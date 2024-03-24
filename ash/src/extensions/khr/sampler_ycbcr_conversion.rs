@@ -1,27 +1,29 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_sampler_ycbcr_conversion.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_sampler_ycbcr_conversion.html>
+pub const NAME: &ffi::CStr = vk::khr::sampler_ycbcr_conversion::NAME;
+
 #[derive(Clone)]
-pub struct SamplerYcbcrConversion {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrSamplerYcbcrConversionFn,
+    fp: vk::khr::sampler_ycbcr_conversion::DeviceFn,
 }
 
-impl SamplerYcbcrConversion {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrSamplerYcbcrConversionFn::load(|name| unsafe {
+        let fp = vk::khr::sampler_ycbcr_conversion::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateSamplerYcbcrConversion.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateSamplerYcbcrConversion.html>
     #[inline]
     pub unsafe fn create_sampler_ycbcr_conversion(
         &self,
@@ -38,7 +40,7 @@ impl SamplerYcbcrConversion {
         .assume_init_on_success(ycbcr_conversion)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroySamplerYcbcrConversion.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroySamplerYcbcrConversion.html>
     #[inline]
     pub unsafe fn destroy_sampler_ycbcr_conversion(
         &self,
@@ -52,10 +54,8 @@ impl SamplerYcbcrConversion {
         )
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrSamplerYcbcrConversionFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrSamplerYcbcrConversionFn {
+    pub fn fp(&self) -> &vk::khr::sampler_ycbcr_conversion::DeviceFn {
         &self.fp
     }
 

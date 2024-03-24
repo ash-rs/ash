@@ -1,26 +1,29 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_pipeline_executable_properties.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use alloc::vec::Vec;
 use core::ffi;
 use core::mem;
 
+pub const NAME: &ffi::CStr = vk::khr::pipeline_executable_properties::NAME;
+
 #[derive(Clone)]
-pub struct PipelineExecutableProperties {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrPipelineExecutablePropertiesFn,
+    fp: vk::khr::pipeline_executable_properties::DeviceFn,
 }
 
-impl PipelineExecutableProperties {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrPipelineExecutablePropertiesFn::load(|name| unsafe {
+        let fp = vk::khr::pipeline_executable_properties::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutableInternalRepresentationsKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutableInternalRepresentationsKHR.html>
     #[inline]
     pub unsafe fn get_pipeline_executable_internal_representations(
         &self,
@@ -36,7 +39,7 @@ impl PipelineExecutableProperties {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutablePropertiesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutablePropertiesKHR.html>
     #[inline]
     pub unsafe fn get_pipeline_executable_properties(
         &self,
@@ -52,7 +55,7 @@ impl PipelineExecutableProperties {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutableStatisticsKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutableStatisticsKHR.html>
     #[inline]
     pub unsafe fn get_pipeline_executable_statistics(
         &self,
@@ -68,10 +71,8 @@ impl PipelineExecutableProperties {
         })
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrPipelineExecutablePropertiesFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrPipelineExecutablePropertiesFn {
+    pub fn fp(&self) -> &vk::khr::pipeline_executable_properties::DeviceFn {
         &self.fp
     }
 

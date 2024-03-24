@@ -1,26 +1,29 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_xcb_surface.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Entry, Instance};
 use core::ffi;
 use core::mem;
 
+pub const NAME: &ffi::CStr = vk::khr::xcb_surface::NAME;
+
 #[derive(Clone)]
-pub struct XcbSurface {
+pub struct Instance {
     handle: vk::Instance,
-    fp: vk::KhrXcbSurfaceFn,
+    fp: vk::khr::xcb_surface::InstanceFn,
 }
 
-impl XcbSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::KhrXcbSurfaceFn::load(|name| unsafe {
+        let fp = vk::khr::xcb_surface::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateXcbSurfaceKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateXcbSurfaceKHR.html>
     #[inline]
     pub unsafe fn create_xcb_surface(
         &self,
@@ -37,7 +40,7 @@ impl XcbSurface {
         .assume_init_on_success(surface)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceXcbPresentationSupportKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceXcbPresentationSupportKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_xcb_presentation_support(
         &self,
@@ -56,10 +59,8 @@ impl XcbSurface {
         b > 0
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrXcbSurfaceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrXcbSurfaceFn {
+    pub fn fp(&self) -> &vk::khr::xcb_surface::InstanceFn {
         &self.fp
     }
 

@@ -1,24 +1,26 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_ray_tracing_maintenance1.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_ray_tracing_maintenance1.html>
+pub const NAME: &ffi::CStr = vk::khr::ray_tracing_maintenance1::NAME;
+
 #[derive(Clone)]
-pub struct RayTracingMaintenance1 {
-    fp: vk::KhrRayTracingMaintenance1Fn,
+pub struct Device {
+    fp: vk::khr::ray_tracing_maintenance1::DeviceFn,
 }
 
-impl RayTracingMaintenance1 {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrRayTracingMaintenance1Fn::load(|name| unsafe {
+        let fp = vk::khr::ray_tracing_maintenance1::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysIndirect2KHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysIndirect2KHR.html>
     ///
     /// `indirect_device_address` is a buffer device address which is a pointer to a [`vk::TraceRaysIndirectCommand2KHR`] structure containing the trace ray parameters.
     #[inline]
@@ -30,10 +32,8 @@ impl RayTracingMaintenance1 {
         (self.fp.cmd_trace_rays_indirect2_khr)(command_buffer, indirect_device_address);
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrRayTracingMaintenance1Fn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrRayTracingMaintenance1Fn {
+    pub fn fp(&self) -> &vk::khr::ray_tracing_maintenance1::DeviceFn {
         &self.fp
     }
 }

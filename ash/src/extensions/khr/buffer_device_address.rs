@@ -1,24 +1,27 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_buffer_device_address.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
+pub const NAME: &ffi::CStr = vk::khr::buffer_device_address::NAME;
+
 #[derive(Clone)]
-pub struct BufferDeviceAddress {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrBufferDeviceAddressFn,
+    fp: vk::khr::buffer_device_address::DeviceFn,
 }
 
-impl BufferDeviceAddress {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrBufferDeviceAddressFn::load(|name| unsafe {
+        let fp = vk::khr::buffer_device_address::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetBufferDeviceAddressKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferDeviceAddressKHR.html>
     #[inline]
     pub unsafe fn get_buffer_device_address(
         &self,
@@ -27,7 +30,7 @@ impl BufferDeviceAddress {
         (self.fp.get_buffer_device_address_khr)(self.handle, info)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetBufferOpaqueCaptureAddressKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferOpaqueCaptureAddressKHR.html>
     #[inline]
     pub unsafe fn get_buffer_opaque_capture_address(
         &self,
@@ -36,7 +39,7 @@ impl BufferDeviceAddress {
         (self.fp.get_buffer_opaque_capture_address_khr)(self.handle, info)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceMemoryOpaqueCaptureAddressKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceMemoryOpaqueCaptureAddressKHR.html>
     #[inline]
     pub unsafe fn get_device_memory_opaque_capture_address(
         &self,
@@ -45,10 +48,8 @@ impl BufferDeviceAddress {
         (self.fp.get_device_memory_opaque_capture_address_khr)(self.handle, info)
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrBufferDeviceAddressFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrBufferDeviceAddressFn {
+    pub fn fp(&self) -> &vk::khr::buffer_device_address::DeviceFn {
         &self.fp
     }
 

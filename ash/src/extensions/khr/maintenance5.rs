@@ -1,21 +1,23 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance5.html>
+
 #[cfg(doc)]
-use super::super::ext::{HostImageCopy, ImageCompressionControl};
+use super::super::ext::{host_image_copy, image_compression_control};
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance5.html>
+pub const NAME: &ffi::CStr = vk::khr::maintenance5::NAME;
+
 #[derive(Clone)]
-pub struct Maintenance5 {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrMaintenance5Fn,
+    fp: vk::khr::maintenance5::DeviceFn,
 }
 
-impl Maintenance5 {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrMaintenance5Fn::load(|name| unsafe {
+        let fp = vk::khr::maintenance5::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -61,10 +63,10 @@ impl Maintenance5 {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2KHR.html>
     ///
-    /// Also available as [`HostImageCopy::get_image_subresource_layout2()`]
+    /// Also available as [`host_image_copy::Device::get_image_subresource_layout2()`]
     /// when [`VK_EXT_host_image_copy`] is enabled.
     ///
-    /// Also available as [`ImageCompressionControl::get_image_subresource_layout2()`]
+    /// Also available as [`image_compression_control::Device::get_image_subresource_layout2()`]
     /// when [`VK_EXT_image_compression_control`] is enabled.
     ///
     /// [`VK_EXT_host_image_copy`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_host_image_copy.html
@@ -79,10 +81,8 @@ impl Maintenance5 {
         (self.fp.get_image_subresource_layout2_khr)(self.handle, image, subresource, layout)
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrMaintenance5Fn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrMaintenance5Fn {
+    pub fn fp(&self) -> &vk::khr::maintenance5::DeviceFn {
         &self.fp
     }
 

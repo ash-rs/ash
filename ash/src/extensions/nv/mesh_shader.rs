@@ -1,22 +1,25 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_mesh_shader.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
+pub const NAME: &ffi::CStr = vk::nv::mesh_shader::NAME;
+
 #[derive(Clone)]
-pub struct MeshShader {
-    fp: vk::NvMeshShaderFn,
+pub struct Device {
+    fp: vk::nv::mesh_shader::DeviceFn,
 }
 
-impl MeshShader {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::NvMeshShaderFn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::nv::mesh_shader::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksNV.html>
     #[inline]
     pub unsafe fn cmd_draw_mesh_tasks(
         &self,
@@ -27,7 +30,7 @@ impl MeshShader {
         (self.fp.cmd_draw_mesh_tasks_nv)(command_buffer, task_count, first_task);
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectNV.html>
     #[inline]
     pub unsafe fn cmd_draw_mesh_tasks_indirect(
         &self,
@@ -46,7 +49,7 @@ impl MeshShader {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectCountNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectCountNV.html>
     #[inline]
     pub unsafe fn cmd_draw_mesh_tasks_indirect_count(
         &self,
@@ -69,10 +72,8 @@ impl MeshShader {
         );
     }
 
-    pub const NAME: &'static ffi::CStr = vk::NvMeshShaderFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::NvMeshShaderFn {
+    pub fn fp(&self) -> &vk::nv::mesh_shader::DeviceFn {
         &self.fp
     }
 }

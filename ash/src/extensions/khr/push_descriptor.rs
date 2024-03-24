@@ -1,22 +1,25 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_push_descriptor.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
+pub const NAME: &ffi::CStr = vk::khr::push_descriptor::NAME;
+
 #[derive(Clone)]
-pub struct PushDescriptor {
-    fp: vk::KhrPushDescriptorFn,
+pub struct Device {
+    fp: vk::khr::push_descriptor::DeviceFn,
 }
 
-impl PushDescriptor {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::KhrPushDescriptorFn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::khr::push_descriptor::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetKHR.html>
     #[inline]
     pub unsafe fn cmd_push_descriptor_set(
         &self,
@@ -36,7 +39,7 @@ impl PushDescriptor {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>
     #[inline]
     pub unsafe fn cmd_push_descriptor_set_with_template(
         &self,
@@ -55,10 +58,8 @@ impl PushDescriptor {
         );
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrPushDescriptorFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrPushDescriptorFn {
+    pub fn fp(&self) -> &vk::khr::push_descriptor::DeviceFn {
         &self.fp
     }
 }

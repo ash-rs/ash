@@ -1,26 +1,29 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_metal_surface.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Entry, Instance};
 use core::ffi;
 use core::mem;
 
+pub const NAME: &ffi::CStr = vk::ext::metal_surface::NAME;
+
 #[derive(Clone)]
-pub struct MetalSurface {
+pub struct Instance {
     handle: vk::Instance,
-    fp: vk::ExtMetalSurfaceFn,
+    fp: vk::ext::metal_surface::InstanceFn,
 }
 
-impl MetalSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ExtMetalSurfaceFn::load(|name| unsafe {
+        let fp = vk::ext::metal_surface::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateMetalSurfaceEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateMetalSurfaceEXT.html>
     #[inline]
     pub unsafe fn create_metal_surface(
         &self,
@@ -37,10 +40,8 @@ impl MetalSurface {
         .assume_init_on_success(surface)
     }
 
-    pub const NAME: &'static ffi::CStr = vk::ExtMetalSurfaceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtMetalSurfaceFn {
+    pub fn fp(&self) -> &vk::ext::metal_surface::InstanceFn {
         &self.fp
     }
 

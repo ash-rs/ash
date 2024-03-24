@@ -1,26 +1,28 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance4.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 use core::ptr;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance4.html>
+pub const NAME: &ffi::CStr = vk::khr::maintenance4::NAME;
+
 #[derive(Clone)]
-pub struct Maintenance4 {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrMaintenance4Fn,
+    fp: vk::khr::maintenance4::DeviceFn,
 }
 
-impl Maintenance4 {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrMaintenance4Fn::load(|name| unsafe {
+        let fp = vk::khr::maintenance4::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceBufferMemoryRequirementsKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceBufferMemoryRequirementsKHR.html>
     #[inline]
     pub unsafe fn get_device_buffer_memory_requirements(
         &self,
@@ -30,7 +32,7 @@ impl Maintenance4 {
         (self.fp.get_device_buffer_memory_requirements_khr)(self.handle, memory_requirements, out)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageMemoryRequirementsKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageMemoryRequirementsKHR.html>
     #[inline]
     pub unsafe fn get_device_image_memory_requirements(
         &self,
@@ -56,7 +58,7 @@ impl Maintenance4 {
         count.assume_init() as usize
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSparseMemoryRequirementsKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSparseMemoryRequirementsKHR.html>
     ///
     /// Call [`get_device_image_sparse_memory_requirements_len()`][Self::get_device_image_sparse_memory_requirements_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
@@ -76,10 +78,8 @@ impl Maintenance4 {
         assert_eq!(count as usize, out.len());
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrMaintenance4Fn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrMaintenance4Fn {
+    pub fn fp(&self) -> &vk::khr::maintenance4::DeviceFn {
         &self.fp
     }
 

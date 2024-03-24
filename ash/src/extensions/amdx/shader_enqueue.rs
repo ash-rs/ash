@@ -1,22 +1,24 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMDX_shader_enqueue.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use alloc::vec::Vec;
 use core::ffi;
 use core::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_AMDX_shader_enqueue.html>
+pub const NAME: &ffi::CStr = vk::amdx::shader_enqueue::NAME;
+
 #[derive(Clone)]
-pub struct ShaderEnqueue {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::AmdxShaderEnqueueFn,
+    fp: vk::amdx::shader_enqueue::DeviceFn,
 }
 
-impl ShaderEnqueue {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::AmdxShaderEnqueueFn::load(|name| unsafe {
+        let fp = vk::amdx::shader_enqueue::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -117,10 +119,8 @@ impl ShaderEnqueue {
         (self.fp.cmd_dispatch_graph_indirect_count_amdx)(command_buffer, scratch, count_info)
     }
 
-    pub const NAME: &'static ffi::CStr = vk::AmdxShaderEnqueueFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::AmdxShaderEnqueueFn {
+    pub fn fp(&self) -> &vk::amdx::shader_enqueue::DeviceFn {
         &self.fp
     }
 

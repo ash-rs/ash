@@ -1,22 +1,25 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_draw_indirect_count.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
+pub const NAME: &ffi::CStr = vk::khr::draw_indirect_count::NAME;
+
 #[derive(Clone)]
-pub struct DrawIndirectCount {
-    fp: vk::KhrDrawIndirectCountFn,
+pub struct Device {
+    fp: vk::khr::draw_indirect_count::DeviceFn,
 }
 
-impl DrawIndirectCount {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::KhrDrawIndirectCountFn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::khr::draw_indirect_count::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndexedIndirectCountKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndexedIndirectCountKHR.html>
     #[inline]
     pub unsafe fn cmd_draw_indexed_indirect_count(
         &self,
@@ -39,7 +42,7 @@ impl DrawIndirectCount {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndirectCountKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndirectCountKHR.html>
     #[inline]
     pub unsafe fn cmd_draw_indirect_count(
         &self,
@@ -62,10 +65,8 @@ impl DrawIndirectCount {
         );
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrDrawIndirectCountFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrDrawIndirectCountFn {
+    pub fn fp(&self) -> &vk::khr::draw_indirect_count::DeviceFn {
         &self.fp
     }
 }

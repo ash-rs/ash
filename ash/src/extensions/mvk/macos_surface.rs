@@ -1,26 +1,29 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_MVK_macos_surface.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Entry, Instance};
 use core::ffi;
 use core::mem;
 
+pub const NAME: &ffi::CStr = vk::mvk::macos_surface::NAME;
+
 #[derive(Clone)]
-pub struct MacOSSurface {
+pub struct Instance {
     handle: vk::Instance,
-    fp: vk::MvkMacosSurfaceFn,
+    fp: vk::mvk::macos_surface::InstanceFn,
 }
 
-impl MacOSSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::MvkMacosSurfaceFn::load(|name| unsafe {
+        let fp = vk::mvk::macos_surface::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateMacOSSurfaceMVK.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateMacOSSurfaceMVK.html>
     #[inline]
     pub unsafe fn create_mac_os_surface(
         &self,
@@ -37,10 +40,8 @@ impl MacOSSurface {
         .assume_init_on_success(surface)
     }
 
-    pub const NAME: &'static ffi::CStr = vk::MvkMacosSurfaceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::MvkMacosSurfaceFn {
+    pub fn fp(&self) -> &vk::mvk::macos_surface::InstanceFn {
         &self.fp
     }
 

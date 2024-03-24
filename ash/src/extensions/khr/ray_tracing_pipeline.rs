@@ -1,27 +1,30 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_ray_tracing_pipeline.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use alloc::vec::Vec;
 use core::ffi;
 use core::mem;
 
+pub const NAME: &ffi::CStr = vk::khr::ray_tracing_pipeline::NAME;
+
 #[derive(Clone)]
-pub struct RayTracingPipeline {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrRayTracingPipelineFn,
+    fp: vk::khr::ray_tracing_pipeline::DeviceFn,
 }
 
-impl RayTracingPipeline {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrRayTracingPipelineFn::load(|name| unsafe {
+        let fp = vk::khr::ray_tracing_pipeline::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysKHR.html>
     #[inline]
     pub unsafe fn cmd_trace_rays(
         &self,
@@ -46,7 +49,7 @@ impl RayTracingPipeline {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateRayTracingPipelinesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateRayTracingPipelinesKHR.html>
     #[inline]
     pub unsafe fn create_ray_tracing_pipelines(
         &self,
@@ -68,7 +71,7 @@ impl RayTracingPipeline {
         .set_vec_len_on_success(pipelines, create_info.len())
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupHandlesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupHandlesKHR.html>
     #[inline]
     pub unsafe fn get_ray_tracing_shader_group_handles(
         &self,
@@ -89,7 +92,7 @@ impl RayTracingPipeline {
         .set_vec_len_on_success(data, data_size)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingCaptureReplayShaderGroupHandlesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingCaptureReplayShaderGroupHandlesKHR.html>
     #[inline]
     pub unsafe fn get_ray_tracing_capture_replay_shader_group_handles(
         &self,
@@ -112,7 +115,7 @@ impl RayTracingPipeline {
         .set_vec_len_on_success(data, data_size)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysIndirectKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysIndirectKHR.html>
     ///
     /// `indirect_device_address` is a buffer device address which is a pointer to a [`vk::TraceRaysIndirectCommandKHR`] structure containing the trace ray parameters.
     #[inline]
@@ -135,7 +138,7 @@ impl RayTracingPipeline {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupStackSizeKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupStackSizeKHR.html>
     #[inline]
     pub unsafe fn get_ray_tracing_shader_group_stack_size(
         &self,
@@ -151,7 +154,7 @@ impl RayTracingPipeline {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRayTracingPipelineStackSizeKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRayTracingPipelineStackSizeKHR.html>
     #[inline]
     pub unsafe fn cmd_set_ray_tracing_pipeline_stack_size(
         &self,
@@ -161,10 +164,8 @@ impl RayTracingPipeline {
         (self.fp.cmd_set_ray_tracing_pipeline_stack_size_khr)(command_buffer, pipeline_stack_size);
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrRayTracingPipelineFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrRayTracingPipelineFn {
+    pub fn fp(&self) -> &vk::khr::ray_tracing_pipeline::DeviceFn {
         &self.fp
     }
 

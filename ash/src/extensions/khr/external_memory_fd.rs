@@ -1,26 +1,28 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_memory_fd.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_memory_fd.html>
+pub const NAME: &ffi::CStr = vk::khr::external_memory_fd::NAME;
+
 #[derive(Clone)]
-pub struct ExternalMemoryFd {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrExternalMemoryFdFn,
+    fp: vk::khr::external_memory_fd::DeviceFn,
 }
 
-impl ExternalMemoryFd {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrExternalMemoryFdFn::load(|name| unsafe {
+        let fp = vk::khr::external_memory_fd::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetMemoryFdKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryFdKHR.html>
     #[inline]
     pub unsafe fn get_memory_fd(&self, get_fd_info: &vk::MemoryGetFdInfoKHR<'_>) -> VkResult<i32> {
         let mut fd = mem::MaybeUninit::uninit();
@@ -28,7 +30,7 @@ impl ExternalMemoryFd {
             .assume_init_on_success(fd)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetMemoryFdPropertiesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryFdPropertiesKHR.html>
     #[inline]
     pub unsafe fn get_memory_fd_properties(
         &self,
@@ -40,10 +42,8 @@ impl ExternalMemoryFd {
             .result()
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrExternalMemoryFdFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrExternalMemoryFdFn {
+    pub fn fp(&self) -> &vk::khr::external_memory_fd::DeviceFn {
         &self.fp
     }
 

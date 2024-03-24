@@ -14,7 +14,7 @@ unsafe impl Sync for StaticFn {}
 impl StaticFn {
     pub fn load<F>(mut _f: F) -> Self
     where
-        F: FnMut(&::core::ffi::CStr) -> *const c_void,
+        F: FnMut(&CStr) -> *const c_void,
     {
         Self {
             get_instance_proc_addr: unsafe {
@@ -27,8 +27,7 @@ impl StaticFn {
                         stringify!(get_instance_proc_addr)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetInstanceProcAddr\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetInstanceProcAddr\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_instance_proc_addr
@@ -67,7 +66,7 @@ unsafe impl Sync for EntryFnV1_0 {}
 impl EntryFnV1_0 {
     pub fn load<F>(mut _f: F) -> Self
     where
-        F: FnMut(&::core::ffi::CStr) -> *const c_void,
+        F: FnMut(&CStr) -> *const c_void,
     {
         Self {
             create_instance: unsafe {
@@ -78,7 +77,7 @@ impl EntryFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_instance)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateInstance\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateInstance\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_instance
@@ -97,7 +96,7 @@ impl EntryFnV1_0 {
                         stringify!(enumerate_instance_extension_properties)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
+                let cname = CStr::from_bytes_with_nul_unchecked(
                     b"vkEnumerateInstanceExtensionProperties\0",
                 );
                 let val = _f(cname);
@@ -117,9 +116,8 @@ impl EntryFnV1_0 {
                         stringify!(enumerate_instance_layer_properties)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkEnumerateInstanceLayerProperties\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkEnumerateInstanceLayerProperties\0");
                 let val = _f(cname);
                 if val.is_null() {
                     enumerate_instance_layer_properties
@@ -232,7 +230,7 @@ unsafe impl Sync for InstanceFnV1_0 {}
 impl InstanceFnV1_0 {
     pub fn load<F>(mut _f: F) -> Self
     where
-        F: FnMut(&::core::ffi::CStr) -> *const c_void,
+        F: FnMut(&CStr) -> *const c_void,
     {
         Self {
             destroy_instance: unsafe {
@@ -242,8 +240,7 @@ impl InstanceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_instance)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyInstance\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyInstance\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_instance
@@ -262,9 +259,7 @@ impl InstanceFnV1_0 {
                         stringify!(enumerate_physical_devices)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkEnumeratePhysicalDevices\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkEnumeratePhysicalDevices\0");
                 let val = _f(cname);
                 if val.is_null() {
                     enumerate_physical_devices
@@ -282,9 +277,7 @@ impl InstanceFnV1_0 {
                         stringify!(get_physical_device_features)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceFeatures\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceFeatures\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_physical_device_features
@@ -303,9 +296,8 @@ impl InstanceFnV1_0 {
                         stringify!(get_physical_device_format_properties)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceFormatProperties\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceFormatProperties\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_physical_device_format_properties
@@ -328,7 +320,7 @@ impl InstanceFnV1_0 {
                         stringify!(get_physical_device_image_format_properties)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
+                let cname = CStr::from_bytes_with_nul_unchecked(
                     b"vkGetPhysicalDeviceImageFormatProperties\0",
                 );
                 let val = _f(cname);
@@ -348,9 +340,7 @@ impl InstanceFnV1_0 {
                         stringify!(get_physical_device_properties)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceProperties\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceProperties\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_physical_device_properties
@@ -369,7 +359,7 @@ impl InstanceFnV1_0 {
                         stringify!(get_physical_device_queue_family_properties)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
+                let cname = CStr::from_bytes_with_nul_unchecked(
                     b"vkGetPhysicalDeviceQueueFamilyProperties\0",
                 );
                 let val = _f(cname);
@@ -389,9 +379,8 @@ impl InstanceFnV1_0 {
                         stringify!(get_physical_device_memory_properties)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceMemoryProperties\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceMemoryProperties\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_physical_device_memory_properties
@@ -406,8 +395,7 @@ impl InstanceFnV1_0 {
                 ) -> PFN_vkVoidFunction {
                     panic!(concat!("Unable to load ", stringify!(get_device_proc_addr)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceProcAddr\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceProcAddr\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_device_proc_addr
@@ -424,7 +412,7 @@ impl InstanceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_device)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateDevice\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateDevice\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_device
@@ -444,9 +432,8 @@ impl InstanceFnV1_0 {
                         stringify!(enumerate_device_extension_properties)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkEnumerateDeviceExtensionProperties\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkEnumerateDeviceExtensionProperties\0");
                 let val = _f(cname);
                 if val.is_null() {
                     enumerate_device_extension_properties
@@ -465,9 +452,8 @@ impl InstanceFnV1_0 {
                         stringify!(enumerate_device_layer_properties)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkEnumerateDeviceLayerProperties\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkEnumerateDeviceLayerProperties\0");
                 let val = _f(cname);
                 if val.is_null() {
                     enumerate_device_layer_properties
@@ -491,7 +477,7 @@ impl InstanceFnV1_0 {
                         stringify!(get_physical_device_sparse_image_format_properties)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
+                let cname = CStr::from_bytes_with_nul_unchecked(
                     b"vkGetPhysicalDeviceSparseImageFormatProperties\0",
                 );
                 let val = _f(cname);
@@ -1421,7 +1407,7 @@ unsafe impl Sync for DeviceFnV1_0 {}
 impl DeviceFnV1_0 {
     pub fn load<F>(mut _f: F) -> Self
     where
-        F: FnMut(&::core::ffi::CStr) -> *const c_void,
+        F: FnMut(&CStr) -> *const c_void,
     {
         Self {
             destroy_device: unsafe {
@@ -1431,7 +1417,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_device)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyDevice\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyDevice\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_device
@@ -1448,7 +1434,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(get_device_queue)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceQueue\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceQueue\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_device_queue
@@ -1465,7 +1451,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(queue_submit)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkQueueSubmit\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkQueueSubmit\0");
                 let val = _f(cname);
                 if val.is_null() {
                     queue_submit
@@ -1477,7 +1463,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn queue_wait_idle(_queue: Queue) -> Result {
                     panic!(concat!("Unable to load ", stringify!(queue_wait_idle)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkQueueWaitIdle\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkQueueWaitIdle\0");
                 let val = _f(cname);
                 if val.is_null() {
                     queue_wait_idle
@@ -1489,7 +1475,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn device_wait_idle(_device: Device) -> Result {
                     panic!(concat!("Unable to load ", stringify!(device_wait_idle)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDeviceWaitIdle\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDeviceWaitIdle\0");
                 let val = _f(cname);
                 if val.is_null() {
                     device_wait_idle
@@ -1506,7 +1492,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(allocate_memory)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkAllocateMemory\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkAllocateMemory\0");
                 let val = _f(cname);
                 if val.is_null() {
                     allocate_memory
@@ -1522,7 +1508,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(free_memory)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkFreeMemory\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkFreeMemory\0");
                 let val = _f(cname);
                 if val.is_null() {
                     free_memory
@@ -1541,7 +1527,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(map_memory)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkMapMemory\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkMapMemory\0");
                 let val = _f(cname);
                 if val.is_null() {
                     map_memory
@@ -1553,7 +1539,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn unmap_memory(_device: Device, _memory: DeviceMemory) {
                     panic!(concat!("Unable to load ", stringify!(unmap_memory)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkUnmapMemory\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkUnmapMemory\0");
                 let val = _f(cname);
                 if val.is_null() {
                     unmap_memory
@@ -1572,9 +1558,7 @@ impl DeviceFnV1_0 {
                         stringify!(flush_mapped_memory_ranges)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkFlushMappedMemoryRanges\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkFlushMappedMemoryRanges\0");
                 let val = _f(cname);
                 if val.is_null() {
                     flush_mapped_memory_ranges
@@ -1593,9 +1577,8 @@ impl DeviceFnV1_0 {
                         stringify!(invalidate_mapped_memory_ranges)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkInvalidateMappedMemoryRanges\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkInvalidateMappedMemoryRanges\0");
                 let val = _f(cname);
                 if val.is_null() {
                     invalidate_mapped_memory_ranges
@@ -1614,9 +1597,7 @@ impl DeviceFnV1_0 {
                         stringify!(get_device_memory_commitment)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetDeviceMemoryCommitment\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceMemoryCommitment\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_device_memory_commitment
@@ -1633,8 +1614,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(bind_buffer_memory)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkBindBufferMemory\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkBindBufferMemory\0");
                 let val = _f(cname);
                 if val.is_null() {
                     bind_buffer_memory
@@ -1651,8 +1631,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(bind_image_memory)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkBindImageMemory\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkBindImageMemory\0");
                 let val = _f(cname);
                 if val.is_null() {
                     bind_image_memory
@@ -1671,9 +1650,7 @@ impl DeviceFnV1_0 {
                         stringify!(get_buffer_memory_requirements)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetBufferMemoryRequirements\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetBufferMemoryRequirements\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_buffer_memory_requirements
@@ -1692,9 +1669,7 @@ impl DeviceFnV1_0 {
                         stringify!(get_image_memory_requirements)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetImageMemoryRequirements\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetImageMemoryRequirements\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_image_memory_requirements
@@ -1714,9 +1689,8 @@ impl DeviceFnV1_0 {
                         stringify!(get_image_sparse_memory_requirements)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetImageSparseMemoryRequirements\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetImageSparseMemoryRequirements\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_image_sparse_memory_requirements
@@ -1733,8 +1707,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(queue_bind_sparse)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkQueueBindSparse\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkQueueBindSparse\0");
                 let val = _f(cname);
                 if val.is_null() {
                     queue_bind_sparse
@@ -1751,7 +1724,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_fence)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateFence\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateFence\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_fence
@@ -1767,7 +1740,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_fence)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyFence\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyFence\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_fence
@@ -1783,7 +1756,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(reset_fences)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkResetFences\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetFences\0");
                 let val = _f(cname);
                 if val.is_null() {
                     reset_fences
@@ -1798,7 +1771,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(get_fence_status)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetFenceStatus\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetFenceStatus\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_fence_status
@@ -1816,7 +1789,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(wait_for_fences)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkWaitForFences\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkWaitForFences\0");
                 let val = _f(cname);
                 if val.is_null() {
                     wait_for_fences
@@ -1833,8 +1806,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_semaphore)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateSemaphore\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateSemaphore\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_semaphore
@@ -1850,8 +1822,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_semaphore)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroySemaphore\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroySemaphore\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_semaphore
@@ -1868,7 +1839,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_event)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateEvent\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateEvent\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_event
@@ -1884,7 +1855,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_event)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyEvent\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyEvent\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_event
@@ -1899,7 +1870,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(get_event_status)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetEventStatus\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetEventStatus\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_event_status
@@ -1911,7 +1882,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn set_event(_device: Device, _event: Event) -> Result {
                     panic!(concat!("Unable to load ", stringify!(set_event)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkSetEvent\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkSetEvent\0");
                 let val = _f(cname);
                 if val.is_null() {
                     set_event
@@ -1923,7 +1894,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn reset_event(_device: Device, _event: Event) -> Result {
                     panic!(concat!("Unable to load ", stringify!(reset_event)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkResetEvent\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetEvent\0");
                 let val = _f(cname);
                 if val.is_null() {
                     reset_event
@@ -1940,8 +1911,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_query_pool)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateQueryPool\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateQueryPool\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_query_pool
@@ -1957,8 +1927,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_query_pool)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyQueryPool\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyQueryPool\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_query_pool
@@ -1982,8 +1951,7 @@ impl DeviceFnV1_0 {
                         stringify!(get_query_pool_results)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetQueryPoolResults\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetQueryPoolResults\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_query_pool_results
@@ -2000,7 +1968,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_buffer)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateBuffer\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateBuffer\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_buffer
@@ -2016,7 +1984,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_buffer)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyBuffer\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyBuffer\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_buffer
@@ -2033,8 +2001,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_buffer_view)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateBufferView\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateBufferView\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_buffer_view
@@ -2050,8 +2017,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_buffer_view)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyBufferView\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyBufferView\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_buffer_view
@@ -2068,7 +2034,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_image)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateImage\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateImage\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_image
@@ -2084,7 +2050,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_image)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyImage\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyImage\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_image
@@ -2104,9 +2070,7 @@ impl DeviceFnV1_0 {
                         stringify!(get_image_subresource_layout)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetImageSubresourceLayout\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetImageSubresourceLayout\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_image_subresource_layout
@@ -2123,8 +2087,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_image_view)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateImageView\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateImageView\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_image_view
@@ -2140,8 +2103,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_image_view)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyImageView\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyImageView\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_image_view
@@ -2158,8 +2120,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_shader_module)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateShaderModule\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateShaderModule\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_shader_module
@@ -2178,8 +2139,7 @@ impl DeviceFnV1_0 {
                         stringify!(destroy_shader_module)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyShaderModule\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyShaderModule\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_shader_module
@@ -2199,8 +2159,7 @@ impl DeviceFnV1_0 {
                         stringify!(create_pipeline_cache)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreatePipelineCache\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreatePipelineCache\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_pipeline_cache
@@ -2219,8 +2178,7 @@ impl DeviceFnV1_0 {
                         stringify!(destroy_pipeline_cache)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyPipelineCache\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyPipelineCache\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_pipeline_cache
@@ -2240,8 +2198,7 @@ impl DeviceFnV1_0 {
                         stringify!(get_pipeline_cache_data)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetPipelineCacheData\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetPipelineCacheData\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_pipeline_cache_data
@@ -2261,8 +2218,7 @@ impl DeviceFnV1_0 {
                         stringify!(merge_pipeline_caches)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkMergePipelineCaches\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkMergePipelineCaches\0");
                 let val = _f(cname);
                 if val.is_null() {
                     merge_pipeline_caches
@@ -2284,9 +2240,7 @@ impl DeviceFnV1_0 {
                         stringify!(create_graphics_pipelines)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCreateGraphicsPipelines\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateGraphicsPipelines\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_graphics_pipelines
@@ -2308,8 +2262,7 @@ impl DeviceFnV1_0 {
                         stringify!(create_compute_pipelines)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateComputePipelines\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateComputePipelines\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_compute_pipelines
@@ -2325,8 +2278,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_pipeline)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyPipeline\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyPipeline\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_pipeline
@@ -2346,8 +2298,7 @@ impl DeviceFnV1_0 {
                         stringify!(create_pipeline_layout)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreatePipelineLayout\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreatePipelineLayout\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_pipeline_layout
@@ -2366,8 +2317,7 @@ impl DeviceFnV1_0 {
                         stringify!(destroy_pipeline_layout)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyPipelineLayout\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyPipelineLayout\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_pipeline_layout
@@ -2384,7 +2334,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_sampler)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateSampler\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateSampler\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_sampler
@@ -2400,7 +2350,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_sampler)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroySampler\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroySampler\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_sampler
@@ -2420,9 +2370,7 @@ impl DeviceFnV1_0 {
                         stringify!(create_descriptor_set_layout)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCreateDescriptorSetLayout\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateDescriptorSetLayout\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_descriptor_set_layout
@@ -2441,9 +2389,7 @@ impl DeviceFnV1_0 {
                         stringify!(destroy_descriptor_set_layout)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkDestroyDescriptorSetLayout\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyDescriptorSetLayout\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_descriptor_set_layout
@@ -2463,8 +2409,7 @@ impl DeviceFnV1_0 {
                         stringify!(create_descriptor_pool)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateDescriptorPool\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateDescriptorPool\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_descriptor_pool
@@ -2483,8 +2428,7 @@ impl DeviceFnV1_0 {
                         stringify!(destroy_descriptor_pool)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyDescriptorPool\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyDescriptorPool\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_descriptor_pool
@@ -2503,8 +2447,7 @@ impl DeviceFnV1_0 {
                         stringify!(reset_descriptor_pool)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkResetDescriptorPool\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetDescriptorPool\0");
                 let val = _f(cname);
                 if val.is_null() {
                     reset_descriptor_pool
@@ -2523,8 +2466,7 @@ impl DeviceFnV1_0 {
                         stringify!(allocate_descriptor_sets)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkAllocateDescriptorSets\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkAllocateDescriptorSets\0");
                 let val = _f(cname);
                 if val.is_null() {
                     allocate_descriptor_sets
@@ -2541,8 +2483,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(free_descriptor_sets)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkFreeDescriptorSets\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkFreeDescriptorSets\0");
                 let val = _f(cname);
                 if val.is_null() {
                     free_descriptor_sets
@@ -2563,8 +2504,7 @@ impl DeviceFnV1_0 {
                         stringify!(update_descriptor_sets)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkUpdateDescriptorSets\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkUpdateDescriptorSets\0");
                 let val = _f(cname);
                 if val.is_null() {
                     update_descriptor_sets
@@ -2581,8 +2521,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_framebuffer)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateFramebuffer\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateFramebuffer\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_framebuffer
@@ -2598,8 +2537,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_framebuffer)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyFramebuffer\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyFramebuffer\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_framebuffer
@@ -2616,8 +2554,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_render_pass)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateRenderPass\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateRenderPass\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_render_pass
@@ -2633,8 +2570,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_render_pass)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyRenderPass\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyRenderPass\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_render_pass
@@ -2653,9 +2589,7 @@ impl DeviceFnV1_0 {
                         stringify!(get_render_area_granularity)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetRenderAreaGranularity\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetRenderAreaGranularity\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_render_area_granularity
@@ -2672,8 +2606,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_command_pool)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateCommandPool\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateCommandPool\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_command_pool
@@ -2689,8 +2622,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_command_pool)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyCommandPool\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyCommandPool\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_command_pool
@@ -2706,8 +2638,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(reset_command_pool)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkResetCommandPool\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetCommandPool\0");
                 let val = _f(cname);
                 if val.is_null() {
                     reset_command_pool
@@ -2726,8 +2657,7 @@ impl DeviceFnV1_0 {
                         stringify!(allocate_command_buffers)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkAllocateCommandBuffers\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkAllocateCommandBuffers\0");
                 let val = _f(cname);
                 if val.is_null() {
                     allocate_command_buffers
@@ -2744,8 +2674,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(free_command_buffers)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkFreeCommandBuffers\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkFreeCommandBuffers\0");
                 let val = _f(cname);
                 if val.is_null() {
                     free_command_buffers
@@ -2760,8 +2689,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(begin_command_buffer)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkBeginCommandBuffer\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkBeginCommandBuffer\0");
                 let val = _f(cname);
                 if val.is_null() {
                     begin_command_buffer
@@ -2775,8 +2703,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(end_command_buffer)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkEndCommandBuffer\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkEndCommandBuffer\0");
                 let val = _f(cname);
                 if val.is_null() {
                     end_command_buffer
@@ -2791,8 +2718,7 @@ impl DeviceFnV1_0 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(reset_command_buffer)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkResetCommandBuffer\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetCommandBuffer\0");
                 let val = _f(cname);
                 if val.is_null() {
                     reset_command_buffer
@@ -2808,8 +2734,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_bind_pipeline)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBindPipeline\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindPipeline\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_bind_pipeline
@@ -2826,7 +2751,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_viewport)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetViewport\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetViewport\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_viewport
@@ -2843,7 +2768,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_scissor)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetScissor\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetScissor\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_scissor
@@ -2858,8 +2783,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_line_width)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLineWidth\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLineWidth\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_line_width
@@ -2876,8 +2800,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_depth_bias)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBias\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBias\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_depth_bias
@@ -2895,8 +2818,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_set_blend_constants)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetBlendConstants\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetBlendConstants\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_blend_constants
@@ -2912,8 +2834,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_depth_bounds)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBounds\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBounds\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_depth_bounds
@@ -2932,9 +2853,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_set_stencil_compare_mask)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCmdSetStencilCompareMask\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilCompareMask\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_stencil_compare_mask
@@ -2953,8 +2872,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_set_stencil_write_mask)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilWriteMask\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilWriteMask\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_stencil_write_mask
@@ -2973,8 +2891,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_set_stencil_reference)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilReference\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilReference\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_stencil_reference
@@ -2998,8 +2915,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_bind_descriptor_sets)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBindDescriptorSets\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindDescriptorSets\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_bind_descriptor_sets
@@ -3019,8 +2935,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_bind_index_buffer)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBindIndexBuffer\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindIndexBuffer\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_bind_index_buffer
@@ -3041,8 +2956,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_bind_vertex_buffers)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBindVertexBuffers\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindVertexBuffers\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_bind_vertex_buffers
@@ -3060,7 +2974,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_draw)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDraw\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDraw\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_draw
@@ -3079,7 +2993,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_draw_indexed)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndexed\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndexed\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_draw_indexed
@@ -3097,8 +3011,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_draw_indirect)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndirect\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndirect\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_draw_indirect
@@ -3119,8 +3032,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_draw_indexed_indirect)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndexedIndirect\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndexedIndirect\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_draw_indexed_indirect
@@ -3137,7 +3049,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_dispatch)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatch\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatch\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_dispatch
@@ -3156,8 +3068,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_dispatch_indirect)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchIndirect\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchIndirect\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_dispatch_indirect
@@ -3175,7 +3086,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_buffer)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBuffer\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBuffer\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_copy_buffer
@@ -3195,7 +3106,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_image)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImage\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImage\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_copy_image
@@ -3216,7 +3127,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_blit_image)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBlitImage\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBlitImage\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_blit_image
@@ -3238,8 +3149,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_copy_buffer_to_image)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBufferToImage\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBufferToImage\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_copy_buffer_to_image
@@ -3261,8 +3171,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_copy_image_to_buffer)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImageToBuffer\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImageToBuffer\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_copy_image_to_buffer
@@ -3280,8 +3189,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_update_buffer)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdUpdateBuffer\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdUpdateBuffer\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_update_buffer
@@ -3299,7 +3207,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_fill_buffer)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdFillBuffer\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdFillBuffer\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_fill_buffer
@@ -3321,8 +3229,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_clear_color_image)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdClearColorImage\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdClearColorImage\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_clear_color_image
@@ -3344,9 +3251,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_clear_depth_stencil_image)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCmdClearDepthStencilImage\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdClearDepthStencilImage\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_clear_depth_stencil_image
@@ -3367,8 +3272,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_clear_attachments)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdClearAttachments\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdClearAttachments\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_clear_attachments
@@ -3388,8 +3292,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_resolve_image)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdResolveImage\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResolveImage\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_resolve_image
@@ -3405,7 +3308,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_event)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetEvent\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetEvent\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_event
@@ -3421,7 +3324,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_reset_event)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdResetEvent\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResetEvent\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_reset_event
@@ -3445,7 +3348,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_wait_events)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdWaitEvents\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdWaitEvents\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_wait_events
@@ -3468,8 +3371,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_pipeline_barrier)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdPipelineBarrier\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPipelineBarrier\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_pipeline_barrier
@@ -3486,7 +3388,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_begin_query)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginQuery\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginQuery\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_begin_query
@@ -3502,7 +3404,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_end_query)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdEndQuery\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndQuery\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_end_query
@@ -3519,8 +3421,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_reset_query_pool)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdResetQueryPool\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResetQueryPool\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_reset_query_pool
@@ -3537,8 +3438,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_write_timestamp)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdWriteTimestamp\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdWriteTimestamp\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_write_timestamp
@@ -3562,9 +3462,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_copy_query_pool_results)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCmdCopyQueryPoolResults\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyQueryPoolResults\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_copy_query_pool_results
@@ -3583,8 +3481,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_push_constants)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdPushConstants\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPushConstants\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_push_constants
@@ -3603,8 +3500,7 @@ impl DeviceFnV1_0 {
                         stringify!(cmd_begin_render_pass)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginRenderPass\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginRenderPass\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_begin_render_pass
@@ -3619,7 +3515,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_next_subpass)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdNextSubpass\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdNextSubpass\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_next_subpass
@@ -3631,8 +3527,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn cmd_end_render_pass(_command_buffer: CommandBuffer) {
                     panic!(concat!("Unable to load ", stringify!(cmd_end_render_pass)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRenderPass\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRenderPass\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_end_render_pass
@@ -3648,8 +3543,7 @@ impl DeviceFnV1_0 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_execute_commands)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdExecuteCommands\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdExecuteCommands\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_execute_commands
@@ -3672,7 +3566,7 @@ unsafe impl Sync for EntryFnV1_1 {}
 impl EntryFnV1_1 {
     pub fn load<F>(mut _f: F) -> Self
     where
-        F: FnMut(&::core::ffi::CStr) -> *const c_void,
+        F: FnMut(&CStr) -> *const c_void,
     {
         Self {
             enumerate_instance_version: unsafe {
@@ -3684,9 +3578,7 @@ impl EntryFnV1_1 {
                         stringify!(enumerate_instance_version)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkEnumerateInstanceVersion\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkEnumerateInstanceVersion\0");
                 let val = _f(cname);
                 if val.is_null() {
                     enumerate_instance_version
@@ -3698,31 +3590,13 @@ impl EntryFnV1_1 {
     }
 }
 #[derive(Clone)]
-pub struct InstanceFnV1_1 {
-    pub enumerate_physical_device_groups: crate::vk::PFN_vkEnumeratePhysicalDeviceGroups,
-    pub get_physical_device_features2: crate::vk::PFN_vkGetPhysicalDeviceFeatures2,
-    pub get_physical_device_properties2: crate::vk::PFN_vkGetPhysicalDeviceProperties2,
-    pub get_physical_device_format_properties2: crate::vk::PFN_vkGetPhysicalDeviceFormatProperties2,
-    pub get_physical_device_image_format_properties2:
-        crate::vk::PFN_vkGetPhysicalDeviceImageFormatProperties2,
-    pub get_physical_device_queue_family_properties2:
-        crate::vk::PFN_vkGetPhysicalDeviceQueueFamilyProperties2,
-    pub get_physical_device_memory_properties2: crate::vk::PFN_vkGetPhysicalDeviceMemoryProperties2,
-    pub get_physical_device_sparse_image_format_properties2:
-        crate::vk::PFN_vkGetPhysicalDeviceSparseImageFormatProperties2,
-    pub get_physical_device_external_buffer_properties:
-        crate::vk::PFN_vkGetPhysicalDeviceExternalBufferProperties,
-    pub get_physical_device_external_fence_properties:
-        crate::vk::PFN_vkGetPhysicalDeviceExternalFenceProperties,
-    pub get_physical_device_external_semaphore_properties:
-        crate::vk::PFN_vkGetPhysicalDeviceExternalSemaphoreProperties,
-}
+pub struct InstanceFnV1_1 { pub enumerate_physical_device_groups : crate :: vk :: khr :: device_group_creation :: PFN_vkEnumeratePhysicalDeviceGroups , pub get_physical_device_features2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceFeatures2 , pub get_physical_device_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceProperties2 , pub get_physical_device_format_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceFormatProperties2 , pub get_physical_device_image_format_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceImageFormatProperties2 , pub get_physical_device_queue_family_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceQueueFamilyProperties2 , pub get_physical_device_memory_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceMemoryProperties2 , pub get_physical_device_sparse_image_format_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 , pub get_physical_device_external_buffer_properties : crate :: vk :: khr :: external_memory_capabilities :: PFN_vkGetPhysicalDeviceExternalBufferProperties , pub get_physical_device_external_fence_properties : crate :: vk :: khr :: external_fence_capabilities :: PFN_vkGetPhysicalDeviceExternalFenceProperties , pub get_physical_device_external_semaphore_properties : crate :: vk :: khr :: external_semaphore_capabilities :: PFN_vkGetPhysicalDeviceExternalSemaphoreProperties , }
 unsafe impl Send for InstanceFnV1_1 {}
 unsafe impl Sync for InstanceFnV1_1 {}
 impl InstanceFnV1_1 {
     pub fn load<F>(mut _f: F) -> Self
     where
-        F: FnMut(&::core::ffi::CStr) -> *const c_void,
+        F: FnMut(&CStr) -> *const c_void,
     {
         Self {
             enumerate_physical_device_groups: unsafe {
@@ -3736,9 +3610,8 @@ impl InstanceFnV1_1 {
                         stringify!(enumerate_physical_device_groups)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkEnumeratePhysicalDeviceGroups\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkEnumeratePhysicalDeviceGroups\0");
                 let val = _f(cname);
                 if val.is_null() {
                     enumerate_physical_device_groups
@@ -3756,9 +3629,7 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_features2)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceFeatures2\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceFeatures2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_physical_device_features2
@@ -3776,9 +3647,8 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_properties2)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceProperties2\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceProperties2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_physical_device_properties2
@@ -3797,9 +3667,8 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_format_properties2)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceFormatProperties2\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceFormatProperties2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_physical_device_format_properties2
@@ -3818,7 +3687,7 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_image_format_properties2)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
+                let cname = CStr::from_bytes_with_nul_unchecked(
                     b"vkGetPhysicalDeviceImageFormatProperties2\0",
                 );
                 let val = _f(cname);
@@ -3839,7 +3708,7 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_queue_family_properties2)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
+                let cname = CStr::from_bytes_with_nul_unchecked(
                     b"vkGetPhysicalDeviceQueueFamilyProperties2\0",
                 );
                 let val = _f(cname);
@@ -3859,9 +3728,8 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_memory_properties2)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceMemoryProperties2\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceMemoryProperties2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_physical_device_memory_properties2
@@ -3881,7 +3749,7 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_sparse_image_format_properties2)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
+                let cname = CStr::from_bytes_with_nul_unchecked(
                     b"vkGetPhysicalDeviceSparseImageFormatProperties2\0",
                 );
                 let val = _f(cname);
@@ -3902,7 +3770,7 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_external_buffer_properties)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
+                let cname = CStr::from_bytes_with_nul_unchecked(
                     b"vkGetPhysicalDeviceExternalBufferProperties\0",
                 );
                 let val = _f(cname);
@@ -3923,7 +3791,7 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_external_fence_properties)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
+                let cname = CStr::from_bytes_with_nul_unchecked(
                     b"vkGetPhysicalDeviceExternalFenceProperties\0",
                 );
                 let val = _f(cname);
@@ -3944,7 +3812,7 @@ impl InstanceFnV1_1 {
                         stringify!(get_physical_device_external_semaphore_properties)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
+                let cname = CStr::from_bytes_with_nul_unchecked(
                     b"vkGetPhysicalDeviceExternalSemaphoreProperties\0",
                 );
                 let val = _f(cname);
@@ -3965,29 +3833,39 @@ pub type PFN_vkGetDeviceQueue2 = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct DeviceFnV1_1 {
-    pub bind_buffer_memory2: crate::vk::PFN_vkBindBufferMemory2,
-    pub bind_image_memory2: crate::vk::PFN_vkBindImageMemory2,
-    pub get_device_group_peer_memory_features: crate::vk::PFN_vkGetDeviceGroupPeerMemoryFeatures,
-    pub cmd_set_device_mask: crate::vk::PFN_vkCmdSetDeviceMask,
-    pub cmd_dispatch_base: crate::vk::PFN_vkCmdDispatchBase,
-    pub get_image_memory_requirements2: crate::vk::PFN_vkGetImageMemoryRequirements2,
-    pub get_buffer_memory_requirements2: crate::vk::PFN_vkGetBufferMemoryRequirements2,
-    pub get_image_sparse_memory_requirements2: crate::vk::PFN_vkGetImageSparseMemoryRequirements2,
-    pub trim_command_pool: crate::vk::PFN_vkTrimCommandPool,
+    pub bind_buffer_memory2: crate::vk::khr::bind_memory2::PFN_vkBindBufferMemory2,
+    pub bind_image_memory2: crate::vk::khr::bind_memory2::PFN_vkBindImageMemory2,
+    pub get_device_group_peer_memory_features:
+        crate::vk::khr::device_group::PFN_vkGetDeviceGroupPeerMemoryFeatures,
+    pub cmd_set_device_mask: crate::vk::khr::device_group::PFN_vkCmdSetDeviceMask,
+    pub cmd_dispatch_base: crate::vk::khr::device_group::PFN_vkCmdDispatchBase,
+    pub get_image_memory_requirements2:
+        crate::vk::khr::get_memory_requirements2::PFN_vkGetImageMemoryRequirements2,
+    pub get_buffer_memory_requirements2:
+        crate::vk::khr::get_memory_requirements2::PFN_vkGetBufferMemoryRequirements2,
+    pub get_image_sparse_memory_requirements2:
+        crate::vk::khr::get_memory_requirements2::PFN_vkGetImageSparseMemoryRequirements2,
+    pub trim_command_pool: crate::vk::khr::maintenance1::PFN_vkTrimCommandPool,
     pub get_device_queue2: PFN_vkGetDeviceQueue2,
-    pub create_sampler_ycbcr_conversion: crate::vk::PFN_vkCreateSamplerYcbcrConversion,
-    pub destroy_sampler_ycbcr_conversion: crate::vk::PFN_vkDestroySamplerYcbcrConversion,
-    pub create_descriptor_update_template: crate::vk::PFN_vkCreateDescriptorUpdateTemplate,
-    pub destroy_descriptor_update_template: crate::vk::PFN_vkDestroyDescriptorUpdateTemplate,
-    pub update_descriptor_set_with_template: crate::vk::PFN_vkUpdateDescriptorSetWithTemplate,
-    pub get_descriptor_set_layout_support: crate::vk::PFN_vkGetDescriptorSetLayoutSupport,
+    pub create_sampler_ycbcr_conversion:
+        crate::vk::khr::sampler_ycbcr_conversion::PFN_vkCreateSamplerYcbcrConversion,
+    pub destroy_sampler_ycbcr_conversion:
+        crate::vk::khr::sampler_ycbcr_conversion::PFN_vkDestroySamplerYcbcrConversion,
+    pub create_descriptor_update_template:
+        crate::vk::khr::descriptor_update_template::PFN_vkCreateDescriptorUpdateTemplate,
+    pub destroy_descriptor_update_template:
+        crate::vk::khr::descriptor_update_template::PFN_vkDestroyDescriptorUpdateTemplate,
+    pub update_descriptor_set_with_template:
+        crate::vk::khr::descriptor_update_template::PFN_vkUpdateDescriptorSetWithTemplate,
+    pub get_descriptor_set_layout_support:
+        crate::vk::khr::maintenance3::PFN_vkGetDescriptorSetLayoutSupport,
 }
 unsafe impl Send for DeviceFnV1_1 {}
 unsafe impl Sync for DeviceFnV1_1 {}
 impl DeviceFnV1_1 {
     pub fn load<F>(mut _f: F) -> Self
     where
-        F: FnMut(&::core::ffi::CStr) -> *const c_void,
+        F: FnMut(&CStr) -> *const c_void,
     {
         Self {
             bind_buffer_memory2: unsafe {
@@ -3998,8 +3876,7 @@ impl DeviceFnV1_1 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(bind_buffer_memory2)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkBindBufferMemory2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkBindBufferMemory2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     bind_buffer_memory2
@@ -4015,8 +3892,7 @@ impl DeviceFnV1_1 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(bind_image_memory2)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkBindImageMemory2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkBindImageMemory2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     bind_image_memory2
@@ -4037,9 +3913,8 @@ impl DeviceFnV1_1 {
                         stringify!(get_device_group_peer_memory_features)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetDeviceGroupPeerMemoryFeatures\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceGroupPeerMemoryFeatures\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_device_group_peer_memory_features
@@ -4054,8 +3929,7 @@ impl DeviceFnV1_1 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_device_mask)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDeviceMask\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDeviceMask\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_device_mask
@@ -4075,8 +3949,7 @@ impl DeviceFnV1_1 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_dispatch_base)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchBase\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchBase\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_dispatch_base
@@ -4095,9 +3968,7 @@ impl DeviceFnV1_1 {
                         stringify!(get_image_memory_requirements2)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetImageMemoryRequirements2\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetImageMemoryRequirements2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_image_memory_requirements2
@@ -4116,9 +3987,8 @@ impl DeviceFnV1_1 {
                         stringify!(get_buffer_memory_requirements2)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetBufferMemoryRequirements2\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetBufferMemoryRequirements2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_buffer_memory_requirements2
@@ -4138,9 +4008,8 @@ impl DeviceFnV1_1 {
                         stringify!(get_image_sparse_memory_requirements2)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetImageSparseMemoryRequirements2\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetImageSparseMemoryRequirements2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_image_sparse_memory_requirements2
@@ -4156,8 +4025,7 @@ impl DeviceFnV1_1 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(trim_command_pool)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkTrimCommandPool\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkTrimCommandPool\0");
                 let val = _f(cname);
                 if val.is_null() {
                     trim_command_pool
@@ -4173,8 +4041,7 @@ impl DeviceFnV1_1 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(get_device_queue2)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceQueue2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceQueue2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_device_queue2
@@ -4194,9 +4061,8 @@ impl DeviceFnV1_1 {
                         stringify!(create_sampler_ycbcr_conversion)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCreateSamplerYcbcrConversion\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkCreateSamplerYcbcrConversion\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_sampler_ycbcr_conversion
@@ -4215,9 +4081,8 @@ impl DeviceFnV1_1 {
                         stringify!(destroy_sampler_ycbcr_conversion)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkDestroySamplerYcbcrConversion\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkDestroySamplerYcbcrConversion\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_sampler_ycbcr_conversion
@@ -4237,9 +4102,8 @@ impl DeviceFnV1_1 {
                         stringify!(create_descriptor_update_template)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCreateDescriptorUpdateTemplate\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkCreateDescriptorUpdateTemplate\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_descriptor_update_template
@@ -4258,9 +4122,8 @@ impl DeviceFnV1_1 {
                         stringify!(destroy_descriptor_update_template)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkDestroyDescriptorUpdateTemplate\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkDestroyDescriptorUpdateTemplate\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_descriptor_update_template
@@ -4280,9 +4143,8 @@ impl DeviceFnV1_1 {
                         stringify!(update_descriptor_set_with_template)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkUpdateDescriptorSetWithTemplate\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkUpdateDescriptorSetWithTemplate\0");
                 let val = _f(cname);
                 if val.is_null() {
                     update_descriptor_set_with_template
@@ -4301,9 +4163,8 @@ impl DeviceFnV1_1 {
                         stringify!(get_descriptor_set_layout_support)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetDescriptorSetLayoutSupport\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetDescriptorSetLayoutSupport\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_descriptor_set_layout_support
@@ -4320,27 +4181,31 @@ pub struct EntryFnV1_2;
 pub struct InstanceFnV1_2;
 #[derive(Clone)]
 pub struct DeviceFnV1_2 {
-    pub cmd_draw_indirect_count: crate::vk::PFN_vkCmdDrawIndirectCount,
-    pub cmd_draw_indexed_indirect_count: crate::vk::PFN_vkCmdDrawIndexedIndirectCount,
-    pub create_render_pass2: crate::vk::PFN_vkCreateRenderPass2,
-    pub cmd_begin_render_pass2: crate::vk::PFN_vkCmdBeginRenderPass2,
-    pub cmd_next_subpass2: crate::vk::PFN_vkCmdNextSubpass2,
-    pub cmd_end_render_pass2: crate::vk::PFN_vkCmdEndRenderPass2,
-    pub reset_query_pool: crate::vk::PFN_vkResetQueryPool,
-    pub get_semaphore_counter_value: crate::vk::PFN_vkGetSemaphoreCounterValue,
-    pub wait_semaphores: crate::vk::PFN_vkWaitSemaphores,
-    pub signal_semaphore: crate::vk::PFN_vkSignalSemaphore,
-    pub get_buffer_device_address: crate::vk::PFN_vkGetBufferDeviceAddress,
-    pub get_buffer_opaque_capture_address: crate::vk::PFN_vkGetBufferOpaqueCaptureAddress,
+    pub cmd_draw_indirect_count: crate::vk::amd::draw_indirect_count::PFN_vkCmdDrawIndirectCount,
+    pub cmd_draw_indexed_indirect_count:
+        crate::vk::amd::draw_indirect_count::PFN_vkCmdDrawIndexedIndirectCount,
+    pub create_render_pass2: crate::vk::khr::create_renderpass2::PFN_vkCreateRenderPass2,
+    pub cmd_begin_render_pass2: crate::vk::khr::create_renderpass2::PFN_vkCmdBeginRenderPass2,
+    pub cmd_next_subpass2: crate::vk::khr::create_renderpass2::PFN_vkCmdNextSubpass2,
+    pub cmd_end_render_pass2: crate::vk::khr::create_renderpass2::PFN_vkCmdEndRenderPass2,
+    pub reset_query_pool: crate::vk::ext::host_query_reset::PFN_vkResetQueryPool,
+    pub get_semaphore_counter_value:
+        crate::vk::khr::timeline_semaphore::PFN_vkGetSemaphoreCounterValue,
+    pub wait_semaphores: crate::vk::khr::timeline_semaphore::PFN_vkWaitSemaphores,
+    pub signal_semaphore: crate::vk::khr::timeline_semaphore::PFN_vkSignalSemaphore,
+    pub get_buffer_device_address:
+        crate::vk::ext::buffer_device_address::PFN_vkGetBufferDeviceAddress,
+    pub get_buffer_opaque_capture_address:
+        crate::vk::khr::buffer_device_address::PFN_vkGetBufferOpaqueCaptureAddress,
     pub get_device_memory_opaque_capture_address:
-        crate::vk::PFN_vkGetDeviceMemoryOpaqueCaptureAddress,
+        crate::vk::khr::buffer_device_address::PFN_vkGetDeviceMemoryOpaqueCaptureAddress,
 }
 unsafe impl Send for DeviceFnV1_2 {}
 unsafe impl Sync for DeviceFnV1_2 {}
 impl DeviceFnV1_2 {
     pub fn load<F>(mut _f: F) -> Self
     where
-        F: FnMut(&::core::ffi::CStr) -> *const c_void,
+        F: FnMut(&CStr) -> *const c_void,
     {
         Self {
             cmd_draw_indirect_count: unsafe {
@@ -4358,8 +4223,7 @@ impl DeviceFnV1_2 {
                         stringify!(cmd_draw_indirect_count)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndirectCount\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndirectCount\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_draw_indirect_count
@@ -4382,9 +4246,7 @@ impl DeviceFnV1_2 {
                         stringify!(cmd_draw_indexed_indirect_count)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCmdDrawIndexedIndirectCount\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndexedIndirectCount\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_draw_indexed_indirect_count
@@ -4401,8 +4263,7 @@ impl DeviceFnV1_2 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_render_pass2)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateRenderPass2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateRenderPass2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_render_pass2
@@ -4421,8 +4282,7 @@ impl DeviceFnV1_2 {
                         stringify!(cmd_begin_render_pass2)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginRenderPass2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginRenderPass2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_begin_render_pass2
@@ -4438,8 +4298,7 @@ impl DeviceFnV1_2 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_next_subpass2)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdNextSubpass2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdNextSubpass2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_next_subpass2
@@ -4454,8 +4313,7 @@ impl DeviceFnV1_2 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_end_render_pass2)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRenderPass2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRenderPass2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_end_render_pass2
@@ -4472,7 +4330,7 @@ impl DeviceFnV1_2 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(reset_query_pool)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkResetQueryPool\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetQueryPool\0");
                 let val = _f(cname);
                 if val.is_null() {
                     reset_query_pool
@@ -4491,9 +4349,7 @@ impl DeviceFnV1_2 {
                         stringify!(get_semaphore_counter_value)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetSemaphoreCounterValue\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetSemaphoreCounterValue\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_semaphore_counter_value
@@ -4509,7 +4365,7 @@ impl DeviceFnV1_2 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(wait_semaphores)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkWaitSemaphores\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkWaitSemaphores\0");
                 let val = _f(cname);
                 if val.is_null() {
                     wait_semaphores
@@ -4524,8 +4380,7 @@ impl DeviceFnV1_2 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(signal_semaphore)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkSignalSemaphore\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkSignalSemaphore\0");
                 let val = _f(cname);
                 if val.is_null() {
                     signal_semaphore
@@ -4543,8 +4398,7 @@ impl DeviceFnV1_2 {
                         stringify!(get_buffer_device_address)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetBufferDeviceAddress\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetBufferDeviceAddress\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_buffer_device_address
@@ -4562,9 +4416,8 @@ impl DeviceFnV1_2 {
                         stringify!(get_buffer_opaque_capture_address)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetBufferOpaqueCaptureAddress\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetBufferOpaqueCaptureAddress\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_buffer_opaque_capture_address
@@ -4582,9 +4435,8 @@ impl DeviceFnV1_2 {
                         stringify!(get_device_memory_opaque_capture_address)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetDeviceMemoryOpaqueCaptureAddress\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceMemoryOpaqueCaptureAddress\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_device_memory_opaque_capture_address
@@ -4599,14 +4451,15 @@ impl DeviceFnV1_2 {
 pub struct EntryFnV1_3;
 #[derive(Clone)]
 pub struct InstanceFnV1_3 {
-    pub get_physical_device_tool_properties: crate::vk::PFN_vkGetPhysicalDeviceToolProperties,
+    pub get_physical_device_tool_properties:
+        crate::vk::ext::tooling_info::PFN_vkGetPhysicalDeviceToolProperties,
 }
 unsafe impl Send for InstanceFnV1_3 {}
 unsafe impl Sync for InstanceFnV1_3 {}
 impl InstanceFnV1_3 {
     pub fn load<F>(mut _f: F) -> Self
     where
-        F: FnMut(&::core::ffi::CStr) -> *const c_void,
+        F: FnMut(&CStr) -> *const c_void,
     {
         Self {
             get_physical_device_tool_properties: unsafe {
@@ -4620,9 +4473,8 @@ impl InstanceFnV1_3 {
                         stringify!(get_physical_device_tool_properties)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetPhysicalDeviceToolProperties\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetPhysicalDeviceToolProperties\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_physical_device_tool_properties
@@ -4635,50 +4487,64 @@ impl InstanceFnV1_3 {
 }
 #[derive(Clone)]
 pub struct DeviceFnV1_3 {
-    pub create_private_data_slot: crate::vk::PFN_vkCreatePrivateDataSlot,
-    pub destroy_private_data_slot: crate::vk::PFN_vkDestroyPrivateDataSlot,
-    pub set_private_data: crate::vk::PFN_vkSetPrivateData,
-    pub get_private_data: crate::vk::PFN_vkGetPrivateData,
-    pub cmd_set_event2: crate::vk::PFN_vkCmdSetEvent2,
-    pub cmd_reset_event2: crate::vk::PFN_vkCmdResetEvent2,
-    pub cmd_wait_events2: crate::vk::PFN_vkCmdWaitEvents2,
-    pub cmd_pipeline_barrier2: crate::vk::PFN_vkCmdPipelineBarrier2,
-    pub cmd_write_timestamp2: crate::vk::PFN_vkCmdWriteTimestamp2,
-    pub queue_submit2: crate::vk::PFN_vkQueueSubmit2,
-    pub cmd_copy_buffer2: crate::vk::PFN_vkCmdCopyBuffer2,
-    pub cmd_copy_image2: crate::vk::PFN_vkCmdCopyImage2,
-    pub cmd_copy_buffer_to_image2: crate::vk::PFN_vkCmdCopyBufferToImage2,
-    pub cmd_copy_image_to_buffer2: crate::vk::PFN_vkCmdCopyImageToBuffer2,
-    pub cmd_blit_image2: crate::vk::PFN_vkCmdBlitImage2,
-    pub cmd_resolve_image2: crate::vk::PFN_vkCmdResolveImage2,
-    pub cmd_begin_rendering: crate::vk::PFN_vkCmdBeginRendering,
-    pub cmd_end_rendering: crate::vk::PFN_vkCmdEndRendering,
-    pub cmd_set_cull_mode: crate::vk::PFN_vkCmdSetCullMode,
-    pub cmd_set_front_face: crate::vk::PFN_vkCmdSetFrontFace,
-    pub cmd_set_primitive_topology: crate::vk::PFN_vkCmdSetPrimitiveTopology,
-    pub cmd_set_viewport_with_count: crate::vk::PFN_vkCmdSetViewportWithCount,
-    pub cmd_set_scissor_with_count: crate::vk::PFN_vkCmdSetScissorWithCount,
-    pub cmd_bind_vertex_buffers2: crate::vk::PFN_vkCmdBindVertexBuffers2,
-    pub cmd_set_depth_test_enable: crate::vk::PFN_vkCmdSetDepthTestEnable,
-    pub cmd_set_depth_write_enable: crate::vk::PFN_vkCmdSetDepthWriteEnable,
-    pub cmd_set_depth_compare_op: crate::vk::PFN_vkCmdSetDepthCompareOp,
-    pub cmd_set_depth_bounds_test_enable: crate::vk::PFN_vkCmdSetDepthBoundsTestEnable,
-    pub cmd_set_stencil_test_enable: crate::vk::PFN_vkCmdSetStencilTestEnable,
-    pub cmd_set_stencil_op: crate::vk::PFN_vkCmdSetStencilOp,
-    pub cmd_set_rasterizer_discard_enable: crate::vk::PFN_vkCmdSetRasterizerDiscardEnable,
-    pub cmd_set_depth_bias_enable: crate::vk::PFN_vkCmdSetDepthBiasEnable,
-    pub cmd_set_primitive_restart_enable: crate::vk::PFN_vkCmdSetPrimitiveRestartEnable,
-    pub get_device_buffer_memory_requirements: crate::vk::PFN_vkGetDeviceBufferMemoryRequirements,
-    pub get_device_image_memory_requirements: crate::vk::PFN_vkGetDeviceImageMemoryRequirements,
+    pub create_private_data_slot: crate::vk::ext::private_data::PFN_vkCreatePrivateDataSlot,
+    pub destroy_private_data_slot: crate::vk::ext::private_data::PFN_vkDestroyPrivateDataSlot,
+    pub set_private_data: crate::vk::ext::private_data::PFN_vkSetPrivateData,
+    pub get_private_data: crate::vk::ext::private_data::PFN_vkGetPrivateData,
+    pub cmd_set_event2: crate::vk::khr::synchronization2::PFN_vkCmdSetEvent2,
+    pub cmd_reset_event2: crate::vk::khr::synchronization2::PFN_vkCmdResetEvent2,
+    pub cmd_wait_events2: crate::vk::khr::synchronization2::PFN_vkCmdWaitEvents2,
+    pub cmd_pipeline_barrier2: crate::vk::khr::synchronization2::PFN_vkCmdPipelineBarrier2,
+    pub cmd_write_timestamp2: crate::vk::khr::synchronization2::PFN_vkCmdWriteTimestamp2,
+    pub queue_submit2: crate::vk::khr::synchronization2::PFN_vkQueueSubmit2,
+    pub cmd_copy_buffer2: crate::vk::khr::copy_commands2::PFN_vkCmdCopyBuffer2,
+    pub cmd_copy_image2: crate::vk::khr::copy_commands2::PFN_vkCmdCopyImage2,
+    pub cmd_copy_buffer_to_image2: crate::vk::khr::copy_commands2::PFN_vkCmdCopyBufferToImage2,
+    pub cmd_copy_image_to_buffer2: crate::vk::khr::copy_commands2::PFN_vkCmdCopyImageToBuffer2,
+    pub cmd_blit_image2: crate::vk::khr::copy_commands2::PFN_vkCmdBlitImage2,
+    pub cmd_resolve_image2: crate::vk::khr::copy_commands2::PFN_vkCmdResolveImage2,
+    pub cmd_begin_rendering: crate::vk::khr::dynamic_rendering::PFN_vkCmdBeginRendering,
+    pub cmd_end_rendering: crate::vk::khr::dynamic_rendering::PFN_vkCmdEndRendering,
+    pub cmd_set_cull_mode: crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetCullMode,
+    pub cmd_set_front_face: crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetFrontFace,
+    pub cmd_set_primitive_topology:
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetPrimitiveTopology,
+    pub cmd_set_viewport_with_count:
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetViewportWithCount,
+    pub cmd_set_scissor_with_count:
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetScissorWithCount,
+    pub cmd_bind_vertex_buffers2:
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdBindVertexBuffers2,
+    pub cmd_set_depth_test_enable:
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetDepthTestEnable,
+    pub cmd_set_depth_write_enable:
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetDepthWriteEnable,
+    pub cmd_set_depth_compare_op:
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetDepthCompareOp,
+    pub cmd_set_depth_bounds_test_enable:
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetDepthBoundsTestEnable,
+    pub cmd_set_stencil_test_enable:
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetStencilTestEnable,
+    pub cmd_set_stencil_op: crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetStencilOp,
+    pub cmd_set_rasterizer_discard_enable:
+        crate::vk::ext::extended_dynamic_state2::PFN_vkCmdSetRasterizerDiscardEnable,
+    pub cmd_set_depth_bias_enable:
+        crate::vk::ext::extended_dynamic_state2::PFN_vkCmdSetDepthBiasEnable,
+    pub cmd_set_primitive_restart_enable:
+        crate::vk::ext::extended_dynamic_state2::PFN_vkCmdSetPrimitiveRestartEnable,
+    pub get_device_buffer_memory_requirements:
+        crate::vk::khr::maintenance4::PFN_vkGetDeviceBufferMemoryRequirements,
+    pub get_device_image_memory_requirements:
+        crate::vk::khr::maintenance4::PFN_vkGetDeviceImageMemoryRequirements,
     pub get_device_image_sparse_memory_requirements:
-        crate::vk::PFN_vkGetDeviceImageSparseMemoryRequirements,
+        crate::vk::khr::maintenance4::PFN_vkGetDeviceImageSparseMemoryRequirements,
 }
 unsafe impl Send for DeviceFnV1_3 {}
 unsafe impl Sync for DeviceFnV1_3 {}
 impl DeviceFnV1_3 {
     pub fn load<F>(mut _f: F) -> Self
     where
-        F: FnMut(&::core::ffi::CStr) -> *const c_void,
+        F: FnMut(&CStr) -> *const c_void,
     {
         Self {
             create_private_data_slot: unsafe {
@@ -4693,8 +4559,7 @@ impl DeviceFnV1_3 {
                         stringify!(create_private_data_slot)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreatePrivateDataSlot\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreatePrivateDataSlot\0");
                 let val = _f(cname);
                 if val.is_null() {
                     create_private_data_slot
@@ -4713,8 +4578,7 @@ impl DeviceFnV1_3 {
                         stringify!(destroy_private_data_slot)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyPrivateDataSlot\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyPrivateDataSlot\0");
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_private_data_slot
@@ -4732,7 +4596,7 @@ impl DeviceFnV1_3 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(set_private_data)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkSetPrivateData\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkSetPrivateData\0");
                 let val = _f(cname);
                 if val.is_null() {
                     set_private_data
@@ -4750,7 +4614,7 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(get_private_data)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetPrivateData\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetPrivateData\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_private_data
@@ -4766,7 +4630,7 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_event2)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetEvent2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetEvent2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_event2
@@ -4782,7 +4646,7 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_reset_event2)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdResetEvent2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResetEvent2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_reset_event2
@@ -4799,7 +4663,7 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_wait_events2)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdWaitEvents2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdWaitEvents2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_wait_events2
@@ -4817,8 +4681,7 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_pipeline_barrier2)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdPipelineBarrier2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPipelineBarrier2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_pipeline_barrier2
@@ -4835,8 +4698,7 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_write_timestamp2)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdWriteTimestamp2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdWriteTimestamp2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_write_timestamp2
@@ -4853,7 +4715,7 @@ impl DeviceFnV1_3 {
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(queue_submit2)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkQueueSubmit2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkQueueSubmit2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     queue_submit2
@@ -4868,7 +4730,7 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_buffer2)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBuffer2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBuffer2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_copy_buffer2
@@ -4883,7 +4745,7 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_image2)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImage2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImage2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_copy_image2
@@ -4901,8 +4763,7 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_copy_buffer_to_image2)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBufferToImage2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBufferToImage2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_copy_buffer_to_image2
@@ -4920,8 +4781,7 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_copy_image_to_buffer2)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImageToBuffer2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImageToBuffer2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_copy_image_to_buffer2
@@ -4936,7 +4796,7 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_blit_image2)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBlitImage2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBlitImage2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_blit_image2
@@ -4951,8 +4811,7 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_resolve_image2)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdResolveImage2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResolveImage2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_resolve_image2
@@ -4967,8 +4826,7 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_begin_rendering)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginRendering\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginRendering\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_begin_rendering
@@ -4980,8 +4838,7 @@ impl DeviceFnV1_3 {
                 unsafe extern "system" fn cmd_end_rendering(_command_buffer: CommandBuffer) {
                     panic!(concat!("Unable to load ", stringify!(cmd_end_rendering)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRendering\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRendering\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_end_rendering
@@ -4996,7 +4853,7 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_cull_mode)))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetCullMode\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetCullMode\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_cull_mode
@@ -5011,8 +4868,7 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_front_face)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetFrontFace\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetFrontFace\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_front_face
@@ -5030,9 +4886,7 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_primitive_topology)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCmdSetPrimitiveTopology\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetPrimitiveTopology\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_primitive_topology
@@ -5051,9 +4905,7 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_viewport_with_count)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCmdSetViewportWithCount\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetViewportWithCount\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_viewport_with_count
@@ -5072,8 +4924,7 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_scissor_with_count)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetScissorWithCount\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetScissorWithCount\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_scissor_with_count
@@ -5096,8 +4947,7 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_bind_vertex_buffers2)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBindVertexBuffers2\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindVertexBuffers2\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_bind_vertex_buffers2
@@ -5115,8 +4965,7 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_depth_test_enable)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthTestEnable\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthTestEnable\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_depth_test_enable
@@ -5134,8 +4983,7 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_depth_write_enable)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthWriteEnable\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthWriteEnable\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_depth_write_enable
@@ -5153,8 +5001,7 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_depth_compare_op)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthCompareOp\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthCompareOp\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_depth_compare_op
@@ -5172,9 +5019,7 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_depth_bounds_test_enable)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCmdSetDepthBoundsTestEnable\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBoundsTestEnable\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_depth_bounds_test_enable
@@ -5192,9 +5037,7 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_stencil_test_enable)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCmdSetStencilTestEnable\0",
-                );
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilTestEnable\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_stencil_test_enable
@@ -5213,8 +5056,7 @@ impl DeviceFnV1_3 {
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_stencil_op)))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilOp\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilOp\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_stencil_op
@@ -5232,9 +5074,8 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_rasterizer_discard_enable)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCmdSetRasterizerDiscardEnable\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkCmdSetRasterizerDiscardEnable\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_rasterizer_discard_enable
@@ -5252,8 +5093,7 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_depth_bias_enable)
                     ))
                 }
-                let cname =
-                    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBiasEnable\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBiasEnable\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_depth_bias_enable
@@ -5271,9 +5111,8 @@ impl DeviceFnV1_3 {
                         stringify!(cmd_set_primitive_restart_enable)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCmdSetPrimitiveRestartEnable\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkCmdSetPrimitiveRestartEnable\0");
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_primitive_restart_enable
@@ -5292,9 +5131,8 @@ impl DeviceFnV1_3 {
                         stringify!(get_device_buffer_memory_requirements)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetDeviceBufferMemoryRequirements\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceBufferMemoryRequirements\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_device_buffer_memory_requirements
@@ -5313,9 +5151,8 @@ impl DeviceFnV1_3 {
                         stringify!(get_device_image_memory_requirements)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetDeviceImageMemoryRequirements\0",
-                );
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceImageMemoryRequirements\0");
                 let val = _f(cname);
                 if val.is_null() {
                     get_device_image_memory_requirements
@@ -5335,7 +5172,7 @@ impl DeviceFnV1_3 {
                         stringify!(get_device_image_sparse_memory_requirements)
                     ))
                 }
-                let cname = ::core::ffi::CStr::from_bytes_with_nul_unchecked(
+                let cname = CStr::from_bytes_with_nul_unchecked(
                     b"vkGetDeviceImageSparseMemoryRequirements\0",
                 );
                 let val = _f(cname);

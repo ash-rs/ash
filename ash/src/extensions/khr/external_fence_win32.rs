@@ -1,26 +1,28 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_fence_win32.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_fence_win32.html>
+pub const NAME: &ffi::CStr = vk::khr::external_fence_win32::NAME;
+
 #[derive(Clone)]
-pub struct ExternalFenceWin32 {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrExternalFenceWin32Fn,
+    fp: vk::khr::external_fence_win32::DeviceFn,
 }
 
-impl ExternalFenceWin32 {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrExternalFenceWin32Fn::load(|name| unsafe {
+        let fp = vk::khr::external_fence_win32::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkImportFenceWin32HandleKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportFenceWin32HandleKHR.html>
     #[inline]
     pub unsafe fn import_fence_win32_handle(
         &self,
@@ -29,7 +31,7 @@ impl ExternalFenceWin32 {
         (self.fp.import_fence_win32_handle_khr)(self.handle, import_info).result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetFenceWin32HandleKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetFenceWin32HandleKHR.html>
     #[inline]
     pub unsafe fn get_fence_win32_handle(
         &self,
@@ -40,10 +42,8 @@ impl ExternalFenceWin32 {
             .assume_init_on_success(handle)
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrExternalFenceWin32Fn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrExternalFenceWin32Fn {
+    pub fn fp(&self) -> &vk::khr::external_fence_win32::DeviceFn {
         &self.fp
     }
 

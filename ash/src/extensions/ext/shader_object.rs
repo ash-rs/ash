@@ -1,29 +1,31 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_shader_object.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use alloc::vec::Vec;
 use core::ffi;
 use core::mem;
 use core::ptr;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_shader_object.html>
+pub const NAME: &ffi::CStr = vk::ext::shader_object::NAME;
+
 #[derive(Clone)]
-pub struct ShaderObject {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::ExtShaderObjectFn,
+    fp: vk::ext::shader_object::DeviceFn,
 }
 
-impl ShaderObject {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtShaderObjectFn::load(|name| unsafe {
+        let fp = vk::ext::shader_object::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateShadersEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateShadersEXT.html>
     #[inline]
     pub unsafe fn create_shaders(
         &self,
@@ -41,7 +43,7 @@ impl ShaderObject {
         .set_vec_len_on_success(shaders, create_infos.len())
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyShaderEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyShaderEXT.html>
     #[inline]
     pub unsafe fn destroy_shader(
         &self,
@@ -51,7 +53,7 @@ impl ShaderObject {
         (self.fp.destroy_shader_ext)(self.handle, shader, allocator.as_raw_ptr())
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetShaderBinaryDataEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetShaderBinaryDataEXT.html>
     #[inline]
     pub unsafe fn get_shader_binary_data(&self, shader: vk::ShaderEXT) -> VkResult<Vec<u8>> {
         read_into_uninitialized_vector(|count, data: *mut u8| {
@@ -59,7 +61,7 @@ impl ShaderObject {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindShadersEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindShadersEXT.html>
     #[inline]
     pub unsafe fn cmd_bind_shaders(
         &self,
@@ -76,7 +78,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetVertexInputEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetVertexInputEXT.html>
     #[inline]
     pub unsafe fn cmd_set_vertex_input(
         &self,
@@ -95,7 +97,7 @@ impl ShaderObject {
 
     // --- extended_dynamic_state functions ---
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetCullModeEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCullModeEXT.html>
     #[inline]
     pub unsafe fn cmd_set_cull_mode(
         &self,
@@ -105,7 +107,7 @@ impl ShaderObject {
         (self.fp.cmd_set_cull_mode_ext)(command_buffer, cull_mode)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetFrontFaceEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetFrontFaceEXT.html>
     #[inline]
     pub unsafe fn cmd_set_front_face(
         &self,
@@ -115,7 +117,7 @@ impl ShaderObject {
         (self.fp.cmd_set_front_face_ext)(command_buffer, front_face)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveTopologyEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveTopologyEXT.html>
     #[inline]
     pub unsafe fn cmd_set_primitive_topology(
         &self,
@@ -125,7 +127,7 @@ impl ShaderObject {
         (self.fp.cmd_set_primitive_topology_ext)(command_buffer, primitive_topology)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportWithCountEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportWithCountEXT.html>
     #[inline]
     pub unsafe fn cmd_set_viewport_with_count(
         &self,
@@ -139,7 +141,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetScissorWithCountEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetScissorWithCountEXT.html>
     #[inline]
     pub unsafe fn cmd_set_scissor_with_count(
         &self,
@@ -153,7 +155,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindVertexBuffers2EXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindVertexBuffers2EXT.html>
     #[inline]
     pub unsafe fn cmd_bind_vertex_buffers2(
         &self,
@@ -188,7 +190,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthTestEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthTestEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_test_enable(
         &self,
@@ -198,7 +200,7 @@ impl ShaderObject {
         (self.fp.cmd_set_depth_test_enable_ext)(command_buffer, depth_test_enable.into())
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthWriteEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthWriteEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_write_enable(
         &self,
@@ -208,7 +210,7 @@ impl ShaderObject {
         (self.fp.cmd_set_depth_write_enable_ext)(command_buffer, depth_write_enable.into())
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthCompareOpEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthCompareOpEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_compare_op(
         &self,
@@ -218,7 +220,7 @@ impl ShaderObject {
         (self.fp.cmd_set_depth_compare_op_ext)(command_buffer, depth_compare_op)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBoundsTestEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBoundsTestEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_bounds_test_enable(
         &self,
@@ -231,7 +233,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilTestEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilTestEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_stencil_test_enable(
         &self,
@@ -241,7 +243,7 @@ impl ShaderObject {
         (self.fp.cmd_set_stencil_test_enable_ext)(command_buffer, stencil_test_enable.into())
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilOpEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilOpEXT.html>
     #[inline]
     pub unsafe fn cmd_set_stencil_op(
         &self,
@@ -264,7 +266,7 @@ impl ShaderObject {
 
     // --- extended_dynamic_state2 functions ---
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPatchControlPointsEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPatchControlPointsEXT.html>
     #[inline]
     pub unsafe fn cmd_set_patch_control_points(
         &self,
@@ -274,7 +276,7 @@ impl ShaderObject {
         (self.fp.cmd_set_patch_control_points_ext)(command_buffer, patch_control_points)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizerDiscardEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizerDiscardEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_rasterizer_discard_enable(
         &self,
@@ -287,7 +289,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBiasEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBiasEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_bias_enable(
         &self,
@@ -297,7 +299,7 @@ impl ShaderObject {
         (self.fp.cmd_set_depth_bias_enable_ext)(command_buffer, depth_bias_enable.into())
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLogicOpEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLogicOpEXT.html>
     #[inline]
     pub unsafe fn cmd_set_logic_op(
         &self,
@@ -307,7 +309,7 @@ impl ShaderObject {
         (self.fp.cmd_set_logic_op_ext)(command_buffer, logic_op)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveRestartEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveRestartEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_primitive_restart_enable(
         &self,
@@ -322,7 +324,7 @@ impl ShaderObject {
 
     // --- extended_dynamic_state3 functions ---
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetTessellationDomainOriginEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetTessellationDomainOriginEXT.html>
     #[inline]
     pub unsafe fn cmd_set_tessellation_domain_origin(
         &self,
@@ -332,7 +334,7 @@ impl ShaderObject {
         (self.fp.cmd_set_tessellation_domain_origin_ext)(command_buffer, domain_origin)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClampEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClampEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_clamp_enable(
         &self,
@@ -342,7 +344,7 @@ impl ShaderObject {
         (self.fp.cmd_set_depth_clamp_enable_ext)(command_buffer, depth_clamp_enable.into())
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPolygonModeEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPolygonModeEXT.html>
     #[inline]
     pub unsafe fn cmd_set_polygon_mode(
         &self,
@@ -352,7 +354,7 @@ impl ShaderObject {
         (self.fp.cmd_set_polygon_mode_ext)(command_buffer, polygon_mode)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizationSamplesEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizationSamplesEXT.html>
     #[inline]
     pub unsafe fn cmd_set_rasterization_samples(
         &self,
@@ -362,7 +364,7 @@ impl ShaderObject {
         (self.fp.cmd_set_rasterization_samples_ext)(command_buffer, rasterization_samples)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleMaskEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleMaskEXT.html>
     #[inline]
     pub unsafe fn cmd_set_sample_mask(
         &self,
@@ -378,7 +380,7 @@ impl ShaderObject {
         (self.fp.cmd_set_sample_mask_ext)(command_buffer, samples, sample_mask.as_ptr())
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetAlphaToCoverageEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetAlphaToCoverageEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_alpha_to_coverage_enable(
         &self,
@@ -391,7 +393,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetAlphaToOneEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetAlphaToOneEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_alpha_to_one_enable(
         &self,
@@ -401,7 +403,7 @@ impl ShaderObject {
         (self.fp.cmd_set_alpha_to_one_enable_ext)(command_buffer, alpha_to_one_enable.into())
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLogicOpEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLogicOpEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_logic_op_enable(
         &self,
@@ -411,7 +413,7 @@ impl ShaderObject {
         (self.fp.cmd_set_logic_op_enable_ext)(command_buffer, logic_op_enable.into())
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorBlendEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorBlendEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_color_blend_enable(
         &self,
@@ -427,7 +429,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorBlendEquationEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorBlendEquationEXT.html>
     #[inline]
     pub unsafe fn cmd_set_color_blend_equation(
         &self,
@@ -443,7 +445,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorWriteMaskEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorWriteMaskEXT.html>
     #[inline]
     pub unsafe fn cmd_set_color_write_mask(
         &self,
@@ -459,7 +461,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizationStreamEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizationStreamEXT.html>
     #[inline]
     pub unsafe fn cmd_set_rasterization_stream(
         &self,
@@ -469,7 +471,7 @@ impl ShaderObject {
         (self.fp.cmd_set_rasterization_stream_ext)(command_buffer, rasterization_stream)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetConservativeRasterizationModeEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetConservativeRasterizationModeEXT.html>
     #[inline]
     pub unsafe fn cmd_set_conservative_rasterization_mode(
         &self,
@@ -482,7 +484,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetExtraPrimitiveOverestimationSizeEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetExtraPrimitiveOverestimationSizeEXT.html>
     #[inline]
     pub unsafe fn cmd_set_extra_primitive_overestimation_size(
         &self,
@@ -495,7 +497,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClipEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClipEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_clip_enable(
         &self,
@@ -505,7 +507,7 @@ impl ShaderObject {
         (self.fp.cmd_set_depth_clip_enable_ext)(command_buffer, depth_clip_enable.into())
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_sample_locations_enable(
         &self,
@@ -518,7 +520,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorBlendAdvancedEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorBlendAdvancedEXT.html>
     #[inline]
     pub unsafe fn cmd_set_color_blend_advanced(
         &self,
@@ -534,7 +536,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetProvokingVertexModeEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetProvokingVertexModeEXT.html>
     #[inline]
     pub unsafe fn cmd_set_provoking_vertex_mode(
         &self,
@@ -544,7 +546,7 @@ impl ShaderObject {
         (self.fp.cmd_set_provoking_vertex_mode_ext)(command_buffer, provoking_vertex_mode)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineRasterizationModeEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineRasterizationModeEXT.html>
     #[inline]
     pub unsafe fn cmd_set_line_rasterization_mode(
         &self,
@@ -554,7 +556,7 @@ impl ShaderObject {
         (self.fp.cmd_set_line_rasterization_mode_ext)(command_buffer, line_rasterization_mode)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_line_stipple_enable(
         &self,
@@ -564,7 +566,7 @@ impl ShaderObject {
         (self.fp.cmd_set_line_stipple_enable_ext)(command_buffer, stippled_line_enable.into())
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClipNegativeOneToOneEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClipNegativeOneToOneEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_clip_negative_one_to_one(
         &self,
@@ -577,7 +579,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportWScalingEnableNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportWScalingEnableNV.html>
     #[inline]
     pub unsafe fn cmd_set_viewport_w_scaling_enable_nv(
         &self,
@@ -590,7 +592,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportSwizzleNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportSwizzleNV.html>
     #[inline]
     pub unsafe fn cmd_set_viewport_swizzle_nv(
         &self,
@@ -606,7 +608,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageToColorEnableNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageToColorEnableNV.html>
     #[inline]
     pub unsafe fn cmd_set_coverage_to_color_enable_nv(
         &self,
@@ -619,7 +621,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageToColorLocationNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageToColorLocationNV.html>
     #[inline]
     pub unsafe fn cmd_set_coverage_to_color_location_nv(
         &self,
@@ -629,7 +631,7 @@ impl ShaderObject {
         (self.fp.cmd_set_coverage_to_color_location_nv)(command_buffer, coverage_to_color_location)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageModulationModeNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageModulationModeNV.html>
     #[inline]
     pub unsafe fn cmd_set_coverage_modulation_mode_nv(
         &self,
@@ -639,7 +641,7 @@ impl ShaderObject {
         (self.fp.cmd_set_coverage_modulation_mode_nv)(command_buffer, coverage_modulation_mode)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageModulationTableEnableNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageModulationTableEnableNV.html>
     #[inline]
     pub unsafe fn cmd_set_coverage_modulation_table_enable_nv(
         &self,
@@ -652,7 +654,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageModulationTableNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageModulationTableNV.html>
     #[inline]
     pub unsafe fn cmd_set_coverage_modulation_table_nv(
         &self,
@@ -666,7 +668,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetShadingRateImageEnableNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetShadingRateImageEnableNV.html>
     #[inline]
     pub unsafe fn cmd_set_shading_rate_image_enable_nv(
         &self,
@@ -679,7 +681,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRepresentativeFragmentTestEnableNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRepresentativeFragmentTestEnableNV.html>
     #[inline]
     pub unsafe fn cmd_set_representative_fragment_test_enable_nv(
         &self,
@@ -692,7 +694,7 @@ impl ShaderObject {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageReductionModeNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageReductionModeNV.html>
     #[inline]
     pub unsafe fn cmd_set_coverage_reduction_mode_nv(
         &self,
@@ -702,10 +704,8 @@ impl ShaderObject {
         (self.fp.cmd_set_coverage_reduction_mode_nv)(command_buffer, coverage_reduction_mode)
     }
 
-    pub const NAME: &'static ffi::CStr = vk::ExtShaderObjectFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtShaderObjectFn {
+    pub fn fp(&self) -> &vk::ext::shader_object::DeviceFn {
         &self.fp
     }
 

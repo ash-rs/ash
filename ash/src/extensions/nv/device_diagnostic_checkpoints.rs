@@ -1,24 +1,26 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_device_diagnostic_checkpoints.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 use core::ptr;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_NV_device_diagnostic_checkpoints.html>
+pub const NAME: &ffi::CStr = vk::nv::device_diagnostic_checkpoints::NAME;
+
 #[derive(Clone)]
-pub struct DeviceDiagnosticCheckpoints {
-    fp: vk::NvDeviceDiagnosticCheckpointsFn,
+pub struct Device {
+    fp: vk::nv::device_diagnostic_checkpoints::DeviceFn,
 }
 
-impl DeviceDiagnosticCheckpoints {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::NvDeviceDiagnosticCheckpointsFn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::nv::device_diagnostic_checkpoints::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetCheckpointNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCheckpointNV.html>
     #[inline]
     pub unsafe fn cmd_set_checkpoint(
         &self,
@@ -36,7 +38,7 @@ impl DeviceDiagnosticCheckpoints {
         count.assume_init() as usize
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetQueueCheckpointDataNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetQueueCheckpointDataNV.html>
     ///
     /// Call [`get_queue_checkpoint_data_len()`][Self::get_queue_checkpoint_data_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
@@ -51,10 +53,8 @@ impl DeviceDiagnosticCheckpoints {
         assert_eq!(count as usize, out.len());
     }
 
-    pub const NAME: &'static ffi::CStr = vk::NvDeviceDiagnosticCheckpointsFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::NvDeviceDiagnosticCheckpointsFn {
+    pub fn fp(&self) -> &vk::nv::device_diagnostic_checkpoints::DeviceFn {
         &self.fp
     }
 }

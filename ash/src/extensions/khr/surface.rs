@@ -1,27 +1,30 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Entry, Instance};
 use alloc::vec::Vec;
 use core::ffi;
 use core::mem;
 
+pub const NAME: &ffi::CStr = vk::khr::surface::NAME;
+
 #[derive(Clone)]
-pub struct Surface {
+pub struct Instance {
     handle: vk::Instance,
-    fp: vk::KhrSurfaceFn,
+    fp: vk::khr::surface::InstanceFn,
 }
 
-impl Surface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::KhrSurfaceFn::load(|name| unsafe {
+        let fp = vk::khr::surface::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceSupportKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceSupportKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_support(
         &self,
@@ -40,7 +43,7 @@ impl Surface {
         Ok(b.assume_init() > 0)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModesKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_present_modes(
         &self,
@@ -57,7 +60,7 @@ impl Surface {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilitiesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilitiesKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_capabilities(
         &self,
@@ -73,7 +76,7 @@ impl Surface {
         .assume_init_on_success(surface_capabilities)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceFormatsKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceFormatsKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_formats(
         &self,
@@ -85,7 +88,7 @@ impl Surface {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroySurfaceKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroySurfaceKHR.html>
     #[inline]
     pub unsafe fn destroy_surface(
         &self,
@@ -95,10 +98,8 @@ impl Surface {
         (self.fp.destroy_surface_khr)(self.handle, surface, allocation_callbacks.as_raw_ptr());
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrSurfaceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrSurfaceFn {
+    pub fn fp(&self) -> &vk::khr::surface::InstanceFn {
         &self.fp
     }
 

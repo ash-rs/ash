@@ -1,31 +1,33 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_pipeline_properties.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_pipeline_properties.html>
+pub const NAME: &ffi::CStr = vk::ext::pipeline_properties::NAME;
+
 #[derive(Clone)]
-pub struct PipelineProperties {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::ExtPipelinePropertiesFn,
+    fp: vk::ext::pipeline_properties::DeviceFn,
 }
 
-impl PipelineProperties {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtPipelinePropertiesFn::load(|name| unsafe {
+        let fp = vk::ext::pipeline_properties::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPipelinePropertiesEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelinePropertiesEXT.html>
     #[inline]
     pub unsafe fn get_pipeline_properties(
         &self,
         pipeline_info: &vk::PipelineInfoEXT<'_>,
-        pipeline_properties: &mut impl vk::GetPipelinePropertiesEXTParamPipelineProperties,
+        pipeline_properties: &mut impl vk::ext::pipeline_properties::GetPipelinePropertiesEXTParamPipelineProperties,
     ) -> VkResult<()> {
         (self.fp.get_pipeline_properties_ext)(
             self.handle,
@@ -35,10 +37,8 @@ impl PipelineProperties {
         .result()
     }
 
-    pub const NAME: &'static ffi::CStr = vk::ExtPipelinePropertiesFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtPipelinePropertiesFn {
+    pub fn fp(&self) -> &vk::ext::pipeline_properties::DeviceFn {
         &self.fp
     }
 

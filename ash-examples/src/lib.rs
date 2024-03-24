@@ -7,29 +7,21 @@
     unused_qualifications
 )]
 
+use std::{
+    borrow::Cow, cell::RefCell, default::Default, error::Error, ffi, ops::Drop, os::raw::c_char,
+};
+
 use ash::extensions::{
-    ext::DebugUtils,
-    khr::{Surface, Swapchain},
+    ext::debug_utils,
+    khr::{surface, swapchain},
 };
-use ash::{vk, Entry};
-pub use ash::{Device, Instance};
-use raw_window_handle::{HasRawDisplayHandle, HasRawWindowHandle};
-use std::borrow::Cow;
-use std::cell::RefCell;
-use std::default::Default;
-use std::ffi;
-use std::ops::Drop;
-use std::os::raw::c_char;
-
-#[cfg(any(target_os = "macos", target_os = "ios"))]
-use ash::vk::{
-    KhrGetPhysicalDeviceProperties2Fn, KhrPortabilityEnumerationFn, KhrPortabilitySubsetFn,
-};
-
+use ash::{vk, Device, Entry, Instance};
 use winit::{
-    event::{ElementState, Event, KeyboardInput, VirtualKeyCode, WindowEvent},
+    event::{ElementState, Event, KeyEvent, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
-    platform::run_return::EventLoopExtRunReturn,
+    keyboard::{Key, NamedKey},
+    platform::run_on_demand::EventLoopExtRunOnDemand,
+    raw_window_handle::{HasDisplayHandle, HasWindowHandle},
     window::WindowBuilder,
 };
 
@@ -146,9 +138,9 @@ pub struct ExampleBase {
     pub entry: Entry,
     pub instance: Instance,
     pub device: Device,
-    pub surface_loader: Surface,
-    pub swapchain_loader: Swapchain,
-    pub debug_utils_loader: DebugUtils,
+    pub surface_loader: surface::Instance,
+    pub swapchain_loader: swapchain::Device,
+    pub debug_utils_loader: debug_utils::Instance,
     pub window: winit::window::Window,
     pub event_loop: RefCell<EventLoop<()>>,
     pub debug_call_back: vk::DebugUtilsMessengerEXT,
@@ -182,35 +174,35 @@ pub struct ExampleBase {
 }
 
 impl ExampleBase {
-    pub fn render_loop<F: Fn()>(&self, f: F) {
-        self.event_loop
-            .borrow_mut()
-            .run_return(|event, _, control_flow| {
-                *control_flow = ControlFlow::Poll;
-                match event {
-                    Event::WindowEvent {
-                        event:
-                            WindowEvent::CloseRequested
-                            | WindowEvent::KeyboardInput {
-                                input:
-                                    KeyboardInput {
-                                        state: ElementState::Pressed,
-                                        virtual_keycode: Some(VirtualKeyCode::Escape),
-                                        ..
-                                    },
-                                ..
-                            },
-                        ..
-                    } => *control_flow = ControlFlow::Exit,
-                    Event::MainEventsCleared => f(),
-                    _ => (),
+    pub fn render_loop<F: Fn()>(&self, f: F) -> Result<(), impl Error> {
+        self.event_loop.borrow_mut().run_on_demand(|event, elwp| {
+            elwp.set_control_flow(ControlFlow::Poll);
+            match event {
+                Event::WindowEvent {
+                    event:
+                        WindowEvent::CloseRequested
+                        | WindowEvent::KeyboardInput {
+                            event:
+                                KeyEvent {
+                                    state: ElementState::Pressed,
+                                    logical_key: Key::Named(NamedKey::Escape),
+                                    ..
+                                },
+                            ..
+                        },
+                    ..
+                } => {
+                    elwp.exit();
                 }
-            });
+                Event::AboutToWait => f(),
+                _ => (),
+            }
+        })
     }
 
-    pub fn new(window_width: u32, window_height: u32) -> Self {
+    pub fn new(window_width: u32, window_height: u32) -> Result<Self, Box<dyn Error>> {
         unsafe {
-            let event_loop = EventLoop::new();
+            let event_loop = EventLoop::new()?;
             let window = WindowBuilder::new()
                 .with_title("Ash - Example")
                 .with_inner_size(winit::dpi::LogicalSize::new(
@@ -231,16 +223,16 @@ impl ExampleBase {
                 .collect();
 
             let mut extension_names =
-                ash_window::enumerate_required_extensions(window.raw_display_handle())
+                ash_window::enumerate_required_extensions(window.display_handle()?.as_raw())
                     .unwrap()
                     .to_vec();
-            extension_names.push(DebugUtils::NAME.as_ptr());
+            extension_names.push(debug_utils::NAME.as_ptr());
 
             #[cfg(any(target_os = "macos", target_os = "ios"))]
             {
-                extension_names.push(KhrPortabilityEnumerationFn::NAME.as_ptr());
+                extension_names.push(vk::khr::portability_enumeration::NAME.as_ptr());
                 // Enabling this extension is a requirement when using `VK_KHR_portability_subset`
-                extension_names.push(KhrGetPhysicalDeviceProperties2Fn::NAME.as_ptr());
+                extension_names.push(vk::khr::get_physical_device_properties2::NAME.as_ptr());
             }
 
             let appinfo = vk::ApplicationInfo::default()
@@ -279,22 +271,22 @@ impl ExampleBase {
                 )
                 .pfn_user_callback(Some(vulkan_debug_callback));
 
-            let debug_utils_loader = DebugUtils::new(&entry, &instance);
+            let debug_utils_loader = debug_utils::Instance::new(&entry, &instance);
             let debug_call_back = debug_utils_loader
                 .create_debug_utils_messenger(&debug_info, None)
                 .unwrap();
             let surface = ash_window::create_surface(
                 &entry,
                 &instance,
-                window.raw_display_handle(),
-                window.raw_window_handle(),
+                window.display_handle()?.as_raw(),
+                window.window_handle()?.as_raw(),
                 None,
             )
             .unwrap();
             let pdevices = instance
                 .enumerate_physical_devices()
                 .expect("Physical device error");
-            let surface_loader = Surface::new(&entry, &instance);
+            let surface_loader = surface::Instance::new(&entry, &instance);
             let (pdevice, queue_family_index) = pdevices
                 .iter()
                 .find_map(|pdevice| {
@@ -322,9 +314,9 @@ impl ExampleBase {
                 .expect("Couldn't find suitable device.");
             let queue_family_index = queue_family_index as u32;
             let device_extension_names_raw = [
-                Swapchain::NAME.as_ptr(),
+                swapchain::NAME.as_ptr(),
                 #[cfg(any(target_os = "macos", target_os = "ios"))]
-                KhrPortabilitySubsetFn::NAME.as_ptr(),
+                vk::khr::portability_subset::NAME.as_ptr(),
             ];
             let features = vk::PhysicalDeviceFeatures {
                 shader_clip_distance: 1,
@@ -383,7 +375,7 @@ impl ExampleBase {
                 .cloned()
                 .find(|&mode| mode == vk::PresentModeKHR::MAILBOX)
                 .unwrap_or(vk::PresentModeKHR::FIFO);
-            let swapchain_loader = Swapchain::new(&instance, &device);
+            let swapchain_loader = swapchain::Device::new(&instance, &device);
 
             let swapchain_create_info = vk::SwapchainCreateInfoKHR::default()
                 .surface(surface)
@@ -547,7 +539,7 @@ impl ExampleBase {
                 .create_semaphore(&semaphore_create_info, None)
                 .unwrap();
 
-            Self {
+            Ok(Self {
                 event_loop: RefCell::new(event_loop),
                 entry,
                 instance,
@@ -577,7 +569,7 @@ impl ExampleBase {
                 debug_call_back,
                 debug_utils_loader,
                 depth_image_memory,
-            }
+            })
         }
     }
 }

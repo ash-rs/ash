@@ -19,7 +19,7 @@
 
 //! # Vulkan API
 //!
-//! <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/html/index.html>
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/html/index.html>
 //!
 //! ## Examples
 //!
@@ -50,7 +50,7 @@
 //! * **debug** (default): Whether Vulkan structs should implement `Debug`.
 //! * **loaded** (default): Support searching for the Vulkan loader manually at runtime.
 //! * **linked**: Link the Vulkan loader at compile time.
-//! * **std** (default): Whether ash depends on the standard library (otherwise alloc is required)
+//! * **std** (default): Whether ash depends on the standard library (otherwise `alloc` is required)
 
 extern crate alloc;
 
@@ -195,7 +195,7 @@ mod tests {
     fn test_ptr_chains() {
         let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::default();
         let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::default();
-        let chain = vec![
+        let chain = alloc::vec![
             <*mut _>::cast(&mut variable_pointers),
             <*mut _>::cast(&mut corner),
         ];

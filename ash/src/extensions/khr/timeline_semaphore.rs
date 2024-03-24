@@ -1,25 +1,28 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_timeline_semaphore.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
+pub const NAME: &ffi::CStr = vk::khr::timeline_semaphore::NAME;
+
 #[derive(Clone)]
-pub struct TimelineSemaphore {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrTimelineSemaphoreFn,
+    fp: vk::khr::timeline_semaphore::DeviceFn,
 }
 
-impl TimelineSemaphore {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrTimelineSemaphoreFn::load(|name| unsafe {
+        let fp = vk::khr::timeline_semaphore::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreCounterValue.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreCounterValue.html>
     #[inline]
     pub unsafe fn get_semaphore_counter_value(&self, semaphore: vk::Semaphore) -> VkResult<u64> {
         let mut value = mem::MaybeUninit::uninit();
@@ -27,7 +30,7 @@ impl TimelineSemaphore {
             .assume_init_on_success(value)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkWaitSemaphores.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWaitSemaphores.html>
     #[inline]
     pub unsafe fn wait_semaphores(
         &self,
@@ -37,7 +40,7 @@ impl TimelineSemaphore {
         (self.fp.wait_semaphores_khr)(self.handle, wait_info, timeout).result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSignalSemaphore.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSignalSemaphore.html>
     #[inline]
     pub unsafe fn signal_semaphore(
         &self,
@@ -46,10 +49,8 @@ impl TimelineSemaphore {
         (self.fp.signal_semaphore_khr)(self.handle, signal_info).result()
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrTimelineSemaphoreFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrTimelineSemaphoreFn {
+    pub fn fp(&self) -> &vk::khr::timeline_semaphore::DeviceFn {
         &self.fp
     }
 

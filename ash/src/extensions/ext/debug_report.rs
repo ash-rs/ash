@@ -1,26 +1,29 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_debug_report.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Entry, Instance};
 use core::ffi;
 use core::mem;
 
+pub const NAME: &ffi::CStr = vk::ext::debug_report::NAME;
+
 #[derive(Clone)]
-pub struct DebugReport {
+pub struct Instance {
     handle: vk::Instance,
-    fp: vk::ExtDebugReportFn,
+    fp: vk::ext::debug_report::InstanceFn,
 }
 
-impl DebugReport {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ExtDebugReportFn::load(|name| unsafe {
+        let fp = vk::ext::debug_report::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyDebugReportCallbackEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDebugReportCallbackEXT.html>
     #[inline]
     pub unsafe fn destroy_debug_report_callback(
         &self,
@@ -34,7 +37,7 @@ impl DebugReport {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDebugReportCallbackEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDebugReportCallbackEXT.html>
     #[inline]
     pub unsafe fn create_debug_report_callback(
         &self,
@@ -51,10 +54,8 @@ impl DebugReport {
         .assume_init_on_success(debug_cb)
     }
 
-    pub const NAME: &'static ffi::CStr = vk::ExtDebugReportFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtDebugReportFn {
+    pub fn fp(&self) -> &vk::ext::debug_report::InstanceFn {
         &self.fp
     }
 

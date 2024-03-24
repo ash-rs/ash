@@ -1,26 +1,29 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_ANDROID_external_memory_android_hardware_buffer.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_ANDROID_external_memory_android_hardware_buffer.html>
+pub const NAME: &ffi::CStr = vk::android::external_memory_android_hardware_buffer::NAME;
+
 #[derive(Clone)]
-pub struct ExternalMemoryAndroidHardwareBuffer {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::AndroidExternalMemoryAndroidHardwareBufferFn,
+    fp: vk::android::external_memory_android_hardware_buffer::DeviceFn,
 }
 
-impl ExternalMemoryAndroidHardwareBuffer {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::AndroidExternalMemoryAndroidHardwareBufferFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
+        let fp =
+            vk::android::external_memory_android_hardware_buffer::DeviceFn::load(|name| unsafe {
+                mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+            });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetAndroidHardwareBufferPropertiesANDROID.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAndroidHardwareBufferPropertiesANDROID.html>
     #[inline]
     pub unsafe fn get_android_hardware_buffer_properties(
         &self,
@@ -31,7 +34,7 @@ impl ExternalMemoryAndroidHardwareBuffer {
             .result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetMemoryAndroidHardwareBufferANDROID.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryAndroidHardwareBufferANDROID.html>
     #[inline]
     pub unsafe fn get_memory_android_hardware_buffer(
         &self,
@@ -42,10 +45,8 @@ impl ExternalMemoryAndroidHardwareBuffer {
             .assume_init_on_success(buffer)
     }
 
-    pub const NAME: &'static ffi::CStr = vk::AndroidExternalMemoryAndroidHardwareBufferFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::AndroidExternalMemoryAndroidHardwareBufferFn {
+    pub fn fp(&self) -> &vk::android::external_memory_android_hardware_buffer::DeviceFn {
         &self.fp
     }
 

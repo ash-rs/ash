@@ -1,25 +1,27 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_get_surface_capabilities2.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Entry, Instance};
 use core::ffi;
 use core::mem;
 use core::ptr;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_get_surface_capabilities2.html>
+pub const NAME: &ffi::CStr = vk::khr::get_surface_capabilities2::NAME;
+
 #[derive(Clone)]
-pub struct GetSurfaceCapabilities2 {
-    fp: vk::KhrGetSurfaceCapabilities2Fn,
+pub struct Instance {
+    fp: vk::khr::get_surface_capabilities2::InstanceFn,
 }
 
-impl GetSurfaceCapabilities2 {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fp = vk::KhrGetSurfaceCapabilities2Fn::load(|name| unsafe {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        let fp = vk::khr::get_surface_capabilities2::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_capabilities2(
         &self,
@@ -52,7 +54,7 @@ impl GetSurfaceCapabilities2 {
         err_code.assume_init_on_success(count).map(|c| c as usize)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html>
     ///
     /// Call [`get_physical_device_surface_formats2_len()`][Self::get_physical_device_surface_formats2_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
@@ -74,10 +76,8 @@ impl GetSurfaceCapabilities2 {
         err_code.result()
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrGetSurfaceCapabilities2Fn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrGetSurfaceCapabilities2Fn {
+    pub fn fp(&self) -> &vk::khr::get_surface_capabilities2::InstanceFn {
         &self.fp
     }
 }

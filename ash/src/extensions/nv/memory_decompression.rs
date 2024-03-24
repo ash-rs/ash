@@ -1,16 +1,19 @@
-use crate::{vk, Device, Instance};
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_memory_decompression.html>
+
+use crate::vk;
 use core::ffi;
 use core::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_memory_decompression.html>
+pub const NAME: &ffi::CStr = vk::nv::memory_decompression::NAME;
+
 #[derive(Clone)]
-pub struct MemoryDecompression {
-    fp: vk::NvMemoryDecompressionFn,
+pub struct Device {
+    fp: vk::nv::memory_decompression::DeviceFn,
 }
 
-impl MemoryDecompression {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::NvMemoryDecompressionFn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::nv::memory_decompression::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -45,10 +48,8 @@ impl MemoryDecompression {
         )
     }
 
-    pub const NAME: &'static ffi::CStr = vk::NvMemoryDecompressionFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::NvMemoryDecompressionFn {
+    pub fn fp(&self) -> &vk::nv::memory_decompression::DeviceFn {
         &self.fp
     }
 }

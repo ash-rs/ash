@@ -1,25 +1,27 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_acquire_drm_display.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Entry, Instance};
 use core::ffi;
 use core::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_acquire_drm_display.html>
+pub const NAME: &ffi::CStr = vk::ext::acquire_drm_display::NAME;
+
 #[derive(Clone)]
-pub struct AcquireDrmDisplay {
-    fp: vk::ExtAcquireDrmDisplayFn,
+pub struct Instance {
+    fp: vk::ext::acquire_drm_display::InstanceFn,
 }
 
-impl AcquireDrmDisplay {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ExtAcquireDrmDisplayFn::load(|name| unsafe {
+        let fp = vk::ext::acquire_drm_display::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkAcquireDrmDisplayEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireDrmDisplayEXT.html>
     #[inline]
     pub unsafe fn acquire_drm_display(
         &self,
@@ -30,7 +32,7 @@ impl AcquireDrmDisplay {
         (self.fp.acquire_drm_display_ext)(physical_device, drm_fd, display).result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDrmDisplayEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDrmDisplayEXT.html>
     #[inline]
     pub unsafe fn get_drm_display(
         &self,
@@ -43,10 +45,8 @@ impl AcquireDrmDisplay {
             .assume_init_on_success(display)
     }
 
-    pub const NAME: &'static ffi::CStr = vk::ExtAcquireDrmDisplayFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtAcquireDrmDisplayFn {
+    pub fn fp(&self) -> &vk::ext::acquire_drm_display::InstanceFn {
         &self.fp
     }
 }

@@ -9,11 +9,6 @@ use core::mem;
 use core::ptr;
 
 #[cfg(feature = "loaded")]
-use alloc::sync::Arc;
-#[cfg(feature = "loaded")]
-use std::ffi::OsStr;
-
-#[cfg(feature = "loaded")]
 use libloading::Library;
 
 /// Holds the Vulkan functions independent of a particular instance
@@ -23,7 +18,7 @@ pub struct Entry {
     entry_fn_1_0: vk::EntryFnV1_0,
     entry_fn_1_1: vk::EntryFnV1_1,
     #[cfg(feature = "loaded")]
-    _lib_guard: Option<Arc<Library>>,
+    _lib_guard: Option<alloc::sync::Arc<Library>>,
 }
 
 /// Vulkan core 1.0
@@ -133,10 +128,10 @@ impl Entry {
     /// may be called after it is [dropped][drop()].
     #[cfg(feature = "loaded")]
     #[cfg_attr(docsrs, doc(cfg(feature = "loaded")))]
-    pub unsafe fn load_from(path: impl AsRef<OsStr>) -> Result<Self, LoadingError> {
+    pub unsafe fn load_from(path: impl AsRef<std::ffi::OsStr>) -> Result<Self, LoadingError> {
         let lib = Library::new(path)
             .map_err(LoadingError::LibraryLoadFailure)
-            .map(Arc::new)?;
+            .map(alloc::sync::Arc::new)?;
 
         let static_fn = vk::StaticFn::load_checked(|name| {
             lib.get(name.to_bytes_with_nul())
@@ -196,7 +191,7 @@ impl Entry {
         &self.static_fn
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceVersion.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceVersion.html>
     ///
     /// # Example
     ///
@@ -235,7 +230,7 @@ impl Entry {
         }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateInstance.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateInstance.html>
     ///
     /// # Safety
     ///
@@ -262,7 +257,7 @@ impl Entry {
         Ok(Instance::load(&self.static_fn, instance))
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceLayerProperties.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceLayerProperties.html>
     #[inline]
     pub unsafe fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         read_into_uninitialized_vector(|count, data| {
@@ -270,7 +265,7 @@ impl Entry {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>
     #[inline]
     pub unsafe fn enumerate_instance_extension_properties(
         &self,
@@ -285,7 +280,7 @@ impl Entry {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetInstanceProcAddr.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetInstanceProcAddr.html>
     #[inline]
     pub unsafe fn get_instance_proc_addr(
         &self,
@@ -304,7 +299,7 @@ impl Entry {
     }
 
     #[deprecated = "This function is unavailable and therefore panics on Vulkan 1.0, please use `try_enumerate_instance_version()` instead"]
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceVersion.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceVersion.html>
     ///
     /// Please use [`try_enumerate_instance_version()`][Self::try_enumerate_instance_version()] instead.
     #[inline]
@@ -383,8 +378,8 @@ mod loaded {
     }
 
     #[cfg(feature = "std")]
-    impl ::std::error::Error for LoadingError {
-        fn source(&self) -> Option<&(dyn ::std::error::Error + 'static)> {
+    impl std::error::Error for LoadingError {
+        fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
             Some(match self {
                 Self::LibraryLoadFailure(err) => err,
                 Self::MissingEntryPoint(err) => err,

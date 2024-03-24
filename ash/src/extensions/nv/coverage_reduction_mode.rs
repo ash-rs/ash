@@ -1,19 +1,21 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_coverage_reduction_mode.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Entry, Instance};
 use core::ffi;
 use core::mem;
 use core::ptr;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_NV_coverage_reduction_mode.html>
+pub const NAME: &ffi::CStr = vk::nv::coverage_reduction_mode::NAME;
+
 #[derive(Clone)]
-pub struct CoverageReductionMode {
-    fp: vk::NvCoverageReductionModeFn,
+pub struct Instance {
+    fp: vk::nv::coverage_reduction_mode::InstanceFn,
 }
 
-impl CoverageReductionMode {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fp = vk::NvCoverageReductionModeFn::load(|name| unsafe {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        let fp = vk::nv::coverage_reduction_mode::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -37,7 +39,7 @@ impl CoverageReductionMode {
         .map(|c| c as usize)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV.html>
     ///
     /// Call [`get_physical_device_supported_framebuffer_mixed_samples_combinations_len()`][Self::get_physical_device_supported_framebuffer_mixed_samples_combinations_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
@@ -60,10 +62,8 @@ impl CoverageReductionMode {
         Ok(())
     }
 
-    pub const NAME: &'static ffi::CStr = vk::NvCoverageReductionModeFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::NvCoverageReductionModeFn {
+    pub fn fp(&self) -> &vk::nv::coverage_reduction_mode::InstanceFn {
         &self.fp
     }
 }

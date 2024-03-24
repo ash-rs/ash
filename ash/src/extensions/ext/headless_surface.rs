@@ -1,27 +1,29 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_headless_surface.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Entry, Instance};
 use core::ffi;
 use core::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_headless_surface.html>
+pub const NAME: &ffi::CStr = vk::ext::headless_surface::NAME;
+
 #[derive(Clone)]
-pub struct HeadlessSurface {
+pub struct Instance {
     handle: vk::Instance,
-    fp: vk::ExtHeadlessSurfaceFn,
+    fp: vk::ext::headless_surface::InstanceFn,
 }
 
-impl HeadlessSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ExtHeadlessSurfaceFn::load(|name| unsafe {
+        let fp = vk::ext::headless_surface::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateHeadlessSurfaceEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateHeadlessSurfaceEXT.html>
     #[inline]
     pub unsafe fn create_headless_surface(
         &self,
@@ -38,10 +40,8 @@ impl HeadlessSurface {
         .assume_init_on_success(surface)
     }
 
-    pub const NAME: &'static ffi::CStr = vk::ExtHeadlessSurfaceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtHeadlessSurfaceFn {
+    pub fn fp(&self) -> &vk::ext::headless_surface::InstanceFn {
         &self.fp
     }
 

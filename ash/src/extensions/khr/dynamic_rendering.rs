@@ -1,22 +1,25 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_dynamic_rendering.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
+pub const NAME: &ffi::CStr = vk::khr::dynamic_rendering::NAME;
+
 #[derive(Clone)]
-pub struct DynamicRendering {
-    fp: vk::KhrDynamicRenderingFn,
+pub struct Device {
+    fp: vk::khr::dynamic_rendering::DeviceFn,
 }
 
-impl DynamicRendering {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::KhrDynamicRenderingFn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::khr::dynamic_rendering::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRenderingKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRenderingKHR.html>
     #[inline]
     pub unsafe fn cmd_begin_rendering(
         &self,
@@ -26,16 +29,14 @@ impl DynamicRendering {
         (self.fp.cmd_begin_rendering_khr)(command_buffer, rendering_info)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderingKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderingKHR.html>
     #[inline]
     pub unsafe fn cmd_end_rendering(&self, command_buffer: vk::CommandBuffer) {
         (self.fp.cmd_end_rendering_khr)(command_buffer)
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrDynamicRenderingFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrDynamicRenderingFn {
+    pub fn fp(&self) -> &vk::khr::dynamic_rendering::DeviceFn {
         &self.fp
     }
 }

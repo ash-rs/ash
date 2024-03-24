@@ -1,25 +1,28 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_semaphore_fd.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
+pub const NAME: &ffi::CStr = vk::khr::external_semaphore_fd::NAME;
+
 #[derive(Clone)]
-pub struct ExternalSemaphoreFd {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrExternalSemaphoreFdFn,
+    fp: vk::khr::external_semaphore_fd::DeviceFn,
 }
 
-impl ExternalSemaphoreFd {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrExternalSemaphoreFdFn::load(|name| unsafe {
+        let fp = vk::khr::external_semaphore_fd::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkImportSemaphoreFdKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportSemaphoreFdKHR.html>
     #[inline]
     pub unsafe fn import_semaphore_fd(
         &self,
@@ -28,7 +31,7 @@ impl ExternalSemaphoreFd {
         (self.fp.import_semaphore_fd_khr)(self.handle, import_info).result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreFdKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreFdKHR.html>
     #[inline]
     pub unsafe fn get_semaphore_fd(
         &self,
@@ -39,10 +42,8 @@ impl ExternalSemaphoreFd {
             .assume_init_on_success(fd)
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrExternalSemaphoreFdFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrExternalSemaphoreFdFn {
+    pub fn fp(&self) -> &vk::khr::external_semaphore_fd::DeviceFn {
         &self.fp
     }
 

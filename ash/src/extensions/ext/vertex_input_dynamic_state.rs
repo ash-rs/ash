@@ -1,23 +1,25 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_vertex_input_dynamic_state.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_vertex_input_dynamic_state.html>
+pub const NAME: &ffi::CStr = vk::ext::vertex_input_dynamic_state::NAME;
+
 #[derive(Clone)]
-pub struct VertexInputDynamicState {
-    fp: vk::ExtVertexInputDynamicStateFn,
+pub struct Device {
+    fp: vk::ext::vertex_input_dynamic_state::DeviceFn,
 }
 
-impl VertexInputDynamicState {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::ExtVertexInputDynamicStateFn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::ext::vertex_input_dynamic_state::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetVertexInputEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetVertexInputEXT.html>
     #[inline]
     pub unsafe fn cmd_set_vertex_input(
         &self,
@@ -34,10 +36,8 @@ impl VertexInputDynamicState {
         )
     }
 
-    pub const NAME: &'static ffi::CStr = vk::ExtVertexInputDynamicStateFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtVertexInputDynamicStateFn {
+    pub fn fp(&self) -> &vk::ext::vertex_input_dynamic_state::DeviceFn {
         &self.fp
     }
 }

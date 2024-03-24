@@ -1,26 +1,29 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_wayland_surface.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Entry, Instance};
 use core::ffi;
 use core::mem;
 
+pub const NAME: &ffi::CStr = vk::khr::wayland_surface::NAME;
+
 #[derive(Clone)]
-pub struct WaylandSurface {
+pub struct Instance {
     handle: vk::Instance,
-    fp: vk::KhrWaylandSurfaceFn,
+    fp: vk::khr::wayland_surface::InstanceFn,
 }
 
-impl WaylandSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::KhrWaylandSurfaceFn::load(|name| unsafe {
+        let fp = vk::khr::wayland_surface::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateWaylandSurfaceKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateWaylandSurfaceKHR.html>
     #[inline]
     pub unsafe fn create_wayland_surface(
         &self,
@@ -37,7 +40,7 @@ impl WaylandSurface {
         .assume_init_on_success(surface)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_wayland_presentation_support(
         &self,
@@ -54,10 +57,8 @@ impl WaylandSurface {
         b > 0
     }
 
-    pub const NAME: &'static ffi::CStr = vk::KhrWaylandSurfaceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrWaylandSurfaceFn {
+    pub fn fp(&self) -> &vk::khr::wayland_surface::InstanceFn {
         &self.fp
     }
 

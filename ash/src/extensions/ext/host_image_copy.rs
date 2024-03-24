@@ -1,22 +1,24 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_host_image_copy.html>
+
 #[cfg(doc)]
-use super::{super::khr::Maintenance5, ImageCompressionControl};
+use super::{super::khr::maintenance5, image_compression_control};
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use core::ffi;
 use core::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_host_image_copy.html>
+pub const NAME: &ffi::CStr = vk::ext::host_image_copy::NAME;
+
 #[derive(Clone)]
-pub struct HostImageCopy {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::ExtHostImageCopyFn,
+    fp: vk::ext::host_image_copy::DeviceFn,
 }
 
-impl HostImageCopy {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtHostImageCopyFn::load(|name| unsafe {
+        let fp = vk::ext::host_image_copy::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -65,10 +67,10 @@ impl HostImageCopy {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2EXT.html>
     ///
-    /// Also available as [`Maintenance5::get_image_subresource_layout2()`]
+    /// Also available as [`maintenance5::Device::get_image_subresource_layout2()`]
     /// when [`VK_KHR_maintenance5`] is enabled.
     ///
-    /// Also available as [`ImageCompressionControl::get_image_subresource_layout2()`]
+    /// Also available as [`image_compression_control::Device::get_image_subresource_layout2()`]
     /// when [`VK_EXT_image_compression_control`] is enabled.
     ///
     /// [`VK_KHR_maintenance5`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance5.html
@@ -83,10 +85,8 @@ impl HostImageCopy {
         (self.fp.get_image_subresource_layout2_ext)(self.handle, image, subresource, layout)
     }
 
-    pub const NAME: &'static ffi::CStr = vk::ExtHostImageCopyFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtHostImageCopyFn {
+    pub fn fp(&self) -> &vk::ext::host_image_copy::DeviceFn {
         &self.fp
     }
 

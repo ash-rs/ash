@@ -1,21 +1,23 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMD_shader_info.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use alloc::vec::Vec;
 use core::ffi;
 use core::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMD_shader_info.html>
+pub const NAME: &ffi::CStr = vk::amd::shader_info::NAME;
+
 #[derive(Clone)]
-pub struct ShaderInfo {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::AmdShaderInfoFn,
+    fp: vk::amd::shader_info::DeviceFn,
 }
 
-impl ShaderInfo {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::AmdShaderInfoFn::load(|name| unsafe {
+        let fp = vk::amd::shader_info::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -65,10 +67,8 @@ impl ShaderInfo {
         }
     }
 
-    pub const NAME: &'static ffi::CStr = vk::AmdShaderInfoFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::AmdShaderInfoFn {
+    pub fn fp(&self) -> &vk::amd::shader_info::DeviceFn {
         &self.fp
     }
 
