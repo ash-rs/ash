@@ -52,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Windows `HANDLE` types (`HWND`, `HINSTANCE`, `HMONITOR`) are now defined as `isize` instead of `*const c_void` (#797)
 - extensions/ext/ray_tracing_pipeline: Pass indirect SBT regions as single item reference (#829)
 - Replaced `c_char` array setters with `CStr` setters (#831)
+- `push_next()` functions now allow unsized `p_next` argument (#855)
 
 ### Removed
 
