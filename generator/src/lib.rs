@@ -1812,6 +1812,24 @@ fn derive_default(
     Some(q)
 }
 
+fn derive_send_sync(struct_: &vkxml::Struct) -> Option<TokenStream> {
+    if !struct_
+        .elements
+        .iter()
+        .filter_map(get_variant!(vkxml::StructElement::Member))
+        .any(|e| e.reference.is_some())
+    {
+        // No pointers, no need to implement Send/Sync
+        return None;
+    }
+    let name = name_to_tokens(&struct_.name);
+    let q = quote! {
+        unsafe impl Send for #name <'_> {}
+        unsafe impl Sync for #name <'_> {}
+    };
+    Some(q)
+}
+
 fn derive_debug(
     struct_: &vkxml::Struct,
     members: &[PreprocessedMember<'_>],
@@ -2452,6 +2470,7 @@ pub fn generate_struct(
 
     let debug_tokens = derive_debug(struct_, &members, union_types, has_lifetime);
     let default_tokens = derive_default(struct_, &members, has_lifetime);
+    let send_sync_tokens = derive_send_sync(struct_);
     let setter_tokens = derive_getters_and_setters(struct_, &members, root_structs, has_lifetimes);
     let manual_derive_tokens = manual_derives(struct_);
     let dbg_str = if debug_tokens.is_none() {
@@ -2475,6 +2494,7 @@ pub fn generate_struct(
             #(#params,)*
             #marker
         }
+        #send_sync_tokens
         #debug_tokens
         #default_tokens
         #setter_tokens
