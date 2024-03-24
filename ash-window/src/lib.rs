@@ -14,7 +14,7 @@ use ash::{
 };
 use raw_window_handle::{RawDisplayHandle, RawWindowHandle};
 
-/// Create a surface from a raw surface handle.
+/// Create a surface from a raw display and window handle.
 ///
 /// `instance` must have created with platform specific surface extensions enabled, acquired
 /// through [`enumerate_required_extensions()`].
@@ -47,23 +47,33 @@ pub unsafe fn create_surface(
     match (display_handle, window_handle) {
         (RawDisplayHandle::Windows(_), RawWindowHandle::Win32(window)) => {
             let surface_desc = vk::Win32SurfaceCreateInfoKHR::default()
-                .hinstance(window.hinstance as isize)
-                .hwnd(window.hwnd as isize);
+                .hwnd(window.hwnd.get())
+                .hinstance(
+                    window
+                        .hinstance
+                        .ok_or(vk::Result::ERROR_INITIALIZATION_FAILED)?
+                        .get(),
+                );
             let surface_fn = win32_surface::Instance::new(entry, instance);
             surface_fn.create_win32_surface(&surface_desc, allocation_callbacks)
         }
 
         (RawDisplayHandle::Wayland(display), RawWindowHandle::Wayland(window)) => {
             let surface_desc = vk::WaylandSurfaceCreateInfoKHR::default()
-                .display(display.display)
-                .surface(window.surface);
+                .display(display.display.as_ptr())
+                .surface(window.surface.as_ptr());
             let surface_fn = wayland_surface::Instance::new(entry, instance);
             surface_fn.create_wayland_surface(&surface_desc, allocation_callbacks)
         }
 
         (RawDisplayHandle::Xlib(display), RawWindowHandle::Xlib(window)) => {
             let surface_desc = vk::XlibSurfaceCreateInfoKHR::default()
-                .dpy(display.display.cast())
+                .dpy(
+                    display
+                        .display
+                        .ok_or(vk::Result::ERROR_INITIALIZATION_FAILED)?
+                        .as_ptr(),
+                )
                 .window(window.window);
             let surface_fn = xlib_surface::Instance::new(entry, instance);
             surface_fn.create_xlib_surface(&surface_desc, allocation_callbacks)
@@ -71,15 +81,20 @@ pub unsafe fn create_surface(
 
         (RawDisplayHandle::Xcb(display), RawWindowHandle::Xcb(window)) => {
             let surface_desc = vk::XcbSurfaceCreateInfoKHR::default()
-                .connection(display.connection)
-                .window(window.window);
+                .connection(
+                    display
+                        .connection
+                        .ok_or(vk::Result::ERROR_INITIALIZATION_FAILED)?
+                        .as_ptr(),
+                )
+                .window(window.window.get());
             let surface_fn = xcb_surface::Instance::new(entry, instance);
             surface_fn.create_xcb_surface(&surface_desc, allocation_callbacks)
         }
 
         (RawDisplayHandle::Android(_), RawWindowHandle::AndroidNdk(window)) => {
             let surface_desc =
-                vk::AndroidSurfaceCreateInfoKHR::default().window(window.a_native_window);
+                vk::AndroidSurfaceCreateInfoKHR::default().window(window.a_native_window.as_ptr());
             let surface_fn = android_surface::Instance::new(entry, instance);
             surface_fn.create_android_surface(&surface_desc, allocation_callbacks)
         }
@@ -90,7 +105,6 @@ pub unsafe fn create_surface(
 
             let layer = match appkit::metal_layer_from_handle(window) {
                 Layer::Existing(layer) | Layer::Allocated(layer) => layer.cast(),
-                Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
 
             let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(&*layer);
@@ -104,7 +118,6 @@ pub unsafe fn create_surface(
 
             let layer = match uikit::metal_layer_from_handle(window) {
                 Layer::Existing(layer) | Layer::Allocated(layer) => layer.cast(),
-                Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
 
             let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(&*layer);
@@ -116,7 +129,7 @@ pub unsafe fn create_surface(
     }
 }
 
-/// Query the required instance extensions for creating a surface from a display handle.
+/// Query the required instance extensions for creating a surface from a raw display handle.
 ///
 /// This [`RawDisplayHandle`] can typically be acquired from a window, but is usually also
 /// accessible earlier through an "event loop" concept to allow querying required instance
