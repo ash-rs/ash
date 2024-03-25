@@ -1,11 +1,10 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_push_descriptor.html>
 
 use crate::vk;
-use std::ffi::c_void;
-use std::ffi::CStr;
-use std::mem;
+use core::ffi;
+use core::mem;
 
-pub const NAME: &CStr = vk::khr::push_descriptor::NAME;
+pub const NAME: &ffi::CStr = vk::khr::push_descriptor::NAME;
 
 #[derive(Clone)]
 pub struct Device {
@@ -48,7 +47,7 @@ impl Device {
         descriptor_update_template: vk::DescriptorUpdateTemplate,
         layout: vk::PipelineLayout,
         set: u32,
-        p_data: *const c_void,
+        p_data: *const ffi::c_void,
     ) {
         (self.fp.cmd_push_descriptor_set_with_template_khr)(
             command_buffer,

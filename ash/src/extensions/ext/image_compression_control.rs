@@ -3,10 +3,10 @@
 #[cfg(doc)]
 use super::{super::khr::maintenance5, host_image_copy};
 use crate::vk;
-use std::ffi::CStr;
-use std::mem;
+use core::ffi;
+use core::mem;
 
-pub const NAME: &CStr = vk::ext::image_compression_control::NAME;
+pub const NAME: &ffi::CStr = vk::ext::image_compression_control::NAME;
 
 #[derive(Clone)]
 pub struct Device {

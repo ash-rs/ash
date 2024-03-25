@@ -1,6 +1,7 @@
-use std::convert::TryInto;
-use std::mem;
-use std::ptr;
+use alloc::vec::Vec;
+use core::convert::TryInto;
+use core::mem;
+use core::ptr;
 
 use crate::vk;
 pub type VkResult<T> = Result<T, vk::Result>;
@@ -45,7 +46,7 @@ pub(crate) unsafe fn read_into_uninitialized_vector<N: Copy + Default + TryInto<
     f: impl Fn(&mut N, *mut T) -> vk::Result,
 ) -> VkResult<Vec<T>>
 where
-    <N as TryInto<usize>>::Error: std::fmt::Debug,
+    <N as TryInto<usize>>::Error: core::fmt::Debug,
 {
     loop {
         let mut count = N::default();
@@ -83,13 +84,12 @@ pub(crate) unsafe fn read_into_defaulted_vector<
     f: impl Fn(&mut N, *mut T) -> vk::Result,
 ) -> VkResult<Vec<T>>
 where
-    <N as TryInto<usize>>::Error: std::fmt::Debug,
+    <N as TryInto<usize>>::Error: core::fmt::Debug,
 {
     loop {
         let mut count = N::default();
         f(&mut count, ptr::null_mut()).result()?;
-        let mut data =
-            vec![Default::default(); count.try_into().expect("`N` failed to convert to `usize`")];
+        let mut data = alloc::vec![Default::default(); count.try_into().expect("`N` failed to convert to `usize`")];
 
         let err_code = f(&mut count, data.as_mut_ptr());
         if err_code != vk::Result::INCOMPLETE {
@@ -103,10 +103,10 @@ where
 
 #[cfg(feature = "debug")]
 pub(crate) fn debug_flags<Value: Into<u64> + Copy>(
-    f: &mut std::fmt::Formatter<'_>,
+    f: &mut core::fmt::Formatter<'_>,
     known: &[(Value, &'static str)],
     value: Value,
-) -> std::fmt::Result {
+) -> core::fmt::Result {
     let mut first = true;
     let mut accum = value.into();
     for &(bit, name) in known {

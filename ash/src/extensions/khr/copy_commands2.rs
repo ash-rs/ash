@@ -1,10 +1,10 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_copy_commands2.html>
 
 use crate::vk;
-use std::ffi::CStr;
-use std::mem;
+use core::ffi;
+use core::mem;
 
-pub const NAME: &CStr = vk::khr::copy_commands2::NAME;
+pub const NAME: &ffi::CStr = vk::khr::copy_commands2::NAME;
 
 #[derive(Clone)]
 pub struct Device {

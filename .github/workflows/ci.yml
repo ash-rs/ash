@@ -16,7 +16,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@1.69.0
-      - run: cargo check -p ash -p ash-rewrite -p ash-window --all-features
+      - name: Check ash, ash-window and ash-rewrite
+        run: cargo check -p ash -p ash-rewrite -p ash-window --all-features
+      - name: Check ash with no_std
+        run: cargo check -p ash --no-default-features
 
   # TODO: add a similar job for the rewrite once that generates code
   generated:

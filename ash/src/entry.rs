@@ -2,17 +2,11 @@ use crate::instance::Instance;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use std::error::Error;
-use std::ffi::CStr;
-#[cfg(feature = "loaded")]
-use std::ffi::OsStr;
-use std::fmt;
-use std::mem;
-use std::os::raw::c_char;
-use std::os::raw::c_void;
-use std::ptr;
-#[cfg(feature = "loaded")]
-use std::sync::Arc;
+use alloc::vec::Vec;
+use core::ffi;
+use core::fmt;
+use core::mem;
+use core::ptr;
 
 #[cfg(feature = "loaded")]
 use libloading::Library;
@@ -24,7 +18,7 @@ pub struct Entry {
     entry_fn_1_0: vk::EntryFnV1_0,
     entry_fn_1_1: vk::EntryFnV1_1,
     #[cfg(feature = "loaded")]
-    _lib_guard: Option<Arc<Library>>,
+    _lib_guard: Option<alloc::sync::Arc<Library>>,
 }
 
 /// Vulkan core 1.0
@@ -134,10 +128,10 @@ impl Entry {
     /// may be called after it is [dropped][drop()].
     #[cfg(feature = "loaded")]
     #[cfg_attr(docsrs, doc(cfg(feature = "loaded")))]
-    pub unsafe fn load_from(path: impl AsRef<OsStr>) -> Result<Self, LoadingError> {
+    pub unsafe fn load_from(path: impl AsRef<std::ffi::OsStr>) -> Result<Self, LoadingError> {
         let lib = Library::new(path)
             .map_err(LoadingError::LibraryLoadFailure)
-            .map(Arc::new)?;
+            .map(alloc::sync::Arc::new)?;
 
         let static_fn = vk::StaticFn::load_checked(|name| {
             lib.get(name.to_bytes_with_nul())
@@ -158,7 +152,7 @@ impl Entry {
     /// `static_fn` must contain valid function pointers that comply with the semantics specified
     /// by Vulkan 1.0, which must remain valid for at least the lifetime of the returned [`Entry`].
     pub unsafe fn from_static_fn(static_fn: vk::StaticFn) -> Self {
-        let load_fn = move |name: &CStr| {
+        let load_fn = move |name: &ffi::CStr| {
             mem::transmute((static_fn.get_instance_proc_addr)(
                 vk::Instance::null(),
                 name.as_ptr(),
@@ -220,7 +214,7 @@ impl Entry {
     #[inline]
     pub unsafe fn try_enumerate_instance_version(&self) -> VkResult<Option<u32>> {
         let enumerate_instance_version: Option<vk::PFN_vkEnumerateInstanceVersion> = {
-            let name = CStr::from_bytes_with_nul_unchecked(b"vkEnumerateInstanceVersion\0");
+            let name = ffi::CStr::from_bytes_with_nul_unchecked(b"vkEnumerateInstanceVersion\0");
             mem::transmute((self.static_fn.get_instance_proc_addr)(
                 vk::Instance::null(),
                 name.as_ptr(),
@@ -275,7 +269,7 @@ impl Entry {
     #[inline]
     pub unsafe fn enumerate_instance_extension_properties(
         &self,
-        layer_name: Option<&CStr>,
+        layer_name: Option<&ffi::CStr>,
     ) -> VkResult<Vec<vk::ExtensionProperties>> {
         read_into_uninitialized_vector(|count, data| {
             (self.entry_fn_1_0.enumerate_instance_extension_properties)(
@@ -291,7 +285,7 @@ impl Entry {
     pub unsafe fn get_instance_proc_addr(
         &self,
         instance: vk::Instance,
-        p_name: *const c_char,
+        p_name: *const ffi::c_char,
     ) -> vk::PFN_vkVoidFunction {
         (self.static_fn.get_instance_proc_addr)(instance, p_name)
     }
@@ -328,11 +322,11 @@ impl Default for Entry {
 impl vk::StaticFn {
     pub fn load_checked<F>(mut _f: F) -> Result<Self, MissingEntryPoint>
     where
-        F: FnMut(&CStr) -> *const c_void,
+        F: FnMut(&ffi::CStr) -> *const ffi::c_void,
     {
         Ok(Self {
             get_instance_proc_addr: unsafe {
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetInstanceProcAddr\0");
+                let cname = ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetInstanceProcAddr\0");
                 let val = _f(cname);
                 if val.is_null() {
                     return Err(MissingEntryPoint);
@@ -351,12 +345,15 @@ impl fmt::Display for MissingEntryPoint {
         write!(f, "Cannot load `vkGetInstanceProcAddr` symbol from library")
     }
 }
-impl Error for MissingEntryPoint {}
+#[cfg(feature = "std")] // TODO: implement when error_in_core is stabilized
+impl std::error::Error for MissingEntryPoint {}
 
 #[cfg(feature = "linked")]
 extern "system" {
-    fn vkGetInstanceProcAddr(instance: vk::Instance, name: *const c_char)
-        -> vk::PFN_vkVoidFunction;
+    fn vkGetInstanceProcAddr(
+        instance: vk::Instance,
+        name: *const ffi::c_char,
+    ) -> vk::PFN_vkVoidFunction;
 }
 
 #[cfg(feature = "loaded")]
@@ -380,8 +377,9 @@ mod loaded {
         }
     }
 
-    impl Error for LoadingError {
-        fn source(&self) -> Option<&(dyn Error + 'static)> {
+    #[cfg(feature = "std")]
+    impl std::error::Error for LoadingError {
+        fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
             Some(match self {
                 Self::LibraryLoadFailure(err) => err,
                 Self::MissingEntryPoint(err) => err,

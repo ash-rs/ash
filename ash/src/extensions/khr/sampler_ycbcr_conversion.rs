@@ -3,10 +3,10 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use std::ffi::CStr;
-use std::mem;
+use core::ffi;
+use core::mem;
 
-pub const NAME: &CStr = vk::khr::sampler_ycbcr_conversion::NAME;
+pub const NAME: &ffi::CStr = vk::khr::sampler_ycbcr_conversion::NAME;
 
 #[derive(Clone)]
 pub struct Device {

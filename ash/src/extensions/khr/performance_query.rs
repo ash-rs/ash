@@ -2,11 +2,11 @@
 
 use crate::prelude::*;
 use crate::vk;
-use std::ffi::CStr;
-use std::mem;
-use std::ptr;
+use core::ffi;
+use core::mem;
+use core::ptr;
 
-pub const NAME: &CStr = vk::khr::performance_query::NAME;
+pub const NAME: &ffi::CStr = vk::khr::performance_query::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]

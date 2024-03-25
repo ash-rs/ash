@@ -4,9 +4,10 @@ use crate::device::Device;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
+use alloc::vec::Vec;
 use core::ffi;
-use std::mem;
-use std::ptr;
+use core::mem;
+use core::ptr;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkInstance.html>
 #[derive(Clone)]

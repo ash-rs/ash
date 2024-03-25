@@ -19,7 +19,7 @@ edition = "2021"
 rust-version = "1.69.0"
 
 [dependencies]
-ash = { path = "../ash", version = "0.37", default-features = false }
+ash = { path = "../ash", version = "0.37", default-features = false, features = ["std"] }
 raw-window-handle = "0.6"
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]

@@ -8,16 +8,13 @@
 )]
 
 use std::{
-    borrow::Cow, cell::RefCell, default::Default, error::Error, ffi::CStr, ops::Drop,
-    os::raw::c_char,
+    borrow::Cow, cell::RefCell, default::Default, error::Error, ffi, ops::Drop, os::raw::c_char,
 };
 
 use ash::extensions::{
     ext::debug_utils,
     khr::{surface, swapchain},
 };
-#[cfg(any(target_os = "macos", target_os = "ios"))]
-use ash::vk::khr;
 use ash::{vk, Device, Entry, Instance};
 use winit::{
     event::{ElementState, Event, KeyEvent, WindowEvent},
@@ -106,13 +103,13 @@ unsafe extern "system" fn vulkan_debug_callback(
     let message_id_name = if callback_data.p_message_id_name.is_null() {
         Cow::from("")
     } else {
-        CStr::from_ptr(callback_data.p_message_id_name).to_string_lossy()
+        ffi::CStr::from_ptr(callback_data.p_message_id_name).to_string_lossy()
     };
 
     let message = if callback_data.p_message.is_null() {
         Cow::from("")
     } else {
-        CStr::from_ptr(callback_data.p_message).to_string_lossy()
+        ffi::CStr::from_ptr(callback_data.p_message).to_string_lossy()
     };
 
     println!(
@@ -215,9 +212,9 @@ impl ExampleBase {
                 .build(&event_loop)
                 .unwrap();
             let entry = Entry::linked();
-            let app_name = CStr::from_bytes_with_nul_unchecked(b"VulkanTriangle\0");
+            let app_name = ffi::CStr::from_bytes_with_nul_unchecked(b"VulkanTriangle\0");
 
-            let layer_names = [CStr::from_bytes_with_nul_unchecked(
+            let layer_names = [ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_LAYER_KHRONOS_validation\0",
             )];
             let layers_names_raw: Vec<*const c_char> = layer_names
@@ -233,9 +230,9 @@ impl ExampleBase {
 
             #[cfg(any(target_os = "macos", target_os = "ios"))]
             {
-                extension_names.push(khr::portability_enumeration::NAME.as_ptr());
+                extension_names.push(vk::khr::portability_enumeration::NAME.as_ptr());
                 // Enabling this extension is a requirement when using `VK_KHR_portability_subset`
-                extension_names.push(khr::get_physical_device_properties2::NAME.as_ptr());
+                extension_names.push(vk::khr::get_physical_device_properties2::NAME.as_ptr());
             }
 
             let appinfo = vk::ApplicationInfo::default()
@@ -319,7 +316,7 @@ impl ExampleBase {
             let device_extension_names_raw = [
                 swapchain::NAME.as_ptr(),
                 #[cfg(any(target_os = "macos", target_os = "ios"))]
-                khr::portability_subset::NAME.as_ptr(),
+                vk::khr::portability_subset::NAME.as_ptr(),
             ];
             let features = vk::PhysicalDeviceFeatures {
                 shader_clip_distance: 1,

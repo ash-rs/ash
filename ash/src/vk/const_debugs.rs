@@ -2,7 +2,7 @@ use crate::prelude::debug_flags;
 use crate::vk::bitflags::*;
 use crate::vk::definitions::*;
 use crate::vk::enums::*;
-use std::fmt;
+use core::fmt;
 impl fmt::Debug for AccelerationStructureBuildTypeKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {

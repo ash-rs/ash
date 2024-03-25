@@ -3,10 +3,10 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use std::ffi::CStr;
-use std::mem;
+use core::ffi;
+use core::mem;
 
-pub const NAME: &CStr = vk::ext::debug_report::NAME;
+pub const NAME: &ffi::CStr = vk::ext::debug_report::NAME;
 
 #[derive(Clone)]
 pub struct Instance {

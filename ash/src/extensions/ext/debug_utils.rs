@@ -1,11 +1,12 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_debug_utils.html>
 
 use crate::prelude::*;
-use crate::{vk, RawPtr};
-use std::ffi::CStr;
-use std::mem;
+use crate::vk;
+use crate::RawPtr;
+use core::ffi;
+use core::mem;
 
-pub const NAME: &CStr = vk::ext::debug_utils::NAME;
+pub const NAME: &ffi::CStr = vk::ext::debug_utils::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]

@@ -2,10 +2,10 @@
 
 use crate::prelude::*;
 use crate::vk;
-use std::ffi::CStr;
-use std::mem;
+use core::ffi;
+use core::mem;
 
-pub const NAME: &CStr = vk::ext::acquire_drm_display::NAME;
+pub const NAME: &ffi::CStr = vk::ext::acquire_drm_display::NAME;
 
 #[derive(Clone)]
 pub struct Instance {

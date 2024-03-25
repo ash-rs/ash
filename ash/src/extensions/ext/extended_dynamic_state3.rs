@@ -1,10 +1,10 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_extended_dynamic_state3.html>
 
 use crate::vk;
-use std::ffi::CStr;
-use std::mem;
+use core::ffi;
+use core::mem;
 
-pub const NAME: &CStr = vk::ext::extended_dynamic_state3::NAME;
+pub const NAME: &ffi::CStr = vk::ext::extended_dynamic_state3::NAME;
 
 #[derive(Clone)]
 pub struct Device {
@@ -398,6 +398,7 @@ impl Device {
     ) {
         (self.fp.cmd_set_coverage_reduction_mode_nv)(command_buffer, coverage_reduction_mode)
     }
+
     #[inline]
     pub fn fp(&self) -> &vk::ext::extended_dynamic_state3::DeviceFn {
         &self.fp

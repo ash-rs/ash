@@ -2,10 +2,10 @@
 
 use crate::prelude::*;
 use crate::vk;
-use std::ffi::CStr;
-use std::mem;
+use core::ffi;
+use core::mem;
 
-pub const NAME: &CStr = vk::android::external_memory_android_hardware_buffer::NAME;
+pub const NAME: &ffi::CStr = vk::android::external_memory_android_hardware_buffer::NAME;
 
 #[derive(Clone)]
 pub struct Device {

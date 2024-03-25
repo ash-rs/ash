@@ -33,46 +33,46 @@ macro_rules! vk_bitflags_wrapped {
                 self.0 & other.0 == other.0
             }
         }
-        impl ::std::ops::BitOr for $name {
+        impl ::core::ops::BitOr for $name {
             type Output = Self;
             #[inline]
             fn bitor(self, rhs: Self) -> Self {
                 Self(self.0 | rhs.0)
             }
         }
-        impl ::std::ops::BitOrAssign for $name {
+        impl ::core::ops::BitOrAssign for $name {
             #[inline]
             fn bitor_assign(&mut self, rhs: Self) {
                 *self = *self | rhs
             }
         }
-        impl ::std::ops::BitAnd for $name {
+        impl ::core::ops::BitAnd for $name {
             type Output = Self;
             #[inline]
             fn bitand(self, rhs: Self) -> Self {
                 Self(self.0 & rhs.0)
             }
         }
-        impl ::std::ops::BitAndAssign for $name {
+        impl ::core::ops::BitAndAssign for $name {
             #[inline]
             fn bitand_assign(&mut self, rhs: Self) {
                 *self = *self & rhs
             }
         }
-        impl ::std::ops::BitXor for $name {
+        impl ::core::ops::BitXor for $name {
             type Output = Self;
             #[inline]
             fn bitxor(self, rhs: Self) -> Self {
                 Self(self.0 ^ rhs.0)
             }
         }
-        impl ::std::ops::BitXorAssign for $name {
+        impl ::core::ops::BitXorAssign for $name {
             #[inline]
             fn bitxor_assign(&mut self, rhs: Self) {
                 *self = *self ^ rhs
             }
         }
-        impl ::std::ops::Not for $name {
+        impl ::core::ops::Not for $name {
             type Output = Self;
             #[inline]
             fn not(self) -> Self {
@@ -145,7 +145,7 @@ macro_rules! define_handle {
         unsafe impl Sync for $name {}
         impl $name {
             pub const fn null() -> Self {
-                Self(::std::ptr::null_mut())
+                Self(::core::ptr::null_mut())
             }
         }
         impl fmt::Pointer for $name {

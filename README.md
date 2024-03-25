@@ -19,6 +19,7 @@ A very lightweight wrapper around Vulkan
 - [x] No validation, everything is **unsafe**
 - [x] Generated from `vk.xml`
 - [x] Support for Vulkan `1.1`, `1.2`, `1.3`
+- [x] `no_std` support
 
 ## ⚠️ Semver compatibility warning
 
@@ -192,6 +193,10 @@ let pool = device.create_command_pool(&pool_create_info).unwrap();
 The default `loaded` cargo feature will dynamically load the default Vulkan library for the current platform with `Entry::load`, meaning that the build environment does not have to have Vulkan development packages installed.
 
 If, on the other hand, your application cannot handle Vulkan being missing at runtime, you can instead enable the `linked` feature, which will link your binary with the Vulkan loader directly and expose the infallible `Entry::linked`.
+
+### Use in `no_std` environments
+
+Ash can be used in `no_std` environments (with `alloc`) by disabling the `std` feature.
 
 ## Example
 

@@ -2,10 +2,11 @@
 
 use crate::prelude::*;
 use crate::vk;
-use std::ffi::CStr;
-use std::mem;
+use alloc::vec::Vec;
+use core::ffi;
+use core::mem;
 
-pub const NAME: &CStr = vk::khr::cooperative_matrix::NAME;
+pub const NAME: &ffi::CStr = vk::khr::cooperative_matrix::NAME;
 
 #[derive(Clone)]
 pub struct Instance {

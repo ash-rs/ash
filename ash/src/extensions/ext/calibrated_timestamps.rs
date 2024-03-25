@@ -2,10 +2,11 @@
 
 use crate::prelude::*;
 use crate::vk;
-use std::ffi::CStr;
-use std::mem;
+use alloc::vec::Vec;
+use core::ffi;
+use core::mem;
 
-pub const NAME: &CStr = vk::ext::calibrated_timestamps::NAME;
+pub const NAME: &ffi::CStr = vk::ext::calibrated_timestamps::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]

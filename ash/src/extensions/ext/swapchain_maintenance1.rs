@@ -2,10 +2,10 @@
 
 use crate::prelude::*;
 use crate::vk;
-use std::ffi::CStr;
-use std::mem;
+use core::ffi;
+use core::mem;
 
-pub const NAME: &CStr = vk::ext::swapchain_maintenance1::NAME;
+pub const NAME: &ffi::CStr = vk::ext::swapchain_maintenance1::NAME;
 
 #[derive(Clone)]
 pub struct Device {

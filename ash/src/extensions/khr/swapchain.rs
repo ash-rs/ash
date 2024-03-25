@@ -5,10 +5,11 @@ use super::device_group;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use std::ffi::CStr;
-use std::mem;
+use alloc::vec::Vec;
+use core::ffi;
+use core::mem;
 
-pub const NAME: &CStr = vk::khr::swapchain::NAME;
+pub const NAME: &ffi::CStr = vk::khr::swapchain::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]

@@ -1,9 +1,11 @@
 use crate::vk;
-use std::iter::Iterator;
-use std::marker::PhantomData;
-use std::mem::size_of;
-use std::os::raw::c_void;
-use std::{io, slice};
+use core::ffi::c_void;
+use core::iter::Iterator;
+use core::marker::PhantomData;
+use core::mem::size_of;
+use core::slice;
+#[cfg(feature = "std")]
+use std::io;
 
 /// [`Align`] handles dynamic alignment. The is useful for dynamic uniform buffers where
 /// the alignment might be different. For example a 4x4 f32 matrix has a size of 64 bytes
@@ -102,6 +104,7 @@ impl<'a, T: Copy + 'a> Iterator for AlignIter<'a, T> {
 /// ];
 /// let words = ash::util::read_spv(&mut std::io::Cursor::new(&SPIRV[..])).unwrap();
 /// ```
+#[cfg(feature = "std")]
 pub fn read_spv<R: io::Read + io::Seek>(x: &mut R) -> io::Result<Vec<u32>> {
     // TODO use stream_len() once it is stabilized and remove the subsequent rewind() call
     let size = x.seek(io::SeekFrom::End(0))?;

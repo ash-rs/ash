@@ -2,9 +2,10 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
+use alloc::vec::Vec;
 use core::ffi;
-use std::mem;
-use std::ptr;
+use core::mem;
+use core::ptr;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDevice.html>
 #[derive(Clone)]
@@ -20,9 +21,7 @@ pub struct Device {
 impl Device {
     pub unsafe fn load(instance_fn: &vk::InstanceFnV1_0, device: vk::Device) -> Self {
         Self::load_with(
-            |name: &std::ffi::CStr| {
-                mem::transmute((instance_fn.get_device_proc_addr)(device, name.as_ptr()))
-            },
+            |name| mem::transmute((instance_fn.get_device_proc_addr)(device, name.as_ptr())),
             device,
         )
     }

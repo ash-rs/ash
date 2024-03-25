@@ -2,10 +2,11 @@
 
 use crate::prelude::*;
 use crate::vk;
-use std::ffi::CStr;
-use std::mem;
+use alloc::vec::Vec;
+use core::ffi;
+use core::mem;
 
-pub const NAME: &CStr = vk::ext::full_screen_exclusive::NAME;
+pub const NAME: &ffi::CStr = vk::ext::full_screen_exclusive::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]

@@ -2,11 +2,11 @@
 
 use crate::prelude::*;
 use crate::vk;
-use std::ffi::CStr;
-use std::mem;
-use std::ptr;
+use core::ffi;
+use core::mem;
+use core::ptr;
 
-pub const NAME: &CStr = vk::khr::device_group_creation::NAME;
+pub const NAME: &ffi::CStr = vk::khr::device_group_creation::NAME;
 
 #[derive(Clone)]
 pub struct Instance {

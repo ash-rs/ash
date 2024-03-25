@@ -3,10 +3,11 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use std::ffi::CStr;
-use std::mem;
+use alloc::vec::Vec;
+use core::ffi;
+use core::mem;
 
-pub const NAME: &CStr = vk::amdx::shader_enqueue::NAME;
+pub const NAME: &ffi::CStr = vk::amdx::shader_enqueue::NAME;
 
 #[derive(Clone)]
 pub struct Device {

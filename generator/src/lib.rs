@@ -1102,12 +1102,12 @@ fn generate_function_pointers<'a>(
                     unsafe extern "system" fn #function_name_rust (#parameters_unused) #returns {
                         panic!(concat!("Unable to load ", stringify!(#function_name_rust)))
                     }
-                    let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(#byte_function_name);
+                    let cname = CStr::from_bytes_with_nul_unchecked(#byte_function_name);
                     let val = _f(cname);
                     if val.is_null() {
                         #function_name_rust
                     } else {
-                        ::std::mem::transmute(val)
+                        ::core::mem::transmute(val)
                     }
                 }
             )
@@ -1120,7 +1120,7 @@ fn generate_function_pointers<'a>(
         quote! {
             impl #ident {
                 pub fn load<F>(mut _f: F) -> Self
-                    where F: FnMut(&::std::ffi::CStr) -> *const c_void
+                    where F: FnMut(&CStr) -> *const c_void
                 {
                     Self {
                         #(#loaders,)*
@@ -1355,8 +1355,8 @@ pub fn generate_extension_commands<'a>(
             pub mod #extension_ident {
                 use super::super::*; // Use global imports (i.e. Vulkan structs and enums) from the root module defined by this file
 
-                pub const NAME: &::std::ffi::CStr = unsafe {
-                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(#byte_name_ident)
+                pub const NAME: &CStr = unsafe {
+                    CStr::from_bytes_with_nul_unchecked(#byte_name_ident)
                 };
                 #spec_version
 
@@ -1704,7 +1704,8 @@ fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
     });
 
     quote! {
-        impl ::std::error::Error for #ident {}
+        #[cfg(feature = "std")]
+        impl std::error::Error for #ident {}
         impl fmt::Display for #ident {
             fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
                 let name = match *self {
@@ -1776,18 +1777,18 @@ fn derive_default(
             if member.vkxml_field.type_enums.is_some() {
                 quote!(#param_ident: Self::STRUCTURE_TYPE)
             } else {
-                quote!(#param_ident: unsafe { ::std::mem::zeroed() })
+                quote!(#param_ident: unsafe { ::core::mem::zeroed() })
             }
         } else if member.vkxml_field.reference.is_some() {
             if member.vkxml_field.is_const {
-                quote!(#param_ident: ::std::ptr::null())
+                quote!(#param_ident: ::core::ptr::null())
             } else {
-                quote!(#param_ident: ::std::ptr::null_mut())
+                quote!(#param_ident: ::core::ptr::null_mut())
             }
         } else if is_static_array(member.vkxml_field)
             || handles.contains(&member.vkxml_field.basetype.as_str())
         {
-            quote!(#param_ident: unsafe { ::std::mem::zeroed() })
+            quote!(#param_ident: unsafe { ::core::mem::zeroed() })
         } else {
             let ty = member.vkxml_field.type_tokens(false, None);
             quote!(#param_ident: #ty::default())
@@ -1796,7 +1797,7 @@ fn derive_default(
     let lifetime = has_lifetime.then(|| quote!(<'_>));
     let marker = has_lifetime.then(|| quote!(_marker: PhantomData,));
     let q = quote! {
-        impl ::std::default::Default for #name #lifetime {
+        impl ::core::default::Default for #name #lifetime {
             #[inline]
             fn default() -> Self {
                 #allow_deprecated
@@ -2020,7 +2021,7 @@ fn derive_getters_and_setters(
                 #[inline]
                 pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
                     self.p_sample_mask = if sample_mask.is_empty() {
-                        std::ptr::null()
+                        core::ptr::null()
                     } else {
                         sample_mask.as_ptr()
                     };
@@ -2037,17 +2038,17 @@ fn derive_getters_and_setters(
                 return Some(quote! {
                     #deprecated
                     #[inline]
-                    pub fn #param_ident_short(mut self, #param_ident_short: &'a core::ffi::CStr) -> Self {
+                    pub fn #param_ident_short(mut self, #param_ident_short: &'a CStr) -> Self {
                         self.#param_ident = #param_ident_short.as_ptr();
                         self
                     }
                     #deprecated
                     #[inline]
-                    pub unsafe fn #param_ident_as_c_str(&self) -> Option<&core::ffi::CStr> {
+                    pub unsafe fn #param_ident_as_c_str(&self) -> Option<&CStr> {
                         if self.#param_ident.is_null() {
                             None
                         } else {
-                            Some(core::ffi::CStr::from_ptr(self.#param_ident))
+                            Some(CStr::from_ptr(self.#param_ident))
                         }
                     }
                 });
@@ -2056,12 +2057,12 @@ fn derive_getters_and_setters(
                 return Some(quote! {
                     #deprecated
                     #[inline]
-                    pub fn #param_ident_short(mut self, #param_ident_short: &core::ffi::CStr) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
+                    pub fn #param_ident_short(mut self, #param_ident_short: &CStr) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
                         write_c_str_slice_with_nul(&mut self.#param_ident, #param_ident_short).map(|()| self)
                     }
                     #deprecated
                     #[inline]
-                    pub fn #param_ident_as_c_str(&self) -> core::result::Result<&core::ffi::CStr, core::ffi::FromBytesUntilNulError> {
+                    pub fn #param_ident_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
                         wrap_c_str_slice_until_nul(&self.#param_ident)
                     }
                 });
@@ -2573,10 +2574,10 @@ fn generate_union(union: &vkxml::Union, has_lifetimes: &HashSet<Ident>) -> Token
         pub union #name #lifetime {
             #(#fields),*
         }
-        impl #lifetime ::std::default::Default for #name #lifetime {
+        impl #lifetime ::core::default::Default for #name #lifetime {
             #[inline]
             fn default() -> Self {
-                unsafe { ::std::mem::zeroed() }
+                unsafe { ::core::mem::zeroed() }
             }
         }
     }
@@ -3252,7 +3253,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let vk_aliases_file = File::create(vk_dir.join("aliases.rs")).expect("vk/aliases.rs");
 
     let feature_code = quote! {
-        use std::os::raw::*;
+        use core::ffi::*;
         use crate::vk::bitflags::*;
         use crate::vk::definitions::*;
         use crate::vk::enums::*;
@@ -3260,9 +3261,9 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let definition_code = quote! {
-        use std::marker::PhantomData;
-        use std::fmt;
-        use std::os::raw::*;
+        use core::marker::PhantomData;
+        use core::fmt;
+        use core::ffi::*;
         use crate::vk::{Handle, ptr_chain_iter};
         use crate::vk::aliases::*;
         use crate::vk::bitflags::*;
@@ -3275,7 +3276,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let enum_code = quote! {
-        use std::fmt;
+        use core::fmt;
         #(#enum_code)*
         #core_debugs
     };
@@ -3294,7 +3295,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         #![allow(unused_qualifications)] // Because we do not know in what file the PFNs are defined
         #![allow(unused_imports)]        // for sometimes-dead `use` in extension modules
 
-        use std::os::raw::*;
+        use core::ffi::*;
         use crate::vk::platform_types::*;
         use crate::vk::aliases::*;
         use crate::vk::bitflags::*;
@@ -3311,7 +3312,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let const_debugs = quote! {
-        use std::fmt;
+        use core::fmt;
         use crate::vk::bitflags::*;
         use crate::vk::definitions::*;
         use crate::vk::enums::*;
@@ -3359,7 +3360,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let vk_include = vk_headers_dir.join("include");
 
-    let mut bindings = bindgen::Builder::default().clang_arg(format!(
+    let mut bindings = bindgen::Builder::default().use_core().clang_arg(format!(
         "-I{}",
         vk_include.to_str().expect("Valid UTF8 string")
     ));

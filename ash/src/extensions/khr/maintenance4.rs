@@ -1,11 +1,11 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance4.html>
 
 use crate::vk;
-use std::ffi::CStr;
-use std::mem;
-use std::ptr;
+use core::ffi;
+use core::mem;
+use core::ptr;
 
-pub const NAME: &CStr = vk::khr::maintenance4::NAME;
+pub const NAME: &ffi::CStr = vk::khr::maintenance4::NAME;
 
 #[derive(Clone)]
 pub struct Device {
