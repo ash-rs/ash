@@ -1,3 +1,4 @@
+pub mod acceleration_structure;
 pub mod android_surface;
 pub mod buffer_device_address;
 pub mod calibrated_timestamps;
