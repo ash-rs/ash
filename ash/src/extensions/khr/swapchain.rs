@@ -6,10 +6,8 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use alloc::vec::Vec;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::khr::swapchain::NAME;
+pub use vk::khr::swapchain::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]

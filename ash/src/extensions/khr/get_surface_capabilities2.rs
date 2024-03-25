@@ -2,11 +2,9 @@
 
 use crate::prelude::*;
 use crate::vk;
-use core::ffi;
 use core::mem;
 use core::ptr;
-
-pub const NAME: &ffi::CStr = vk::khr::get_surface_capabilities2::NAME;
+pub use vk::khr::get_surface_capabilities2::NAME;
 
 #[derive(Clone)]
 pub struct Instance {

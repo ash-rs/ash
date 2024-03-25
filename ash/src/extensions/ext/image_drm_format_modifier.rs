@@ -2,10 +2,8 @@
 
 use crate::prelude::*;
 use crate::vk;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::ext::image_drm_format_modifier::NAME;
+pub use vk::ext::image_drm_format_modifier::NAME;
 
 #[derive(Clone)]
 pub struct Device {

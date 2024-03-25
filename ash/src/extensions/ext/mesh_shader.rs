@@ -1,10 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_mesh_shader.html>
 
 use crate::vk;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::ext::mesh_shader::NAME;
+pub use vk::ext::mesh_shader::NAME;
 
 #[derive(Clone)]
 pub struct Device {

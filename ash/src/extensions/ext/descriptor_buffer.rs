@@ -2,10 +2,8 @@
 
 use crate::prelude::*;
 use crate::vk;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::ext::descriptor_buffer::NAME;
+pub use vk::ext::descriptor_buffer::NAME;
 
 #[derive(Clone)]
 pub struct Device {

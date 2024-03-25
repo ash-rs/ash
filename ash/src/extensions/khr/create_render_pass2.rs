@@ -3,10 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::khr::create_renderpass2::NAME;
+pub use vk::khr::create_renderpass2::NAME;
 
 #[derive(Clone)]
 pub struct Device {

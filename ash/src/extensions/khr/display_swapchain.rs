@@ -4,10 +4,8 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use alloc::vec::Vec;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::khr::display_swapchain::NAME;
+pub use vk::khr::display_swapchain::NAME;
 
 #[derive(Clone)]
 pub struct Device {

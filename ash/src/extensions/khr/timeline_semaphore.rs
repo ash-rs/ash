@@ -2,10 +2,8 @@
 
 use crate::prelude::*;
 use crate::vk;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::khr::timeline_semaphore::NAME;
+pub use vk::khr::timeline_semaphore::NAME;
 
 #[derive(Clone)]
 pub struct Device {

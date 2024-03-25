@@ -2,10 +2,8 @@
 
 use crate::prelude::*;
 use crate::vk;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::khr::external_semaphore_win32::NAME;
+pub use vk::khr::external_semaphore_win32::NAME;
 
 #[derive(Clone)]
 pub struct Device {

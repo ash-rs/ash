@@ -3,10 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::khr::deferred_host_operations::NAME;
+pub use vk::khr::deferred_host_operations::NAME;
 
 #[derive(Clone)]
 pub struct Device {

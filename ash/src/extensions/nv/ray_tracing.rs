@@ -4,10 +4,8 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use alloc::vec::Vec;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::nv::ray_tracing::NAME;
+pub use vk::nv::ray_tracing::NAME;
 
 #[derive(Clone)]
 pub struct Device {

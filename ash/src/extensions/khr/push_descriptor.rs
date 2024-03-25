@@ -3,8 +3,7 @@
 use crate::vk;
 use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::khr::push_descriptor::NAME;
+pub use vk::khr::push_descriptor::NAME;
 
 #[derive(Clone)]
 pub struct Device {

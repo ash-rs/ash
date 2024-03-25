@@ -3,10 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::khr::xcb_surface::NAME;
+pub use vk::khr::xcb_surface::NAME;
 
 #[derive(Clone)]
 pub struct Instance {
