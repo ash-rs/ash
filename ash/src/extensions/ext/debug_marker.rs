@@ -2,10 +2,8 @@
 
 use crate::prelude::*;
 use crate::vk;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::ext::debug_marker::NAME;
+pub use vk::ext::debug_marker::NAME;
 
 #[derive(Clone)]
 pub struct Device {

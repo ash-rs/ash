@@ -2,10 +2,8 @@
 
 use crate::prelude::*;
 use crate::vk;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::ext::pipeline_properties::NAME;
+pub use vk::ext::pipeline_properties::NAME;
 
 #[derive(Clone)]
 pub struct Device {

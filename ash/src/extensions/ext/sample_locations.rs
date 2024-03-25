@@ -1,10 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_sample_locations.html>
 
 use crate::vk;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::ext::sample_locations::NAME;
+pub use vk::ext::sample_locations::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]

@@ -3,10 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::ext::debug_utils::NAME;
+pub use vk::ext::debug_utils::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]

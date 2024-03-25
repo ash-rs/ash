@@ -2,11 +2,9 @@
 
 use crate::prelude::*;
 use crate::vk;
-use core::ffi;
 use core::mem;
 use core::ptr;
-
-pub const NAME: &ffi::CStr = vk::nv::coverage_reduction_mode::NAME;
+pub use vk::nv::coverage_reduction_mode::NAME;
 
 #[derive(Clone)]
 pub struct Instance {

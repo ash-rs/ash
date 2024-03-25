@@ -3,10 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::khr::android_surface::NAME;
+pub use vk::khr::android_surface::NAME;
 
 #[derive(Clone)]
 pub struct Instance {

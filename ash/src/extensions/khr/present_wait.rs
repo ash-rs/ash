@@ -2,10 +2,8 @@
 
 use crate::prelude::*;
 use crate::vk;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::khr::present_wait::NAME;
+pub use vk::khr::present_wait::NAME;
 
 #[derive(Clone)]
 pub struct Device {

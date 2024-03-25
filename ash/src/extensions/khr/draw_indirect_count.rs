@@ -1,10 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_draw_indirect_count.html>
 
 use crate::vk;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::khr::draw_indirect_count::NAME;
+pub use vk::khr::draw_indirect_count::NAME;
 
 #[derive(Clone)]
 pub struct Device {

@@ -3,10 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use alloc::vec::Vec;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::amd::shader_info::NAME;
+pub use vk::amd::shader_info::NAME;
 
 #[derive(Clone)]
 pub struct Device {

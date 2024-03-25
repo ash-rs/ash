@@ -1,11 +1,9 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_extended_dynamic_state.html>
 
 use crate::vk;
-use core::ffi;
 use core::mem;
 use core::ptr;
-
-pub const NAME: &ffi::CStr = vk::ext::extended_dynamic_state::NAME;
+pub use vk::ext::extended_dynamic_state::NAME;
 
 #[derive(Clone)]
 pub struct Device {

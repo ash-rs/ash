@@ -3,10 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use alloc::vec::Vec;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::google::display_timing::NAME;
+pub use vk::google::display_timing::NAME;
 
 #[derive(Clone)]
 pub struct Device {

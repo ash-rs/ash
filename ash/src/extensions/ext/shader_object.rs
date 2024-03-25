@@ -4,11 +4,9 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use alloc::vec::Vec;
-use core::ffi;
 use core::mem;
 use core::ptr;
-
-pub const NAME: &ffi::CStr = vk::ext::shader_object::NAME;
+pub use vk::ext::shader_object::NAME;
 
 #[derive(Clone)]
 pub struct Device {

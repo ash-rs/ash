@@ -4,8 +4,7 @@ use crate::vk;
 use core::ffi;
 use core::mem;
 use core::ptr;
-
-pub const NAME: &ffi::CStr = vk::nv::device_diagnostic_checkpoints::NAME;
+pub use vk::nv::device_diagnostic_checkpoints::NAME;
 
 #[derive(Clone)]
 pub struct Device {

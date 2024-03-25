@@ -1,11 +1,9 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_get_memory_requirements2.html>
 
 use crate::vk;
-use core::ffi;
 use core::mem;
 use core::ptr;
-
-pub const NAME: &ffi::CStr = vk::khr::get_memory_requirements2::NAME;
+pub use vk::khr::get_memory_requirements2::NAME;
 
 #[derive(Clone)]
 pub struct Device {

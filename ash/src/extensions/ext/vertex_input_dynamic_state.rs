@@ -1,10 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_vertex_input_dynamic_state.html>
 
 use crate::vk;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::ext::vertex_input_dynamic_state::NAME;
+pub use vk::ext::vertex_input_dynamic_state::NAME;
 
 #[derive(Clone)]
 pub struct Device {

@@ -4,10 +4,8 @@
 use super::{super::khr::maintenance5, image_compression_control};
 use crate::prelude::*;
 use crate::vk;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::ext::host_image_copy::NAME;
+pub use vk::ext::host_image_copy::NAME;
 
 #[derive(Clone)]
 pub struct Device {

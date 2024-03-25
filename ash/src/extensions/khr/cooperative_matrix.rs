@@ -3,10 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use alloc::vec::Vec;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::khr::cooperative_matrix::NAME;
+pub use vk::khr::cooperative_matrix::NAME;
 
 #[derive(Clone)]
 pub struct Instance {

@@ -1,10 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_device_generated_commands_compute.html>
 
 use crate::vk;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::nv::device_generated_commands_compute::NAME;
+pub use vk::nv::device_generated_commands_compute::NAME;
 
 #[derive(Clone)]
 pub struct Device {

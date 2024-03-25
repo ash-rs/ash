@@ -3,10 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use alloc::vec::Vec;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::ext::calibrated_timestamps::NAME;
+pub use vk::ext::calibrated_timestamps::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]

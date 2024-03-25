@@ -3,10 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use alloc::vec::Vec;
-use core::ffi;
 use core::mem;
-
-pub const NAME: &ffi::CStr = vk::khr::pipeline_executable_properties::NAME;
+pub use vk::khr::pipeline_executable_properties::NAME;
 
 #[derive(Clone)]
 pub struct Device {
