@@ -36,7 +36,7 @@ impl Device {
             set,
             descriptor_writes.len() as u32,
             descriptor_writes.as_ptr(),
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>
@@ -55,7 +55,7 @@ impl Device {
             layout,
             set,
             p_data,
-        );
+        )
     }
 
     #[inline]
