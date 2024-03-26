@@ -3,23 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use core::mem;
-pub use vk::ext::descriptor_buffer::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::ext::descriptor_buffer::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::ext::descriptor_buffer::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl vk::ext::descriptor_buffer::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutSizeEXT.html>
     #[inline]
     pub unsafe fn get_descriptor_set_layout_size(
@@ -192,15 +177,5 @@ impl Device {
             data.as_mut_ptr().cast(),
         )
         .result()
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::ext::descriptor_buffer::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

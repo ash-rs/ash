@@ -2,22 +2,8 @@
 
 use crate::prelude::*;
 use crate::vk;
-use core::mem;
-pub use vk::khr::synchronization2::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    fp: vk::khr::synchronization2::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::khr::synchronization2::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl vk::khr::synchronization2::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPipelineBarrier2KHR.html>
     #[inline]
     pub unsafe fn cmd_pipeline_barrier2(
@@ -88,10 +74,5 @@ impl Device {
         fence: vk::Fence,
     ) -> VkResult<()> {
         (self.fp.queue_submit2_khr)(queue, submits.len() as u32, submits.as_ptr(), fence).result()
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::synchronization2::DeviceFn {
-        &self.fp
     }
 }

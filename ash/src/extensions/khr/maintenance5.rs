@@ -1,26 +1,9 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance5.html>
 
-#[cfg(doc)]
-use super::super::ext::{host_image_copy, image_compression_control};
 use crate::vk;
 use core::mem;
-pub use vk::khr::maintenance5::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::khr::maintenance5::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::khr::maintenance5::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl vk::khr::maintenance5::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindIndexBuffer2KHR.html>
     #[inline]
     pub unsafe fn cmd_bind_index_buffer2(
@@ -61,10 +44,10 @@ impl Device {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2KHR.html>
     ///
-    /// Also available as [`host_image_copy::Device::get_image_subresource_layout2()`]
+    /// Also available as [`vk::ext::host_image_copy::Device::get_image_subresource_layout2()`]
     /// when [`VK_EXT_host_image_copy`] is enabled.
     ///
-    /// Also available as [`image_compression_control::Device::get_image_subresource_layout2()`]
+    /// Also available as [`vk::ext::image_compression_control::Device::get_image_subresource_layout2()`]
     /// when [`VK_EXT_image_compression_control`] is enabled.
     ///
     /// [`VK_EXT_host_image_copy`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_host_image_copy.html
@@ -77,15 +60,5 @@ impl Device {
         layout: &mut vk::SubresourceLayout2KHR<'_>,
     ) {
         (self.fp.get_image_subresource_layout2_khr)(self.handle, image, subresource, layout)
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::maintenance5::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

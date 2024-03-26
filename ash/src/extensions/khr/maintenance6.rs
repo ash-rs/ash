@@ -1,23 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance6.html>
 
 use crate::vk;
-use core::mem;
-pub use vk::khr::maintenance6::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    fp: vk::khr::maintenance6::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::khr::maintenance6::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl vk::khr::maintenance6::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets2KHR.html>
     #[inline]
     pub unsafe fn cmd_bind_descriptor_sets2(
@@ -85,10 +70,5 @@ impl Device {
             command_buffer,
             bind_descriptor_buffer_embedded_samplers_info,
         )
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::maintenance6::DeviceFn {
-        &self.fp
     }
 }

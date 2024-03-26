@@ -1,22 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_mesh_shader.html>
 
 use crate::vk;
-use core::mem;
-pub use vk::ext::mesh_shader::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    fp: vk::ext::mesh_shader::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::ext::mesh_shader::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl vk::ext::mesh_shader::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksEXT.html>
     #[inline]
     pub unsafe fn cmd_draw_mesh_tasks(
@@ -80,10 +66,5 @@ impl Device {
             max_draw_count,
             stride,
         )
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::ext::mesh_shader::DeviceFn {
-        &self.fp
     }
 }

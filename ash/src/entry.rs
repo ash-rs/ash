@@ -235,8 +235,8 @@ impl Entry {
     /// # Safety
     ///
     /// The resulting [`Instance`] and any function-pointer objects (e.g. [`Device`][crate::Device]
-    /// and [extensions][crate::extensions]) loaded from it may not be used after this [`Entry`]
-    /// object is dropped, unless it was crated using [`Entry::linked()`] or
+    /// and extensions like [`vk::khr::swapchain::Device`]) loaded from it may not be used after
+    /// this [`Entry`] object is dropped, unless it was crated using [`Entry::linked()`] or
     /// [`Entry::from_parts_1_1()`].
     ///
     /// [`Instance`] does _not_ implement [drop][drop()] semantics and can only be destroyed via

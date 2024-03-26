@@ -11,7 +11,7 @@ use std::{
     borrow::Cow, cell::RefCell, default::Default, error::Error, ffi, ops::Drop, os::raw::c_char,
 };
 
-use ash::extensions::{
+use ash::vk::{
     ext::debug_utils,
     khr::{surface, swapchain},
 };

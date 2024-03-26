@@ -1,22 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_copy_commands2.html>
 
 use crate::vk;
-use core::mem;
-pub use vk::khr::copy_commands2::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    fp: vk::khr::copy_commands2::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::khr::copy_commands2::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl vk::khr::copy_commands2::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyBuffer2KHR.html>
     #[inline]
     pub unsafe fn cmd_copy_buffer2(
@@ -70,10 +56,5 @@ impl Device {
         resolve_image_info: &vk::ResolveImageInfo2KHR<'_>,
     ) {
         (self.fp.cmd_resolve_image2_khr)(command_buffer, resolve_image_info)
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::copy_commands2::DeviceFn {
-        &self.fp
     }
 }
