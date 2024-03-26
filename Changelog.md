@@ -76,6 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - extensions/ext/ray_tracing_pipeline: Pass indirect SBT regions as single item reference (#829)
 - Replaced `c_char` array setters with `CStr` setters (#831)
 - `push_next()` functions now allow unsized `p_next` argument (#855)
+- Moved high-level extension wrappers from `ash::extensions` to the existing modules under `ash::vk` (#894)
 
 ### Removed
 

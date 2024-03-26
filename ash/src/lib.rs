@@ -70,6 +70,7 @@ pub mod util;
 pub mod vk;
 
 // macros of vk need to be defined beforehand
+/// Hand-written ergonomic wrappers for extension functions
 mod extensions;
 
 pub trait RawPtr<T> {
