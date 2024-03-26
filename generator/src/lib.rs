@@ -1426,6 +1426,7 @@ pub fn generate_extension_commands<'a>(
     (
         vendor,
         quote! {
+            #[doc = #full_extension_name]
             pub mod #extension_ident {
                 use super::super::*; // Use global imports (i.e. Vulkan structs and enums) from the root module defined by this file
 
@@ -3255,7 +3256,9 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     }
     let extension_cmds = extension_cmds.into_iter().map(|(vendor, code)| {
         let vendor_ident = format_ident!("{}", vendor.to_lowercase());
+        let doc = format!("Extensions tagged {}", vendor);
         quote! {
+            #[doc = #doc]
             pub mod #vendor_ident {
                 #(#code)*
             }

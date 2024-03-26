@@ -11,11 +11,14 @@ use std::{
     borrow::Cow, cell::RefCell, default::Default, error::Error, ffi, ops::Drop, os::raw::c_char,
 };
 
-use ash::vk::{
-    ext::debug_utils,
-    khr::{surface, swapchain},
+use ash::{
+    vk,
+    vk::{
+        ext::debug_utils,
+        khr::{surface, swapchain},
+    },
+    Device, Entry, Instance,
 };
-use ash::{vk, Device, Entry, Instance};
 use winit::{
     event::{ElementState, Event, KeyEvent, WindowEvent},
     event_loop::{ControlFlow, EventLoop},

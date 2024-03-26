@@ -3956,19 +3956,23 @@ impl StructureType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV: Self = Self(1_000_568_000);
 }
+#[doc = "Extensions tagged AMD"]
 pub mod amd {
+    #[doc = "VK_AMD_rasterization_order"]
     pub mod rasterization_order {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_rasterization_order\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_AMD_shader_trinary_minmax"]
     pub mod shader_trinary_minmax {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_trinary_minmax\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_AMD_shader_explicit_vertex_parameter"]
     pub mod shader_explicit_vertex_parameter {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -3976,12 +3980,14 @@ pub mod amd {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_AMD_gcn_shader"]
     pub mod gcn_shader {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gcn_shader\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_AMD_draw_indirect_count"]
     pub mod draw_indirect_count {
         use super::super::*;
         pub const NAME: &CStr =
@@ -4096,30 +4102,35 @@ pub mod amd {
             }
         }
     }
+    #[doc = "VK_AMD_negative_viewport_height"]
     pub mod negative_viewport_height {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_negative_viewport_height\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_AMD_gpu_shader_half_float"]
     pub mod gpu_shader_half_float {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_half_float\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_AMD_shader_ballot"]
     pub mod shader_ballot {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_ballot\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_AMD_texture_gather_bias_lod"]
     pub mod texture_gather_bias_lod {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_texture_gather_bias_lod\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_AMD_shader_info"]
     pub mod shader_info {
         use super::super::*;
         pub const NAME: &CStr =
@@ -4192,30 +4203,35 @@ pub mod amd {
             }
         }
     }
+    #[doc = "VK_AMD_shader_image_load_store_lod"]
     pub mod shader_image_load_store_lod {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_image_load_store_lod\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_AMD_gpu_shader_int16"]
     pub mod gpu_shader_int16 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_int16\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_AMD_mixed_attachment_samples"]
     pub mod mixed_attachment_samples {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_mixed_attachment_samples\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_AMD_shader_fragment_mask"]
     pub mod shader_fragment_mask {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_fragment_mask\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_AMD_buffer_marker"]
     pub mod buffer_marker {
         use super::super::*;
         pub const NAME: &CStr =
@@ -4290,18 +4306,21 @@ pub mod amd {
             }
         }
     }
+    #[doc = "VK_AMD_pipeline_compiler_control"]
     pub mod pipeline_compiler_control {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_pipeline_compiler_control\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_AMD_shader_core_properties"]
     pub mod shader_core_properties {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_core_properties\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_AMD_memory_overallocation_behavior"]
     pub mod memory_overallocation_behavior {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -4309,6 +4328,7 @@ pub mod amd {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_AMD_display_native_hdr"]
     pub mod display_native_hdr {
         use super::super::*;
         pub const NAME: &CStr =
@@ -4378,18 +4398,21 @@ pub mod amd {
             }
         }
     }
+    #[doc = "VK_AMD_shader_core_properties2"]
     pub mod shader_core_properties2 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_core_properties2\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_AMD_device_coherent_memory"]
     pub mod device_coherent_memory {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_device_coherent_memory\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_AMD_shader_early_and_late_fragment_tests"]
     pub mod shader_early_and_late_fragment_tests {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -4398,7 +4421,9 @@ pub mod amd {
         pub const SPEC_VERSION: u32 = 1u32;
     }
 }
+#[doc = "Extensions tagged AMDX"]
 pub mod amdx {
+    #[doc = "VK_AMDX_shader_enqueue"]
     pub mod shader_enqueue {
         use super::super::*;
         pub const NAME: &CStr =
@@ -4647,7 +4672,9 @@ pub mod amdx {
         }
     }
 }
+#[doc = "Extensions tagged ANDROID"]
 pub mod android {
+    #[doc = "VK_ANDROID_native_buffer"]
     pub mod native_buffer {
         use super::super::*;
         pub const NAME: &CStr =
@@ -4820,6 +4847,7 @@ pub mod android {
             }
         }
     }
+    #[doc = "VK_ANDROID_external_memory_android_hardware_buffer"]
     pub mod external_memory_android_hardware_buffer {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -4926,6 +4954,7 @@ pub mod android {
             }
         }
     }
+    #[doc = "VK_ANDROID_external_format_resolve"]
     pub mod external_format_resolve {
         use super::super::*;
         pub const NAME: &CStr =
@@ -4933,7 +4962,9 @@ pub mod android {
         pub const SPEC_VERSION: u32 = 1u32;
     }
 }
+#[doc = "Extensions tagged ARM"]
 pub mod arm {
+    #[doc = "VK_ARM_rasterization_order_attachment_access"]
     pub mod rasterization_order_attachment_access {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -4941,24 +4972,28 @@ pub mod arm {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_ARM_shader_core_properties"]
     pub mod shader_core_properties {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_shader_core_properties\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_ARM_scheduling_controls"]
     pub mod scheduling_controls {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_scheduling_controls\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_ARM_render_pass_striped"]
     pub mod render_pass_striped {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_render_pass_striped\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_ARM_shader_core_builtins"]
     pub mod shader_core_builtins {
         use super::super::*;
         pub const NAME: &CStr =
@@ -4966,7 +5001,9 @@ pub mod arm {
         pub const SPEC_VERSION: u32 = 2u32;
     }
 }
+#[doc = "Extensions tagged EXT"]
 pub mod ext {
+    #[doc = "VK_EXT_debug_report"]
     pub mod debug_report {
         use super::super::*;
         pub const NAME: &CStr =
@@ -5105,12 +5142,14 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_depth_range_unrestricted"]
     pub mod depth_range_unrestricted {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_range_unrestricted\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_debug_marker"]
     pub mod debug_marker {
         use super::super::*;
         pub const NAME: &CStr =
@@ -5276,6 +5315,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_transform_feedback"]
     pub mod transform_feedback {
         use super::super::*;
         pub const NAME: &CStr =
@@ -5511,24 +5551,28 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_validation_flags"]
     pub mod validation_flags {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_flags\0") };
         pub const SPEC_VERSION: u32 = 3u32;
     }
+    #[doc = "VK_EXT_shader_subgroup_ballot"]
     pub mod shader_subgroup_ballot {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_ballot\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_shader_subgroup_vote"]
     pub mod shader_subgroup_vote {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_vote\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_texture_compression_astc_hdr"]
     pub mod texture_compression_astc_hdr {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -5536,18 +5580,21 @@ pub mod ext {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_astc_decode_mode"]
     pub mod astc_decode_mode {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_astc_decode_mode\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_pipeline_robustness"]
     pub mod pipeline_robustness {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_robustness\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_conditional_rendering"]
     pub mod conditional_rendering {
         use super::super::*;
         pub const NAME: &CStr =
@@ -5642,6 +5689,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_direct_mode_display"]
     pub mod direct_mode_display {
         use super::super::*;
         pub const NAME: &CStr =
@@ -5706,6 +5754,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_acquire_xlib_display"]
     pub mod acquire_xlib_display {
         use super::super::*;
         pub const NAME: &CStr =
@@ -5805,6 +5854,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_display_surface_counter"]
     pub mod display_surface_counter {
         use super::super::*;
         pub const NAME: &CStr =
@@ -5878,6 +5928,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_display_control"]
     pub mod display_control {
         use super::super::*;
         pub const NAME: &CStr =
@@ -6037,6 +6088,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_discard_rectangles"]
     pub mod discard_rectangles {
         use super::super::*;
         pub const NAME: &CStr =
@@ -6161,24 +6213,28 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_conservative_rasterization"]
     pub mod conservative_rasterization {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_conservative_rasterization\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_depth_clip_enable"]
     pub mod depth_clip_enable {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clip_enable\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_swapchain_colorspace"]
     pub mod swapchain_colorspace {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_swapchain_colorspace\0") };
         pub const SPEC_VERSION: u32 = 4u32;
     }
+    #[doc = "VK_EXT_hdr_metadata"]
     pub mod hdr_metadata {
         use super::super::*;
         pub const NAME: &CStr =
@@ -6247,18 +6303,21 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_external_memory_dma_buf"]
     pub mod external_memory_dma_buf {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_external_memory_dma_buf\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_queue_family_foreign"]
     pub mod queue_family_foreign {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_queue_family_foreign\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_debug_utils"]
     pub mod debug_utils {
         use super::super::*;
         pub const NAME: &CStr =
@@ -6615,24 +6674,28 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_sampler_filter_minmax"]
     pub mod sampler_filter_minmax {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_sampler_filter_minmax\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_EXT_inline_uniform_block"]
     pub mod inline_uniform_block {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_inline_uniform_block\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_shader_stencil_export"]
     pub mod shader_stencil_export {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_stencil_export\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_sample_locations"]
     pub mod sample_locations {
         use super::super::*;
         pub const NAME: &CStr =
@@ -6767,18 +6830,21 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_blend_operation_advanced"]
     pub mod blend_operation_advanced {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_blend_operation_advanced\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_EXT_post_depth_coverage"]
     pub mod post_depth_coverage {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_post_depth_coverage\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_image_drm_format_modifier"]
     pub mod image_drm_format_modifier {
         use super::super::*;
         pub const NAME: &CStr =
@@ -6852,6 +6918,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_validation_cache"]
     pub mod validation_cache {
         use super::super::*;
         pub const NAME: &CStr =
@@ -7009,30 +7076,35 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_descriptor_indexing"]
     pub mod descriptor_indexing {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_descriptor_indexing\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_EXT_shader_viewport_index_layer"]
     pub mod shader_viewport_index_layer {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_viewport_index_layer\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_filter_cubic"]
     pub mod filter_cubic {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_filter_cubic\0") };
         pub const SPEC_VERSION: u32 = 3u32;
     }
+    #[doc = "VK_EXT_global_priority"]
     pub mod global_priority {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_global_priority\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_EXT_external_memory_host"]
     pub mod external_memory_host {
         use super::super::*;
         pub const NAME: &CStr =
@@ -7109,6 +7181,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_calibrated_timestamps"]
     pub mod calibrated_timestamps {
         use super::super::*;
         pub const NAME: &CStr =
@@ -7250,24 +7323,28 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_vertex_attribute_divisor"]
     pub mod vertex_attribute_divisor {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_vertex_attribute_divisor\0") };
         pub const SPEC_VERSION: u32 = 3u32;
     }
+    #[doc = "VK_EXT_pipeline_creation_feedback"]
     pub mod pipeline_creation_feedback {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_creation_feedback\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_pci_bus_info"]
     pub mod pci_bus_info {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pci_bus_info\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_EXT_metal_surface"]
     pub mod metal_surface {
         use super::super::*;
         pub const NAME: &CStr =
@@ -7340,42 +7417,49 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_fragment_density_map"]
     pub mod fragment_density_map {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_density_map\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_EXT_scalar_block_layout"]
     pub mod scalar_block_layout {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_scalar_block_layout\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_subgroup_size_control"]
     pub mod subgroup_size_control {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_subgroup_size_control\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_EXT_shader_image_atomic_int64"]
     pub mod shader_image_atomic_int64 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_image_atomic_int64\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_memory_budget"]
     pub mod memory_budget {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_memory_budget\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_memory_priority"]
     pub mod memory_priority {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_memory_priority\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_buffer_device_address"]
     pub mod buffer_device_address {
         use super::super::*;
         pub const NAME: &CStr =
@@ -7444,6 +7528,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_tooling_info"]
     pub mod tooling_info {
         use super::super::*;
         pub const NAME: &CStr =
@@ -7516,36 +7601,42 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_separate_stencil_usage"]
     pub mod separate_stencil_usage {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_separate_stencil_usage\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_validation_features"]
     pub mod validation_features {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_features\0") };
         pub const SPEC_VERSION: u32 = 6u32;
     }
+    #[doc = "VK_EXT_fragment_shader_interlock"]
     pub mod fragment_shader_interlock {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_shader_interlock\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_ycbcr_image_arrays"]
     pub mod ycbcr_image_arrays {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_ycbcr_image_arrays\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_provoking_vertex"]
     pub mod provoking_vertex {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_provoking_vertex\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_full_screen_exclusive"]
     pub mod full_screen_exclusive {
         use super::super::*;
         pub const NAME: &CStr =
@@ -7736,6 +7827,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_headless_surface"]
     pub mod headless_surface {
         use super::super::*;
         pub const NAME: &CStr =
@@ -7808,6 +7900,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_line_rasterization"]
     pub mod line_rasterization {
         use super::super::*;
         pub const NAME: &CStr =
@@ -7878,12 +7971,14 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_shader_atomic_float"]
     pub mod shader_atomic_float {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_atomic_float\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_host_query_reset"]
     pub mod host_query_reset {
         use super::super::*;
         pub const NAME: &CStr =
@@ -7952,12 +8047,14 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_index_type_uint8"]
     pub mod index_type_uint8 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_index_type_uint8\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_extended_dynamic_state"]
     pub mod extended_dynamic_state {
         use super::super::*;
         pub const NAME: &CStr =
@@ -8309,6 +8406,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_host_image_copy"]
     pub mod host_image_copy {
         use super::super::*;
         pub const NAME: &CStr =
@@ -8483,24 +8581,28 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_map_memory_placed"]
     pub mod map_memory_placed {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_map_memory_placed\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_shader_atomic_float2"]
     pub mod shader_atomic_float2 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_atomic_float2\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_surface_maintenance1"]
     pub mod surface_maintenance1 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_surface_maintenance1\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_swapchain_maintenance1"]
     pub mod swapchain_maintenance1 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -8569,6 +8671,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_shader_demote_to_helper_invocation"]
     pub mod shader_demote_to_helper_invocation {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -8576,12 +8679,14 @@ pub mod ext {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_texel_buffer_alignment"]
     pub mod texel_buffer_alignment {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_texel_buffer_alignment\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_depth_bias_control"]
     pub mod depth_bias_control {
         use super::super::*;
         pub const NAME: &CStr =
@@ -8649,12 +8754,14 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_device_memory_report"]
     pub mod device_memory_report {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_memory_report\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_EXT_acquire_drm_display"]
     pub mod acquire_drm_display {
         use super::super::*;
         pub const NAME: &CStr =
@@ -8750,18 +8857,21 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_robustness2"]
     pub mod robustness2 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_robustness2\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_custom_border_color"]
     pub mod custom_border_color {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_custom_border_color\0") };
         pub const SPEC_VERSION: u32 = 12u32;
     }
+    #[doc = "VK_EXT_private_data"]
     pub mod private_data {
         use super::super::*;
         pub const NAME: &CStr =
@@ -8915,6 +9025,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_pipeline_creation_cache_control"]
     pub mod pipeline_creation_cache_control {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -8922,6 +9033,7 @@ pub mod ext {
         };
         pub const SPEC_VERSION: u32 = 3u32;
     }
+    #[doc = "VK_EXT_metal_objects"]
     pub mod metal_objects {
         use super::super::*;
         pub const NAME: &CStr =
@@ -8990,6 +9102,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_descriptor_buffer"]
     pub mod descriptor_buffer {
         use super::super::*;
         pub const NAME: &CStr =
@@ -9363,12 +9476,14 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_graphics_pipeline_library"]
     pub mod graphics_pipeline_library {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_graphics_pipeline_library\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_mesh_shader"]
     pub mod mesh_shader {
         use super::super::*;
         pub const NAME: &CStr =
@@ -9507,24 +9622,28 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_ycbcr_2plane_444_formats"]
     pub mod ycbcr_2plane_444_formats {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_ycbcr_2plane_444_formats\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_fragment_density_map2"]
     pub mod fragment_density_map2 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_density_map2\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_image_robustness"]
     pub mod image_robustness {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_robustness\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_image_compression_control"]
     pub mod image_compression_control {
         use super::super::*;
         pub const NAME: &CStr =
@@ -9592,6 +9711,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_attachment_feedback_loop_layout"]
     pub mod attachment_feedback_loop_layout {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -9599,12 +9719,14 @@ pub mod ext {
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_EXT_4444_formats"]
     pub mod _4444_formats {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_4444_formats\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_device_fault"]
     pub mod device_fault {
         use super::super::*;
         pub const NAME: &CStr =
@@ -9675,12 +9797,14 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_rgba10x6_formats"]
     pub mod rgba10x6_formats {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_rgba10x6_formats\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_directfb_surface"]
     pub mod directfb_surface {
         use super::super::*;
         pub const NAME: &CStr =
@@ -9783,6 +9907,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_vertex_input_dynamic_state"]
     pub mod vertex_input_dynamic_state {
         use super::super::*;
         pub const NAME: &CStr =
@@ -9857,12 +9982,14 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_physical_device_drm"]
     pub mod physical_device_drm {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_physical_device_drm\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_device_address_binding_report"]
     pub mod device_address_binding_report {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -9870,12 +9997,14 @@ pub mod ext {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_depth_clip_control"]
     pub mod depth_clip_control {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clip_control\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_primitive_topology_list_restart"]
     pub mod primitive_topology_list_restart {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -9883,6 +10012,7 @@ pub mod ext {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_pipeline_properties"]
     pub mod pipeline_properties {
         use super::super::*;
         pub const NAME: &CStr =
@@ -9960,12 +10090,14 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_frame_boundary"]
     pub mod frame_boundary {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_frame_boundary\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_multisampled_render_to_single_sampled"]
     pub mod multisampled_render_to_single_sampled {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -9973,6 +10105,7 @@ pub mod ext {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_extended_dynamic_state2"]
     pub mod extended_dynamic_state2 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -10133,6 +10266,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_color_write_enable"]
     pub mod color_write_enable {
         use super::super::*;
         pub const NAME: &CStr =
@@ -10203,24 +10337,28 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_primitives_generated_query"]
     pub mod primitives_generated_query {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_primitives_generated_query\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_global_priority_query"]
     pub mod global_priority_query {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_global_priority_query\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_image_view_min_lod"]
     pub mod image_view_min_lod {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_view_min_lod\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_multi_draw"]
     pub mod multi_draw {
         use super::super::*;
         pub const NAME: &CStr =
@@ -10328,18 +10466,21 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_image_2d_view_of_3d"]
     pub mod image_2d_view_of_3d {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_2d_view_of_3d\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_shader_tile_image"]
     pub mod shader_tile_image {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_tile_image\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_opacity_micromap"]
     pub mod opacity_micromap {
         use super::super::*;
         pub const NAME: &CStr =
@@ -10760,18 +10901,21 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_load_store_op_none"]
     pub mod load_store_op_none {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_load_store_op_none\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_border_color_swizzle"]
     pub mod border_color_swizzle {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_border_color_swizzle\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_pageable_device_local_memory"]
     pub mod pageable_device_local_memory {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -10843,24 +10987,28 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_image_sliced_view_of_3d"]
     pub mod image_sliced_view_of_3d {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_sliced_view_of_3d\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_depth_clamp_zero_one"]
     pub mod depth_clamp_zero_one {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clamp_zero_one\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_non_seamless_cube_map"]
     pub mod non_seamless_cube_map {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_non_seamless_cube_map\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_image_compression_control_swapchain"]
     pub mod image_compression_control_swapchain {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -10868,12 +11016,14 @@ pub mod ext {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_nested_command_buffer"]
     pub mod nested_command_buffer {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_nested_command_buffer\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_external_memory_acquire_unmodified"]
     pub mod external_memory_acquire_unmodified {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -10881,6 +11031,7 @@ pub mod ext {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_extended_dynamic_state3"]
     pub mod extended_dynamic_state3 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -11730,12 +11881,14 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_subpass_merge_feedback"]
     pub mod subpass_merge_feedback {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_subpass_merge_feedback\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_EXT_shader_module_identifier"]
     pub mod shader_module_identifier {
         use super::super::*;
         pub const NAME: &CStr =
@@ -11836,6 +11989,7 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_rasterization_order_attachment_access"]
     pub mod rasterization_order_attachment_access {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -11843,18 +11997,21 @@ pub mod ext {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_legacy_dithering"]
     pub mod legacy_dithering {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_legacy_dithering\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_pipeline_protected_access"]
     pub mod pipeline_protected_access {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_protected_access\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_shader_object"]
     pub mod shader_object {
         use super::super::*;
         pub const NAME: &CStr =
@@ -12968,18 +13125,21 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_mutable_descriptor_type"]
     pub mod mutable_descriptor_type {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mutable_descriptor_type\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_layer_settings"]
     pub mod layer_settings {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_layer_settings\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_EXT_pipeline_library_group_handles"]
     pub mod pipeline_library_group_handles {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -12987,6 +13147,7 @@ pub mod ext {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_dynamic_rendering_unused_attachments"]
     pub mod dynamic_rendering_unused_attachments {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -12994,6 +13155,7 @@ pub mod ext {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_EXT_attachment_feedback_loop_dynamic_state"]
     pub mod attachment_feedback_loop_dynamic_state {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -13064,7 +13226,9 @@ pub mod ext {
         }
     }
 }
+#[doc = "Extensions tagged FUCHSIA"]
 pub mod fuchsia {
+    #[doc = "VK_FUCHSIA_imagepipe_surface"]
     pub mod imagepipe_surface {
         use super::super::*;
         pub const NAME: &CStr =
@@ -13138,6 +13302,7 @@ pub mod fuchsia {
             }
         }
     }
+    #[doc = "VK_FUCHSIA_external_memory"]
     pub mod external_memory {
         use super::super::*;
         pub const NAME: &CStr =
@@ -13241,6 +13406,7 @@ pub mod fuchsia {
             }
         }
     }
+    #[doc = "VK_FUCHSIA_external_semaphore"]
     pub mod external_semaphore {
         use super::super::*;
         pub const NAME: &CStr =
@@ -13342,6 +13508,7 @@ pub mod fuchsia {
             }
         }
     }
+    #[doc = "VK_FUCHSIA_buffer_collection"]
     pub mod buffer_collection {
         use super::super::*;
         pub const NAME: &CStr =
@@ -13534,7 +13701,9 @@ pub mod fuchsia {
         }
     }
 }
+#[doc = "Extensions tagged GGP"]
 pub mod ggp {
+    #[doc = "VK_GGP_stream_descriptor_surface"]
     pub mod stream_descriptor_surface {
         use super::super::*;
         pub const NAME: &CStr =
@@ -13609,6 +13778,7 @@ pub mod ggp {
             }
         }
     }
+    #[doc = "VK_GGP_frame_token"]
     pub mod frame_token {
         use super::super::*;
         pub const NAME: &CStr =
@@ -13616,7 +13786,9 @@ pub mod ggp {
         pub const SPEC_VERSION: u32 = 1u32;
     }
 }
+#[doc = "Extensions tagged GOOGLE"]
 pub mod google {
+    #[doc = "VK_GOOGLE_display_timing"]
     pub mod display_timing {
         use super::super::*;
         pub const NAME: &CStr =
@@ -13719,24 +13891,28 @@ pub mod google {
             }
         }
     }
+    #[doc = "VK_GOOGLE_hlsl_functionality1"]
     pub mod hlsl_functionality1 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_hlsl_functionality1\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_GOOGLE_decorate_string"]
     pub mod decorate_string {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_decorate_string\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_GOOGLE_user_type"]
     pub mod user_type {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_user_type\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_GOOGLE_surfaceless_query"]
     pub mod surfaceless_query {
         use super::super::*;
         pub const NAME: &CStr =
@@ -13744,7 +13920,9 @@ pub mod google {
         pub const SPEC_VERSION: u32 = 2u32;
     }
 }
+#[doc = "Extensions tagged HUAWEI"]
 pub mod huawei {
+    #[doc = "VK_HUAWEI_subpass_shading"]
     pub mod subpass_shading {
         use super::super::*;
         pub const NAME: &CStr =
@@ -13840,6 +14018,7 @@ pub mod huawei {
             }
         }
     }
+    #[doc = "VK_HUAWEI_invocation_mask"]
     pub mod invocation_mask {
         use super::super::*;
         pub const NAME: &CStr =
@@ -13910,6 +14089,7 @@ pub mod huawei {
             }
         }
     }
+    #[doc = "VK_HUAWEI_cluster_culling_shader"]
     pub mod cluster_culling_shader {
         use super::super::*;
         pub const NAME: &CStr =
@@ -14011,19 +14191,23 @@ pub mod huawei {
         }
     }
 }
+#[doc = "Extensions tagged IMG"]
 pub mod img {
+    #[doc = "VK_IMG_filter_cubic"]
     pub mod filter_cubic {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_IMG_filter_cubic\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_IMG_format_pvrtc"]
     pub mod format_pvrtc {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_IMG_format_pvrtc\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_IMG_relaxed_line_rasterization"]
     pub mod relaxed_line_rasterization {
         use super::super::*;
         pub const NAME: &CStr =
@@ -14031,13 +14215,16 @@ pub mod img {
         pub const SPEC_VERSION: u32 = 1u32;
     }
 }
+#[doc = "Extensions tagged INTEL"]
 pub mod intel {
+    #[doc = "VK_INTEL_shader_integer_functions2"]
     pub mod shader_integer_functions2 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_shader_integer_functions2\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_INTEL_performance_query"]
     pub mod performance_query {
         use super::super::*;
         pub const NAME: &CStr =
@@ -14323,7 +14510,9 @@ pub mod intel {
         }
     }
 }
+#[doc = "Extensions tagged KHR"]
 pub mod khr {
+    #[doc = "VK_KHR_surface"]
     pub mod surface {
         use super::super::*;
         pub const NAME: &CStr = unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_surface\0") };
@@ -14513,6 +14702,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_swapchain"]
     pub mod swapchain {
         use super::super::*;
         pub const NAME: &CStr =
@@ -14843,6 +15033,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_display"]
     pub mod display {
         use super::super::*;
         pub const NAME: &CStr = unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_display\0") };
@@ -15097,6 +15288,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_display_swapchain"]
     pub mod display_swapchain {
         use super::super::*;
         pub const NAME: &CStr =
@@ -15171,6 +15363,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_xlib_surface"]
     pub mod xlib_surface {
         use super::super::*;
         pub const NAME: &CStr =
@@ -15275,6 +15468,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_xcb_surface"]
     pub mod xcb_surface {
         use super::super::*;
         pub const NAME: &CStr =
@@ -15378,6 +15572,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_wayland_surface"]
     pub mod wayland_surface {
         use super::super::*;
         pub const NAME: &CStr =
@@ -15480,6 +15675,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_android_surface"]
     pub mod android_surface {
         use super::super::*;
         pub const NAME: &CStr =
@@ -15552,6 +15748,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_win32_surface"]
     pub mod win32_surface {
         use super::super::*;
         pub const NAME: &CStr =
@@ -15652,6 +15849,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_sampler_mirror_clamp_to_edge"]
     pub mod sampler_mirror_clamp_to_edge {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -15659,6 +15857,7 @@ pub mod khr {
         };
         pub const SPEC_VERSION: u32 = 3u32;
     }
+    #[doc = "VK_KHR_video_queue"]
     pub mod video_queue {
         use super::super::*;
         pub const NAME: &CStr =
@@ -16081,6 +16280,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_video_decode_queue"]
     pub mod video_decode_queue {
         use super::super::*;
         pub const NAME: &CStr =
@@ -16145,24 +16345,28 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_video_encode_h264"]
     pub mod video_encode_h264 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_h264\0") };
         pub const SPEC_VERSION: u32 = 14u32;
     }
+    #[doc = "VK_KHR_video_encode_h265"]
     pub mod video_encode_h265 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_h265\0") };
         pub const SPEC_VERSION: u32 = 14u32;
     }
+    #[doc = "VK_KHR_video_decode_h264"]
     pub mod video_decode_h264 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_h264\0") };
         pub const SPEC_VERSION: u32 = 9u32;
     }
+    #[doc = "VK_KHR_dynamic_rendering"]
     pub mod dynamic_rendering {
         use super::super::*;
         pub const NAME: &CStr =
@@ -16251,12 +16455,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_multiview"]
     pub mod multiview {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_multiview\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_get_physical_device_properties2"]
     pub mod get_physical_device_properties2 {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -16500,6 +16706,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_device_group"]
     pub mod device_group {
         use super::super::*;
         pub const NAME: &CStr =
@@ -16758,12 +16965,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_shader_draw_parameters"]
     pub mod shader_draw_parameters {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_draw_parameters\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_maintenance1"]
     pub mod maintenance1 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -16833,6 +17042,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_device_group_creation"]
     pub mod device_group_creation {
         use super::super::*;
         pub const NAME: &CStr =
@@ -16906,6 +17116,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_external_memory_capabilities"]
     pub mod external_memory_capabilities {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -16979,12 +17190,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_external_memory"]
     pub mod external_memory {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_external_memory_win32"]
     pub mod external_memory_win32 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -17088,6 +17301,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_external_memory_fd"]
     pub mod external_memory_fd {
         use super::super::*;
         pub const NAME: &CStr =
@@ -17183,12 +17397,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_win32_keyed_mutex"]
     pub mod win32_keyed_mutex {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_win32_keyed_mutex\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_external_semaphore_capabilities"]
     pub mod external_semaphore_capabilities {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -17264,12 +17480,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_external_semaphore"]
     pub mod external_semaphore {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_external_semaphore_win32"]
     pub mod external_semaphore_win32 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -17366,6 +17584,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_external_semaphore_fd"]
     pub mod external_semaphore_fd {
         use super::super::*;
         pub const NAME: &CStr =
@@ -17457,6 +17676,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_push_descriptor"]
     pub mod push_descriptor {
         use super::super::*;
         pub const NAME: &CStr =
@@ -17566,24 +17786,28 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_shader_float16_int8"]
     pub mod shader_float16_int8 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_float16_int8\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_16bit_storage"]
     pub mod _16bit_storage {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_16bit_storage\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_incremental_present"]
     pub mod incremental_present {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_incremental_present\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_KHR_descriptor_update_template"]
     pub mod descriptor_update_template {
         use super::super::*;
         pub const NAME: &CStr =
@@ -17741,12 +17965,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_imageless_framebuffer"]
     pub mod imageless_framebuffer {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_imageless_framebuffer\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_create_renderpass2"]
     pub mod create_renderpass2 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -17897,6 +18123,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_shared_presentable_image"]
     pub mod shared_presentable_image {
         use super::super::*;
         pub const NAME: &CStr =
@@ -17963,6 +18190,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_external_fence_capabilities"]
     pub mod external_fence_capabilities {
         use super::super::*;
         pub const NAME: &CStr =
@@ -18035,12 +18263,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_external_fence"]
     pub mod external_fence {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_external_fence_win32"]
     pub mod external_fence_win32 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -18138,6 +18368,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_external_fence_fd"]
     pub mod external_fence_fd {
         use super::super::*;
         pub const NAME: &CStr =
@@ -18225,6 +18456,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_performance_query"]
     pub mod performance_query {
         use super::super::*;
         pub const NAME: &CStr =
@@ -18415,12 +18647,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_maintenance2"]
     pub mod maintenance2 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance2\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_get_surface_capabilities2"]
     pub mod get_surface_capabilities2 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -18525,12 +18759,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_variable_pointers"]
     pub mod variable_pointers {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_variable_pointers\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_get_display_properties2"]
     pub mod get_display_properties2 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -18693,12 +18929,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_dedicated_allocation"]
     pub mod dedicated_allocation {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_dedicated_allocation\0") };
         pub const SPEC_VERSION: u32 = 3u32;
     }
+    #[doc = "VK_KHR_storage_buffer_storage_class"]
     pub mod storage_buffer_storage_class {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -18706,12 +18944,14 @@ pub mod khr {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_relaxed_block_layout"]
     pub mod relaxed_block_layout {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_relaxed_block_layout\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_get_memory_requirements2"]
     pub mod get_memory_requirements2 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -18841,12 +19081,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_image_format_list"]
     pub mod image_format_list {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_image_format_list\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_acceleration_structure"]
     pub mod acceleration_structure {
         use super::super::*;
         pub const NAME: &CStr =
@@ -19379,6 +19621,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_ray_tracing_pipeline"]
     pub mod ray_tracing_pipeline {
         use super::super::*;
         pub const NAME: &CStr =
@@ -19652,12 +19895,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_ray_query"]
     pub mod ray_query {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_query\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_sampler_ycbcr_conversion"]
     pub mod sampler_ycbcr_conversion {
         use super::super::*;
         pub const NAME: &CStr =
@@ -19759,6 +20004,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_bind_memory2"]
     pub mod bind_memory2 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -19855,12 +20101,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_portability_subset"]
     pub mod portability_subset {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_portability_subset\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_maintenance3"]
     pub mod maintenance3 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -19932,6 +20180,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_draw_indirect_count"]
     pub mod draw_indirect_count {
         use super::super::*;
         pub const NAME: &CStr =
@@ -20028,6 +20277,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_shader_subgroup_extended_types"]
     pub mod shader_subgroup_extended_types {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -20035,60 +20285,70 @@ pub mod khr {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_8bit_storage"]
     pub mod _8bit_storage {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_8bit_storage\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_shader_atomic_int64"]
     pub mod shader_atomic_int64 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_atomic_int64\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_shader_clock"]
     pub mod shader_clock {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_clock\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_video_decode_h265"]
     pub mod video_decode_h265 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_h265\0") };
         pub const SPEC_VERSION: u32 = 8u32;
     }
+    #[doc = "VK_KHR_global_priority"]
     pub mod global_priority {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_global_priority\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_driver_properties"]
     pub mod driver_properties {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_driver_properties\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_shader_float_controls"]
     pub mod shader_float_controls {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_float_controls\0") };
         pub const SPEC_VERSION: u32 = 4u32;
     }
+    #[doc = "VK_KHR_depth_stencil_resolve"]
     pub mod depth_stencil_resolve {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_depth_stencil_resolve\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_swapchain_mutable_format"]
     pub mod swapchain_mutable_format {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_swapchain_mutable_format\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_timeline_semaphore"]
     pub mod timeline_semaphore {
         use super::super::*;
         pub const NAME: &CStr =
@@ -20203,18 +20463,21 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_vulkan_memory_model"]
     pub mod vulkan_memory_model {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_vulkan_memory_model\0") };
         pub const SPEC_VERSION: u32 = 3u32;
     }
+    #[doc = "VK_KHR_shader_terminate_invocation"]
     pub mod shader_terminate_invocation {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_terminate_invocation\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_fragment_shading_rate"]
     pub mod fragment_shading_rate {
         use super::super::*;
         pub const NAME: &CStr =
@@ -20355,6 +20618,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_dynamic_rendering_local_read"]
     pub mod dynamic_rendering_local_read {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -20453,18 +20717,21 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_shader_quad_control"]
     pub mod shader_quad_control {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_quad_control\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_spirv_1_4"]
     pub mod spirv_1_4 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_spirv_1_4\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_surface_protected_capabilities"]
     pub mod surface_protected_capabilities {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -20472,6 +20739,7 @@ pub mod khr {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_separate_depth_stencil_layouts"]
     pub mod separate_depth_stencil_layouts {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -20479,6 +20747,7 @@ pub mod khr {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_present_wait"]
     pub mod present_wait {
         use super::super::*;
         pub const NAME: &CStr =
@@ -20547,6 +20816,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_uniform_buffer_standard_layout"]
     pub mod uniform_buffer_standard_layout {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -20554,6 +20824,7 @@ pub mod khr {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_buffer_device_address"]
     pub mod buffer_device_address {
         use super::super::*;
         pub const NAME: &CStr =
@@ -20672,6 +20943,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_deferred_host_operations"]
     pub mod deferred_host_operations {
         use super::super::*;
         pub const NAME: &CStr =
@@ -20848,6 +21120,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_pipeline_executable_properties"]
     pub mod pipeline_executable_properties {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -20986,6 +21259,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_map_memory2"]
     pub mod map_memory2 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -21073,30 +21347,35 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_shader_integer_dot_product"]
     pub mod shader_integer_dot_product {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_integer_dot_product\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_pipeline_library"]
     pub mod pipeline_library {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_pipeline_library\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_shader_non_semantic_info"]
     pub mod shader_non_semantic_info {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_non_semantic_info\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_present_id"]
     pub mod present_id {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_present_id\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_video_encode_queue"]
     pub mod video_encode_queue {
         use super::super::*;
         pub const NAME: &CStr =
@@ -21265,6 +21544,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_synchronization2"]
     pub mod synchronization2 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -21516,12 +21796,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_fragment_shader_barycentric"]
     pub mod fragment_shader_barycentric {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_fragment_shader_barycentric\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_shader_subgroup_uniform_control_flow"]
     pub mod shader_subgroup_uniform_control_flow {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -21529,6 +21811,7 @@ pub mod khr {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_zero_initialize_workgroup_memory"]
     pub mod zero_initialize_workgroup_memory {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -21536,6 +21819,7 @@ pub mod khr {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_workgroup_memory_explicit_layout"]
     pub mod workgroup_memory_explicit_layout {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -21543,6 +21827,7 @@ pub mod khr {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_copy_commands2"]
     pub mod copy_commands2 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -21723,12 +22008,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_format_feature_flags2"]
     pub mod format_feature_flags2 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_format_feature_flags2\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_KHR_ray_tracing_maintenance1"]
     pub mod ray_tracing_maintenance1 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -21797,12 +22084,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_portability_enumeration"]
     pub mod portability_enumeration {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_portability_enumeration\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_maintenance4"]
     pub mod maintenance4 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -21933,12 +22222,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_shader_subgroup_rotate"]
     pub mod shader_subgroup_rotate {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_subgroup_rotate\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_KHR_shader_maximal_reconvergence"]
     pub mod shader_maximal_reconvergence {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -21946,6 +22237,7 @@ pub mod khr {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_maintenance5"]
     pub mod maintenance5 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -22100,12 +22392,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_ray_tracing_position_fetch"]
     pub mod ray_tracing_position_fetch {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_tracing_position_fetch\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_cooperative_matrix"]
     pub mod cooperative_matrix {
         use super::super::*;
         pub const NAME: &CStr =
@@ -22179,42 +22473,49 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_video_decode_av1"]
     pub mod video_decode_av1 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_av1\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_video_maintenance1"]
     pub mod video_maintenance1 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_maintenance1\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_vertex_attribute_divisor"]
     pub mod vertex_attribute_divisor {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_vertex_attribute_divisor\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_load_store_op_none"]
     pub mod load_store_op_none {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_load_store_op_none\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_shader_float_controls2"]
     pub mod shader_float_controls2 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_float_controls2\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_index_type_uint8"]
     pub mod index_type_uint8 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_index_type_uint8\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_line_rasterization"]
     pub mod line_rasterization {
         use super::super::*;
         pub const NAME: &CStr =
@@ -22280,6 +22581,7 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_calibrated_timestamps"]
     pub mod calibrated_timestamps {
         use super::super::*;
         pub const NAME: &CStr =
@@ -22404,12 +22706,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_shader_expect_assume"]
     pub mod shader_expect_assume {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_expect_assume\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_KHR_maintenance6"]
     pub mod maintenance6 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -22608,7 +22912,9 @@ pub mod khr {
         }
     }
 }
+#[doc = "Extensions tagged LUNARG"]
 pub mod lunarg {
+    #[doc = "VK_LUNARG_direct_driver_loading"]
     pub mod direct_driver_loading {
         use super::super::*;
         pub const NAME: &CStr =
@@ -22616,7 +22922,9 @@ pub mod lunarg {
         pub const SPEC_VERSION: u32 = 1u32;
     }
 }
+#[doc = "Extensions tagged MSFT"]
 pub mod msft {
+    #[doc = "VK_MSFT_layered_driver"]
     pub mod layered_driver {
         use super::super::*;
         pub const NAME: &CStr =
@@ -22624,7 +22932,9 @@ pub mod msft {
         pub const SPEC_VERSION: u32 = 1u32;
     }
 }
+#[doc = "Extensions tagged MVK"]
 pub mod mvk {
+    #[doc = "VK_MVK_ios_surface"]
     pub mod ios_surface {
         use super::super::*;
         pub const NAME: &CStr =
@@ -22696,6 +23006,7 @@ pub mod mvk {
             }
         }
     }
+    #[doc = "VK_MVK_macos_surface"]
     pub mod macos_surface {
         use super::super::*;
         pub const NAME: &CStr =
@@ -22769,7 +23080,9 @@ pub mod mvk {
         }
     }
 }
+#[doc = "Extensions tagged NN"]
 pub mod nn {
+    #[doc = "VK_NN_vi_surface"]
     pub mod vi_surface {
         use super::super::*;
         pub const NAME: &CStr =
@@ -22839,25 +23152,30 @@ pub mod nn {
         }
     }
 }
+#[doc = "Extensions tagged NV"]
 pub mod nv {
+    #[doc = "VK_NV_glsl_shader"]
     pub mod glsl_shader {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_glsl_shader\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_dedicated_allocation"]
     pub mod dedicated_allocation {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_dedicated_allocation\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_corner_sampled_image"]
     pub mod corner_sampled_image {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_corner_sampled_image\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_NV_external_memory_capabilities"]
     pub mod external_memory_capabilities {
         use super::super::*;
         pub const NAME: &CStr =
@@ -22941,12 +23259,14 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_external_memory"]
     pub mod external_memory {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_external_memory_win32"]
     pub mod external_memory_win32 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -23019,12 +23339,14 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_win32_keyed_mutex"]
     pub mod win32_keyed_mutex {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_win32_keyed_mutex\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_NV_clip_space_w_scaling"]
     pub mod clip_space_w_scaling {
         use super::super::*;
         pub const NAME: &CStr =
@@ -23097,6 +23419,7 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_sample_mask_override_coverage"]
     pub mod sample_mask_override_coverage {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -23104,48 +23427,56 @@ pub mod nv {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_geometry_shader_passthrough"]
     pub mod geometry_shader_passthrough {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_geometry_shader_passthrough\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_viewport_array2"]
     pub mod viewport_array2 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_viewport_array2\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_viewport_swizzle"]
     pub mod viewport_swizzle {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_viewport_swizzle\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_fragment_coverage_to_color"]
     pub mod fragment_coverage_to_color {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_coverage_to_color\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_framebuffer_mixed_samples"]
     pub mod framebuffer_mixed_samples {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_framebuffer_mixed_samples\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_fill_rectangle"]
     pub mod fill_rectangle {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_fill_rectangle\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_shader_sm_builtins"]
     pub mod shader_sm_builtins {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_sm_builtins\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_shading_rate_image"]
     pub mod shading_rate_image {
         use super::super::*;
         pub const NAME: &CStr =
@@ -23275,6 +23606,7 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_ray_tracing"]
     pub mod ray_tracing {
         use super::super::*;
         pub const NAME: &CStr =
@@ -23699,24 +24031,28 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_representative_fragment_test"]
     pub mod representative_fragment_test {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_representative_fragment_test\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_NV_shader_subgroup_partitioned"]
     pub mod shader_subgroup_partitioned {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_subgroup_partitioned\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_compute_shader_derivatives"]
     pub mod compute_shader_derivatives {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_compute_shader_derivatives\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_mesh_shader"]
     pub mod mesh_shader {
         use super::super::*;
         pub const NAME: &CStr =
@@ -23853,18 +24189,21 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_fragment_shader_barycentric"]
     pub mod fragment_shader_barycentric {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_shader_barycentric\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_shader_image_footprint"]
     pub mod shader_image_footprint {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_image_footprint\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_NV_scissor_exclusive"]
     pub mod scissor_exclusive {
         use super::super::*;
         pub const NAME: &CStr =
@@ -23967,6 +24306,7 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_device_diagnostic_checkpoints"]
     pub mod device_diagnostic_checkpoints {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -24062,6 +24402,7 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_dedicated_allocation_image_aliasing"]
     pub mod dedicated_allocation_image_aliasing {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -24069,6 +24410,7 @@ pub mod nv {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_cooperative_matrix"]
     pub mod cooperative_matrix {
         use super::super::*;
         pub const NAME: &CStr =
@@ -24142,6 +24484,7 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_coverage_reduction_mode"]
     pub mod coverage_reduction_mode {
         use super::super::*;
         pub const NAME: &CStr =
@@ -24212,6 +24555,7 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_device_generated_commands"]
     pub mod device_generated_commands {
         use super::super::*;
         pub const NAME: &CStr =
@@ -24427,24 +24771,28 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_inherited_viewport_scissor"]
     pub mod inherited_viewport_scissor {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_inherited_viewport_scissor\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_present_barrier"]
     pub mod present_barrier {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_present_barrier\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_device_diagnostics_config"]
     pub mod device_diagnostics_config {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_device_diagnostics_config\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_NV_cuda_kernel_launch"]
     pub mod cuda_kernel_launch {
         use super::super::*;
         pub const NAME: &CStr =
@@ -24652,12 +25000,14 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_low_latency"]
     pub mod low_latency {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_low_latency\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_fragment_shading_rate_enums"]
     pub mod fragment_shading_rate_enums {
         use super::super::*;
         pub const NAME: &CStr =
@@ -24729,12 +25079,14 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_ray_tracing_motion_blur"]
     pub mod ray_tracing_motion_blur {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_motion_blur\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_acquire_winrt_display"]
     pub mod acquire_winrt_display {
         use super::super::*;
         pub const NAME: &CStr =
@@ -24826,6 +25178,7 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_external_memory_rdma"]
     pub mod external_memory_rdma {
         use super::super::*;
         pub const NAME: &CStr =
@@ -24898,12 +25251,14 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_displacement_micromap"]
     pub mod displacement_micromap {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_displacement_micromap\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_NV_copy_memory_indirect"]
     pub mod copy_memory_indirect {
         use super::super::*;
         pub const NAME: &CStr =
@@ -25012,6 +25367,7 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_memory_decompression"]
     pub mod memory_decompression {
         use super::super::*;
         pub const NAME: &CStr =
@@ -25112,6 +25468,7 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_device_generated_commands_compute"]
     pub mod device_generated_commands_compute {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -25240,12 +25597,14 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_linear_color_attachment"]
     pub mod linear_color_attachment {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_linear_color_attachment\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_optical_flow"]
     pub mod optical_flow {
         use super::super::*;
         pub const NAME: &CStr =
@@ -25475,6 +25834,7 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_ray_tracing_invocation_reorder"]
     pub mod ray_tracing_invocation_reorder {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -25482,6 +25842,7 @@ pub mod nv {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_extended_sparse_address_space"]
     pub mod extended_sparse_address_space {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -25489,6 +25850,7 @@ pub mod nv {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_low_latency2"]
     pub mod low_latency2 {
         use super::super::*;
         pub const NAME: &CStr =
@@ -25659,12 +26021,14 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_per_stage_descriptor_set"]
     pub mod per_stage_descriptor_set {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_per_stage_descriptor_set\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_descriptor_pool_overallocation"]
     pub mod descriptor_pool_overallocation {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -25672,18 +26036,21 @@ pub mod nv {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_raw_access_chains"]
     pub mod raw_access_chains {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_raw_access_chains\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_shader_atomic_float16_vector"]
     pub mod shader_atomic_float16_vector {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_atomic_float16_vector\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_NV_ray_tracing_validation"]
     pub mod ray_tracing_validation {
         use super::super::*;
         pub const NAME: &CStr =
@@ -25691,7 +26058,9 @@ pub mod nv {
         pub const SPEC_VERSION: u32 = 1u32;
     }
 }
+#[doc = "Extensions tagged NVX"]
 pub mod nvx {
+    #[doc = "VK_NVX_binary_import"]
     pub mod binary_import {
         use super::super::*;
         pub const NAME: &CStr =
@@ -25866,6 +26235,7 @@ pub mod nvx {
             }
         }
     }
+    #[doc = "VK_NVX_image_view_handle"]
     pub mod image_view_handle {
         use super::super::*;
         pub const NAME: &CStr =
@@ -25961,6 +26331,7 @@ pub mod nvx {
             }
         }
     }
+    #[doc = "VK_NVX_multiview_per_view_attributes"]
     pub mod multiview_per_view_attributes {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -25969,31 +26340,37 @@ pub mod nvx {
         pub const SPEC_VERSION: u32 = 1u32;
     }
 }
+#[doc = "Extensions tagged QCOM"]
 pub mod qcom {
+    #[doc = "VK_QCOM_render_pass_shader_resolve"]
     pub mod render_pass_shader_resolve {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_shader_resolve\0") };
         pub const SPEC_VERSION: u32 = 4u32;
     }
+    #[doc = "VK_QCOM_render_pass_transform"]
     pub mod render_pass_transform {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_transform\0") };
         pub const SPEC_VERSION: u32 = 4u32;
     }
+    #[doc = "VK_QCOM_render_pass_store_ops"]
     pub mod render_pass_store_ops {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_store_ops\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_QCOM_rotated_copy_commands"]
     pub mod rotated_copy_commands {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_rotated_copy_commands\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
+    #[doc = "VK_QCOM_fragment_density_map_offset"]
     pub mod fragment_density_map_offset {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -26001,12 +26378,14 @@ pub mod qcom {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_QCOM_image_processing"]
     pub mod image_processing {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_image_processing\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_QCOM_tile_properties"]
     pub mod tile_properties {
         use super::super::*;
         pub const NAME: &CStr =
@@ -26111,6 +26490,7 @@ pub mod qcom {
             }
         }
     }
+    #[doc = "VK_QCOM_multiview_per_view_viewports"]
     pub mod multiview_per_view_viewports {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -26118,6 +26498,7 @@ pub mod qcom {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_QCOM_multiview_per_view_render_areas"]
     pub mod multiview_per_view_render_areas {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -26125,24 +26506,28 @@ pub mod qcom {
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_QCOM_image_processing2"]
     pub mod image_processing2 {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_image_processing2\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_QCOM_filter_cubic_weights"]
     pub mod filter_cubic_weights {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_filter_cubic_weights\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_QCOM_ycbcr_degamma"]
     pub mod ycbcr_degamma {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_ycbcr_degamma\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_QCOM_filter_cubic_clamp"]
     pub mod filter_cubic_clamp {
         use super::super::*;
         pub const NAME: &CStr =
@@ -26150,7 +26535,9 @@ pub mod qcom {
         pub const SPEC_VERSION: u32 = 1u32;
     }
 }
+#[doc = "Extensions tagged QNX"]
 pub mod qnx {
+    #[doc = "VK_QNX_screen_surface"]
     pub mod screen_surface {
         use super::super::*;
         pub const NAME: &CStr =
@@ -26253,6 +26640,7 @@ pub mod qnx {
             }
         }
     }
+    #[doc = "VK_QNX_external_memory_screen_buffer"]
     pub mod external_memory_screen_buffer {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
@@ -26326,7 +26714,9 @@ pub mod qnx {
         }
     }
 }
+#[doc = "Extensions tagged SEC"]
 pub mod sec {
+    #[doc = "VK_SEC_amigo_profiling"]
     pub mod amigo_profiling {
         use super::super::*;
         pub const NAME: &CStr =
@@ -26334,13 +26724,16 @@ pub mod sec {
         pub const SPEC_VERSION: u32 = 1u32;
     }
 }
+#[doc = "Extensions tagged VALVE"]
 pub mod valve {
+    #[doc = "VK_VALVE_mutable_descriptor_type"]
     pub mod mutable_descriptor_type {
         use super::super::*;
         pub const NAME: &CStr =
             unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_VALVE_mutable_descriptor_type\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
+    #[doc = "VK_VALVE_descriptor_set_host_mapping"]
     pub mod descriptor_set_host_mapping {
         use super::super::*;
         pub const NAME: &CStr = unsafe {
