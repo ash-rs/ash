@@ -1,24 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_device_generated_commands_compute.html>
 
 use crate::vk;
-use core::mem;
-pub use vk::nv::device_generated_commands_compute::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::nv::device_generated_commands_compute::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::nv::device_generated_commands_compute::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl vk::nv::device_generated_commands_compute::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineIndirectMemoryRequirementsNV.html>
     #[inline]
     pub unsafe fn get_pipeline_indirect_memory_requirements(
@@ -55,15 +39,5 @@ impl Device {
         info: &vk::PipelineIndirectDeviceAddressInfoNV<'_>,
     ) -> vk::DeviceAddress {
         (self.fp.get_pipeline_indirect_device_address_nv)(self.handle, info)
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::nv::device_generated_commands_compute::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

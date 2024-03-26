@@ -1,22 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_extended_dynamic_state2.html>
 
 use crate::vk;
-use core::mem;
-pub use vk::ext::extended_dynamic_state2::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    fp: vk::ext::extended_dynamic_state2::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::ext::extended_dynamic_state2::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl vk::ext::extended_dynamic_state2::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPatchControlPointsEXT.html>
     #[inline]
     pub unsafe fn cmd_set_patch_control_points(
@@ -71,10 +57,5 @@ impl Device {
             command_buffer,
             primitive_restart_enable.into(),
         )
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::ext::extended_dynamic_state2::DeviceFn {
-        &self.fp
     }
 }

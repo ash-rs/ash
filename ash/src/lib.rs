@@ -70,8 +70,7 @@ pub mod util;
 pub mod vk;
 
 // macros of vk need to be defined beforehand
-/// Wrappers for Vulkan extensions
-pub mod extensions;
+mod extensions;
 
 pub trait RawPtr<T> {
     fn as_raw_ptr(&self) -> *const T;

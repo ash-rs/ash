@@ -5,23 +5,8 @@ use crate::vk;
 use crate::RawPtr;
 use alloc::vec::Vec;
 use core::mem;
-pub use vk::nv::cuda_kernel_launch::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::nv::cuda_kernel_launch::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::nv::cuda_kernel_launch::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl vk::nv::cuda_kernel_launch::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateCudaModuleNV.html>
     #[inline]
     pub unsafe fn create_cuda_module(
@@ -92,15 +77,5 @@ impl Device {
         launch_info: &vk::CudaLaunchInfoNV<'_>,
     ) {
         (self.fp.cmd_cuda_launch_kernel_nv)(command_buffer, launch_info)
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::nv::cuda_kernel_launch::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

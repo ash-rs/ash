@@ -875,8 +875,13 @@ impl FieldExt for vk_parse::CommandParam {
         assert!(!self.is_void(), "{:?}", self);
         let (rem, ty) = parse_c_parameter(&self.definition.code).unwrap();
         assert!(rem.is_empty());
+        // Disambiguate overloaded names
+        let qualifier = match ty.type_.name == "VkDevice" || ty.type_.name == "VkInstance" {
+            true => quote!(crate::vk::),
+            false => quote!(),
+        };
         let type_name = name_to_tokens(ty.type_.name);
-        let type_name = quote!(#type_name #type_lifetime);
+        let type_name = quote!(#qualifier #type_name #type_lifetime);
         let inner_ty = match ty.type_.reference_type {
             CReferenceType::Value => quote!(#type_name),
             CReferenceType::Pointer => {
@@ -916,6 +921,7 @@ fn generate_function_pointers<'a>(
     rename_commands: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashMap<&'a str, (Ident, Ident)>,
     has_lifetimes: &HashSet<Ident>,
+    doc: &str,
 ) -> TokenStream {
     // Commands can have duplicates inside them because they are declared per features. But we only
     // really want to generate one function pointer.
@@ -1155,6 +1161,7 @@ fn generate_function_pointers<'a>(
         #(#pfn_typedefs)*
 
         #[derive(Clone)]
+        #[doc = #doc]
         #struct_contents
 
         #loader
@@ -1259,7 +1266,7 @@ pub fn generate_extension_constants<'a>(
     quote!(#(#enum_tokens)*)
 }
 pub fn generate_extension_commands<'a>(
-    extension_name: &'a str,
+    full_extension_name: &'a str,
     items: &'a [vk_parse::ExtensionChild],
     cmd_map: &CommandMap<'a>,
     cmd_aliases: &HashMap<&'a str, &'a str>,
@@ -1281,9 +1288,9 @@ pub fn generate_extension_commands<'a>(
             }
         });
 
-    let byte_name_ident = Literal::byte_string(format!("{extension_name}\0").as_bytes());
+    let byte_name_ident = Literal::byte_string(format!("{full_extension_name}\0").as_bytes());
 
-    let extension_name = extension_name.strip_prefix("VK_").unwrap();
+    let extension_name = full_extension_name.strip_prefix("VK_").unwrap();
     let (vendor, extension_ident) = extension_name.split_once('_').unwrap();
     let extension_ident = match extension_ident.chars().next().unwrap().is_ascii_digit() {
         false => format_ident!("{}", extension_ident.to_lowercase()),
@@ -1326,27 +1333,94 @@ pub fn generate_extension_commands<'a>(
     let instance_fp = (!instance_commands.is_empty()).then(|| {
         let instance_ident = format_ident!("InstanceFn");
 
-        generate_function_pointers(
+        let fp = generate_function_pointers(
             instance_ident,
             Some((&vendor, &extension_ident)),
             &instance_commands,
             &rename_commands,
             fn_cache,
             has_lifetimes,
-        )
+            &format!(
+                "Raw {} instance-level function pointers",
+                full_extension_name
+            ),
+        );
+        let doc = format!("{} instance-level functions", full_extension_name);
+
+        quote! {
+            #fp
+
+            #[doc = #doc]
+            pub struct Instance {
+                pub(crate) fp: InstanceFn,
+                pub(crate) handle: crate::vk::Instance,
+            }
+
+            impl Instance {
+                pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+                    let handle = instance.handle();
+                    let fp = InstanceFn::load(|name| unsafe {
+                        core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                    });
+                    Self { handle, fp }
+                }
+
+                #[inline]
+                pub fn fp(&self) -> &InstanceFn {
+                    &self.fp
+                }
+
+                #[inline]
+                pub fn instance(&self) -> crate::vk::Instance {
+                    self.handle
+                }
+            }
+        }
     });
 
     let device_fp = (!device_commands.is_empty()).then(|| {
         let device_ident = format_ident!("DeviceFn");
 
-        generate_function_pointers(
+        let fp = generate_function_pointers(
             device_ident,
             Some((&vendor, &extension_ident)),
             &device_commands,
             &rename_commands,
             fn_cache,
             has_lifetimes,
-        )
+            &format!("Raw {} device-level function pointers", full_extension_name),
+        );
+        let doc = format!("{} device-level functions", full_extension_name);
+
+        quote! {
+            #fp
+
+            #[doc = #doc]
+            pub struct Device {
+                pub(crate) fp: DeviceFn,
+                pub(crate) handle: crate::vk::Device,
+            }
+
+            impl Device {
+                pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                    let handle = device.handle();
+                    let fp = DeviceFn::load(|name| unsafe {
+                        core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                    });
+                    Self { handle, fp }
+                }
+
+                #[inline]
+                pub fn fp(&self) -> &DeviceFn {
+                    &self.fp
+                }
+
+                #[inline]
+                pub fn device(&self) -> crate::vk::Device {
+                    self.handle
+                }
+            }
+        }
     });
 
     (
@@ -2709,6 +2783,7 @@ pub fn generate_feature<'a>(
             &HashMap::new(),
             fn_cache,
             has_lifetimes,
+            "Raw Vulkan 1 static function pointers",
         )
     } else {
         quote! {}
@@ -2720,6 +2795,10 @@ pub fn generate_feature<'a>(
         &HashMap::new(),
         fn_cache,
         has_lifetimes,
+        &format!(
+            "Raw Vulkan {} entry point function pointers",
+            feature.version
+        ),
     );
     let instance = generate_function_pointers(
         format_ident!("InstanceFnV{}", version),
@@ -2728,6 +2807,10 @@ pub fn generate_feature<'a>(
         &HashMap::new(),
         fn_cache,
         has_lifetimes,
+        &format!(
+            "Raw Vulkan {} instance-level function pointers",
+            feature.version
+        ),
     );
     let device = generate_function_pointers(
         format_ident!("DeviceFnV{}", version),
@@ -2736,6 +2819,10 @@ pub fn generate_feature<'a>(
         &HashMap::new(),
         fn_cache,
         has_lifetimes,
+        &format!(
+            "Raw Vulkan {} device-level function pointers",
+            feature.version
+        ),
     );
     quote! {
         #static_fn

@@ -2,22 +2,8 @@
 
 use crate::vk;
 use core::ffi;
-use core::mem;
-pub use vk::khr::push_descriptor::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    fp: vk::khr::push_descriptor::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::khr::push_descriptor::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl vk::khr::push_descriptor::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetKHR.html>
     #[inline]
     pub unsafe fn cmd_push_descriptor_set(
@@ -55,10 +41,5 @@ impl Device {
             set,
             p_data,
         )
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::push_descriptor::DeviceFn {
-        &self.fp
     }
 }

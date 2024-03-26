@@ -4,23 +4,8 @@ use crate::prelude::*;
 use crate::vk;
 use core::mem;
 use core::ptr;
-pub use vk::khr::device_group_creation::NAME;
 
-#[derive(Clone)]
-pub struct Instance {
-    handle: vk::Instance,
-    fp: vk::khr::device_group_creation::InstanceFn,
-}
-
-impl Instance {
-    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-        let handle = instance.handle();
-        let fp = vk::khr::device_group_creation::InstanceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl vk::khr::device_group_creation::Instance {
     /// Retrieve the number of elements to pass to [`enumerate_physical_device_groups()`][Self::enumerate_physical_device_groups()]
     #[inline]
     pub unsafe fn enumerate_physical_device_groups_len(&self) -> VkResult<usize> {
@@ -48,15 +33,5 @@ impl Instance {
             .result()?;
         assert_eq!(count as usize, out.len());
         Ok(())
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::device_group_creation::InstanceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn instance(&self) -> vk::Instance {
-        self.handle
     }
 }

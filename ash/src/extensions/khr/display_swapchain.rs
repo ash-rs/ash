@@ -4,24 +4,8 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use alloc::vec::Vec;
-use core::mem;
-pub use vk::khr::display_swapchain::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::khr::display_swapchain::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::khr::display_swapchain::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl vk::khr::display_swapchain::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateSharedSwapchainsKHR.html>
     #[inline]
     pub unsafe fn create_shared_swapchains(
@@ -38,15 +22,5 @@ impl Device {
             swapchains.as_mut_ptr(),
         )
         .set_vec_len_on_success(swapchains, create_infos.len())
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::display_swapchain::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

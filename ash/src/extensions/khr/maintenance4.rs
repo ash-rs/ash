@@ -3,23 +3,8 @@
 use crate::vk;
 use core::mem;
 use core::ptr;
-pub use vk::khr::maintenance4::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::khr::maintenance4::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::khr::maintenance4::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl vk::khr::maintenance4::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceBufferMemoryRequirementsKHR.html>
     #[inline]
     pub unsafe fn get_device_buffer_memory_requirements(
@@ -74,15 +59,5 @@ impl Device {
             out.as_mut_ptr(),
         );
         assert_eq!(count as usize, out.len());
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::maintenance4::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

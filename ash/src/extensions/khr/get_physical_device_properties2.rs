@@ -4,21 +4,8 @@ use crate::prelude::*;
 use crate::vk;
 use core::mem;
 use core::ptr;
-pub use vk::khr::get_physical_device_properties2::NAME;
 
-#[derive(Clone)]
-pub struct Instance {
-    fp: vk::khr::get_physical_device_properties2::InstanceFn,
-}
-
-impl Instance {
-    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-        let fp = vk::khr::get_physical_device_properties2::InstanceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl vk::khr::get_physical_device_properties2::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFeatures2KHR.html>
     #[inline]
     pub unsafe fn get_physical_device_features2(
@@ -154,10 +141,5 @@ impl Instance {
             out.as_mut_ptr(),
         );
         assert_eq!(count as usize, out.len());
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::get_physical_device_properties2::InstanceFn {
-        &self.fp
     }
 }

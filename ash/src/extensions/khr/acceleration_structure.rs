@@ -5,23 +5,8 @@ use crate::vk;
 use crate::RawPtr;
 use alloc::vec::Vec;
 use core::mem;
-pub use vk::khr::acceleration_structure::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::khr::acceleration_structure::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::khr::acceleration_structure::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl vk::khr::acceleration_structure::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateAccelerationStructureKHR.html>
     #[inline]
     pub unsafe fn create_acceleration_structure(
@@ -287,15 +272,5 @@ impl Device {
             max_primitive_counts.as_ptr(),
             size_info,
         )
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::acceleration_structure::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

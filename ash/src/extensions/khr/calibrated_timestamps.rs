@@ -4,23 +4,8 @@ use crate::prelude::*;
 use crate::vk;
 use alloc::vec::Vec;
 use core::mem;
-pub use vk::khr::calibrated_timestamps::NAME;
 
-/// High-level device function wrapper
-#[derive(Clone)]
-pub struct Device {
-    fp: vk::khr::calibrated_timestamps::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::khr::calibrated_timestamps::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl vk::khr::calibrated_timestamps::Device {
     /// <https://registry.khronos.org//vulkan/specs/1.3-extensions/man/html/vkGetCalibratedTimestampsKHR.html>
     ///
     /// Returns a tuple containing `(timestamps, max_deviation)`
@@ -43,28 +28,9 @@ impl Device {
         timestamps.set_len(info.len());
         Ok((timestamps, max_deviation))
     }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::calibrated_timestamps::DeviceFn {
-        &self.fp
-    }
 }
 
-/// High-level instance function wrapper
-#[derive(Clone)]
-pub struct Instance {
-    fp: vk::khr::calibrated_timestamps::InstanceFn,
-}
-
-impl Instance {
-    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-        let handle = instance.handle();
-        let fp = vk::khr::calibrated_timestamps::InstanceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl vk::khr::calibrated_timestamps::Instance {
     /// <https://registry.khronos.org//vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCalibrateableTimeDomainsKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_calibrateable_time_domains(
@@ -78,10 +44,5 @@ impl Instance {
                 data,
             )
         })
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::calibrated_timestamps::InstanceFn {
-        &self.fp
     }
 }
