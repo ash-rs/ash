@@ -3,9 +3,12 @@ use crate::vk::definitions::*;
 use crate::vk::enums::*;
 use core::ffi::*;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetInstanceProcAddr =
-    unsafe extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction;
+pub type PFN_vkGetInstanceProcAddr = unsafe extern "system" fn(
+    instance: crate::vk::Instance,
+    p_name: *const c_char,
+) -> PFN_vkVoidFunction;
 #[derive(Clone)]
+#[doc = "Raw Vulkan 1 static function pointers"]
 pub struct StaticFn {
     pub get_instance_proc_addr: PFN_vkGetInstanceProcAddr,
 }
@@ -19,7 +22,7 @@ impl StaticFn {
         Self {
             get_instance_proc_addr: unsafe {
                 unsafe extern "system" fn get_instance_proc_addr(
-                    _instance: Instance,
+                    _instance: crate::vk::Instance,
                     _p_name: *const c_char,
                 ) -> PFN_vkVoidFunction {
                     panic!(concat!(
@@ -42,7 +45,7 @@ impl StaticFn {
 pub type PFN_vkCreateInstance = unsafe extern "system" fn(
     p_create_info: *const InstanceCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
-    p_instance: *mut Instance,
+    p_instance: *mut crate::vk::Instance,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumerateInstanceExtensionProperties = unsafe extern "system" fn(
@@ -56,6 +59,7 @@ pub type PFN_vkEnumerateInstanceLayerProperties = unsafe extern "system" fn(
     p_properties: *mut LayerProperties,
 ) -> Result;
 #[derive(Clone)]
+#[doc = "Raw Vulkan 1 entry point function pointers"]
 pub struct EntryFnV1_0 {
     pub create_instance: PFN_vkCreateInstance,
     pub enumerate_instance_extension_properties: PFN_vkEnumerateInstanceExtensionProperties,
@@ -73,7 +77,7 @@ impl EntryFnV1_0 {
                 unsafe extern "system" fn create_instance(
                     _p_create_info: *const InstanceCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
-                    _p_instance: *mut Instance,
+                    _p_instance: *mut crate::vk::Instance,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_instance)))
                 }
@@ -129,11 +133,13 @@ impl EntryFnV1_0 {
     }
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyInstance =
-    unsafe extern "system" fn(instance: Instance, p_allocator: *const AllocationCallbacks<'_>);
+pub type PFN_vkDestroyInstance = unsafe extern "system" fn(
+    instance: crate::vk::Instance,
+    p_allocator: *const AllocationCallbacks<'_>,
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumeratePhysicalDevices = unsafe extern "system" fn(
-    instance: Instance,
+    instance: crate::vk::Instance,
     p_physical_device_count: *mut u32,
     p_physical_devices: *mut PhysicalDevice,
 ) -> Result;
@@ -175,14 +181,16 @@ pub type PFN_vkGetPhysicalDeviceMemoryProperties = unsafe extern "system" fn(
     p_memory_properties: *mut PhysicalDeviceMemoryProperties,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetDeviceProcAddr =
-    unsafe extern "system" fn(device: Device, p_name: *const c_char) -> PFN_vkVoidFunction;
+pub type PFN_vkGetDeviceProcAddr = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_name: *const c_char,
+) -> PFN_vkVoidFunction;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDevice = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_create_info: *const DeviceCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
-    p_device: *mut Device,
+    p_device: *mut crate::vk::Device,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumerateDeviceExtensionProperties = unsafe extern "system" fn(
@@ -209,6 +217,7 @@ pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties = unsafe extern "sys
     p_properties: *mut SparseImageFormatProperties,
 );
 #[derive(Clone)]
+#[doc = "Raw Vulkan 1 instance-level function pointers"]
 pub struct InstanceFnV1_0 {
     pub destroy_instance: PFN_vkDestroyInstance,
     pub enumerate_physical_devices: PFN_vkEnumeratePhysicalDevices,
@@ -235,7 +244,7 @@ impl InstanceFnV1_0 {
         Self {
             destroy_instance: unsafe {
                 unsafe extern "system" fn destroy_instance(
-                    _instance: Instance,
+                    _instance: crate::vk::Instance,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_instance)))
@@ -250,7 +259,7 @@ impl InstanceFnV1_0 {
             },
             enumerate_physical_devices: unsafe {
                 unsafe extern "system" fn enumerate_physical_devices(
-                    _instance: Instance,
+                    _instance: crate::vk::Instance,
                     _p_physical_device_count: *mut u32,
                     _p_physical_devices: *mut PhysicalDevice,
                 ) -> Result {
@@ -390,7 +399,7 @@ impl InstanceFnV1_0 {
             },
             get_device_proc_addr: unsafe {
                 unsafe extern "system" fn get_device_proc_addr(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_name: *const c_char,
                 ) -> PFN_vkVoidFunction {
                     panic!(concat!("Unable to load ", stringify!(get_device_proc_addr)))
@@ -408,7 +417,7 @@ impl InstanceFnV1_0 {
                     _physical_device: PhysicalDevice,
                     _p_create_info: *const DeviceCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
-                    _p_device: *mut Device,
+                    _p_device: *mut crate::vk::Device,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_device)))
                 }
@@ -491,11 +500,13 @@ impl InstanceFnV1_0 {
     }
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyDevice =
-    unsafe extern "system" fn(device: Device, p_allocator: *const AllocationCallbacks<'_>);
+pub type PFN_vkDestroyDevice = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_allocator: *const AllocationCallbacks<'_>,
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceQueue = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     queue_family_index: u32,
     queue_index: u32,
     p_queue: *mut Queue,
@@ -510,23 +521,23 @@ pub type PFN_vkQueueSubmit = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkQueueWaitIdle = unsafe extern "system" fn(queue: Queue) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDeviceWaitIdle = unsafe extern "system" fn(device: Device) -> Result;
+pub type PFN_vkDeviceWaitIdle = unsafe extern "system" fn(device: crate::vk::Device) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkAllocateMemory = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_allocate_info: *const MemoryAllocateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_memory: *mut DeviceMemory,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkFreeMemory = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     memory: DeviceMemory,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkMapMemory = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     memory: DeviceMemory,
     offset: DeviceSize,
     size: DeviceSize,
@@ -534,54 +545,55 @@ pub type PFN_vkMapMemory = unsafe extern "system" fn(
     pp_data: *mut *mut c_void,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkUnmapMemory = unsafe extern "system" fn(device: Device, memory: DeviceMemory);
+pub type PFN_vkUnmapMemory =
+    unsafe extern "system" fn(device: crate::vk::Device, memory: DeviceMemory);
 #[allow(non_camel_case_types)]
 pub type PFN_vkFlushMappedMemoryRanges = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     memory_range_count: u32,
     p_memory_ranges: *const MappedMemoryRange<'_>,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkInvalidateMappedMemoryRanges = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     memory_range_count: u32,
     p_memory_ranges: *const MappedMemoryRange<'_>,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceMemoryCommitment = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     memory: DeviceMemory,
     p_committed_memory_in_bytes: *mut DeviceSize,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkBindBufferMemory = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     buffer: Buffer,
     memory: DeviceMemory,
     memory_offset: DeviceSize,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkBindImageMemory = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     image: Image,
     memory: DeviceMemory,
     memory_offset: DeviceSize,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetBufferMemoryRequirements = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     buffer: Buffer,
     p_memory_requirements: *mut MemoryRequirements,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageMemoryRequirements = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     image: Image,
     p_memory_requirements: *mut MemoryRequirements,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageSparseMemoryRequirements = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     image: Image,
     p_sparse_memory_requirement_count: *mut u32,
     p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
@@ -595,25 +607,29 @@ pub type PFN_vkQueueBindSparse = unsafe extern "system" fn(
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateFence = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const FenceCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_fence: *mut Fence,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyFence = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     fence: Fence,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkResetFences =
-    unsafe extern "system" fn(device: Device, fence_count: u32, p_fences: *const Fence) -> Result;
+pub type PFN_vkResetFences = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    fence_count: u32,
+    p_fences: *const Fence,
+) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetFenceStatus = unsafe extern "system" fn(device: Device, fence: Fence) -> Result;
+pub type PFN_vkGetFenceStatus =
+    unsafe extern "system" fn(device: crate::vk::Device, fence: Fence) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkWaitForFences = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     fence_count: u32,
     p_fences: *const Fence,
     wait_all: Bool32,
@@ -621,52 +637,55 @@ pub type PFN_vkWaitForFences = unsafe extern "system" fn(
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateSemaphore = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const SemaphoreCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_semaphore: *mut Semaphore,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroySemaphore = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     semaphore: Semaphore,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateEvent = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const EventCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_event: *mut Event,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyEvent = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     event: Event,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetEventStatus = unsafe extern "system" fn(device: Device, event: Event) -> Result;
+pub type PFN_vkGetEventStatus =
+    unsafe extern "system" fn(device: crate::vk::Device, event: Event) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkSetEvent = unsafe extern "system" fn(device: Device, event: Event) -> Result;
+pub type PFN_vkSetEvent =
+    unsafe extern "system" fn(device: crate::vk::Device, event: Event) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkResetEvent = unsafe extern "system" fn(device: Device, event: Event) -> Result;
+pub type PFN_vkResetEvent =
+    unsafe extern "system" fn(device: crate::vk::Device, event: Event) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateQueryPool = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const QueryPoolCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_query_pool: *mut QueryPool,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyQueryPool = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     query_pool: QueryPool,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetQueryPoolResults = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     query_pool: QueryPool,
     first_query: u32,
     query_count: u32,
@@ -677,106 +696,106 @@ pub type PFN_vkGetQueryPoolResults = unsafe extern "system" fn(
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateBuffer = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const BufferCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_buffer: *mut Buffer,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyBuffer = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     buffer: Buffer,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateBufferView = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const BufferViewCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_view: *mut BufferView,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyBufferView = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     buffer_view: BufferView,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateImage = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const ImageCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_image: *mut Image,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyImage = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     image: Image,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageSubresourceLayout = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     image: Image,
     p_subresource: *const ImageSubresource,
     p_layout: *mut SubresourceLayout,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateImageView = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const ImageViewCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_view: *mut ImageView,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyImageView = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     image_view: ImageView,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateShaderModule = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const ShaderModuleCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_shader_module: *mut ShaderModule,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyShaderModule = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     shader_module: ShaderModule,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreatePipelineCache = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const PipelineCacheCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_pipeline_cache: *mut PipelineCache,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyPipelineCache = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     pipeline_cache: PipelineCache,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPipelineCacheData = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     pipeline_cache: PipelineCache,
     p_data_size: *mut usize,
     p_data: *mut c_void,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkMergePipelineCaches = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     dst_cache: PipelineCache,
     src_cache_count: u32,
     p_src_caches: *const PipelineCache,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateGraphicsPipelines = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     pipeline_cache: PipelineCache,
     create_info_count: u32,
     p_create_infos: *const GraphicsPipelineCreateInfo<'_>,
@@ -785,7 +804,7 @@ pub type PFN_vkCreateGraphicsPipelines = unsafe extern "system" fn(
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateComputePipelines = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     pipeline_cache: PipelineCache,
     create_info_count: u32,
     p_create_infos: *const ComputePipelineCreateInfo<'_>,
@@ -794,84 +813,84 @@ pub type PFN_vkCreateComputePipelines = unsafe extern "system" fn(
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyPipeline = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     pipeline: Pipeline,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreatePipelineLayout = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const PipelineLayoutCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_pipeline_layout: *mut PipelineLayout,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyPipelineLayout = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     pipeline_layout: PipelineLayout,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateSampler = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const SamplerCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_sampler: *mut Sampler,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroySampler = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     sampler: Sampler,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDescriptorSetLayout = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const DescriptorSetLayoutCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_set_layout: *mut DescriptorSetLayout,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDescriptorSetLayout = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     descriptor_set_layout: DescriptorSetLayout,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDescriptorPool = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const DescriptorPoolCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_descriptor_pool: *mut DescriptorPool,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDescriptorPool = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     descriptor_pool: DescriptorPool,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetDescriptorPool = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     descriptor_pool: DescriptorPool,
     flags: DescriptorPoolResetFlags,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkAllocateDescriptorSets = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_allocate_info: *const DescriptorSetAllocateInfo<'_>,
     p_descriptor_sets: *mut DescriptorSet,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkFreeDescriptorSets = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     descriptor_pool: DescriptorPool,
     descriptor_set_count: u32,
     p_descriptor_sets: *const DescriptorSet,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkUpdateDescriptorSets = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     descriptor_write_count: u32,
     p_descriptor_writes: *const WriteDescriptorSet<'_>,
     descriptor_copy_count: u32,
@@ -879,64 +898,64 @@ pub type PFN_vkUpdateDescriptorSets = unsafe extern "system" fn(
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateFramebuffer = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const FramebufferCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_framebuffer: *mut Framebuffer,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyFramebuffer = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     framebuffer: Framebuffer,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateRenderPass = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const RenderPassCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_render_pass: *mut RenderPass,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyRenderPass = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     render_pass: RenderPass,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetRenderAreaGranularity = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     render_pass: RenderPass,
     p_granularity: *mut Extent2D,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateCommandPool = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_create_info: *const CommandPoolCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks<'_>,
     p_command_pool: *mut CommandPool,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyCommandPool = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     command_pool: CommandPool,
     p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetCommandPool = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     command_pool: CommandPool,
     flags: CommandPoolResetFlags,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkAllocateCommandBuffers = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_allocate_info: *const CommandBufferAllocateInfo<'_>,
     p_command_buffers: *mut CommandBuffer,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkFreeCommandBuffers = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     command_pool: CommandPool,
     command_buffer_count: u32,
     p_command_buffers: *const CommandBuffer,
@@ -1280,6 +1299,7 @@ pub type PFN_vkCmdExecuteCommands = unsafe extern "system" fn(
     p_command_buffers: *const CommandBuffer,
 );
 #[derive(Clone)]
+#[doc = "Raw Vulkan 1 device-level function pointers"]
 pub struct DeviceFnV1_0 {
     pub destroy_device: PFN_vkDestroyDevice,
     pub get_device_queue: PFN_vkGetDeviceQueue,
@@ -1412,7 +1432,7 @@ impl DeviceFnV1_0 {
         Self {
             destroy_device: unsafe {
                 unsafe extern "system" fn destroy_device(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_device)))
@@ -1427,7 +1447,7 @@ impl DeviceFnV1_0 {
             },
             get_device_queue: unsafe {
                 unsafe extern "system" fn get_device_queue(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _queue_family_index: u32,
                     _queue_index: u32,
                     _p_queue: *mut Queue,
@@ -1472,7 +1492,7 @@ impl DeviceFnV1_0 {
                 }
             },
             device_wait_idle: unsafe {
-                unsafe extern "system" fn device_wait_idle(_device: Device) -> Result {
+                unsafe extern "system" fn device_wait_idle(_device: crate::vk::Device) -> Result {
                     panic!(concat!("Unable to load ", stringify!(device_wait_idle)))
                 }
                 let cname = CStr::from_bytes_with_nul_unchecked(b"vkDeviceWaitIdle\0");
@@ -1485,7 +1505,7 @@ impl DeviceFnV1_0 {
             },
             allocate_memory: unsafe {
                 unsafe extern "system" fn allocate_memory(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_allocate_info: *const MemoryAllocateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_memory: *mut DeviceMemory,
@@ -1502,7 +1522,7 @@ impl DeviceFnV1_0 {
             },
             free_memory: unsafe {
                 unsafe extern "system" fn free_memory(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _memory: DeviceMemory,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -1518,7 +1538,7 @@ impl DeviceFnV1_0 {
             },
             map_memory: unsafe {
                 unsafe extern "system" fn map_memory(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _memory: DeviceMemory,
                     _offset: DeviceSize,
                     _size: DeviceSize,
@@ -1536,7 +1556,10 @@ impl DeviceFnV1_0 {
                 }
             },
             unmap_memory: unsafe {
-                unsafe extern "system" fn unmap_memory(_device: Device, _memory: DeviceMemory) {
+                unsafe extern "system" fn unmap_memory(
+                    _device: crate::vk::Device,
+                    _memory: DeviceMemory,
+                ) {
                     panic!(concat!("Unable to load ", stringify!(unmap_memory)))
                 }
                 let cname = CStr::from_bytes_with_nul_unchecked(b"vkUnmapMemory\0");
@@ -1549,7 +1572,7 @@ impl DeviceFnV1_0 {
             },
             flush_mapped_memory_ranges: unsafe {
                 unsafe extern "system" fn flush_mapped_memory_ranges(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _memory_range_count: u32,
                     _p_memory_ranges: *const MappedMemoryRange<'_>,
                 ) -> Result {
@@ -1568,7 +1591,7 @@ impl DeviceFnV1_0 {
             },
             invalidate_mapped_memory_ranges: unsafe {
                 unsafe extern "system" fn invalidate_mapped_memory_ranges(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _memory_range_count: u32,
                     _p_memory_ranges: *const MappedMemoryRange<'_>,
                 ) -> Result {
@@ -1588,7 +1611,7 @@ impl DeviceFnV1_0 {
             },
             get_device_memory_commitment: unsafe {
                 unsafe extern "system" fn get_device_memory_commitment(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _memory: DeviceMemory,
                     _p_committed_memory_in_bytes: *mut DeviceSize,
                 ) {
@@ -1607,7 +1630,7 @@ impl DeviceFnV1_0 {
             },
             bind_buffer_memory: unsafe {
                 unsafe extern "system" fn bind_buffer_memory(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _buffer: Buffer,
                     _memory: DeviceMemory,
                     _memory_offset: DeviceSize,
@@ -1624,7 +1647,7 @@ impl DeviceFnV1_0 {
             },
             bind_image_memory: unsafe {
                 unsafe extern "system" fn bind_image_memory(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _image: Image,
                     _memory: DeviceMemory,
                     _memory_offset: DeviceSize,
@@ -1641,7 +1664,7 @@ impl DeviceFnV1_0 {
             },
             get_buffer_memory_requirements: unsafe {
                 unsafe extern "system" fn get_buffer_memory_requirements(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _buffer: Buffer,
                     _p_memory_requirements: *mut MemoryRequirements,
                 ) {
@@ -1660,7 +1683,7 @@ impl DeviceFnV1_0 {
             },
             get_image_memory_requirements: unsafe {
                 unsafe extern "system" fn get_image_memory_requirements(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _image: Image,
                     _p_memory_requirements: *mut MemoryRequirements,
                 ) {
@@ -1679,7 +1702,7 @@ impl DeviceFnV1_0 {
             },
             get_image_sparse_memory_requirements: unsafe {
                 unsafe extern "system" fn get_image_sparse_memory_requirements(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _image: Image,
                     _p_sparse_memory_requirement_count: *mut u32,
                     _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
@@ -1717,7 +1740,7 @@ impl DeviceFnV1_0 {
             },
             create_fence: unsafe {
                 unsafe extern "system" fn create_fence(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const FenceCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_fence: *mut Fence,
@@ -1734,7 +1757,7 @@ impl DeviceFnV1_0 {
             },
             destroy_fence: unsafe {
                 unsafe extern "system" fn destroy_fence(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _fence: Fence,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -1750,7 +1773,7 @@ impl DeviceFnV1_0 {
             },
             reset_fences: unsafe {
                 unsafe extern "system" fn reset_fences(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _fence_count: u32,
                     _p_fences: *const Fence,
                 ) -> Result {
@@ -1766,7 +1789,7 @@ impl DeviceFnV1_0 {
             },
             get_fence_status: unsafe {
                 unsafe extern "system" fn get_fence_status(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _fence: Fence,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(get_fence_status)))
@@ -1781,7 +1804,7 @@ impl DeviceFnV1_0 {
             },
             wait_for_fences: unsafe {
                 unsafe extern "system" fn wait_for_fences(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _fence_count: u32,
                     _p_fences: *const Fence,
                     _wait_all: Bool32,
@@ -1799,7 +1822,7 @@ impl DeviceFnV1_0 {
             },
             create_semaphore: unsafe {
                 unsafe extern "system" fn create_semaphore(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const SemaphoreCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_semaphore: *mut Semaphore,
@@ -1816,7 +1839,7 @@ impl DeviceFnV1_0 {
             },
             destroy_semaphore: unsafe {
                 unsafe extern "system" fn destroy_semaphore(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _semaphore: Semaphore,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -1832,7 +1855,7 @@ impl DeviceFnV1_0 {
             },
             create_event: unsafe {
                 unsafe extern "system" fn create_event(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const EventCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_event: *mut Event,
@@ -1849,7 +1872,7 @@ impl DeviceFnV1_0 {
             },
             destroy_event: unsafe {
                 unsafe extern "system" fn destroy_event(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _event: Event,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -1865,7 +1888,7 @@ impl DeviceFnV1_0 {
             },
             get_event_status: unsafe {
                 unsafe extern "system" fn get_event_status(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _event: Event,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(get_event_status)))
@@ -1879,7 +1902,10 @@ impl DeviceFnV1_0 {
                 }
             },
             set_event: unsafe {
-                unsafe extern "system" fn set_event(_device: Device, _event: Event) -> Result {
+                unsafe extern "system" fn set_event(
+                    _device: crate::vk::Device,
+                    _event: Event,
+                ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(set_event)))
                 }
                 let cname = CStr::from_bytes_with_nul_unchecked(b"vkSetEvent\0");
@@ -1891,7 +1917,10 @@ impl DeviceFnV1_0 {
                 }
             },
             reset_event: unsafe {
-                unsafe extern "system" fn reset_event(_device: Device, _event: Event) -> Result {
+                unsafe extern "system" fn reset_event(
+                    _device: crate::vk::Device,
+                    _event: Event,
+                ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(reset_event)))
                 }
                 let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetEvent\0");
@@ -1904,7 +1933,7 @@ impl DeviceFnV1_0 {
             },
             create_query_pool: unsafe {
                 unsafe extern "system" fn create_query_pool(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const QueryPoolCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_query_pool: *mut QueryPool,
@@ -1921,7 +1950,7 @@ impl DeviceFnV1_0 {
             },
             destroy_query_pool: unsafe {
                 unsafe extern "system" fn destroy_query_pool(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _query_pool: QueryPool,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -1937,7 +1966,7 @@ impl DeviceFnV1_0 {
             },
             get_query_pool_results: unsafe {
                 unsafe extern "system" fn get_query_pool_results(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _query_pool: QueryPool,
                     _first_query: u32,
                     _query_count: u32,
@@ -1961,7 +1990,7 @@ impl DeviceFnV1_0 {
             },
             create_buffer: unsafe {
                 unsafe extern "system" fn create_buffer(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const BufferCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_buffer: *mut Buffer,
@@ -1978,7 +2007,7 @@ impl DeviceFnV1_0 {
             },
             destroy_buffer: unsafe {
                 unsafe extern "system" fn destroy_buffer(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _buffer: Buffer,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -1994,7 +2023,7 @@ impl DeviceFnV1_0 {
             },
             create_buffer_view: unsafe {
                 unsafe extern "system" fn create_buffer_view(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const BufferViewCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_view: *mut BufferView,
@@ -2011,7 +2040,7 @@ impl DeviceFnV1_0 {
             },
             destroy_buffer_view: unsafe {
                 unsafe extern "system" fn destroy_buffer_view(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _buffer_view: BufferView,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -2027,7 +2056,7 @@ impl DeviceFnV1_0 {
             },
             create_image: unsafe {
                 unsafe extern "system" fn create_image(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const ImageCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_image: *mut Image,
@@ -2044,7 +2073,7 @@ impl DeviceFnV1_0 {
             },
             destroy_image: unsafe {
                 unsafe extern "system" fn destroy_image(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _image: Image,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -2060,7 +2089,7 @@ impl DeviceFnV1_0 {
             },
             get_image_subresource_layout: unsafe {
                 unsafe extern "system" fn get_image_subresource_layout(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _image: Image,
                     _p_subresource: *const ImageSubresource,
                     _p_layout: *mut SubresourceLayout,
@@ -2080,7 +2109,7 @@ impl DeviceFnV1_0 {
             },
             create_image_view: unsafe {
                 unsafe extern "system" fn create_image_view(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const ImageViewCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_view: *mut ImageView,
@@ -2097,7 +2126,7 @@ impl DeviceFnV1_0 {
             },
             destroy_image_view: unsafe {
                 unsafe extern "system" fn destroy_image_view(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _image_view: ImageView,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -2113,7 +2142,7 @@ impl DeviceFnV1_0 {
             },
             create_shader_module: unsafe {
                 unsafe extern "system" fn create_shader_module(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const ShaderModuleCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_shader_module: *mut ShaderModule,
@@ -2130,7 +2159,7 @@ impl DeviceFnV1_0 {
             },
             destroy_shader_module: unsafe {
                 unsafe extern "system" fn destroy_shader_module(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _shader_module: ShaderModule,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -2149,7 +2178,7 @@ impl DeviceFnV1_0 {
             },
             create_pipeline_cache: unsafe {
                 unsafe extern "system" fn create_pipeline_cache(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const PipelineCacheCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_pipeline_cache: *mut PipelineCache,
@@ -2169,7 +2198,7 @@ impl DeviceFnV1_0 {
             },
             destroy_pipeline_cache: unsafe {
                 unsafe extern "system" fn destroy_pipeline_cache(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _pipeline_cache: PipelineCache,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -2188,7 +2217,7 @@ impl DeviceFnV1_0 {
             },
             get_pipeline_cache_data: unsafe {
                 unsafe extern "system" fn get_pipeline_cache_data(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _pipeline_cache: PipelineCache,
                     _p_data_size: *mut usize,
                     _p_data: *mut c_void,
@@ -2208,7 +2237,7 @@ impl DeviceFnV1_0 {
             },
             merge_pipeline_caches: unsafe {
                 unsafe extern "system" fn merge_pipeline_caches(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _dst_cache: PipelineCache,
                     _src_cache_count: u32,
                     _p_src_caches: *const PipelineCache,
@@ -2228,7 +2257,7 @@ impl DeviceFnV1_0 {
             },
             create_graphics_pipelines: unsafe {
                 unsafe extern "system" fn create_graphics_pipelines(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _pipeline_cache: PipelineCache,
                     _create_info_count: u32,
                     _p_create_infos: *const GraphicsPipelineCreateInfo<'_>,
@@ -2250,7 +2279,7 @@ impl DeviceFnV1_0 {
             },
             create_compute_pipelines: unsafe {
                 unsafe extern "system" fn create_compute_pipelines(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _pipeline_cache: PipelineCache,
                     _create_info_count: u32,
                     _p_create_infos: *const ComputePipelineCreateInfo<'_>,
@@ -2272,7 +2301,7 @@ impl DeviceFnV1_0 {
             },
             destroy_pipeline: unsafe {
                 unsafe extern "system" fn destroy_pipeline(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _pipeline: Pipeline,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -2288,7 +2317,7 @@ impl DeviceFnV1_0 {
             },
             create_pipeline_layout: unsafe {
                 unsafe extern "system" fn create_pipeline_layout(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const PipelineLayoutCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_pipeline_layout: *mut PipelineLayout,
@@ -2308,7 +2337,7 @@ impl DeviceFnV1_0 {
             },
             destroy_pipeline_layout: unsafe {
                 unsafe extern "system" fn destroy_pipeline_layout(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _pipeline_layout: PipelineLayout,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -2327,7 +2356,7 @@ impl DeviceFnV1_0 {
             },
             create_sampler: unsafe {
                 unsafe extern "system" fn create_sampler(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const SamplerCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_sampler: *mut Sampler,
@@ -2344,7 +2373,7 @@ impl DeviceFnV1_0 {
             },
             destroy_sampler: unsafe {
                 unsafe extern "system" fn destroy_sampler(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _sampler: Sampler,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -2360,7 +2389,7 @@ impl DeviceFnV1_0 {
             },
             create_descriptor_set_layout: unsafe {
                 unsafe extern "system" fn create_descriptor_set_layout(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const DescriptorSetLayoutCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_set_layout: *mut DescriptorSetLayout,
@@ -2380,7 +2409,7 @@ impl DeviceFnV1_0 {
             },
             destroy_descriptor_set_layout: unsafe {
                 unsafe extern "system" fn destroy_descriptor_set_layout(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _descriptor_set_layout: DescriptorSetLayout,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -2399,7 +2428,7 @@ impl DeviceFnV1_0 {
             },
             create_descriptor_pool: unsafe {
                 unsafe extern "system" fn create_descriptor_pool(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const DescriptorPoolCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_descriptor_pool: *mut DescriptorPool,
@@ -2419,7 +2448,7 @@ impl DeviceFnV1_0 {
             },
             destroy_descriptor_pool: unsafe {
                 unsafe extern "system" fn destroy_descriptor_pool(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _descriptor_pool: DescriptorPool,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -2438,7 +2467,7 @@ impl DeviceFnV1_0 {
             },
             reset_descriptor_pool: unsafe {
                 unsafe extern "system" fn reset_descriptor_pool(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _descriptor_pool: DescriptorPool,
                     _flags: DescriptorPoolResetFlags,
                 ) -> Result {
@@ -2457,7 +2486,7 @@ impl DeviceFnV1_0 {
             },
             allocate_descriptor_sets: unsafe {
                 unsafe extern "system" fn allocate_descriptor_sets(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_allocate_info: *const DescriptorSetAllocateInfo<'_>,
                     _p_descriptor_sets: *mut DescriptorSet,
                 ) -> Result {
@@ -2476,7 +2505,7 @@ impl DeviceFnV1_0 {
             },
             free_descriptor_sets: unsafe {
                 unsafe extern "system" fn free_descriptor_sets(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _descriptor_pool: DescriptorPool,
                     _descriptor_set_count: u32,
                     _p_descriptor_sets: *const DescriptorSet,
@@ -2493,7 +2522,7 @@ impl DeviceFnV1_0 {
             },
             update_descriptor_sets: unsafe {
                 unsafe extern "system" fn update_descriptor_sets(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _descriptor_write_count: u32,
                     _p_descriptor_writes: *const WriteDescriptorSet<'_>,
                     _descriptor_copy_count: u32,
@@ -2514,7 +2543,7 @@ impl DeviceFnV1_0 {
             },
             create_framebuffer: unsafe {
                 unsafe extern "system" fn create_framebuffer(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const FramebufferCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_framebuffer: *mut Framebuffer,
@@ -2531,7 +2560,7 @@ impl DeviceFnV1_0 {
             },
             destroy_framebuffer: unsafe {
                 unsafe extern "system" fn destroy_framebuffer(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _framebuffer: Framebuffer,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -2547,7 +2576,7 @@ impl DeviceFnV1_0 {
             },
             create_render_pass: unsafe {
                 unsafe extern "system" fn create_render_pass(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const RenderPassCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_render_pass: *mut RenderPass,
@@ -2564,7 +2593,7 @@ impl DeviceFnV1_0 {
             },
             destroy_render_pass: unsafe {
                 unsafe extern "system" fn destroy_render_pass(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _render_pass: RenderPass,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -2580,7 +2609,7 @@ impl DeviceFnV1_0 {
             },
             get_render_area_granularity: unsafe {
                 unsafe extern "system" fn get_render_area_granularity(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _render_pass: RenderPass,
                     _p_granularity: *mut Extent2D,
                 ) {
@@ -2599,7 +2628,7 @@ impl DeviceFnV1_0 {
             },
             create_command_pool: unsafe {
                 unsafe extern "system" fn create_command_pool(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const CommandPoolCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_command_pool: *mut CommandPool,
@@ -2616,7 +2645,7 @@ impl DeviceFnV1_0 {
             },
             destroy_command_pool: unsafe {
                 unsafe extern "system" fn destroy_command_pool(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _command_pool: CommandPool,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -2632,7 +2661,7 @@ impl DeviceFnV1_0 {
             },
             reset_command_pool: unsafe {
                 unsafe extern "system" fn reset_command_pool(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _command_pool: CommandPool,
                     _flags: CommandPoolResetFlags,
                 ) -> Result {
@@ -2648,7 +2677,7 @@ impl DeviceFnV1_0 {
             },
             allocate_command_buffers: unsafe {
                 unsafe extern "system" fn allocate_command_buffers(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_allocate_info: *const CommandBufferAllocateInfo<'_>,
                     _p_command_buffers: *mut CommandBuffer,
                 ) -> Result {
@@ -2667,7 +2696,7 @@ impl DeviceFnV1_0 {
             },
             free_command_buffers: unsafe {
                 unsafe extern "system" fn free_command_buffers(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _command_pool: CommandPool,
                     _command_buffer_count: u32,
                     _p_command_buffers: *const CommandBuffer,
@@ -3558,6 +3587,7 @@ impl DeviceFnV1_0 {
 pub type PFN_vkEnumerateInstanceVersion =
     unsafe extern "system" fn(p_api_version: *mut u32) -> Result;
 #[derive(Clone)]
+#[doc = "Raw Vulkan 1.1 entry point function pointers"]
 pub struct EntryFnV1_1 {
     pub enumerate_instance_version: PFN_vkEnumerateInstanceVersion,
 }
@@ -3590,6 +3620,7 @@ impl EntryFnV1_1 {
     }
 }
 #[derive(Clone)]
+#[doc = "Raw Vulkan 1.1 instance-level function pointers"]
 pub struct InstanceFnV1_1 { pub enumerate_physical_device_groups : crate :: vk :: khr :: device_group_creation :: PFN_vkEnumeratePhysicalDeviceGroups , pub get_physical_device_features2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceFeatures2 , pub get_physical_device_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceProperties2 , pub get_physical_device_format_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceFormatProperties2 , pub get_physical_device_image_format_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceImageFormatProperties2 , pub get_physical_device_queue_family_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceQueueFamilyProperties2 , pub get_physical_device_memory_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceMemoryProperties2 , pub get_physical_device_sparse_image_format_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 , pub get_physical_device_external_buffer_properties : crate :: vk :: khr :: external_memory_capabilities :: PFN_vkGetPhysicalDeviceExternalBufferProperties , pub get_physical_device_external_fence_properties : crate :: vk :: khr :: external_fence_capabilities :: PFN_vkGetPhysicalDeviceExternalFenceProperties , pub get_physical_device_external_semaphore_properties : crate :: vk :: khr :: external_semaphore_capabilities :: PFN_vkGetPhysicalDeviceExternalSemaphoreProperties , }
 unsafe impl Send for InstanceFnV1_1 {}
 unsafe impl Sync for InstanceFnV1_1 {}
@@ -3601,7 +3632,7 @@ impl InstanceFnV1_1 {
         Self {
             enumerate_physical_device_groups: unsafe {
                 unsafe extern "system" fn enumerate_physical_device_groups(
-                    _instance: Instance,
+                    _instance: crate::vk::Instance,
                     _p_physical_device_group_count: *mut u32,
                     _p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties<'_>,
                 ) -> Result {
@@ -3827,11 +3858,12 @@ impl InstanceFnV1_1 {
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceQueue2 = unsafe extern "system" fn(
-    device: Device,
+    device: crate::vk::Device,
     p_queue_info: *const DeviceQueueInfo2<'_>,
     p_queue: *mut Queue,
 );
 #[derive(Clone)]
+#[doc = "Raw Vulkan 1.1 device-level function pointers"]
 pub struct DeviceFnV1_1 {
     pub bind_buffer_memory2: crate::vk::khr::bind_memory2::PFN_vkBindBufferMemory2,
     pub bind_image_memory2: crate::vk::khr::bind_memory2::PFN_vkBindImageMemory2,
@@ -3870,7 +3902,7 @@ impl DeviceFnV1_1 {
         Self {
             bind_buffer_memory2: unsafe {
                 unsafe extern "system" fn bind_buffer_memory2(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _bind_info_count: u32,
                     _p_bind_infos: *const BindBufferMemoryInfo<'_>,
                 ) -> Result {
@@ -3886,7 +3918,7 @@ impl DeviceFnV1_1 {
             },
             bind_image_memory2: unsafe {
                 unsafe extern "system" fn bind_image_memory2(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _bind_info_count: u32,
                     _p_bind_infos: *const BindImageMemoryInfo<'_>,
                 ) -> Result {
@@ -3902,7 +3934,7 @@ impl DeviceFnV1_1 {
             },
             get_device_group_peer_memory_features: unsafe {
                 unsafe extern "system" fn get_device_group_peer_memory_features(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _heap_index: u32,
                     _local_device_index: u32,
                     _remote_device_index: u32,
@@ -3959,7 +3991,7 @@ impl DeviceFnV1_1 {
             },
             get_image_memory_requirements2: unsafe {
                 unsafe extern "system" fn get_image_memory_requirements2(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_info: *const ImageMemoryRequirementsInfo2<'_>,
                     _p_memory_requirements: *mut MemoryRequirements2<'_>,
                 ) {
@@ -3978,7 +4010,7 @@ impl DeviceFnV1_1 {
             },
             get_buffer_memory_requirements2: unsafe {
                 unsafe extern "system" fn get_buffer_memory_requirements2(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_info: *const BufferMemoryRequirementsInfo2<'_>,
                     _p_memory_requirements: *mut MemoryRequirements2<'_>,
                 ) {
@@ -3998,7 +4030,7 @@ impl DeviceFnV1_1 {
             },
             get_image_sparse_memory_requirements2: unsafe {
                 unsafe extern "system" fn get_image_sparse_memory_requirements2(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_info: *const ImageSparseMemoryRequirementsInfo2<'_>,
                     _p_sparse_memory_requirement_count: *mut u32,
                     _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2<'_>,
@@ -4019,7 +4051,7 @@ impl DeviceFnV1_1 {
             },
             trim_command_pool: unsafe {
                 unsafe extern "system" fn trim_command_pool(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _command_pool: CommandPool,
                     _flags: CommandPoolTrimFlags,
                 ) {
@@ -4035,7 +4067,7 @@ impl DeviceFnV1_1 {
             },
             get_device_queue2: unsafe {
                 unsafe extern "system" fn get_device_queue2(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_queue_info: *const DeviceQueueInfo2<'_>,
                     _p_queue: *mut Queue,
                 ) {
@@ -4051,7 +4083,7 @@ impl DeviceFnV1_1 {
             },
             create_sampler_ycbcr_conversion: unsafe {
                 unsafe extern "system" fn create_sampler_ycbcr_conversion(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const SamplerYcbcrConversionCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_ycbcr_conversion: *mut SamplerYcbcrConversion,
@@ -4072,7 +4104,7 @@ impl DeviceFnV1_1 {
             },
             destroy_sampler_ycbcr_conversion: unsafe {
                 unsafe extern "system" fn destroy_sampler_ycbcr_conversion(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _ycbcr_conversion: SamplerYcbcrConversion,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -4092,7 +4124,7 @@ impl DeviceFnV1_1 {
             },
             create_descriptor_update_template: unsafe {
                 unsafe extern "system" fn create_descriptor_update_template(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const DescriptorUpdateTemplateCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_descriptor_update_template: *mut DescriptorUpdateTemplate,
@@ -4113,7 +4145,7 @@ impl DeviceFnV1_1 {
             },
             destroy_descriptor_update_template: unsafe {
                 unsafe extern "system" fn destroy_descriptor_update_template(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _descriptor_update_template: DescriptorUpdateTemplate,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -4133,7 +4165,7 @@ impl DeviceFnV1_1 {
             },
             update_descriptor_set_with_template: unsafe {
                 unsafe extern "system" fn update_descriptor_set_with_template(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _descriptor_set: DescriptorSet,
                     _descriptor_update_template: DescriptorUpdateTemplate,
                     _p_data: *const c_void,
@@ -4154,7 +4186,7 @@ impl DeviceFnV1_1 {
             },
             get_descriptor_set_layout_support: unsafe {
                 unsafe extern "system" fn get_descriptor_set_layout_support(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const DescriptorSetLayoutCreateInfo<'_>,
                     _p_support: *mut DescriptorSetLayoutSupport<'_>,
                 ) {
@@ -4176,10 +4208,13 @@ impl DeviceFnV1_1 {
     }
 }
 #[derive(Clone)]
+#[doc = "Raw Vulkan 1.2 entry point function pointers"]
 pub struct EntryFnV1_2;
 #[derive(Clone)]
+#[doc = "Raw Vulkan 1.2 instance-level function pointers"]
 pub struct InstanceFnV1_2;
 #[derive(Clone)]
+#[doc = "Raw Vulkan 1.2 device-level function pointers"]
 pub struct DeviceFnV1_2 {
     pub cmd_draw_indirect_count: crate::vk::amd::draw_indirect_count::PFN_vkCmdDrawIndirectCount,
     pub cmd_draw_indexed_indirect_count:
@@ -4256,7 +4291,7 @@ impl DeviceFnV1_2 {
             },
             create_render_pass2: unsafe {
                 unsafe extern "system" fn create_render_pass2(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const RenderPassCreateInfo2<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_render_pass: *mut RenderPass,
@@ -4323,7 +4358,7 @@ impl DeviceFnV1_2 {
             },
             reset_query_pool: unsafe {
                 unsafe extern "system" fn reset_query_pool(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _query_pool: QueryPool,
                     _first_query: u32,
                     _query_count: u32,
@@ -4340,7 +4375,7 @@ impl DeviceFnV1_2 {
             },
             get_semaphore_counter_value: unsafe {
                 unsafe extern "system" fn get_semaphore_counter_value(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _semaphore: Semaphore,
                     _p_value: *mut u64,
                 ) -> Result {
@@ -4359,7 +4394,7 @@ impl DeviceFnV1_2 {
             },
             wait_semaphores: unsafe {
                 unsafe extern "system" fn wait_semaphores(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_wait_info: *const SemaphoreWaitInfo<'_>,
                     _timeout: u64,
                 ) -> Result {
@@ -4375,7 +4410,7 @@ impl DeviceFnV1_2 {
             },
             signal_semaphore: unsafe {
                 unsafe extern "system" fn signal_semaphore(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_signal_info: *const SemaphoreSignalInfo<'_>,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(signal_semaphore)))
@@ -4390,7 +4425,7 @@ impl DeviceFnV1_2 {
             },
             get_buffer_device_address: unsafe {
                 unsafe extern "system" fn get_buffer_device_address(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_info: *const BufferDeviceAddressInfo<'_>,
                 ) -> DeviceAddress {
                     panic!(concat!(
@@ -4408,7 +4443,7 @@ impl DeviceFnV1_2 {
             },
             get_buffer_opaque_capture_address: unsafe {
                 unsafe extern "system" fn get_buffer_opaque_capture_address(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_info: *const BufferDeviceAddressInfo<'_>,
                 ) -> u64 {
                     panic!(concat!(
@@ -4427,7 +4462,7 @@ impl DeviceFnV1_2 {
             },
             get_device_memory_opaque_capture_address: unsafe {
                 unsafe extern "system" fn get_device_memory_opaque_capture_address(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_info: *const DeviceMemoryOpaqueCaptureAddressInfo<'_>,
                 ) -> u64 {
                     panic!(concat!(
@@ -4448,8 +4483,10 @@ impl DeviceFnV1_2 {
     }
 }
 #[derive(Clone)]
+#[doc = "Raw Vulkan 1.3 entry point function pointers"]
 pub struct EntryFnV1_3;
 #[derive(Clone)]
+#[doc = "Raw Vulkan 1.3 instance-level function pointers"]
 pub struct InstanceFnV1_3 {
     pub get_physical_device_tool_properties:
         crate::vk::ext::tooling_info::PFN_vkGetPhysicalDeviceToolProperties,
@@ -4486,6 +4523,7 @@ impl InstanceFnV1_3 {
     }
 }
 #[derive(Clone)]
+#[doc = "Raw Vulkan 1.3 device-level function pointers"]
 pub struct DeviceFnV1_3 {
     pub create_private_data_slot: crate::vk::ext::private_data::PFN_vkCreatePrivateDataSlot,
     pub destroy_private_data_slot: crate::vk::ext::private_data::PFN_vkDestroyPrivateDataSlot,
@@ -4549,7 +4587,7 @@ impl DeviceFnV1_3 {
         Self {
             create_private_data_slot: unsafe {
                 unsafe extern "system" fn create_private_data_slot(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_create_info: *const PrivateDataSlotCreateInfo<'_>,
                     _p_allocator: *const AllocationCallbacks<'_>,
                     _p_private_data_slot: *mut PrivateDataSlot,
@@ -4569,7 +4607,7 @@ impl DeviceFnV1_3 {
             },
             destroy_private_data_slot: unsafe {
                 unsafe extern "system" fn destroy_private_data_slot(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _private_data_slot: PrivateDataSlot,
                     _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
@@ -4588,7 +4626,7 @@ impl DeviceFnV1_3 {
             },
             set_private_data: unsafe {
                 unsafe extern "system" fn set_private_data(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _object_type: ObjectType,
                     _object_handle: u64,
                     _private_data_slot: PrivateDataSlot,
@@ -4606,7 +4644,7 @@ impl DeviceFnV1_3 {
             },
             get_private_data: unsafe {
                 unsafe extern "system" fn get_private_data(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _object_type: ObjectType,
                     _object_handle: u64,
                     _private_data_slot: PrivateDataSlot,
@@ -5122,7 +5160,7 @@ impl DeviceFnV1_3 {
             },
             get_device_buffer_memory_requirements: unsafe {
                 unsafe extern "system" fn get_device_buffer_memory_requirements(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_info: *const DeviceBufferMemoryRequirements<'_>,
                     _p_memory_requirements: *mut MemoryRequirements2<'_>,
                 ) {
@@ -5142,7 +5180,7 @@ impl DeviceFnV1_3 {
             },
             get_device_image_memory_requirements: unsafe {
                 unsafe extern "system" fn get_device_image_memory_requirements(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_info: *const DeviceImageMemoryRequirements<'_>,
                     _p_memory_requirements: *mut MemoryRequirements2<'_>,
                 ) {
@@ -5162,7 +5200,7 @@ impl DeviceFnV1_3 {
             },
             get_device_image_sparse_memory_requirements: unsafe {
                 unsafe extern "system" fn get_device_image_sparse_memory_requirements(
-                    _device: Device,
+                    _device: crate::vk::Device,
                     _p_info: *const DeviceImageMemoryRequirements<'_>,
                     _p_sparse_memory_requirement_count: *mut u32,
                     _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2<'_>,

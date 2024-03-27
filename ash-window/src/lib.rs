@@ -3,14 +3,15 @@
 use std::os::raw::c_char;
 
 use ash::{
-    extensions::{
+    prelude::*,
+    vk,
+    vk::{
         ext::metal_surface,
         khr::{
             android_surface, surface, wayland_surface, win32_surface, xcb_surface, xlib_surface,
         },
     },
-    prelude::*,
-    vk, Entry, Instance,
+    Entry, Instance,
 };
 use raw_window_handle::{RawDisplayHandle, RawWindowHandle};
 

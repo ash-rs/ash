@@ -4,23 +4,8 @@ use crate::prelude::*;
 use crate::vk;
 use alloc::vec::Vec;
 use core::mem;
-pub use vk::amd::shader_info::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::amd::shader_info::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::amd::shader_info::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl vk::amd::shader_info::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetShaderInfoAMD.html>
     #[inline]
     pub unsafe fn get_shader_info(
@@ -63,16 +48,6 @@ impl Device {
             #[cfg(not(feature = "debug"))]
             x => unimplemented!("ShaderInfoTypeAMD {}", x.0),
         }
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::amd::shader_info::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }
 

@@ -3,23 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use core::mem;
-pub use vk::khr::timeline_semaphore::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::khr::timeline_semaphore::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::khr::timeline_semaphore::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl vk::khr::timeline_semaphore::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreCounterValue.html>
     #[inline]
     pub unsafe fn get_semaphore_counter_value(&self, semaphore: vk::Semaphore) -> VkResult<u64> {
@@ -45,15 +30,5 @@ impl Device {
         signal_info: &vk::SemaphoreSignalInfo<'_>,
     ) -> VkResult<()> {
         (self.fp.signal_semaphore_khr)(self.handle, signal_info).result()
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::timeline_semaphore::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

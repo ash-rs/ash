@@ -4,21 +4,8 @@ use crate::prelude::*;
 use crate::vk;
 use core::mem;
 use core::ptr;
-pub use vk::nv::coverage_reduction_mode::NAME;
 
-#[derive(Clone)]
-pub struct Instance {
-    fp: vk::nv::coverage_reduction_mode::InstanceFn,
-}
-
-impl Instance {
-    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-        let fp = vk::nv::coverage_reduction_mode::InstanceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl vk::nv::coverage_reduction_mode::Instance {
     /// Retrieve the number of elements to pass to [`get_physical_device_supported_framebuffer_mixed_samples_combinations()`][Self::get_physical_device_supported_framebuffer_mixed_samples_combinations()]
     #[inline]
     pub unsafe fn get_physical_device_supported_framebuffer_mixed_samples_combinations_len(
@@ -58,10 +45,5 @@ impl Instance {
         .result()?;
         assert_eq!(count as usize, out.len());
         Ok(())
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::nv::coverage_reduction_mode::InstanceFn {
-        &self.fp
     }
 }

@@ -1,23 +1,9 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_extended_dynamic_state.html>
 
 use crate::vk;
-use core::mem;
 use core::ptr;
-pub use vk::ext::extended_dynamic_state::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    fp: vk::ext::extended_dynamic_state::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::ext::extended_dynamic_state::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl vk::ext::extended_dynamic_state::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCullModeEXT.html>
     #[inline]
     pub unsafe fn cmd_set_cull_mode(
@@ -183,10 +169,5 @@ impl Device {
             depth_fail_op,
             compare_op,
         )
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::ext::extended_dynamic_state::DeviceFn {
-        &self.fp
     }
 }

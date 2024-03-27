@@ -4,24 +4,8 @@ use crate::prelude::*;
 use crate::vk;
 use alloc::vec::Vec;
 use core::mem;
-pub use vk::ext::full_screen_exclusive::NAME;
 
-/// High-level device function wrapper
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::ext::full_screen_exclusive::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::ext::full_screen_exclusive::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl vk::ext::full_screen_exclusive::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireFullScreenExclusiveModeEXT.html>
     #[inline]
     pub unsafe fn acquire_full_screen_exclusive_mode(
@@ -54,33 +38,9 @@ impl Device {
         )
         .assume_init_on_success(present_modes)
     }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::ext::full_screen_exclusive::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
-    }
 }
 
-/// High-level instance function wrapper
-#[derive(Clone)]
-pub struct Instance {
-    fp: vk::ext::full_screen_exclusive::InstanceFn,
-}
-
-impl Instance {
-    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-        let handle = instance.handle();
-        let fp = vk::ext::full_screen_exclusive::InstanceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl vk::ext::full_screen_exclusive::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModes2EXT.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_present_modes2(
@@ -96,10 +56,5 @@ impl Instance {
                 data,
             )
         })
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::ext::full_screen_exclusive::InstanceFn {
-        &self.fp
     }
 }

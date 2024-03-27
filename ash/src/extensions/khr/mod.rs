@@ -4,7 +4,7 @@ pub mod buffer_device_address;
 pub mod calibrated_timestamps;
 pub mod cooperative_matrix;
 pub mod copy_commands2;
-pub mod create_render_pass2;
+pub mod create_renderpass2;
 pub mod deferred_host_operations;
 pub mod device_group;
 pub mod device_group_creation;

@@ -1,22 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_draw_indirect_count.html>
 
 use crate::vk;
-use core::mem;
-pub use vk::khr::draw_indirect_count::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    fp: vk::khr::draw_indirect_count::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::khr::draw_indirect_count::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl vk::khr::draw_indirect_count::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndexedIndirectCountKHR.html>
     #[inline]
     pub unsafe fn cmd_draw_indexed_indirect_count(
@@ -61,10 +47,5 @@ impl Device {
             max_draw_count,
             stride,
         );
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::draw_indirect_count::DeviceFn {
-        &self.fp
     }
 }

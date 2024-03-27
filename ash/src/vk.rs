@@ -1,7 +1,8 @@
 #![allow(
     clippy::too_many_arguments,
     clippy::cognitive_complexity,
-    clippy::wrong_self_convention
+    clippy::wrong_self_convention,
+    unused_qualifications
 )]
 #[macro_use]
 mod macros;

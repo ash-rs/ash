@@ -5,23 +5,8 @@ use crate::vk;
 use crate::RawPtr;
 use alloc::vec::Vec;
 use core::mem;
-pub use vk::amdx::shader_enqueue::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::amdx::shader_enqueue::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::amdx::shader_enqueue::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl vk::amdx::shader_enqueue::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateExecutionGraphPipelinesAMDX.html>
     #[inline]
     pub unsafe fn create_execution_graph_pipelines(
@@ -115,15 +100,5 @@ impl Device {
         count_info: vk::DeviceAddress,
     ) {
         (self.fp.cmd_dispatch_graph_indirect_count_amdx)(command_buffer, scratch, count_info)
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::amdx::shader_enqueue::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

@@ -4,23 +4,8 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use core::mem;
-pub use vk::khr::sampler_ycbcr_conversion::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::khr::sampler_ycbcr_conversion::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::khr::sampler_ycbcr_conversion::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl vk::khr::sampler_ycbcr_conversion::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateSamplerYcbcrConversion.html>
     #[inline]
     pub unsafe fn create_sampler_ycbcr_conversion(
@@ -50,15 +35,5 @@ impl Device {
             ycbcr_conversion,
             allocation_callbacks.as_raw_ptr(),
         )
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::sampler_ycbcr_conversion::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }
