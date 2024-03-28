@@ -69,7 +69,7 @@ impl Device {
             samples.as_raw().is_power_of_two(),
             "Only one SampleCount bit must be set"
         );
-        assert_eq!(samples.as_raw() as usize / 32, sample_mask.len());
+        assert_eq!((samples.as_raw() as usize + 31) / 32, sample_mask.len());
         (self.fp.cmd_set_sample_mask_ext)(command_buffer, samples, sample_mask.as_ptr())
     }
 
