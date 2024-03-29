@@ -4,7 +4,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 
-impl vk::nv::low_latency2::Device {
+impl crate::nv::low_latency2::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetLatencySleepModeNV.html>
     #[inline]
     pub unsafe fn set_latency_sleep_mode(

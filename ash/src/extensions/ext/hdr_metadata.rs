@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::ext::hdr_metadata::Device {
+impl crate::ext::hdr_metadata::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetHdrMetadataEXT.html>
     #[inline]
     pub unsafe fn set_hdr_metadata(

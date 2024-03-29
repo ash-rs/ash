@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::ext::sample_locations::Device {
+impl crate::ext::sample_locations::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEXT.html>
     #[inline]
     pub unsafe fn cmd_set_sample_locations(
@@ -14,7 +14,7 @@ impl vk::ext::sample_locations::Device {
     }
 }
 
-impl vk::ext::sample_locations::Instance {
+impl crate::ext::sample_locations::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html>
     #[inline]
     pub unsafe fn get_physical_device_multisample_properties(

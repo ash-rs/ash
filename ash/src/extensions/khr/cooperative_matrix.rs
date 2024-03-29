@@ -4,7 +4,7 @@ use crate::prelude::*;
 use crate::vk;
 use alloc::vec::Vec;
 
-impl vk::khr::cooperative_matrix::Instance {
+impl crate::khr::cooperative_matrix::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_cooperative_matrix_properties(

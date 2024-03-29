@@ -5,7 +5,7 @@ use crate::vk;
 use crate::RawPtr;
 use core::mem;
 
-impl vk::nn::vi_surface::Instance {
+impl crate::nn::vi_surface::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateViSurfaceNN.html>
     #[inline]
     pub unsafe fn create_vi_surface(

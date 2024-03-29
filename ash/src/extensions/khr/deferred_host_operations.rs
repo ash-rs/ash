@@ -5,7 +5,7 @@ use crate::vk;
 use crate::RawPtr;
 use core::mem;
 
-impl vk::khr::deferred_host_operations::Device {
+impl crate::khr::deferred_host_operations::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDeferredOperationKHR.html>
     #[inline]
     pub unsafe fn create_deferred_operation(

@@ -4,7 +4,7 @@ use crate::prelude::*;
 use crate::vk;
 use alloc::vec::Vec;
 
-impl vk::khr::pipeline_executable_properties::Device {
+impl crate::khr::pipeline_executable_properties::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutableInternalRepresentationsKHR.html>
     #[inline]
     pub unsafe fn get_pipeline_executable_internal_representations(

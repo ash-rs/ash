@@ -6,7 +6,7 @@ use crate::RawPtr;
 use alloc::vec::Vec;
 use core::ptr;
 
-impl vk::ext::shader_object::Device {
+impl crate::ext::shader_object::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateShadersEXT.html>
     #[inline]
     pub unsafe fn create_shaders(

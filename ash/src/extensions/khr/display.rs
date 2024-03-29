@@ -6,7 +6,7 @@ use crate::RawPtr;
 use alloc::vec::Vec;
 use core::mem;
 
-impl vk::khr::display::Instance {
+impl crate::khr::display::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPropertiesKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_display_properties(

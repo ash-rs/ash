@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::amd::buffer_marker::Device {
+impl crate::amd::buffer_marker::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteBufferMarkerAMD.html>
     #[inline]
     pub unsafe fn cmd_write_buffer_marker(

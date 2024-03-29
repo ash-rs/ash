@@ -5,7 +5,7 @@ use crate::vk;
 use core::mem;
 use core::ptr;
 
-impl vk::khr::device_group_creation::Instance {
+impl crate::khr::device_group_creation::Instance {
     /// Retrieve the number of elements to pass to [`enumerate_physical_device_groups()`][Self::enumerate_physical_device_groups()]
     #[inline]
     pub unsafe fn enumerate_physical_device_groups_len(&self) -> VkResult<usize> {

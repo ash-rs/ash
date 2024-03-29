@@ -58,12 +58,16 @@ pub use crate::device::Device;
 pub use crate::entry::Entry;
 #[cfg(feature = "loaded")]
 pub use crate::entry::LoadingError;
+pub use crate::extensions_generated::*;
 pub use crate::instance::Instance;
+pub use crate::tables::*;
 
 mod device;
 mod entry;
+mod extensions_generated;
 mod instance;
 pub mod prelude;
+mod tables;
 pub mod util;
 /// Raw Vulkan bindings and types, generated from `vk.xml`
 #[macro_use]

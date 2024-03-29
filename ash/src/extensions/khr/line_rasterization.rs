@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::khr::line_rasterization::Device {
+impl crate::khr::line_rasterization::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleKHR.html>
     #[inline]
     pub unsafe fn cmd_set_line_stipple(

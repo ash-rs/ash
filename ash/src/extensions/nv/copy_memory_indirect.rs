@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::nv::copy_memory_indirect::Device {
+impl crate::nv::copy_memory_indirect::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryIndirectNV.html>
     ///
     /// `copy_buffer_address` is a buffer device address which is a pointer to an array of

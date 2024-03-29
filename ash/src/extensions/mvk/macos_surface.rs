@@ -5,7 +5,7 @@ use crate::vk;
 use crate::RawPtr;
 use core::mem;
 
-impl vk::mvk::macos_surface::Instance {
+impl crate::mvk::macos_surface::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateMacOSSurfaceMVK.html>
     #[inline]
     pub unsafe fn create_mac_os_surface(

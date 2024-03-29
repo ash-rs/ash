@@ -4,7 +4,7 @@ use crate::prelude::*;
 use crate::vk;
 use core::mem;
 
-impl vk::khr::external_memory_fd::Device {
+impl crate::khr::external_memory_fd::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryFdKHR.html>
     #[inline]
     pub unsafe fn get_memory_fd(&self, get_fd_info: &vk::MemoryGetFdInfoKHR<'_>) -> VkResult<i32> {

@@ -5,7 +5,7 @@ use crate::vk;
 use alloc::vec::Vec;
 use core::mem;
 
-impl vk::ext::full_screen_exclusive::Device {
+impl crate::ext::full_screen_exclusive::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireFullScreenExclusiveModeEXT.html>
     #[inline]
     pub unsafe fn acquire_full_screen_exclusive_mode(
@@ -40,7 +40,7 @@ impl vk::ext::full_screen_exclusive::Device {
     }
 }
 
-impl vk::ext::full_screen_exclusive::Instance {
+impl crate::ext::full_screen_exclusive::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModes2EXT.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_present_modes2(

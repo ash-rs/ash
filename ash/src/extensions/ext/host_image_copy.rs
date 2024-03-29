@@ -2,8 +2,10 @@
 
 use crate::prelude::*;
 use crate::vk;
+#[cfg(doc)]
+use crate::{ext, khr};
 
-impl vk::ext::host_image_copy::Device {
+impl crate::ext::host_image_copy::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyMemoryToImageEXT.html>
     #[inline]
     pub unsafe fn copy_memory_to_image(
@@ -47,10 +49,10 @@ impl vk::ext::host_image_copy::Device {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2EXT.html>
     ///
-    /// Also available as [`vk::khr::maintenance5::Device::get_image_subresource_layout2()`]
+    /// Also available as [`khr::maintenance5::Device::get_image_subresource_layout2()`]
     /// when [`VK_KHR_maintenance5`] is enabled.
     ///
-    /// Also available as [`vk::ext::image_compression_control::Device::get_image_subresource_layout2()`]
+    /// Also available as [`ext::image_compression_control::Device::get_image_subresource_layout2()`]
     /// when [`VK_EXT_image_compression_control`] is enabled.
     ///
     /// [`VK_KHR_maintenance5`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance5.html

@@ -12,12 +12,9 @@ use std::{
 };
 
 use ash::{
-    vk,
-    vk::{
-        ext::debug_utils,
-        khr::{surface, swapchain},
-    },
-    Device, Entry, Instance,
+    ext::debug_utils,
+    khr::{surface, swapchain},
+    vk, Device, Entry, Instance,
 };
 use winit::{
     event::{ElementState, Event, KeyEvent, WindowEvent},
@@ -233,9 +230,9 @@ impl ExampleBase {
 
             #[cfg(any(target_os = "macos", target_os = "ios"))]
             {
-                extension_names.push(vk::khr::portability_enumeration::NAME.as_ptr());
+                extension_names.push(ash::khr::portability_enumeration::NAME.as_ptr());
                 // Enabling this extension is a requirement when using `VK_KHR_portability_subset`
-                extension_names.push(vk::khr::get_physical_device_properties2::NAME.as_ptr());
+                extension_names.push(ash::khr::get_physical_device_properties2::NAME.as_ptr());
             }
 
             let appinfo = vk::ApplicationInfo::default()
@@ -319,7 +316,7 @@ impl ExampleBase {
             let device_extension_names_raw = [
                 swapchain::NAME.as_ptr(),
                 #[cfg(any(target_os = "macos", target_os = "ios"))]
-                vk::khr::portability_subset::NAME.as_ptr(),
+                ash::khr::portability_subset::NAME.as_ptr(),
             ];
             let features = vk::PhysicalDeviceFeatures {
                 shader_clip_distance: 1,

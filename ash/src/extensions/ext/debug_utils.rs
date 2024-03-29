@@ -5,7 +5,7 @@ use crate::vk;
 use crate::RawPtr;
 use core::mem;
 
-impl vk::ext::debug_utils::Device {
+impl crate::ext::debug_utils::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetDebugUtilsObjectNameEXT.html>
     #[inline]
     pub unsafe fn set_debug_utils_object_name(
@@ -77,7 +77,7 @@ impl vk::ext::debug_utils::Device {
     }
 }
 
-impl vk::ext::debug_utils::Instance {
+impl crate::ext::debug_utils::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDebugUtilsMessengerEXT.html>
     #[inline]
     pub unsafe fn create_debug_utils_messenger(

@@ -12,14 +12,14 @@ use core::ptr;
 pub struct Device {
     pub(crate) handle: vk::Device,
 
-    pub(crate) device_fn_1_0: vk::DeviceFnV1_0,
-    pub(crate) device_fn_1_1: vk::DeviceFnV1_1,
-    pub(crate) device_fn_1_2: vk::DeviceFnV1_2,
-    pub(crate) device_fn_1_3: vk::DeviceFnV1_3,
+    pub(crate) device_fn_1_0: crate::DeviceFnV1_0,
+    pub(crate) device_fn_1_1: crate::DeviceFnV1_1,
+    pub(crate) device_fn_1_2: crate::DeviceFnV1_2,
+    pub(crate) device_fn_1_3: crate::DeviceFnV1_3,
 }
 
 impl Device {
-    pub unsafe fn load(instance_fn: &vk::InstanceFnV1_0, device: vk::Device) -> Self {
+    pub unsafe fn load(instance_fn: &crate::InstanceFnV1_0, device: vk::Device) -> Self {
         Self::load_with(
             |name| mem::transmute((instance_fn.get_device_proc_addr)(device, name.as_ptr())),
             device,
@@ -32,20 +32,20 @@ impl Device {
     ) -> Self {
         Self::from_parts_1_3(
             device,
-            vk::DeviceFnV1_0::load(&mut load_fn),
-            vk::DeviceFnV1_1::load(&mut load_fn),
-            vk::DeviceFnV1_2::load(&mut load_fn),
-            vk::DeviceFnV1_3::load(&mut load_fn),
+            crate::DeviceFnV1_0::load(&mut load_fn),
+            crate::DeviceFnV1_1::load(&mut load_fn),
+            crate::DeviceFnV1_2::load(&mut load_fn),
+            crate::DeviceFnV1_3::load(&mut load_fn),
         )
     }
 
     #[inline]
     pub fn from_parts_1_3(
         handle: vk::Device,
-        device_fn_1_0: vk::DeviceFnV1_0,
-        device_fn_1_1: vk::DeviceFnV1_1,
-        device_fn_1_2: vk::DeviceFnV1_2,
-        device_fn_1_3: vk::DeviceFnV1_3,
+        device_fn_1_0: crate::DeviceFnV1_0,
+        device_fn_1_1: crate::DeviceFnV1_1,
+        device_fn_1_2: crate::DeviceFnV1_2,
+        device_fn_1_3: crate::DeviceFnV1_3,
     ) -> Self {
         Self {
             handle,
@@ -66,7 +66,7 @@ impl Device {
 /// Vulkan core 1.3
 impl Device {
     #[inline]
-    pub fn fp_v1_3(&self) -> &vk::DeviceFnV1_3 {
+    pub fn fp_v1_3(&self) -> &crate::DeviceFnV1_3 {
         &self.device_fn_1_3
     }
 
@@ -556,7 +556,7 @@ impl Device {
 /// Vulkan core 1.2
 impl Device {
     #[inline]
-    pub fn fp_v1_2(&self) -> &vk::DeviceFnV1_2 {
+    pub fn fp_v1_2(&self) -> &crate::DeviceFnV1_2 {
         &self.device_fn_1_2
     }
 
@@ -736,7 +736,7 @@ impl Device {
 /// Vulkan core 1.1
 impl Device {
     #[inline]
-    pub fn fp_v1_1(&self) -> &vk::DeviceFnV1_1 {
+    pub fn fp_v1_1(&self) -> &crate::DeviceFnV1_1 {
         &self.device_fn_1_1
     }
 
@@ -982,7 +982,7 @@ impl Device {
 /// Vulkan core 1.0
 impl Device {
     #[inline]
-    pub fn fp_v1_0(&self) -> &vk::DeviceFnV1_0 {
+    pub fn fp_v1_0(&self) -> &crate::DeviceFnV1_0 {
         &self.device_fn_1_0
     }
 

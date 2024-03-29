@@ -3,7 +3,7 @@
 use crate::prelude::*;
 use crate::vk;
 
-impl vk::ext::swapchain_maintenance1::Device {
+impl crate::ext::swapchain_maintenance1::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkReleaseSwapchainImagesEXT.html>
     #[inline]
     pub unsafe fn release_swapchain_images(

@@ -5,7 +5,7 @@ use crate::vk;
 use core::mem;
 use core::ptr;
 
-impl vk::nv::coverage_reduction_mode::Instance {
+impl crate::nv::coverage_reduction_mode::Instance {
     /// Retrieve the number of elements to pass to [`get_physical_device_supported_framebuffer_mixed_samples_combinations()`][Self::get_physical_device_supported_framebuffer_mixed_samples_combinations()]
     #[inline]
     pub unsafe fn get_physical_device_supported_framebuffer_mixed_samples_combinations_len(

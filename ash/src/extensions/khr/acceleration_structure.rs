@@ -6,7 +6,7 @@ use crate::RawPtr;
 use alloc::vec::Vec;
 use core::mem;
 
-impl vk::khr::acceleration_structure::Device {
+impl crate::khr::acceleration_structure::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateAccelerationStructureKHR.html>
     #[inline]
     pub unsafe fn create_acceleration_structure(

@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::ext::extended_dynamic_state3::Device {
+impl crate::ext::extended_dynamic_state3::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetTessellationDomainOriginEXT.html>
     #[inline]
     pub unsafe fn cmd_set_tessellation_domain_origin(

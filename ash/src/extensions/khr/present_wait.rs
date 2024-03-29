@@ -3,7 +3,7 @@
 use crate::prelude::*;
 use crate::vk;
 
-impl vk::khr::present_wait::Device {
+impl crate::khr::present_wait::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWaitForPresentKHR.html>
     #[inline]
     pub unsafe fn wait_for_present(

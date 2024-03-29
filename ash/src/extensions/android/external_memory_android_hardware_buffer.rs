@@ -4,7 +4,7 @@ use crate::prelude::*;
 use crate::vk;
 use core::mem;
 
-impl vk::android::external_memory_android_hardware_buffer::Device {
+impl crate::android::external_memory_android_hardware_buffer::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAndroidHardwareBufferPropertiesANDROID.html>
     #[inline]
     pub unsafe fn get_android_hardware_buffer_properties(

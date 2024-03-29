@@ -4,7 +4,7 @@ use crate::vk;
 use core::mem;
 use core::ptr;
 
-impl vk::khr::get_memory_requirements2::Device {
+impl crate::khr::get_memory_requirements2::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferMemoryRequirements2KHR.html>
     #[inline]
     pub unsafe fn get_buffer_memory_requirements2(

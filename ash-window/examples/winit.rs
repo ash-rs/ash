@@ -35,7 +35,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             .build(&event_loop)?;
 
         // Load the surface extensions
-        let surface_fn = vk::khr::surface::Instance::new(&entry, &instance);
+        let surface_fn = ash::khr::surface::Instance::new(&entry, &instance);
         let mut surface = None;
 
         let _ = event_loop.run(move |event, elwp| match event {

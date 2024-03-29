@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::khr::copy_commands2::Device {
+impl crate::khr::copy_commands2::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyBuffer2KHR.html>
     #[inline]
     pub unsafe fn cmd_copy_buffer2(

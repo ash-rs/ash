@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::khr::maintenance6::Device {
+impl crate::khr::maintenance6::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets2KHR.html>
     #[inline]
     pub unsafe fn cmd_bind_descriptor_sets2(

@@ -5,7 +5,7 @@ use crate::vk;
 use core::mem;
 use core::ptr;
 
-impl vk::khr::performance_query::Device {
+impl crate::khr::performance_query::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireProfilingLockKHR.html>
     #[inline]
     pub unsafe fn acquire_profiling_lock(
@@ -22,7 +22,7 @@ impl vk::khr::performance_query::Device {
     }
 }
 
-impl vk::khr::performance_query::Instance {
+impl crate::khr::performance_query::Instance {
     /// Retrieve the number of elements to pass to [`enumerate_physical_device_queue_family_performance_query_counters()`][Self::enumerate_physical_device_queue_family_performance_query_counters()]
     #[inline]
     pub unsafe fn enumerate_physical_device_queue_family_performance_query_counters_len(

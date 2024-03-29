@@ -5,7 +5,7 @@ use crate::vk;
 use alloc::vec::Vec;
 use core::mem;
 
-impl vk::amd::shader_info::Device {
+impl crate::amd::shader_info::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetShaderInfoAMD.html>
     #[inline]
     pub unsafe fn get_shader_info(

@@ -5,7 +5,7 @@ use core::ffi;
 use core::mem;
 use core::ptr;
 
-impl vk::nv::device_diagnostic_checkpoints::Device {
+impl crate::nv::device_diagnostic_checkpoints::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCheckpointNV.html>
     #[inline]
     pub unsafe fn cmd_set_checkpoint(

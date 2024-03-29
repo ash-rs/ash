@@ -6,7 +6,7 @@ use crate::RawPtr;
 use alloc::vec::Vec;
 use core::mem;
 
-impl vk::khr::surface::Instance {
+impl crate::khr::surface::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceSupportKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_support(

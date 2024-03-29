@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::khr::buffer_device_address::Device {
+impl crate::khr::buffer_device_address::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferDeviceAddressKHR.html>
     #[inline]
     pub unsafe fn get_buffer_device_address(

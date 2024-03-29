@@ -5,7 +5,7 @@ use crate::vk;
 use crate::RawPtr;
 use alloc::vec::Vec;
 
-impl vk::khr::ray_tracing_pipeline::Device {
+impl crate::khr::ray_tracing_pipeline::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysKHR.html>
     #[inline]
     pub unsafe fn cmd_trace_rays(

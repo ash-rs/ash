@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::khr::maintenance3::Device {
+impl crate::khr::maintenance3::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutSupportKHR.html>
     #[inline]
     pub unsafe fn get_descriptor_set_layout_support(

@@ -6,7 +6,7 @@ use crate::RawPtr;
 use alloc::vec::Vec;
 use core::mem;
 
-impl vk::amdx::shader_enqueue::Device {
+impl crate::amdx::shader_enqueue::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateExecutionGraphPipelinesAMDX.html>
     #[inline]
     pub unsafe fn create_execution_graph_pipelines(

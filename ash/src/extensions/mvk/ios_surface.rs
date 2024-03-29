@@ -5,7 +5,7 @@ use crate::vk;
 use crate::RawPtr;
 use core::mem;
 
-impl vk::mvk::ios_surface::Instance {
+impl crate::mvk::ios_surface::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateIOSSurfaceMVK.html>
     #[inline]
     pub unsafe fn create_ios_surface(

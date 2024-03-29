@@ -3,7 +3,7 @@
 use crate::prelude::*;
 use crate::vk;
 
-impl vk::khr::synchronization2::Device {
+impl crate::khr::synchronization2::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPipelineBarrier2KHR.html>
     #[inline]
     pub unsafe fn cmd_pipeline_barrier2(

@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::khr::ray_tracing_maintenance1::Device {
+impl crate::khr::ray_tracing_maintenance1::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysIndirect2KHR.html>
     ///
     /// `indirect_device_address` is a buffer device address which is a pointer to a [`vk::TraceRaysIndirectCommand2KHR`] structure containing the trace ray parameters.

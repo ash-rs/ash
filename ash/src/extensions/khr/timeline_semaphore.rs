@@ -4,7 +4,7 @@ use crate::prelude::*;
 use crate::vk;
 use core::mem;
 
-impl vk::khr::timeline_semaphore::Device {
+impl crate::khr::timeline_semaphore::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreCounterValue.html>
     #[inline]
     pub unsafe fn get_semaphore_counter_value(&self, semaphore: vk::Semaphore) -> VkResult<u64> {

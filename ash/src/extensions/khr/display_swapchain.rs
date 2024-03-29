@@ -5,7 +5,7 @@ use crate::vk;
 use crate::RawPtr;
 use alloc::vec::Vec;
 
-impl vk::khr::display_swapchain::Device {
+impl crate::khr::display_swapchain::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateSharedSwapchainsKHR.html>
     #[inline]
     pub unsafe fn create_shared_swapchains(

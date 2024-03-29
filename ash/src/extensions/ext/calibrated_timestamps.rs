@@ -5,7 +5,7 @@ use crate::vk;
 use alloc::vec::Vec;
 use core::mem;
 
-impl vk::ext::calibrated_timestamps::Device {
+impl crate::ext::calibrated_timestamps::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetCalibratedTimestampsEXT.html>
     ///
     /// Returns a tuple containing `(timestamps, max_deviation)`
@@ -29,7 +29,7 @@ impl vk::ext::calibrated_timestamps::Device {
     }
 }
 
-impl vk::ext::calibrated_timestamps::Instance {
+impl crate::ext::calibrated_timestamps::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCalibrateableTimeDomainsEXT.html>
     #[inline]
     pub unsafe fn get_physical_device_calibrateable_time_domains(

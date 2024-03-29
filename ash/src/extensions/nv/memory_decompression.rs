@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::nv::memory_decompression::Device {
+impl crate::nv::memory_decompression::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDecompressMemoryNV.html>
     pub unsafe fn cmd_decompress_memory(
         &self,

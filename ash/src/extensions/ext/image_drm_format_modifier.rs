@@ -3,7 +3,7 @@
 use crate::prelude::*;
 use crate::vk;
 
-impl vk::ext::image_drm_format_modifier::Device {
+impl crate::ext::image_drm_format_modifier::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageDrmFormatModifierPropertiesEXT.html>
     #[inline]
     pub unsafe fn get_image_drm_format_modifier_properties(

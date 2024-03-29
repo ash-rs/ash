@@ -6,7 +6,7 @@ use crate::RawPtr;
 use alloc::vec::Vec;
 use core::mem;
 
-impl vk::nv::cuda_kernel_launch::Device {
+impl crate::nv::cuda_kernel_launch::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateCudaModuleNV.html>
     #[inline]
     pub unsafe fn create_cuda_module(

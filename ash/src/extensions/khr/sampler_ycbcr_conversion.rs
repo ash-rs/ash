@@ -5,7 +5,7 @@ use crate::vk;
 use crate::RawPtr;
 use core::mem;
 
-impl vk::khr::sampler_ycbcr_conversion::Device {
+impl crate::khr::sampler_ycbcr_conversion::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateSamplerYcbcrConversion.html>
     #[inline]
     pub unsafe fn create_sampler_ycbcr_conversion(

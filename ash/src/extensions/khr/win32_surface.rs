@@ -5,7 +5,7 @@ use crate::vk;
 use crate::RawPtr;
 use core::mem;
 
-impl vk::khr::win32_surface::Instance {
+impl crate::khr::win32_surface::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateWin32SurfaceKHR.html>
     #[inline]
     pub unsafe fn create_win32_surface(

@@ -4,7 +4,7 @@ use crate::prelude::*;
 use crate::vk;
 use core::mem;
 
-impl vk::khr::external_semaphore_fd::Device {
+impl crate::khr::external_semaphore_fd::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportSemaphoreFdKHR.html>
     #[inline]
     pub unsafe fn import_semaphore_fd(

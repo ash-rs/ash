@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::nv::device_generated_commands_compute::Device {
+impl crate::nv::device_generated_commands_compute::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineIndirectMemoryRequirementsNV.html>
     #[inline]
     pub unsafe fn get_pipeline_indirect_memory_requirements(

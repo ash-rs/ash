@@ -4,7 +4,7 @@ use crate::prelude::*;
 use crate::vk;
 use core::mem;
 
-impl vk::ext::acquire_drm_display::Instance {
+impl crate::ext::acquire_drm_display::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireDrmDisplayEXT.html>
     #[inline]
     pub unsafe fn acquire_drm_display(

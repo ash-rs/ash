@@ -4,7 +4,7 @@ use crate::prelude::*;
 use crate::vk;
 use core::mem;
 
-impl vk::khr::external_fence_win32::Device {
+impl crate::khr::external_fence_win32::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportFenceWin32HandleKHR.html>
     #[inline]
     pub unsafe fn import_fence_win32_handle(

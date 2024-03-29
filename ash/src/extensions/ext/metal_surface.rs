@@ -5,7 +5,7 @@ use crate::vk;
 use crate::RawPtr;
 use core::mem;
 
-impl vk::ext::metal_surface::Instance {
+impl crate::ext::metal_surface::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateMetalSurfaceEXT.html>
     #[inline]
     pub unsafe fn create_metal_surface(

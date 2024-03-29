@@ -4,7 +4,7 @@ use crate::vk;
 use core::mem;
 use core::ptr;
 
-impl vk::khr::maintenance4::Device {
+impl crate::khr::maintenance4::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceBufferMemoryRequirementsKHR.html>
     #[inline]
     pub unsafe fn get_device_buffer_memory_requirements(

@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::ext::vertex_input_dynamic_state::Device {
+impl crate::ext::vertex_input_dynamic_state::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetVertexInputEXT.html>
     #[inline]
     pub unsafe fn cmd_set_vertex_input(

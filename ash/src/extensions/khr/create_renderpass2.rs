@@ -5,7 +5,7 @@ use crate::vk;
 use crate::RawPtr;
 use core::mem;
 
-impl vk::khr::create_renderpass2::Device {
+impl crate::khr::create_renderpass2::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateRenderPass2.html>
     #[inline]
     pub unsafe fn create_render_pass2(

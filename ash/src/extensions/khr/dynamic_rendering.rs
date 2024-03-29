@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::khr::dynamic_rendering::Device {
+impl crate::khr::dynamic_rendering::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRenderingKHR.html>
     #[inline]
     pub unsafe fn cmd_begin_rendering(

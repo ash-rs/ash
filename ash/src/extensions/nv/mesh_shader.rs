@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::nv::mesh_shader::Device {
+impl crate::nv::mesh_shader::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksNV.html>
     #[inline]
     pub unsafe fn cmd_draw_mesh_tasks(

@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::khr::dynamic_rendering_local_read::Device {
+impl crate::khr::dynamic_rendering_local_read::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingAttachmentLocationsKHR.html>
     #[inline]
     pub unsafe fn cmd_set_rendering_attachment_locations(

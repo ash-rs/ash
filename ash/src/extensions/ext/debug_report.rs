@@ -5,7 +5,7 @@ use crate::vk;
 use crate::RawPtr;
 use core::mem;
 
-impl vk::ext::debug_report::Instance {
+impl crate::ext::debug_report::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDebugReportCallbackEXT.html>
     #[inline]
     pub unsafe fn destroy_debug_report_callback(

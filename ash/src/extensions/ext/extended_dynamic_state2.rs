@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::ext::extended_dynamic_state2::Device {
+impl crate::ext::extended_dynamic_state2::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPatchControlPointsEXT.html>
     #[inline]
     pub unsafe fn cmd_set_patch_control_points(

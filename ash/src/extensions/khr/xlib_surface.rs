@@ -5,7 +5,7 @@ use crate::vk;
 use crate::RawPtr;
 use core::mem;
 
-impl vk::khr::xlib_surface::Instance {
+impl crate::khr::xlib_surface::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateXlibSurfaceKHR.html>
     #[inline]
     pub unsafe fn create_xlib_surface(

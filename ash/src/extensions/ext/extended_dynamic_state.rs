@@ -3,7 +3,7 @@
 use crate::vk;
 use core::ptr;
 
-impl vk::ext::extended_dynamic_state::Device {
+impl crate::ext::extended_dynamic_state::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCullModeEXT.html>
     #[inline]
     pub unsafe fn cmd_set_cull_mode(

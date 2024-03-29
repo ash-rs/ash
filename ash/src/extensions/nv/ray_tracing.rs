@@ -6,7 +6,7 @@ use crate::RawPtr;
 use alloc::vec::Vec;
 use core::mem;
 
-impl vk::nv::ray_tracing::Device {
+impl crate::nv::ray_tracing::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateAccelerationStructureNV.html>
     #[inline]
     pub unsafe fn create_acceleration_structure(

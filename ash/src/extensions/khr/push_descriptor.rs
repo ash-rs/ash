@@ -3,7 +3,7 @@
 use crate::vk;
 use core::ffi;
 
-impl vk::khr::push_descriptor::Device {
+impl crate::khr::push_descriptor::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetKHR.html>
     #[inline]
     pub unsafe fn cmd_push_descriptor_set(

@@ -2,7 +2,7 @@
 
 use crate::vk;
 
-impl vk::khr::draw_indirect_count::Device {
+impl crate::khr::draw_indirect_count::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndexedIndirectCountKHR.html>
     #[inline]
     pub unsafe fn cmd_draw_indexed_indirect_count(

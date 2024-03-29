@@ -5,7 +5,7 @@ use crate::vk;
 use core::mem;
 use core::ptr;
 
-impl vk::khr::get_surface_capabilities2::Instance {
+impl crate::khr::get_surface_capabilities2::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_capabilities2(

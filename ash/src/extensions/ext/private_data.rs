@@ -5,7 +5,7 @@ use crate::vk;
 use crate::RawPtr;
 use core::mem;
 
-impl vk::ext::private_data::Device {
+impl crate::ext::private_data::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreatePrivateDataSlotEXT.html>
     #[inline]
     pub unsafe fn create_private_data_slot(

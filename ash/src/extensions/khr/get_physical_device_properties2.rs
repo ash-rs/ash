@@ -5,7 +5,7 @@ use crate::vk;
 use core::mem;
 use core::ptr;
 
-impl vk::khr::get_physical_device_properties2::Instance {
+impl crate::khr::get_physical_device_properties2::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFeatures2KHR.html>
     #[inline]
     pub unsafe fn get_physical_device_features2(
