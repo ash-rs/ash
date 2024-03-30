@@ -73,10 +73,10 @@ pub mod amd {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_draw_indirect_count_amd: unsafe {
                         unsafe extern "system" fn cmd_draw_indirect_count_amd(
@@ -200,10 +200,10 @@ pub mod amd {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_shader_info_amd: unsafe {
                         unsafe extern "system" fn get_shader_info_amd(
@@ -297,10 +297,10 @@ pub mod amd {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_write_buffer_marker_amd: unsafe {
                         unsafe extern "system" fn cmd_write_buffer_marker_amd(
@@ -389,10 +389,10 @@ pub mod amd {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     set_local_dimming_amd: unsafe {
                         unsafe extern "system" fn set_local_dimming_amd(
@@ -489,10 +489,10 @@ pub mod amdx {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_execution_graph_pipelines_amdx: unsafe {
                         unsafe extern "system" fn create_execution_graph_pipelines_amdx(
@@ -690,10 +690,10 @@ pub mod android {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_swapchain_gralloc_usage_android: unsafe {
                         unsafe extern "system" fn get_swapchain_gralloc_usage_android(
@@ -829,10 +829,10 @@ pub mod android {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_android_hardware_buffer_properties_android: unsafe {
                         unsafe extern "system" fn get_android_hardware_buffer_properties_android(
@@ -973,10 +973,10 @@ pub mod ext {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_debug_report_callback_ext: unsafe {
                         unsafe extern "system" fn create_debug_report_callback_ext(
@@ -1099,10 +1099,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     debug_marker_set_object_tag_ext: unsafe {
                         unsafe extern "system" fn debug_marker_set_object_tag_ext(
@@ -1244,10 +1244,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_bind_transform_feedback_buffers_ext: unsafe {
                         unsafe extern "system" fn cmd_bind_transform_feedback_buffers_ext(
@@ -1475,10 +1475,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_begin_conditional_rendering_ext: unsafe {
                         unsafe extern "system" fn cmd_begin_conditional_rendering_ext(
@@ -1562,10 +1562,10 @@ pub mod ext {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     release_display_ext: unsafe {
                         unsafe extern "system" fn release_display_ext(
@@ -1624,10 +1624,10 @@ pub mod ext {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     acquire_xlib_display_ext: unsafe {
                         unsafe extern "system" fn acquire_xlib_display_ext(
@@ -1712,10 +1712,10 @@ pub mod ext {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_surface_capabilities2_ext: unsafe {
                         unsafe extern "system" fn get_physical_device_surface_capabilities2_ext(
@@ -1782,10 +1782,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     display_power_control_ext: unsafe {
                         unsafe extern "system" fn display_power_control_ext(
@@ -1914,10 +1914,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_discard_rectangle_ext: unsafe {
                         unsafe extern "system" fn cmd_set_discard_rectangle_ext(
@@ -2045,10 +2045,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     set_hdr_metadata_ext: unsafe {
                         unsafe extern "system" fn set_hdr_metadata_ext(
@@ -2126,10 +2126,10 @@ pub mod ext {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_debug_utils_messenger_ext: unsafe {
                         unsafe extern "system" fn create_debug_utils_messenger_ext(
@@ -2235,10 +2235,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     set_debug_utils_object_name_ext: unsafe {
                         unsafe extern "system" fn set_debug_utils_object_name_ext(
@@ -2456,10 +2456,10 @@ pub mod ext {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_multisample_properties_ext: unsafe {
                         unsafe extern "system" fn get_physical_device_multisample_properties_ext(
@@ -2515,10 +2515,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_sample_locations_ext: unsafe {
                         unsafe extern "system" fn cmd_set_sample_locations_ext(
@@ -2597,10 +2597,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_image_drm_format_modifier_properties_ext: unsafe {
                         unsafe extern "system" fn get_image_drm_format_modifier_properties_ext(
@@ -2667,10 +2667,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_validation_cache_ext: unsafe {
                         unsafe extern "system" fn create_validation_cache_ext(
@@ -2828,10 +2828,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_memory_host_pointer_properties_ext: unsafe {
                         unsafe extern "system" fn get_memory_host_pointer_properties_ext(
@@ -2899,10 +2899,10 @@ pub mod ext {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_calibrateable_time_domains_ext: unsafe {
                         unsafe extern "system" fn get_physical_device_calibrateable_time_domains_ext(
@@ -2958,10 +2958,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_calibrated_timestamps_ext: unsafe {
                         unsafe extern "system" fn get_calibrated_timestamps_ext(
@@ -3050,10 +3050,10 @@ pub mod ext {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_metal_surface_ext: unsafe {
                         unsafe extern "system" fn create_metal_surface_ext(
@@ -3165,10 +3165,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_buffer_device_address_ext: unsafe {
                         unsafe extern "system" fn get_buffer_device_address_ext(
@@ -3230,10 +3230,10 @@ pub mod ext {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_tool_properties_ext: unsafe {
                         unsafe extern "system" fn get_physical_device_tool_properties_ext(
@@ -3338,10 +3338,10 @@ pub mod ext {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_surface_present_modes2_ext: unsafe {
                         unsafe extern "system" fn get_physical_device_surface_present_modes2_ext(
@@ -3401,10 +3401,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     acquire_full_screen_exclusive_mode_ext: unsafe {
                         unsafe extern "system" fn acquire_full_screen_exclusive_mode_ext(
@@ -3508,10 +3508,10 @@ pub mod ext {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_headless_surface_ext: unsafe {
                         unsafe extern "system" fn create_headless_surface_ext(
@@ -3575,10 +3575,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_line_stipple_ext: unsafe {
                         unsafe extern "system" fn cmd_set_line_stipple_ext(
@@ -3649,10 +3649,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     reset_query_pool_ext: unsafe {
                         unsafe extern "system" fn reset_query_pool_ext(
@@ -3731,10 +3731,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_cull_mode_ext: unsafe {
                         unsafe extern "system" fn cmd_set_cull_mode_ext(
@@ -4018,10 +4018,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     copy_memory_to_image_ext: unsafe {
                         unsafe extern "system" fn copy_memory_to_image_ext(
@@ -4186,10 +4186,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     release_swapchain_images_ext: unsafe {
                         unsafe extern "system" fn release_swapchain_images_ext(
@@ -4267,10 +4267,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_depth_bias2_ext: unsafe {
                         unsafe extern "system" fn cmd_set_depth_bias2_ext(
@@ -4340,10 +4340,10 @@ pub mod ext {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     acquire_drm_display_ext: unsafe {
                         unsafe extern "system" fn acquire_drm_display_ext(
@@ -4442,10 +4442,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_private_data_slot_ext: unsafe {
                         unsafe extern "system" fn create_private_data_slot_ext(
@@ -4573,10 +4573,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     export_metal_objects_ext: unsafe {
                         unsafe extern "system" fn export_metal_objects_ext(
@@ -4655,10 +4655,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_descriptor_set_layout_size_ext: unsafe {
                         unsafe extern "system" fn get_descriptor_set_layout_size_ext(
@@ -4945,10 +4945,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_draw_mesh_tasks_ext: unsafe {
                         unsafe extern "system" fn cmd_draw_mesh_tasks_ext(
@@ -5082,10 +5082,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_image_subresource_layout2_ext: unsafe {
                         unsafe extern "system" fn get_image_subresource_layout2_ext(
@@ -5166,10 +5166,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_device_fault_info_ext: unsafe {
                         unsafe extern "system" fn get_device_fault_info_ext(
@@ -5242,10 +5242,10 @@ pub mod ext {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_direct_fb_surface_ext: unsafe {
                         unsafe extern "system" fn create_direct_fb_surface_ext(
@@ -5330,10 +5330,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_vertex_input_ext: unsafe {
                         unsafe extern "system" fn cmd_set_vertex_input_ext(
@@ -5437,10 +5437,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_pipeline_properties_ext: unsafe {
                         unsafe extern "system" fn get_pipeline_properties_ext(
@@ -5523,10 +5523,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_patch_control_points_ext: unsafe {
                         unsafe extern "system" fn cmd_set_patch_control_points_ext(
@@ -5662,10 +5662,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_color_write_enable_ext: unsafe {
                         unsafe extern "system" fn cmd_set_color_write_enable_ext(
@@ -5753,10 +5753,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_draw_multi_ext: unsafe {
                         unsafe extern "system" fn cmd_draw_multi_ext(
@@ -5871,10 +5871,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_micromap_ext: unsafe {
                         unsafe extern "system" fn create_micromap_ext(
@@ -6205,10 +6205,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     set_device_memory_priority_ext: unsafe {
                         unsafe extern "system" fn set_device_memory_priority_ext(
@@ -6354,10 +6354,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_depth_clamp_enable_ext: unsafe {
                         unsafe extern "system" fn cmd_set_depth_clamp_enable_ext(
@@ -7029,10 +7029,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_shader_module_identifier_ext: unsafe {
                         unsafe extern "system" fn get_shader_module_identifier_ext(
@@ -7198,10 +7198,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_shaders_ext: unsafe {
                         unsafe extern "system" fn create_shaders_ext(
@@ -8320,10 +8320,10 @@ pub mod ext {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_attachment_feedback_loop_enable_ext: unsafe {
                         unsafe extern "system" fn cmd_set_attachment_feedback_loop_enable_ext(
@@ -8389,10 +8389,10 @@ pub mod fuchsia {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_image_pipe_surface_fuchsia: unsafe {
                         unsafe extern "system" fn create_image_pipe_surface_fuchsia(
@@ -8459,10 +8459,10 @@ pub mod fuchsia {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_memory_zircon_handle_fuchsia: unsafe {
                         unsafe extern "system" fn get_memory_zircon_handle_fuchsia(
@@ -8549,10 +8549,10 @@ pub mod fuchsia {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     import_semaphore_zircon_handle_fuchsia: unsafe {
                         unsafe extern "system" fn import_semaphore_zircon_handle_fuchsia(
@@ -8645,10 +8645,10 @@ pub mod fuchsia {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_buffer_collection_fuchsia: unsafe {
                         unsafe extern "system" fn create_buffer_collection_fuchsia(
@@ -8800,10 +8800,10 @@ pub mod ggp {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_stream_descriptor_surface_ggp: unsafe {
                         unsafe extern "system" fn create_stream_descriptor_surface_ggp(
@@ -8880,10 +8880,10 @@ pub mod google {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_refresh_cycle_duration_google: unsafe {
                         unsafe extern "system" fn get_refresh_cycle_duration_google(
@@ -9006,10 +9006,10 @@ pub mod huawei {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_device_subpass_shading_max_workgroup_size_huawei: unsafe {
                         unsafe extern "system" fn get_device_subpass_shading_max_workgroup_size_huawei(
@@ -9091,10 +9091,10 @@ pub mod huawei {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_bind_invocation_mask_huawei: unsafe {
                         unsafe extern "system" fn cmd_bind_invocation_mask_huawei(
@@ -9158,10 +9158,10 @@ pub mod huawei {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_draw_cluster_huawei: unsafe {
                         unsafe extern "system" fn cmd_draw_cluster_huawei(
@@ -9293,10 +9293,10 @@ pub mod intel {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     initialize_performance_api_intel: unsafe {
                         unsafe extern "system" fn initialize_performance_api_intel(
@@ -9529,10 +9529,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     destroy_surface_khr: unsafe {
                         unsafe extern "system" fn destroy_surface_khr(
@@ -9679,10 +9679,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_present_rectangles_khr: unsafe {
                         unsafe extern "system" fn get_physical_device_present_rectangles_khr(
@@ -9748,10 +9748,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_swapchain_khr: unsafe {
                         unsafe extern "system" fn create_swapchain_khr(
@@ -9957,10 +9957,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_display_properties_khr: unsafe {
                         unsafe extern "system" fn get_physical_device_display_properties_khr(
@@ -10154,10 +10154,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_shared_swapchains_khr: unsafe {
                         unsafe extern "system" fn create_shared_swapchains_khr(
@@ -10224,10 +10224,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_xlib_surface_khr: unsafe {
                         unsafe extern "system" fn create_xlib_surface_khr(
@@ -10315,10 +10315,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_xcb_surface_khr: unsafe {
                         unsafe extern "system" fn create_xcb_surface_khr(
@@ -10405,10 +10405,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_wayland_surface_khr: unsafe {
                         unsafe extern "system" fn create_wayland_surface_khr(
@@ -10493,10 +10493,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_android_surface_khr: unsafe {
                         unsafe extern "system" fn create_android_surface_khr(
@@ -10562,10 +10562,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_win32_surface_khr: unsafe {
                         unsafe extern "system" fn create_win32_surface_khr(
@@ -10660,10 +10660,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_video_capabilities_khr: unsafe {
                         unsafe extern "system" fn get_physical_device_video_capabilities_khr(
@@ -10751,10 +10751,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_video_session_khr: unsafe {
                         unsafe extern "system" fn create_video_session_khr(
@@ -11002,10 +11002,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_decode_video_khr: unsafe {
                         unsafe extern "system" fn cmd_decode_video_khr(
@@ -11088,10 +11088,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_begin_rendering_khr: unsafe {
                         unsafe extern "system" fn cmd_begin_rendering_khr(
@@ -11189,10 +11189,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_features2_khr: unsafe {
                         unsafe extern "system" fn get_physical_device_features2_khr(
@@ -11381,10 +11381,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_present_rectangles_khr: unsafe {
                         unsafe extern "system" fn get_physical_device_present_rectangles_khr(
@@ -11448,10 +11448,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_device_group_peer_memory_features_khr: unsafe {
                         unsafe extern "system" fn get_device_group_peer_memory_features_khr(
@@ -11627,10 +11627,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     trim_command_pool_khr: unsafe {
                         unsafe extern "system" fn trim_command_pool_khr(
@@ -11692,10 +11692,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     enumerate_physical_device_groups_khr: unsafe {
                         unsafe extern "system" fn enumerate_physical_device_groups_khr(
@@ -11762,10 +11762,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_external_buffer_properties_khr: unsafe {
                         unsafe extern "system" fn get_physical_device_external_buffer_properties_khr(
@@ -11838,10 +11838,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_memory_win32_handle_khr: unsafe {
                         unsafe extern "system" fn get_memory_win32_handle_khr(
@@ -11929,10 +11929,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_memory_fd_khr: unsafe {
                         unsafe extern "system" fn get_memory_fd_khr(
@@ -12021,10 +12021,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_external_semaphore_properties_khr: unsafe {
                         unsafe extern "system" fn get_physical_device_external_semaphore_properties_khr(
@@ -12099,10 +12099,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     import_semaphore_win32_handle_khr: unsafe {
                         unsafe extern "system" fn import_semaphore_win32_handle_khr(
@@ -12186,10 +12186,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     import_semaphore_fd_khr: unsafe {
                         unsafe extern "system" fn import_semaphore_fd_khr(
@@ -12269,10 +12269,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_push_descriptor_set_khr: unsafe {
                         unsafe extern "system" fn cmd_push_descriptor_set_khr(
@@ -12389,10 +12389,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_descriptor_update_template_khr: unsafe {
                         unsafe extern "system" fn create_descriptor_update_template_khr(
@@ -12534,10 +12534,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_render_pass2_khr: unsafe {
                         unsafe extern "system" fn create_render_pass2_khr(
@@ -12659,10 +12659,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_swapchain_status_khr: unsafe {
                         unsafe extern "system" fn get_swapchain_status_khr(
@@ -12725,10 +12725,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_external_fence_properties_khr: unsafe {
                         unsafe extern "system" fn get_physical_device_external_fence_properties_khr(
@@ -12801,10 +12801,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     import_fence_win32_handle_khr: unsafe {
                         unsafe extern "system" fn import_fence_win32_handle_khr(
@@ -12889,10 +12889,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     import_fence_fd_khr: unsafe {
                         unsafe extern "system" fn import_fence_fd_khr(
@@ -12969,10 +12969,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     enumerate_physical_device_queue_family_performance_query_counters_khr: unsafe {
                         unsafe extern "system" fn enumerate_physical_device_queue_family_performance_query_counters_khr(
@@ -13051,10 +13051,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     acquire_profiling_lock_khr: unsafe {
                         unsafe extern "system" fn acquire_profiling_lock_khr(
@@ -13144,10 +13144,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_surface_capabilities2_khr: unsafe {
                         unsafe extern "system" fn get_physical_device_surface_capabilities2_khr(
@@ -13246,10 +13246,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_display_properties2_khr: unsafe {
                         unsafe extern "system" fn get_physical_device_display_properties2_khr(
@@ -13403,10 +13403,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_image_memory_requirements2_khr: unsafe {
                         unsafe extern "system" fn get_image_memory_requirements2_khr(
@@ -13546,10 +13546,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_acceleration_structure_khr: unsafe {
                         unsafe extern "system" fn create_acceleration_structure_khr(
@@ -13949,10 +13949,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_trace_rays_khr: unsafe {
                         unsafe extern "system" fn cmd_trace_rays_khr(
@@ -14163,10 +14163,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_sampler_ycbcr_conversion_khr: unsafe {
                         unsafe extern "system" fn create_sampler_ycbcr_conversion_khr(
@@ -14253,10 +14253,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     bind_buffer_memory2_khr: unsafe {
                         unsafe extern "system" fn bind_buffer_memory2_khr(
@@ -14346,10 +14346,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_descriptor_set_layout_support_khr: unsafe {
                         unsafe extern "system" fn get_descriptor_set_layout_support_khr(
@@ -14414,10 +14414,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_draw_indirect_count_khr: unsafe {
                         unsafe extern "system" fn cmd_draw_indirect_count_khr(
@@ -14591,10 +14591,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_semaphore_counter_value_khr: unsafe {
                         unsafe extern "system" fn get_semaphore_counter_value_khr(
@@ -14705,10 +14705,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_fragment_shading_rates_khr: unsafe {
                         unsafe extern "system" fn get_physical_device_fragment_shading_rates_khr(
@@ -14766,10 +14766,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_fragment_shading_rate_khr: unsafe {
                         unsafe extern "system" fn cmd_set_fragment_shading_rate_khr(
@@ -14836,10 +14836,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_rendering_attachment_locations_khr: unsafe {
                         unsafe extern "system" fn cmd_set_rendering_attachment_locations_khr(
@@ -14954,10 +14954,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     wait_for_present_khr: unsafe {
                         unsafe extern "system" fn wait_for_present_khr(
@@ -15028,10 +15028,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_buffer_device_address_khr: unsafe {
                         unsafe extern "system" fn get_buffer_device_address_khr(
@@ -15138,10 +15138,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_deferred_operation_khr: unsafe {
                         unsafe extern "system" fn create_deferred_operation_khr(
@@ -15286,10 +15286,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_pipeline_executable_properties_khr: unsafe {
                         unsafe extern "system" fn get_pipeline_executable_properties_khr(
@@ -15399,10 +15399,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     map_memory2_khr: unsafe {
                         unsafe extern "system" fn map_memory2_khr(
@@ -15509,10 +15509,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_video_encode_quality_level_properties_khr: unsafe {
                         unsafe extern "system" fn get_physical_device_video_encode_quality_level_properties_khr(
@@ -15573,10 +15573,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_encoded_video_session_parameters_khr: unsafe {
                         unsafe extern "system" fn get_encoded_video_session_parameters_khr(
@@ -15664,10 +15664,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_event2_khr: unsafe {
                         unsafe extern "system" fn cmd_set_event2_khr(
@@ -15895,10 +15895,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_copy_buffer2_khr: unsafe {
                         unsafe extern "system" fn cmd_copy_buffer2_khr(
@@ -16050,10 +16050,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_trace_rays_indirect2_khr: unsafe {
                         unsafe extern "system" fn cmd_trace_rays_indirect2_khr(
@@ -16126,10 +16126,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_device_buffer_memory_requirements_khr: unsafe {
                         unsafe extern "system" fn get_device_buffer_memory_requirements_khr(
@@ -16255,10 +16255,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_bind_index_buffer2_khr: unsafe {
                         unsafe extern "system" fn cmd_bind_index_buffer2_khr(
@@ -16396,10 +16396,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_cooperative_matrix_properties_khr: unsafe {
                         unsafe extern "system" fn get_physical_device_cooperative_matrix_properties_khr(
@@ -16511,10 +16511,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_line_stipple_khr: unsafe {
                         unsafe extern "system" fn cmd_set_line_stipple_khr(
@@ -16578,10 +16578,10 @@ pub mod khr {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_calibrateable_time_domains_khr: unsafe {
                         unsafe extern "system" fn get_physical_device_calibrateable_time_domains_khr(
@@ -16637,10 +16637,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_calibrated_timestamps_khr: unsafe {
                         unsafe extern "system" fn get_calibrated_timestamps_khr(
@@ -16720,10 +16720,10 @@ pub mod khr {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_bind_descriptor_sets2_khr: unsafe {
                         unsafe extern "system" fn cmd_bind_descriptor_sets2_khr(
@@ -16908,10 +16908,10 @@ pub mod mvk {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_ios_surface_mvk: unsafe {
                         unsafe extern "system" fn create_ios_surface_mvk(
@@ -16974,10 +16974,10 @@ pub mod mvk {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_mac_os_surface_mvk: unsafe {
                         unsafe extern "system" fn create_mac_os_surface_mvk(
@@ -17044,10 +17044,10 @@ pub mod nn {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_vi_surface_nn: unsafe {
                         unsafe extern "system" fn create_vi_surface_nn(
@@ -17135,10 +17135,10 @@ pub mod nv {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_external_image_format_properties_nv: unsafe {
                         unsafe extern "system" fn get_physical_device_external_image_format_properties_nv(
@@ -17215,10 +17215,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_memory_win32_handle_nv: unsafe {
                         unsafe extern "system" fn get_memory_win32_handle_nv(
@@ -17290,10 +17290,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_viewport_w_scaling_nv: unsafe {
                         unsafe extern "system" fn cmd_set_viewport_w_scaling_nv(
@@ -17423,10 +17423,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_bind_shading_rate_image_nv: unsafe {
                         unsafe extern "system" fn cmd_bind_shading_rate_image_nv(
@@ -17545,10 +17545,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_acceleration_structure_nv: unsafe {
                         unsafe extern "system" fn create_acceleration_structure_nv(
@@ -17888,10 +17888,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_draw_mesh_tasks_nv: unsafe {
                         unsafe extern "system" fn cmd_draw_mesh_tasks_nv(
@@ -18017,10 +18017,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_exclusive_scissor_enable_nv: unsafe {
                         unsafe extern "system" fn cmd_set_exclusive_scissor_enable_nv(
@@ -18107,10 +18107,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_checkpoint_nv: unsafe {
                         unsafe extern "system" fn cmd_set_checkpoint_nv(
@@ -18200,10 +18200,10 @@ pub mod nv {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_cooperative_matrix_properties_nv: unsafe {
                         unsafe extern "system" fn get_physical_device_cooperative_matrix_properties_nv(
@@ -18268,10 +18268,10 @@ pub mod nv {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_supported_framebuffer_mixed_samples_combinations_nv: unsafe {
                         unsafe extern "system" fn get_physical_device_supported_framebuffer_mixed_samples_combinations_nv(
@@ -18338,10 +18338,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_generated_commands_memory_requirements_nv: unsafe {
                         unsafe extern "system" fn get_generated_commands_memory_requirements_nv(
@@ -18540,10 +18540,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_cuda_module_nv: unsafe {
                         unsafe extern "system" fn create_cuda_module_nv(
@@ -18714,10 +18714,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_set_fragment_shading_rate_enum_nv: unsafe {
                         unsafe extern "system" fn cmd_set_fragment_shading_rate_enum_nv(
@@ -18790,10 +18790,10 @@ pub mod nv {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     acquire_winrt_display_nv: unsafe {
                         unsafe extern "system" fn acquire_winrt_display_nv(
@@ -18871,10 +18871,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_memory_remote_address_nv: unsafe {
                         unsafe extern "system" fn get_memory_remote_address_nv(
@@ -18948,10 +18948,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_copy_memory_indirect_nv: unsafe {
                         unsafe extern "system" fn cmd_copy_memory_indirect_nv(
@@ -19041,10 +19041,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     cmd_decompress_memory_nv: unsafe {
                         unsafe extern "system" fn cmd_decompress_memory_nv(
@@ -19132,10 +19132,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_pipeline_indirect_memory_requirements_nv: unsafe {
                         unsafe extern "system" fn get_pipeline_indirect_memory_requirements_nv(
@@ -19249,10 +19249,10 @@ pub mod nv {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_physical_device_optical_flow_image_formats_nv: unsafe {
                         unsafe extern "system" fn get_physical_device_optical_flow_image_formats_nv(
@@ -19314,10 +19314,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_optical_flow_session_nv: unsafe {
                         unsafe extern "system" fn create_optical_flow_session_nv(
@@ -19464,10 +19464,10 @@ pub mod nv {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     set_latency_sleep_mode_nv: unsafe {
                         unsafe extern "system" fn set_latency_sleep_mode_nv(
@@ -19650,10 +19650,10 @@ pub mod nvx {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_cu_module_nvx: unsafe {
                         unsafe extern "system" fn create_cu_module_nvx(
@@ -19792,10 +19792,10 @@ pub mod nvx {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_image_view_handle_nvx: unsafe {
                         unsafe extern "system" fn get_image_view_handle_nvx(
@@ -19938,10 +19938,10 @@ pub mod qcom {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_framebuffer_tile_properties_qcom: unsafe {
                         unsafe extern "system" fn get_framebuffer_tile_properties_qcom(
@@ -20080,10 +20080,10 @@ pub mod qnx {
         unsafe impl Send for InstanceFn {}
         unsafe impl Sync for InstanceFn {}
         impl InstanceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     create_screen_surface_qnx: unsafe {
                         unsafe extern "system" fn create_screen_surface_qnx(
@@ -20168,10 +20168,10 @@ pub mod qnx {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_screen_buffer_properties_qnx: unsafe {
                         unsafe extern "system" fn get_screen_buffer_properties_qnx(
@@ -20259,10 +20259,10 @@ pub mod valve {
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
         impl DeviceFn {
-            pub fn load<F>(mut _f: F) -> Self
-            where
-                F: FnMut(&CStr) -> *const c_void,
-            {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
                 Self {
                     get_descriptor_set_layout_host_mapping_info_valve: unsafe {
                         unsafe extern "system" fn get_descriptor_set_layout_host_mapping_info_valve(

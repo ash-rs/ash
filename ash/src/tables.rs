@@ -9,10 +9,10 @@ pub struct StaticFn {
 unsafe impl Send for StaticFn {}
 unsafe impl Sync for StaticFn {}
 impl StaticFn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
         Self {
             get_instance_proc_addr: unsafe {
                 unsafe extern "system" fn get_instance_proc_addr(
@@ -45,10 +45,10 @@ pub struct EntryFnV1_0 {
 unsafe impl Send for EntryFnV1_0 {}
 unsafe impl Sync for EntryFnV1_0 {}
 impl EntryFnV1_0 {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
         Self {
             create_instance: unsafe {
                 unsafe extern "system" fn create_instance(
@@ -130,10 +130,10 @@ pub struct InstanceFnV1_0 {
 unsafe impl Send for InstanceFnV1_0 {}
 unsafe impl Sync for InstanceFnV1_0 {}
 impl InstanceFnV1_0 {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
         Self {
             destroy_instance: unsafe {
                 unsafe extern "system" fn destroy_instance(
@@ -519,10 +519,10 @@ pub struct DeviceFnV1_0 {
 unsafe impl Send for DeviceFnV1_0 {}
 unsafe impl Sync for DeviceFnV1_0 {}
 impl DeviceFnV1_0 {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
         Self {
             destroy_device: unsafe {
                 unsafe extern "system" fn destroy_device(
@@ -2685,10 +2685,10 @@ pub struct EntryFnV1_1 {
 unsafe impl Send for EntryFnV1_1 {}
 unsafe impl Sync for EntryFnV1_1 {}
 impl EntryFnV1_1 {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
         Self {
             enumerate_instance_version: unsafe {
                 unsafe extern "system" fn enumerate_instance_version(
@@ -2732,10 +2732,10 @@ pub struct InstanceFnV1_1 {
 unsafe impl Send for InstanceFnV1_1 {}
 unsafe impl Sync for InstanceFnV1_1 {}
 impl InstanceFnV1_1 {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
         Self {
             enumerate_physical_device_groups: unsafe {
                 unsafe extern "system" fn enumerate_physical_device_groups(
@@ -2986,10 +2986,10 @@ pub struct DeviceFnV1_1 {
 unsafe impl Send for DeviceFnV1_1 {}
 unsafe impl Sync for DeviceFnV1_1 {}
 impl DeviceFnV1_1 {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
         Self {
             bind_buffer_memory2: unsafe {
                 unsafe extern "system" fn bind_buffer_memory2(
@@ -3324,10 +3324,10 @@ pub struct DeviceFnV1_2 {
 unsafe impl Send for DeviceFnV1_2 {}
 unsafe impl Sync for DeviceFnV1_2 {}
 impl DeviceFnV1_2 {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
         Self {
             cmd_draw_indirect_count: unsafe {
                 unsafe extern "system" fn cmd_draw_indirect_count(
@@ -3579,10 +3579,10 @@ pub struct InstanceFnV1_3 {
 unsafe impl Send for InstanceFnV1_3 {}
 unsafe impl Sync for InstanceFnV1_3 {}
 impl InstanceFnV1_3 {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
         Self {
             get_physical_device_tool_properties: unsafe {
                 unsafe extern "system" fn get_physical_device_tool_properties(
@@ -3650,10 +3650,10 @@ pub struct DeviceFnV1_3 {
 unsafe impl Send for DeviceFnV1_3 {}
 unsafe impl Sync for DeviceFnV1_3 {}
 impl DeviceFnV1_3 {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
         Self {
             create_private_data_slot: unsafe {
                 unsafe extern "system" fn create_private_data_slot(
