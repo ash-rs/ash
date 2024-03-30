@@ -9,10 +9,7 @@ pub struct StaticFn {
 unsafe impl Send for StaticFn {}
 unsafe impl Sync for StaticFn {}
 impl StaticFn {
-    pub fn load<F>(mut f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
         Self::load_erased(&mut f)
     }
     fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
@@ -48,10 +45,7 @@ pub struct EntryFnV1_0 {
 unsafe impl Send for EntryFnV1_0 {}
 unsafe impl Sync for EntryFnV1_0 {}
 impl EntryFnV1_0 {
-    pub fn load<F>(mut f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
         Self::load_erased(&mut f)
     }
     fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
@@ -136,10 +130,7 @@ pub struct InstanceFnV1_0 {
 unsafe impl Send for InstanceFnV1_0 {}
 unsafe impl Sync for InstanceFnV1_0 {}
 impl InstanceFnV1_0 {
-    pub fn load<F>(mut f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
         Self::load_erased(&mut f)
     }
     fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
@@ -528,10 +519,7 @@ pub struct DeviceFnV1_0 {
 unsafe impl Send for DeviceFnV1_0 {}
 unsafe impl Sync for DeviceFnV1_0 {}
 impl DeviceFnV1_0 {
-    pub fn load<F>(mut f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
         Self::load_erased(&mut f)
     }
     fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
@@ -2697,10 +2685,7 @@ pub struct EntryFnV1_1 {
 unsafe impl Send for EntryFnV1_1 {}
 unsafe impl Sync for EntryFnV1_1 {}
 impl EntryFnV1_1 {
-    pub fn load<F>(mut f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
         Self::load_erased(&mut f)
     }
     fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
@@ -2747,10 +2732,7 @@ pub struct InstanceFnV1_1 {
 unsafe impl Send for InstanceFnV1_1 {}
 unsafe impl Sync for InstanceFnV1_1 {}
 impl InstanceFnV1_1 {
-    pub fn load<F>(mut f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
         Self::load_erased(&mut f)
     }
     fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
@@ -3004,10 +2986,7 @@ pub struct DeviceFnV1_1 {
 unsafe impl Send for DeviceFnV1_1 {}
 unsafe impl Sync for DeviceFnV1_1 {}
 impl DeviceFnV1_1 {
-    pub fn load<F>(mut f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
         Self::load_erased(&mut f)
     }
     fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
@@ -3345,10 +3324,7 @@ pub struct DeviceFnV1_2 {
 unsafe impl Send for DeviceFnV1_2 {}
 unsafe impl Sync for DeviceFnV1_2 {}
 impl DeviceFnV1_2 {
-    pub fn load<F>(mut f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
         Self::load_erased(&mut f)
     }
     fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
@@ -3603,10 +3579,7 @@ pub struct InstanceFnV1_3 {
 unsafe impl Send for InstanceFnV1_3 {}
 unsafe impl Sync for InstanceFnV1_3 {}
 impl InstanceFnV1_3 {
-    pub fn load<F>(mut f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
         Self::load_erased(&mut f)
     }
     fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
@@ -3677,10 +3650,7 @@ pub struct DeviceFnV1_3 {
 unsafe impl Send for DeviceFnV1_3 {}
 unsafe impl Sync for DeviceFnV1_3 {}
 impl DeviceFnV1_3 {
-    pub fn load<F>(mut f: F) -> Self
-    where
-        F: FnMut(&CStr) -> *const c_void,
-    {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
         Self::load_erased(&mut f)
     }
     fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {

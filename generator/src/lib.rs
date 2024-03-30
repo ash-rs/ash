@@ -1109,9 +1109,7 @@ fn generate_function_pointers<'a>(
     let loader = commands.is_empty().not().then(|| {
         quote! {
             impl #ident {
-                pub fn load<F>(mut f: F) -> Self
-                    where F: FnMut(&CStr) -> *const c_void
-                {
+                pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
                     Self::load_erased(&mut f)
                 }
 
