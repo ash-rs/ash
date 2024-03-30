@@ -3,23 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use core::mem;
-pub use vk::khr::external_memory_win32::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::khr::external_memory_win32::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::khr::external_memory_win32::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl crate::khr::external_memory_win32::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryWin32HandleKHR.html>
     #[inline]
     pub unsafe fn get_memory_win32_handle(
@@ -46,15 +31,5 @@ impl Device {
             memory_win32_handle_properties,
         )
         .result()
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::external_memory_win32::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

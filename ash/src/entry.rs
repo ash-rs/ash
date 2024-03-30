@@ -1,4 +1,6 @@
 use crate::instance::Instance;
+#[cfg(doc)]
+use crate::khr;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
@@ -14,9 +16,9 @@ use libloading::Library;
 /// Holds the Vulkan functions independent of a particular instance
 #[derive(Clone)]
 pub struct Entry {
-    static_fn: vk::StaticFn,
-    entry_fn_1_0: vk::EntryFnV1_0,
-    entry_fn_1_1: vk::EntryFnV1_1,
+    static_fn: crate::StaticFn,
+    entry_fn_1_0: crate::EntryFnV1_0,
+    entry_fn_1_1: crate::EntryFnV1_1,
     #[cfg(feature = "loaded")]
     _lib_guard: Option<alloc::sync::Arc<Library>>,
 }
@@ -111,7 +113,7 @@ impl Entry {
         // Sound because we're linking to Vulkan, which provides a vkGetInstanceProcAddr that has
         // defined behavior in this use.
         unsafe {
-            Self::from_static_fn(vk::StaticFn {
+            Self::from_static_fn(crate::StaticFn {
                 get_instance_proc_addr: vkGetInstanceProcAddr,
             })
         }
@@ -133,7 +135,7 @@ impl Entry {
             .map_err(LoadingError::LibraryLoadFailure)
             .map(alloc::sync::Arc::new)?;
 
-        let static_fn = vk::StaticFn::load_checked(|name| {
+        let static_fn = crate::StaticFn::load_checked(|name| {
             lib.get(name.to_bytes_with_nul())
                 .map(|symbol| *symbol)
                 .unwrap_or(ptr::null_mut())
@@ -145,13 +147,13 @@ impl Entry {
         })
     }
 
-    /// Load entry points based on an already-loaded [`vk::StaticFn`]
+    /// Load entry points based on an already-loaded [`crate::StaticFn`]
     ///
     /// # Safety
     ///
     /// `static_fn` must contain valid function pointers that comply with the semantics specified
     /// by Vulkan 1.0, which must remain valid for at least the lifetime of the returned [`Entry`].
-    pub unsafe fn from_static_fn(static_fn: vk::StaticFn) -> Self {
+    pub unsafe fn from_static_fn(static_fn: crate::StaticFn) -> Self {
         let load_fn = move |name: &ffi::CStr| {
             mem::transmute((static_fn.get_instance_proc_addr)(
                 vk::Instance::null(),
@@ -161,16 +163,16 @@ impl Entry {
 
         Self::from_parts_1_1(
             static_fn,
-            vk::EntryFnV1_0::load(load_fn),
-            vk::EntryFnV1_1::load(load_fn),
+            crate::EntryFnV1_0::load(load_fn),
+            crate::EntryFnV1_1::load(load_fn),
         )
     }
 
     #[inline]
     pub fn from_parts_1_1(
-        static_fn: vk::StaticFn,
-        entry_fn_1_0: vk::EntryFnV1_0,
-        entry_fn_1_1: vk::EntryFnV1_1,
+        static_fn: crate::StaticFn,
+        entry_fn_1_0: crate::EntryFnV1_0,
+        entry_fn_1_1: crate::EntryFnV1_1,
     ) -> Self {
         Self {
             static_fn,
@@ -182,12 +184,12 @@ impl Entry {
     }
 
     #[inline]
-    pub fn fp_v1_0(&self) -> &vk::EntryFnV1_0 {
+    pub fn fp_v1_0(&self) -> &crate::EntryFnV1_0 {
         &self.entry_fn_1_0
     }
 
     #[inline]
-    pub fn static_fn(&self) -> &vk::StaticFn {
+    pub fn static_fn(&self) -> &crate::StaticFn {
         &self.static_fn
     }
 
@@ -235,8 +237,8 @@ impl Entry {
     /// # Safety
     ///
     /// The resulting [`Instance`] and any function-pointer objects (e.g. [`Device`][crate::Device]
-    /// and [extensions][crate::extensions]) loaded from it may not be used after this [`Entry`]
-    /// object is dropped, unless it was crated using [`Entry::linked()`] or
+    /// and extensions like [`khr::swapchain::Device`]) loaded from it may not be used after
+    /// this [`Entry`] object is dropped, unless it was crated using [`Entry::linked()`] or
     /// [`Entry::from_parts_1_1()`].
     ///
     /// [`Instance`] does _not_ implement [drop][drop()] semantics and can only be destroyed via
@@ -294,7 +296,7 @@ impl Entry {
 /// Vulkan core 1.1
 impl Entry {
     #[inline]
-    pub fn fp_v1_1(&self) -> &vk::EntryFnV1_1 {
+    pub fn fp_v1_1(&self) -> &crate::EntryFnV1_1 {
         &self.entry_fn_1_1
     }
 
@@ -319,7 +321,7 @@ impl Default for Entry {
     }
 }
 
-impl vk::StaticFn {
+impl crate::StaticFn {
     pub fn load_checked<F>(mut _f: F) -> Result<Self, MissingEntryPoint>
     where
         F: FnMut(&ffi::CStr) -> *const ffi::c_void,

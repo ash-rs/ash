@@ -4,21 +4,8 @@ use crate::prelude::*;
 use crate::vk;
 use core::mem;
 use core::ptr;
-pub use vk::khr::get_surface_capabilities2::NAME;
 
-#[derive(Clone)]
-pub struct Instance {
-    fp: vk::khr::get_surface_capabilities2::InstanceFn,
-}
-
-impl Instance {
-    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-        let fp = vk::khr::get_surface_capabilities2::InstanceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl crate::khr::get_surface_capabilities2::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_capabilities2(
@@ -72,10 +59,5 @@ impl Instance {
         );
         assert_eq!(count as usize, out.len());
         err_code.result()
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::get_surface_capabilities2::InstanceFn {
-        &self.fp
     }
 }

@@ -1,22 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_line_rasterization.html>
 
 use crate::vk;
-use core::mem;
-pub use vk::khr::line_rasterization::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    fp: vk::khr::line_rasterization::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::khr::line_rasterization::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl crate::khr::line_rasterization::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleKHR.html>
     #[inline]
     pub unsafe fn cmd_set_line_stipple(
@@ -30,10 +16,5 @@ impl Device {
             line_stipple_factor,
             line_stipple_pattern,
         )
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::line_rasterization::DeviceFn {
-        &self.fp
     }
 }

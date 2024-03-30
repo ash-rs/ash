@@ -1,22 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMD_buffer_marker.html>
 
 use crate::vk;
-use core::mem;
-pub use vk::amd::buffer_marker::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    fp: vk::amd::buffer_marker::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::amd::buffer_marker::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl crate::amd::buffer_marker::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteBufferMarkerAMD.html>
     #[inline]
     pub unsafe fn cmd_write_buffer_marker(
@@ -34,10 +20,5 @@ impl Device {
             dst_offset,
             marker,
         )
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::amd::buffer_marker::DeviceFn {
-        &self.fp
     }
 }

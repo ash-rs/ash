@@ -5,23 +5,8 @@ use crate::vk;
 use crate::RawPtr;
 use alloc::vec::Vec;
 use core::mem;
-pub use vk::khr::display::NAME;
 
-#[derive(Clone)]
-pub struct Instance {
-    handle: vk::Instance,
-    fp: vk::khr::display::InstanceFn,
-}
-
-impl Instance {
-    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-        let handle = instance.handle();
-        let fp = vk::khr::display::InstanceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl crate::khr::display::Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPropertiesKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_display_properties(
@@ -126,15 +111,5 @@ impl Instance {
             surface.as_mut_ptr(),
         )
         .assume_init_on_success(surface)
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::display::InstanceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn instance(&self) -> vk::Instance {
-        self.handle
     }
 }

@@ -4,24 +4,8 @@ use crate::prelude::*;
 use crate::vk;
 use core::mem;
 use core::ptr;
-pub use vk::khr::performance_query::NAME;
 
-/// High-level device function wrapper
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::khr::performance_query::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::khr::performance_query::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl crate::khr::performance_query::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireProfilingLockKHR.html>
     #[inline]
     pub unsafe fn acquire_profiling_lock(
@@ -36,32 +20,9 @@ impl Device {
     pub unsafe fn release_profiling_lock(&self) {
         (self.fp.release_profiling_lock_khr)(self.handle)
     }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::performance_query::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
-    }
 }
 
-/// High-level instance function wrapper
-#[derive(Clone)]
-pub struct Instance {
-    fp: vk::khr::performance_query::InstanceFn,
-}
-
-impl Instance {
-    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-        let fp = vk::khr::performance_query::InstanceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl crate::khr::performance_query::Instance {
     /// Retrieve the number of elements to pass to [`enumerate_physical_device_queue_family_performance_query_counters()`][Self::enumerate_physical_device_queue_family_performance_query_counters()]
     #[inline]
     pub unsafe fn enumerate_physical_device_queue_family_performance_query_counters_len(
@@ -128,10 +89,5 @@ impl Instance {
             num_passes.as_mut_ptr(),
         );
         num_passes.assume_init()
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::performance_query::InstanceFn {
-        &self.fp
     }
 }

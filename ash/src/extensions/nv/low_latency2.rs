@@ -3,24 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use core::mem;
-pub use vk::nv::low_latency2::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::nv::low_latency2::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::nv::low_latency2::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl crate::nv::low_latency2::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetLatencySleepModeNV.html>
     #[inline]
     pub unsafe fn set_latency_sleep_mode(
@@ -70,15 +54,5 @@ impl Device {
         queue_type_info: &vk::OutOfBandQueueTypeInfoNV<'_>,
     ) {
         (self.fp.queue_notify_out_of_band_nv)(queue, queue_type_info)
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::nv::low_latency2::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

@@ -4,21 +4,8 @@ use crate::vk;
 use core::ffi;
 use core::mem;
 use core::ptr;
-pub use vk::nv::device_diagnostic_checkpoints::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    fp: vk::nv::device_diagnostic_checkpoints::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::nv::device_diagnostic_checkpoints::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl crate::nv::device_diagnostic_checkpoints::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCheckpointNV.html>
     #[inline]
     pub unsafe fn cmd_set_checkpoint(
@@ -50,10 +37,5 @@ impl Device {
         let mut count = out.len() as u32;
         (self.fp.get_queue_checkpoint_data_nv)(queue, &mut count, out.as_mut_ptr());
         assert_eq!(count as usize, out.len());
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::nv::device_diagnostic_checkpoints::DeviceFn {
-        &self.fp
     }
 }

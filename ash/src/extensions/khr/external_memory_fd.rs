@@ -3,23 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use core::mem;
-pub use vk::khr::external_memory_fd::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::khr::external_memory_fd::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::khr::external_memory_fd::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl crate::khr::external_memory_fd::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryFdKHR.html>
     #[inline]
     pub unsafe fn get_memory_fd(&self, get_fd_info: &vk::MemoryGetFdInfoKHR<'_>) -> VkResult<i32> {
@@ -38,15 +23,5 @@ impl Device {
     ) -> VkResult<()> {
         (self.fp.get_memory_fd_properties_khr)(self.handle, handle_type, fd, memory_fd_properties)
             .result()
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::external_memory_fd::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

@@ -3,24 +3,8 @@
 use crate::prelude::*;
 use crate::vk;
 use core::mem;
-pub use vk::android::external_memory_android_hardware_buffer::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::android::external_memory_android_hardware_buffer::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp =
-            vk::android::external_memory_android_hardware_buffer::DeviceFn::load(|name| unsafe {
-                mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-            });
-        Self { handle, fp }
-    }
-
+impl crate::android::external_memory_android_hardware_buffer::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAndroidHardwareBufferPropertiesANDROID.html>
     #[inline]
     pub unsafe fn get_android_hardware_buffer_properties(
@@ -41,15 +25,5 @@ impl Device {
         let mut buffer = mem::MaybeUninit::uninit();
         (self.fp.get_memory_android_hardware_buffer_android)(self.handle, info, buffer.as_mut_ptr())
             .assume_init_on_success(buffer)
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::android::external_memory_android_hardware_buffer::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

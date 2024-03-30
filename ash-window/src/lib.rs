@@ -3,12 +3,8 @@
 use std::os::raw::c_char;
 
 use ash::{
-    extensions::{
-        ext::metal_surface,
-        khr::{
-            android_surface, surface, wayland_surface, win32_surface, xcb_surface, xlib_surface,
-        },
-    },
+    ext::metal_surface,
+    khr::{android_surface, surface, wayland_surface, win32_surface, xcb_surface, xlib_surface},
     prelude::*,
     vk, Entry, Instance,
 };

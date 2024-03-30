@@ -4,25 +4,9 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use alloc::vec::Vec;
-use core::mem;
 use core::ptr;
-pub use vk::ext::shader_object::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::ext::shader_object::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::ext::shader_object::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl crate::ext::shader_object::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateShadersEXT.html>
     #[inline]
     pub unsafe fn create_shaders(
@@ -700,15 +684,5 @@ impl Device {
         coverage_reduction_mode: vk::CoverageReductionModeNV,
     ) {
         (self.fp.cmd_set_coverage_reduction_mode_nv)(command_buffer, coverage_reduction_mode)
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::ext::shader_object::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

@@ -4,23 +4,8 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use core::mem;
-pub use vk::khr::deferred_host_operations::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    handle: vk::Device,
-    fp: vk::khr::deferred_host_operations::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let handle = device.handle();
-        let fp = vk::khr::deferred_host_operations::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
-        });
-        Self { handle, fp }
-    }
-
+impl crate::khr::deferred_host_operations::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDeferredOperationKHR.html>
     #[inline]
     pub unsafe fn create_deferred_operation(
@@ -75,15 +60,5 @@ impl Device {
         operation: vk::DeferredOperationKHR,
     ) -> VkResult<()> {
         (self.fp.get_deferred_operation_result_khr)(self.handle, operation).result()
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr::deferred_host_operations::DeviceFn {
-        &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

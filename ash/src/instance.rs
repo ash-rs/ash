@@ -14,13 +14,13 @@ use core::ptr;
 pub struct Instance {
     pub(crate) handle: vk::Instance,
 
-    pub(crate) instance_fn_1_0: vk::InstanceFnV1_0,
-    pub(crate) instance_fn_1_1: vk::InstanceFnV1_1,
-    pub(crate) instance_fn_1_3: vk::InstanceFnV1_3,
+    pub(crate) instance_fn_1_0: crate::InstanceFnV1_0,
+    pub(crate) instance_fn_1_1: crate::InstanceFnV1_1,
+    pub(crate) instance_fn_1_3: crate::InstanceFnV1_3,
 }
 
 impl Instance {
-    pub unsafe fn load(static_fn: &vk::StaticFn, instance: vk::Instance) -> Self {
+    pub unsafe fn load(static_fn: &crate::StaticFn, instance: vk::Instance) -> Self {
         Self::load_with(
             |name| mem::transmute((static_fn.get_instance_proc_addr)(instance, name.as_ptr())),
             instance,
@@ -33,18 +33,18 @@ impl Instance {
     ) -> Self {
         Self::from_parts_1_3(
             instance,
-            vk::InstanceFnV1_0::load(&mut load_fn),
-            vk::InstanceFnV1_1::load(&mut load_fn),
-            vk::InstanceFnV1_3::load(&mut load_fn),
+            crate::InstanceFnV1_0::load(&mut load_fn),
+            crate::InstanceFnV1_1::load(&mut load_fn),
+            crate::InstanceFnV1_3::load(&mut load_fn),
         )
     }
 
     #[inline]
     pub fn from_parts_1_3(
         handle: vk::Instance,
-        instance_fn_1_0: vk::InstanceFnV1_0,
-        instance_fn_1_1: vk::InstanceFnV1_1,
-        instance_fn_1_3: vk::InstanceFnV1_3,
+        instance_fn_1_0: crate::InstanceFnV1_0,
+        instance_fn_1_1: crate::InstanceFnV1_1,
+        instance_fn_1_3: crate::InstanceFnV1_3,
     ) -> Self {
         Self {
             handle,
@@ -64,7 +64,7 @@ impl Instance {
 /// Vulkan core 1.3
 impl Instance {
     #[inline]
-    pub fn fp_v1_3(&self) -> &vk::InstanceFnV1_3 {
+    pub fn fp_v1_3(&self) -> &crate::InstanceFnV1_3 {
         &self.instance_fn_1_3
     }
 
@@ -109,7 +109,7 @@ impl Instance {
 /// Vulkan core 1.1
 impl Instance {
     #[inline]
-    pub fn fp_v1_1(&self) -> &vk::InstanceFnV1_1 {
+    pub fn fp_v1_1(&self) -> &crate::InstanceFnV1_1 {
         &self.instance_fn_1_1
     }
 
@@ -340,7 +340,7 @@ impl Instance {
 /// Vulkan core 1.0
 impl Instance {
     #[inline]
-    pub fn fp_v1_0(&self) -> &vk::InstanceFnV1_0 {
+    pub fn fp_v1_0(&self) -> &crate::InstanceFnV1_0 {
         &self.instance_fn_1_0
     }
 

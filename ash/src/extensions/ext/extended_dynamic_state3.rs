@@ -1,22 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_extended_dynamic_state3.html>
 
 use crate::vk;
-use core::mem;
-pub use vk::ext::extended_dynamic_state3::NAME;
 
-#[derive(Clone)]
-pub struct Device {
-    fp: vk::ext::extended_dynamic_state3::DeviceFn,
-}
-
-impl Device {
-    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::ext::extended_dynamic_state3::DeviceFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
-        });
-        Self { fp }
-    }
-
+impl crate::ext::extended_dynamic_state3::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetTessellationDomainOriginEXT.html>
     #[inline]
     pub unsafe fn cmd_set_tessellation_domain_origin(
@@ -395,10 +381,5 @@ impl Device {
         coverage_reduction_mode: vk::CoverageReductionModeNV,
     ) {
         (self.fp.cmd_set_coverage_reduction_mode_nv)(command_buffer, coverage_reduction_mode)
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::ext::extended_dynamic_state3::DeviceFn {
-        &self.fp
     }
 }

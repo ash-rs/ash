@@ -58,20 +58,24 @@ pub use crate::device::Device;
 pub use crate::entry::Entry;
 #[cfg(feature = "loaded")]
 pub use crate::entry::LoadingError;
+pub use crate::extensions_generated::*;
 pub use crate::instance::Instance;
+pub use crate::tables::*;
 
 mod device;
 mod entry;
+mod extensions_generated;
 mod instance;
 pub mod prelude;
+mod tables;
 pub mod util;
 /// Raw Vulkan bindings and types, generated from `vk.xml`
 #[macro_use]
 pub mod vk;
 
 // macros of vk need to be defined beforehand
-/// Wrappers for Vulkan extensions
-pub mod extensions;
+/// Hand-written ergonomic wrappers for extension functions
+mod extensions;
 
 pub trait RawPtr<T> {
     fn as_raw_ptr(&self) -> *const T;
