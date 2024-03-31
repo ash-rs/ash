@@ -12,13 +12,12 @@ impl crate::khr::calibrated_timestamps::Device {
     #[inline]
     pub unsafe fn get_calibrated_timestamps(
         &self,
-        device: vk::Device,
         info: &[vk::CalibratedTimestampInfoKHR<'_>],
     ) -> VkResult<(Vec<u64>, u64)> {
         let mut timestamps = Vec::with_capacity(info.len());
         let mut max_deviation = mem::MaybeUninit::uninit();
         let max_deviation = (self.fp.get_calibrated_timestamps_khr)(
-            device,
+            self.handle,
             info.len() as u32,
             info.as_ptr(),
             timestamps.as_mut_ptr(),
