@@ -2142,6 +2142,10 @@ impl Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateGraphicsPipelines.html>
+    ///
+    /// Pipelines are created and returned as described for [Multiple Pipeline Creation].
+    ///
+    /// [Multiple Pipeline Creation]: https://registry.khronos.org/vulkan/specs/1.3-extensions/html/vkspec.html#pipelines-multiple
     #[inline]
     pub unsafe fn create_graphics_pipelines(
         &self,
@@ -2166,6 +2170,10 @@ impl Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateComputePipelines.html>
+    ///
+    /// Pipelines are created and returned as described for [Multiple Pipeline Creation].
+    ///
+    /// [Multiple Pipeline Creation]: https://registry.khronos.org/vulkan/specs/1.3-extensions/html/vkspec.html#pipelines-multiple
     #[inline]
     pub unsafe fn create_compute_pipelines(
         &self,
