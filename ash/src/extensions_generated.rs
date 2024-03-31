@@ -43,6 +43,7 @@ pub mod amd {
             crate::vk::AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_AMD_draw_indirect_count device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -171,6 +172,7 @@ pub mod amd {
             crate::vk::AMD_SHADER_INFO_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_AMD_shader_info device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -268,6 +270,7 @@ pub mod amd {
             crate::vk::AMD_BUFFER_MARKER_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_AMD_buffer_marker device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -360,6 +363,7 @@ pub mod amd {
             crate::vk::AMD_DISPLAY_NATIVE_HDR_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_AMD_display_native_hdr device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -452,6 +456,7 @@ pub mod amdx {
             crate::vk::AMDX_SHADER_ENQUEUE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_AMDX_shader_enqueue device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -658,6 +663,7 @@ pub mod android {
             crate::vk::ANDROID_NATIVE_BUFFER_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_ANDROID_native_buffer device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -797,6 +803,7 @@ pub mod android {
             crate::vk::ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_ANDROID_external_memory_android_hardware_buffer device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -942,6 +949,7 @@ pub mod ext {
             crate::vk::EXT_DEBUG_REPORT_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_debug_report instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -1066,6 +1074,7 @@ pub mod ext {
             crate::vk::EXT_DEBUG_MARKER_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_debug_marker device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -1210,6 +1219,7 @@ pub mod ext {
             crate::vk::EXT_TRANSFORM_FEEDBACK_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_transform_feedback device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -1445,6 +1455,7 @@ pub mod ext {
             crate::vk::EXT_CONDITIONAL_RENDERING_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_conditional_rendering device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -1533,6 +1544,7 @@ pub mod ext {
             crate::vk::EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_direct_mode_display instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -1594,6 +1606,7 @@ pub mod ext {
             crate::vk::EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_acquire_xlib_display instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -1682,6 +1695,7 @@ pub mod ext {
             crate::vk::EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_display_surface_counter instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -1750,6 +1764,7 @@ pub mod ext {
             crate::vk::EXT_DISPLAY_CONTROL_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_display_control device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -1883,6 +1898,7 @@ pub mod ext {
             crate::vk::EXT_DISCARD_RECTANGLES_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_discard_rectangles device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -2016,6 +2032,7 @@ pub mod ext {
             crate::vk::EXT_HDR_METADATA_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_hdr_metadata device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -2095,6 +2112,7 @@ pub mod ext {
             crate::vk::EXT_DEBUG_UTILS_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_debug_utils instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -2199,6 +2217,7 @@ pub mod ext {
             }
         }
         #[doc = "VK_EXT_debug_utils device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -2426,6 +2445,7 @@ pub mod ext {
             crate::vk::EXT_SAMPLE_LOCATIONS_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_sample_locations instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -2486,6 +2506,7 @@ pub mod ext {
             }
         }
         #[doc = "VK_EXT_sample_locations device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -2567,6 +2588,7 @@ pub mod ext {
             crate::vk::EXT_IMAGE_DRM_FORMAT_MODIFIER_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_image_drm_format_modifier device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -2635,6 +2657,7 @@ pub mod ext {
             crate::vk::EXT_VALIDATION_CACHE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_validation_cache device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -2799,6 +2822,7 @@ pub mod ext {
             crate::vk::EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_external_memory_host device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -2869,6 +2893,7 @@ pub mod ext {
             crate::vk::EXT_CALIBRATED_TIMESTAMPS_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_calibrated_timestamps instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -2929,6 +2954,7 @@ pub mod ext {
             }
         }
         #[doc = "VK_EXT_calibrated_timestamps device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -3021,6 +3047,7 @@ pub mod ext {
             crate::vk::EXT_METAL_SURFACE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_metal_surface instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -3136,6 +3163,7 @@ pub mod ext {
             crate::vk::EXT_BUFFER_DEVICE_ADDRESS_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_buffer_device_address device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -3201,6 +3229,7 @@ pub mod ext {
             crate::vk::EXT_TOOLING_INFO_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_tooling_info instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -3308,6 +3337,7 @@ pub mod ext {
             crate::vk::EXT_FULL_SCREEN_EXCLUSIVE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_full_screen_exclusive instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -3369,6 +3399,7 @@ pub mod ext {
             }
         }
         #[doc = "VK_EXT_full_screen_exclusive device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -3479,6 +3510,7 @@ pub mod ext {
             crate::vk::EXT_HEADLESS_SURFACE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_headless_surface instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -3546,6 +3578,7 @@ pub mod ext {
             crate::vk::EXT_LINE_RASTERIZATION_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_line_rasterization device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -3620,6 +3653,7 @@ pub mod ext {
             crate::vk::EXT_HOST_QUERY_RESET_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_host_query_reset device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -3691,6 +3725,7 @@ pub mod ext {
             crate::vk::EXT_EXTENDED_DYNAMIC_STATE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_extended_dynamic_state device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -3985,6 +4020,7 @@ pub mod ext {
             crate::vk::EXT_HOST_IMAGE_COPY_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_host_image_copy device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -4157,6 +4193,7 @@ pub mod ext {
             crate::vk::EXT_SWAPCHAIN_MAINTENANCE1_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_swapchain_maintenance1 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -4238,6 +4275,7 @@ pub mod ext {
             crate::vk::EXT_DEPTH_BIAS_CONTROL_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_depth_bias_control device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -4310,6 +4348,7 @@ pub mod ext {
             crate::vk::EXT_ACQUIRE_DRM_DISPLAY_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_acquire_drm_display instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -4410,6 +4449,7 @@ pub mod ext {
             crate::vk::EXT_PRIVATE_DATA_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_private_data device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -4544,6 +4584,7 @@ pub mod ext {
             crate::vk::EXT_METAL_OBJECTS_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_metal_objects device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -4609,6 +4650,7 @@ pub mod ext {
             crate::vk::EXT_DESCRIPTOR_BUFFER_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_descriptor_buffer device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -4914,6 +4956,7 @@ pub mod ext {
             crate::vk::EXT_MESH_SHADER_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_mesh_shader device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -5053,6 +5096,7 @@ pub mod ext {
             crate::vk::EXT_IMAGE_COMPRESSION_CONTROL_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_image_compression_control device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -5137,6 +5181,7 @@ pub mod ext {
             crate::vk::EXT_DEVICE_FAULT_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_device_fault device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -5211,6 +5256,7 @@ pub mod ext {
             crate::vk::EXT_DIRECTFB_SURFACE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_directfb_surface instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -5301,6 +5347,7 @@ pub mod ext {
             crate::vk::EXT_VERTEX_INPUT_DYNAMIC_STATE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_vertex_input_dynamic_state device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -5401,6 +5448,7 @@ pub mod ext {
             crate::vk::EXT_PIPELINE_PROPERTIES_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_pipeline_properties device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -5490,6 +5538,7 @@ pub mod ext {
             crate::vk::EXT_EXTENDED_DYNAMIC_STATE2_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_extended_dynamic_state2 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -5633,6 +5682,7 @@ pub mod ext {
             crate::vk::EXT_COLOR_WRITE_ENABLE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_color_write_enable device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -5723,6 +5773,7 @@ pub mod ext {
             crate::vk::EXT_MULTI_DRAW_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_multi_draw device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -5829,6 +5880,7 @@ pub mod ext {
             crate::vk::EXT_OPACITY_MICROMAP_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_opacity_micromap device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -6176,6 +6228,7 @@ pub mod ext {
             crate::vk::EXT_PAGEABLE_DEVICE_LOCAL_MEMORY_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_pageable_device_local_memory device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -6290,6 +6343,7 @@ pub mod ext {
             crate::vk::EXT_EXTENDED_DYNAMIC_STATE3_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_extended_dynamic_state3 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -6998,6 +7052,7 @@ pub mod ext {
             crate::vk::EXT_SHADER_MODULE_IDENTIFIER_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_shader_module_identifier device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -7112,6 +7167,7 @@ pub mod ext {
             crate::vk::EXT_SHADER_OBJECT_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_shader_object device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -8290,6 +8346,7 @@ pub mod ext {
             crate::vk::EXT_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_EXT_attachment_feedback_loop_dynamic_state device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -8360,6 +8417,7 @@ pub mod fuchsia {
             crate::vk::FUCHSIA_IMAGEPIPE_SURFACE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_FUCHSIA_imagepipe_surface instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -8428,6 +8486,7 @@ pub mod fuchsia {
             crate::vk::FUCHSIA_EXTERNAL_MEMORY_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_FUCHSIA_external_memory device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -8519,6 +8578,7 @@ pub mod fuchsia {
             crate::vk::FUCHSIA_EXTERNAL_SEMAPHORE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_FUCHSIA_external_semaphore device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -8609,6 +8669,7 @@ pub mod fuchsia {
             crate::vk::FUCHSIA_BUFFER_COLLECTION_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_FUCHSIA_buffer_collection device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -8771,6 +8832,7 @@ pub mod ggp {
             crate::vk::GGP_STREAM_DESCRIPTOR_SURFACE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_GGP_stream_descriptor_surface instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -8850,6 +8912,7 @@ pub mod google {
             crate::vk::GOOGLE_DISPLAY_TIMING_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_GOOGLE_display_timing device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -8975,6 +9038,7 @@ pub mod huawei {
             crate::vk::HUAWEI_SUBPASS_SHADING_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_HUAWEI_subpass_shading device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -9062,6 +9126,7 @@ pub mod huawei {
             crate::vk::HUAWEI_INVOCATION_MASK_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_HUAWEI_invocation_mask device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -9128,6 +9193,7 @@ pub mod huawei {
             crate::vk::HUAWEI_CLUSTER_CULLING_SHADER_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_HUAWEI_cluster_culling_shader device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -9255,6 +9321,7 @@ pub mod intel {
             crate::vk::INTEL_PERFORMANCE_QUERY_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_INTEL_performance_query device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -9494,6 +9561,7 @@ pub mod khr {
             crate::vk::KHR_SURFACE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_surface instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -9649,6 +9717,7 @@ pub mod khr {
             crate::vk::KHR_SWAPCHAIN_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_swapchain instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -9710,6 +9779,7 @@ pub mod khr {
             }
         }
         #[doc = "VK_KHR_swapchain device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -9920,6 +9990,7 @@ pub mod khr {
             crate::vk::KHR_DISPLAY_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_display instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -10125,6 +10196,7 @@ pub mod khr {
             crate::vk::KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_display_swapchain device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -10193,6 +10265,7 @@ pub mod khr {
             crate::vk::KHR_XLIB_SURFACE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_xlib_surface instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -10284,6 +10357,7 @@ pub mod khr {
             crate::vk::KHR_XCB_SURFACE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_xcb_surface instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -10374,6 +10448,7 @@ pub mod khr {
             crate::vk::KHR_WAYLAND_SURFACE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_wayland_surface instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -10464,6 +10539,7 @@ pub mod khr {
             crate::vk::KHR_ANDROID_SURFACE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_android_surface instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -10531,6 +10607,7 @@ pub mod khr {
             crate::vk::KHR_WIN32_SURFACE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_win32_surface instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -10628,6 +10705,7 @@ pub mod khr {
             crate::vk::KHR_VIDEO_QUEUE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_video_queue instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -10712,6 +10790,7 @@ pub mod khr {
             }
         }
         #[doc = "VK_KHR_video_queue device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -10973,6 +11052,7 @@ pub mod khr {
             crate::vk::KHR_VIDEO_DECODE_QUEUE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_video_decode_queue device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -11058,6 +11138,7 @@ pub mod khr {
             crate::vk::KHR_DYNAMIC_RENDERING_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_dynamic_rendering device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -11149,6 +11230,7 @@ pub mod khr {
             crate::vk::KHR_GET_PHYSICAL_DEVICE_PROPERTIES2_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_get_physical_device_properties2 instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -11351,6 +11433,7 @@ pub mod khr {
             crate::vk::KHR_DEVICE_GROUP_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_device_group instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -11412,6 +11495,7 @@ pub mod khr {
             }
         }
         #[doc = "VK_KHR_device_group device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -11598,6 +11682,7 @@ pub mod khr {
             crate::vk::KHR_MAINTENANCE1_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_maintenance1 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -11663,6 +11748,7 @@ pub mod khr {
             crate::vk::KHR_DEVICE_GROUP_CREATION_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_device_group_creation instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -11732,6 +11818,7 @@ pub mod khr {
             crate::vk::KHR_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_external_memory_capabilities instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -11808,6 +11895,7 @@ pub mod khr {
             crate::vk::KHR_EXTERNAL_MEMORY_WIN32_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_external_memory_win32 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -11899,6 +11987,7 @@ pub mod khr {
             crate::vk::KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_external_memory_fd device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -11991,6 +12080,7 @@ pub mod khr {
             crate::vk::KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_external_semaphore_capabilities instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -12069,6 +12159,7 @@ pub mod khr {
             crate::vk::KHR_EXTERNAL_SEMAPHORE_WIN32_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_external_semaphore_win32 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -12156,6 +12247,7 @@ pub mod khr {
             crate::vk::KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_external_semaphore_fd device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -12238,6 +12330,7 @@ pub mod khr {
             crate::vk::KHR_PUSH_DESCRIPTOR_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_push_descriptor device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -12356,6 +12449,7 @@ pub mod khr {
             crate::vk::KHR_DESCRIPTOR_UPDATE_TEMPLATE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_descriptor_update_template device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -12502,6 +12596,7 @@ pub mod khr {
             crate::vk::KHR_CREATE_RENDERPASS2_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_create_renderpass2 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -12630,6 +12725,7 @@ pub mod khr {
             crate::vk::KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_shared_presentable_image device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -12695,6 +12791,7 @@ pub mod khr {
             crate::vk::KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_external_fence_capabilities instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -12771,6 +12868,7 @@ pub mod khr {
             crate::vk::KHR_EXTERNAL_FENCE_WIN32_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_external_fence_win32 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -12859,6 +12957,7 @@ pub mod khr {
             crate::vk::KHR_EXTERNAL_FENCE_FD_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_external_fence_fd device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -12937,6 +13036,7 @@ pub mod khr {
             crate::vk::KHR_PERFORMANCE_QUERY_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_performance_query instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -13021,6 +13121,7 @@ pub mod khr {
             }
         }
         #[doc = "VK_KHR_performance_query device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -13113,6 +13214,7 @@ pub mod khr {
             crate::vk::KHR_GET_SURFACE_CAPABILITIES2_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_get_surface_capabilities2 instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -13212,6 +13314,7 @@ pub mod khr {
             crate::vk::KHR_GET_DISPLAY_PROPERTIES2_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_get_display_properties2 instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -13372,6 +13475,7 @@ pub mod khr {
             crate::vk::KHR_GET_MEMORY_REQUIREMENTS2_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_get_memory_requirements2 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -13492,6 +13596,7 @@ pub mod khr {
             crate::vk::KHR_ACCELERATION_STRUCTURE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_acceleration_structure device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -13911,6 +14016,7 @@ pub mod khr {
             crate::vk::KHR_RAY_TRACING_PIPELINE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_ray_tracing_pipeline device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -14133,6 +14239,7 @@ pub mod khr {
             crate::vk::KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_sampler_ycbcr_conversion device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -14223,6 +14330,7 @@ pub mod khr {
             crate::vk::KHR_BIND_MEMORY2_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_bind_memory2 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -14317,6 +14425,7 @@ pub mod khr {
             crate::vk::KHR_MAINTENANCE3_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_maintenance3 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -14384,6 +14493,7 @@ pub mod khr {
             crate::vk::KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_draw_indirect_count device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -14560,6 +14670,7 @@ pub mod khr {
             crate::vk::KHR_TIMELINE_SEMAPHORE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_timeline_semaphore device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -14675,6 +14786,7 @@ pub mod khr {
             crate::vk::KHR_FRAGMENT_SHADING_RATE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_fragment_shading_rate instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -14737,6 +14849,7 @@ pub mod khr {
             }
         }
         #[doc = "VK_KHR_fragment_shading_rate device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -14804,6 +14917,7 @@ pub mod khr {
             crate::vk::KHR_DYNAMIC_RENDERING_LOCAL_READ_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_dynamic_rendering_local_read device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -14925,6 +15039,7 @@ pub mod khr {
             crate::vk::KHR_PRESENT_WAIT_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_present_wait device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -14996,6 +15111,7 @@ pub mod khr {
             crate::vk::KHR_BUFFER_DEVICE_ADDRESS_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_buffer_device_address device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -15104,6 +15220,7 @@ pub mod khr {
             crate::vk::KHR_DEFERRED_HOST_OPERATIONS_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_deferred_host_operations device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -15254,6 +15371,7 @@ pub mod khr {
             crate::vk::KHR_PIPELINE_EXECUTABLE_PROPERTIES_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_pipeline_executable_properties device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -15369,6 +15487,7 @@ pub mod khr {
             crate::vk::KHR_MAP_MEMORY2_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_map_memory2 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -15479,6 +15598,7 @@ pub mod khr {
             crate::vk::KHR_VIDEO_ENCODE_QUEUE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_video_encode_queue instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -15543,6 +15663,7 @@ pub mod khr {
             }
         }
         #[doc = "VK_KHR_video_encode_queue device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -15628,6 +15749,7 @@ pub mod khr {
             crate::vk::KHR_SYNCHRONIZATION2_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_synchronization2 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -15861,6 +15983,7 @@ pub mod khr {
             crate::vk::KHR_COPY_COMMANDS2_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_copy_commands2 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -16021,6 +16144,7 @@ pub mod khr {
             crate::vk::KHR_RAY_TRACING_MAINTENANCE1_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_ray_tracing_maintenance1 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -16094,6 +16218,7 @@ pub mod khr {
             crate::vk::KHR_MAINTENANCE4_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_maintenance4 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -16223,6 +16348,7 @@ pub mod khr {
             crate::vk::KHR_MAINTENANCE5_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_maintenance5 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -16366,6 +16492,7 @@ pub mod khr {
             crate::vk::KHR_COOPERATIVE_MATRIX_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_cooperative_matrix instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -16482,6 +16609,7 @@ pub mod khr {
             crate::vk::KHR_LINE_RASTERIZATION_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_line_rasterization device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -16548,6 +16676,7 @@ pub mod khr {
             crate::vk::KHR_CALIBRATED_TIMESTAMPS_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_calibrated_timestamps instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -16608,6 +16737,7 @@ pub mod khr {
             }
         }
         #[doc = "VK_KHR_calibrated_timestamps device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -16684,6 +16814,7 @@ pub mod khr {
             crate::vk::KHR_MAINTENANCE6_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_KHR_maintenance6 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -16879,6 +17010,7 @@ pub mod mvk {
             crate::vk::MVK_IOS_SURFACE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_MVK_ios_surface instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -16945,6 +17077,7 @@ pub mod mvk {
             crate::vk::MVK_MACOS_SURFACE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_MVK_macos_surface instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -17015,6 +17148,7 @@ pub mod nn {
             crate::vk::NN_VI_SURFACE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NN_vi_surface instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -17105,6 +17239,7 @@ pub mod nv {
             crate::vk::NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_external_memory_capabilities instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -17186,6 +17321,7 @@ pub mod nv {
             crate::vk::NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_external_memory_win32 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -17261,6 +17397,7 @@ pub mod nv {
             crate::vk::NV_CLIP_SPACE_W_SCALING_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_clip_space_w_scaling device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -17392,6 +17529,7 @@ pub mod nv {
             crate::vk::NV_SHADING_RATE_IMAGE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_shading_rate_image device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -17503,6 +17641,7 @@ pub mod nv {
             crate::vk::NV_RAY_TRACING_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_ray_tracing device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -17857,6 +17996,7 @@ pub mod nv {
             crate::vk::NV_MESH_SHADER_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_mesh_shader device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -17987,6 +18127,7 @@ pub mod nv {
             crate::vk::NV_SCISSOR_EXCLUSIVE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_scissor_exclusive device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -18077,6 +18218,7 @@ pub mod nv {
             crate::vk::NV_DEVICE_DIAGNOSTIC_CHECKPOINTS_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_device_diagnostic_checkpoints device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -18170,6 +18312,7 @@ pub mod nv {
             crate::vk::NV_COOPERATIVE_MATRIX_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_cooperative_matrix instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -18238,6 +18381,7 @@ pub mod nv {
             crate::vk::NV_COVERAGE_REDUCTION_MODE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_coverage_reduction_mode instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -18303,6 +18447,7 @@ pub mod nv {
             crate::vk::NV_DEVICE_GENERATED_COMMANDS_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_device_generated_commands device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -18506,6 +18651,7 @@ pub mod nv {
             crate::vk::NV_CUDA_KERNEL_LAUNCH_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_cuda_kernel_launch device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -18685,6 +18831,7 @@ pub mod nv {
             crate::vk::NV_FRAGMENT_SHADING_RATE_ENUMS_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_fragment_shading_rate_enums device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -18760,6 +18907,7 @@ pub mod nv {
             crate::vk::NV_ACQUIRE_WINRT_DISPLAY_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_acquire_winrt_display instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -18842,6 +18990,7 @@ pub mod nv {
             crate::vk::NV_EXTERNAL_MEMORY_RDMA_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_external_memory_rdma device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -18918,6 +19067,7 @@ pub mod nv {
             crate::vk::NV_COPY_MEMORY_INDIRECT_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_copy_memory_indirect device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -19011,6 +19161,7 @@ pub mod nv {
             crate::vk::NV_MEMORY_DECOMPRESSION_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_memory_decompression device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -19100,6 +19251,7 @@ pub mod nv {
             crate::vk::NV_DEVICE_GENERATED_COMMANDS_COMPUTE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_device_generated_commands_compute device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -19219,6 +19371,7 @@ pub mod nv {
             crate::vk::NV_OPTICAL_FLOW_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_optical_flow instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -19282,6 +19435,7 @@ pub mod nv {
             }
         }
         #[doc = "VK_NV_optical_flow device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -19431,6 +19585,7 @@ pub mod nv {
             crate::vk::NV_LOW_LATENCY2_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NV_low_latency2 device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -19617,6 +19772,7 @@ pub mod nvx {
             crate::vk::NVX_BINARY_IMPORT_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NVX_binary_import device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -19762,6 +19918,7 @@ pub mod nvx {
             crate::vk::NVX_IMAGE_VIEW_HANDLE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_NVX_image_view_handle device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -19907,6 +20064,7 @@ pub mod qcom {
             crate::vk::QCOM_TILE_PROPERTIES_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_QCOM_tile_properties device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -20049,6 +20207,7 @@ pub mod qnx {
             crate::vk::QNX_SCREEN_SURFACE_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_QNX_screen_surface instance-level functions"]
+        #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
@@ -20139,6 +20298,7 @@ pub mod qnx {
             crate::vk::QNX_EXTERNAL_MEMORY_SCREEN_BUFFER_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_QNX_external_memory_screen_buffer device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
@@ -20228,6 +20388,7 @@ pub mod valve {
             crate::vk::VALVE_DESCRIPTOR_SET_HOST_MAPPING_SPEC_VERSION as SPEC_VERSION,
         };
         #[doc = "VK_VALVE_descriptor_set_host_mapping device-level functions"]
+        #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,

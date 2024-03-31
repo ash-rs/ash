@@ -1348,6 +1348,7 @@ pub fn generate_extension_commands<'a>(
 
         (fp, quote! {
             #[doc = #doc]
+            #[derive(Clone)]
             pub struct Instance {
                 pub(crate) fp: InstanceFn,
                 pub(crate) handle: crate::vk::Instance,
@@ -1392,6 +1393,7 @@ pub fn generate_extension_commands<'a>(
 
         (fp, quote! {
             #[doc = #doc]
+            #[derive(Clone)]
             pub struct Device {
                 pub(crate) fp: DeviceFn,
                 pub(crate) handle: crate::vk::Device,
