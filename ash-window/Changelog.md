@@ -1,9 +1,10 @@
 # Changelog
 
-## [Unreleased] - ReleaseDate
+## [0.13.0] - 2024-03-31
 
 - Bumped MSRV from 1.59 to 1.69 for `winit 0.28` and `raw-window-handle 0.5.1`, and `CStr::from_bytes_until_nul`. (#709, #716, #746)
 - Bumped `raw-window-handle` to `0.6.0` (#799)
+- Bumped `ash` version to [`0.38`](https://github.com/ash-rs/ash/releases/tag/0.38.0) (#TODO)
 
 ## [0.12.0] - 2022-09-23
 
@@ -86,7 +87,8 @@
 ## Version 0.1.0
 Initial release for `raw-window-handle = "0.3"` with Windows, Linux, Android, MacOS/iOS support.
 
-[Unreleased]: https://github.com/ash-rs/ash/compare/ash-window-0.12.0...HEAD
+[Unreleased]: https://github.com/ash-rs/ash/compare/ash-window-0.13.0...HEAD
+[0.12.0]: https://github.com/ash-rs/ash/releases/tag/ash-window-0.13.0
 [0.12.0]: https://github.com/ash-rs/ash/releases/tag/ash-window-0.12.0
 [0.11.0]: https://github.com/ash-rs/ash/releases/tag/ash-window-0.11.0
 [0.10.0]: https://github.com/ash-rs/ash/releases/tag/ash-window-0.10.0

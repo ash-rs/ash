@@ -7,6 +7,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+## [0.38.0] - 2024-04-01
+
+With over two years of collecting breaking changes (since the `0.37.0` release in March 2022), April 2024 marks the next breaking release of `ash`.  This release introduces an overhaul of all Vulkan structures, restructures modules around extensions, and separates extension wrappers between `Instance` and `Device` functions.  The crate contains all bindings defined by the latest `1.3.281` Vulkan specification, and many old and new extensions have received a hand-written extension wrapper.  For a full overview of all individual changes, see the list at the end of this post.
+
+### Replaced builders with lifetimes/setters directly on Vulkan structs
+
+All `Builder` structs have been removed, and their builder functions and lifetime generic have moved to the underlying Vulkan struct.  This means all types will carry the lifetime information of contained references at all times, when created using the builder pattern.
+
+Where one used to call:
+
+```rust
+let queue_info = [vk::DeviceQueueCreateInfo::build()
+    .queue_family_index(queue_family_index)
+    .queue_priorities(&priorities)
+    .build()];
+```
+
+Which drops lifetime information about the `&priorities` slice borrow, one now writes:
+
+```rust
+let queue_info = [vk::DeviceQueueCreateInfo::default()
+    .queue_family_index(queue_family_index)
+    .queue_priorities(&priorities)];
+```
+
+And `queue_info` relies on the borrow checker to ensure it cannot outlive `&priorities`.
+
+### Separating extension loaders and wrappers between `instance` and `device` functions
+
+Just like the separation between `InstanceFnV1_x` and `Device_FnV1_x` for Vulkan core functions, all extensions now have a separate generated `InstanceFn` and `DeviceFn` function pointer table (when containing one or more functions), separating out the two.
+
+High-level extension wrappers are updated to match via a separate `Instance` and `Device` struct inside a module carrying the extension name (see also below), instead of residing in a single struct.  These modules are generated for all extensions including those without functions (for which no `Instance` or `Device` struct is generated), complete with a reexport of the extension name and version.
+
+### Restructuring of modules around extensions, function-pointer tables and high-level wrappers
+
+Function pointer tables for both core and extensions have moved out of the "pure" `sys`-like `ash::vk::` module, into the `ash::` root for core `*FnV1_x` tables and into the extension module `ash::<prefix>::<extension name>::{InstanceFn, DeviceFn}` for extensions.  High-level wrappers for these structs (originally from the `ash::extensions` module), together with the `Instance` and `Device` structure split detailed above, have also moved into this module.
+
+For example, `ash::vk::KhrSwapchainFn` is now available as `ash::khr::swapchain::{InstanceFn, DeviceFn}`, and the high-level `ash::extensions::KhrSwapchain` wrapper is available at `ash::khr::swapchain::{Instance, Device}`.  The extension name and version are found under `ash::khr::swapchain::{NAME, SPEC_VERSION}`.
+
+### Misc helpers
+
+Various miscellaneous helpers have been introduced on low-level Vulkan structs.
+
+For statically-sized arrays with a field bounding their length (e.g. `ash::vk::PhysicalDeviceMemoryProperties::memory_types` with the `memory_types_count` field) a new `_as_slice()` getter is available to retrieve the initialized portion of the slice.
+
+For null-terminated strings stored in statically-sized arrays, both `_as_c_str()` getters and more convenient setter is introduced based on the `CStr` type, providing `Result`-based access to these fields.
+
+### `no_std` support
+
+By disabling the default `std` feature, this crate compiles in a [`no_std` environment](https://docs.rust-embedded.org/book/intro/no-std.html).
+
 ### Added
 
 - Added `std` feature. Disabling this feature makes ash `no_std` (#664)
@@ -44,10 +95,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Replaced builders with lifetimes/setters directly on Vulkan structs (#602)
 - Inlined struct setters (#602)
+- On Fuchsia `libvulkan.so` is now loaded without inexistent `.1` major-version suffix (#626)
 - Bumped MSRV from 1.59 to 1.69 (#709, #746)
 - Replaced `const fn name()` with associated `NAME` constants (#715)
 - Generic builders now automatically set `objecttype` to `<T as Handle>::ObjectType` (#724)
-- Separated low-level `*Fn` structs and high-level extension wrappers between instance and device functions, for the following extensions: (#734)
+- Separated low-level `*Fn` structs and high-level extension wrappers between instance and device functions, and moved high-level extension wrappers from `ash::extensions::*` to `ash::<prefix>::<extension name>::{Instance, Device}` (#734)
+  This not only allows loading `device`-optimized function pointers, it also prevents accidentally loading `instance` functions via `get_device_proc_addr()` which would always return `NULL`, making these `instance` functions always panic on the following high-level extension wrappers:
+  - `VK_KHR_swapchain`
+  - `VK_KHR_device_group`
+  - `VK_EXT_full_screen_exclusive`
+  The following extensions containing `instance`-level functions prevented this panic by loading all functions in the `*Fn` loader struct via `get_instance_proc_addr()`, resulting in extra dispatch code inserted by the loader for all `device`-level functions:
   - `VK_KHR_swapchain`
   - `VK_KHR_video_queue`
   - `VK_KHR_device_group`
@@ -58,10 +115,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `VK_KHR_fragment_shading_rate`
   - `VK_EXT_full_screen_exclusive`
   - `VK_NV_optical_flow`
-  This not only allows loading `device`-optimized function pointers, it also prevents accidentally loading `instance` functions via `get_device_proc_addr()` which would always return `NULL`, making these `instance` functions always panic on the following high-level extension wrappers:
-  - `VK_KHR_swapchain`
-  - `VK_KHR_device_group`
-  - `VK_EXT_full_screen_exclusive`
 - `get_calibrated_timestamps()` now returns a single value for `max_deviation` (#738)
 - Bumped `libloading` from `0.7` to `0.8` (#739)
 - extensions/khr: Take the remaining `p_next`-containing structs as `&mut` to allow chains (#744)
@@ -81,7 +134,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - extensions/ext/ray_tracing_pipeline: Pass indirect SBT regions as single item reference (#829)
 - Replaced `c_char` array setters with `CStr` setters (#831)
 - `push_next()` functions now allow unsized `p_next` argument (#855)
-- Flattened `ash::extensions` into `ash`, flattened `ash::vk::*` extension modules into `ash::vk`, and moved `*Fn` function pointer table structs from `ash::vk` into `ash` or the associated extension module (#894)
+- Flattened `ash::extensions` into `ash`, and moved `*Fn` function pointer table structs from `ash::vk` into `ash` or the associated extension module (#894)
 
 ### Removed
 
@@ -470,7 +523,8 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 - `ash::util::Align` is a helper struct that
   can write to aligned memory.
 
-[Unreleased]: https://github.com/ash-rs/ash/compare/0.37.2...HEAD
+[Unreleased]: https://github.com/ash-rs/ash/compare/0.38.0...HEAD
+[0.38.0]: https://github.com/ash-rs/ash/releases/tag/0.38.0
 [0.37.2]: https://github.com/ash-rs/ash/releases/tag/0.37.2
 [0.37.1]: https://github.com/ash-rs/ash/releases/tag/0.37.1
 [0.37.0]: https://github.com/ash-rs/ash/releases/tag/0.37.0
