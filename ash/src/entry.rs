@@ -64,11 +64,11 @@ impl Entry {
 
         #[cfg(all(
             unix,
-            not(any(target_os = "macos", target_os = "ios", target_os = "android"))
+            not(any(target_os = "macos", target_os = "ios", target_os = "android", target_os = "fuchsia"))
         ))]
         const LIB_PATH: &str = "libvulkan.so.1";
 
-        #[cfg(target_os = "android")]
+        #[cfg(any(target_os = "android", target_os = "fuchsia"))]
         const LIB_PATH: &str = "libvulkan.so";
 
         #[cfg(any(target_os = "macos", target_os = "ios"))]
