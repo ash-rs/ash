@@ -17,6 +17,7 @@ A very lightweight wrapper around Vulkan
 - [x] Additional type safety
 - [x] Device local function pointer loading
 - [x] No validation, everything is **unsafe**
+- [x] Lifetime-safety on structs created with the builder pattern
 - [x] Generated from `vk.xml`
 - [x] Support for Vulkan `1.1`, `1.2`, `1.3`
 - [x] `no_std` support
@@ -146,11 +147,11 @@ Custom loaders can be implemented.
 
 ### Extension loading
 
-Additionally, every Vulkan extension has to be loaded explicitly. You can find all extensions under [`ash::extensions`](https://github.com/ash-rs/ash/tree/master/ash/src/extensions).
+Additionally, every Vulkan extension has to be loaded explicitly. You can find all extensions directly under `ash::*` in a module with their prefix (e.g. `khr` or `ext`).
 
 ```rust
-use ash::extensions::khr::Swapchain;
-let swapchain_loader = Swapchain::new(&instance, &device);
+use ash::khr;
+let swapchain_loader = khr::swapchain::Device::new(&instance, &device);
 let swapchain = swapchain_loader.create_swapchain(&swapchain_create_info).unwrap();
 ```
 
@@ -165,13 +166,13 @@ device.fp_v1_0().destroy_device(...);
 ### Support for extension names
 
 ```rust
-use ash::extensions::{Swapchain, XlibSurface, Surface, DebugReport};
+use ash::{ext, khr};
 #[cfg(all(unix, not(target_os = "android")))]
 fn extension_names() -> Vec<*const i8> {
     vec![
-        Surface::NAME.as_ptr(),
-        XlibSurface::NAME.as_ptr(),
-        DebugReport::NAME.as_ptr()
+        khr::surface::NAME.as_ptr(),
+        khr::xlib_surface::NAME.as_ptr(),
+        ext::debug_utils::NAME.as_ptr(),
     ]
 }
 ```
@@ -236,7 +237,7 @@ Displays a triangle with vertex colors.
 cargo run -p ash-examples --bin triangle
 ```
 
-![screenshot](http://i.imgur.com/PQZcL6w.jpg)
+![screenshot](https://i.imgur.com/PQZcL6w.jpg)
 
 ### [Texture](https://github.com/ash-rs/ash/blob/master/ash-examples/src/bin/texture.rs)
 
@@ -246,7 +247,7 @@ Displays a texture on a quad.
 cargo run -p ash-examples --bin texture
 ```
 
-![texture](http://i.imgur.com/trow00H.png)
+![texture](https://i.imgur.com/trow00H.png)
 
 ## Useful resources
 
@@ -270,7 +271,7 @@ cargo run -p ash-examples --bin texture
 ## A thanks to
 
 - [Api with no secrets](https://software.intel.com/en-us/articles/api-without-secrets-introduction-to-vulkan-part-1)
-- [Vulkan tutorial](http://jhenriques.net/development.html)
+- [Vulkan tutorial](https://jhenriques.net/development.html)
 - [Vulkan examples](https://github.com/SaschaWillems/Vulkan)
 - [Vulkan tutorial](https://vulkan-tutorial.com/)
 - [Vulkano](https://github.com/vulkano-rs/vulkano)

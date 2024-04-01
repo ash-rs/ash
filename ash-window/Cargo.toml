@@ -1,6 +1,6 @@
 [package]
 name = "ash-window"
-version = "0.12.0"
+version = "0.13.0"
 authors = [
     "msiglreith <m.siglreith@gmail.com>",
     "Marijn Suijten <marijn@traverseresearch.nl>",
@@ -19,7 +19,7 @@ edition = "2021"
 rust-version = "1.69.0"
 
 [dependencies]
-ash = { path = "../ash", version = "0.37", default-features = false, features = ["std"] }
+ash = { path = "../ash", version = "0.38", default-features = false, features = ["std"] }
 raw-window-handle = "0.6"
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
@@ -27,7 +27,7 @@ raw-window-metal = "0.4"
 
 [dev-dependencies]
 winit = { version = "0.29", features = ["rwh_06"] }
-ash = { path = "../ash", version = "0.37", default-features = false, features = ["linked"] }
+ash = { path = "../ash", version = "0.38", default-features = false, features = ["linked"] }
 
 [[example]]
 name = "winit"
