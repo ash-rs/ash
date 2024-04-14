@@ -91,19 +91,19 @@ let device: Device = instance
 
 ### Pointer chains
 
-Use `base.push_next(ext)` to insert `ext` at the front of the pointer chain attached to `base`.
+Use `base.push(ext)` to insert `ext` at the front of the pointer chain attached to `base`.  If `ext` already contains a valid pointer chain of its own, `unsafe`ly call `extend()` instead.
 
 ```rust
 let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::default();
 let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::default();
 
 let mut device_create_info = vk::DeviceCreateInfo::default()
-    .push_next(&mut corner)
-    .push_next(&mut variable_pointers);
+    .push(&mut corner)
+    .push(&mut variable_pointers);
 ```
 
-The generic argument of `.push_next()` only allows valid structs to extend a given struct (known as [`structextends` in the Vulkan registry](https://registry.khronos.org/vulkan/specs/1.3/styleguide.html#extensions-interactions), mapped to `Extends*` traits).
-Only structs that are listed one or more times in any `structextends` will implement a `.push_next()`.
+The generic argument of `.push()` only allows valid structs to extend a given struct (known as [`structextends` in the Vulkan registry](https://registry.khronos.org/vulkan/specs/1.3/styleguide.html#extensions-interactions), mapped to `Extends*` traits).
+Only structs that are listed one or more times in any `structextends` will implement a `.push()`.
 
 ### Flags and constants as associated constants
 
