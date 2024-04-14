@@ -3533,7 +3533,7 @@ impl AccessFlags2 {
 }
 #[doc = "Generated from 'VK_NV_optical_flow'"]
 impl Format {
-    pub const R16G16_S10_5_NV: Self = Self(1_000_464_000);
+    pub const R16G16_SFIXED5_NV: Self = Self(1_000_464_000);
 }
 #[doc = "Generated from 'VK_NV_optical_flow'"]
 impl FormatFeatureFlags2 {
@@ -6635,7 +6635,7 @@ pub const NV_LOW_LATENCY_NAME: &CStr =
 pub const NV_LOW_LATENCY_SPEC_VERSION: u32 = 1u32;
 pub const EXT_METAL_OBJECTS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_metal_objects\0") };
-pub const EXT_METAL_OBJECTS_SPEC_VERSION: u32 = 1u32;
+pub const EXT_METAL_OBJECTS_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkExportMetalObjectsEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
