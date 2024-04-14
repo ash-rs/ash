@@ -204,8 +204,8 @@ mod tests {
             <*mut _>::cast(&mut corner),
         ];
         let mut device_create_info = vk::DeviceCreateInfo::default()
-            .push_next(&mut corner)
-            .push_next(&mut variable_pointers);
+            .push_next_one(&mut corner)
+            .push_next_one(&mut variable_pointers);
         let chain2: Vec<*mut vk::BaseOutStructure<'_>> = unsafe {
             vk::ptr_chain_iter(&mut device_create_info)
                 .skip(1)
