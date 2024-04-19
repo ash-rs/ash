@@ -3712,6 +3712,10 @@ impl fmt::Debug for PipelineCreateFlags2KHR {
             ),
             (PipelineCreateFlags2KHR::DERIVATIVE.0, "DERIVATIVE"),
             (
+                PipelineCreateFlags2KHR::ENABLE_LEGACY_DITHERING_EXT.0,
+                "ENABLE_LEGACY_DITHERING_EXT",
+            ),
+            (
                 PipelineCreateFlags2KHR::VIEW_INDEX_FROM_DEVICE_INDEX.0,
                 "VIEW_INDEX_FROM_DEVICE_INDEX",
             ),
