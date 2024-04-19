@@ -3567,6 +3567,11 @@ impl StructureType {
     pub const OPTICAL_FLOW_SESSION_CREATE_PRIVATE_DATA_INFO_NV: Self = Self(1_000_464_010);
 }
 #[doc = "Generated from 'VK_EXT_legacy_dithering'"]
+impl PipelineCreateFlags2KHR {
+    pub const ENABLE_LEGACY_DITHERING_EXT: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_legacy_dithering'"]
 impl RenderingFlags {
     pub const ENABLE_LEGACY_DITHERING_EXT: Self = Self(0b1000);
 }
@@ -7627,7 +7632,7 @@ pub type PFN_vkCmdOpticalFlowExecuteNV = unsafe extern "system" fn(
 );
 pub const EXT_LEGACY_DITHERING_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_legacy_dithering\0") };
-pub const EXT_LEGACY_DITHERING_SPEC_VERSION: u32 = 1u32;
+pub const EXT_LEGACY_DITHERING_SPEC_VERSION: u32 = 2u32;
 pub const EXT_PIPELINE_PROTECTED_ACCESS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_protected_access\0") };
 pub const EXT_PIPELINE_PROTECTED_ACCESS_SPEC_VERSION: u32 = 1u32;
