@@ -113,9 +113,9 @@ pub enum PromotionStatus {
     PromotedToCore(u32),
     PromotedToExtension(&'static std::ffi::CStr),
 }
-pub trait InstanceExtension: Send + Sync + 'static {
+pub trait InstanceExtension: Send + Sync + Sized + Clone + 'static {
     fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self;
-    const NAME: &'static std::ffi::CStr;
+    const NAME: &'static core::ffi::CStr;
     const SPEC_VERSION: u32;
 
     type Fp;
@@ -124,9 +124,9 @@ pub trait InstanceExtension: Send + Sync + 'static {
     const PROMOTION_STATUS: PromotionStatus;
 }
 
-pub trait DeviceExtension: Send + Sync + Sized + 'static {
+pub trait DeviceExtension: Send + Sync + Sized + Clone + 'static {
     fn new(instance: &crate::Instance, device: &crate::Device) -> Self;
-    const NAME: &'static std::ffi::CStr;
+    const NAME: &'static core::ffi::CStr;
     const SPEC_VERSION: u32;
 
     type Fp;
