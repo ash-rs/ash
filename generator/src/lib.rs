@@ -1264,13 +1264,18 @@ pub struct ExtensionCommands<'a> {
 }
 
 pub fn generate_extension_commands<'a>(
-    full_extension_name: &'a str,
-    items: &'a [vk_parse::ExtensionChild],
+    extension: &'a vk_parse::Extension,
     cmd_map: &CommandMap<'a>,
     cmd_aliases: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
     has_lifetimes: &HashSet<Ident>,
 ) -> ExtensionCommands<'a> {
+    let vk_parse::Extension {
+        name: full_extension_name,
+        children: items,
+        promotedto,
+        ..
+    } = extension;
     let byte_name_ident = Literal::byte_string(format!("{full_extension_name}\0").as_bytes());
 
     let extension_name = full_extension_name.strip_prefix("VK_").unwrap();
@@ -1297,6 +1302,24 @@ pub fn generate_extension_commands<'a>(
                 None
             }
         });
+
+    let promoted_version = match promotedto.as_ref().map(String::as_str) {
+        Some("VK_VERSION_1_1") => quote!(PromotionStatus::PromotedToCore(make_api_version(
+            0, 1, 1, 0
+        ))),
+        Some("VK_VERSION_1_2") => quote!(PromotionStatus::PromotedToCore(make_api_version(
+            0, 1, 2, 0
+        ))),
+        Some("VK_VERSION_1_3") => quote!(PromotionStatus::PromotedToCore(make_api_version(
+            0, 1, 3, 0
+        ))),
+        Some(full_name) => {
+            let ext_name = full_name.strip_prefix("VK_").unwrap();
+            let ident = format_ident!("{}_NAME", ext_name.to_uppercase());
+            quote!(PromotionStatus::PromotedToExtension(#ident))
+        }
+        _ => quote!(PromotionStatus::None),
+    };
 
     let mut instance_commands = Vec::new();
     let mut device_commands = Vec::new();
@@ -1354,8 +1377,11 @@ pub fn generate_extension_commands<'a>(
                 pub(crate) handle: crate::vk::Instance,
             }
 
-            impl Instance {
-                pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            impl InstanceExtension for Instance {
+                const NAME: &'static CStr = #name_ident;
+                const SPEC_VERSION: u32 = #spec_version_ident;
+                const PROMOTION_STATUS: PromotionStatus = #promoted_version;
+                fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                     let handle = instance.handle();
                     let fp = InstanceFn::load(|name| unsafe {
                         core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -1363,13 +1389,14 @@ pub fn generate_extension_commands<'a>(
                     Self { handle, fp }
                 }
 
+                type Fp = InstanceFn;
                 #[inline]
-                pub fn fp(&self) -> &InstanceFn {
+                fn fp(&self) -> &InstanceFn {
                     &self.fp
                 }
 
                 #[inline]
-                pub fn instance(&self) -> crate::vk::Instance {
+                fn instance(&self) -> crate::vk::Instance {
                     self.handle
                 }
             }
@@ -1399,8 +1426,11 @@ pub fn generate_extension_commands<'a>(
                 pub(crate) handle: crate::vk::Device,
             }
 
-            impl Device {
-                pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            impl DeviceExtension for Device {
+                const NAME: &'static CStr = #name_ident;
+                const SPEC_VERSION: u32 = #spec_version_ident;
+                const PROMOTION_STATUS: PromotionStatus = #promoted_version;
+                fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                     let handle = device.handle();
                     let fp = DeviceFn::load(|name| unsafe {
                         core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -1408,13 +1438,14 @@ pub fn generate_extension_commands<'a>(
                     Self { handle, fp }
                 }
 
+                type Fp = DeviceFn;
                 #[inline]
-                pub fn fp(&self) -> &DeviceFn {
+                fn fp(&self) -> &DeviceFn {
                     &self.fp
                 }
 
                 #[inline]
-                pub fn device(&self) -> crate::vk::Device {
+                fn device(&self) -> crate::vk::Device {
                     self.handle
                 }
             }
@@ -3259,8 +3290,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let mut extension_cmds = Vec::<TokenStream>::new();
     for ext in extensions.iter() {
         let cmds = generate_extension_commands(
-            &ext.name,
-            &ext.children,
+            &ext,
             &commands,
             &cmd_aliases,
             &mut fn_cache,

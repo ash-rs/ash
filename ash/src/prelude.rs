@@ -5,6 +5,7 @@ use core::ptr;
 
 use crate::vk;
 pub type VkResult<T> = Result<T, vk::Result>;
+pub use vk::{DeviceExtension, InstanceExtension};
 
 impl vk::Result {
     #[inline]

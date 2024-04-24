@@ -107,3 +107,30 @@ pub(crate) fn write_c_str_slice_with_nul(
         .copy_from_slice(bytes);
     Ok(())
 }
+
+pub enum PromotionStatus {
+    None,
+    PromotedToCore(u32),
+    PromotedToExtension(&'static std::ffi::CStr),
+}
+pub trait InstanceExtension: Send + Sync + 'static {
+    fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self;
+    const NAME: &'static std::ffi::CStr;
+    const SPEC_VERSION: u32;
+
+    type Fp;
+    fn fp(&self) -> &Self::Fp;
+    fn instance(&self) -> vk::Instance;
+    const PROMOTION_STATUS: PromotionStatus;
+}
+
+pub trait DeviceExtension: Send + Sync + Sized + 'static {
+    fn new(instance: &crate::Instance, device: &crate::Device) -> Self;
+    const NAME: &'static std::ffi::CStr;
+    const SPEC_VERSION: u32;
+
+    type Fp;
+    fn fp(&self) -> &Self::Fp;
+    fn device(&self) -> vk::Device;
+    const PROMOTION_STATUS: PromotionStatus;
+}
