@@ -3290,7 +3290,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let mut extension_cmds = Vec::<TokenStream>::new();
     for ext in extensions.iter() {
         let cmds = generate_extension_commands(
-            &ext,
+            ext,
             &commands,
             &cmd_aliases,
             &mut fn_cache,
