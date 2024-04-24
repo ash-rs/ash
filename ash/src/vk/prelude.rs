@@ -111,7 +111,7 @@ pub(crate) fn write_c_str_slice_with_nul(
 pub enum PromotionStatus {
     None,
     PromotedToCore(u32),
-    PromotedToExtension(&'static std::ffi::CStr),
+    PromotedToExtension(&'static core::ffi::CStr),
 }
 pub trait InstanceExtension: Send + Sync + Sized + Clone + 'static {
     fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self;
