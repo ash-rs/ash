@@ -64,3 +64,20 @@ pub trait Handle: Sized {
         self.as_raw() == 0
     }
 }
+
+pub enum PromotionStatus {
+    None,
+    PromotedToCore(u32),
+    PromotedToExtension(&'static core::ffi::CStr),
+}
+
+pub trait ExtensionMeta {
+    const NAME: &'static core::ffi::CStr;
+    const SPEC_VERSION: u32;
+    const PROMOTION_STATUS: PromotionStatus;
+
+    type Device;
+    fn new_device(instance: &crate::Instance, device: &crate::Device) -> Self::Device;
+    type Instance;
+    fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Self::Instance;
+}
