@@ -8314,6 +8314,14 @@ pub mod ext {
             crate::vk::EXT_MUTABLE_DESCRIPTOR_TYPE_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_EXT_legacy_vertex_attributes"]
+    pub mod legacy_vertex_attributes {
+        use super::super::*;
+        pub use {
+            crate::vk::EXT_LEGACY_VERTEX_ATTRIBUTES_NAME as NAME,
+            crate::vk::EXT_LEGACY_VERTEX_ATTRIBUTES_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_EXT_layer_settings"]
     pub mod layer_settings {
         use super::super::*;

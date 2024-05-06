@@ -3754,6 +3754,11 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT: Self = Self(1_000_351_000);
     pub const MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT: Self = Self(1_000_351_002);
 }
+#[doc = "Generated from 'VK_EXT_legacy_vertex_attributes'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_FEATURES_EXT: Self = Self(1_000_495_000);
+    pub const PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_PROPERTIES_EXT: Self = Self(1_000_495_001);
+}
 #[doc = "Generated from 'VK_EXT_layer_settings'"]
 impl StructureType {
     pub const LAYER_SETTINGS_CREATE_INFO_EXT: Self = Self(1_000_496_000);
@@ -7727,6 +7732,9 @@ pub const NV_EXTENDED_SPARSE_ADDRESS_SPACE_SPEC_VERSION: u32 = 1u32;
 pub const EXT_MUTABLE_DESCRIPTOR_TYPE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mutable_descriptor_type\0") };
 pub const EXT_MUTABLE_DESCRIPTOR_TYPE_SPEC_VERSION: u32 = 1u32;
+pub const EXT_LEGACY_VERTEX_ATTRIBUTES_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_legacy_vertex_attributes\0") };
+pub const EXT_LEGACY_VERTEX_ATTRIBUTES_SPEC_VERSION: u32 = 1u32;
 pub const EXT_LAYER_SETTINGS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_layer_settings\0") };
 pub const EXT_LAYER_SETTINGS_SPEC_VERSION: u32 = 2u32;
