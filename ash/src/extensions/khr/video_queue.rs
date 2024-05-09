@@ -43,7 +43,7 @@ impl crate::khr::video_queue::Instance {
     /// Call [`get_physical_device_video_format_properties_len()`][Self::get_physical_device_video_format_properties_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
     #[inline]
-    pub unsafe fn get_video_session_memory_requirements(
+    pub unsafe fn get_physical_device_video_format_properties(
         &self,
         physical_device: vk::PhysicalDevice,
         video_format_info: &vk::PhysicalDeviceVideoFormatInfoKHR<'_>,
