@@ -40,14 +40,14 @@ impl crate::khr::video_queue::Device {
     // Retrieve the number of elements to pass to [`get_video_session_memory_requirements`][Self::get_video_session_memory_requirements]
     pub unsafe fn get_video_session_memory_requirements_len(
         &self,
-        video_session: vk::VideoSessionKHR
+        video_session: vk::VideoSessionKHR,
     ) -> usize {
         let mut memory_requirements_count = mem::MaybeUninit::uninit();
         let _ = (self.fp.get_video_session_memory_requirements_khr)(
             self.handle,
             video_session,
             memory_requirements_count.as_mut_ptr(),
-            ptr::null_mut()
+            ptr::null_mut(),
         );
         memory_requirements_count.assume_init() as _
     }
@@ -60,16 +60,16 @@ impl crate::khr::video_queue::Device {
     pub unsafe fn get_video_session_memory_requirements(
         &self,
         video_session: vk::VideoSessionKHR,
-        out: &mut [vk::VideoSessionMemoryRequirementsKHR<'_>]
+        out: &mut [vk::VideoSessionMemoryRequirementsKHR<'_>],
     ) {
         let mut count = out.len() as u32;
         let _ = (self.fp.get_video_session_memory_requirements_khr)(
             self.handle,
             video_session,
             &mut count,
-            out.as_mut_ptr()
+            out.as_mut_ptr(),
         );
-        assert_eq!(count, out.len());
+        assert_eq!(count as usize, out.len());
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindVideoSessionMemoryKHR.html>

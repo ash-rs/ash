@@ -30,7 +30,9 @@ impl crate::khr::video_encode_queue::Device {
                 data.as_mut_ptr() as _,
             );
             if result != vk::Result::INCOMPLETE {
-                break result.assume_init_on_success(feedback_info).map(|value| (value, data));
+                break result
+                    .assume_init_on_success(feedback_info)
+                    .map(|value| (value, data));
             }
         }
     }
