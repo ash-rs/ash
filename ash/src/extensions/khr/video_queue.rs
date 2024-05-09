@@ -5,6 +5,61 @@ use crate::{vk, RawPtr};
 use core::mem;
 use std::ptr;
 
+impl crate::khr::video_queue::Instance {
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceVideoCapabilitiesKHR.html>
+    #[inline]
+    pub unsafe fn get_physical_device_video_capabilities(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        video_profile: &vk::VideoProfileInfoKHR<'_>,
+    ) -> VkResult<vk::VideoCapabilitiesKHR> {
+        let mut video_capabilities = mem::MaybeUninit::uninit();
+        (self.fp.get_physical_device_video_capabilities_khr)(
+            physical_device,
+            video_profile,
+            video_capabilities.as_mut_ptr(),
+        )
+        .assume_init_on_success(video_capabilities)
+    }
+
+    // Retrieve the number of elements to pass to [`get_physical_device_video_format_properties`][Self::get_physical_device_video_format_properties]
+    pub unsafe fn get_physical_device_video_format_properties_len(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        video_format_info: &vk::PhysicalDeviceVideoFormatInfoKHR<'_>,
+    ) -> usize {
+        let mut memory_requirements_count = mem::MaybeUninit::uninit();
+        let _ = (self.fp.get_physical_device_video_format_properties_khr)(
+            physical_device,
+            video_format_info,
+            memory_requirements_count.as_mut_ptr(),
+            ptr::null_mut(),
+        );
+        memory_requirements_count.assume_init() as _
+    }
+
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceVideoFormatPropertiesKHR.html>
+    ///
+    /// Call [`get_physical_device_video_format_properties_len()`][Self::get_physical_device_video_format_properties_len()] to query the number of elements to pass to `out`.
+    /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
+    #[inline]
+    pub unsafe fn get_video_session_memory_requirements(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        video_format_info: &vk::PhysicalDeviceVideoFormatInfoKHR<'_>,
+        out: &mut [vk::VideoFormatPropertiesKHR<'_>],
+    ) {
+        let mut count = out.len() as u32;
+        let _ = (self.fp.get_physical_device_video_format_properties_khr)(
+            physical_device,
+            video_format_info,
+            &mut count,
+            out.as_mut_ptr(),
+        );
+        assert_eq!(count as usize, out.len());
+    }
+}
+
 impl crate::khr::video_queue::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateVideoSessionKHR.html>
     #[inline]
