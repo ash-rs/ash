@@ -1,8 +1,9 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_video_encode_queue.html>
 
-use crate::prelude::{read_into_uninitialized_vector, VkResult};
+use crate::prelude::VkResult;
 use crate::{vk, RawPtr};
 use core::mem;
+use std::ptr;
 
 impl crate::khr::video_queue::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateVideoSessionKHR.html>
@@ -36,20 +37,39 @@ impl crate::khr::video_queue::Device {
         )
     }
 
+    // Retrieve the number of elements to pass to [`get_video_session_memory_requirements`][Self::get_video_session_memory_requirements]
+    pub unsafe fn get_video_session_memory_requirements_len(
+        &self,
+        video_session: vk::VideoSessionKHR
+    ) -> usize {
+        let mut memory_requirements_count = mem::MaybeUninit::uninit();
+        let _ = (self.fp.get_video_session_memory_requirements_khr)(
+            self.handle,
+            video_session,
+            memory_requirements_count.as_mut_ptr(),
+            ptr::null_mut()
+        );
+        memory_requirements_count.assume_init() as _
+    }
+
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetVideoSessionMemoryRequirementsKHR.html>
+    ///
+    /// Call [`get_video_session_memory_requirements_len()`][Self::get_video_session_memory_requirements_len()] to query the number of elements to pass to `out`.
+    /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
     #[inline]
     pub unsafe fn get_video_session_memory_requirements(
         &self,
         video_session: vk::VideoSessionKHR,
-    ) -> VkResult<Vec<vk::VideoSessionMemoryRequirementsKHR<'_>>> {
-        read_into_uninitialized_vector(|count, data| {
-            (self.fp.get_video_session_memory_requirements_khr)(
-                self.handle,
-                video_session,
-                count,
-                data,
-            )
-        })
+        out: &mut [vk::VideoSessionMemoryRequirementsKHR<'_>]
+    ) {
+        let mut count = out.len() as u32;
+        let _ = (self.fp.get_video_session_memory_requirements_khr)(
+            self.handle,
+            video_session,
+            &mut count,
+            out.as_mut_ptr()
+        );
+        assert_eq!(count, out.len());
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindVideoSessionMemoryKHR.html>
