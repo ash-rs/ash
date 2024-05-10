@@ -118,7 +118,7 @@ impl crate::khr::video_queue::Device {
         out: &mut [vk::VideoSessionMemoryRequirementsKHR<'_>],
     ) -> VkResult<()> {
         let mut count = out.len() as u32;
-        self.fp.get_video_session_memory_requirements_khr)(
+        (self.fp.get_video_session_memory_requirements_khr)(
             self.handle,
             video_session,
             &mut count,
