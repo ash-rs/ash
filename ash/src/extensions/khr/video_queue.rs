@@ -48,15 +48,14 @@ impl crate::khr::video_queue::Instance {
         physical_device: vk::PhysicalDevice,
         video_format_info: &vk::PhysicalDeviceVideoFormatInfoKHR<'_>,
         out: &mut [vk::VideoFormatPropertiesKHR<'_>],
-    ) {
+    ) -> VkResult<()> {
         let mut count = out.len() as u32;
-        let _ = (self.fp.get_physical_device_video_format_properties_khr)(
+        (self.fp.get_physical_device_video_format_properties_khr)(
             physical_device,
             video_format_info,
             &mut count,
             out.as_mut_ptr(),
-        );
-        assert_eq!(count as usize, out.len());
+        ).result()
     }
 }
 
@@ -117,15 +116,14 @@ impl crate::khr::video_queue::Device {
         &self,
         video_session: vk::VideoSessionKHR,
         out: &mut [vk::VideoSessionMemoryRequirementsKHR<'_>],
-    ) {
+    ) -> VkResult<()> {
         let mut count = out.len() as u32;
-        let _ = (self.fp.get_video_session_memory_requirements_khr)(
+        self.fp.get_video_session_memory_requirements_khr)(
             self.handle,
             video_session,
             &mut count,
             out.as_mut_ptr(),
-        );
-        assert_eq!(count as usize, out.len());
+        ).result()
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindVideoSessionMemoryKHR.html>
