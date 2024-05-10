@@ -12,7 +12,7 @@ impl crate::khr::video_queue::Instance {
         &self,
         physical_device: vk::PhysicalDevice,
         video_profile: &vk::VideoProfileInfoKHR<'_>,
-    ) -> VkResult<vk::VideoCapabilitiesKHR> {
+    ) -> VkResult<vk::VideoCapabilitiesKHR<'_>> {
         let mut video_capabilities = mem::MaybeUninit::uninit();
         (self.fp.get_physical_device_video_capabilities_khr)(
             physical_device,
