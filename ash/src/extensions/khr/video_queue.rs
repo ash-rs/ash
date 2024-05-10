@@ -12,14 +12,13 @@ impl crate::khr::video_queue::Instance {
         &self,
         physical_device: vk::PhysicalDevice,
         video_profile: &vk::VideoProfileInfoKHR<'_>,
-    ) -> VkResult<vk::VideoCapabilitiesKHR<'_>> {
-        let mut video_capabilities = mem::MaybeUninit::uninit();
+        capabilities: &mut vk::VideoCapabilitiesKHR<'_>
+    ) -> VkResult<()> {
         (self.fp.get_physical_device_video_capabilities_khr)(
             physical_device,
             video_profile,
-            video_capabilities.as_mut_ptr(),
-        )
-        .assume_init_on_success(video_capabilities)
+            capabilities,
+        ).result()
     }
 
     // Retrieve the number of elements to pass to [`get_physical_device_video_format_properties`][Self::get_physical_device_video_format_properties]
