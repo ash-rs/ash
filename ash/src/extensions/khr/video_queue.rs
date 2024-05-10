@@ -23,6 +23,7 @@ impl crate::khr::video_queue::Instance {
     }
 
     // Retrieve the number of elements to pass to [`get_physical_device_video_format_properties`][Self::get_physical_device_video_format_properties]
+    #[inline]
     pub unsafe fn get_physical_device_video_format_properties_len(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -93,6 +94,7 @@ impl crate::khr::video_queue::Device {
     }
 
     // Retrieve the number of elements to pass to [`get_video_session_memory_requirements`][Self::get_video_session_memory_requirements]
+    #[inline]
     pub unsafe fn get_video_session_memory_requirements_len(
         &self,
         video_session: vk::VideoSessionKHR,
