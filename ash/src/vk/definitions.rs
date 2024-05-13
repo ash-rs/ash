@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 284;
+pub const HEADER_VERSION: u32 = 285;
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -57503,6 +57503,117 @@ impl<'a> PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
     #[inline]
     pub fn shader_raw_access_chains(mut self, shader_raw_access_chains: bool) -> Self {
         self.shader_raw_access_chains = shader_raw_access_chains.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImageAlignmentControlFeaturesMESA.html>"]
+#[must_use]
+pub struct PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub image_alignment_control: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {}
+unsafe impl Sync for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {}
+impl ::core::default::Default for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            image_alignment_control: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_FEATURES_MESA;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {}
+impl<'a> PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
+    #[inline]
+    pub fn image_alignment_control(mut self, image_alignment_control: bool) -> Self {
+        self.image_alignment_control = image_alignment_control.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImageAlignmentControlPropertiesMESA.html>"]
+#[must_use]
+pub struct PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub supported_image_alignment_mask: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {}
+unsafe impl Sync for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {}
+impl ::core::default::Default for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            supported_image_alignment_mask: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_PROPERTIES_MESA;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_>
+{
+}
+impl<'a> PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
+    #[inline]
+    pub fn supported_image_alignment_mask(mut self, supported_image_alignment_mask: u32) -> Self {
+        self.supported_image_alignment_mask = supported_image_alignment_mask;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageAlignmentControlCreateInfoMESA.html>"]
+#[must_use]
+pub struct ImageAlignmentControlCreateInfoMESA<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub maximum_requested_alignment: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for ImageAlignmentControlCreateInfoMESA<'_> {}
+unsafe impl Sync for ImageAlignmentControlCreateInfoMESA<'_> {}
+impl ::core::default::Default for ImageAlignmentControlCreateInfoMESA<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            maximum_requested_alignment: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ImageAlignmentControlCreateInfoMESA<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_ALIGNMENT_CONTROL_CREATE_INFO_MESA;
+}
+unsafe impl ExtendsImageCreateInfo for ImageAlignmentControlCreateInfoMESA<'_> {}
+impl<'a> ImageAlignmentControlCreateInfoMESA<'a> {
+    #[inline]
+    pub fn maximum_requested_alignment(mut self, maximum_requested_alignment: u32) -> Self {
+        self.maximum_requested_alignment = maximum_requested_alignment;
         self
     }
 }
