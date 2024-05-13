@@ -3965,6 +3965,12 @@ impl StructureType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV: Self = Self(1_000_568_000);
 }
+#[doc = "Generated from 'VK_MESA_image_alignment_control'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_FEATURES_MESA: Self = Self(1_000_575_000);
+    pub const PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_PROPERTIES_MESA: Self = Self(1_000_575_001);
+    pub const IMAGE_ALIGNMENT_CONTROL_CREATE_INFO_MESA: Self = Self(1_000_575_002);
+}
 pub const KHR_SURFACE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_surface\0") };
 pub const KHR_SURFACE_SPEC_VERSION: u32 = 25u32;
@@ -7894,3 +7900,6 @@ pub const NV_SHADER_ATOMIC_FLOAT16_VECTOR_SPEC_VERSION: u32 = 1u32;
 pub const NV_RAY_TRACING_VALIDATION_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_validation\0") };
 pub const NV_RAY_TRACING_VALIDATION_SPEC_VERSION: u32 = 1u32;
+pub const MESA_IMAGE_ALIGNMENT_CONTROL_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_MESA_image_alignment_control\0") };
+pub const MESA_IMAGE_ALIGNMENT_CONTROL_SPEC_VERSION: u32 = 1u32;

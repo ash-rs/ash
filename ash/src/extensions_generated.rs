@@ -16997,6 +16997,17 @@ pub mod lunarg {
         };
     }
 }
+#[doc = "Extensions tagged MESA"]
+pub mod mesa {
+    #[doc = "VK_MESA_image_alignment_control"]
+    pub mod image_alignment_control {
+        use super::super::*;
+        pub use {
+            crate::vk::MESA_IMAGE_ALIGNMENT_CONTROL_NAME as NAME,
+            crate::vk::MESA_IMAGE_ALIGNMENT_CONTROL_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+}
 #[doc = "Extensions tagged MSFT"]
 pub mod msft {
     #[doc = "VK_MSFT_layered_driver"]
