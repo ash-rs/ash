@@ -1997,11 +1997,13 @@ fn derive_getters_and_setters(
     root_structs: &HashSet<Ident>,
     has_lifetimes: &HashSet<Ident>,
 ) -> Option<TokenStream> {
-    if &struct_.name == "VkBaseInStructure"
-        || &struct_.name == "VkBaseOutStructure"
-        || &struct_.name == "VkTransformMatrixKHR"
-        || &struct_.name == "VkAccelerationStructureInstanceKHR"
-    {
+    if matches!(
+        struct_.name.as_str(),
+        "VkBaseInStructure"
+            | "VkBaseOutStructure"
+            | "VkTransformMatrixKHR"
+            | "VkAccelerationStructureInstanceKHR"
+    ) {
         return None;
     }
 
@@ -2062,7 +2064,7 @@ fn derive_getters_and_setters(
         })
         .collect::<Vec<_>>();
 
-    let setters = members.iter().filter_map(|member| {
+    let setters_and_getters = members.iter().filter_map(|member| {
         let field = &member.vkxml_field;
 
         let name = field.name.as_ref().unwrap();
@@ -2128,13 +2130,17 @@ fn derive_getters_and_setters(
             if matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
                 assert!(field.null_terminate);
                 assert_eq!(field.size, None);
-                return Some(quote! {
+                let setter = struct_.is_return.not().then(|| quote! {
                     #deprecated
                     #[inline]
                     pub fn #param_ident_short(mut self, #param_ident_short: &'a CStr) -> Self {
                         self.#param_ident = #param_ident_short.as_ptr();
                         self
                     }
+                });
+                return Some(quote! {
+                    #setter
+
                     #deprecated
                     #[inline]
                     pub unsafe fn #param_ident_as_c_str(&self) -> Option<&CStr> {
@@ -2147,12 +2153,16 @@ fn derive_getters_and_setters(
                 });
             } else if is_static_array(field) {
                 assert_eq!(field.size, None);
-                return Some(quote! {
+                let setter = struct_.is_return.not().then(|| quote! {
                     #deprecated
                     #[inline]
                     pub fn #param_ident_short(mut self, #param_ident_short: &CStr) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
                         write_c_str_slice_with_nul(&mut self.#param_ident, #param_ident_short).map(|()| self)
                     }
+                 });
+                return Some(quote! {
+                    #setter
+
                     #deprecated
                     #[inline]
                     pub fn #param_ident_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
@@ -2191,7 +2201,7 @@ fn derive_getters_and_setters(
                     } else {
                         quote!(as _)
                     };
-                    return Some(quote! {
+                    let setter = struct_.is_return.not().then(|| quote! {
                         #deprecated
                         #[inline]
                         pub fn #param_ident_short(mut self, #param_ident_short: &'_ #slice_param_ty_tokens) -> Self {
@@ -2199,12 +2209,20 @@ fn derive_getters_and_setters(
                             self.#param_ident[..#param_ident_short.len()].copy_from_slice(#param_ident_short);
                             self
                         }
+                    });
+                    return Some(quote! {
+                        #setter
+
                         #deprecated
                         #[inline]
                         pub fn #param_ident_short_as_slice(&self) -> &#slice_param_ty_tokens {
                             &self.#param_ident[..self.#array_size_ident #cast]
                         }
                     });
+                }
+
+                if struct_.is_return {
+                    return None;
                 }
 
                 // Interpret void array as byte array
@@ -2259,6 +2277,10 @@ fn derive_getters_and_setters(
                     }
                 });
             }
+        }
+
+        if struct_.is_return {
+            return None;
         }
 
         if field.basetype == "VkBool32" {
@@ -2425,8 +2447,9 @@ fn derive_getters_and_setters(
         #(#impl_extend_trait)*
         #next_trait
 
+        // TODO: Skip if empty
         impl #lifetime #name #lifetime {
-            #(#setters)*
+            #(#setters_and_getters)*
 
             #next_function
         }

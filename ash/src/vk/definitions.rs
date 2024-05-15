@@ -903,55 +903,8 @@ impl ::core::default::Default for PhysicalDeviceProperties {
 }
 impl PhysicalDeviceProperties {
     #[inline]
-    pub fn api_version(mut self, api_version: u32) -> Self {
-        self.api_version = api_version;
-        self
-    }
-    #[inline]
-    pub fn driver_version(mut self, driver_version: u32) -> Self {
-        self.driver_version = driver_version;
-        self
-    }
-    #[inline]
-    pub fn vendor_id(mut self, vendor_id: u32) -> Self {
-        self.vendor_id = vendor_id;
-        self
-    }
-    #[inline]
-    pub fn device_id(mut self, device_id: u32) -> Self {
-        self.device_id = device_id;
-        self
-    }
-    #[inline]
-    pub fn device_type(mut self, device_type: PhysicalDeviceType) -> Self {
-        self.device_type = device_type;
-        self
-    }
-    #[inline]
-    pub fn device_name(
-        mut self,
-        device_name: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.device_name, device_name).map(|()| self)
-    }
-    #[inline]
     pub fn device_name_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.device_name)
-    }
-    #[inline]
-    pub fn pipeline_cache_uuid(mut self, pipeline_cache_uuid: [u8; UUID_SIZE]) -> Self {
-        self.pipeline_cache_uuid = pipeline_cache_uuid;
-        self
-    }
-    #[inline]
-    pub fn limits(mut self, limits: PhysicalDeviceLimits) -> Self {
-        self.limits = limits;
-        self
-    }
-    #[inline]
-    pub fn sparse_properties(mut self, sparse_properties: PhysicalDeviceSparseProperties) -> Self {
-        self.sparse_properties = sparse_properties;
-        self
     }
 }
 #[repr(C)]
@@ -982,20 +935,8 @@ impl ::core::default::Default for ExtensionProperties {
 }
 impl ExtensionProperties {
     #[inline]
-    pub fn extension_name(
-        mut self,
-        extension_name: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.extension_name, extension_name).map(|()| self)
-    }
-    #[inline]
     pub fn extension_name_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.extension_name)
-    }
-    #[inline]
-    pub fn spec_version(mut self, spec_version: u32) -> Self {
-        self.spec_version = spec_version;
-        self
     }
 }
 #[repr(C)]
@@ -1032,32 +973,8 @@ impl ::core::default::Default for LayerProperties {
 }
 impl LayerProperties {
     #[inline]
-    pub fn layer_name(
-        mut self,
-        layer_name: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.layer_name, layer_name).map(|()| self)
-    }
-    #[inline]
     pub fn layer_name_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.layer_name)
-    }
-    #[inline]
-    pub fn spec_version(mut self, spec_version: u32) -> Self {
-        self.spec_version = spec_version;
-        self
-    }
-    #[inline]
-    pub fn implementation_version(mut self, implementation_version: u32) -> Self {
-        self.implementation_version = implementation_version;
-        self
-    }
-    #[inline]
-    pub fn description(
-        mut self,
-        description: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
     }
     #[inline]
     pub fn description_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
@@ -1572,31 +1489,7 @@ pub struct QueueFamilyProperties {
     pub timestamp_valid_bits: u32,
     pub min_image_transfer_granularity: Extent3D,
 }
-impl QueueFamilyProperties {
-    #[inline]
-    pub fn queue_flags(mut self, queue_flags: QueueFlags) -> Self {
-        self.queue_flags = queue_flags;
-        self
-    }
-    #[inline]
-    pub fn queue_count(mut self, queue_count: u32) -> Self {
-        self.queue_count = queue_count;
-        self
-    }
-    #[inline]
-    pub fn timestamp_valid_bits(mut self, timestamp_valid_bits: u32) -> Self {
-        self.timestamp_valid_bits = timestamp_valid_bits;
-        self
-    }
-    #[inline]
-    pub fn min_image_transfer_granularity(
-        mut self,
-        min_image_transfer_granularity: Extent3D,
-    ) -> Self {
-        self.min_image_transfer_granularity = min_image_transfer_granularity;
-        self
-    }
-}
+impl QueueFamilyProperties {}
 #[repr(C)]
 #[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMemoryProperties.html>"]
@@ -1631,20 +1524,8 @@ impl ::core::default::Default for PhysicalDeviceMemoryProperties {
 }
 impl PhysicalDeviceMemoryProperties {
     #[inline]
-    pub fn memory_types(mut self, memory_types: &'_ [MemoryType]) -> Self {
-        self.memory_type_count = memory_types.len() as _;
-        self.memory_types[..memory_types.len()].copy_from_slice(memory_types);
-        self
-    }
-    #[inline]
     pub fn memory_types_as_slice(&self) -> &[MemoryType] {
         &self.memory_types[..self.memory_type_count as _]
-    }
-    #[inline]
-    pub fn memory_heaps(mut self, memory_heaps: &'_ [MemoryHeap]) -> Self {
-        self.memory_heap_count = memory_heaps.len() as _;
-        self.memory_heaps[..memory_heaps.len()].copy_from_slice(memory_heaps);
-        self
     }
     #[inline]
     pub fn memory_heaps_as_slice(&self) -> &[MemoryHeap] {
@@ -1747,23 +1628,7 @@ pub struct MemoryRequirements {
     pub alignment: DeviceSize,
     pub memory_type_bits: u32,
 }
-impl MemoryRequirements {
-    #[inline]
-    pub fn size(mut self, size: DeviceSize) -> Self {
-        self.size = size;
-        self
-    }
-    #[inline]
-    pub fn alignment(mut self, alignment: DeviceSize) -> Self {
-        self.alignment = alignment;
-        self
-    }
-    #[inline]
-    pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
-        self.memory_type_bits = memory_type_bits;
-        self
-    }
-}
+impl MemoryRequirements {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -1774,23 +1639,7 @@ pub struct SparseImageFormatProperties {
     pub image_granularity: Extent3D,
     pub flags: SparseImageFormatFlags,
 }
-impl SparseImageFormatProperties {
-    #[inline]
-    pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
-        self.aspect_mask = aspect_mask;
-        self
-    }
-    #[inline]
-    pub fn image_granularity(mut self, image_granularity: Extent3D) -> Self {
-        self.image_granularity = image_granularity;
-        self
-    }
-    #[inline]
-    pub fn flags(mut self, flags: SparseImageFormatFlags) -> Self {
-        self.flags = flags;
-        self
-    }
-}
+impl SparseImageFormatProperties {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -1803,33 +1652,7 @@ pub struct SparseImageMemoryRequirements {
     pub image_mip_tail_offset: DeviceSize,
     pub image_mip_tail_stride: DeviceSize,
 }
-impl SparseImageMemoryRequirements {
-    #[inline]
-    pub fn format_properties(mut self, format_properties: SparseImageFormatProperties) -> Self {
-        self.format_properties = format_properties;
-        self
-    }
-    #[inline]
-    pub fn image_mip_tail_first_lod(mut self, image_mip_tail_first_lod: u32) -> Self {
-        self.image_mip_tail_first_lod = image_mip_tail_first_lod;
-        self
-    }
-    #[inline]
-    pub fn image_mip_tail_size(mut self, image_mip_tail_size: DeviceSize) -> Self {
-        self.image_mip_tail_size = image_mip_tail_size;
-        self
-    }
-    #[inline]
-    pub fn image_mip_tail_offset(mut self, image_mip_tail_offset: DeviceSize) -> Self {
-        self.image_mip_tail_offset = image_mip_tail_offset;
-        self
-    }
-    #[inline]
-    pub fn image_mip_tail_stride(mut self, image_mip_tail_stride: DeviceSize) -> Self {
-        self.image_mip_tail_stride = image_mip_tail_stride;
-        self
-    }
-}
+impl SparseImageMemoryRequirements {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -1839,18 +1662,7 @@ pub struct MemoryType {
     pub property_flags: MemoryPropertyFlags,
     pub heap_index: u32,
 }
-impl MemoryType {
-    #[inline]
-    pub fn property_flags(mut self, property_flags: MemoryPropertyFlags) -> Self {
-        self.property_flags = property_flags;
-        self
-    }
-    #[inline]
-    pub fn heap_index(mut self, heap_index: u32) -> Self {
-        self.heap_index = heap_index;
-        self
-    }
-}
+impl MemoryType {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -1860,18 +1672,7 @@ pub struct MemoryHeap {
     pub size: DeviceSize,
     pub flags: MemoryHeapFlags,
 }
-impl MemoryHeap {
-    #[inline]
-    pub fn size(mut self, size: DeviceSize) -> Self {
-        self.size = size;
-        self
-    }
-    #[inline]
-    pub fn flags(mut self, flags: MemoryHeapFlags) -> Self {
-        self.flags = flags;
-        self
-    }
-}
+impl MemoryHeap {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -1930,23 +1731,7 @@ pub struct FormatProperties {
     pub optimal_tiling_features: FormatFeatureFlags,
     pub buffer_features: FormatFeatureFlags,
 }
-impl FormatProperties {
-    #[inline]
-    pub fn linear_tiling_features(mut self, linear_tiling_features: FormatFeatureFlags) -> Self {
-        self.linear_tiling_features = linear_tiling_features;
-        self
-    }
-    #[inline]
-    pub fn optimal_tiling_features(mut self, optimal_tiling_features: FormatFeatureFlags) -> Self {
-        self.optimal_tiling_features = optimal_tiling_features;
-        self
-    }
-    #[inline]
-    pub fn buffer_features(mut self, buffer_features: FormatFeatureFlags) -> Self {
-        self.buffer_features = buffer_features;
-        self
-    }
-}
+impl FormatProperties {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -1959,33 +1744,7 @@ pub struct ImageFormatProperties {
     pub sample_counts: SampleCountFlags,
     pub max_resource_size: DeviceSize,
 }
-impl ImageFormatProperties {
-    #[inline]
-    pub fn max_extent(mut self, max_extent: Extent3D) -> Self {
-        self.max_extent = max_extent;
-        self
-    }
-    #[inline]
-    pub fn max_mip_levels(mut self, max_mip_levels: u32) -> Self {
-        self.max_mip_levels = max_mip_levels;
-        self
-    }
-    #[inline]
-    pub fn max_array_layers(mut self, max_array_layers: u32) -> Self {
-        self.max_array_layers = max_array_layers;
-        self
-    }
-    #[inline]
-    pub fn sample_counts(mut self, sample_counts: SampleCountFlags) -> Self {
-        self.sample_counts = sample_counts;
-        self
-    }
-    #[inline]
-    pub fn max_resource_size(mut self, max_resource_size: DeviceSize) -> Self {
-        self.max_resource_size = max_resource_size;
-        self
-    }
-}
+impl ImageFormatProperties {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -8075,43 +7834,7 @@ pub struct PhysicalDeviceSparseProperties {
     pub residency_aligned_mip_size: Bool32,
     pub residency_non_resident_strict: Bool32,
 }
-impl PhysicalDeviceSparseProperties {
-    #[inline]
-    pub fn residency_standard2_d_block_shape(
-        mut self,
-        residency_standard2_d_block_shape: bool,
-    ) -> Self {
-        self.residency_standard2_d_block_shape = residency_standard2_d_block_shape.into();
-        self
-    }
-    #[inline]
-    pub fn residency_standard2_d_multisample_block_shape(
-        mut self,
-        residency_standard2_d_multisample_block_shape: bool,
-    ) -> Self {
-        self.residency_standard2_d_multisample_block_shape =
-            residency_standard2_d_multisample_block_shape.into();
-        self
-    }
-    #[inline]
-    pub fn residency_standard3_d_block_shape(
-        mut self,
-        residency_standard3_d_block_shape: bool,
-    ) -> Self {
-        self.residency_standard3_d_block_shape = residency_standard3_d_block_shape.into();
-        self
-    }
-    #[inline]
-    pub fn residency_aligned_mip_size(mut self, residency_aligned_mip_size: bool) -> Self {
-        self.residency_aligned_mip_size = residency_aligned_mip_size.into();
-        self
-    }
-    #[inline]
-    pub fn residency_non_resident_strict(mut self, residency_non_resident_strict: bool) -> Self {
-        self.residency_non_resident_strict = residency_non_resident_strict.into();
-        self
-    }
-}
+impl PhysicalDeviceSparseProperties {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -8338,670 +8061,7 @@ impl ::core::default::Default for PhysicalDeviceLimits {
         }
     }
 }
-impl PhysicalDeviceLimits {
-    #[inline]
-    pub fn max_image_dimension1_d(mut self, max_image_dimension1_d: u32) -> Self {
-        self.max_image_dimension1_d = max_image_dimension1_d;
-        self
-    }
-    #[inline]
-    pub fn max_image_dimension2_d(mut self, max_image_dimension2_d: u32) -> Self {
-        self.max_image_dimension2_d = max_image_dimension2_d;
-        self
-    }
-    #[inline]
-    pub fn max_image_dimension3_d(mut self, max_image_dimension3_d: u32) -> Self {
-        self.max_image_dimension3_d = max_image_dimension3_d;
-        self
-    }
-    #[inline]
-    pub fn max_image_dimension_cube(mut self, max_image_dimension_cube: u32) -> Self {
-        self.max_image_dimension_cube = max_image_dimension_cube;
-        self
-    }
-    #[inline]
-    pub fn max_image_array_layers(mut self, max_image_array_layers: u32) -> Self {
-        self.max_image_array_layers = max_image_array_layers;
-        self
-    }
-    #[inline]
-    pub fn max_texel_buffer_elements(mut self, max_texel_buffer_elements: u32) -> Self {
-        self.max_texel_buffer_elements = max_texel_buffer_elements;
-        self
-    }
-    #[inline]
-    pub fn max_uniform_buffer_range(mut self, max_uniform_buffer_range: u32) -> Self {
-        self.max_uniform_buffer_range = max_uniform_buffer_range;
-        self
-    }
-    #[inline]
-    pub fn max_storage_buffer_range(mut self, max_storage_buffer_range: u32) -> Self {
-        self.max_storage_buffer_range = max_storage_buffer_range;
-        self
-    }
-    #[inline]
-    pub fn max_push_constants_size(mut self, max_push_constants_size: u32) -> Self {
-        self.max_push_constants_size = max_push_constants_size;
-        self
-    }
-    #[inline]
-    pub fn max_memory_allocation_count(mut self, max_memory_allocation_count: u32) -> Self {
-        self.max_memory_allocation_count = max_memory_allocation_count;
-        self
-    }
-    #[inline]
-    pub fn max_sampler_allocation_count(mut self, max_sampler_allocation_count: u32) -> Self {
-        self.max_sampler_allocation_count = max_sampler_allocation_count;
-        self
-    }
-    #[inline]
-    pub fn buffer_image_granularity(mut self, buffer_image_granularity: DeviceSize) -> Self {
-        self.buffer_image_granularity = buffer_image_granularity;
-        self
-    }
-    #[inline]
-    pub fn sparse_address_space_size(mut self, sparse_address_space_size: DeviceSize) -> Self {
-        self.sparse_address_space_size = sparse_address_space_size;
-        self
-    }
-    #[inline]
-    pub fn max_bound_descriptor_sets(mut self, max_bound_descriptor_sets: u32) -> Self {
-        self.max_bound_descriptor_sets = max_bound_descriptor_sets;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_samplers(
-        mut self,
-        max_per_stage_descriptor_samplers: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_samplers = max_per_stage_descriptor_samplers;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_uniform_buffers(
-        mut self,
-        max_per_stage_descriptor_uniform_buffers: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_uniform_buffers = max_per_stage_descriptor_uniform_buffers;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_storage_buffers(
-        mut self,
-        max_per_stage_descriptor_storage_buffers: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_storage_buffers = max_per_stage_descriptor_storage_buffers;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_sampled_images(
-        mut self,
-        max_per_stage_descriptor_sampled_images: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_sampled_images = max_per_stage_descriptor_sampled_images;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_storage_images(
-        mut self,
-        max_per_stage_descriptor_storage_images: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_storage_images = max_per_stage_descriptor_storage_images;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_input_attachments(
-        mut self,
-        max_per_stage_descriptor_input_attachments: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_input_attachments =
-            max_per_stage_descriptor_input_attachments;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_resources(mut self, max_per_stage_resources: u32) -> Self {
-        self.max_per_stage_resources = max_per_stage_resources;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_samplers(mut self, max_descriptor_set_samplers: u32) -> Self {
-        self.max_descriptor_set_samplers = max_descriptor_set_samplers;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_uniform_buffers(
-        mut self,
-        max_descriptor_set_uniform_buffers: u32,
-    ) -> Self {
-        self.max_descriptor_set_uniform_buffers = max_descriptor_set_uniform_buffers;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_uniform_buffers_dynamic(
-        mut self,
-        max_descriptor_set_uniform_buffers_dynamic: u32,
-    ) -> Self {
-        self.max_descriptor_set_uniform_buffers_dynamic =
-            max_descriptor_set_uniform_buffers_dynamic;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_storage_buffers(
-        mut self,
-        max_descriptor_set_storage_buffers: u32,
-    ) -> Self {
-        self.max_descriptor_set_storage_buffers = max_descriptor_set_storage_buffers;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_storage_buffers_dynamic(
-        mut self,
-        max_descriptor_set_storage_buffers_dynamic: u32,
-    ) -> Self {
-        self.max_descriptor_set_storage_buffers_dynamic =
-            max_descriptor_set_storage_buffers_dynamic;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_sampled_images(
-        mut self,
-        max_descriptor_set_sampled_images: u32,
-    ) -> Self {
-        self.max_descriptor_set_sampled_images = max_descriptor_set_sampled_images;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_storage_images(
-        mut self,
-        max_descriptor_set_storage_images: u32,
-    ) -> Self {
-        self.max_descriptor_set_storage_images = max_descriptor_set_storage_images;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_input_attachments(
-        mut self,
-        max_descriptor_set_input_attachments: u32,
-    ) -> Self {
-        self.max_descriptor_set_input_attachments = max_descriptor_set_input_attachments;
-        self
-    }
-    #[inline]
-    pub fn max_vertex_input_attributes(mut self, max_vertex_input_attributes: u32) -> Self {
-        self.max_vertex_input_attributes = max_vertex_input_attributes;
-        self
-    }
-    #[inline]
-    pub fn max_vertex_input_bindings(mut self, max_vertex_input_bindings: u32) -> Self {
-        self.max_vertex_input_bindings = max_vertex_input_bindings;
-        self
-    }
-    #[inline]
-    pub fn max_vertex_input_attribute_offset(
-        mut self,
-        max_vertex_input_attribute_offset: u32,
-    ) -> Self {
-        self.max_vertex_input_attribute_offset = max_vertex_input_attribute_offset;
-        self
-    }
-    #[inline]
-    pub fn max_vertex_input_binding_stride(mut self, max_vertex_input_binding_stride: u32) -> Self {
-        self.max_vertex_input_binding_stride = max_vertex_input_binding_stride;
-        self
-    }
-    #[inline]
-    pub fn max_vertex_output_components(mut self, max_vertex_output_components: u32) -> Self {
-        self.max_vertex_output_components = max_vertex_output_components;
-        self
-    }
-    #[inline]
-    pub fn max_tessellation_generation_level(
-        mut self,
-        max_tessellation_generation_level: u32,
-    ) -> Self {
-        self.max_tessellation_generation_level = max_tessellation_generation_level;
-        self
-    }
-    #[inline]
-    pub fn max_tessellation_patch_size(mut self, max_tessellation_patch_size: u32) -> Self {
-        self.max_tessellation_patch_size = max_tessellation_patch_size;
-        self
-    }
-    #[inline]
-    pub fn max_tessellation_control_per_vertex_input_components(
-        mut self,
-        max_tessellation_control_per_vertex_input_components: u32,
-    ) -> Self {
-        self.max_tessellation_control_per_vertex_input_components =
-            max_tessellation_control_per_vertex_input_components;
-        self
-    }
-    #[inline]
-    pub fn max_tessellation_control_per_vertex_output_components(
-        mut self,
-        max_tessellation_control_per_vertex_output_components: u32,
-    ) -> Self {
-        self.max_tessellation_control_per_vertex_output_components =
-            max_tessellation_control_per_vertex_output_components;
-        self
-    }
-    #[inline]
-    pub fn max_tessellation_control_per_patch_output_components(
-        mut self,
-        max_tessellation_control_per_patch_output_components: u32,
-    ) -> Self {
-        self.max_tessellation_control_per_patch_output_components =
-            max_tessellation_control_per_patch_output_components;
-        self
-    }
-    #[inline]
-    pub fn max_tessellation_control_total_output_components(
-        mut self,
-        max_tessellation_control_total_output_components: u32,
-    ) -> Self {
-        self.max_tessellation_control_total_output_components =
-            max_tessellation_control_total_output_components;
-        self
-    }
-    #[inline]
-    pub fn max_tessellation_evaluation_input_components(
-        mut self,
-        max_tessellation_evaluation_input_components: u32,
-    ) -> Self {
-        self.max_tessellation_evaluation_input_components =
-            max_tessellation_evaluation_input_components;
-        self
-    }
-    #[inline]
-    pub fn max_tessellation_evaluation_output_components(
-        mut self,
-        max_tessellation_evaluation_output_components: u32,
-    ) -> Self {
-        self.max_tessellation_evaluation_output_components =
-            max_tessellation_evaluation_output_components;
-        self
-    }
-    #[inline]
-    pub fn max_geometry_shader_invocations(mut self, max_geometry_shader_invocations: u32) -> Self {
-        self.max_geometry_shader_invocations = max_geometry_shader_invocations;
-        self
-    }
-    #[inline]
-    pub fn max_geometry_input_components(mut self, max_geometry_input_components: u32) -> Self {
-        self.max_geometry_input_components = max_geometry_input_components;
-        self
-    }
-    #[inline]
-    pub fn max_geometry_output_components(mut self, max_geometry_output_components: u32) -> Self {
-        self.max_geometry_output_components = max_geometry_output_components;
-        self
-    }
-    #[inline]
-    pub fn max_geometry_output_vertices(mut self, max_geometry_output_vertices: u32) -> Self {
-        self.max_geometry_output_vertices = max_geometry_output_vertices;
-        self
-    }
-    #[inline]
-    pub fn max_geometry_total_output_components(
-        mut self,
-        max_geometry_total_output_components: u32,
-    ) -> Self {
-        self.max_geometry_total_output_components = max_geometry_total_output_components;
-        self
-    }
-    #[inline]
-    pub fn max_fragment_input_components(mut self, max_fragment_input_components: u32) -> Self {
-        self.max_fragment_input_components = max_fragment_input_components;
-        self
-    }
-    #[inline]
-    pub fn max_fragment_output_attachments(mut self, max_fragment_output_attachments: u32) -> Self {
-        self.max_fragment_output_attachments = max_fragment_output_attachments;
-        self
-    }
-    #[inline]
-    pub fn max_fragment_dual_src_attachments(
-        mut self,
-        max_fragment_dual_src_attachments: u32,
-    ) -> Self {
-        self.max_fragment_dual_src_attachments = max_fragment_dual_src_attachments;
-        self
-    }
-    #[inline]
-    pub fn max_fragment_combined_output_resources(
-        mut self,
-        max_fragment_combined_output_resources: u32,
-    ) -> Self {
-        self.max_fragment_combined_output_resources = max_fragment_combined_output_resources;
-        self
-    }
-    #[inline]
-    pub fn max_compute_shared_memory_size(mut self, max_compute_shared_memory_size: u32) -> Self {
-        self.max_compute_shared_memory_size = max_compute_shared_memory_size;
-        self
-    }
-    #[inline]
-    pub fn max_compute_work_group_count(mut self, max_compute_work_group_count: [u32; 3]) -> Self {
-        self.max_compute_work_group_count = max_compute_work_group_count;
-        self
-    }
-    #[inline]
-    pub fn max_compute_work_group_invocations(
-        mut self,
-        max_compute_work_group_invocations: u32,
-    ) -> Self {
-        self.max_compute_work_group_invocations = max_compute_work_group_invocations;
-        self
-    }
-    #[inline]
-    pub fn max_compute_work_group_size(mut self, max_compute_work_group_size: [u32; 3]) -> Self {
-        self.max_compute_work_group_size = max_compute_work_group_size;
-        self
-    }
-    #[inline]
-    pub fn sub_pixel_precision_bits(mut self, sub_pixel_precision_bits: u32) -> Self {
-        self.sub_pixel_precision_bits = sub_pixel_precision_bits;
-        self
-    }
-    #[inline]
-    pub fn sub_texel_precision_bits(mut self, sub_texel_precision_bits: u32) -> Self {
-        self.sub_texel_precision_bits = sub_texel_precision_bits;
-        self
-    }
-    #[inline]
-    pub fn mipmap_precision_bits(mut self, mipmap_precision_bits: u32) -> Self {
-        self.mipmap_precision_bits = mipmap_precision_bits;
-        self
-    }
-    #[inline]
-    pub fn max_draw_indexed_index_value(mut self, max_draw_indexed_index_value: u32) -> Self {
-        self.max_draw_indexed_index_value = max_draw_indexed_index_value;
-        self
-    }
-    #[inline]
-    pub fn max_draw_indirect_count(mut self, max_draw_indirect_count: u32) -> Self {
-        self.max_draw_indirect_count = max_draw_indirect_count;
-        self
-    }
-    #[inline]
-    pub fn max_sampler_lod_bias(mut self, max_sampler_lod_bias: f32) -> Self {
-        self.max_sampler_lod_bias = max_sampler_lod_bias;
-        self
-    }
-    #[inline]
-    pub fn max_sampler_anisotropy(mut self, max_sampler_anisotropy: f32) -> Self {
-        self.max_sampler_anisotropy = max_sampler_anisotropy;
-        self
-    }
-    #[inline]
-    pub fn max_viewports(mut self, max_viewports: u32) -> Self {
-        self.max_viewports = max_viewports;
-        self
-    }
-    #[inline]
-    pub fn max_viewport_dimensions(mut self, max_viewport_dimensions: [u32; 2]) -> Self {
-        self.max_viewport_dimensions = max_viewport_dimensions;
-        self
-    }
-    #[inline]
-    pub fn viewport_bounds_range(mut self, viewport_bounds_range: [f32; 2]) -> Self {
-        self.viewport_bounds_range = viewport_bounds_range;
-        self
-    }
-    #[inline]
-    pub fn viewport_sub_pixel_bits(mut self, viewport_sub_pixel_bits: u32) -> Self {
-        self.viewport_sub_pixel_bits = viewport_sub_pixel_bits;
-        self
-    }
-    #[inline]
-    pub fn min_memory_map_alignment(mut self, min_memory_map_alignment: usize) -> Self {
-        self.min_memory_map_alignment = min_memory_map_alignment;
-        self
-    }
-    #[inline]
-    pub fn min_texel_buffer_offset_alignment(
-        mut self,
-        min_texel_buffer_offset_alignment: DeviceSize,
-    ) -> Self {
-        self.min_texel_buffer_offset_alignment = min_texel_buffer_offset_alignment;
-        self
-    }
-    #[inline]
-    pub fn min_uniform_buffer_offset_alignment(
-        mut self,
-        min_uniform_buffer_offset_alignment: DeviceSize,
-    ) -> Self {
-        self.min_uniform_buffer_offset_alignment = min_uniform_buffer_offset_alignment;
-        self
-    }
-    #[inline]
-    pub fn min_storage_buffer_offset_alignment(
-        mut self,
-        min_storage_buffer_offset_alignment: DeviceSize,
-    ) -> Self {
-        self.min_storage_buffer_offset_alignment = min_storage_buffer_offset_alignment;
-        self
-    }
-    #[inline]
-    pub fn min_texel_offset(mut self, min_texel_offset: i32) -> Self {
-        self.min_texel_offset = min_texel_offset;
-        self
-    }
-    #[inline]
-    pub fn max_texel_offset(mut self, max_texel_offset: u32) -> Self {
-        self.max_texel_offset = max_texel_offset;
-        self
-    }
-    #[inline]
-    pub fn min_texel_gather_offset(mut self, min_texel_gather_offset: i32) -> Self {
-        self.min_texel_gather_offset = min_texel_gather_offset;
-        self
-    }
-    #[inline]
-    pub fn max_texel_gather_offset(mut self, max_texel_gather_offset: u32) -> Self {
-        self.max_texel_gather_offset = max_texel_gather_offset;
-        self
-    }
-    #[inline]
-    pub fn min_interpolation_offset(mut self, min_interpolation_offset: f32) -> Self {
-        self.min_interpolation_offset = min_interpolation_offset;
-        self
-    }
-    #[inline]
-    pub fn max_interpolation_offset(mut self, max_interpolation_offset: f32) -> Self {
-        self.max_interpolation_offset = max_interpolation_offset;
-        self
-    }
-    #[inline]
-    pub fn sub_pixel_interpolation_offset_bits(
-        mut self,
-        sub_pixel_interpolation_offset_bits: u32,
-    ) -> Self {
-        self.sub_pixel_interpolation_offset_bits = sub_pixel_interpolation_offset_bits;
-        self
-    }
-    #[inline]
-    pub fn max_framebuffer_width(mut self, max_framebuffer_width: u32) -> Self {
-        self.max_framebuffer_width = max_framebuffer_width;
-        self
-    }
-    #[inline]
-    pub fn max_framebuffer_height(mut self, max_framebuffer_height: u32) -> Self {
-        self.max_framebuffer_height = max_framebuffer_height;
-        self
-    }
-    #[inline]
-    pub fn max_framebuffer_layers(mut self, max_framebuffer_layers: u32) -> Self {
-        self.max_framebuffer_layers = max_framebuffer_layers;
-        self
-    }
-    #[inline]
-    pub fn framebuffer_color_sample_counts(
-        mut self,
-        framebuffer_color_sample_counts: SampleCountFlags,
-    ) -> Self {
-        self.framebuffer_color_sample_counts = framebuffer_color_sample_counts;
-        self
-    }
-    #[inline]
-    pub fn framebuffer_depth_sample_counts(
-        mut self,
-        framebuffer_depth_sample_counts: SampleCountFlags,
-    ) -> Self {
-        self.framebuffer_depth_sample_counts = framebuffer_depth_sample_counts;
-        self
-    }
-    #[inline]
-    pub fn framebuffer_stencil_sample_counts(
-        mut self,
-        framebuffer_stencil_sample_counts: SampleCountFlags,
-    ) -> Self {
-        self.framebuffer_stencil_sample_counts = framebuffer_stencil_sample_counts;
-        self
-    }
-    #[inline]
-    pub fn framebuffer_no_attachments_sample_counts(
-        mut self,
-        framebuffer_no_attachments_sample_counts: SampleCountFlags,
-    ) -> Self {
-        self.framebuffer_no_attachments_sample_counts = framebuffer_no_attachments_sample_counts;
-        self
-    }
-    #[inline]
-    pub fn max_color_attachments(mut self, max_color_attachments: u32) -> Self {
-        self.max_color_attachments = max_color_attachments;
-        self
-    }
-    #[inline]
-    pub fn sampled_image_color_sample_counts(
-        mut self,
-        sampled_image_color_sample_counts: SampleCountFlags,
-    ) -> Self {
-        self.sampled_image_color_sample_counts = sampled_image_color_sample_counts;
-        self
-    }
-    #[inline]
-    pub fn sampled_image_integer_sample_counts(
-        mut self,
-        sampled_image_integer_sample_counts: SampleCountFlags,
-    ) -> Self {
-        self.sampled_image_integer_sample_counts = sampled_image_integer_sample_counts;
-        self
-    }
-    #[inline]
-    pub fn sampled_image_depth_sample_counts(
-        mut self,
-        sampled_image_depth_sample_counts: SampleCountFlags,
-    ) -> Self {
-        self.sampled_image_depth_sample_counts = sampled_image_depth_sample_counts;
-        self
-    }
-    #[inline]
-    pub fn sampled_image_stencil_sample_counts(
-        mut self,
-        sampled_image_stencil_sample_counts: SampleCountFlags,
-    ) -> Self {
-        self.sampled_image_stencil_sample_counts = sampled_image_stencil_sample_counts;
-        self
-    }
-    #[inline]
-    pub fn storage_image_sample_counts(
-        mut self,
-        storage_image_sample_counts: SampleCountFlags,
-    ) -> Self {
-        self.storage_image_sample_counts = storage_image_sample_counts;
-        self
-    }
-    #[inline]
-    pub fn max_sample_mask_words(mut self, max_sample_mask_words: u32) -> Self {
-        self.max_sample_mask_words = max_sample_mask_words;
-        self
-    }
-    #[inline]
-    pub fn timestamp_compute_and_graphics(mut self, timestamp_compute_and_graphics: bool) -> Self {
-        self.timestamp_compute_and_graphics = timestamp_compute_and_graphics.into();
-        self
-    }
-    #[inline]
-    pub fn timestamp_period(mut self, timestamp_period: f32) -> Self {
-        self.timestamp_period = timestamp_period;
-        self
-    }
-    #[inline]
-    pub fn max_clip_distances(mut self, max_clip_distances: u32) -> Self {
-        self.max_clip_distances = max_clip_distances;
-        self
-    }
-    #[inline]
-    pub fn max_cull_distances(mut self, max_cull_distances: u32) -> Self {
-        self.max_cull_distances = max_cull_distances;
-        self
-    }
-    #[inline]
-    pub fn max_combined_clip_and_cull_distances(
-        mut self,
-        max_combined_clip_and_cull_distances: u32,
-    ) -> Self {
-        self.max_combined_clip_and_cull_distances = max_combined_clip_and_cull_distances;
-        self
-    }
-    #[inline]
-    pub fn discrete_queue_priorities(mut self, discrete_queue_priorities: u32) -> Self {
-        self.discrete_queue_priorities = discrete_queue_priorities;
-        self
-    }
-    #[inline]
-    pub fn point_size_range(mut self, point_size_range: [f32; 2]) -> Self {
-        self.point_size_range = point_size_range;
-        self
-    }
-    #[inline]
-    pub fn line_width_range(mut self, line_width_range: [f32; 2]) -> Self {
-        self.line_width_range = line_width_range;
-        self
-    }
-    #[inline]
-    pub fn point_size_granularity(mut self, point_size_granularity: f32) -> Self {
-        self.point_size_granularity = point_size_granularity;
-        self
-    }
-    #[inline]
-    pub fn line_width_granularity(mut self, line_width_granularity: f32) -> Self {
-        self.line_width_granularity = line_width_granularity;
-        self
-    }
-    #[inline]
-    pub fn strict_lines(mut self, strict_lines: bool) -> Self {
-        self.strict_lines = strict_lines.into();
-        self
-    }
-    #[inline]
-    pub fn standard_sample_locations(mut self, standard_sample_locations: bool) -> Self {
-        self.standard_sample_locations = standard_sample_locations.into();
-        self
-    }
-    #[inline]
-    pub fn optimal_buffer_copy_offset_alignment(
-        mut self,
-        optimal_buffer_copy_offset_alignment: DeviceSize,
-    ) -> Self {
-        self.optimal_buffer_copy_offset_alignment = optimal_buffer_copy_offset_alignment;
-        self
-    }
-    #[inline]
-    pub fn optimal_buffer_copy_row_pitch_alignment(
-        mut self,
-        optimal_buffer_copy_row_pitch_alignment: DeviceSize,
-    ) -> Self {
-        self.optimal_buffer_copy_row_pitch_alignment = optimal_buffer_copy_row_pitch_alignment;
-        self
-    }
-    #[inline]
-    pub fn non_coherent_atom_size(mut self, non_coherent_atom_size: DeviceSize) -> Self {
-        self.non_coherent_atom_size = non_coherent_atom_size;
-        self
-    }
-}
+impl PhysicalDeviceLimits {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -9606,47 +8666,12 @@ impl ::core::default::Default for DisplayPropertiesKHR<'_> {
 }
 impl<'a> DisplayPropertiesKHR<'a> {
     #[inline]
-    pub fn display(mut self, display: DisplayKHR) -> Self {
-        self.display = display;
-        self
-    }
-    #[inline]
-    pub fn display_name(mut self, display_name: &'a CStr) -> Self {
-        self.display_name = display_name.as_ptr();
-        self
-    }
-    #[inline]
     pub unsafe fn display_name_as_c_str(&self) -> Option<&CStr> {
         if self.display_name.is_null() {
             None
         } else {
             Some(CStr::from_ptr(self.display_name))
         }
-    }
-    #[inline]
-    pub fn physical_dimensions(mut self, physical_dimensions: Extent2D) -> Self {
-        self.physical_dimensions = physical_dimensions;
-        self
-    }
-    #[inline]
-    pub fn physical_resolution(mut self, physical_resolution: Extent2D) -> Self {
-        self.physical_resolution = physical_resolution;
-        self
-    }
-    #[inline]
-    pub fn supported_transforms(mut self, supported_transforms: SurfaceTransformFlagsKHR) -> Self {
-        self.supported_transforms = supported_transforms;
-        self
-    }
-    #[inline]
-    pub fn plane_reorder_possible(mut self, plane_reorder_possible: bool) -> Self {
-        self.plane_reorder_possible = plane_reorder_possible.into();
-        self
-    }
-    #[inline]
-    pub fn persistent_content(mut self, persistent_content: bool) -> Self {
-        self.persistent_content = persistent_content.into();
-        self
     }
 }
 #[repr(C)]
@@ -9658,18 +8683,7 @@ pub struct DisplayPlanePropertiesKHR {
     pub current_display: DisplayKHR,
     pub current_stack_index: u32,
 }
-impl DisplayPlanePropertiesKHR {
-    #[inline]
-    pub fn current_display(mut self, current_display: DisplayKHR) -> Self {
-        self.current_display = current_display;
-        self
-    }
-    #[inline]
-    pub fn current_stack_index(mut self, current_stack_index: u32) -> Self {
-        self.current_stack_index = current_stack_index;
-        self
-    }
-}
+impl DisplayPlanePropertiesKHR {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -9700,18 +8714,7 @@ pub struct DisplayModePropertiesKHR {
     pub display_mode: DisplayModeKHR,
     pub parameters: DisplayModeParametersKHR,
 }
-impl DisplayModePropertiesKHR {
-    #[inline]
-    pub fn display_mode(mut self, display_mode: DisplayModeKHR) -> Self {
-        self.display_mode = display_mode;
-        self
-    }
-    #[inline]
-    pub fn parameters(mut self, parameters: DisplayModeParametersKHR) -> Self {
-        self.parameters = parameters;
-        self
-    }
-}
+impl DisplayModePropertiesKHR {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -9769,53 +8772,7 @@ pub struct DisplayPlaneCapabilitiesKHR {
     pub min_dst_extent: Extent2D,
     pub max_dst_extent: Extent2D,
 }
-impl DisplayPlaneCapabilitiesKHR {
-    #[inline]
-    pub fn supported_alpha(mut self, supported_alpha: DisplayPlaneAlphaFlagsKHR) -> Self {
-        self.supported_alpha = supported_alpha;
-        self
-    }
-    #[inline]
-    pub fn min_src_position(mut self, min_src_position: Offset2D) -> Self {
-        self.min_src_position = min_src_position;
-        self
-    }
-    #[inline]
-    pub fn max_src_position(mut self, max_src_position: Offset2D) -> Self {
-        self.max_src_position = max_src_position;
-        self
-    }
-    #[inline]
-    pub fn min_src_extent(mut self, min_src_extent: Extent2D) -> Self {
-        self.min_src_extent = min_src_extent;
-        self
-    }
-    #[inline]
-    pub fn max_src_extent(mut self, max_src_extent: Extent2D) -> Self {
-        self.max_src_extent = max_src_extent;
-        self
-    }
-    #[inline]
-    pub fn min_dst_position(mut self, min_dst_position: Offset2D) -> Self {
-        self.min_dst_position = min_dst_position;
-        self
-    }
-    #[inline]
-    pub fn max_dst_position(mut self, max_dst_position: Offset2D) -> Self {
-        self.max_dst_position = max_dst_position;
-        self
-    }
-    #[inline]
-    pub fn min_dst_extent(mut self, min_dst_extent: Extent2D) -> Self {
-        self.min_dst_extent = min_dst_extent;
-        self
-    }
-    #[inline]
-    pub fn max_dst_extent(mut self, max_dst_extent: Extent2D) -> Self {
-        self.max_dst_extent = max_dst_extent;
-        self
-    }
-}
+impl DisplayPlaneCapabilitiesKHR {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -9965,61 +8922,7 @@ pub struct SurfaceCapabilitiesKHR {
     pub supported_composite_alpha: CompositeAlphaFlagsKHR,
     pub supported_usage_flags: ImageUsageFlags,
 }
-impl SurfaceCapabilitiesKHR {
-    #[inline]
-    pub fn min_image_count(mut self, min_image_count: u32) -> Self {
-        self.min_image_count = min_image_count;
-        self
-    }
-    #[inline]
-    pub fn max_image_count(mut self, max_image_count: u32) -> Self {
-        self.max_image_count = max_image_count;
-        self
-    }
-    #[inline]
-    pub fn current_extent(mut self, current_extent: Extent2D) -> Self {
-        self.current_extent = current_extent;
-        self
-    }
-    #[inline]
-    pub fn min_image_extent(mut self, min_image_extent: Extent2D) -> Self {
-        self.min_image_extent = min_image_extent;
-        self
-    }
-    #[inline]
-    pub fn max_image_extent(mut self, max_image_extent: Extent2D) -> Self {
-        self.max_image_extent = max_image_extent;
-        self
-    }
-    #[inline]
-    pub fn max_image_array_layers(mut self, max_image_array_layers: u32) -> Self {
-        self.max_image_array_layers = max_image_array_layers;
-        self
-    }
-    #[inline]
-    pub fn supported_transforms(mut self, supported_transforms: SurfaceTransformFlagsKHR) -> Self {
-        self.supported_transforms = supported_transforms;
-        self
-    }
-    #[inline]
-    pub fn current_transform(mut self, current_transform: SurfaceTransformFlagsKHR) -> Self {
-        self.current_transform = current_transform;
-        self
-    }
-    #[inline]
-    pub fn supported_composite_alpha(
-        mut self,
-        supported_composite_alpha: CompositeAlphaFlagsKHR,
-    ) -> Self {
-        self.supported_composite_alpha = supported_composite_alpha;
-        self
-    }
-    #[inline]
-    pub fn supported_usage_flags(mut self, supported_usage_flags: ImageUsageFlags) -> Self {
-        self.supported_usage_flags = supported_usage_flags;
-        self
-    }
-}
+impl SurfaceCapabilitiesKHR {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -10481,18 +9384,7 @@ pub struct SurfaceFormatKHR {
     pub format: Format,
     pub color_space: ColorSpaceKHR,
 }
-impl SurfaceFormatKHR {
-    #[inline]
-    pub fn format(mut self, format: Format) -> Self {
-        self.format = format;
-        self
-    }
-    #[inline]
-    pub fn color_space(mut self, color_space: ColorSpaceKHR) -> Self {
-        self.color_space = color_space;
-        self
-    }
-}
+impl SurfaceFormatKHR {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -11375,40 +10267,7 @@ pub struct ExternalImageFormatPropertiesNV {
     pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlagsNV,
     pub compatible_handle_types: ExternalMemoryHandleTypeFlagsNV,
 }
-impl ExternalImageFormatPropertiesNV {
-    #[inline]
-    pub fn image_format_properties(
-        mut self,
-        image_format_properties: ImageFormatProperties,
-    ) -> Self {
-        self.image_format_properties = image_format_properties;
-        self
-    }
-    #[inline]
-    pub fn external_memory_features(
-        mut self,
-        external_memory_features: ExternalMemoryFeatureFlagsNV,
-    ) -> Self {
-        self.external_memory_features = external_memory_features;
-        self
-    }
-    #[inline]
-    pub fn export_from_imported_handle_types(
-        mut self,
-        export_from_imported_handle_types: ExternalMemoryHandleTypeFlagsNV,
-    ) -> Self {
-        self.export_from_imported_handle_types = export_from_imported_handle_types;
-        self
-    }
-    #[inline]
-    pub fn compatible_handle_types(
-        mut self,
-        compatible_handle_types: ExternalMemoryHandleTypeFlagsNV,
-    ) -> Self {
-        self.compatible_handle_types = compatible_handle_types;
-        self
-    }
-}
+impl ExternalImageFormatPropertiesNV {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -11887,77 +10746,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_>
 {
 }
-impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
-    #[inline]
-    pub fn max_graphics_shader_group_count(mut self, max_graphics_shader_group_count: u32) -> Self {
-        self.max_graphics_shader_group_count = max_graphics_shader_group_count;
-        self
-    }
-    #[inline]
-    pub fn max_indirect_sequence_count(mut self, max_indirect_sequence_count: u32) -> Self {
-        self.max_indirect_sequence_count = max_indirect_sequence_count;
-        self
-    }
-    #[inline]
-    pub fn max_indirect_commands_token_count(
-        mut self,
-        max_indirect_commands_token_count: u32,
-    ) -> Self {
-        self.max_indirect_commands_token_count = max_indirect_commands_token_count;
-        self
-    }
-    #[inline]
-    pub fn max_indirect_commands_stream_count(
-        mut self,
-        max_indirect_commands_stream_count: u32,
-    ) -> Self {
-        self.max_indirect_commands_stream_count = max_indirect_commands_stream_count;
-        self
-    }
-    #[inline]
-    pub fn max_indirect_commands_token_offset(
-        mut self,
-        max_indirect_commands_token_offset: u32,
-    ) -> Self {
-        self.max_indirect_commands_token_offset = max_indirect_commands_token_offset;
-        self
-    }
-    #[inline]
-    pub fn max_indirect_commands_stream_stride(
-        mut self,
-        max_indirect_commands_stream_stride: u32,
-    ) -> Self {
-        self.max_indirect_commands_stream_stride = max_indirect_commands_stream_stride;
-        self
-    }
-    #[inline]
-    pub fn min_sequences_count_buffer_offset_alignment(
-        mut self,
-        min_sequences_count_buffer_offset_alignment: u32,
-    ) -> Self {
-        self.min_sequences_count_buffer_offset_alignment =
-            min_sequences_count_buffer_offset_alignment;
-        self
-    }
-    #[inline]
-    pub fn min_sequences_index_buffer_offset_alignment(
-        mut self,
-        min_sequences_index_buffer_offset_alignment: u32,
-    ) -> Self {
-        self.min_sequences_index_buffer_offset_alignment =
-            min_sequences_index_buffer_offset_alignment;
-        self
-    }
-    #[inline]
-    pub fn min_indirect_commands_buffer_offset_alignment(
-        mut self,
-        min_indirect_commands_buffer_offset_alignment: u32,
-    ) -> Self {
-        self.min_indirect_commands_buffer_offset_alignment =
-            min_indirect_commands_buffer_offset_alignment;
-        self
-    }
-}
+impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -11986,13 +10775,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiDrawPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiDrawPropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceMultiDrawPropertiesEXT<'a> {
-    #[inline]
-    pub fn max_multi_draw_count(mut self, max_multi_draw_count: u32) -> Self {
-        self.max_multi_draw_count = max_multi_draw_count;
-        self
-    }
-}
+impl<'a> PhysicalDeviceMultiDrawPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -12733,11 +11516,6 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceProperties2<'a> {
 }
 pub unsafe trait ExtendsPhysicalDeviceProperties2 {}
 impl<'a> PhysicalDeviceProperties2<'a> {
-    #[inline]
-    pub fn properties(mut self, properties: PhysicalDeviceProperties) -> Self {
-        self.properties = properties;
-        self
-    }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
@@ -12818,11 +11596,6 @@ unsafe impl<'a> TaggedStructure for FormatProperties2<'a> {
 }
 pub unsafe trait ExtendsFormatProperties2 {}
 impl<'a> FormatProperties2<'a> {
-    #[inline]
-    pub fn format_properties(mut self, format_properties: FormatProperties) -> Self {
-        self.format_properties = format_properties;
-        self
-    }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
@@ -12897,14 +11670,6 @@ unsafe impl<'a> TaggedStructure for ImageFormatProperties2<'a> {
 }
 pub unsafe trait ExtendsImageFormatProperties2 {}
 impl<'a> ImageFormatProperties2<'a> {
-    #[inline]
-    pub fn image_format_properties(
-        mut self,
-        image_format_properties: ImageFormatProperties,
-    ) -> Self {
-        self.image_format_properties = image_format_properties;
-        self
-    }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
@@ -13101,14 +11866,6 @@ unsafe impl<'a> TaggedStructure for QueueFamilyProperties2<'a> {
 }
 pub unsafe trait ExtendsQueueFamilyProperties2 {}
 impl<'a> QueueFamilyProperties2<'a> {
-    #[inline]
-    pub fn queue_family_properties(
-        mut self,
-        queue_family_properties: QueueFamilyProperties,
-    ) -> Self {
-        self.queue_family_properties = queue_family_properties;
-        self
-    }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
@@ -13189,11 +11946,6 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryProperties2<'a> {
 }
 pub unsafe trait ExtendsPhysicalDeviceMemoryProperties2 {}
 impl<'a> PhysicalDeviceMemoryProperties2<'a> {
-    #[inline]
-    pub fn memory_properties(mut self, memory_properties: PhysicalDeviceMemoryProperties) -> Self {
-        self.memory_properties = memory_properties;
-        self
-    }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
@@ -13275,13 +12027,7 @@ impl ::core::default::Default for SparseImageFormatProperties2<'_> {
 unsafe impl<'a> TaggedStructure for SparseImageFormatProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SPARSE_IMAGE_FORMAT_PROPERTIES_2;
 }
-impl<'a> SparseImageFormatProperties2<'a> {
-    #[inline]
-    pub fn properties(mut self, properties: SparseImageFormatProperties) -> Self {
-        self.properties = properties;
-        self
-    }
-}
+impl<'a> SparseImageFormatProperties2<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -13373,13 +12119,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDevicePushDescriptorPropertiesKHR<'a
         StructureType::PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePushDescriptorPropertiesKHR<'_> {}
-impl<'a> PhysicalDevicePushDescriptorPropertiesKHR<'a> {
-    #[inline]
-    pub fn max_push_descriptors(mut self, max_push_descriptors: u32) -> Self {
-        self.max_push_descriptors = max_push_descriptors;
-        self
-    }
-}
+impl<'a> PhysicalDevicePushDescriptorPropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -13461,36 +12201,12 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceDriverProperties<'a> {
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDriverProperties<'_> {}
 impl<'a> PhysicalDeviceDriverProperties<'a> {
     #[inline]
-    pub fn driver_id(mut self, driver_id: DriverId) -> Self {
-        self.driver_id = driver_id;
-        self
-    }
-    #[inline]
-    pub fn driver_name(
-        mut self,
-        driver_name: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.driver_name, driver_name).map(|()| self)
-    }
-    #[inline]
     pub fn driver_name_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.driver_name)
     }
     #[inline]
-    pub fn driver_info(
-        mut self,
-        driver_info: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.driver_info, driver_info).map(|()| self)
-    }
-    #[inline]
     pub fn driver_info_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.driver_info)
-    }
-    #[inline]
-    pub fn conformance_version(mut self, conformance_version: ConformanceVersion) -> Self {
-        self.conformance_version = conformance_version;
-        self
     }
 }
 #[repr(C)]
@@ -13644,32 +12360,7 @@ pub struct ExternalMemoryProperties {
     pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlags,
     pub compatible_handle_types: ExternalMemoryHandleTypeFlags,
 }
-impl ExternalMemoryProperties {
-    #[inline]
-    pub fn external_memory_features(
-        mut self,
-        external_memory_features: ExternalMemoryFeatureFlags,
-    ) -> Self {
-        self.external_memory_features = external_memory_features;
-        self
-    }
-    #[inline]
-    pub fn export_from_imported_handle_types(
-        mut self,
-        export_from_imported_handle_types: ExternalMemoryHandleTypeFlags,
-    ) -> Self {
-        self.export_from_imported_handle_types = export_from_imported_handle_types;
-        self
-    }
-    #[inline]
-    pub fn compatible_handle_types(
-        mut self,
-        compatible_handle_types: ExternalMemoryHandleTypeFlags,
-    ) -> Self {
-        self.compatible_handle_types = compatible_handle_types;
-        self
-    }
-}
+impl ExternalMemoryProperties {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -13733,16 +12424,7 @@ unsafe impl<'a> TaggedStructure for ExternalImageFormatProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_IMAGE_FORMAT_PROPERTIES;
 }
 unsafe impl ExtendsImageFormatProperties2 for ExternalImageFormatProperties<'_> {}
-impl<'a> ExternalImageFormatProperties<'a> {
-    #[inline]
-    pub fn external_memory_properties(
-        mut self,
-        external_memory_properties: ExternalMemoryProperties,
-    ) -> Self {
-        self.external_memory_properties = external_memory_properties;
-        self
-    }
-}
+impl<'a> ExternalImageFormatProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -13872,16 +12554,7 @@ impl ::core::default::Default for ExternalBufferProperties<'_> {
 unsafe impl<'a> TaggedStructure for ExternalBufferProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_BUFFER_PROPERTIES;
 }
-impl<'a> ExternalBufferProperties<'a> {
-    #[inline]
-    pub fn external_memory_properties(
-        mut self,
-        external_memory_properties: ExternalMemoryProperties,
-    ) -> Self {
-        self.external_memory_properties = external_memory_properties;
-        self
-    }
-}
+impl<'a> ExternalBufferProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -13918,33 +12591,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceIDProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_ID_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceIDProperties<'_> {}
-impl<'a> PhysicalDeviceIDProperties<'a> {
-    #[inline]
-    pub fn device_uuid(mut self, device_uuid: [u8; UUID_SIZE]) -> Self {
-        self.device_uuid = device_uuid;
-        self
-    }
-    #[inline]
-    pub fn driver_uuid(mut self, driver_uuid: [u8; UUID_SIZE]) -> Self {
-        self.driver_uuid = driver_uuid;
-        self
-    }
-    #[inline]
-    pub fn device_luid(mut self, device_luid: [u8; LUID_SIZE]) -> Self {
-        self.device_luid = device_luid;
-        self
-    }
-    #[inline]
-    pub fn device_node_mask(mut self, device_node_mask: u32) -> Self {
-        self.device_node_mask = device_node_mask;
-        self
-    }
-    #[inline]
-    pub fn device_luid_valid(mut self, device_luid_valid: bool) -> Self {
-        self.device_luid_valid = device_luid_valid.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceIDProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -14217,13 +12864,7 @@ impl ::core::default::Default for MemoryZirconHandlePropertiesFUCHSIA<'_> {
 unsafe impl<'a> TaggedStructure for MemoryZirconHandlePropertiesFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_ZIRCON_HANDLE_PROPERTIES_FUCHSIA;
 }
-impl<'a> MemoryZirconHandlePropertiesFUCHSIA<'a> {
-    #[inline]
-    pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
-        self.memory_type_bits = memory_type_bits;
-        self
-    }
-}
+impl<'a> MemoryZirconHandlePropertiesFUCHSIA<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -14292,13 +12933,7 @@ impl ::core::default::Default for MemoryWin32HandlePropertiesKHR<'_> {
 unsafe impl<'a> TaggedStructure for MemoryWin32HandlePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_WIN32_HANDLE_PROPERTIES_KHR;
 }
-impl<'a> MemoryWin32HandlePropertiesKHR<'a> {
-    #[inline]
-    pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
-        self.memory_type_bits = memory_type_bits;
-        self
-    }
-}
+impl<'a> MemoryWin32HandlePropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -14409,13 +13044,7 @@ impl ::core::default::Default for MemoryFdPropertiesKHR<'_> {
 unsafe impl<'a> TaggedStructure for MemoryFdPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_FD_PROPERTIES_KHR;
 }
-impl<'a> MemoryFdPropertiesKHR<'a> {
-    #[inline]
-    pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
-        self.memory_type_bits = memory_type_bits;
-        self
-    }
-}
+impl<'a> MemoryFdPropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -14649,32 +13278,7 @@ impl ::core::default::Default for ExternalSemaphoreProperties<'_> {
 unsafe impl<'a> TaggedStructure for ExternalSemaphoreProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_SEMAPHORE_PROPERTIES;
 }
-impl<'a> ExternalSemaphoreProperties<'a> {
-    #[inline]
-    pub fn export_from_imported_handle_types(
-        mut self,
-        export_from_imported_handle_types: ExternalSemaphoreHandleTypeFlags,
-    ) -> Self {
-        self.export_from_imported_handle_types = export_from_imported_handle_types;
-        self
-    }
-    #[inline]
-    pub fn compatible_handle_types(
-        mut self,
-        compatible_handle_types: ExternalSemaphoreHandleTypeFlags,
-    ) -> Self {
-        self.compatible_handle_types = compatible_handle_types;
-        self
-    }
-    #[inline]
-    pub fn external_semaphore_features(
-        mut self,
-        external_semaphore_features: ExternalSemaphoreFeatureFlags,
-    ) -> Self {
-        self.external_semaphore_features = external_semaphore_features;
-        self
-    }
-}
+impl<'a> ExternalSemaphoreProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -15168,32 +13772,7 @@ impl ::core::default::Default for ExternalFenceProperties<'_> {
 unsafe impl<'a> TaggedStructure for ExternalFenceProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_FENCE_PROPERTIES;
 }
-impl<'a> ExternalFenceProperties<'a> {
-    #[inline]
-    pub fn export_from_imported_handle_types(
-        mut self,
-        export_from_imported_handle_types: ExternalFenceHandleTypeFlags,
-    ) -> Self {
-        self.export_from_imported_handle_types = export_from_imported_handle_types;
-        self
-    }
-    #[inline]
-    pub fn compatible_handle_types(
-        mut self,
-        compatible_handle_types: ExternalFenceHandleTypeFlags,
-    ) -> Self {
-        self.compatible_handle_types = compatible_handle_types;
-        self
-    }
-    #[inline]
-    pub fn external_fence_features(
-        mut self,
-        external_fence_features: ExternalFenceFeatureFlags,
-    ) -> Self {
-        self.external_fence_features = external_fence_features;
-        self
-    }
-}
+impl<'a> ExternalFenceProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -15557,18 +14136,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiviewProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiviewProperties<'_> {}
-impl<'a> PhysicalDeviceMultiviewProperties<'a> {
-    #[inline]
-    pub fn max_multiview_view_count(mut self, max_multiview_view_count: u32) -> Self {
-        self.max_multiview_view_count = max_multiview_view_count;
-        self
-    }
-    #[inline]
-    pub fn max_multiview_instance_index(mut self, max_multiview_instance_index: u32) -> Self {
-        self.max_multiview_instance_index = max_multiview_instance_index;
-        self
-    }
-}
+impl<'a> PhysicalDeviceMultiviewProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -15674,69 +14242,7 @@ impl ::core::default::Default for SurfaceCapabilities2EXT<'_> {
 unsafe impl<'a> TaggedStructure for SurfaceCapabilities2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_2_EXT;
 }
-impl<'a> SurfaceCapabilities2EXT<'a> {
-    #[inline]
-    pub fn min_image_count(mut self, min_image_count: u32) -> Self {
-        self.min_image_count = min_image_count;
-        self
-    }
-    #[inline]
-    pub fn max_image_count(mut self, max_image_count: u32) -> Self {
-        self.max_image_count = max_image_count;
-        self
-    }
-    #[inline]
-    pub fn current_extent(mut self, current_extent: Extent2D) -> Self {
-        self.current_extent = current_extent;
-        self
-    }
-    #[inline]
-    pub fn min_image_extent(mut self, min_image_extent: Extent2D) -> Self {
-        self.min_image_extent = min_image_extent;
-        self
-    }
-    #[inline]
-    pub fn max_image_extent(mut self, max_image_extent: Extent2D) -> Self {
-        self.max_image_extent = max_image_extent;
-        self
-    }
-    #[inline]
-    pub fn max_image_array_layers(mut self, max_image_array_layers: u32) -> Self {
-        self.max_image_array_layers = max_image_array_layers;
-        self
-    }
-    #[inline]
-    pub fn supported_transforms(mut self, supported_transforms: SurfaceTransformFlagsKHR) -> Self {
-        self.supported_transforms = supported_transforms;
-        self
-    }
-    #[inline]
-    pub fn current_transform(mut self, current_transform: SurfaceTransformFlagsKHR) -> Self {
-        self.current_transform = current_transform;
-        self
-    }
-    #[inline]
-    pub fn supported_composite_alpha(
-        mut self,
-        supported_composite_alpha: CompositeAlphaFlagsKHR,
-    ) -> Self {
-        self.supported_composite_alpha = supported_composite_alpha;
-        self
-    }
-    #[inline]
-    pub fn supported_usage_flags(mut self, supported_usage_flags: ImageUsageFlags) -> Self {
-        self.supported_usage_flags = supported_usage_flags;
-        self
-    }
-    #[inline]
-    pub fn supported_surface_counters(
-        mut self,
-        supported_surface_counters: SurfaceCounterFlagsEXT,
-    ) -> Self {
-        self.supported_surface_counters = supported_surface_counters;
-        self
-    }
-}
+impl<'a> SurfaceCapabilities2EXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -15918,19 +14424,8 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceGroupProperties<'a> {
 }
 impl<'a> PhysicalDeviceGroupProperties<'a> {
     #[inline]
-    pub fn physical_devices(mut self, physical_devices: &'_ [PhysicalDevice]) -> Self {
-        self.physical_device_count = physical_devices.len() as _;
-        self.physical_devices[..physical_devices.len()].copy_from_slice(physical_devices);
-        self
-    }
-    #[inline]
     pub fn physical_devices_as_slice(&self) -> &[PhysicalDevice] {
         &self.physical_devices[..self.physical_device_count as _]
-    }
-    #[inline]
-    pub fn subset_allocation(mut self, subset_allocation: bool) -> Self {
-        self.subset_allocation = subset_allocation.into();
-        self
     }
 }
 #[repr(C)]
@@ -16475,18 +14970,7 @@ impl ::core::default::Default for DeviceGroupPresentCapabilitiesKHR<'_> {
 unsafe impl<'a> TaggedStructure for DeviceGroupPresentCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_PRESENT_CAPABILITIES_KHR;
 }
-impl<'a> DeviceGroupPresentCapabilitiesKHR<'a> {
-    #[inline]
-    pub fn present_mask(mut self, present_mask: [u32; MAX_DEVICE_GROUP_SIZE]) -> Self {
-        self.present_mask = present_mask;
-        self
-    }
-    #[inline]
-    pub fn modes(mut self, modes: DeviceGroupPresentModeFlagsKHR) -> Self {
-        self.modes = modes;
-        self
-    }
-}
+impl<'a> DeviceGroupPresentCapabilitiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -17114,13 +15598,7 @@ unsafe impl<'a> TaggedStructure for DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
         StructureType::DISPLAY_NATIVE_HDR_SURFACE_CAPABILITIES_AMD;
 }
 unsafe impl ExtendsSurfaceCapabilities2KHR for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {}
-impl<'a> DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
-    #[inline]
-    pub fn local_dimming_support(mut self, local_dimming_support: bool) -> Self {
-        self.local_dimming_support = local_dimming_support.into();
-        self
-    }
-}
+impl<'a> DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -17165,13 +15643,7 @@ impl<'a> SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
 pub struct RefreshCycleDurationGOOGLE {
     pub refresh_duration: u64,
 }
-impl RefreshCycleDurationGOOGLE {
-    #[inline]
-    pub fn refresh_duration(mut self, refresh_duration: u64) -> Self {
-        self.refresh_duration = refresh_duration;
-        self
-    }
-}
+impl RefreshCycleDurationGOOGLE {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -17184,33 +15656,7 @@ pub struct PastPresentationTimingGOOGLE {
     pub earliest_present_time: u64,
     pub present_margin: u64,
 }
-impl PastPresentationTimingGOOGLE {
-    #[inline]
-    pub fn present_id(mut self, present_id: u32) -> Self {
-        self.present_id = present_id;
-        self
-    }
-    #[inline]
-    pub fn desired_present_time(mut self, desired_present_time: u64) -> Self {
-        self.desired_present_time = desired_present_time;
-        self
-    }
-    #[inline]
-    pub fn actual_present_time(mut self, actual_present_time: u64) -> Self {
-        self.actual_present_time = actual_present_time;
-        self
-    }
-    #[inline]
-    pub fn earliest_present_time(mut self, earliest_present_time: u64) -> Self {
-        self.earliest_present_time = earliest_present_time;
-        self
-    }
-    #[inline]
-    pub fn present_margin(mut self, present_margin: u64) -> Self {
-        self.present_margin = present_margin;
-        self
-    }
-}
+impl PastPresentationTimingGOOGLE {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -17574,13 +16020,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceDiscardRectanglePropertiesEXT<
         StructureType::PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
-    #[inline]
-    pub fn max_discard_rectangles(mut self, max_discard_rectangles: u32) -> Self {
-        self.max_discard_rectangles = max_discard_rectangles;
-        self
-    }
-}
+impl<'a> PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -17669,16 +16109,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_>
 {
 }
-impl<'a> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
-    #[inline]
-    pub fn per_view_position_all_components(
-        mut self,
-        per_view_position_all_components: bool,
-    ) -> Self {
-        self.per_view_position_all_components = per_view_position_all_components.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -17865,11 +16296,6 @@ unsafe impl<'a> TaggedStructure for SurfaceCapabilities2KHR<'a> {
 }
 pub unsafe trait ExtendsSurfaceCapabilities2KHR {}
 impl<'a> SurfaceCapabilities2KHR<'a> {
-    #[inline]
-    pub fn surface_capabilities(mut self, surface_capabilities: SurfaceCapabilitiesKHR) -> Self {
-        self.surface_capabilities = surface_capabilities;
-        self
-    }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
@@ -17950,11 +16376,6 @@ unsafe impl<'a> TaggedStructure for SurfaceFormat2KHR<'a> {
 }
 pub unsafe trait ExtendsSurfaceFormat2KHR {}
 impl<'a> SurfaceFormat2KHR<'a> {
-    #[inline]
-    pub fn surface_format(mut self, surface_format: SurfaceFormatKHR) -> Self {
-        self.surface_format = surface_format;
-        self
-    }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
@@ -18027,13 +16448,7 @@ impl ::core::default::Default for DisplayProperties2KHR<'_> {
 unsafe impl<'a> TaggedStructure for DisplayProperties2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PROPERTIES_2_KHR;
 }
-impl<'a> DisplayProperties2KHR<'a> {
-    #[inline]
-    pub fn display_properties(mut self, display_properties: DisplayPropertiesKHR<'a>) -> Self {
-        self.display_properties = display_properties;
-        self
-    }
-}
+impl<'a> DisplayProperties2KHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -18061,16 +16476,7 @@ impl ::core::default::Default for DisplayPlaneProperties2KHR<'_> {
 unsafe impl<'a> TaggedStructure for DisplayPlaneProperties2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PLANE_PROPERTIES_2_KHR;
 }
-impl<'a> DisplayPlaneProperties2KHR<'a> {
-    #[inline]
-    pub fn display_plane_properties(
-        mut self,
-        display_plane_properties: DisplayPlanePropertiesKHR,
-    ) -> Self {
-        self.display_plane_properties = display_plane_properties;
-        self
-    }
-}
+impl<'a> DisplayPlaneProperties2KHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -18098,16 +16504,7 @@ impl ::core::default::Default for DisplayModeProperties2KHR<'_> {
 unsafe impl<'a> TaggedStructure for DisplayModeProperties2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_MODE_PROPERTIES_2_KHR;
 }
-impl<'a> DisplayModeProperties2KHR<'a> {
-    #[inline]
-    pub fn display_mode_properties(
-        mut self,
-        display_mode_properties: DisplayModePropertiesKHR,
-    ) -> Self {
-        self.display_mode_properties = display_mode_properties;
-        self
-    }
-}
+impl<'a> DisplayModeProperties2KHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -18176,13 +16573,7 @@ impl ::core::default::Default for DisplayPlaneCapabilities2KHR<'_> {
 unsafe impl<'a> TaggedStructure for DisplayPlaneCapabilities2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PLANE_CAPABILITIES_2_KHR;
 }
-impl<'a> DisplayPlaneCapabilities2KHR<'a> {
-    #[inline]
-    pub fn capabilities(mut self, capabilities: DisplayPlaneCapabilitiesKHR) -> Self {
-        self.capabilities = capabilities;
-        self
-    }
-}
+impl<'a> DisplayPlaneCapabilities2KHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -18211,16 +16602,7 @@ unsafe impl<'a> TaggedStructure for SharedPresentSurfaceCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHARED_PRESENT_SURFACE_CAPABILITIES_KHR;
 }
 unsafe impl ExtendsSurfaceCapabilities2KHR for SharedPresentSurfaceCapabilitiesKHR<'_> {}
-impl<'a> SharedPresentSurfaceCapabilitiesKHR<'a> {
-    #[inline]
-    pub fn shared_present_supported_usage_flags(
-        mut self,
-        shared_present_supported_usage_flags: ImageUsageFlags,
-    ) -> Self {
-        self.shared_present_supported_usage_flags = shared_present_supported_usage_flags;
-        self
-    }
-}
+impl<'a> SharedPresentSurfaceCapabilitiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -18316,28 +16698,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceSubgroupProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupProperties<'_> {}
-impl<'a> PhysicalDeviceSubgroupProperties<'a> {
-    #[inline]
-    pub fn subgroup_size(mut self, subgroup_size: u32) -> Self {
-        self.subgroup_size = subgroup_size;
-        self
-    }
-    #[inline]
-    pub fn supported_stages(mut self, supported_stages: ShaderStageFlags) -> Self {
-        self.supported_stages = supported_stages;
-        self
-    }
-    #[inline]
-    pub fn supported_operations(mut self, supported_operations: SubgroupFeatureFlags) -> Self {
-        self.supported_operations = supported_operations;
-        self
-    }
-    #[inline]
-    pub fn quad_operations_in_all_stages(mut self, quad_operations_in_all_stages: bool) -> Self {
-        self.quad_operations_in_all_stages = quad_operations_in_all_stages.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceSubgroupProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -18638,11 +16999,6 @@ unsafe impl<'a> TaggedStructure for MemoryRequirements2<'a> {
 }
 pub unsafe trait ExtendsMemoryRequirements2 {}
 impl<'a> MemoryRequirements2<'a> {
-    #[inline]
-    pub fn memory_requirements(mut self, memory_requirements: MemoryRequirements) -> Self {
-        self.memory_requirements = memory_requirements;
-        self
-    }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
@@ -18718,16 +17074,7 @@ impl ::core::default::Default for SparseImageMemoryRequirements2<'_> {
 unsafe impl<'a> TaggedStructure for SparseImageMemoryRequirements2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SPARSE_IMAGE_MEMORY_REQUIREMENTS_2;
 }
-impl<'a> SparseImageMemoryRequirements2<'a> {
-    #[inline]
-    pub fn memory_requirements(
-        mut self,
-        memory_requirements: SparseImageMemoryRequirements,
-    ) -> Self {
-        self.memory_requirements = memory_requirements;
-        self
-    }
-}
+impl<'a> SparseImageMemoryRequirements2<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -18756,16 +17103,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDevicePointClippingProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePointClippingProperties<'_> {}
-impl<'a> PhysicalDevicePointClippingProperties<'a> {
-    #[inline]
-    pub fn point_clipping_behavior(
-        mut self,
-        point_clipping_behavior: PointClippingBehavior,
-    ) -> Self {
-        self.point_clipping_behavior = point_clipping_behavior;
-        self
-    }
-}
+impl<'a> PhysicalDevicePointClippingProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -18796,18 +17134,7 @@ unsafe impl<'a> TaggedStructure for MemoryDedicatedRequirements<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_DEDICATED_REQUIREMENTS;
 }
 unsafe impl ExtendsMemoryRequirements2 for MemoryDedicatedRequirements<'_> {}
-impl<'a> MemoryDedicatedRequirements<'a> {
-    #[inline]
-    pub fn prefers_dedicated_allocation(mut self, prefers_dedicated_allocation: bool) -> Self {
-        self.prefers_dedicated_allocation = prefers_dedicated_allocation.into();
-        self
-    }
-    #[inline]
-    pub fn requires_dedicated_allocation(mut self, requires_dedicated_allocation: bool) -> Self {
-        self.requires_dedicated_allocation = requires_dedicated_allocation.into();
-        self
-    }
-}
+impl<'a> MemoryDedicatedRequirements<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -19275,16 +17602,7 @@ unsafe impl<'a> TaggedStructure for SamplerYcbcrConversionImageFormatProperties<
         StructureType::SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES;
 }
 unsafe impl ExtendsImageFormatProperties2 for SamplerYcbcrConversionImageFormatProperties<'_> {}
-impl<'a> SamplerYcbcrConversionImageFormatProperties<'a> {
-    #[inline]
-    pub fn combined_image_sampler_descriptor_count(
-        mut self,
-        combined_image_sampler_descriptor_count: u32,
-    ) -> Self {
-        self.combined_image_sampler_descriptor_count = combined_image_sampler_descriptor_count;
-        self
-    }
-}
+impl<'a> SamplerYcbcrConversionImageFormatProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -19313,16 +17631,7 @@ unsafe impl<'a> TaggedStructure for TextureLODGatherFormatPropertiesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD;
 }
 unsafe impl ExtendsImageFormatProperties2 for TextureLODGatherFormatPropertiesAMD<'_> {}
-impl<'a> TextureLODGatherFormatPropertiesAMD<'a> {
-    #[inline]
-    pub fn supports_texture_gather_lod_bias_amd(
-        mut self,
-        supports_texture_gather_lod_bias_amd: bool,
-    ) -> Self {
-        self.supports_texture_gather_lod_bias_amd = supports_texture_gather_lod_bias_amd.into();
-        self
-    }
-}
+impl<'a> TextureLODGatherFormatPropertiesAMD<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -19471,13 +17780,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceProtectedMemoryProperties<'a> 
         StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceProtectedMemoryProperties<'_> {}
-impl<'a> PhysicalDeviceProtectedMemoryProperties<'a> {
-    #[inline]
-    pub fn protected_no_fault(mut self, protected_no_fault: bool) -> Self {
-        self.protected_no_fault = protected_no_fault.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceProtectedMemoryProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -19610,24 +17913,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceSamplerFilterMinmaxProperties<
         StructureType::PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {}
-impl<'a> PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
-    #[inline]
-    pub fn filter_minmax_single_component_formats(
-        mut self,
-        filter_minmax_single_component_formats: bool,
-    ) -> Self {
-        self.filter_minmax_single_component_formats = filter_minmax_single_component_formats.into();
-        self
-    }
-    #[inline]
-    pub fn filter_minmax_image_component_mapping(
-        mut self,
-        filter_minmax_image_component_mapping: bool,
-    ) -> Self {
-        self.filter_minmax_image_component_mapping = filter_minmax_image_component_mapping.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceSamplerFilterMinmaxProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -19897,42 +18183,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceSampleLocationsPropertiesEXT<'
         StructureType::PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
-    #[inline]
-    pub fn sample_location_sample_counts(
-        mut self,
-        sample_location_sample_counts: SampleCountFlags,
-    ) -> Self {
-        self.sample_location_sample_counts = sample_location_sample_counts;
-        self
-    }
-    #[inline]
-    pub fn max_sample_location_grid_size(
-        mut self,
-        max_sample_location_grid_size: Extent2D,
-    ) -> Self {
-        self.max_sample_location_grid_size = max_sample_location_grid_size;
-        self
-    }
-    #[inline]
-    pub fn sample_location_coordinate_range(
-        mut self,
-        sample_location_coordinate_range: [f32; 2],
-    ) -> Self {
-        self.sample_location_coordinate_range = sample_location_coordinate_range;
-        self
-    }
-    #[inline]
-    pub fn sample_location_sub_pixel_bits(mut self, sample_location_sub_pixel_bits: u32) -> Self {
-        self.sample_location_sub_pixel_bits = sample_location_sub_pixel_bits;
-        self
-    }
-    #[inline]
-    pub fn variable_sample_locations(mut self, variable_sample_locations: bool) -> Self {
-        self.variable_sample_locations = variable_sample_locations.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceSampleLocationsPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -19960,16 +18211,7 @@ impl ::core::default::Default for MultisamplePropertiesEXT<'_> {
 unsafe impl<'a> TaggedStructure for MultisamplePropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MULTISAMPLE_PROPERTIES_EXT;
 }
-impl<'a> MultisamplePropertiesEXT<'a> {
-    #[inline]
-    pub fn max_sample_location_grid_size(
-        mut self,
-        max_sample_location_grid_size: Extent2D,
-    ) -> Self {
-        self.max_sample_location_grid_size = max_sample_location_grid_size;
-        self
-    }
-}
+impl<'a> MultisamplePropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -20123,55 +18365,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_>
 {
 }
-impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
-    #[inline]
-    pub fn advanced_blend_max_color_attachments(
-        mut self,
-        advanced_blend_max_color_attachments: u32,
-    ) -> Self {
-        self.advanced_blend_max_color_attachments = advanced_blend_max_color_attachments;
-        self
-    }
-    #[inline]
-    pub fn advanced_blend_independent_blend(
-        mut self,
-        advanced_blend_independent_blend: bool,
-    ) -> Self {
-        self.advanced_blend_independent_blend = advanced_blend_independent_blend.into();
-        self
-    }
-    #[inline]
-    pub fn advanced_blend_non_premultiplied_src_color(
-        mut self,
-        advanced_blend_non_premultiplied_src_color: bool,
-    ) -> Self {
-        self.advanced_blend_non_premultiplied_src_color =
-            advanced_blend_non_premultiplied_src_color.into();
-        self
-    }
-    #[inline]
-    pub fn advanced_blend_non_premultiplied_dst_color(
-        mut self,
-        advanced_blend_non_premultiplied_dst_color: bool,
-    ) -> Self {
-        self.advanced_blend_non_premultiplied_dst_color =
-            advanced_blend_non_premultiplied_dst_color.into();
-        self
-    }
-    #[inline]
-    pub fn advanced_blend_correlated_overlap(
-        mut self,
-        advanced_blend_correlated_overlap: bool,
-    ) -> Self {
-        self.advanced_blend_correlated_overlap = advanced_blend_correlated_overlap.into();
-        self
-    }
-    #[inline]
-    pub fn advanced_blend_all_operations(mut self, advanced_blend_all_operations: bool) -> Self {
-        self.advanced_blend_all_operations = advanced_blend_all_operations.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -20310,48 +18504,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceInlineUniformBlockProperties<'
         StructureType::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceInlineUniformBlockProperties<'_> {}
-impl<'a> PhysicalDeviceInlineUniformBlockProperties<'a> {
-    #[inline]
-    pub fn max_inline_uniform_block_size(mut self, max_inline_uniform_block_size: u32) -> Self {
-        self.max_inline_uniform_block_size = max_inline_uniform_block_size;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_inline_uniform_blocks(
-        mut self,
-        max_per_stage_descriptor_inline_uniform_blocks: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_inline_uniform_blocks =
-            max_per_stage_descriptor_inline_uniform_blocks;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_update_after_bind_inline_uniform_blocks(
-        mut self,
-        max_per_stage_descriptor_update_after_bind_inline_uniform_blocks: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_update_after_bind_inline_uniform_blocks =
-            max_per_stage_descriptor_update_after_bind_inline_uniform_blocks;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_inline_uniform_blocks(
-        mut self,
-        max_descriptor_set_inline_uniform_blocks: u32,
-    ) -> Self {
-        self.max_descriptor_set_inline_uniform_blocks = max_descriptor_set_inline_uniform_blocks;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_inline_uniform_blocks(
-        mut self,
-        max_descriptor_set_update_after_bind_inline_uniform_blocks: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_inline_uniform_blocks =
-            max_descriptor_set_update_after_bind_inline_uniform_blocks;
-        self
-    }
-}
+impl<'a> PhysicalDeviceInlineUniformBlockProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -20649,18 +18802,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance3Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance3Properties<'_> {}
-impl<'a> PhysicalDeviceMaintenance3Properties<'a> {
-    #[inline]
-    pub fn max_per_set_descriptors(mut self, max_per_set_descriptors: u32) -> Self {
-        self.max_per_set_descriptors = max_per_set_descriptors;
-        self
-    }
-    #[inline]
-    pub fn max_memory_allocation_size(mut self, max_memory_allocation_size: DeviceSize) -> Self {
-        self.max_memory_allocation_size = max_memory_allocation_size;
-        self
-    }
-}
+impl<'a> PhysicalDeviceMaintenance3Properties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -20725,13 +18867,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance4Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance4Properties<'_> {}
-impl<'a> PhysicalDeviceMaintenance4Properties<'a> {
-    #[inline]
-    pub fn max_buffer_size(mut self, max_buffer_size: DeviceSize) -> Self {
-        self.max_buffer_size = max_buffer_size;
-        self
-    }
-}
+impl<'a> PhysicalDeviceMaintenance4Properties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -20807,57 +18943,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance5PropertiesKHR<'a> 
         StructureType::PHYSICAL_DEVICE_MAINTENANCE_5_PROPERTIES_KHR;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance5PropertiesKHR<'_> {}
-impl<'a> PhysicalDeviceMaintenance5PropertiesKHR<'a> {
-    #[inline]
-    pub fn early_fragment_multisample_coverage_after_sample_counting(
-        mut self,
-        early_fragment_multisample_coverage_after_sample_counting: bool,
-    ) -> Self {
-        self.early_fragment_multisample_coverage_after_sample_counting =
-            early_fragment_multisample_coverage_after_sample_counting.into();
-        self
-    }
-    #[inline]
-    pub fn early_fragment_sample_mask_test_before_sample_counting(
-        mut self,
-        early_fragment_sample_mask_test_before_sample_counting: bool,
-    ) -> Self {
-        self.early_fragment_sample_mask_test_before_sample_counting =
-            early_fragment_sample_mask_test_before_sample_counting.into();
-        self
-    }
-    #[inline]
-    pub fn depth_stencil_swizzle_one_support(
-        mut self,
-        depth_stencil_swizzle_one_support: bool,
-    ) -> Self {
-        self.depth_stencil_swizzle_one_support = depth_stencil_swizzle_one_support.into();
-        self
-    }
-    #[inline]
-    pub fn polygon_mode_point_size(mut self, polygon_mode_point_size: bool) -> Self {
-        self.polygon_mode_point_size = polygon_mode_point_size.into();
-        self
-    }
-    #[inline]
-    pub fn non_strict_single_pixel_wide_lines_use_parallelogram(
-        mut self,
-        non_strict_single_pixel_wide_lines_use_parallelogram: bool,
-    ) -> Self {
-        self.non_strict_single_pixel_wide_lines_use_parallelogram =
-            non_strict_single_pixel_wide_lines_use_parallelogram.into();
-        self
-    }
-    #[inline]
-    pub fn non_strict_wide_lines_use_parallelogram(
-        mut self,
-        non_strict_wide_lines_use_parallelogram: bool,
-    ) -> Self {
-        self.non_strict_wide_lines_use_parallelogram =
-            non_strict_wide_lines_use_parallelogram.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceMaintenance5PropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -20927,35 +19013,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance6PropertiesKHR<'a> 
         StructureType::PHYSICAL_DEVICE_MAINTENANCE_6_PROPERTIES_KHR;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance6PropertiesKHR<'_> {}
-impl<'a> PhysicalDeviceMaintenance6PropertiesKHR<'a> {
-    #[inline]
-    pub fn block_texel_view_compatible_multiple_layers(
-        mut self,
-        block_texel_view_compatible_multiple_layers: bool,
-    ) -> Self {
-        self.block_texel_view_compatible_multiple_layers =
-            block_texel_view_compatible_multiple_layers.into();
-        self
-    }
-    #[inline]
-    pub fn max_combined_image_sampler_descriptor_count(
-        mut self,
-        max_combined_image_sampler_descriptor_count: u32,
-    ) -> Self {
-        self.max_combined_image_sampler_descriptor_count =
-            max_combined_image_sampler_descriptor_count;
-        self
-    }
-    #[inline]
-    pub fn fragment_shading_rate_clamp_combiner_inputs(
-        mut self,
-        fragment_shading_rate_clamp_combiner_inputs: bool,
-    ) -> Self {
-        self.fragment_shading_rate_clamp_combiner_inputs =
-            fragment_shading_rate_clamp_combiner_inputs.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceMaintenance6PropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -21035,79 +19093,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance7PropertiesKHR<'a> 
         StructureType::PHYSICAL_DEVICE_MAINTENANCE_7_PROPERTIES_KHR;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance7PropertiesKHR<'_> {}
-impl<'a> PhysicalDeviceMaintenance7PropertiesKHR<'a> {
-    #[inline]
-    pub fn robust_fragment_shading_rate_attachment_access(
-        mut self,
-        robust_fragment_shading_rate_attachment_access: bool,
-    ) -> Self {
-        self.robust_fragment_shading_rate_attachment_access =
-            robust_fragment_shading_rate_attachment_access.into();
-        self
-    }
-    #[inline]
-    pub fn separate_depth_stencil_attachment_access(
-        mut self,
-        separate_depth_stencil_attachment_access: bool,
-    ) -> Self {
-        self.separate_depth_stencil_attachment_access =
-            separate_depth_stencil_attachment_access.into();
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_total_uniform_buffers_dynamic(
-        mut self,
-        max_descriptor_set_total_uniform_buffers_dynamic: u32,
-    ) -> Self {
-        self.max_descriptor_set_total_uniform_buffers_dynamic =
-            max_descriptor_set_total_uniform_buffers_dynamic;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_total_storage_buffers_dynamic(
-        mut self,
-        max_descriptor_set_total_storage_buffers_dynamic: u32,
-    ) -> Self {
-        self.max_descriptor_set_total_storage_buffers_dynamic =
-            max_descriptor_set_total_storage_buffers_dynamic;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_total_buffers_dynamic(
-        mut self,
-        max_descriptor_set_total_buffers_dynamic: u32,
-    ) -> Self {
-        self.max_descriptor_set_total_buffers_dynamic = max_descriptor_set_total_buffers_dynamic;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_total_uniform_buffers_dynamic(
-        mut self,
-        max_descriptor_set_update_after_bind_total_uniform_buffers_dynamic: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_total_uniform_buffers_dynamic =
-            max_descriptor_set_update_after_bind_total_uniform_buffers_dynamic;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_total_storage_buffers_dynamic(
-        mut self,
-        max_descriptor_set_update_after_bind_total_storage_buffers_dynamic: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_total_storage_buffers_dynamic =
-            max_descriptor_set_update_after_bind_total_storage_buffers_dynamic;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_total_buffers_dynamic(
-        mut self,
-        max_descriptor_set_update_after_bind_total_buffers_dynamic: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_total_buffers_dynamic =
-            max_descriptor_set_update_after_bind_total_buffers_dynamic;
-        self
-    }
-}
+impl<'a> PhysicalDeviceMaintenance7PropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -21198,28 +19184,6 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceLayeredApiPropertiesKHR<'a> {
 pub unsafe trait ExtendsPhysicalDeviceLayeredApiPropertiesKHR {}
 impl<'a> PhysicalDeviceLayeredApiPropertiesKHR<'a> {
     #[inline]
-    pub fn vendor_id(mut self, vendor_id: u32) -> Self {
-        self.vendor_id = vendor_id;
-        self
-    }
-    #[inline]
-    pub fn device_id(mut self, device_id: u32) -> Self {
-        self.device_id = device_id;
-        self
-    }
-    #[inline]
-    pub fn layered_api(mut self, layered_api: PhysicalDeviceLayeredApiKHR) -> Self {
-        self.layered_api = layered_api;
-        self
-    }
-    #[inline]
-    pub fn device_name(
-        mut self,
-        device_name: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.device_name, device_name).map(|()| self)
-    }
-    #[inline]
     pub fn device_name_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.device_name)
     }
@@ -21309,13 +19273,7 @@ unsafe impl ExtendsPhysicalDeviceLayeredApiPropertiesKHR
     for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_>
 {
 }
-impl<'a> PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
-    #[inline]
-    pub fn properties(mut self, properties: PhysicalDeviceProperties2<'a>) -> Self {
-        self.properties = properties;
-        self
-    }
-}
+impl<'a> PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -21403,11 +19361,6 @@ unsafe impl<'a> TaggedStructure for DescriptorSetLayoutSupport<'a> {
 }
 pub unsafe trait ExtendsDescriptorSetLayoutSupport {}
 impl<'a> DescriptorSetLayoutSupport<'a> {
-    #[inline]
-    pub fn supported(mut self, supported: bool) -> Self {
-        self.supported = supported.into();
-        self
-    }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
@@ -21600,138 +19553,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceFloatControlsProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFloatControlsProperties<'_> {}
-impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
-    #[inline]
-    pub fn denorm_behavior_independence(
-        mut self,
-        denorm_behavior_independence: ShaderFloatControlsIndependence,
-    ) -> Self {
-        self.denorm_behavior_independence = denorm_behavior_independence;
-        self
-    }
-    #[inline]
-    pub fn rounding_mode_independence(
-        mut self,
-        rounding_mode_independence: ShaderFloatControlsIndependence,
-    ) -> Self {
-        self.rounding_mode_independence = rounding_mode_independence;
-        self
-    }
-    #[inline]
-    pub fn shader_signed_zero_inf_nan_preserve_float16(
-        mut self,
-        shader_signed_zero_inf_nan_preserve_float16: bool,
-    ) -> Self {
-        self.shader_signed_zero_inf_nan_preserve_float16 =
-            shader_signed_zero_inf_nan_preserve_float16.into();
-        self
-    }
-    #[inline]
-    pub fn shader_signed_zero_inf_nan_preserve_float32(
-        mut self,
-        shader_signed_zero_inf_nan_preserve_float32: bool,
-    ) -> Self {
-        self.shader_signed_zero_inf_nan_preserve_float32 =
-            shader_signed_zero_inf_nan_preserve_float32.into();
-        self
-    }
-    #[inline]
-    pub fn shader_signed_zero_inf_nan_preserve_float64(
-        mut self,
-        shader_signed_zero_inf_nan_preserve_float64: bool,
-    ) -> Self {
-        self.shader_signed_zero_inf_nan_preserve_float64 =
-            shader_signed_zero_inf_nan_preserve_float64.into();
-        self
-    }
-    #[inline]
-    pub fn shader_denorm_preserve_float16(mut self, shader_denorm_preserve_float16: bool) -> Self {
-        self.shader_denorm_preserve_float16 = shader_denorm_preserve_float16.into();
-        self
-    }
-    #[inline]
-    pub fn shader_denorm_preserve_float32(mut self, shader_denorm_preserve_float32: bool) -> Self {
-        self.shader_denorm_preserve_float32 = shader_denorm_preserve_float32.into();
-        self
-    }
-    #[inline]
-    pub fn shader_denorm_preserve_float64(mut self, shader_denorm_preserve_float64: bool) -> Self {
-        self.shader_denorm_preserve_float64 = shader_denorm_preserve_float64.into();
-        self
-    }
-    #[inline]
-    pub fn shader_denorm_flush_to_zero_float16(
-        mut self,
-        shader_denorm_flush_to_zero_float16: bool,
-    ) -> Self {
-        self.shader_denorm_flush_to_zero_float16 = shader_denorm_flush_to_zero_float16.into();
-        self
-    }
-    #[inline]
-    pub fn shader_denorm_flush_to_zero_float32(
-        mut self,
-        shader_denorm_flush_to_zero_float32: bool,
-    ) -> Self {
-        self.shader_denorm_flush_to_zero_float32 = shader_denorm_flush_to_zero_float32.into();
-        self
-    }
-    #[inline]
-    pub fn shader_denorm_flush_to_zero_float64(
-        mut self,
-        shader_denorm_flush_to_zero_float64: bool,
-    ) -> Self {
-        self.shader_denorm_flush_to_zero_float64 = shader_denorm_flush_to_zero_float64.into();
-        self
-    }
-    #[inline]
-    pub fn shader_rounding_mode_rte_float16(
-        mut self,
-        shader_rounding_mode_rte_float16: bool,
-    ) -> Self {
-        self.shader_rounding_mode_rte_float16 = shader_rounding_mode_rte_float16.into();
-        self
-    }
-    #[inline]
-    pub fn shader_rounding_mode_rte_float32(
-        mut self,
-        shader_rounding_mode_rte_float32: bool,
-    ) -> Self {
-        self.shader_rounding_mode_rte_float32 = shader_rounding_mode_rte_float32.into();
-        self
-    }
-    #[inline]
-    pub fn shader_rounding_mode_rte_float64(
-        mut self,
-        shader_rounding_mode_rte_float64: bool,
-    ) -> Self {
-        self.shader_rounding_mode_rte_float64 = shader_rounding_mode_rte_float64.into();
-        self
-    }
-    #[inline]
-    pub fn shader_rounding_mode_rtz_float16(
-        mut self,
-        shader_rounding_mode_rtz_float16: bool,
-    ) -> Self {
-        self.shader_rounding_mode_rtz_float16 = shader_rounding_mode_rtz_float16.into();
-        self
-    }
-    #[inline]
-    pub fn shader_rounding_mode_rtz_float32(
-        mut self,
-        shader_rounding_mode_rtz_float32: bool,
-    ) -> Self {
-        self.shader_rounding_mode_rtz_float32 = shader_rounding_mode_rtz_float32.into();
-        self
-    }
-    #[inline]
-    pub fn shader_rounding_mode_rtz_float64(
-        mut self,
-        shader_rounding_mode_rtz_float64: bool,
-    ) -> Self {
-        self.shader_rounding_mode_rtz_float64 = shader_rounding_mode_rtz_float64.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceFloatControlsProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -21932,33 +19754,7 @@ pub struct ShaderResourceUsageAMD {
     pub lds_usage_size_in_bytes: usize,
     pub scratch_mem_usage_in_bytes: usize,
 }
-impl ShaderResourceUsageAMD {
-    #[inline]
-    pub fn num_used_vgprs(mut self, num_used_vgprs: u32) -> Self {
-        self.num_used_vgprs = num_used_vgprs;
-        self
-    }
-    #[inline]
-    pub fn num_used_sgprs(mut self, num_used_sgprs: u32) -> Self {
-        self.num_used_sgprs = num_used_sgprs;
-        self
-    }
-    #[inline]
-    pub fn lds_size_per_local_work_group(mut self, lds_size_per_local_work_group: u32) -> Self {
-        self.lds_size_per_local_work_group = lds_size_per_local_work_group;
-        self
-    }
-    #[inline]
-    pub fn lds_usage_size_in_bytes(mut self, lds_usage_size_in_bytes: usize) -> Self {
-        self.lds_usage_size_in_bytes = lds_usage_size_in_bytes;
-        self
-    }
-    #[inline]
-    pub fn scratch_mem_usage_in_bytes(mut self, scratch_mem_usage_in_bytes: usize) -> Self {
-        self.scratch_mem_usage_in_bytes = scratch_mem_usage_in_bytes;
-        self
-    }
-}
+impl ShaderResourceUsageAMD {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -21987,43 +19783,7 @@ impl ::core::default::Default for ShaderStatisticsInfoAMD {
         }
     }
 }
-impl ShaderStatisticsInfoAMD {
-    #[inline]
-    pub fn shader_stage_mask(mut self, shader_stage_mask: ShaderStageFlags) -> Self {
-        self.shader_stage_mask = shader_stage_mask;
-        self
-    }
-    #[inline]
-    pub fn resource_usage(mut self, resource_usage: ShaderResourceUsageAMD) -> Self {
-        self.resource_usage = resource_usage;
-        self
-    }
-    #[inline]
-    pub fn num_physical_vgprs(mut self, num_physical_vgprs: u32) -> Self {
-        self.num_physical_vgprs = num_physical_vgprs;
-        self
-    }
-    #[inline]
-    pub fn num_physical_sgprs(mut self, num_physical_sgprs: u32) -> Self {
-        self.num_physical_sgprs = num_physical_sgprs;
-        self
-    }
-    #[inline]
-    pub fn num_available_vgprs(mut self, num_available_vgprs: u32) -> Self {
-        self.num_available_vgprs = num_available_vgprs;
-        self
-    }
-    #[inline]
-    pub fn num_available_sgprs(mut self, num_available_sgprs: u32) -> Self {
-        self.num_available_sgprs = num_available_sgprs;
-        self
-    }
-    #[inline]
-    pub fn compute_work_group_size(mut self, compute_work_group_size: [u32; 3]) -> Self {
-        self.compute_work_group_size = compute_work_group_size;
-        self
-    }
-}
+impl ShaderStatisticsInfoAMD {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -22139,12 +19899,6 @@ unsafe impl<'a> TaggedStructure for QueueFamilyGlobalPriorityPropertiesKHR<'a> {
 }
 unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyGlobalPriorityPropertiesKHR<'_> {}
 impl<'a> QueueFamilyGlobalPriorityPropertiesKHR<'a> {
-    #[inline]
-    pub fn priorities(mut self, priorities: &'_ [QueueGlobalPriorityKHR]) -> Self {
-        self.priority_count = priorities.len() as _;
-        self.priorities[..priorities.len()].copy_from_slice(priorities);
-        self
-    }
     #[inline]
     pub fn priorities_as_slice(&self) -> &[QueueGlobalPriorityKHR] {
         &self.priorities[..self.priority_count as _]
@@ -22686,39 +20440,7 @@ impl ::core::default::Default for DeviceMemoryReportCallbackDataEXT<'_> {
 unsafe impl<'a> TaggedStructure for DeviceMemoryReportCallbackDataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_MEMORY_REPORT_CALLBACK_DATA_EXT;
 }
-impl<'a> DeviceMemoryReportCallbackDataEXT<'a> {
-    #[inline]
-    pub fn flags(mut self, flags: DeviceMemoryReportFlagsEXT) -> Self {
-        self.flags = flags;
-        self
-    }
-    #[inline]
-    pub fn ty(mut self, ty: DeviceMemoryReportEventTypeEXT) -> Self {
-        self.ty = ty;
-        self
-    }
-    #[inline]
-    pub fn memory_object_id(mut self, memory_object_id: u64) -> Self {
-        self.memory_object_id = memory_object_id;
-        self
-    }
-    #[inline]
-    pub fn size(mut self, size: DeviceSize) -> Self {
-        self.size = size;
-        self
-    }
-    #[inline]
-    pub fn object_handle<T: Handle>(mut self, object_handle: T) -> Self {
-        self.object_handle = object_handle.as_raw();
-        self.object_type = T::TYPE;
-        self
-    }
-    #[inline]
-    pub fn heap_index(mut self, heap_index: u32) -> Self {
-        self.heap_index = heap_index;
-        self
-    }
-}
+impl<'a> DeviceMemoryReportCallbackDataEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -22788,13 +20510,7 @@ impl ::core::default::Default for MemoryHostPointerPropertiesEXT<'_> {
 unsafe impl<'a> TaggedStructure for MemoryHostPointerPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_HOST_POINTER_PROPERTIES_EXT;
 }
-impl<'a> MemoryHostPointerPropertiesEXT<'a> {
-    #[inline]
-    pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
-        self.memory_type_bits = memory_type_bits;
-        self
-    }
-}
+impl<'a> MemoryHostPointerPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -22824,16 +20540,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalMemoryHostPropertiesEX
         StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
-    #[inline]
-    pub fn min_imported_host_pointer_alignment(
-        mut self,
-        min_imported_host_pointer_alignment: DeviceSize,
-    ) -> Self {
-        self.min_imported_host_pointer_alignment = min_imported_host_pointer_alignment;
-        self
-    }
-}
+impl<'a> PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -22882,75 +20589,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_>
 {
 }
-impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
-    #[inline]
-    pub fn primitive_overestimation_size(mut self, primitive_overestimation_size: f32) -> Self {
-        self.primitive_overestimation_size = primitive_overestimation_size;
-        self
-    }
-    #[inline]
-    pub fn max_extra_primitive_overestimation_size(
-        mut self,
-        max_extra_primitive_overestimation_size: f32,
-    ) -> Self {
-        self.max_extra_primitive_overestimation_size = max_extra_primitive_overestimation_size;
-        self
-    }
-    #[inline]
-    pub fn extra_primitive_overestimation_size_granularity(
-        mut self,
-        extra_primitive_overestimation_size_granularity: f32,
-    ) -> Self {
-        self.extra_primitive_overestimation_size_granularity =
-            extra_primitive_overestimation_size_granularity;
-        self
-    }
-    #[inline]
-    pub fn primitive_underestimation(mut self, primitive_underestimation: bool) -> Self {
-        self.primitive_underestimation = primitive_underestimation.into();
-        self
-    }
-    #[inline]
-    pub fn conservative_point_and_line_rasterization(
-        mut self,
-        conservative_point_and_line_rasterization: bool,
-    ) -> Self {
-        self.conservative_point_and_line_rasterization =
-            conservative_point_and_line_rasterization.into();
-        self
-    }
-    #[inline]
-    pub fn degenerate_triangles_rasterized(
-        mut self,
-        degenerate_triangles_rasterized: bool,
-    ) -> Self {
-        self.degenerate_triangles_rasterized = degenerate_triangles_rasterized.into();
-        self
-    }
-    #[inline]
-    pub fn degenerate_lines_rasterized(mut self, degenerate_lines_rasterized: bool) -> Self {
-        self.degenerate_lines_rasterized = degenerate_lines_rasterized.into();
-        self
-    }
-    #[inline]
-    pub fn fully_covered_fragment_shader_input_variable(
-        mut self,
-        fully_covered_fragment_shader_input_variable: bool,
-    ) -> Self {
-        self.fully_covered_fragment_shader_input_variable =
-            fully_covered_fragment_shader_input_variable.into();
-        self
-    }
-    #[inline]
-    pub fn conservative_rasterization_post_depth_coverage(
-        mut self,
-        conservative_rasterization_post_depth_coverage: bool,
-    ) -> Self {
-        self.conservative_rasterization_post_depth_coverage =
-            conservative_rasterization_post_depth_coverage.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -23039,78 +20678,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCorePropertiesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCorePropertiesAMD<'_> {}
-impl<'a> PhysicalDeviceShaderCorePropertiesAMD<'a> {
-    #[inline]
-    pub fn shader_engine_count(mut self, shader_engine_count: u32) -> Self {
-        self.shader_engine_count = shader_engine_count;
-        self
-    }
-    #[inline]
-    pub fn shader_arrays_per_engine_count(mut self, shader_arrays_per_engine_count: u32) -> Self {
-        self.shader_arrays_per_engine_count = shader_arrays_per_engine_count;
-        self
-    }
-    #[inline]
-    pub fn compute_units_per_shader_array(mut self, compute_units_per_shader_array: u32) -> Self {
-        self.compute_units_per_shader_array = compute_units_per_shader_array;
-        self
-    }
-    #[inline]
-    pub fn simd_per_compute_unit(mut self, simd_per_compute_unit: u32) -> Self {
-        self.simd_per_compute_unit = simd_per_compute_unit;
-        self
-    }
-    #[inline]
-    pub fn wavefronts_per_simd(mut self, wavefronts_per_simd: u32) -> Self {
-        self.wavefronts_per_simd = wavefronts_per_simd;
-        self
-    }
-    #[inline]
-    pub fn wavefront_size(mut self, wavefront_size: u32) -> Self {
-        self.wavefront_size = wavefront_size;
-        self
-    }
-    #[inline]
-    pub fn sgprs_per_simd(mut self, sgprs_per_simd: u32) -> Self {
-        self.sgprs_per_simd = sgprs_per_simd;
-        self
-    }
-    #[inline]
-    pub fn min_sgpr_allocation(mut self, min_sgpr_allocation: u32) -> Self {
-        self.min_sgpr_allocation = min_sgpr_allocation;
-        self
-    }
-    #[inline]
-    pub fn max_sgpr_allocation(mut self, max_sgpr_allocation: u32) -> Self {
-        self.max_sgpr_allocation = max_sgpr_allocation;
-        self
-    }
-    #[inline]
-    pub fn sgpr_allocation_granularity(mut self, sgpr_allocation_granularity: u32) -> Self {
-        self.sgpr_allocation_granularity = sgpr_allocation_granularity;
-        self
-    }
-    #[inline]
-    pub fn vgprs_per_simd(mut self, vgprs_per_simd: u32) -> Self {
-        self.vgprs_per_simd = vgprs_per_simd;
-        self
-    }
-    #[inline]
-    pub fn min_vgpr_allocation(mut self, min_vgpr_allocation: u32) -> Self {
-        self.min_vgpr_allocation = min_vgpr_allocation;
-        self
-    }
-    #[inline]
-    pub fn max_vgpr_allocation(mut self, max_vgpr_allocation: u32) -> Self {
-        self.max_vgpr_allocation = max_vgpr_allocation;
-        self
-    }
-    #[inline]
-    pub fn vgpr_allocation_granularity(mut self, vgpr_allocation_granularity: u32) -> Self {
-        self.vgpr_allocation_granularity = vgpr_allocation_granularity;
-        self
-    }
-}
+impl<'a> PhysicalDeviceShaderCorePropertiesAMD<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -23142,21 +20710,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCoreProperties2AMD<'a> {
         StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_2_AMD;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCoreProperties2AMD<'_> {}
-impl<'a> PhysicalDeviceShaderCoreProperties2AMD<'a> {
-    #[inline]
-    pub fn shader_core_features(
-        mut self,
-        shader_core_features: ShaderCorePropertiesFlagsAMD,
-    ) -> Self {
-        self.shader_core_features = shader_core_features;
-        self
-    }
-    #[inline]
-    pub fn active_compute_unit_count(mut self, active_compute_unit_count: u32) -> Self {
-        self.active_compute_unit_count = active_compute_unit_count;
-        self
-    }
-}
+impl<'a> PhysicalDeviceShaderCoreProperties2AMD<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -23534,209 +21088,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorIndexingProperties<'
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDescriptorIndexingProperties<'_> {}
-impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
-    #[inline]
-    pub fn max_update_after_bind_descriptors_in_all_pools(
-        mut self,
-        max_update_after_bind_descriptors_in_all_pools: u32,
-    ) -> Self {
-        self.max_update_after_bind_descriptors_in_all_pools =
-            max_update_after_bind_descriptors_in_all_pools;
-        self
-    }
-    #[inline]
-    pub fn shader_uniform_buffer_array_non_uniform_indexing_native(
-        mut self,
-        shader_uniform_buffer_array_non_uniform_indexing_native: bool,
-    ) -> Self {
-        self.shader_uniform_buffer_array_non_uniform_indexing_native =
-            shader_uniform_buffer_array_non_uniform_indexing_native.into();
-        self
-    }
-    #[inline]
-    pub fn shader_sampled_image_array_non_uniform_indexing_native(
-        mut self,
-        shader_sampled_image_array_non_uniform_indexing_native: bool,
-    ) -> Self {
-        self.shader_sampled_image_array_non_uniform_indexing_native =
-            shader_sampled_image_array_non_uniform_indexing_native.into();
-        self
-    }
-    #[inline]
-    pub fn shader_storage_buffer_array_non_uniform_indexing_native(
-        mut self,
-        shader_storage_buffer_array_non_uniform_indexing_native: bool,
-    ) -> Self {
-        self.shader_storage_buffer_array_non_uniform_indexing_native =
-            shader_storage_buffer_array_non_uniform_indexing_native.into();
-        self
-    }
-    #[inline]
-    pub fn shader_storage_image_array_non_uniform_indexing_native(
-        mut self,
-        shader_storage_image_array_non_uniform_indexing_native: bool,
-    ) -> Self {
-        self.shader_storage_image_array_non_uniform_indexing_native =
-            shader_storage_image_array_non_uniform_indexing_native.into();
-        self
-    }
-    #[inline]
-    pub fn shader_input_attachment_array_non_uniform_indexing_native(
-        mut self,
-        shader_input_attachment_array_non_uniform_indexing_native: bool,
-    ) -> Self {
-        self.shader_input_attachment_array_non_uniform_indexing_native =
-            shader_input_attachment_array_non_uniform_indexing_native.into();
-        self
-    }
-    #[inline]
-    pub fn robust_buffer_access_update_after_bind(
-        mut self,
-        robust_buffer_access_update_after_bind: bool,
-    ) -> Self {
-        self.robust_buffer_access_update_after_bind = robust_buffer_access_update_after_bind.into();
-        self
-    }
-    #[inline]
-    pub fn quad_divergent_implicit_lod(mut self, quad_divergent_implicit_lod: bool) -> Self {
-        self.quad_divergent_implicit_lod = quad_divergent_implicit_lod.into();
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_update_after_bind_samplers(
-        mut self,
-        max_per_stage_descriptor_update_after_bind_samplers: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_update_after_bind_samplers =
-            max_per_stage_descriptor_update_after_bind_samplers;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_update_after_bind_uniform_buffers(
-        mut self,
-        max_per_stage_descriptor_update_after_bind_uniform_buffers: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_update_after_bind_uniform_buffers =
-            max_per_stage_descriptor_update_after_bind_uniform_buffers;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_update_after_bind_storage_buffers(
-        mut self,
-        max_per_stage_descriptor_update_after_bind_storage_buffers: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_update_after_bind_storage_buffers =
-            max_per_stage_descriptor_update_after_bind_storage_buffers;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_update_after_bind_sampled_images(
-        mut self,
-        max_per_stage_descriptor_update_after_bind_sampled_images: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_update_after_bind_sampled_images =
-            max_per_stage_descriptor_update_after_bind_sampled_images;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_update_after_bind_storage_images(
-        mut self,
-        max_per_stage_descriptor_update_after_bind_storage_images: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_update_after_bind_storage_images =
-            max_per_stage_descriptor_update_after_bind_storage_images;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_update_after_bind_input_attachments(
-        mut self,
-        max_per_stage_descriptor_update_after_bind_input_attachments: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_update_after_bind_input_attachments =
-            max_per_stage_descriptor_update_after_bind_input_attachments;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_update_after_bind_resources(
-        mut self,
-        max_per_stage_update_after_bind_resources: u32,
-    ) -> Self {
-        self.max_per_stage_update_after_bind_resources = max_per_stage_update_after_bind_resources;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_samplers(
-        mut self,
-        max_descriptor_set_update_after_bind_samplers: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_samplers =
-            max_descriptor_set_update_after_bind_samplers;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_uniform_buffers(
-        mut self,
-        max_descriptor_set_update_after_bind_uniform_buffers: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_uniform_buffers =
-            max_descriptor_set_update_after_bind_uniform_buffers;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_uniform_buffers_dynamic(
-        mut self,
-        max_descriptor_set_update_after_bind_uniform_buffers_dynamic: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_uniform_buffers_dynamic =
-            max_descriptor_set_update_after_bind_uniform_buffers_dynamic;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_storage_buffers(
-        mut self,
-        max_descriptor_set_update_after_bind_storage_buffers: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_storage_buffers =
-            max_descriptor_set_update_after_bind_storage_buffers;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_storage_buffers_dynamic(
-        mut self,
-        max_descriptor_set_update_after_bind_storage_buffers_dynamic: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_storage_buffers_dynamic =
-            max_descriptor_set_update_after_bind_storage_buffers_dynamic;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_sampled_images(
-        mut self,
-        max_descriptor_set_update_after_bind_sampled_images: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_sampled_images =
-            max_descriptor_set_update_after_bind_sampled_images;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_storage_images(
-        mut self,
-        max_descriptor_set_update_after_bind_storage_images: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_storage_images =
-            max_descriptor_set_update_after_bind_storage_images;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_input_attachments(
-        mut self,
-        max_descriptor_set_update_after_bind_input_attachments: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_input_attachments =
-            max_descriptor_set_update_after_bind_input_attachments;
-        self
-    }
-}
+impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -23850,13 +21202,7 @@ unsafe impl ExtendsDescriptorSetLayoutSupport
     for DescriptorSetVariableDescriptorCountLayoutSupport<'_>
 {
 }
-impl<'a> DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
-    #[inline]
-    pub fn max_variable_descriptor_count(mut self, max_variable_descriptor_count: u32) -> Self {
-        self.max_variable_descriptor_count = max_variable_descriptor_count;
-        self
-    }
-}
+impl<'a> DescriptorSetVariableDescriptorCountLayoutSupport<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -24669,16 +22015,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceTimelineSemaphoreProperties<'a
         StructureType::PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTimelineSemaphoreProperties<'_> {}
-impl<'a> PhysicalDeviceTimelineSemaphoreProperties<'a> {
-    #[inline]
-    pub fn max_timeline_semaphore_value_difference(
-        mut self,
-        max_timeline_semaphore_value_difference: u64,
-    ) -> Self {
-        self.max_timeline_semaphore_value_difference = max_timeline_semaphore_value_difference;
-        self
-    }
-}
+impl<'a> PhysicalDeviceTimelineSemaphoreProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -24962,13 +22299,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_>
 {
 }
-impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
-    #[inline]
-    pub fn max_vertex_attrib_divisor(mut self, max_vertex_attrib_divisor: u32) -> Self {
-        self.max_vertex_attrib_divisor = max_vertex_attrib_divisor;
-        self
-    }
-}
+impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -25003,21 +22334,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'_>
 {
 }
-impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'a> {
-    #[inline]
-    pub fn max_vertex_attrib_divisor(mut self, max_vertex_attrib_divisor: u32) -> Self {
-        self.max_vertex_attrib_divisor = max_vertex_attrib_divisor;
-        self
-    }
-    #[inline]
-    pub fn supports_non_zero_first_instance(
-        mut self,
-        supports_non_zero_first_instance: bool,
-    ) -> Self {
-        self.supports_non_zero_first_instance = supports_non_zero_first_instance.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -25053,28 +22370,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
         StructureType::PHYSICAL_DEVICE_PCI_BUS_INFO_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {}
-impl<'a> PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
-    #[inline]
-    pub fn pci_domain(mut self, pci_domain: u32) -> Self {
-        self.pci_domain = pci_domain;
-        self
-    }
-    #[inline]
-    pub fn pci_bus(mut self, pci_bus: u32) -> Self {
-        self.pci_bus = pci_bus;
-        self
-    }
-    #[inline]
-    pub fn pci_device(mut self, pci_device: u32) -> Self {
-        self.pci_device = pci_device;
-        self
-    }
-    #[inline]
-    pub fn pci_function(mut self, pci_function: u32) -> Self {
-        self.pci_function = pci_function;
-        self
-    }
-}
+impl<'a> PhysicalDevicePCIBusInfoPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -25139,13 +22435,7 @@ unsafe impl<'a> TaggedStructure for AndroidHardwareBufferUsageANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANDROID_HARDWARE_BUFFER_USAGE_ANDROID;
 }
 unsafe impl ExtendsImageFormatProperties2 for AndroidHardwareBufferUsageANDROID<'_> {}
-impl<'a> AndroidHardwareBufferUsageANDROID<'a> {
-    #[inline]
-    pub fn android_hardware_buffer_usage(mut self, android_hardware_buffer_usage: u64) -> Self {
-        self.android_hardware_buffer_usage = android_hardware_buffer_usage;
-        self
-    }
-}
+impl<'a> AndroidHardwareBufferUsageANDROID<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -25177,16 +22467,6 @@ unsafe impl<'a> TaggedStructure for AndroidHardwareBufferPropertiesANDROID<'a> {
 }
 pub unsafe trait ExtendsAndroidHardwareBufferPropertiesANDROID {}
 impl<'a> AndroidHardwareBufferPropertiesANDROID<'a> {
-    #[inline]
-    pub fn allocation_size(mut self, allocation_size: DeviceSize) -> Self {
-        self.allocation_size = allocation_size;
-        self
-    }
-    #[inline]
-    pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
-        self.memory_type_bits = memory_type_bits;
-        self
-    }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
@@ -25322,54 +22602,7 @@ unsafe impl ExtendsAndroidHardwareBufferPropertiesANDROID
     for AndroidHardwareBufferFormatPropertiesANDROID<'_>
 {
 }
-impl<'a> AndroidHardwareBufferFormatPropertiesANDROID<'a> {
-    #[inline]
-    pub fn format(mut self, format: Format) -> Self {
-        self.format = format;
-        self
-    }
-    #[inline]
-    pub fn external_format(mut self, external_format: u64) -> Self {
-        self.external_format = external_format;
-        self
-    }
-    #[inline]
-    pub fn format_features(mut self, format_features: FormatFeatureFlags) -> Self {
-        self.format_features = format_features;
-        self
-    }
-    #[inline]
-    pub fn sampler_ycbcr_conversion_components(
-        mut self,
-        sampler_ycbcr_conversion_components: ComponentMapping,
-    ) -> Self {
-        self.sampler_ycbcr_conversion_components = sampler_ycbcr_conversion_components;
-        self
-    }
-    #[inline]
-    pub fn suggested_ycbcr_model(
-        mut self,
-        suggested_ycbcr_model: SamplerYcbcrModelConversion,
-    ) -> Self {
-        self.suggested_ycbcr_model = suggested_ycbcr_model;
-        self
-    }
-    #[inline]
-    pub fn suggested_ycbcr_range(mut self, suggested_ycbcr_range: SamplerYcbcrRange) -> Self {
-        self.suggested_ycbcr_range = suggested_ycbcr_range;
-        self
-    }
-    #[inline]
-    pub fn suggested_x_chroma_offset(mut self, suggested_x_chroma_offset: ChromaLocation) -> Self {
-        self.suggested_x_chroma_offset = suggested_x_chroma_offset;
-        self
-    }
-    #[inline]
-    pub fn suggested_y_chroma_offset(mut self, suggested_y_chroma_offset: ChromaLocation) -> Self {
-        self.suggested_y_chroma_offset = suggested_y_chroma_offset;
-        self
-    }
-}
+impl<'a> AndroidHardwareBufferFormatPropertiesANDROID<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -26005,16 +23238,7 @@ unsafe impl<'a> TaggedStructure for QueueFamilyCheckpointPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV;
 }
 unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointPropertiesNV<'_> {}
-impl<'a> QueueFamilyCheckpointPropertiesNV<'a> {
-    #[inline]
-    pub fn checkpoint_execution_stage_mask(
-        mut self,
-        checkpoint_execution_stage_mask: PipelineStageFlags,
-    ) -> Self {
-        self.checkpoint_execution_stage_mask = checkpoint_execution_stage_mask;
-        self
-    }
-}
+impl<'a> QueueFamilyCheckpointPropertiesNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -26044,18 +23268,7 @@ impl ::core::default::Default for CheckpointDataNV<'_> {
 unsafe impl<'a> TaggedStructure for CheckpointDataNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CHECKPOINT_DATA_NV;
 }
-impl<'a> CheckpointDataNV<'a> {
-    #[inline]
-    pub fn stage(mut self, stage: PipelineStageFlags) -> Self {
-        self.stage = stage;
-        self
-    }
-    #[inline]
-    pub fn checkpoint_marker(mut self, checkpoint_marker: *mut c_void) -> Self {
-        self.p_checkpoint_marker = checkpoint_marker;
-        self
-    }
-}
+impl<'a> CheckpointDataNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -26091,34 +23304,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthStencilResolveProperties<
         StructureType::PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDepthStencilResolveProperties<'_> {}
-impl<'a> PhysicalDeviceDepthStencilResolveProperties<'a> {
-    #[inline]
-    pub fn supported_depth_resolve_modes(
-        mut self,
-        supported_depth_resolve_modes: ResolveModeFlags,
-    ) -> Self {
-        self.supported_depth_resolve_modes = supported_depth_resolve_modes;
-        self
-    }
-    #[inline]
-    pub fn supported_stencil_resolve_modes(
-        mut self,
-        supported_stencil_resolve_modes: ResolveModeFlags,
-    ) -> Self {
-        self.supported_stencil_resolve_modes = supported_stencil_resolve_modes;
-        self
-    }
-    #[inline]
-    pub fn independent_resolve_none(mut self, independent_resolve_none: bool) -> Self {
-        self.independent_resolve_none = independent_resolve_none.into();
-        self
-    }
-    #[inline]
-    pub fn independent_resolve(mut self, independent_resolve: bool) -> Self {
-        self.independent_resolve = independent_resolve.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceDepthStencilResolveProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -26333,78 +23519,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceTransformFeedbackPropertiesEXT
         StructureType::PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
-    #[inline]
-    pub fn max_transform_feedback_streams(mut self, max_transform_feedback_streams: u32) -> Self {
-        self.max_transform_feedback_streams = max_transform_feedback_streams;
-        self
-    }
-    #[inline]
-    pub fn max_transform_feedback_buffers(mut self, max_transform_feedback_buffers: u32) -> Self {
-        self.max_transform_feedback_buffers = max_transform_feedback_buffers;
-        self
-    }
-    #[inline]
-    pub fn max_transform_feedback_buffer_size(
-        mut self,
-        max_transform_feedback_buffer_size: DeviceSize,
-    ) -> Self {
-        self.max_transform_feedback_buffer_size = max_transform_feedback_buffer_size;
-        self
-    }
-    #[inline]
-    pub fn max_transform_feedback_stream_data_size(
-        mut self,
-        max_transform_feedback_stream_data_size: u32,
-    ) -> Self {
-        self.max_transform_feedback_stream_data_size = max_transform_feedback_stream_data_size;
-        self
-    }
-    #[inline]
-    pub fn max_transform_feedback_buffer_data_size(
-        mut self,
-        max_transform_feedback_buffer_data_size: u32,
-    ) -> Self {
-        self.max_transform_feedback_buffer_data_size = max_transform_feedback_buffer_data_size;
-        self
-    }
-    #[inline]
-    pub fn max_transform_feedback_buffer_data_stride(
-        mut self,
-        max_transform_feedback_buffer_data_stride: u32,
-    ) -> Self {
-        self.max_transform_feedback_buffer_data_stride = max_transform_feedback_buffer_data_stride;
-        self
-    }
-    #[inline]
-    pub fn transform_feedback_queries(mut self, transform_feedback_queries: bool) -> Self {
-        self.transform_feedback_queries = transform_feedback_queries.into();
-        self
-    }
-    #[inline]
-    pub fn transform_feedback_streams_lines_triangles(
-        mut self,
-        transform_feedback_streams_lines_triangles: bool,
-    ) -> Self {
-        self.transform_feedback_streams_lines_triangles =
-            transform_feedback_streams_lines_triangles.into();
-        self
-    }
-    #[inline]
-    pub fn transform_feedback_rasterization_stream_select(
-        mut self,
-        transform_feedback_rasterization_stream_select: bool,
-    ) -> Self {
-        self.transform_feedback_rasterization_stream_select =
-            transform_feedback_rasterization_stream_select.into();
-        self
-    }
-    #[inline]
-    pub fn transform_feedback_draw(mut self, transform_feedback_draw: bool) -> Self {
-        self.transform_feedback_draw = transform_feedback_draw.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -26731,16 +23846,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_>
 {
 }
-impl<'a> PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
-    #[inline]
-    pub fn mesh_and_task_shader_derivatives(
-        mut self,
-        mesh_and_task_shader_derivatives: bool,
-    ) -> Self {
-        self.mesh_and_task_shader_derivatives = mesh_and_task_shader_derivatives.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -26890,13 +23996,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceCopyMemoryIndirectPropertiesNV
         StructureType::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_NV;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'_> {}
-impl<'a> PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {
-    #[inline]
-    pub fn supported_queues(mut self, supported_queues: QueueFlags) -> Self {
-        self.supported_queues = supported_queues;
-        self
-    }
-}
+impl<'a> PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -26965,24 +24065,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryDecompressionPropertiesN
         StructureType::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMemoryDecompressionPropertiesNV<'_> {}
-impl<'a> PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
-    #[inline]
-    pub fn decompression_methods(
-        mut self,
-        decompression_methods: MemoryDecompressionMethodFlagsNV,
-    ) -> Self {
-        self.decompression_methods = decompression_methods;
-        self
-    }
-    #[inline]
-    pub fn max_decompression_indirect_count(
-        mut self,
-        max_decompression_indirect_count: u64,
-    ) -> Self {
-        self.max_decompression_indirect_count = max_decompression_indirect_count;
-        self
-    }
-}
+impl<'a> PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -27148,23 +24231,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceShadingRateImagePropertiesNV<'
         StructureType::PHYSICAL_DEVICE_SHADING_RATE_IMAGE_PROPERTIES_NV;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShadingRateImagePropertiesNV<'_> {}
-impl<'a> PhysicalDeviceShadingRateImagePropertiesNV<'a> {
-    #[inline]
-    pub fn shading_rate_texel_size(mut self, shading_rate_texel_size: Extent2D) -> Self {
-        self.shading_rate_texel_size = shading_rate_texel_size;
-        self
-    }
-    #[inline]
-    pub fn shading_rate_palette_size(mut self, shading_rate_palette_size: u32) -> Self {
-        self.shading_rate_palette_size = shading_rate_palette_size;
-        self
-    }
-    #[inline]
-    pub fn shading_rate_max_coarse_samples(mut self, shading_rate_max_coarse_samples: u32) -> Self {
-        self.shading_rate_max_coarse_samples = shading_rate_max_coarse_samples;
-        self
-    }
-}
+impl<'a> PhysicalDeviceShadingRateImagePropertiesNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -27420,79 +24487,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceMeshShaderPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_NV;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMeshShaderPropertiesNV<'_> {}
-impl<'a> PhysicalDeviceMeshShaderPropertiesNV<'a> {
-    #[inline]
-    pub fn max_draw_mesh_tasks_count(mut self, max_draw_mesh_tasks_count: u32) -> Self {
-        self.max_draw_mesh_tasks_count = max_draw_mesh_tasks_count;
-        self
-    }
-    #[inline]
-    pub fn max_task_work_group_invocations(mut self, max_task_work_group_invocations: u32) -> Self {
-        self.max_task_work_group_invocations = max_task_work_group_invocations;
-        self
-    }
-    #[inline]
-    pub fn max_task_work_group_size(mut self, max_task_work_group_size: [u32; 3]) -> Self {
-        self.max_task_work_group_size = max_task_work_group_size;
-        self
-    }
-    #[inline]
-    pub fn max_task_total_memory_size(mut self, max_task_total_memory_size: u32) -> Self {
-        self.max_task_total_memory_size = max_task_total_memory_size;
-        self
-    }
-    #[inline]
-    pub fn max_task_output_count(mut self, max_task_output_count: u32) -> Self {
-        self.max_task_output_count = max_task_output_count;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_work_group_invocations(mut self, max_mesh_work_group_invocations: u32) -> Self {
-        self.max_mesh_work_group_invocations = max_mesh_work_group_invocations;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_work_group_size(mut self, max_mesh_work_group_size: [u32; 3]) -> Self {
-        self.max_mesh_work_group_size = max_mesh_work_group_size;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_total_memory_size(mut self, max_mesh_total_memory_size: u32) -> Self {
-        self.max_mesh_total_memory_size = max_mesh_total_memory_size;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_output_vertices(mut self, max_mesh_output_vertices: u32) -> Self {
-        self.max_mesh_output_vertices = max_mesh_output_vertices;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_output_primitives(mut self, max_mesh_output_primitives: u32) -> Self {
-        self.max_mesh_output_primitives = max_mesh_output_primitives;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_multiview_view_count(mut self, max_mesh_multiview_view_count: u32) -> Self {
-        self.max_mesh_multiview_view_count = max_mesh_multiview_view_count;
-        self
-    }
-    #[inline]
-    pub fn mesh_output_per_vertex_granularity(
-        mut self,
-        mesh_output_per_vertex_granularity: u32,
-    ) -> Self {
-        self.mesh_output_per_vertex_granularity = mesh_output_per_vertex_granularity;
-        self
-    }
-    #[inline]
-    pub fn mesh_output_per_primitive_granularity(
-        mut self,
-        mesh_output_per_primitive_granularity: u32,
-    ) -> Self {
-        self.mesh_output_per_primitive_granularity = mesh_output_per_primitive_granularity;
-        self
-    }
-}
+impl<'a> PhysicalDeviceMeshShaderPropertiesNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -27664,179 +24659,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceMeshShaderPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMeshShaderPropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceMeshShaderPropertiesEXT<'a> {
-    #[inline]
-    pub fn max_task_work_group_total_count(mut self, max_task_work_group_total_count: u32) -> Self {
-        self.max_task_work_group_total_count = max_task_work_group_total_count;
-        self
-    }
-    #[inline]
-    pub fn max_task_work_group_count(mut self, max_task_work_group_count: [u32; 3]) -> Self {
-        self.max_task_work_group_count = max_task_work_group_count;
-        self
-    }
-    #[inline]
-    pub fn max_task_work_group_invocations(mut self, max_task_work_group_invocations: u32) -> Self {
-        self.max_task_work_group_invocations = max_task_work_group_invocations;
-        self
-    }
-    #[inline]
-    pub fn max_task_work_group_size(mut self, max_task_work_group_size: [u32; 3]) -> Self {
-        self.max_task_work_group_size = max_task_work_group_size;
-        self
-    }
-    #[inline]
-    pub fn max_task_payload_size(mut self, max_task_payload_size: u32) -> Self {
-        self.max_task_payload_size = max_task_payload_size;
-        self
-    }
-    #[inline]
-    pub fn max_task_shared_memory_size(mut self, max_task_shared_memory_size: u32) -> Self {
-        self.max_task_shared_memory_size = max_task_shared_memory_size;
-        self
-    }
-    #[inline]
-    pub fn max_task_payload_and_shared_memory_size(
-        mut self,
-        max_task_payload_and_shared_memory_size: u32,
-    ) -> Self {
-        self.max_task_payload_and_shared_memory_size = max_task_payload_and_shared_memory_size;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_work_group_total_count(mut self, max_mesh_work_group_total_count: u32) -> Self {
-        self.max_mesh_work_group_total_count = max_mesh_work_group_total_count;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_work_group_count(mut self, max_mesh_work_group_count: [u32; 3]) -> Self {
-        self.max_mesh_work_group_count = max_mesh_work_group_count;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_work_group_invocations(mut self, max_mesh_work_group_invocations: u32) -> Self {
-        self.max_mesh_work_group_invocations = max_mesh_work_group_invocations;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_work_group_size(mut self, max_mesh_work_group_size: [u32; 3]) -> Self {
-        self.max_mesh_work_group_size = max_mesh_work_group_size;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_shared_memory_size(mut self, max_mesh_shared_memory_size: u32) -> Self {
-        self.max_mesh_shared_memory_size = max_mesh_shared_memory_size;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_payload_and_shared_memory_size(
-        mut self,
-        max_mesh_payload_and_shared_memory_size: u32,
-    ) -> Self {
-        self.max_mesh_payload_and_shared_memory_size = max_mesh_payload_and_shared_memory_size;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_output_memory_size(mut self, max_mesh_output_memory_size: u32) -> Self {
-        self.max_mesh_output_memory_size = max_mesh_output_memory_size;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_payload_and_output_memory_size(
-        mut self,
-        max_mesh_payload_and_output_memory_size: u32,
-    ) -> Self {
-        self.max_mesh_payload_and_output_memory_size = max_mesh_payload_and_output_memory_size;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_output_components(mut self, max_mesh_output_components: u32) -> Self {
-        self.max_mesh_output_components = max_mesh_output_components;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_output_vertices(mut self, max_mesh_output_vertices: u32) -> Self {
-        self.max_mesh_output_vertices = max_mesh_output_vertices;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_output_primitives(mut self, max_mesh_output_primitives: u32) -> Self {
-        self.max_mesh_output_primitives = max_mesh_output_primitives;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_output_layers(mut self, max_mesh_output_layers: u32) -> Self {
-        self.max_mesh_output_layers = max_mesh_output_layers;
-        self
-    }
-    #[inline]
-    pub fn max_mesh_multiview_view_count(mut self, max_mesh_multiview_view_count: u32) -> Self {
-        self.max_mesh_multiview_view_count = max_mesh_multiview_view_count;
-        self
-    }
-    #[inline]
-    pub fn mesh_output_per_vertex_granularity(
-        mut self,
-        mesh_output_per_vertex_granularity: u32,
-    ) -> Self {
-        self.mesh_output_per_vertex_granularity = mesh_output_per_vertex_granularity;
-        self
-    }
-    #[inline]
-    pub fn mesh_output_per_primitive_granularity(
-        mut self,
-        mesh_output_per_primitive_granularity: u32,
-    ) -> Self {
-        self.mesh_output_per_primitive_granularity = mesh_output_per_primitive_granularity;
-        self
-    }
-    #[inline]
-    pub fn max_preferred_task_work_group_invocations(
-        mut self,
-        max_preferred_task_work_group_invocations: u32,
-    ) -> Self {
-        self.max_preferred_task_work_group_invocations = max_preferred_task_work_group_invocations;
-        self
-    }
-    #[inline]
-    pub fn max_preferred_mesh_work_group_invocations(
-        mut self,
-        max_preferred_mesh_work_group_invocations: u32,
-    ) -> Self {
-        self.max_preferred_mesh_work_group_invocations = max_preferred_mesh_work_group_invocations;
-        self
-    }
-    #[inline]
-    pub fn prefers_local_invocation_vertex_output(
-        mut self,
-        prefers_local_invocation_vertex_output: bool,
-    ) -> Self {
-        self.prefers_local_invocation_vertex_output = prefers_local_invocation_vertex_output.into();
-        self
-    }
-    #[inline]
-    pub fn prefers_local_invocation_primitive_output(
-        mut self,
-        prefers_local_invocation_primitive_output: bool,
-    ) -> Self {
-        self.prefers_local_invocation_primitive_output =
-            prefers_local_invocation_primitive_output.into();
-        self
-    }
-    #[inline]
-    pub fn prefers_compact_vertex_output(mut self, prefers_compact_vertex_output: bool) -> Self {
-        self.prefers_compact_vertex_output = prefers_compact_vertex_output.into();
-        self
-    }
-    #[inline]
-    pub fn prefers_compact_primitive_output(
-        mut self,
-        prefers_compact_primitive_output: bool,
-    ) -> Self {
-        self.prefers_compact_primitive_output = prefers_compact_primitive_output.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceMeshShaderPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -29109,68 +25932,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceAccelerationStructurePropertiesKHR<'_>
 {
 }
-impl<'a> PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
-    #[inline]
-    pub fn max_geometry_count(mut self, max_geometry_count: u64) -> Self {
-        self.max_geometry_count = max_geometry_count;
-        self
-    }
-    #[inline]
-    pub fn max_instance_count(mut self, max_instance_count: u64) -> Self {
-        self.max_instance_count = max_instance_count;
-        self
-    }
-    #[inline]
-    pub fn max_primitive_count(mut self, max_primitive_count: u64) -> Self {
-        self.max_primitive_count = max_primitive_count;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_acceleration_structures(
-        mut self,
-        max_per_stage_descriptor_acceleration_structures: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_acceleration_structures =
-            max_per_stage_descriptor_acceleration_structures;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_update_after_bind_acceleration_structures(
-        mut self,
-        max_per_stage_descriptor_update_after_bind_acceleration_structures: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_update_after_bind_acceleration_structures =
-            max_per_stage_descriptor_update_after_bind_acceleration_structures;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_acceleration_structures(
-        mut self,
-        max_descriptor_set_acceleration_structures: u32,
-    ) -> Self {
-        self.max_descriptor_set_acceleration_structures =
-            max_descriptor_set_acceleration_structures;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_acceleration_structures(
-        mut self,
-        max_descriptor_set_update_after_bind_acceleration_structures: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_acceleration_structures =
-            max_descriptor_set_update_after_bind_acceleration_structures;
-        self
-    }
-    #[inline]
-    pub fn min_acceleration_structure_scratch_offset_alignment(
-        mut self,
-        min_acceleration_structure_scratch_offset_alignment: u32,
-    ) -> Self {
-        self.min_acceleration_structure_scratch_offset_alignment =
-            min_acceleration_structure_scratch_offset_alignment;
-        self
-    }
-}
+impl<'a> PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -29214,54 +25976,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingPipelinePropertiesKH
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_PROPERTIES_KHR;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {}
-impl<'a> PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
-    #[inline]
-    pub fn shader_group_handle_size(mut self, shader_group_handle_size: u32) -> Self {
-        self.shader_group_handle_size = shader_group_handle_size;
-        self
-    }
-    #[inline]
-    pub fn max_ray_recursion_depth(mut self, max_ray_recursion_depth: u32) -> Self {
-        self.max_ray_recursion_depth = max_ray_recursion_depth;
-        self
-    }
-    #[inline]
-    pub fn max_shader_group_stride(mut self, max_shader_group_stride: u32) -> Self {
-        self.max_shader_group_stride = max_shader_group_stride;
-        self
-    }
-    #[inline]
-    pub fn shader_group_base_alignment(mut self, shader_group_base_alignment: u32) -> Self {
-        self.shader_group_base_alignment = shader_group_base_alignment;
-        self
-    }
-    #[inline]
-    pub fn shader_group_handle_capture_replay_size(
-        mut self,
-        shader_group_handle_capture_replay_size: u32,
-    ) -> Self {
-        self.shader_group_handle_capture_replay_size = shader_group_handle_capture_replay_size;
-        self
-    }
-    #[inline]
-    pub fn max_ray_dispatch_invocation_count(
-        mut self,
-        max_ray_dispatch_invocation_count: u32,
-    ) -> Self {
-        self.max_ray_dispatch_invocation_count = max_ray_dispatch_invocation_count;
-        self
-    }
-    #[inline]
-    pub fn shader_group_handle_alignment(mut self, shader_group_handle_alignment: u32) -> Self {
-        self.shader_group_handle_alignment = shader_group_handle_alignment;
-        self
-    }
-    #[inline]
-    pub fn max_ray_hit_attribute_size(mut self, max_ray_hit_attribute_size: u32) -> Self {
-        self.max_ray_hit_attribute_size = max_ray_hit_attribute_size;
-        self
-    }
-}
+impl<'a> PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -29304,52 +26019,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_RAY_TRACING_PROPERTIES_NV;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingPropertiesNV<'_> {}
-impl<'a> PhysicalDeviceRayTracingPropertiesNV<'a> {
-    #[inline]
-    pub fn shader_group_handle_size(mut self, shader_group_handle_size: u32) -> Self {
-        self.shader_group_handle_size = shader_group_handle_size;
-        self
-    }
-    #[inline]
-    pub fn max_recursion_depth(mut self, max_recursion_depth: u32) -> Self {
-        self.max_recursion_depth = max_recursion_depth;
-        self
-    }
-    #[inline]
-    pub fn max_shader_group_stride(mut self, max_shader_group_stride: u32) -> Self {
-        self.max_shader_group_stride = max_shader_group_stride;
-        self
-    }
-    #[inline]
-    pub fn shader_group_base_alignment(mut self, shader_group_base_alignment: u32) -> Self {
-        self.shader_group_base_alignment = shader_group_base_alignment;
-        self
-    }
-    #[inline]
-    pub fn max_geometry_count(mut self, max_geometry_count: u64) -> Self {
-        self.max_geometry_count = max_geometry_count;
-        self
-    }
-    #[inline]
-    pub fn max_instance_count(mut self, max_instance_count: u64) -> Self {
-        self.max_instance_count = max_instance_count;
-        self
-    }
-    #[inline]
-    pub fn max_triangle_count(mut self, max_triangle_count: u64) -> Self {
-        self.max_triangle_count = max_triangle_count;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_acceleration_structures(
-        mut self,
-        max_descriptor_set_acceleration_structures: u32,
-    ) -> Self {
-        self.max_descriptor_set_acceleration_structures =
-            max_descriptor_set_acceleration_structures;
-        self
-    }
-}
+impl<'a> PhysicalDeviceRayTracingPropertiesNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -29605,17 +26275,7 @@ unsafe impl<'a> TaggedStructure for DrmFormatModifierPropertiesListEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_EXT;
 }
 unsafe impl ExtendsFormatProperties2 for DrmFormatModifierPropertiesListEXT<'_> {}
-impl<'a> DrmFormatModifierPropertiesListEXT<'a> {
-    #[inline]
-    pub fn drm_format_modifier_properties(
-        mut self,
-        drm_format_modifier_properties: &'a mut [DrmFormatModifierPropertiesEXT],
-    ) -> Self {
-        self.drm_format_modifier_count = drm_format_modifier_properties.len() as _;
-        self.p_drm_format_modifier_properties = drm_format_modifier_properties.as_mut_ptr();
-        self
-    }
-}
+impl<'a> DrmFormatModifierPropertiesListEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -29626,26 +26286,7 @@ pub struct DrmFormatModifierPropertiesEXT {
     pub drm_format_modifier_plane_count: u32,
     pub drm_format_modifier_tiling_features: FormatFeatureFlags,
 }
-impl DrmFormatModifierPropertiesEXT {
-    #[inline]
-    pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
-        self.drm_format_modifier = drm_format_modifier;
-        self
-    }
-    #[inline]
-    pub fn drm_format_modifier_plane_count(mut self, drm_format_modifier_plane_count: u32) -> Self {
-        self.drm_format_modifier_plane_count = drm_format_modifier_plane_count;
-        self
-    }
-    #[inline]
-    pub fn drm_format_modifier_tiling_features(
-        mut self,
-        drm_format_modifier_tiling_features: FormatFeatureFlags,
-    ) -> Self {
-        self.drm_format_modifier_tiling_features = drm_format_modifier_tiling_features;
-        self
-    }
-}
+impl DrmFormatModifierPropertiesEXT {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -29814,13 +26455,7 @@ impl ::core::default::Default for ImageDrmFormatModifierPropertiesEXT<'_> {
 unsafe impl<'a> TaggedStructure for ImageDrmFormatModifierPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT;
 }
-impl<'a> ImageDrmFormatModifierPropertiesEXT<'a> {
-    #[inline]
-    pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
-        self.drm_format_modifier = drm_format_modifier;
-        self
-    }
-}
+impl<'a> ImageDrmFormatModifierPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -30061,29 +26696,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentDensityMapPropertiesEX
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
-    #[inline]
-    pub fn min_fragment_density_texel_size(
-        mut self,
-        min_fragment_density_texel_size: Extent2D,
-    ) -> Self {
-        self.min_fragment_density_texel_size = min_fragment_density_texel_size;
-        self
-    }
-    #[inline]
-    pub fn max_fragment_density_texel_size(
-        mut self,
-        max_fragment_density_texel_size: Extent2D,
-    ) -> Self {
-        self.max_fragment_density_texel_size = max_fragment_density_texel_size;
-        self
-    }
-    #[inline]
-    pub fn fragment_density_invocations(mut self, fragment_density_invocations: bool) -> Self {
-        self.fragment_density_invocations = fragment_density_invocations.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -30122,35 +26735,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_>
 {
 }
-impl<'a> PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
-    #[inline]
-    pub fn subsampled_loads(mut self, subsampled_loads: bool) -> Self {
-        self.subsampled_loads = subsampled_loads.into();
-        self
-    }
-    #[inline]
-    pub fn subsampled_coarse_reconstruction_early_access(
-        mut self,
-        subsampled_coarse_reconstruction_early_access: bool,
-    ) -> Self {
-        self.subsampled_coarse_reconstruction_early_access =
-            subsampled_coarse_reconstruction_early_access.into();
-        self
-    }
-    #[inline]
-    pub fn max_subsampled_array_layers(mut self, max_subsampled_array_layers: u32) -> Self {
-        self.max_subsampled_array_layers = max_subsampled_array_layers;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_subsampled_samplers(
-        mut self,
-        max_descriptor_set_subsampled_samplers: u32,
-    ) -> Self {
-        self.max_descriptor_set_subsampled_samplers = max_descriptor_set_subsampled_samplers;
-        self
-    }
-}
+impl<'a> PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -30183,16 +26768,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'_>
 {
 }
-impl<'a> PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {
-    #[inline]
-    pub fn fragment_density_offset_granularity(
-        mut self,
-        fragment_density_offset_granularity: Extent2D,
-    ) -> Self {
-        self.fragment_density_offset_granularity = fragment_density_offset_granularity;
-        self
-    }
-}
+impl<'a> PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -30337,13 +26913,7 @@ unsafe impl<'a> TaggedStructure for SurfaceProtectedCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PROTECTED_CAPABILITIES_KHR;
 }
 unsafe impl ExtendsSurfaceCapabilities2KHR for SurfaceProtectedCapabilitiesKHR<'_> {}
-impl<'a> SurfaceProtectedCapabilitiesKHR<'a> {
-    #[inline]
-    pub fn supports_protected(mut self, supports_protected: bool) -> Self {
-        self.supports_protected = supports_protected.into();
-        self
-    }
-}
+impl<'a> SurfaceProtectedCapabilitiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -30498,18 +27068,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryBudgetPropertiesEXT<'a> 
         StructureType::PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceMemoryProperties2 for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
-    #[inline]
-    pub fn heap_budget(mut self, heap_budget: [DeviceSize; MAX_MEMORY_HEAPS]) -> Self {
-        self.heap_budget = heap_budget;
-        self
-    }
-    #[inline]
-    pub fn heap_usage(mut self, heap_usage: [DeviceSize; MAX_MEMORY_HEAPS]) -> Self {
-        self.heap_usage = heap_usage;
-        self
-    }
-}
+impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -30910,18 +27469,7 @@ unsafe impl<'a> TaggedStructure for FilterCubicImageViewImageFormatPropertiesEXT
         StructureType::FILTER_CUBIC_IMAGE_VIEW_IMAGE_FORMAT_PROPERTIES_EXT;
 }
 unsafe impl ExtendsImageFormatProperties2 for FilterCubicImageViewImageFormatPropertiesEXT<'_> {}
-impl<'a> FilterCubicImageViewImageFormatPropertiesEXT<'a> {
-    #[inline]
-    pub fn filter_cubic(mut self, filter_cubic: bool) -> Self {
-        self.filter_cubic = filter_cubic.into();
-        self
-    }
-    #[inline]
-    pub fn filter_cubic_minmax(mut self, filter_cubic_minmax: bool) -> Self {
-        self.filter_cubic_minmax = filter_cubic_minmax.into();
-        self
-    }
-}
+impl<'a> FilterCubicImageViewImageFormatPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -31224,16 +27772,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceCooperativeMatrixPropertiesNV<
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_NV;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {}
-impl<'a> PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
-    #[inline]
-    pub fn cooperative_matrix_supported_stages(
-        mut self,
-        cooperative_matrix_supported_stages: ShaderStageFlags,
-    ) -> Self {
-        self.cooperative_matrix_supported_stages = cooperative_matrix_supported_stages;
-        self
-    }
-}
+impl<'a> PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -31275,48 +27814,7 @@ impl ::core::default::Default for CooperativeMatrixPropertiesNV<'_> {
 unsafe impl<'a> TaggedStructure for CooperativeMatrixPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COOPERATIVE_MATRIX_PROPERTIES_NV;
 }
-impl<'a> CooperativeMatrixPropertiesNV<'a> {
-    #[inline]
-    pub fn m_size(mut self, m_size: u32) -> Self {
-        self.m_size = m_size;
-        self
-    }
-    #[inline]
-    pub fn n_size(mut self, n_size: u32) -> Self {
-        self.n_size = n_size;
-        self
-    }
-    #[inline]
-    pub fn k_size(mut self, k_size: u32) -> Self {
-        self.k_size = k_size;
-        self
-    }
-    #[inline]
-    pub fn a_type(mut self, a_type: ComponentTypeNV) -> Self {
-        self.a_type = a_type;
-        self
-    }
-    #[inline]
-    pub fn b_type(mut self, b_type: ComponentTypeNV) -> Self {
-        self.b_type = b_type;
-        self
-    }
-    #[inline]
-    pub fn c_type(mut self, c_type: ComponentTypeNV) -> Self {
-        self.c_type = c_type;
-        self
-    }
-    #[inline]
-    pub fn d_type(mut self, d_type: ComponentTypeNV) -> Self {
-        self.d_type = d_type;
-        self
-    }
-    #[inline]
-    pub fn scope(mut self, scope: ScopeNV) -> Self {
-        self.scope = scope;
-        self
-    }
-}
+impl<'a> CooperativeMatrixPropertiesNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -31431,18 +27929,7 @@ impl ::core::default::Default for ImageViewAddressPropertiesNVX<'_> {
 unsafe impl<'a> TaggedStructure for ImageViewAddressPropertiesNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_ADDRESS_PROPERTIES_NVX;
 }
-impl<'a> ImageViewAddressPropertiesNVX<'a> {
-    #[inline]
-    pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
-        self.device_address = device_address;
-        self
-    }
-    #[inline]
-    pub fn size(mut self, size: DeviceSize) -> Self {
-        self.size = size;
-        self
-    }
-}
+impl<'a> ImageViewAddressPropertiesNVX<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -31487,18 +27974,7 @@ pub struct PipelineCreationFeedback {
     pub flags: PipelineCreationFeedbackFlags,
     pub duration: u64,
 }
-impl PipelineCreationFeedback {
-    #[inline]
-    pub fn flags(mut self, flags: PipelineCreationFeedbackFlags) -> Self {
-        self.flags = flags;
-        self
-    }
-    #[inline]
-    pub fn duration(mut self, duration: u64) -> Self {
-        self.duration = duration;
-        self
-    }
-}
+impl PipelineCreationFeedback {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -31656,16 +28132,7 @@ unsafe impl<'a> TaggedStructure for SurfaceCapabilitiesFullScreenExclusiveEXT<'a
         StructureType::SURFACE_CAPABILITIES_FULL_SCREEN_EXCLUSIVE_EXT;
 }
 unsafe impl ExtendsSurfaceCapabilities2KHR for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {}
-impl<'a> SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
-    #[inline]
-    pub fn full_screen_exclusive_supported(
-        mut self,
-        full_screen_exclusive_supported: bool,
-    ) -> Self {
-        self.full_screen_exclusive_supported = full_screen_exclusive_supported.into();
-        self
-    }
-}
+impl<'a> SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -31731,13 +28198,7 @@ unsafe impl<'a> TaggedStructure for SurfaceCapabilitiesPresentBarrierNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_PRESENT_BARRIER_NV;
 }
 unsafe impl ExtendsSurfaceCapabilities2KHR for SurfaceCapabilitiesPresentBarrierNV<'_> {}
-impl<'a> SurfaceCapabilitiesPresentBarrierNV<'a> {
-    #[inline]
-    pub fn present_barrier_supported(mut self, present_barrier_supported: bool) -> Self {
-        self.present_barrier_supported = present_barrier_supported.into();
-        self
-    }
-}
+impl<'a> SurfaceCapabilitiesPresentBarrierNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -31853,16 +28314,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDevicePerformanceQueryPropertiesKHR<
         StructureType::PHYSICAL_DEVICE_PERFORMANCE_QUERY_PROPERTIES_KHR;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {}
-impl<'a> PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
-    #[inline]
-    pub fn allow_command_buffer_query_copies(
-        mut self,
-        allow_command_buffer_query_copies: bool,
-    ) -> Self {
-        self.allow_command_buffer_query_copies = allow_command_buffer_query_copies.into();
-        self
-    }
-}
+impl<'a> PhysicalDevicePerformanceQueryPropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -31896,28 +28348,7 @@ impl ::core::default::Default for PerformanceCounterKHR<'_> {
 unsafe impl<'a> TaggedStructure for PerformanceCounterKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_COUNTER_KHR;
 }
-impl<'a> PerformanceCounterKHR<'a> {
-    #[inline]
-    pub fn unit(mut self, unit: PerformanceCounterUnitKHR) -> Self {
-        self.unit = unit;
-        self
-    }
-    #[inline]
-    pub fn scope(mut self, scope: PerformanceCounterScopeKHR) -> Self {
-        self.scope = scope;
-        self
-    }
-    #[inline]
-    pub fn storage(mut self, storage: PerformanceCounterStorageKHR) -> Self {
-        self.storage = storage;
-        self
-    }
-    #[inline]
-    pub fn uuid(mut self, uuid: [u8; UUID_SIZE]) -> Self {
-        self.uuid = uuid;
-        self
-    }
-}
+impl<'a> PerformanceCounterKHR<'a> {}
 #[repr(C)]
 #[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceCounterDescriptionKHR.html>"]
@@ -31965,35 +28396,12 @@ unsafe impl<'a> TaggedStructure for PerformanceCounterDescriptionKHR<'a> {
 }
 impl<'a> PerformanceCounterDescriptionKHR<'a> {
     #[inline]
-    pub fn flags(mut self, flags: PerformanceCounterDescriptionFlagsKHR) -> Self {
-        self.flags = flags;
-        self
-    }
-    #[inline]
-    pub fn name(mut self, name: &CStr) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.name, name).map(|()| self)
-    }
-    #[inline]
     pub fn name_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.name)
     }
     #[inline]
-    pub fn category(
-        mut self,
-        category: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.category, category).map(|()| self)
-    }
-    #[inline]
     pub fn category_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.category)
-    }
-    #[inline]
-    pub fn description(
-        mut self,
-        description: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
     }
     #[inline]
     pub fn description_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
@@ -32292,31 +28700,7 @@ impl ::core::default::Default for FramebufferMixedSamplesCombinationNV<'_> {
 unsafe impl<'a> TaggedStructure for FramebufferMixedSamplesCombinationNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_MIXED_SAMPLES_COMBINATION_NV;
 }
-impl<'a> FramebufferMixedSamplesCombinationNV<'a> {
-    #[inline]
-    pub fn coverage_reduction_mode(
-        mut self,
-        coverage_reduction_mode: CoverageReductionModeNV,
-    ) -> Self {
-        self.coverage_reduction_mode = coverage_reduction_mode;
-        self
-    }
-    #[inline]
-    pub fn rasterization_samples(mut self, rasterization_samples: SampleCountFlags) -> Self {
-        self.rasterization_samples = rasterization_samples;
-        self
-    }
-    #[inline]
-    pub fn depth_stencil_samples(mut self, depth_stencil_samples: SampleCountFlags) -> Self {
-        self.depth_stencil_samples = depth_stencil_samples;
-        self
-    }
-    #[inline]
-    pub fn color_samples(mut self, color_samples: SampleCountFlags) -> Self {
-        self.color_samples = color_samples;
-        self
-    }
-}
+impl<'a> FramebufferMixedSamplesCombinationNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -32390,18 +28774,7 @@ impl fmt::Debug for PerformanceValueINTEL {
             .finish()
     }
 }
-impl PerformanceValueINTEL {
-    #[inline]
-    pub fn ty(mut self, ty: PerformanceValueTypeINTEL) -> Self {
-        self.ty = ty;
-        self
-    }
-    #[inline]
-    pub fn data(mut self, data: PerformanceValueDataINTEL) -> Self {
-        self.data = data;
-        self
-    }
-}
+impl PerformanceValueINTEL {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -32737,18 +29110,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'
         StructureType::PHYSICAL_DEVICE_SHADER_SM_BUILTINS_PROPERTIES_NV;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {}
-impl<'a> PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
-    #[inline]
-    pub fn shader_sm_count(mut self, shader_sm_count: u32) -> Self {
-        self.shader_sm_count = shader_sm_count;
-        self
-    }
-    #[inline]
-    pub fn shader_warps_per_sm(mut self, shader_warps_per_sm: u32) -> Self {
-        self.shader_warps_per_sm = shader_warps_per_sm;
-        self
-    }
-}
+impl<'a> PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -33140,33 +29502,12 @@ unsafe impl<'a> TaggedStructure for PipelineExecutablePropertiesKHR<'a> {
 }
 impl<'a> PipelineExecutablePropertiesKHR<'a> {
     #[inline]
-    pub fn stages(mut self, stages: ShaderStageFlags) -> Self {
-        self.stages = stages;
-        self
-    }
-    #[inline]
-    pub fn name(mut self, name: &CStr) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.name, name).map(|()| self)
-    }
-    #[inline]
     pub fn name_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.name)
     }
     #[inline]
-    pub fn description(
-        mut self,
-        description: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
-    }
-    #[inline]
     pub fn description_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.description)
-    }
-    #[inline]
-    pub fn subgroup_size(mut self, subgroup_size: u32) -> Self {
-        self.subgroup_size = subgroup_size;
-        self
     }
 }
 #[repr(C)]
@@ -33272,33 +29613,12 @@ unsafe impl<'a> TaggedStructure for PipelineExecutableStatisticKHR<'a> {
 }
 impl<'a> PipelineExecutableStatisticKHR<'a> {
     #[inline]
-    pub fn name(mut self, name: &CStr) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.name, name).map(|()| self)
-    }
-    #[inline]
     pub fn name_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.name)
     }
     #[inline]
-    pub fn description(
-        mut self,
-        description: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
-    }
-    #[inline]
     pub fn description_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.description)
-    }
-    #[inline]
-    pub fn format(mut self, format: PipelineExecutableStatisticFormatKHR) -> Self {
-        self.format = format;
-        self
-    }
-    #[inline]
-    pub fn value(mut self, value: PipelineExecutableStatisticValueKHR) -> Self {
-        self.value = value;
-        self
     }
 }
 #[repr(C)]
@@ -33352,34 +29672,12 @@ unsafe impl<'a> TaggedStructure for PipelineExecutableInternalRepresentationKHR<
 }
 impl<'a> PipelineExecutableInternalRepresentationKHR<'a> {
     #[inline]
-    pub fn name(mut self, name: &CStr) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.name, name).map(|()| self)
-    }
-    #[inline]
     pub fn name_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.name)
     }
     #[inline]
-    pub fn description(
-        mut self,
-        description: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
-    }
-    #[inline]
     pub fn description_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.description)
-    }
-    #[inline]
-    pub fn is_text(mut self, is_text: bool) -> Self {
-        self.is_text = is_text.into();
-        self
-    }
-    #[inline]
-    pub fn data(mut self, data: &'a mut [u8]) -> Self {
-        self.data_size = data.len();
-        self.p_data = data.as_mut_ptr().cast();
-        self
     }
 }
 #[repr(C)]
@@ -33497,44 +29795,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceTexelBufferAlignmentProperties
         StructureType::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTexelBufferAlignmentProperties<'_> {}
-impl<'a> PhysicalDeviceTexelBufferAlignmentProperties<'a> {
-    #[inline]
-    pub fn storage_texel_buffer_offset_alignment_bytes(
-        mut self,
-        storage_texel_buffer_offset_alignment_bytes: DeviceSize,
-    ) -> Self {
-        self.storage_texel_buffer_offset_alignment_bytes =
-            storage_texel_buffer_offset_alignment_bytes;
-        self
-    }
-    #[inline]
-    pub fn storage_texel_buffer_offset_single_texel_alignment(
-        mut self,
-        storage_texel_buffer_offset_single_texel_alignment: bool,
-    ) -> Self {
-        self.storage_texel_buffer_offset_single_texel_alignment =
-            storage_texel_buffer_offset_single_texel_alignment.into();
-        self
-    }
-    #[inline]
-    pub fn uniform_texel_buffer_offset_alignment_bytes(
-        mut self,
-        uniform_texel_buffer_offset_alignment_bytes: DeviceSize,
-    ) -> Self {
-        self.uniform_texel_buffer_offset_alignment_bytes =
-            uniform_texel_buffer_offset_alignment_bytes;
-        self
-    }
-    #[inline]
-    pub fn uniform_texel_buffer_offset_single_texel_alignment(
-        mut self,
-        uniform_texel_buffer_offset_single_texel_alignment: bool,
-    ) -> Self {
-        self.uniform_texel_buffer_offset_single_texel_alignment =
-            uniform_texel_buffer_offset_single_texel_alignment.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceTexelBufferAlignmentProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -33614,31 +29875,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceSubgroupSizeControlProperties<
         StructureType::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupSizeControlProperties<'_> {}
-impl<'a> PhysicalDeviceSubgroupSizeControlProperties<'a> {
-    #[inline]
-    pub fn min_subgroup_size(mut self, min_subgroup_size: u32) -> Self {
-        self.min_subgroup_size = min_subgroup_size;
-        self
-    }
-    #[inline]
-    pub fn max_subgroup_size(mut self, max_subgroup_size: u32) -> Self {
-        self.max_subgroup_size = max_subgroup_size;
-        self
-    }
-    #[inline]
-    pub fn max_compute_workgroup_subgroups(mut self, max_compute_workgroup_subgroups: u32) -> Self {
-        self.max_compute_workgroup_subgroups = max_compute_workgroup_subgroups;
-        self
-    }
-    #[inline]
-    pub fn required_subgroup_size_stages(
-        mut self,
-        required_subgroup_size_stages: ShaderStageFlags,
-    ) -> Self {
-        self.required_subgroup_size_stages = required_subgroup_size_stages;
-        self
-    }
-}
+impl<'a> PhysicalDeviceSubgroupSizeControlProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -33672,13 +29909,7 @@ unsafe impl ExtendsPipelineShaderStageCreateInfo
 {
 }
 unsafe impl ExtendsShaderCreateInfoEXT for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {}
-impl<'a> PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
-    #[inline]
-    pub fn required_subgroup_size(mut self, required_subgroup_size: u32) -> Self {
-        self.required_subgroup_size = required_subgroup_size;
-        self
-    }
-}
+impl<'a> PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -33751,17 +29982,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceSubpassShadingPropertiesHUAWEI
         StructureType::PHYSICAL_DEVICE_SUBPASS_SHADING_PROPERTIES_HUAWEI;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {}
-impl<'a> PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
-    #[inline]
-    pub fn max_subpass_shading_workgroup_size_aspect_ratio(
-        mut self,
-        max_subpass_shading_workgroup_size_aspect_ratio: u32,
-    ) -> Self {
-        self.max_subpass_shading_workgroup_size_aspect_ratio =
-            max_subpass_shading_workgroup_size_aspect_ratio;
-        self
-    }
-}
+impl<'a> PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -33800,31 +30021,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_>
 {
 }
-impl<'a> PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
-    #[inline]
-    pub fn max_work_group_count(mut self, max_work_group_count: [u32; 3]) -> Self {
-        self.max_work_group_count = max_work_group_count;
-        self
-    }
-    #[inline]
-    pub fn max_work_group_size(mut self, max_work_group_size: [u32; 3]) -> Self {
-        self.max_work_group_size = max_work_group_size;
-        self
-    }
-    #[inline]
-    pub fn max_output_cluster_count(mut self, max_output_cluster_count: u32) -> Self {
-        self.max_output_cluster_count = max_output_cluster_count;
-        self
-    }
-    #[inline]
-    pub fn indirect_buffer_offset_alignment(
-        mut self,
-        indirect_buffer_offset_alignment: DeviceSize,
-    ) -> Self {
-        self.indirect_buffer_offset_alignment = indirect_buffer_offset_alignment;
-        self
-    }
-}
+impl<'a> PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -33996,13 +30193,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceLineRasterizationPropertiesKHR
         StructureType::PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_KHR;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceLineRasterizationPropertiesKHR<'_> {}
-impl<'a> PhysicalDeviceLineRasterizationPropertiesKHR<'a> {
-    #[inline]
-    pub fn line_sub_pixel_precision_bits(mut self, line_sub_pixel_precision_bits: u32) -> Self {
-        self.line_sub_pixel_precision_bits = line_sub_pixel_precision_bits;
-        self
-    }
-}
+impl<'a> PhysicalDeviceLineRasterizationPropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -34285,95 +30476,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan11Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_1_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan11Properties<'_> {}
-impl<'a> PhysicalDeviceVulkan11Properties<'a> {
-    #[inline]
-    pub fn device_uuid(mut self, device_uuid: [u8; UUID_SIZE]) -> Self {
-        self.device_uuid = device_uuid;
-        self
-    }
-    #[inline]
-    pub fn driver_uuid(mut self, driver_uuid: [u8; UUID_SIZE]) -> Self {
-        self.driver_uuid = driver_uuid;
-        self
-    }
-    #[inline]
-    pub fn device_luid(mut self, device_luid: [u8; LUID_SIZE]) -> Self {
-        self.device_luid = device_luid;
-        self
-    }
-    #[inline]
-    pub fn device_node_mask(mut self, device_node_mask: u32) -> Self {
-        self.device_node_mask = device_node_mask;
-        self
-    }
-    #[inline]
-    pub fn device_luid_valid(mut self, device_luid_valid: bool) -> Self {
-        self.device_luid_valid = device_luid_valid.into();
-        self
-    }
-    #[inline]
-    pub fn subgroup_size(mut self, subgroup_size: u32) -> Self {
-        self.subgroup_size = subgroup_size;
-        self
-    }
-    #[inline]
-    pub fn subgroup_supported_stages(
-        mut self,
-        subgroup_supported_stages: ShaderStageFlags,
-    ) -> Self {
-        self.subgroup_supported_stages = subgroup_supported_stages;
-        self
-    }
-    #[inline]
-    pub fn subgroup_supported_operations(
-        mut self,
-        subgroup_supported_operations: SubgroupFeatureFlags,
-    ) -> Self {
-        self.subgroup_supported_operations = subgroup_supported_operations;
-        self
-    }
-    #[inline]
-    pub fn subgroup_quad_operations_in_all_stages(
-        mut self,
-        subgroup_quad_operations_in_all_stages: bool,
-    ) -> Self {
-        self.subgroup_quad_operations_in_all_stages = subgroup_quad_operations_in_all_stages.into();
-        self
-    }
-    #[inline]
-    pub fn point_clipping_behavior(
-        mut self,
-        point_clipping_behavior: PointClippingBehavior,
-    ) -> Self {
-        self.point_clipping_behavior = point_clipping_behavior;
-        self
-    }
-    #[inline]
-    pub fn max_multiview_view_count(mut self, max_multiview_view_count: u32) -> Self {
-        self.max_multiview_view_count = max_multiview_view_count;
-        self
-    }
-    #[inline]
-    pub fn max_multiview_instance_index(mut self, max_multiview_instance_index: u32) -> Self {
-        self.max_multiview_instance_index = max_multiview_instance_index;
-        self
-    }
-    #[inline]
-    pub fn protected_no_fault(mut self, protected_no_fault: bool) -> Self {
-        self.protected_no_fault = protected_no_fault.into();
-        self
-    }
-    #[inline]
-    pub fn max_per_set_descriptors(mut self, max_per_set_descriptors: u32) -> Self {
-        self.max_per_set_descriptors = max_per_set_descriptors;
-        self
-    }
-    #[inline]
-    pub fn max_memory_allocation_size(mut self, max_memory_allocation_size: DeviceSize) -> Self {
-        self.max_memory_allocation_size = max_memory_allocation_size;
-        self
-    }
-}
+impl<'a> PhysicalDeviceVulkan11Properties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -35153,425 +31256,12 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan12Properties<'a> {
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan12Properties<'_> {}
 impl<'a> PhysicalDeviceVulkan12Properties<'a> {
     #[inline]
-    pub fn driver_id(mut self, driver_id: DriverId) -> Self {
-        self.driver_id = driver_id;
-        self
-    }
-    #[inline]
-    pub fn driver_name(
-        mut self,
-        driver_name: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.driver_name, driver_name).map(|()| self)
-    }
-    #[inline]
     pub fn driver_name_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.driver_name)
     }
     #[inline]
-    pub fn driver_info(
-        mut self,
-        driver_info: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.driver_info, driver_info).map(|()| self)
-    }
-    #[inline]
     pub fn driver_info_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.driver_info)
-    }
-    #[inline]
-    pub fn conformance_version(mut self, conformance_version: ConformanceVersion) -> Self {
-        self.conformance_version = conformance_version;
-        self
-    }
-    #[inline]
-    pub fn denorm_behavior_independence(
-        mut self,
-        denorm_behavior_independence: ShaderFloatControlsIndependence,
-    ) -> Self {
-        self.denorm_behavior_independence = denorm_behavior_independence;
-        self
-    }
-    #[inline]
-    pub fn rounding_mode_independence(
-        mut self,
-        rounding_mode_independence: ShaderFloatControlsIndependence,
-    ) -> Self {
-        self.rounding_mode_independence = rounding_mode_independence;
-        self
-    }
-    #[inline]
-    pub fn shader_signed_zero_inf_nan_preserve_float16(
-        mut self,
-        shader_signed_zero_inf_nan_preserve_float16: bool,
-    ) -> Self {
-        self.shader_signed_zero_inf_nan_preserve_float16 =
-            shader_signed_zero_inf_nan_preserve_float16.into();
-        self
-    }
-    #[inline]
-    pub fn shader_signed_zero_inf_nan_preserve_float32(
-        mut self,
-        shader_signed_zero_inf_nan_preserve_float32: bool,
-    ) -> Self {
-        self.shader_signed_zero_inf_nan_preserve_float32 =
-            shader_signed_zero_inf_nan_preserve_float32.into();
-        self
-    }
-    #[inline]
-    pub fn shader_signed_zero_inf_nan_preserve_float64(
-        mut self,
-        shader_signed_zero_inf_nan_preserve_float64: bool,
-    ) -> Self {
-        self.shader_signed_zero_inf_nan_preserve_float64 =
-            shader_signed_zero_inf_nan_preserve_float64.into();
-        self
-    }
-    #[inline]
-    pub fn shader_denorm_preserve_float16(mut self, shader_denorm_preserve_float16: bool) -> Self {
-        self.shader_denorm_preserve_float16 = shader_denorm_preserve_float16.into();
-        self
-    }
-    #[inline]
-    pub fn shader_denorm_preserve_float32(mut self, shader_denorm_preserve_float32: bool) -> Self {
-        self.shader_denorm_preserve_float32 = shader_denorm_preserve_float32.into();
-        self
-    }
-    #[inline]
-    pub fn shader_denorm_preserve_float64(mut self, shader_denorm_preserve_float64: bool) -> Self {
-        self.shader_denorm_preserve_float64 = shader_denorm_preserve_float64.into();
-        self
-    }
-    #[inline]
-    pub fn shader_denorm_flush_to_zero_float16(
-        mut self,
-        shader_denorm_flush_to_zero_float16: bool,
-    ) -> Self {
-        self.shader_denorm_flush_to_zero_float16 = shader_denorm_flush_to_zero_float16.into();
-        self
-    }
-    #[inline]
-    pub fn shader_denorm_flush_to_zero_float32(
-        mut self,
-        shader_denorm_flush_to_zero_float32: bool,
-    ) -> Self {
-        self.shader_denorm_flush_to_zero_float32 = shader_denorm_flush_to_zero_float32.into();
-        self
-    }
-    #[inline]
-    pub fn shader_denorm_flush_to_zero_float64(
-        mut self,
-        shader_denorm_flush_to_zero_float64: bool,
-    ) -> Self {
-        self.shader_denorm_flush_to_zero_float64 = shader_denorm_flush_to_zero_float64.into();
-        self
-    }
-    #[inline]
-    pub fn shader_rounding_mode_rte_float16(
-        mut self,
-        shader_rounding_mode_rte_float16: bool,
-    ) -> Self {
-        self.shader_rounding_mode_rte_float16 = shader_rounding_mode_rte_float16.into();
-        self
-    }
-    #[inline]
-    pub fn shader_rounding_mode_rte_float32(
-        mut self,
-        shader_rounding_mode_rte_float32: bool,
-    ) -> Self {
-        self.shader_rounding_mode_rte_float32 = shader_rounding_mode_rte_float32.into();
-        self
-    }
-    #[inline]
-    pub fn shader_rounding_mode_rte_float64(
-        mut self,
-        shader_rounding_mode_rte_float64: bool,
-    ) -> Self {
-        self.shader_rounding_mode_rte_float64 = shader_rounding_mode_rte_float64.into();
-        self
-    }
-    #[inline]
-    pub fn shader_rounding_mode_rtz_float16(
-        mut self,
-        shader_rounding_mode_rtz_float16: bool,
-    ) -> Self {
-        self.shader_rounding_mode_rtz_float16 = shader_rounding_mode_rtz_float16.into();
-        self
-    }
-    #[inline]
-    pub fn shader_rounding_mode_rtz_float32(
-        mut self,
-        shader_rounding_mode_rtz_float32: bool,
-    ) -> Self {
-        self.shader_rounding_mode_rtz_float32 = shader_rounding_mode_rtz_float32.into();
-        self
-    }
-    #[inline]
-    pub fn shader_rounding_mode_rtz_float64(
-        mut self,
-        shader_rounding_mode_rtz_float64: bool,
-    ) -> Self {
-        self.shader_rounding_mode_rtz_float64 = shader_rounding_mode_rtz_float64.into();
-        self
-    }
-    #[inline]
-    pub fn max_update_after_bind_descriptors_in_all_pools(
-        mut self,
-        max_update_after_bind_descriptors_in_all_pools: u32,
-    ) -> Self {
-        self.max_update_after_bind_descriptors_in_all_pools =
-            max_update_after_bind_descriptors_in_all_pools;
-        self
-    }
-    #[inline]
-    pub fn shader_uniform_buffer_array_non_uniform_indexing_native(
-        mut self,
-        shader_uniform_buffer_array_non_uniform_indexing_native: bool,
-    ) -> Self {
-        self.shader_uniform_buffer_array_non_uniform_indexing_native =
-            shader_uniform_buffer_array_non_uniform_indexing_native.into();
-        self
-    }
-    #[inline]
-    pub fn shader_sampled_image_array_non_uniform_indexing_native(
-        mut self,
-        shader_sampled_image_array_non_uniform_indexing_native: bool,
-    ) -> Self {
-        self.shader_sampled_image_array_non_uniform_indexing_native =
-            shader_sampled_image_array_non_uniform_indexing_native.into();
-        self
-    }
-    #[inline]
-    pub fn shader_storage_buffer_array_non_uniform_indexing_native(
-        mut self,
-        shader_storage_buffer_array_non_uniform_indexing_native: bool,
-    ) -> Self {
-        self.shader_storage_buffer_array_non_uniform_indexing_native =
-            shader_storage_buffer_array_non_uniform_indexing_native.into();
-        self
-    }
-    #[inline]
-    pub fn shader_storage_image_array_non_uniform_indexing_native(
-        mut self,
-        shader_storage_image_array_non_uniform_indexing_native: bool,
-    ) -> Self {
-        self.shader_storage_image_array_non_uniform_indexing_native =
-            shader_storage_image_array_non_uniform_indexing_native.into();
-        self
-    }
-    #[inline]
-    pub fn shader_input_attachment_array_non_uniform_indexing_native(
-        mut self,
-        shader_input_attachment_array_non_uniform_indexing_native: bool,
-    ) -> Self {
-        self.shader_input_attachment_array_non_uniform_indexing_native =
-            shader_input_attachment_array_non_uniform_indexing_native.into();
-        self
-    }
-    #[inline]
-    pub fn robust_buffer_access_update_after_bind(
-        mut self,
-        robust_buffer_access_update_after_bind: bool,
-    ) -> Self {
-        self.robust_buffer_access_update_after_bind = robust_buffer_access_update_after_bind.into();
-        self
-    }
-    #[inline]
-    pub fn quad_divergent_implicit_lod(mut self, quad_divergent_implicit_lod: bool) -> Self {
-        self.quad_divergent_implicit_lod = quad_divergent_implicit_lod.into();
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_update_after_bind_samplers(
-        mut self,
-        max_per_stage_descriptor_update_after_bind_samplers: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_update_after_bind_samplers =
-            max_per_stage_descriptor_update_after_bind_samplers;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_update_after_bind_uniform_buffers(
-        mut self,
-        max_per_stage_descriptor_update_after_bind_uniform_buffers: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_update_after_bind_uniform_buffers =
-            max_per_stage_descriptor_update_after_bind_uniform_buffers;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_update_after_bind_storage_buffers(
-        mut self,
-        max_per_stage_descriptor_update_after_bind_storage_buffers: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_update_after_bind_storage_buffers =
-            max_per_stage_descriptor_update_after_bind_storage_buffers;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_update_after_bind_sampled_images(
-        mut self,
-        max_per_stage_descriptor_update_after_bind_sampled_images: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_update_after_bind_sampled_images =
-            max_per_stage_descriptor_update_after_bind_sampled_images;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_update_after_bind_storage_images(
-        mut self,
-        max_per_stage_descriptor_update_after_bind_storage_images: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_update_after_bind_storage_images =
-            max_per_stage_descriptor_update_after_bind_storage_images;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_update_after_bind_input_attachments(
-        mut self,
-        max_per_stage_descriptor_update_after_bind_input_attachments: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_update_after_bind_input_attachments =
-            max_per_stage_descriptor_update_after_bind_input_attachments;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_update_after_bind_resources(
-        mut self,
-        max_per_stage_update_after_bind_resources: u32,
-    ) -> Self {
-        self.max_per_stage_update_after_bind_resources = max_per_stage_update_after_bind_resources;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_samplers(
-        mut self,
-        max_descriptor_set_update_after_bind_samplers: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_samplers =
-            max_descriptor_set_update_after_bind_samplers;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_uniform_buffers(
-        mut self,
-        max_descriptor_set_update_after_bind_uniform_buffers: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_uniform_buffers =
-            max_descriptor_set_update_after_bind_uniform_buffers;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_uniform_buffers_dynamic(
-        mut self,
-        max_descriptor_set_update_after_bind_uniform_buffers_dynamic: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_uniform_buffers_dynamic =
-            max_descriptor_set_update_after_bind_uniform_buffers_dynamic;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_storage_buffers(
-        mut self,
-        max_descriptor_set_update_after_bind_storage_buffers: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_storage_buffers =
-            max_descriptor_set_update_after_bind_storage_buffers;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_storage_buffers_dynamic(
-        mut self,
-        max_descriptor_set_update_after_bind_storage_buffers_dynamic: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_storage_buffers_dynamic =
-            max_descriptor_set_update_after_bind_storage_buffers_dynamic;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_sampled_images(
-        mut self,
-        max_descriptor_set_update_after_bind_sampled_images: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_sampled_images =
-            max_descriptor_set_update_after_bind_sampled_images;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_storage_images(
-        mut self,
-        max_descriptor_set_update_after_bind_storage_images: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_storage_images =
-            max_descriptor_set_update_after_bind_storage_images;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_input_attachments(
-        mut self,
-        max_descriptor_set_update_after_bind_input_attachments: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_input_attachments =
-            max_descriptor_set_update_after_bind_input_attachments;
-        self
-    }
-    #[inline]
-    pub fn supported_depth_resolve_modes(
-        mut self,
-        supported_depth_resolve_modes: ResolveModeFlags,
-    ) -> Self {
-        self.supported_depth_resolve_modes = supported_depth_resolve_modes;
-        self
-    }
-    #[inline]
-    pub fn supported_stencil_resolve_modes(
-        mut self,
-        supported_stencil_resolve_modes: ResolveModeFlags,
-    ) -> Self {
-        self.supported_stencil_resolve_modes = supported_stencil_resolve_modes;
-        self
-    }
-    #[inline]
-    pub fn independent_resolve_none(mut self, independent_resolve_none: bool) -> Self {
-        self.independent_resolve_none = independent_resolve_none.into();
-        self
-    }
-    #[inline]
-    pub fn independent_resolve(mut self, independent_resolve: bool) -> Self {
-        self.independent_resolve = independent_resolve.into();
-        self
-    }
-    #[inline]
-    pub fn filter_minmax_single_component_formats(
-        mut self,
-        filter_minmax_single_component_formats: bool,
-    ) -> Self {
-        self.filter_minmax_single_component_formats = filter_minmax_single_component_formats.into();
-        self
-    }
-    #[inline]
-    pub fn filter_minmax_image_component_mapping(
-        mut self,
-        filter_minmax_image_component_mapping: bool,
-    ) -> Self {
-        self.filter_minmax_image_component_mapping = filter_minmax_image_component_mapping.into();
-        self
-    }
-    #[inline]
-    pub fn max_timeline_semaphore_value_difference(
-        mut self,
-        max_timeline_semaphore_value_difference: u64,
-    ) -> Self {
-        self.max_timeline_semaphore_value_difference = max_timeline_semaphore_value_difference;
-        self
-    }
-    #[inline]
-    pub fn framebuffer_integer_color_sample_counts(
-        mut self,
-        framebuffer_integer_color_sample_counts: SampleCountFlags,
-    ) -> Self {
-        self.framebuffer_integer_color_sample_counts = framebuffer_integer_color_sample_counts;
-        self
     }
 }
 #[repr(C)]
@@ -35790,386 +31480,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan13Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_3_PROPERTIES;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan13Properties<'_> {}
-impl<'a> PhysicalDeviceVulkan13Properties<'a> {
-    #[inline]
-    pub fn min_subgroup_size(mut self, min_subgroup_size: u32) -> Self {
-        self.min_subgroup_size = min_subgroup_size;
-        self
-    }
-    #[inline]
-    pub fn max_subgroup_size(mut self, max_subgroup_size: u32) -> Self {
-        self.max_subgroup_size = max_subgroup_size;
-        self
-    }
-    #[inline]
-    pub fn max_compute_workgroup_subgroups(mut self, max_compute_workgroup_subgroups: u32) -> Self {
-        self.max_compute_workgroup_subgroups = max_compute_workgroup_subgroups;
-        self
-    }
-    #[inline]
-    pub fn required_subgroup_size_stages(
-        mut self,
-        required_subgroup_size_stages: ShaderStageFlags,
-    ) -> Self {
-        self.required_subgroup_size_stages = required_subgroup_size_stages;
-        self
-    }
-    #[inline]
-    pub fn max_inline_uniform_block_size(mut self, max_inline_uniform_block_size: u32) -> Self {
-        self.max_inline_uniform_block_size = max_inline_uniform_block_size;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_inline_uniform_blocks(
-        mut self,
-        max_per_stage_descriptor_inline_uniform_blocks: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_inline_uniform_blocks =
-            max_per_stage_descriptor_inline_uniform_blocks;
-        self
-    }
-    #[inline]
-    pub fn max_per_stage_descriptor_update_after_bind_inline_uniform_blocks(
-        mut self,
-        max_per_stage_descriptor_update_after_bind_inline_uniform_blocks: u32,
-    ) -> Self {
-        self.max_per_stage_descriptor_update_after_bind_inline_uniform_blocks =
-            max_per_stage_descriptor_update_after_bind_inline_uniform_blocks;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_inline_uniform_blocks(
-        mut self,
-        max_descriptor_set_inline_uniform_blocks: u32,
-    ) -> Self {
-        self.max_descriptor_set_inline_uniform_blocks = max_descriptor_set_inline_uniform_blocks;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_set_update_after_bind_inline_uniform_blocks(
-        mut self,
-        max_descriptor_set_update_after_bind_inline_uniform_blocks: u32,
-    ) -> Self {
-        self.max_descriptor_set_update_after_bind_inline_uniform_blocks =
-            max_descriptor_set_update_after_bind_inline_uniform_blocks;
-        self
-    }
-    #[inline]
-    pub fn max_inline_uniform_total_size(mut self, max_inline_uniform_total_size: u32) -> Self {
-        self.max_inline_uniform_total_size = max_inline_uniform_total_size;
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product8_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product8_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product8_bit_unsigned_accelerated =
-            integer_dot_product8_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product8_bit_signed_accelerated(
-        mut self,
-        integer_dot_product8_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product8_bit_signed_accelerated =
-            integer_dot_product8_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product8_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product8_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product8_bit_mixed_signedness_accelerated =
-            integer_dot_product8_bit_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product4x8_bit_packed_unsigned_accelerated(
-        mut self,
-        integer_dot_product4x8_bit_packed_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product4x8_bit_packed_unsigned_accelerated =
-            integer_dot_product4x8_bit_packed_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product4x8_bit_packed_signed_accelerated(
-        mut self,
-        integer_dot_product4x8_bit_packed_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product4x8_bit_packed_signed_accelerated =
-            integer_dot_product4x8_bit_packed_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product4x8_bit_packed_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product4x8_bit_packed_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product4x8_bit_packed_mixed_signedness_accelerated =
-            integer_dot_product4x8_bit_packed_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product16_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product16_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product16_bit_unsigned_accelerated =
-            integer_dot_product16_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product16_bit_signed_accelerated(
-        mut self,
-        integer_dot_product16_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product16_bit_signed_accelerated =
-            integer_dot_product16_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product16_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product16_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product16_bit_mixed_signedness_accelerated =
-            integer_dot_product16_bit_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product32_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product32_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product32_bit_unsigned_accelerated =
-            integer_dot_product32_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product32_bit_signed_accelerated(
-        mut self,
-        integer_dot_product32_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product32_bit_signed_accelerated =
-            integer_dot_product32_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product32_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product32_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product32_bit_mixed_signedness_accelerated =
-            integer_dot_product32_bit_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product64_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product64_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product64_bit_unsigned_accelerated =
-            integer_dot_product64_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product64_bit_signed_accelerated(
-        mut self,
-        integer_dot_product64_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product64_bit_signed_accelerated =
-            integer_dot_product64_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product64_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product64_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product64_bit_mixed_signedness_accelerated =
-            integer_dot_product64_bit_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated =
-            integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating8_bit_signed_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating8_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating8_bit_signed_accelerated =
-            integer_dot_product_accumulating_saturating8_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated =
-            integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated =
-            integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated =
-            integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : bool,
-    ) -> Self {
-        self . integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated = integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated . into () ;
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated =
-            integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating16_bit_signed_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating16_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating16_bit_signed_accelerated =
-            integer_dot_product_accumulating_saturating16_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated =
-            integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated =
-            integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating32_bit_signed_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating32_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating32_bit_signed_accelerated =
-            integer_dot_product_accumulating_saturating32_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated =
-            integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated =
-            integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating64_bit_signed_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating64_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating64_bit_signed_accelerated =
-            integer_dot_product_accumulating_saturating64_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated =
-            integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn storage_texel_buffer_offset_alignment_bytes(
-        mut self,
-        storage_texel_buffer_offset_alignment_bytes: DeviceSize,
-    ) -> Self {
-        self.storage_texel_buffer_offset_alignment_bytes =
-            storage_texel_buffer_offset_alignment_bytes;
-        self
-    }
-    #[inline]
-    pub fn storage_texel_buffer_offset_single_texel_alignment(
-        mut self,
-        storage_texel_buffer_offset_single_texel_alignment: bool,
-    ) -> Self {
-        self.storage_texel_buffer_offset_single_texel_alignment =
-            storage_texel_buffer_offset_single_texel_alignment.into();
-        self
-    }
-    #[inline]
-    pub fn uniform_texel_buffer_offset_alignment_bytes(
-        mut self,
-        uniform_texel_buffer_offset_alignment_bytes: DeviceSize,
-    ) -> Self {
-        self.uniform_texel_buffer_offset_alignment_bytes =
-            uniform_texel_buffer_offset_alignment_bytes;
-        self
-    }
-    #[inline]
-    pub fn uniform_texel_buffer_offset_single_texel_alignment(
-        mut self,
-        uniform_texel_buffer_offset_single_texel_alignment: bool,
-    ) -> Self {
-        self.uniform_texel_buffer_offset_single_texel_alignment =
-            uniform_texel_buffer_offset_single_texel_alignment.into();
-        self
-    }
-    #[inline]
-    pub fn max_buffer_size(mut self, max_buffer_size: DeviceSize) -> Self {
-        self.max_buffer_size = max_buffer_size;
-        self
-    }
-}
+impl<'a> PhysicalDeviceVulkan13Properties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -36300,43 +31611,16 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceToolProperties<'a> {
 }
 impl<'a> PhysicalDeviceToolProperties<'a> {
     #[inline]
-    pub fn name(mut self, name: &CStr) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.name, name).map(|()| self)
-    }
-    #[inline]
     pub fn name_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.name)
-    }
-    #[inline]
-    pub fn version(
-        mut self,
-        version: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.version, version).map(|()| self)
     }
     #[inline]
     pub fn version_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.version)
     }
     #[inline]
-    pub fn purposes(mut self, purposes: ToolPurposeFlags) -> Self {
-        self.purposes = purposes;
-        self
-    }
-    #[inline]
-    pub fn description(
-        mut self,
-        description: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
-    }
-    #[inline]
     pub fn description_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.description)
-    }
-    #[inline]
-    pub fn layer(mut self, layer: &CStr) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.layer, layer).map(|()| self)
     }
     #[inline]
     pub fn layer_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
@@ -36425,16 +31709,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceCustomBorderColorPropertiesEXT
         StructureType::PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
-    #[inline]
-    pub fn max_custom_border_color_samplers(
-        mut self,
-        max_custom_border_color_samplers: u32,
-    ) -> Self {
-        self.max_custom_border_color_samplers = max_custom_border_color_samplers;
-        self
-    }
-}
+impl<'a> PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -38551,26 +33826,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceRobustness2PropertiesEXT<'a> {
         StructureType::PHYSICAL_DEVICE_ROBUSTNESS_2_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRobustness2PropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceRobustness2PropertiesEXT<'a> {
-    #[inline]
-    pub fn robust_storage_buffer_access_size_alignment(
-        mut self,
-        robust_storage_buffer_access_size_alignment: DeviceSize,
-    ) -> Self {
-        self.robust_storage_buffer_access_size_alignment =
-            robust_storage_buffer_access_size_alignment;
-        self
-    }
-    #[inline]
-    pub fn robust_uniform_buffer_access_size_alignment(
-        mut self,
-        robust_uniform_buffer_access_size_alignment: DeviceSize,
-    ) -> Self {
-        self.robust_uniform_buffer_access_size_alignment =
-            robust_uniform_buffer_access_size_alignment;
-        self
-    }
-}
+impl<'a> PhysicalDeviceRobustness2PropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -40152,151 +35408,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_>
 {
 }
-impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
-    #[inline]
-    pub fn min_fragment_shading_rate_attachment_texel_size(
-        mut self,
-        min_fragment_shading_rate_attachment_texel_size: Extent2D,
-    ) -> Self {
-        self.min_fragment_shading_rate_attachment_texel_size =
-            min_fragment_shading_rate_attachment_texel_size;
-        self
-    }
-    #[inline]
-    pub fn max_fragment_shading_rate_attachment_texel_size(
-        mut self,
-        max_fragment_shading_rate_attachment_texel_size: Extent2D,
-    ) -> Self {
-        self.max_fragment_shading_rate_attachment_texel_size =
-            max_fragment_shading_rate_attachment_texel_size;
-        self
-    }
-    #[inline]
-    pub fn max_fragment_shading_rate_attachment_texel_size_aspect_ratio(
-        mut self,
-        max_fragment_shading_rate_attachment_texel_size_aspect_ratio: u32,
-    ) -> Self {
-        self.max_fragment_shading_rate_attachment_texel_size_aspect_ratio =
-            max_fragment_shading_rate_attachment_texel_size_aspect_ratio;
-        self
-    }
-    #[inline]
-    pub fn primitive_fragment_shading_rate_with_multiple_viewports(
-        mut self,
-        primitive_fragment_shading_rate_with_multiple_viewports: bool,
-    ) -> Self {
-        self.primitive_fragment_shading_rate_with_multiple_viewports =
-            primitive_fragment_shading_rate_with_multiple_viewports.into();
-        self
-    }
-    #[inline]
-    pub fn layered_shading_rate_attachments(
-        mut self,
-        layered_shading_rate_attachments: bool,
-    ) -> Self {
-        self.layered_shading_rate_attachments = layered_shading_rate_attachments.into();
-        self
-    }
-    #[inline]
-    pub fn fragment_shading_rate_non_trivial_combiner_ops(
-        mut self,
-        fragment_shading_rate_non_trivial_combiner_ops: bool,
-    ) -> Self {
-        self.fragment_shading_rate_non_trivial_combiner_ops =
-            fragment_shading_rate_non_trivial_combiner_ops.into();
-        self
-    }
-    #[inline]
-    pub fn max_fragment_size(mut self, max_fragment_size: Extent2D) -> Self {
-        self.max_fragment_size = max_fragment_size;
-        self
-    }
-    #[inline]
-    pub fn max_fragment_size_aspect_ratio(mut self, max_fragment_size_aspect_ratio: u32) -> Self {
-        self.max_fragment_size_aspect_ratio = max_fragment_size_aspect_ratio;
-        self
-    }
-    #[inline]
-    pub fn max_fragment_shading_rate_coverage_samples(
-        mut self,
-        max_fragment_shading_rate_coverage_samples: u32,
-    ) -> Self {
-        self.max_fragment_shading_rate_coverage_samples =
-            max_fragment_shading_rate_coverage_samples;
-        self
-    }
-    #[inline]
-    pub fn max_fragment_shading_rate_rasterization_samples(
-        mut self,
-        max_fragment_shading_rate_rasterization_samples: SampleCountFlags,
-    ) -> Self {
-        self.max_fragment_shading_rate_rasterization_samples =
-            max_fragment_shading_rate_rasterization_samples;
-        self
-    }
-    #[inline]
-    pub fn fragment_shading_rate_with_shader_depth_stencil_writes(
-        mut self,
-        fragment_shading_rate_with_shader_depth_stencil_writes: bool,
-    ) -> Self {
-        self.fragment_shading_rate_with_shader_depth_stencil_writes =
-            fragment_shading_rate_with_shader_depth_stencil_writes.into();
-        self
-    }
-    #[inline]
-    pub fn fragment_shading_rate_with_sample_mask(
-        mut self,
-        fragment_shading_rate_with_sample_mask: bool,
-    ) -> Self {
-        self.fragment_shading_rate_with_sample_mask = fragment_shading_rate_with_sample_mask.into();
-        self
-    }
-    #[inline]
-    pub fn fragment_shading_rate_with_shader_sample_mask(
-        mut self,
-        fragment_shading_rate_with_shader_sample_mask: bool,
-    ) -> Self {
-        self.fragment_shading_rate_with_shader_sample_mask =
-            fragment_shading_rate_with_shader_sample_mask.into();
-        self
-    }
-    #[inline]
-    pub fn fragment_shading_rate_with_conservative_rasterization(
-        mut self,
-        fragment_shading_rate_with_conservative_rasterization: bool,
-    ) -> Self {
-        self.fragment_shading_rate_with_conservative_rasterization =
-            fragment_shading_rate_with_conservative_rasterization.into();
-        self
-    }
-    #[inline]
-    pub fn fragment_shading_rate_with_fragment_shader_interlock(
-        mut self,
-        fragment_shading_rate_with_fragment_shader_interlock: bool,
-    ) -> Self {
-        self.fragment_shading_rate_with_fragment_shader_interlock =
-            fragment_shading_rate_with_fragment_shader_interlock.into();
-        self
-    }
-    #[inline]
-    pub fn fragment_shading_rate_with_custom_sample_locations(
-        mut self,
-        fragment_shading_rate_with_custom_sample_locations: bool,
-    ) -> Self {
-        self.fragment_shading_rate_with_custom_sample_locations =
-            fragment_shading_rate_with_custom_sample_locations.into();
-        self
-    }
-    #[inline]
-    pub fn fragment_shading_rate_strict_multiply_combiner(
-        mut self,
-        fragment_shading_rate_strict_multiply_combiner: bool,
-    ) -> Self {
-        self.fragment_shading_rate_strict_multiply_combiner =
-            fragment_shading_rate_strict_multiply_combiner.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -40326,18 +35438,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateKHR<'_> {
 unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShadingRateKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_KHR;
 }
-impl<'a> PhysicalDeviceFragmentShadingRateKHR<'a> {
-    #[inline]
-    pub fn sample_counts(mut self, sample_counts: SampleCountFlags) -> Self {
-        self.sample_counts = sample_counts;
-        self
-    }
-    #[inline]
-    pub fn fragment_size(mut self, fragment_size: Extent2D) -> Self {
-        self.fragment_size = fragment_size;
-        self
-    }
-}
+impl<'a> PhysicalDeviceFragmentShadingRateKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -40563,23 +35664,7 @@ unsafe impl<'a> TaggedStructure for AccelerationStructureBuildSizesInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR;
 }
-impl<'a> AccelerationStructureBuildSizesInfoKHR<'a> {
-    #[inline]
-    pub fn acceleration_structure_size(mut self, acceleration_structure_size: DeviceSize) -> Self {
-        self.acceleration_structure_size = acceleration_structure_size;
-        self
-    }
-    #[inline]
-    pub fn update_scratch_size(mut self, update_scratch_size: DeviceSize) -> Self {
-        self.update_scratch_size = update_scratch_size;
-        self
-    }
-    #[inline]
-    pub fn build_scratch_size(mut self, build_scratch_size: DeviceSize) -> Self {
-        self.build_scratch_size = build_scratch_size;
-        self
-    }
-}
+impl<'a> AccelerationStructureBuildSizesInfoKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -41035,102 +36120,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'_>
 {
 }
-impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
-    #[inline]
-    pub fn max_indirect_pipeline_count(mut self, max_indirect_pipeline_count: u32) -> Self {
-        self.max_indirect_pipeline_count = max_indirect_pipeline_count;
-        self
-    }
-    #[inline]
-    pub fn max_indirect_shader_object_count(
-        mut self,
-        max_indirect_shader_object_count: u32,
-    ) -> Self {
-        self.max_indirect_shader_object_count = max_indirect_shader_object_count;
-        self
-    }
-    #[inline]
-    pub fn max_indirect_sequence_count(mut self, max_indirect_sequence_count: u32) -> Self {
-        self.max_indirect_sequence_count = max_indirect_sequence_count;
-        self
-    }
-    #[inline]
-    pub fn max_indirect_commands_token_count(
-        mut self,
-        max_indirect_commands_token_count: u32,
-    ) -> Self {
-        self.max_indirect_commands_token_count = max_indirect_commands_token_count;
-        self
-    }
-    #[inline]
-    pub fn max_indirect_commands_token_offset(
-        mut self,
-        max_indirect_commands_token_offset: u32,
-    ) -> Self {
-        self.max_indirect_commands_token_offset = max_indirect_commands_token_offset;
-        self
-    }
-    #[inline]
-    pub fn max_indirect_commands_indirect_stride(
-        mut self,
-        max_indirect_commands_indirect_stride: u32,
-    ) -> Self {
-        self.max_indirect_commands_indirect_stride = max_indirect_commands_indirect_stride;
-        self
-    }
-    #[inline]
-    pub fn supported_indirect_commands_input_modes(
-        mut self,
-        supported_indirect_commands_input_modes: IndirectCommandsInputModeFlagsEXT,
-    ) -> Self {
-        self.supported_indirect_commands_input_modes = supported_indirect_commands_input_modes;
-        self
-    }
-    #[inline]
-    pub fn supported_indirect_commands_shader_stages(
-        mut self,
-        supported_indirect_commands_shader_stages: ShaderStageFlags,
-    ) -> Self {
-        self.supported_indirect_commands_shader_stages = supported_indirect_commands_shader_stages;
-        self
-    }
-    #[inline]
-    pub fn supported_indirect_commands_shader_stages_pipeline_binding(
-        mut self,
-        supported_indirect_commands_shader_stages_pipeline_binding: ShaderStageFlags,
-    ) -> Self {
-        self.supported_indirect_commands_shader_stages_pipeline_binding =
-            supported_indirect_commands_shader_stages_pipeline_binding;
-        self
-    }
-    #[inline]
-    pub fn supported_indirect_commands_shader_stages_shader_binding(
-        mut self,
-        supported_indirect_commands_shader_stages_shader_binding: ShaderStageFlags,
-    ) -> Self {
-        self.supported_indirect_commands_shader_stages_shader_binding =
-            supported_indirect_commands_shader_stages_shader_binding;
-        self
-    }
-    #[inline]
-    pub fn device_generated_commands_transform_feedback(
-        mut self,
-        device_generated_commands_transform_feedback: bool,
-    ) -> Self {
-        self.device_generated_commands_transform_feedback =
-            device_generated_commands_transform_feedback.into();
-        self
-    }
-    #[inline]
-    pub fn device_generated_commands_multi_draw_indirect_count(
-        mut self,
-        device_generated_commands_multi_draw_indirect_count: bool,
-    ) -> Self {
-        self.device_generated_commands_multi_draw_indirect_count =
-            device_generated_commands_multi_draw_indirect_count.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -43247,16 +38237,7 @@ unsafe impl<'a> TaggedStructure for QueueFamilyCheckpointProperties2NV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV;
 }
 unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointProperties2NV<'_> {}
-impl<'a> QueueFamilyCheckpointProperties2NV<'a> {
-    #[inline]
-    pub fn checkpoint_execution_stage_mask(
-        mut self,
-        checkpoint_execution_stage_mask: PipelineStageFlags2,
-    ) -> Self {
-        self.checkpoint_execution_stage_mask = checkpoint_execution_stage_mask;
-        self
-    }
-}
+impl<'a> QueueFamilyCheckpointProperties2NV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -43286,18 +38267,7 @@ impl ::core::default::Default for CheckpointData2NV<'_> {
 unsafe impl<'a> TaggedStructure for CheckpointData2NV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CHECKPOINT_DATA_2_NV;
 }
-impl<'a> CheckpointData2NV<'a> {
-    #[inline]
-    pub fn stage(mut self, stage: PipelineStageFlags2) -> Self {
-        self.stage = stage;
-        self
-    }
-    #[inline]
-    pub fn checkpoint_marker(mut self, checkpoint_marker: *mut c_void) -> Self {
-        self.p_checkpoint_marker = checkpoint_marker;
-        self
-    }
-}
+impl<'a> CheckpointData2NV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -43849,13 +38819,7 @@ unsafe impl<'a> TaggedStructure for SubresourceHostMemcpySizeEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBRESOURCE_HOST_MEMCPY_SIZE_EXT;
 }
 unsafe impl ExtendsSubresourceLayout2KHR for SubresourceHostMemcpySizeEXT<'_> {}
-impl<'a> SubresourceHostMemcpySizeEXT<'a> {
-    #[inline]
-    pub fn size(mut self, size: DeviceSize) -> Self {
-        self.size = size;
-        self
-    }
-}
+impl<'a> SubresourceHostMemcpySizeEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -43887,18 +38851,7 @@ unsafe impl<'a> TaggedStructure for HostImageCopyDevicePerformanceQueryEXT<'a> {
         StructureType::HOST_IMAGE_COPY_DEVICE_PERFORMANCE_QUERY_EXT;
 }
 unsafe impl ExtendsImageFormatProperties2 for HostImageCopyDevicePerformanceQueryEXT<'_> {}
-impl<'a> HostImageCopyDevicePerformanceQueryEXT<'a> {
-    #[inline]
-    pub fn optimal_device_access(mut self, optimal_device_access: bool) -> Self {
-        self.optimal_device_access = optimal_device_access.into();
-        self
-    }
-    #[inline]
-    pub fn identical_memory_layout(mut self, identical_memory_layout: bool) -> Self {
-        self.identical_memory_layout = identical_memory_layout.into();
-        self
-    }
-}
+impl<'a> HostImageCopyDevicePerformanceQueryEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -44072,13 +39025,7 @@ unsafe impl<'a> TaggedStructure for SubpassResolvePerformanceQueryEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_RESOLVE_PERFORMANCE_QUERY_EXT;
 }
 unsafe impl ExtendsFormatProperties2 for SubpassResolvePerformanceQueryEXT<'_> {}
-impl<'a> SubpassResolvePerformanceQueryEXT<'a> {
-    #[inline]
-    pub fn optimal(mut self, optimal: bool) -> Self {
-        self.optimal = optimal.into();
-        self
-    }
-}
+impl<'a> SubpassResolvePerformanceQueryEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -44195,16 +39142,7 @@ unsafe impl<'a> TaggedStructure for QueueFamilyVideoPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_VIDEO_PROPERTIES_KHR;
 }
 unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyVideoPropertiesKHR<'_> {}
-impl<'a> QueueFamilyVideoPropertiesKHR<'a> {
-    #[inline]
-    pub fn video_codec_operations(
-        mut self,
-        video_codec_operations: VideoCodecOperationFlagsKHR,
-    ) -> Self {
-        self.video_codec_operations = video_codec_operations;
-        self
-    }
-}
+impl<'a> QueueFamilyVideoPropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -44234,13 +39172,7 @@ unsafe impl<'a> TaggedStructure for QueueFamilyQueryResultStatusPropertiesKHR<'a
         StructureType::QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_KHR;
 }
 unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyQueryResultStatusPropertiesKHR<'_> {}
-impl<'a> QueueFamilyQueryResultStatusPropertiesKHR<'a> {
-    #[inline]
-    pub fn query_result_status_support(mut self, query_result_status_support: bool) -> Self {
-        self.query_result_status_support = query_result_status_support.into();
-        self
-    }
-}
+impl<'a> QueueFamilyQueryResultStatusPropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -44407,38 +39339,7 @@ impl ::core::default::Default for VideoFormatPropertiesKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoFormatPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_FORMAT_PROPERTIES_KHR;
 }
-impl<'a> VideoFormatPropertiesKHR<'a> {
-    #[inline]
-    pub fn format(mut self, format: Format) -> Self {
-        self.format = format;
-        self
-    }
-    #[inline]
-    pub fn component_mapping(mut self, component_mapping: ComponentMapping) -> Self {
-        self.component_mapping = component_mapping;
-        self
-    }
-    #[inline]
-    pub fn image_create_flags(mut self, image_create_flags: ImageCreateFlags) -> Self {
-        self.image_create_flags = image_create_flags;
-        self
-    }
-    #[inline]
-    pub fn image_type(mut self, image_type: ImageType) -> Self {
-        self.image_type = image_type;
-        self
-    }
-    #[inline]
-    pub fn image_tiling(mut self, image_tiling: ImageTiling) -> Self {
-        self.image_tiling = image_tiling;
-        self
-    }
-    #[inline]
-    pub fn image_usage_flags(mut self, image_usage_flags: ImageUsageFlags) -> Self {
-        self.image_usage_flags = image_usage_flags;
-        self
-    }
-}
+impl<'a> VideoFormatPropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -44594,57 +39495,6 @@ unsafe impl<'a> TaggedStructure for VideoCapabilitiesKHR<'a> {
 }
 pub unsafe trait ExtendsVideoCapabilitiesKHR {}
 impl<'a> VideoCapabilitiesKHR<'a> {
-    #[inline]
-    pub fn flags(mut self, flags: VideoCapabilityFlagsKHR) -> Self {
-        self.flags = flags;
-        self
-    }
-    #[inline]
-    pub fn min_bitstream_buffer_offset_alignment(
-        mut self,
-        min_bitstream_buffer_offset_alignment: DeviceSize,
-    ) -> Self {
-        self.min_bitstream_buffer_offset_alignment = min_bitstream_buffer_offset_alignment;
-        self
-    }
-    #[inline]
-    pub fn min_bitstream_buffer_size_alignment(
-        mut self,
-        min_bitstream_buffer_size_alignment: DeviceSize,
-    ) -> Self {
-        self.min_bitstream_buffer_size_alignment = min_bitstream_buffer_size_alignment;
-        self
-    }
-    #[inline]
-    pub fn picture_access_granularity(mut self, picture_access_granularity: Extent2D) -> Self {
-        self.picture_access_granularity = picture_access_granularity;
-        self
-    }
-    #[inline]
-    pub fn min_coded_extent(mut self, min_coded_extent: Extent2D) -> Self {
-        self.min_coded_extent = min_coded_extent;
-        self
-    }
-    #[inline]
-    pub fn max_coded_extent(mut self, max_coded_extent: Extent2D) -> Self {
-        self.max_coded_extent = max_coded_extent;
-        self
-    }
-    #[inline]
-    pub fn max_dpb_slots(mut self, max_dpb_slots: u32) -> Self {
-        self.max_dpb_slots = max_dpb_slots;
-        self
-    }
-    #[inline]
-    pub fn max_active_reference_pictures(mut self, max_active_reference_pictures: u32) -> Self {
-        self.max_active_reference_pictures = max_active_reference_pictures;
-        self
-    }
-    #[inline]
-    pub fn std_header_version(mut self, std_header_version: ExtensionProperties) -> Self {
-        self.std_header_version = std_header_version;
-        self
-    }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
@@ -44725,18 +39575,7 @@ impl ::core::default::Default for VideoSessionMemoryRequirementsKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoSessionMemoryRequirementsKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_MEMORY_REQUIREMENTS_KHR;
 }
-impl<'a> VideoSessionMemoryRequirementsKHR<'a> {
-    #[inline]
-    pub fn memory_bind_index(mut self, memory_bind_index: u32) -> Self {
-        self.memory_bind_index = memory_bind_index;
-        self
-    }
-    #[inline]
-    pub fn memory_requirements(mut self, memory_requirements: MemoryRequirements) -> Self {
-        self.memory_requirements = memory_requirements;
-        self
-    }
-}
+impl<'a> VideoSessionMemoryRequirementsKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -44970,13 +39809,7 @@ unsafe impl<'a> TaggedStructure for VideoDecodeCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_CAPABILITIES_KHR;
 }
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeCapabilitiesKHR<'_> {}
-impl<'a> VideoDecodeCapabilitiesKHR<'a> {
-    #[inline]
-    pub fn flags(mut self, flags: VideoDecodeCapabilityFlagsKHR) -> Self {
-        self.flags = flags;
-        self
-    }
-}
+impl<'a> VideoDecodeCapabilitiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -45303,18 +40136,7 @@ unsafe impl<'a> TaggedStructure for VideoDecodeH264CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_CAPABILITIES_KHR;
 }
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH264CapabilitiesKHR<'_> {}
-impl<'a> VideoDecodeH264CapabilitiesKHR<'a> {
-    #[inline]
-    pub fn max_level_idc(mut self, max_level_idc: StdVideoH264LevelIdc) -> Self {
-        self.max_level_idc = max_level_idc;
-        self
-    }
-    #[inline]
-    pub fn field_offset_granularity(mut self, field_offset_granularity: Offset2D) -> Self {
-        self.field_offset_granularity = field_offset_granularity;
-        self
-    }
-}
+impl<'a> VideoDecodeH264CapabilitiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -45570,13 +40392,7 @@ unsafe impl<'a> TaggedStructure for VideoDecodeH265CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_CAPABILITIES_KHR;
 }
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH265CapabilitiesKHR<'_> {}
-impl<'a> VideoDecodeH265CapabilitiesKHR<'a> {
-    #[inline]
-    pub fn max_level_idc(mut self, max_level_idc: StdVideoH265LevelIdc) -> Self {
-        self.max_level_idc = max_level_idc;
-        self
-    }
-}
+impl<'a> VideoDecodeH265CapabilitiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -45856,13 +40672,7 @@ unsafe impl<'a> TaggedStructure for VideoDecodeAV1CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_CAPABILITIES_KHR;
 }
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeAV1CapabilitiesKHR<'_> {}
-impl<'a> VideoDecodeAV1CapabilitiesKHR<'a> {
-    #[inline]
-    pub fn max_level(mut self, max_level: StdVideoAV1Level) -> Self {
-        self.max_level = max_level;
-        self
-    }
-}
+impl<'a> VideoDecodeAV1CapabilitiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -46469,11 +41279,6 @@ unsafe impl<'a> TaggedStructure for VideoEncodeSessionParametersFeedbackInfoKHR<
 }
 pub unsafe trait ExtendsVideoEncodeSessionParametersFeedbackInfoKHR {}
 impl<'a> VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
-    #[inline]
-    pub fn has_overrides(mut self, has_overrides: bool) -> Self {
-        self.has_overrides = has_overrides.into();
-        self
-    }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
@@ -47097,22 +41902,6 @@ unsafe impl<'a> TaggedStructure for VideoEncodeQualityLevelPropertiesKHR<'a> {
 }
 pub unsafe trait ExtendsVideoEncodeQualityLevelPropertiesKHR {}
 impl<'a> VideoEncodeQualityLevelPropertiesKHR<'a> {
-    #[inline]
-    pub fn preferred_rate_control_mode(
-        mut self,
-        preferred_rate_control_mode: VideoEncodeRateControlModeFlagsKHR,
-    ) -> Self {
-        self.preferred_rate_control_mode = preferred_rate_control_mode;
-        self
-    }
-    #[inline]
-    pub fn preferred_rate_control_layer_count(
-        mut self,
-        preferred_rate_control_layer_count: u32,
-    ) -> Self {
-        self.preferred_rate_control_layer_count = preferred_rate_control_layer_count;
-        self
-    }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
@@ -47389,52 +42178,7 @@ unsafe impl<'a> TaggedStructure for VideoEncodeCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_CAPABILITIES_KHR;
 }
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeCapabilitiesKHR<'_> {}
-impl<'a> VideoEncodeCapabilitiesKHR<'a> {
-    #[inline]
-    pub fn flags(mut self, flags: VideoEncodeCapabilityFlagsKHR) -> Self {
-        self.flags = flags;
-        self
-    }
-    #[inline]
-    pub fn rate_control_modes(
-        mut self,
-        rate_control_modes: VideoEncodeRateControlModeFlagsKHR,
-    ) -> Self {
-        self.rate_control_modes = rate_control_modes;
-        self
-    }
-    #[inline]
-    pub fn max_rate_control_layers(mut self, max_rate_control_layers: u32) -> Self {
-        self.max_rate_control_layers = max_rate_control_layers;
-        self
-    }
-    #[inline]
-    pub fn max_bitrate(mut self, max_bitrate: u64) -> Self {
-        self.max_bitrate = max_bitrate;
-        self
-    }
-    #[inline]
-    pub fn max_quality_levels(mut self, max_quality_levels: u32) -> Self {
-        self.max_quality_levels = max_quality_levels;
-        self
-    }
-    #[inline]
-    pub fn encode_input_picture_granularity(
-        mut self,
-        encode_input_picture_granularity: Extent2D,
-    ) -> Self {
-        self.encode_input_picture_granularity = encode_input_picture_granularity;
-        self
-    }
-    #[inline]
-    pub fn supported_encode_feedback_flags(
-        mut self,
-        supported_encode_feedback_flags: VideoEncodeFeedbackFlagsKHR,
-    ) -> Self {
-        self.supported_encode_feedback_flags = supported_encode_feedback_flags;
-        self
-    }
-}
+impl<'a> VideoEncodeCapabilitiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -47487,82 +42231,7 @@ unsafe impl<'a> TaggedStructure for VideoEncodeH264CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_CAPABILITIES_KHR;
 }
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH264CapabilitiesKHR<'_> {}
-impl<'a> VideoEncodeH264CapabilitiesKHR<'a> {
-    #[inline]
-    pub fn flags(mut self, flags: VideoEncodeH264CapabilityFlagsKHR) -> Self {
-        self.flags = flags;
-        self
-    }
-    #[inline]
-    pub fn max_level_idc(mut self, max_level_idc: StdVideoH264LevelIdc) -> Self {
-        self.max_level_idc = max_level_idc;
-        self
-    }
-    #[inline]
-    pub fn max_slice_count(mut self, max_slice_count: u32) -> Self {
-        self.max_slice_count = max_slice_count;
-        self
-    }
-    #[inline]
-    pub fn max_p_picture_l0_reference_count(
-        mut self,
-        max_p_picture_l0_reference_count: u32,
-    ) -> Self {
-        self.max_p_picture_l0_reference_count = max_p_picture_l0_reference_count;
-        self
-    }
-    #[inline]
-    pub fn max_b_picture_l0_reference_count(
-        mut self,
-        max_b_picture_l0_reference_count: u32,
-    ) -> Self {
-        self.max_b_picture_l0_reference_count = max_b_picture_l0_reference_count;
-        self
-    }
-    #[inline]
-    pub fn max_l1_reference_count(mut self, max_l1_reference_count: u32) -> Self {
-        self.max_l1_reference_count = max_l1_reference_count;
-        self
-    }
-    #[inline]
-    pub fn max_temporal_layer_count(mut self, max_temporal_layer_count: u32) -> Self {
-        self.max_temporal_layer_count = max_temporal_layer_count;
-        self
-    }
-    #[inline]
-    pub fn expect_dyadic_temporal_layer_pattern(
-        mut self,
-        expect_dyadic_temporal_layer_pattern: bool,
-    ) -> Self {
-        self.expect_dyadic_temporal_layer_pattern = expect_dyadic_temporal_layer_pattern.into();
-        self
-    }
-    #[inline]
-    pub fn min_qp(mut self, min_qp: i32) -> Self {
-        self.min_qp = min_qp;
-        self
-    }
-    #[inline]
-    pub fn max_qp(mut self, max_qp: i32) -> Self {
-        self.max_qp = max_qp;
-        self
-    }
-    #[inline]
-    pub fn prefers_gop_remaining_frames(mut self, prefers_gop_remaining_frames: bool) -> Self {
-        self.prefers_gop_remaining_frames = prefers_gop_remaining_frames.into();
-        self
-    }
-    #[inline]
-    pub fn requires_gop_remaining_frames(mut self, requires_gop_remaining_frames: bool) -> Self {
-        self.requires_gop_remaining_frames = requires_gop_remaining_frames.into();
-        self
-    }
-    #[inline]
-    pub fn std_syntax_flags(mut self, std_syntax_flags: VideoEncodeH264StdFlagsKHR) -> Self {
-        self.std_syntax_flags = std_syntax_flags;
-        self
-    }
-}
+impl<'a> VideoEncodeH264CapabilitiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -47611,68 +42280,7 @@ unsafe impl ExtendsVideoEncodeQualityLevelPropertiesKHR
     for VideoEncodeH264QualityLevelPropertiesKHR<'_>
 {
 }
-impl<'a> VideoEncodeH264QualityLevelPropertiesKHR<'a> {
-    #[inline]
-    pub fn preferred_rate_control_flags(
-        mut self,
-        preferred_rate_control_flags: VideoEncodeH264RateControlFlagsKHR,
-    ) -> Self {
-        self.preferred_rate_control_flags = preferred_rate_control_flags;
-        self
-    }
-    #[inline]
-    pub fn preferred_gop_frame_count(mut self, preferred_gop_frame_count: u32) -> Self {
-        self.preferred_gop_frame_count = preferred_gop_frame_count;
-        self
-    }
-    #[inline]
-    pub fn preferred_idr_period(mut self, preferred_idr_period: u32) -> Self {
-        self.preferred_idr_period = preferred_idr_period;
-        self
-    }
-    #[inline]
-    pub fn preferred_consecutive_b_frame_count(
-        mut self,
-        preferred_consecutive_b_frame_count: u32,
-    ) -> Self {
-        self.preferred_consecutive_b_frame_count = preferred_consecutive_b_frame_count;
-        self
-    }
-    #[inline]
-    pub fn preferred_temporal_layer_count(mut self, preferred_temporal_layer_count: u32) -> Self {
-        self.preferred_temporal_layer_count = preferred_temporal_layer_count;
-        self
-    }
-    #[inline]
-    pub fn preferred_constant_qp(mut self, preferred_constant_qp: VideoEncodeH264QpKHR) -> Self {
-        self.preferred_constant_qp = preferred_constant_qp;
-        self
-    }
-    #[inline]
-    pub fn preferred_max_l0_reference_count(
-        mut self,
-        preferred_max_l0_reference_count: u32,
-    ) -> Self {
-        self.preferred_max_l0_reference_count = preferred_max_l0_reference_count;
-        self
-    }
-    #[inline]
-    pub fn preferred_max_l1_reference_count(
-        mut self,
-        preferred_max_l1_reference_count: u32,
-    ) -> Self {
-        self.preferred_max_l1_reference_count = preferred_max_l1_reference_count;
-        self
-    }
-    #[inline]
-    pub fn preferred_std_entropy_coding_mode_flag(
-        mut self,
-        preferred_std_entropy_coding_mode_flag: bool,
-    ) -> Self {
-        self.preferred_std_entropy_coding_mode_flag = preferred_std_entropy_coding_mode_flag.into();
-        self
-    }
-}
+impl<'a> VideoEncodeH264QualityLevelPropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -47917,18 +42525,7 @@ unsafe impl ExtendsVideoEncodeSessionParametersFeedbackInfoKHR
     for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_>
 {
 }
-impl<'a> VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {
-    #[inline]
-    pub fn has_std_sps_overrides(mut self, has_std_sps_overrides: bool) -> Self {
-        self.has_std_sps_overrides = has_std_sps_overrides.into();
-        self
-    }
-    #[inline]
-    pub fn has_std_pps_overrides(mut self, has_std_pps_overrides: bool) -> Self {
-        self.has_std_pps_overrides = has_std_pps_overrides.into();
-        self
-    }
-}
+impl<'a> VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -48406,101 +43003,7 @@ unsafe impl<'a> TaggedStructure for VideoEncodeH265CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_CAPABILITIES_KHR;
 }
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH265CapabilitiesKHR<'_> {}
-impl<'a> VideoEncodeH265CapabilitiesKHR<'a> {
-    #[inline]
-    pub fn flags(mut self, flags: VideoEncodeH265CapabilityFlagsKHR) -> Self {
-        self.flags = flags;
-        self
-    }
-    #[inline]
-    pub fn max_level_idc(mut self, max_level_idc: StdVideoH265LevelIdc) -> Self {
-        self.max_level_idc = max_level_idc;
-        self
-    }
-    #[inline]
-    pub fn max_slice_segment_count(mut self, max_slice_segment_count: u32) -> Self {
-        self.max_slice_segment_count = max_slice_segment_count;
-        self
-    }
-    #[inline]
-    pub fn max_tiles(mut self, max_tiles: Extent2D) -> Self {
-        self.max_tiles = max_tiles;
-        self
-    }
-    #[inline]
-    pub fn ctb_sizes(mut self, ctb_sizes: VideoEncodeH265CtbSizeFlagsKHR) -> Self {
-        self.ctb_sizes = ctb_sizes;
-        self
-    }
-    #[inline]
-    pub fn transform_block_sizes(
-        mut self,
-        transform_block_sizes: VideoEncodeH265TransformBlockSizeFlagsKHR,
-    ) -> Self {
-        self.transform_block_sizes = transform_block_sizes;
-        self
-    }
-    #[inline]
-    pub fn max_p_picture_l0_reference_count(
-        mut self,
-        max_p_picture_l0_reference_count: u32,
-    ) -> Self {
-        self.max_p_picture_l0_reference_count = max_p_picture_l0_reference_count;
-        self
-    }
-    #[inline]
-    pub fn max_b_picture_l0_reference_count(
-        mut self,
-        max_b_picture_l0_reference_count: u32,
-    ) -> Self {
-        self.max_b_picture_l0_reference_count = max_b_picture_l0_reference_count;
-        self
-    }
-    #[inline]
-    pub fn max_l1_reference_count(mut self, max_l1_reference_count: u32) -> Self {
-        self.max_l1_reference_count = max_l1_reference_count;
-        self
-    }
-    #[inline]
-    pub fn max_sub_layer_count(mut self, max_sub_layer_count: u32) -> Self {
-        self.max_sub_layer_count = max_sub_layer_count;
-        self
-    }
-    #[inline]
-    pub fn expect_dyadic_temporal_sub_layer_pattern(
-        mut self,
-        expect_dyadic_temporal_sub_layer_pattern: bool,
-    ) -> Self {
-        self.expect_dyadic_temporal_sub_layer_pattern =
-            expect_dyadic_temporal_sub_layer_pattern.into();
-        self
-    }
-    #[inline]
-    pub fn min_qp(mut self, min_qp: i32) -> Self {
-        self.min_qp = min_qp;
-        self
-    }
-    #[inline]
-    pub fn max_qp(mut self, max_qp: i32) -> Self {
-        self.max_qp = max_qp;
-        self
-    }
-    #[inline]
-    pub fn prefers_gop_remaining_frames(mut self, prefers_gop_remaining_frames: bool) -> Self {
-        self.prefers_gop_remaining_frames = prefers_gop_remaining_frames.into();
-        self
-    }
-    #[inline]
-    pub fn requires_gop_remaining_frames(mut self, requires_gop_remaining_frames: bool) -> Self {
-        self.requires_gop_remaining_frames = requires_gop_remaining_frames.into();
-        self
-    }
-    #[inline]
-    pub fn std_syntax_flags(mut self, std_syntax_flags: VideoEncodeH265StdFlagsKHR) -> Self {
-        self.std_syntax_flags = std_syntax_flags;
-        self
-    }
-}
+impl<'a> VideoEncodeH265CapabilitiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -48547,60 +43050,7 @@ unsafe impl ExtendsVideoEncodeQualityLevelPropertiesKHR
     for VideoEncodeH265QualityLevelPropertiesKHR<'_>
 {
 }
-impl<'a> VideoEncodeH265QualityLevelPropertiesKHR<'a> {
-    #[inline]
-    pub fn preferred_rate_control_flags(
-        mut self,
-        preferred_rate_control_flags: VideoEncodeH265RateControlFlagsKHR,
-    ) -> Self {
-        self.preferred_rate_control_flags = preferred_rate_control_flags;
-        self
-    }
-    #[inline]
-    pub fn preferred_gop_frame_count(mut self, preferred_gop_frame_count: u32) -> Self {
-        self.preferred_gop_frame_count = preferred_gop_frame_count;
-        self
-    }
-    #[inline]
-    pub fn preferred_idr_period(mut self, preferred_idr_period: u32) -> Self {
-        self.preferred_idr_period = preferred_idr_period;
-        self
-    }
-    #[inline]
-    pub fn preferred_consecutive_b_frame_count(
-        mut self,
-        preferred_consecutive_b_frame_count: u32,
-    ) -> Self {
-        self.preferred_consecutive_b_frame_count = preferred_consecutive_b_frame_count;
-        self
-    }
-    #[inline]
-    pub fn preferred_sub_layer_count(mut self, preferred_sub_layer_count: u32) -> Self {
-        self.preferred_sub_layer_count = preferred_sub_layer_count;
-        self
-    }
-    #[inline]
-    pub fn preferred_constant_qp(mut self, preferred_constant_qp: VideoEncodeH265QpKHR) -> Self {
-        self.preferred_constant_qp = preferred_constant_qp;
-        self
-    }
-    #[inline]
-    pub fn preferred_max_l0_reference_count(
-        mut self,
-        preferred_max_l0_reference_count: u32,
-    ) -> Self {
-        self.preferred_max_l0_reference_count = preferred_max_l0_reference_count;
-        self
-    }
-    #[inline]
-    pub fn preferred_max_l1_reference_count(
-        mut self,
-        preferred_max_l1_reference_count: u32,
-    ) -> Self {
-        self.preferred_max_l1_reference_count = preferred_max_l1_reference_count;
-        self
-    }
-}
+impl<'a> VideoEncodeH265QualityLevelPropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -48878,23 +43328,7 @@ unsafe impl ExtendsVideoEncodeSessionParametersFeedbackInfoKHR
     for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_>
 {
 }
-impl<'a> VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {
-    #[inline]
-    pub fn has_std_vps_overrides(mut self, has_std_vps_overrides: bool) -> Self {
-        self.has_std_vps_overrides = has_std_vps_overrides.into();
-        self
-    }
-    #[inline]
-    pub fn has_std_sps_overrides(mut self, has_std_sps_overrides: bool) -> Self {
-        self.has_std_sps_overrides = has_std_sps_overrides.into();
-        self
-    }
-    #[inline]
-    pub fn has_std_pps_overrides(mut self, has_std_pps_overrides: bool) -> Self {
-        self.has_std_pps_overrides = has_std_pps_overrides.into();
-        self
-    }
-}
+impl<'a> VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -49520,25 +43954,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceProvokingVertexPropertiesEXT<'
         StructureType::PHYSICAL_DEVICE_PROVOKING_VERTEX_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
-    #[inline]
-    pub fn provoking_vertex_mode_per_pipeline(
-        mut self,
-        provoking_vertex_mode_per_pipeline: bool,
-    ) -> Self {
-        self.provoking_vertex_mode_per_pipeline = provoking_vertex_mode_per_pipeline.into();
-        self
-    }
-    #[inline]
-    pub fn transform_feedback_preserves_triangle_fan_provoking_vertex(
-        mut self,
-        transform_feedback_preserves_triangle_fan_provoking_vertex: bool,
-    ) -> Self {
-        self.transform_feedback_preserves_triangle_fan_provoking_vertex =
-            transform_feedback_preserves_triangle_fan_provoking_vertex.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceProvokingVertexPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -49927,258 +44343,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorBufferPropertiesEXT<
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
-    #[inline]
-    pub fn combined_image_sampler_descriptor_single_array(
-        mut self,
-        combined_image_sampler_descriptor_single_array: bool,
-    ) -> Self {
-        self.combined_image_sampler_descriptor_single_array =
-            combined_image_sampler_descriptor_single_array.into();
-        self
-    }
-    #[inline]
-    pub fn bufferless_push_descriptors(mut self, bufferless_push_descriptors: bool) -> Self {
-        self.bufferless_push_descriptors = bufferless_push_descriptors.into();
-        self
-    }
-    #[inline]
-    pub fn allow_sampler_image_view_post_submit_creation(
-        mut self,
-        allow_sampler_image_view_post_submit_creation: bool,
-    ) -> Self {
-        self.allow_sampler_image_view_post_submit_creation =
-            allow_sampler_image_view_post_submit_creation.into();
-        self
-    }
-    #[inline]
-    pub fn descriptor_buffer_offset_alignment(
-        mut self,
-        descriptor_buffer_offset_alignment: DeviceSize,
-    ) -> Self {
-        self.descriptor_buffer_offset_alignment = descriptor_buffer_offset_alignment;
-        self
-    }
-    #[inline]
-    pub fn max_descriptor_buffer_bindings(mut self, max_descriptor_buffer_bindings: u32) -> Self {
-        self.max_descriptor_buffer_bindings = max_descriptor_buffer_bindings;
-        self
-    }
-    #[inline]
-    pub fn max_resource_descriptor_buffer_bindings(
-        mut self,
-        max_resource_descriptor_buffer_bindings: u32,
-    ) -> Self {
-        self.max_resource_descriptor_buffer_bindings = max_resource_descriptor_buffer_bindings;
-        self
-    }
-    #[inline]
-    pub fn max_sampler_descriptor_buffer_bindings(
-        mut self,
-        max_sampler_descriptor_buffer_bindings: u32,
-    ) -> Self {
-        self.max_sampler_descriptor_buffer_bindings = max_sampler_descriptor_buffer_bindings;
-        self
-    }
-    #[inline]
-    pub fn max_embedded_immutable_sampler_bindings(
-        mut self,
-        max_embedded_immutable_sampler_bindings: u32,
-    ) -> Self {
-        self.max_embedded_immutable_sampler_bindings = max_embedded_immutable_sampler_bindings;
-        self
-    }
-    #[inline]
-    pub fn max_embedded_immutable_samplers(mut self, max_embedded_immutable_samplers: u32) -> Self {
-        self.max_embedded_immutable_samplers = max_embedded_immutable_samplers;
-        self
-    }
-    #[inline]
-    pub fn buffer_capture_replay_descriptor_data_size(
-        mut self,
-        buffer_capture_replay_descriptor_data_size: usize,
-    ) -> Self {
-        self.buffer_capture_replay_descriptor_data_size =
-            buffer_capture_replay_descriptor_data_size;
-        self
-    }
-    #[inline]
-    pub fn image_capture_replay_descriptor_data_size(
-        mut self,
-        image_capture_replay_descriptor_data_size: usize,
-    ) -> Self {
-        self.image_capture_replay_descriptor_data_size = image_capture_replay_descriptor_data_size;
-        self
-    }
-    #[inline]
-    pub fn image_view_capture_replay_descriptor_data_size(
-        mut self,
-        image_view_capture_replay_descriptor_data_size: usize,
-    ) -> Self {
-        self.image_view_capture_replay_descriptor_data_size =
-            image_view_capture_replay_descriptor_data_size;
-        self
-    }
-    #[inline]
-    pub fn sampler_capture_replay_descriptor_data_size(
-        mut self,
-        sampler_capture_replay_descriptor_data_size: usize,
-    ) -> Self {
-        self.sampler_capture_replay_descriptor_data_size =
-            sampler_capture_replay_descriptor_data_size;
-        self
-    }
-    #[inline]
-    pub fn acceleration_structure_capture_replay_descriptor_data_size(
-        mut self,
-        acceleration_structure_capture_replay_descriptor_data_size: usize,
-    ) -> Self {
-        self.acceleration_structure_capture_replay_descriptor_data_size =
-            acceleration_structure_capture_replay_descriptor_data_size;
-        self
-    }
-    #[inline]
-    pub fn sampler_descriptor_size(mut self, sampler_descriptor_size: usize) -> Self {
-        self.sampler_descriptor_size = sampler_descriptor_size;
-        self
-    }
-    #[inline]
-    pub fn combined_image_sampler_descriptor_size(
-        mut self,
-        combined_image_sampler_descriptor_size: usize,
-    ) -> Self {
-        self.combined_image_sampler_descriptor_size = combined_image_sampler_descriptor_size;
-        self
-    }
-    #[inline]
-    pub fn sampled_image_descriptor_size(mut self, sampled_image_descriptor_size: usize) -> Self {
-        self.sampled_image_descriptor_size = sampled_image_descriptor_size;
-        self
-    }
-    #[inline]
-    pub fn storage_image_descriptor_size(mut self, storage_image_descriptor_size: usize) -> Self {
-        self.storage_image_descriptor_size = storage_image_descriptor_size;
-        self
-    }
-    #[inline]
-    pub fn uniform_texel_buffer_descriptor_size(
-        mut self,
-        uniform_texel_buffer_descriptor_size: usize,
-    ) -> Self {
-        self.uniform_texel_buffer_descriptor_size = uniform_texel_buffer_descriptor_size;
-        self
-    }
-    #[inline]
-    pub fn robust_uniform_texel_buffer_descriptor_size(
-        mut self,
-        robust_uniform_texel_buffer_descriptor_size: usize,
-    ) -> Self {
-        self.robust_uniform_texel_buffer_descriptor_size =
-            robust_uniform_texel_buffer_descriptor_size;
-        self
-    }
-    #[inline]
-    pub fn storage_texel_buffer_descriptor_size(
-        mut self,
-        storage_texel_buffer_descriptor_size: usize,
-    ) -> Self {
-        self.storage_texel_buffer_descriptor_size = storage_texel_buffer_descriptor_size;
-        self
-    }
-    #[inline]
-    pub fn robust_storage_texel_buffer_descriptor_size(
-        mut self,
-        robust_storage_texel_buffer_descriptor_size: usize,
-    ) -> Self {
-        self.robust_storage_texel_buffer_descriptor_size =
-            robust_storage_texel_buffer_descriptor_size;
-        self
-    }
-    #[inline]
-    pub fn uniform_buffer_descriptor_size(mut self, uniform_buffer_descriptor_size: usize) -> Self {
-        self.uniform_buffer_descriptor_size = uniform_buffer_descriptor_size;
-        self
-    }
-    #[inline]
-    pub fn robust_uniform_buffer_descriptor_size(
-        mut self,
-        robust_uniform_buffer_descriptor_size: usize,
-    ) -> Self {
-        self.robust_uniform_buffer_descriptor_size = robust_uniform_buffer_descriptor_size;
-        self
-    }
-    #[inline]
-    pub fn storage_buffer_descriptor_size(mut self, storage_buffer_descriptor_size: usize) -> Self {
-        self.storage_buffer_descriptor_size = storage_buffer_descriptor_size;
-        self
-    }
-    #[inline]
-    pub fn robust_storage_buffer_descriptor_size(
-        mut self,
-        robust_storage_buffer_descriptor_size: usize,
-    ) -> Self {
-        self.robust_storage_buffer_descriptor_size = robust_storage_buffer_descriptor_size;
-        self
-    }
-    #[inline]
-    pub fn input_attachment_descriptor_size(
-        mut self,
-        input_attachment_descriptor_size: usize,
-    ) -> Self {
-        self.input_attachment_descriptor_size = input_attachment_descriptor_size;
-        self
-    }
-    #[inline]
-    pub fn acceleration_structure_descriptor_size(
-        mut self,
-        acceleration_structure_descriptor_size: usize,
-    ) -> Self {
-        self.acceleration_structure_descriptor_size = acceleration_structure_descriptor_size;
-        self
-    }
-    #[inline]
-    pub fn max_sampler_descriptor_buffer_range(
-        mut self,
-        max_sampler_descriptor_buffer_range: DeviceSize,
-    ) -> Self {
-        self.max_sampler_descriptor_buffer_range = max_sampler_descriptor_buffer_range;
-        self
-    }
-    #[inline]
-    pub fn max_resource_descriptor_buffer_range(
-        mut self,
-        max_resource_descriptor_buffer_range: DeviceSize,
-    ) -> Self {
-        self.max_resource_descriptor_buffer_range = max_resource_descriptor_buffer_range;
-        self
-    }
-    #[inline]
-    pub fn sampler_descriptor_buffer_address_space_size(
-        mut self,
-        sampler_descriptor_buffer_address_space_size: DeviceSize,
-    ) -> Self {
-        self.sampler_descriptor_buffer_address_space_size =
-            sampler_descriptor_buffer_address_space_size;
-        self
-    }
-    #[inline]
-    pub fn resource_descriptor_buffer_address_space_size(
-        mut self,
-        resource_descriptor_buffer_address_space_size: DeviceSize,
-    ) -> Self {
-        self.resource_descriptor_buffer_address_space_size =
-            resource_descriptor_buffer_address_space_size;
-        self
-    }
-    #[inline]
-    pub fn descriptor_buffer_address_space_size(
-        mut self,
-        descriptor_buffer_address_space_size: DeviceSize,
-    ) -> Self {
-        self.descriptor_buffer_address_space_size = descriptor_buffer_address_space_size;
-        self
-    }
-}
+impl<'a> PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -50211,17 +44376,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_>
 {
 }
-impl<'a> PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
-    #[inline]
-    pub fn combined_image_sampler_density_map_descriptor_size(
-        mut self,
-        combined_image_sampler_density_map_descriptor_size: usize,
-    ) -> Self {
-        self.combined_image_sampler_density_map_descriptor_size =
-            combined_image_sampler_density_map_descriptor_size;
-        self
-    }
-}
+impl<'a> PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -50805,277 +44960,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceShaderIntegerDotProductProperties<'_>
 {
 }
-impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
-    #[inline]
-    pub fn integer_dot_product8_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product8_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product8_bit_unsigned_accelerated =
-            integer_dot_product8_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product8_bit_signed_accelerated(
-        mut self,
-        integer_dot_product8_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product8_bit_signed_accelerated =
-            integer_dot_product8_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product8_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product8_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product8_bit_mixed_signedness_accelerated =
-            integer_dot_product8_bit_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product4x8_bit_packed_unsigned_accelerated(
-        mut self,
-        integer_dot_product4x8_bit_packed_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product4x8_bit_packed_unsigned_accelerated =
-            integer_dot_product4x8_bit_packed_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product4x8_bit_packed_signed_accelerated(
-        mut self,
-        integer_dot_product4x8_bit_packed_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product4x8_bit_packed_signed_accelerated =
-            integer_dot_product4x8_bit_packed_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product4x8_bit_packed_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product4x8_bit_packed_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product4x8_bit_packed_mixed_signedness_accelerated =
-            integer_dot_product4x8_bit_packed_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product16_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product16_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product16_bit_unsigned_accelerated =
-            integer_dot_product16_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product16_bit_signed_accelerated(
-        mut self,
-        integer_dot_product16_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product16_bit_signed_accelerated =
-            integer_dot_product16_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product16_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product16_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product16_bit_mixed_signedness_accelerated =
-            integer_dot_product16_bit_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product32_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product32_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product32_bit_unsigned_accelerated =
-            integer_dot_product32_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product32_bit_signed_accelerated(
-        mut self,
-        integer_dot_product32_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product32_bit_signed_accelerated =
-            integer_dot_product32_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product32_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product32_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product32_bit_mixed_signedness_accelerated =
-            integer_dot_product32_bit_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product64_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product64_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product64_bit_unsigned_accelerated =
-            integer_dot_product64_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product64_bit_signed_accelerated(
-        mut self,
-        integer_dot_product64_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product64_bit_signed_accelerated =
-            integer_dot_product64_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product64_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product64_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product64_bit_mixed_signedness_accelerated =
-            integer_dot_product64_bit_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated =
-            integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating8_bit_signed_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating8_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating8_bit_signed_accelerated =
-            integer_dot_product_accumulating_saturating8_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated =
-            integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated =
-            integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated =
-            integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : bool,
-    ) -> Self {
-        self . integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated = integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated . into () ;
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated =
-            integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating16_bit_signed_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating16_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating16_bit_signed_accelerated =
-            integer_dot_product_accumulating_saturating16_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated =
-            integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated =
-            integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating32_bit_signed_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating32_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating32_bit_signed_accelerated =
-            integer_dot_product_accumulating_saturating32_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated =
-            integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated =
-            integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating64_bit_signed_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating64_bit_signed_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating64_bit_signed_accelerated =
-            integer_dot_product_accumulating_saturating64_bit_signed_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated(
-        mut self,
-        integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated: bool,
-    ) -> Self {
-        self.integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated =
-            integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -51114,38 +44999,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceDrmPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_DRM_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDrmPropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceDrmPropertiesEXT<'a> {
-    #[inline]
-    pub fn has_primary(mut self, has_primary: bool) -> Self {
-        self.has_primary = has_primary.into();
-        self
-    }
-    #[inline]
-    pub fn has_render(mut self, has_render: bool) -> Self {
-        self.has_render = has_render.into();
-        self
-    }
-    #[inline]
-    pub fn primary_major(mut self, primary_major: i64) -> Self {
-        self.primary_major = primary_major;
-        self
-    }
-    #[inline]
-    pub fn primary_minor(mut self, primary_minor: i64) -> Self {
-        self.primary_minor = primary_minor;
-        self
-    }
-    #[inline]
-    pub fn render_major(mut self, render_major: i64) -> Self {
-        self.render_major = render_major;
-        self
-    }
-    #[inline]
-    pub fn render_minor(mut self, render_minor: i64) -> Self {
-        self.render_minor = render_minor;
-        self
-    }
-}
+impl<'a> PhysicalDeviceDrmPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -51218,17 +45072,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_>
 {
 }
-impl<'a> PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
-    #[inline]
-    pub fn tri_strip_vertex_order_independent_of_provoking_vertex(
-        mut self,
-        tri_strip_vertex_order_independent_of_provoking_vertex: bool,
-    ) -> Self {
-        self.tri_strip_vertex_order_independent_of_provoking_vertex =
-            tri_strip_vertex_order_independent_of_provoking_vertex.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -51835,72 +45679,7 @@ impl ::core::default::Default for BufferCollectionPropertiesFUCHSIA<'_> {
 unsafe impl<'a> TaggedStructure for BufferCollectionPropertiesFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_COLLECTION_PROPERTIES_FUCHSIA;
 }
-impl<'a> BufferCollectionPropertiesFUCHSIA<'a> {
-    #[inline]
-    pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
-        self.memory_type_bits = memory_type_bits;
-        self
-    }
-    #[inline]
-    pub fn buffer_count(mut self, buffer_count: u32) -> Self {
-        self.buffer_count = buffer_count;
-        self
-    }
-    #[inline]
-    pub fn create_info_index(mut self, create_info_index: u32) -> Self {
-        self.create_info_index = create_info_index;
-        self
-    }
-    #[inline]
-    pub fn sysmem_pixel_format(mut self, sysmem_pixel_format: u64) -> Self {
-        self.sysmem_pixel_format = sysmem_pixel_format;
-        self
-    }
-    #[inline]
-    pub fn format_features(mut self, format_features: FormatFeatureFlags) -> Self {
-        self.format_features = format_features;
-        self
-    }
-    #[inline]
-    pub fn sysmem_color_space_index(
-        mut self,
-        sysmem_color_space_index: SysmemColorSpaceFUCHSIA<'a>,
-    ) -> Self {
-        self.sysmem_color_space_index = sysmem_color_space_index;
-        self
-    }
-    #[inline]
-    pub fn sampler_ycbcr_conversion_components(
-        mut self,
-        sampler_ycbcr_conversion_components: ComponentMapping,
-    ) -> Self {
-        self.sampler_ycbcr_conversion_components = sampler_ycbcr_conversion_components;
-        self
-    }
-    #[inline]
-    pub fn suggested_ycbcr_model(
-        mut self,
-        suggested_ycbcr_model: SamplerYcbcrModelConversion,
-    ) -> Self {
-        self.suggested_ycbcr_model = suggested_ycbcr_model;
-        self
-    }
-    #[inline]
-    pub fn suggested_ycbcr_range(mut self, suggested_ycbcr_range: SamplerYcbcrRange) -> Self {
-        self.suggested_ycbcr_range = suggested_ycbcr_range;
-        self
-    }
-    #[inline]
-    pub fn suggested_x_chroma_offset(mut self, suggested_x_chroma_offset: ChromaLocation) -> Self {
-        self.suggested_x_chroma_offset = suggested_x_chroma_offset;
-        self
-    }
-    #[inline]
-    pub fn suggested_y_chroma_offset(mut self, suggested_y_chroma_offset: ChromaLocation) -> Self {
-        self.suggested_y_chroma_offset = suggested_y_chroma_offset;
-        self
-    }
-}
+impl<'a> BufferCollectionPropertiesFUCHSIA<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -52455,23 +46234,7 @@ unsafe impl<'a> TaggedStructure for FormatProperties3<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FORMAT_PROPERTIES_3;
 }
 unsafe impl ExtendsFormatProperties2 for FormatProperties3<'_> {}
-impl<'a> FormatProperties3<'a> {
-    #[inline]
-    pub fn linear_tiling_features(mut self, linear_tiling_features: FormatFeatureFlags2) -> Self {
-        self.linear_tiling_features = linear_tiling_features;
-        self
-    }
-    #[inline]
-    pub fn optimal_tiling_features(mut self, optimal_tiling_features: FormatFeatureFlags2) -> Self {
-        self.optimal_tiling_features = optimal_tiling_features;
-        self
-    }
-    #[inline]
-    pub fn buffer_features(mut self, buffer_features: FormatFeatureFlags2) -> Self {
-        self.buffer_features = buffer_features;
-        self
-    }
-}
+impl<'a> FormatProperties3<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -52502,17 +46265,7 @@ unsafe impl<'a> TaggedStructure for DrmFormatModifierPropertiesList2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_2_EXT;
 }
 unsafe impl ExtendsFormatProperties2 for DrmFormatModifierPropertiesList2EXT<'_> {}
-impl<'a> DrmFormatModifierPropertiesList2EXT<'a> {
-    #[inline]
-    pub fn drm_format_modifier_properties(
-        mut self,
-        drm_format_modifier_properties: &'a mut [DrmFormatModifierProperties2EXT],
-    ) -> Self {
-        self.drm_format_modifier_count = drm_format_modifier_properties.len() as _;
-        self.p_drm_format_modifier_properties = drm_format_modifier_properties.as_mut_ptr();
-        self
-    }
-}
+impl<'a> DrmFormatModifierPropertiesList2EXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
@@ -52523,26 +46276,7 @@ pub struct DrmFormatModifierProperties2EXT {
     pub drm_format_modifier_plane_count: u32,
     pub drm_format_modifier_tiling_features: FormatFeatureFlags2,
 }
-impl DrmFormatModifierProperties2EXT {
-    #[inline]
-    pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
-        self.drm_format_modifier = drm_format_modifier;
-        self
-    }
-    #[inline]
-    pub fn drm_format_modifier_plane_count(mut self, drm_format_modifier_plane_count: u32) -> Self {
-        self.drm_format_modifier_plane_count = drm_format_modifier_plane_count;
-        self
-    }
-    #[inline]
-    pub fn drm_format_modifier_tiling_features(
-        mut self,
-        drm_format_modifier_tiling_features: FormatFeatureFlags2,
-    ) -> Self {
-        self.drm_format_modifier_tiling_features = drm_format_modifier_tiling_features;
-        self
-    }
-}
+impl DrmFormatModifierProperties2EXT {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -52589,54 +46323,7 @@ unsafe impl ExtendsAndroidHardwareBufferPropertiesANDROID
     for AndroidHardwareBufferFormatProperties2ANDROID<'_>
 {
 }
-impl<'a> AndroidHardwareBufferFormatProperties2ANDROID<'a> {
-    #[inline]
-    pub fn format(mut self, format: Format) -> Self {
-        self.format = format;
-        self
-    }
-    #[inline]
-    pub fn external_format(mut self, external_format: u64) -> Self {
-        self.external_format = external_format;
-        self
-    }
-    #[inline]
-    pub fn format_features(mut self, format_features: FormatFeatureFlags2) -> Self {
-        self.format_features = format_features;
-        self
-    }
-    #[inline]
-    pub fn sampler_ycbcr_conversion_components(
-        mut self,
-        sampler_ycbcr_conversion_components: ComponentMapping,
-    ) -> Self {
-        self.sampler_ycbcr_conversion_components = sampler_ycbcr_conversion_components;
-        self
-    }
-    #[inline]
-    pub fn suggested_ycbcr_model(
-        mut self,
-        suggested_ycbcr_model: SamplerYcbcrModelConversion,
-    ) -> Self {
-        self.suggested_ycbcr_model = suggested_ycbcr_model;
-        self
-    }
-    #[inline]
-    pub fn suggested_ycbcr_range(mut self, suggested_ycbcr_range: SamplerYcbcrRange) -> Self {
-        self.suggested_ycbcr_range = suggested_ycbcr_range;
-        self
-    }
-    #[inline]
-    pub fn suggested_x_chroma_offset(mut self, suggested_x_chroma_offset: ChromaLocation) -> Self {
-        self.suggested_x_chroma_offset = suggested_x_chroma_offset;
-        self
-    }
-    #[inline]
-    pub fn suggested_y_chroma_offset(mut self, suggested_y_chroma_offset: ChromaLocation) -> Self {
-        self.suggested_y_chroma_offset = suggested_y_chroma_offset;
-        self
-    }
-}
+impl<'a> AndroidHardwareBufferFormatProperties2ANDROID<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -53978,16 +47665,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_>
 {
 }
-impl<'a> PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
-    #[inline]
-    pub fn shader_module_identifier_algorithm_uuid(
-        mut self,
-        shader_module_identifier_algorithm_uuid: [u8; UUID_SIZE],
-    ) -> Self {
-        self.shader_module_identifier_algorithm_uuid = shader_module_identifier_algorithm_uuid;
-        self
-    }
-}
+impl<'a> PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -54070,12 +47748,6 @@ unsafe impl<'a> TaggedStructure for ShaderModuleIdentifierEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_MODULE_IDENTIFIER_EXT;
 }
 impl<'a> ShaderModuleIdentifierEXT<'a> {
-    #[inline]
-    pub fn identifier(mut self, identifier: &'_ [u8]) -> Self {
-        self.identifier_size = identifier.len() as _;
-        self.identifier[..identifier.len()].copy_from_slice(identifier);
-        self
-    }
     #[inline]
     pub fn identifier_as_slice(&self) -> &[u8] {
         &self.identifier[..self.identifier_size as _]
@@ -54203,24 +47875,7 @@ unsafe impl<'a> TaggedStructure for ImageCompressionPropertiesEXT<'a> {
 unsafe impl ExtendsImageFormatProperties2 for ImageCompressionPropertiesEXT<'_> {}
 unsafe impl ExtendsSurfaceFormat2KHR for ImageCompressionPropertiesEXT<'_> {}
 unsafe impl ExtendsSubresourceLayout2KHR for ImageCompressionPropertiesEXT<'_> {}
-impl<'a> ImageCompressionPropertiesEXT<'a> {
-    #[inline]
-    pub fn image_compression_flags(
-        mut self,
-        image_compression_flags: ImageCompressionFlagsEXT,
-    ) -> Self {
-        self.image_compression_flags = image_compression_flags;
-        self
-    }
-    #[inline]
-    pub fn image_compression_fixed_rate_flags(
-        mut self,
-        image_compression_fixed_rate_flags: ImageCompressionFixedRateFlagsEXT,
-    ) -> Self {
-        self.image_compression_fixed_rate_flags = image_compression_fixed_rate_flags;
-        self
-    }
-}
+impl<'a> ImageCompressionPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -54330,11 +47985,6 @@ unsafe impl<'a> TaggedStructure for SubresourceLayout2KHR<'a> {
 }
 pub unsafe trait ExtendsSubresourceLayout2KHR {}
 impl<'a> SubresourceLayout2KHR<'a> {
-    #[inline]
-    pub fn subresource_layout(mut self, subresource_layout: SubresourceLayout) -> Self {
-        self.subresource_layout = subresource_layout;
-        self
-    }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
@@ -54430,13 +48080,7 @@ impl<'a> RenderPassCreationControlEXT<'a> {
 pub struct RenderPassCreationFeedbackInfoEXT {
     pub post_merge_subpass_count: u32,
 }
-impl RenderPassCreationFeedbackInfoEXT {
-    #[inline]
-    pub fn post_merge_subpass_count(mut self, post_merge_subpass_count: u32) -> Self {
-        self.post_merge_subpass_count = post_merge_subpass_count;
-        self
-    }
-}
+impl RenderPassCreationFeedbackInfoEXT {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -54507,25 +48151,8 @@ impl ::core::default::Default for RenderPassSubpassFeedbackInfoEXT {
 }
 impl RenderPassSubpassFeedbackInfoEXT {
     #[inline]
-    pub fn subpass_merge_status(mut self, subpass_merge_status: SubpassMergeStatusEXT) -> Self {
-        self.subpass_merge_status = subpass_merge_status;
-        self
-    }
-    #[inline]
-    pub fn description(
-        mut self,
-        description: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
-    }
-    #[inline]
     pub fn description_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.description)
-    }
-    #[inline]
-    pub fn post_merge_index(mut self, post_merge_index: u32) -> Self {
-        self.post_merge_index = post_merge_index;
-        self
     }
 }
 #[repr(C)]
@@ -55177,24 +48804,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceOpacityMicromapPropertiesEXT<'
         StructureType::PHYSICAL_DEVICE_OPACITY_MICROMAP_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
-    #[inline]
-    pub fn max_opacity2_state_subdivision_level(
-        mut self,
-        max_opacity2_state_subdivision_level: u32,
-    ) -> Self {
-        self.max_opacity2_state_subdivision_level = max_opacity2_state_subdivision_level;
-        self
-    }
-    #[inline]
-    pub fn max_opacity4_state_subdivision_level(
-        mut self,
-        max_opacity4_state_subdivision_level: u32,
-    ) -> Self {
-        self.max_opacity4_state_subdivision_level = max_opacity4_state_subdivision_level;
-        self
-    }
-}
+impl<'a> PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {}
 #[repr(C)]
 #[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureTrianglesOpacityMicromapEXT.html>"]
@@ -55365,17 +48975,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceDisplacementMicromapPropertiesNV<'_>
 {
 }
-impl<'a> PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
-    #[inline]
-    pub fn max_displacement_micromap_subdivision_level(
-        mut self,
-        max_displacement_micromap_subdivision_level: u32,
-    ) -> Self {
-        self.max_displacement_micromap_subdivision_level =
-            max_displacement_micromap_subdivision_level;
-        self
-    }
-}
+impl<'a> PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {}
 #[repr(C)]
 #[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureTrianglesDisplacementMicromapNV.html>"]
@@ -55601,13 +49201,7 @@ impl ::core::default::Default for PipelinePropertiesIdentifierEXT<'_> {
 unsafe impl<'a> TaggedStructure for PipelinePropertiesIdentifierEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_PROPERTIES_IDENTIFIER_EXT;
 }
-impl<'a> PipelinePropertiesIdentifierEXT<'a> {
-    #[inline]
-    pub fn pipeline_identifier(mut self, pipeline_identifier: [u8; UUID_SIZE]) -> Self {
-        self.pipeline_identifier = pipeline_identifier;
-        self
-    }
-}
+impl<'a> PipelinePropertiesIdentifierEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -56437,40 +50031,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineRobustnessPropertiesEX
         StructureType::PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePipelineRobustnessPropertiesEXT<'_> {}
-impl<'a> PhysicalDevicePipelineRobustnessPropertiesEXT<'a> {
-    #[inline]
-    pub fn default_robustness_storage_buffers(
-        mut self,
-        default_robustness_storage_buffers: PipelineRobustnessBufferBehaviorEXT,
-    ) -> Self {
-        self.default_robustness_storage_buffers = default_robustness_storage_buffers;
-        self
-    }
-    #[inline]
-    pub fn default_robustness_uniform_buffers(
-        mut self,
-        default_robustness_uniform_buffers: PipelineRobustnessBufferBehaviorEXT,
-    ) -> Self {
-        self.default_robustness_uniform_buffers = default_robustness_uniform_buffers;
-        self
-    }
-    #[inline]
-    pub fn default_robustness_vertex_inputs(
-        mut self,
-        default_robustness_vertex_inputs: PipelineRobustnessBufferBehaviorEXT,
-    ) -> Self {
-        self.default_robustness_vertex_inputs = default_robustness_vertex_inputs;
-        self
-    }
-    #[inline]
-    pub fn default_robustness_images(
-        mut self,
-        default_robustness_images: PipelineRobustnessImageBehaviorEXT,
-    ) -> Self {
-        self.default_robustness_images = default_robustness_images;
-        self
-    }
-}
+impl<'a> PhysicalDevicePipelineRobustnessPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -56606,28 +50167,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceImageProcessingPropertiesQCOM<
         StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_PROPERTIES_QCOM;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {}
-impl<'a> PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
-    #[inline]
-    pub fn max_weight_filter_phases(mut self, max_weight_filter_phases: u32) -> Self {
-        self.max_weight_filter_phases = max_weight_filter_phases;
-        self
-    }
-    #[inline]
-    pub fn max_weight_filter_dimension(mut self, max_weight_filter_dimension: Extent2D) -> Self {
-        self.max_weight_filter_dimension = max_weight_filter_dimension;
-        self
-    }
-    #[inline]
-    pub fn max_block_match_region(mut self, max_block_match_region: Extent2D) -> Self {
-        self.max_block_match_region = max_block_match_region;
-        self
-    }
-    #[inline]
-    pub fn max_box_filter_block_size(mut self, max_box_filter_block_size: Extent2D) -> Self {
-        self.max_box_filter_block_size = max_box_filter_block_size;
-        self
-    }
-}
+impl<'a> PhysicalDeviceImageProcessingPropertiesQCOM<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -57049,69 +50589,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceOpticalFlowPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_OPTICAL_FLOW_PROPERTIES_NV;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceOpticalFlowPropertiesNV<'_> {}
-impl<'a> PhysicalDeviceOpticalFlowPropertiesNV<'a> {
-    #[inline]
-    pub fn supported_output_grid_sizes(
-        mut self,
-        supported_output_grid_sizes: OpticalFlowGridSizeFlagsNV,
-    ) -> Self {
-        self.supported_output_grid_sizes = supported_output_grid_sizes;
-        self
-    }
-    #[inline]
-    pub fn supported_hint_grid_sizes(
-        mut self,
-        supported_hint_grid_sizes: OpticalFlowGridSizeFlagsNV,
-    ) -> Self {
-        self.supported_hint_grid_sizes = supported_hint_grid_sizes;
-        self
-    }
-    #[inline]
-    pub fn hint_supported(mut self, hint_supported: bool) -> Self {
-        self.hint_supported = hint_supported.into();
-        self
-    }
-    #[inline]
-    pub fn cost_supported(mut self, cost_supported: bool) -> Self {
-        self.cost_supported = cost_supported.into();
-        self
-    }
-    #[inline]
-    pub fn bidirectional_flow_supported(mut self, bidirectional_flow_supported: bool) -> Self {
-        self.bidirectional_flow_supported = bidirectional_flow_supported.into();
-        self
-    }
-    #[inline]
-    pub fn global_flow_supported(mut self, global_flow_supported: bool) -> Self {
-        self.global_flow_supported = global_flow_supported.into();
-        self
-    }
-    #[inline]
-    pub fn min_width(mut self, min_width: u32) -> Self {
-        self.min_width = min_width;
-        self
-    }
-    #[inline]
-    pub fn min_height(mut self, min_height: u32) -> Self {
-        self.min_height = min_height;
-        self
-    }
-    #[inline]
-    pub fn max_width(mut self, max_width: u32) -> Self {
-        self.max_width = max_width;
-        self
-    }
-    #[inline]
-    pub fn max_height(mut self, max_height: u32) -> Self {
-        self.max_height = max_height;
-        self
-    }
-    #[inline]
-    pub fn max_num_regions_of_interest(mut self, max_num_regions_of_interest: u32) -> Self {
-        self.max_num_regions_of_interest = max_num_regions_of_interest;
-        self
-    }
-}
+impl<'a> PhysicalDeviceOpticalFlowPropertiesNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -57175,13 +50653,7 @@ impl ::core::default::Default for OpticalFlowImageFormatPropertiesNV<'_> {
 unsafe impl<'a> TaggedStructure for OpticalFlowImageFormatPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_IMAGE_FORMAT_PROPERTIES_NV;
 }
-impl<'a> OpticalFlowImageFormatPropertiesNV<'a> {
-    #[inline]
-    pub fn format(mut self, format: Format) -> Self {
-        self.format = format;
-        self
-    }
-}
+impl<'a> OpticalFlowImageFormatPropertiesNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -57640,30 +51112,8 @@ unsafe impl<'a> TaggedStructure for DeviceFaultInfoEXT<'a> {
 }
 impl<'a> DeviceFaultInfoEXT<'a> {
     #[inline]
-    pub fn description(
-        mut self,
-        description: &CStr,
-    ) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
-        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
-    }
-    #[inline]
     pub fn description_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.description)
-    }
-    #[inline]
-    pub fn address_infos(mut self, address_infos: &'a mut DeviceFaultAddressInfoEXT) -> Self {
-        self.p_address_infos = address_infos;
-        self
-    }
-    #[inline]
-    pub fn vendor_infos(mut self, vendor_infos: &'a mut DeviceFaultVendorInfoEXT) -> Self {
-        self.p_vendor_infos = vendor_infos;
-        self
-    }
-    #[inline]
-    pub fn vendor_binary_data(mut self, vendor_binary_data: *mut c_void) -> Self {
-        self.p_vendor_binary_data = vendor_binary_data;
-        self
     }
 }
 #[repr(C)]
@@ -58016,23 +51466,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCoreBuiltinsPropertiesAR
         StructureType::PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_PROPERTIES_ARM;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {}
-impl<'a> PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
-    #[inline]
-    pub fn shader_core_mask(mut self, shader_core_mask: u64) -> Self {
-        self.shader_core_mask = shader_core_mask;
-        self
-    }
-    #[inline]
-    pub fn shader_core_count(mut self, shader_core_count: u32) -> Self {
-        self.shader_core_count = shader_core_count;
-        self
-    }
-    #[inline]
-    pub fn shader_warps_per_core(mut self, shader_warps_per_core: u32) -> Self {
-        self.shader_warps_per_core = shader_warps_per_core;
-        self
-    }
-}
+impl<'a> PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -58306,42 +51740,7 @@ unsafe impl<'a> TaggedStructure for SurfacePresentScalingCapabilitiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PRESENT_SCALING_CAPABILITIES_EXT;
 }
 unsafe impl ExtendsSurfaceCapabilities2KHR for SurfacePresentScalingCapabilitiesEXT<'_> {}
-impl<'a> SurfacePresentScalingCapabilitiesEXT<'a> {
-    #[inline]
-    pub fn supported_present_scaling(
-        mut self,
-        supported_present_scaling: PresentScalingFlagsEXT,
-    ) -> Self {
-        self.supported_present_scaling = supported_present_scaling;
-        self
-    }
-    #[inline]
-    pub fn supported_present_gravity_x(
-        mut self,
-        supported_present_gravity_x: PresentGravityFlagsEXT,
-    ) -> Self {
-        self.supported_present_gravity_x = supported_present_gravity_x;
-        self
-    }
-    #[inline]
-    pub fn supported_present_gravity_y(
-        mut self,
-        supported_present_gravity_y: PresentGravityFlagsEXT,
-    ) -> Self {
-        self.supported_present_gravity_y = supported_present_gravity_y;
-        self
-    }
-    #[inline]
-    pub fn min_scaled_image_extent(mut self, min_scaled_image_extent: Extent2D) -> Self {
-        self.min_scaled_image_extent = min_scaled_image_extent;
-        self
-    }
-    #[inline]
-    pub fn max_scaled_image_extent(mut self, max_scaled_image_extent: Extent2D) -> Self {
-        self.max_scaled_image_extent = max_scaled_image_extent;
-        self
-    }
-}
+impl<'a> SurfacePresentScalingCapabilitiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -58759,17 +52158,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_>
 {
 }
-impl<'a> PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
-    #[inline]
-    pub fn ray_tracing_invocation_reorder_reordering_hint(
-        mut self,
-        ray_tracing_invocation_reorder_reordering_hint: RayTracingInvocationReorderModeNV,
-    ) -> Self {
-        self.ray_tracing_invocation_reorder_reordering_hint =
-            ray_tracing_invocation_reorder_reordering_hint;
-        self
-    }
-}
+impl<'a> PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -58846,32 +52235,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_>
 {
 }
-impl<'a> PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
-    #[inline]
-    pub fn extended_sparse_address_space_size(
-        mut self,
-        extended_sparse_address_space_size: DeviceSize,
-    ) -> Self {
-        self.extended_sparse_address_space_size = extended_sparse_address_space_size;
-        self
-    }
-    #[inline]
-    pub fn extended_sparse_image_usage_flags(
-        mut self,
-        extended_sparse_image_usage_flags: ImageUsageFlags,
-    ) -> Self {
-        self.extended_sparse_image_usage_flags = extended_sparse_image_usage_flags;
-        self
-    }
-    #[inline]
-    pub fn extended_sparse_buffer_usage_flags(
-        mut self,
-        extended_sparse_buffer_usage_flags: BufferUsageFlags,
-    ) -> Self {
-        self.extended_sparse_buffer_usage_flags = extended_sparse_buffer_usage_flags;
-        self
-    }
-}
+impl<'a> PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {}
 #[repr(C)]
 #[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDirectDriverLoadingInfoLUNARG.html>"]
@@ -59127,23 +52491,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCorePropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCorePropertiesARM<'_> {}
-impl<'a> PhysicalDeviceShaderCorePropertiesARM<'a> {
-    #[inline]
-    pub fn pixel_rate(mut self, pixel_rate: u32) -> Self {
-        self.pixel_rate = pixel_rate;
-        self
-    }
-    #[inline]
-    pub fn texel_rate(mut self, texel_rate: u32) -> Self {
-        self.texel_rate = texel_rate;
-        self
-    }
-    #[inline]
-    pub fn fma_rate(mut self, fma_rate: u32) -> Self {
-        self.fma_rate = fma_rate;
-        self
-    }
-}
+impl<'a> PhysicalDeviceShaderCorePropertiesARM<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -59470,18 +52818,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderObjectPropertiesEXT<'a> 
         StructureType::PHYSICAL_DEVICE_SHADER_OBJECT_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderObjectPropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceShaderObjectPropertiesEXT<'a> {
-    #[inline]
-    pub fn shader_binary_uuid(mut self, shader_binary_uuid: [u8; UUID_SIZE]) -> Self {
-        self.shader_binary_uuid = shader_binary_uuid;
-        self
-    }
-    #[inline]
-    pub fn shader_binary_version(mut self, shader_binary_version: u32) -> Self {
-        self.shader_binary_version = shader_binary_version;
-        self
-    }
-}
+impl<'a> PhysicalDeviceShaderObjectPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -59730,35 +53067,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderTileImagePropertiesEXT<'
         StructureType::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
-    #[inline]
-    pub fn shader_tile_image_coherent_read_accelerated(
-        mut self,
-        shader_tile_image_coherent_read_accelerated: bool,
-    ) -> Self {
-        self.shader_tile_image_coherent_read_accelerated =
-            shader_tile_image_coherent_read_accelerated.into();
-        self
-    }
-    #[inline]
-    pub fn shader_tile_image_read_sample_from_pixel_rate_invocation(
-        mut self,
-        shader_tile_image_read_sample_from_pixel_rate_invocation: bool,
-    ) -> Self {
-        self.shader_tile_image_read_sample_from_pixel_rate_invocation =
-            shader_tile_image_read_sample_from_pixel_rate_invocation.into();
-        self
-    }
-    #[inline]
-    pub fn shader_tile_image_read_from_helper_invocation(
-        mut self,
-        shader_tile_image_read_from_helper_invocation: bool,
-    ) -> Self {
-        self.shader_tile_image_read_from_helper_invocation =
-            shader_tile_image_read_from_helper_invocation.into();
-        self
-    }
-}
+impl<'a> PhysicalDeviceShaderTileImagePropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -59825,16 +53134,6 @@ unsafe impl<'a> TaggedStructure for ScreenBufferPropertiesQNX<'a> {
 }
 pub unsafe trait ExtendsScreenBufferPropertiesQNX {}
 impl<'a> ScreenBufferPropertiesQNX<'a> {
-    #[inline]
-    pub fn allocation_size(mut self, allocation_size: DeviceSize) -> Self {
-        self.allocation_size = allocation_size;
-        self
-    }
-    #[inline]
-    pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
-        self.memory_type_bits = memory_type_bits;
-        self
-    }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
@@ -59930,59 +53229,7 @@ unsafe impl<'a> TaggedStructure for ScreenBufferFormatPropertiesQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SCREEN_BUFFER_FORMAT_PROPERTIES_QNX;
 }
 unsafe impl ExtendsScreenBufferPropertiesQNX for ScreenBufferFormatPropertiesQNX<'_> {}
-impl<'a> ScreenBufferFormatPropertiesQNX<'a> {
-    #[inline]
-    pub fn format(mut self, format: Format) -> Self {
-        self.format = format;
-        self
-    }
-    #[inline]
-    pub fn external_format(mut self, external_format: u64) -> Self {
-        self.external_format = external_format;
-        self
-    }
-    #[inline]
-    pub fn screen_usage(mut self, screen_usage: u64) -> Self {
-        self.screen_usage = screen_usage;
-        self
-    }
-    #[inline]
-    pub fn format_features(mut self, format_features: FormatFeatureFlags) -> Self {
-        self.format_features = format_features;
-        self
-    }
-    #[inline]
-    pub fn sampler_ycbcr_conversion_components(
-        mut self,
-        sampler_ycbcr_conversion_components: ComponentMapping,
-    ) -> Self {
-        self.sampler_ycbcr_conversion_components = sampler_ycbcr_conversion_components;
-        self
-    }
-    #[inline]
-    pub fn suggested_ycbcr_model(
-        mut self,
-        suggested_ycbcr_model: SamplerYcbcrModelConversion,
-    ) -> Self {
-        self.suggested_ycbcr_model = suggested_ycbcr_model;
-        self
-    }
-    #[inline]
-    pub fn suggested_ycbcr_range(mut self, suggested_ycbcr_range: SamplerYcbcrRange) -> Self {
-        self.suggested_ycbcr_range = suggested_ycbcr_range;
-        self
-    }
-    #[inline]
-    pub fn suggested_x_chroma_offset(mut self, suggested_x_chroma_offset: ChromaLocation) -> Self {
-        self.suggested_x_chroma_offset = suggested_x_chroma_offset;
-        self
-    }
-    #[inline]
-    pub fn suggested_y_chroma_offset(mut self, suggested_y_chroma_offset: ChromaLocation) -> Self {
-        self.suggested_y_chroma_offset = suggested_y_chroma_offset;
-        self
-    }
-}
+impl<'a> ScreenBufferFormatPropertiesQNX<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -60150,53 +53397,7 @@ impl ::core::default::Default for CooperativeMatrixPropertiesKHR<'_> {
 unsafe impl<'a> TaggedStructure for CooperativeMatrixPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COOPERATIVE_MATRIX_PROPERTIES_KHR;
 }
-impl<'a> CooperativeMatrixPropertiesKHR<'a> {
-    #[inline]
-    pub fn m_size(mut self, m_size: u32) -> Self {
-        self.m_size = m_size;
-        self
-    }
-    #[inline]
-    pub fn n_size(mut self, n_size: u32) -> Self {
-        self.n_size = n_size;
-        self
-    }
-    #[inline]
-    pub fn k_size(mut self, k_size: u32) -> Self {
-        self.k_size = k_size;
-        self
-    }
-    #[inline]
-    pub fn a_type(mut self, a_type: ComponentTypeKHR) -> Self {
-        self.a_type = a_type;
-        self
-    }
-    #[inline]
-    pub fn b_type(mut self, b_type: ComponentTypeKHR) -> Self {
-        self.b_type = b_type;
-        self
-    }
-    #[inline]
-    pub fn c_type(mut self, c_type: ComponentTypeKHR) -> Self {
-        self.c_type = c_type;
-        self
-    }
-    #[inline]
-    pub fn result_type(mut self, result_type: ComponentTypeKHR) -> Self {
-        self.result_type = result_type;
-        self
-    }
-    #[inline]
-    pub fn saturating_accumulation(mut self, saturating_accumulation: bool) -> Self {
-        self.saturating_accumulation = saturating_accumulation.into();
-        self
-    }
-    #[inline]
-    pub fn scope(mut self, scope: ScopeKHR) -> Self {
-        self.scope = scope;
-        self
-    }
-}
+impl<'a> CooperativeMatrixPropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -60226,16 +53427,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceCooperativeMatrixPropertiesKHR
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_KHR;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {}
-impl<'a> PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
-    #[inline]
-    pub fn cooperative_matrix_supported_stages(
-        mut self,
-        cooperative_matrix_supported_stages: ShaderStageFlags,
-    ) -> Self {
-        self.cooperative_matrix_supported_stages = cooperative_matrix_supported_stages;
-        self
-    }
-}
+impl<'a> PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -61768,13 +54960,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceImageProcessing2PropertiesQCOM
         StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_2_PROPERTIES_QCOM;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {}
-impl<'a> PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
-    #[inline]
-    pub fn max_block_match_window(mut self, max_block_match_window: Extent2D) -> Self {
-        self.max_block_match_window = max_block_match_window;
-        self
-    }
-}
+impl<'a> PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -61890,13 +55076,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceLayeredDriverPropertiesMSFT<'a
         StructureType::PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {}
-impl<'a> PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
-    #[inline]
-    pub fn underlying_api(mut self, underlying_api: LayeredDriverUnderlyingApiMSFT) -> Self {
-        self.underlying_api = underlying_api;
-        self
-    }
-}
+impl<'a> PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -62017,33 +55197,7 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_>
 {
 }
-impl<'a> PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
-    #[inline]
-    pub fn null_color_attachment_with_external_format_resolve(
-        mut self,
-        null_color_attachment_with_external_format_resolve: bool,
-    ) -> Self {
-        self.null_color_attachment_with_external_format_resolve =
-            null_color_attachment_with_external_format_resolve.into();
-        self
-    }
-    #[inline]
-    pub fn external_format_resolve_chroma_offset_x(
-        mut self,
-        external_format_resolve_chroma_offset_x: ChromaLocation,
-    ) -> Self {
-        self.external_format_resolve_chroma_offset_x = external_format_resolve_chroma_offset_x;
-        self
-    }
-    #[inline]
-    pub fn external_format_resolve_chroma_offset_y(
-        mut self,
-        external_format_resolve_chroma_offset_y: ChromaLocation,
-    ) -> Self {
-        self.external_format_resolve_chroma_offset_y = external_format_resolve_chroma_offset_y;
-        self
-    }
-}
+impl<'a> PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -62076,13 +55230,7 @@ unsafe impl ExtendsAndroidHardwareBufferPropertiesANDROID
     for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_>
 {
 }
-impl<'a> AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
-    #[inline]
-    pub fn color_attachment_format(mut self, color_attachment_format: Format) -> Self {
-        self.color_attachment_format = color_attachment_format;
-        self
-    }
-}
+impl<'a> AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -62303,78 +55451,7 @@ impl ::core::default::Default for LatencyTimingsFrameReportNV<'_> {
 unsafe impl<'a> TaggedStructure for LatencyTimingsFrameReportNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_TIMINGS_FRAME_REPORT_NV;
 }
-impl<'a> LatencyTimingsFrameReportNV<'a> {
-    #[inline]
-    pub fn present_id(mut self, present_id: u64) -> Self {
-        self.present_id = present_id;
-        self
-    }
-    #[inline]
-    pub fn input_sample_time_us(mut self, input_sample_time_us: u64) -> Self {
-        self.input_sample_time_us = input_sample_time_us;
-        self
-    }
-    #[inline]
-    pub fn sim_start_time_us(mut self, sim_start_time_us: u64) -> Self {
-        self.sim_start_time_us = sim_start_time_us;
-        self
-    }
-    #[inline]
-    pub fn sim_end_time_us(mut self, sim_end_time_us: u64) -> Self {
-        self.sim_end_time_us = sim_end_time_us;
-        self
-    }
-    #[inline]
-    pub fn render_submit_start_time_us(mut self, render_submit_start_time_us: u64) -> Self {
-        self.render_submit_start_time_us = render_submit_start_time_us;
-        self
-    }
-    #[inline]
-    pub fn render_submit_end_time_us(mut self, render_submit_end_time_us: u64) -> Self {
-        self.render_submit_end_time_us = render_submit_end_time_us;
-        self
-    }
-    #[inline]
-    pub fn present_start_time_us(mut self, present_start_time_us: u64) -> Self {
-        self.present_start_time_us = present_start_time_us;
-        self
-    }
-    #[inline]
-    pub fn present_end_time_us(mut self, present_end_time_us: u64) -> Self {
-        self.present_end_time_us = present_end_time_us;
-        self
-    }
-    #[inline]
-    pub fn driver_start_time_us(mut self, driver_start_time_us: u64) -> Self {
-        self.driver_start_time_us = driver_start_time_us;
-        self
-    }
-    #[inline]
-    pub fn driver_end_time_us(mut self, driver_end_time_us: u64) -> Self {
-        self.driver_end_time_us = driver_end_time_us;
-        self
-    }
-    #[inline]
-    pub fn os_render_queue_start_time_us(mut self, os_render_queue_start_time_us: u64) -> Self {
-        self.os_render_queue_start_time_us = os_render_queue_start_time_us;
-        self
-    }
-    #[inline]
-    pub fn os_render_queue_end_time_us(mut self, os_render_queue_end_time_us: u64) -> Self {
-        self.os_render_queue_end_time_us = os_render_queue_end_time_us;
-        self
-    }
-    #[inline]
-    pub fn gpu_render_start_time_us(mut self, gpu_render_start_time_us: u64) -> Self {
-        self.gpu_render_start_time_us = gpu_render_start_time_us;
-        self
-    }
-    #[inline]
-    pub fn gpu_render_end_time_us(mut self, gpu_render_end_time_us: u64) -> Self {
-        self.gpu_render_end_time_us = gpu_render_end_time_us;
-        self
-    }
-}
+impl<'a> LatencyTimingsFrameReportNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -62586,18 +55663,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceCudaKernelLaunchPropertiesNV<'
         StructureType::PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_PROPERTIES_NV;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {}
-impl<'a> PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
-    #[inline]
-    pub fn compute_capability_minor(mut self, compute_capability_minor: u32) -> Self {
-        self.compute_capability_minor = compute_capability_minor;
-        self
-    }
-    #[inline]
-    pub fn compute_capability_major(mut self, compute_capability_major: u32) -> Self {
-        self.compute_capability_major = compute_capability_major;
-        self
-    }
-}
+impl<'a> PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -62819,21 +55885,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceRenderPassStripedPropertiesARM
         StructureType::PHYSICAL_DEVICE_RENDER_PASS_STRIPED_PROPERTIES_ARM;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {}
-impl<'a> PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
-    #[inline]
-    pub fn render_pass_stripe_granularity(
-        mut self,
-        render_pass_stripe_granularity: Extent2D,
-    ) -> Self {
-        self.render_pass_stripe_granularity = render_pass_stripe_granularity;
-        self
-    }
-    #[inline]
-    pub fn max_render_pass_stripes(mut self, max_render_pass_stripes: u32) -> Self {
-        self.max_render_pass_stripes = max_render_pass_stripes;
-        self
-    }
-}
+impl<'a> PhysicalDeviceRenderPassStripedPropertiesARM<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -63404,16 +56456,7 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'
         StructureType::PHYSICAL_DEVICE_MAP_MEMORY_PLACED_PROPERTIES_EXT;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {}
-impl<'a> PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
-    #[inline]
-    pub fn min_placed_memory_map_alignment(
-        mut self,
-        min_placed_memory_map_alignment: DeviceSize,
-    ) -> Self {
-        self.min_placed_memory_map_alignment = min_placed_memory_map_alignment;
-        self
-    }
-}
+impl<'a> PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
