@@ -814,8 +814,13 @@ impl FieldExt for vkxml::Field {
             // Make sure we also rename the constant, that is
             // used inside the static array
             let size = convert_c_expression(size, &BTreeMap::new());
-            // arrays in c are always passed as a pointer
+            let ty = if is_static_bounded_array(self) {
+                quote!(MaybeUninit<#ty>)
+            } else {
+                quote!(#ty)
+            };
             if is_ffi_param {
+                // arrays in c are always passed as a pointer
                 quote!(*const [#ty; #size])
             } else {
                 quote!([#ty #type_lifetime; #size])
@@ -1817,6 +1822,10 @@ fn is_static_array(field: &vkxml::Field) -> bool {
         _ => false,
     }
 }
+fn is_static_bounded_array(field: &vkxml::Field) -> bool {
+    // Excerpt from is_static_array() for runtime-bounded static arrays that are considered "dynamic" by vkxml
+    matches!(field.array, Some(vkxml::ArrayType::Dynamic)) && field.size_enumref.is_some()
+}
 
 fn derive_default(
     struct_: &vkxml::Struct,
@@ -1934,10 +1943,6 @@ fn derive_debug(
         // Exclude string pointers from formatting as they will always be unsafe to read, even if
         // https://github.com/ash-rs/ash/pull/831#discussion_r1447805951 is resolved.
         is_static_array(field) && field.basetype == "char"
-    }
-    fn is_static_bounded_array(field: &vkxml::Field) -> bool {
-        // Excerpt from is_static_array() for runtime-bounded static arrays that are considered "dynamic" by vkxml
-        matches!(field.array, Some(vkxml::ArrayType::Dynamic)) && field.size_enumref.is_some()
     }
     let contains_static_array = members.iter().any(|member| {
         is_static_char_array(member.vkxml_field) || is_static_bounded_array(member.vkxml_field)
@@ -3375,6 +3380,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use core::marker::PhantomData;
         use core::fmt;
         use core::ffi::*;
+        use core::mem::MaybeUninit;
         use crate::vk::{Handle, ptr_chain_iter};
         use crate::vk::aliases::*;
         use crate::vk::bitflags::*;

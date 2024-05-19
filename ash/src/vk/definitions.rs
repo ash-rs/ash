@@ -9,6 +9,7 @@ use crate::vk::{ptr_chain_iter, Handle};
 use core::ffi::*;
 use core::fmt;
 use core::marker::PhantomData;
+use core::mem::MaybeUninit;
 #[deprecated = "This define is deprecated. VK_MAKE_API_VERSION should be used instead."]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_MAKE_VERSION.html>"]
 pub const fn make_version(major: u32, minor: u32, patch: u32) -> u32 {
@@ -863,7 +864,7 @@ pub struct PhysicalDeviceProperties {
     pub vendor_id: u32,
     pub device_id: u32,
     pub device_type: PhysicalDeviceType,
-    pub device_name: [c_char; MAX_PHYSICAL_DEVICE_NAME_SIZE],
+    pub device_name: [MaybeUninit<c_char>; MAX_PHYSICAL_DEVICE_NAME_SIZE],
     pub pipeline_cache_uuid: [u8; UUID_SIZE],
     pub limits: PhysicalDeviceLimits,
     pub sparse_properties: PhysicalDeviceSparseProperties,
@@ -958,7 +959,7 @@ impl PhysicalDeviceProperties {
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExtensionProperties.html>"]
 #[must_use]
 pub struct ExtensionProperties {
-    pub extension_name: [c_char; MAX_EXTENSION_NAME_SIZE],
+    pub extension_name: [MaybeUninit<c_char>; MAX_EXTENSION_NAME_SIZE],
     pub spec_version: u32,
 }
 #[cfg(feature = "debug")]
@@ -1002,10 +1003,10 @@ impl ExtensionProperties {
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLayerProperties.html>"]
 #[must_use]
 pub struct LayerProperties {
-    pub layer_name: [c_char; MAX_EXTENSION_NAME_SIZE],
+    pub layer_name: [MaybeUninit<c_char>; MAX_EXTENSION_NAME_SIZE],
     pub spec_version: u32,
     pub implementation_version: u32,
-    pub description: [c_char; MAX_DESCRIPTION_SIZE],
+    pub description: [MaybeUninit<c_char>; MAX_DESCRIPTION_SIZE],
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for LayerProperties {
@@ -1508,9 +1509,9 @@ impl QueueFamilyProperties {
 #[must_use]
 pub struct PhysicalDeviceMemoryProperties {
     pub memory_type_count: u32,
-    pub memory_types: [MemoryType; MAX_MEMORY_TYPES],
+    pub memory_types: [MaybeUninit<MemoryType>; MAX_MEMORY_TYPES],
     pub memory_heap_count: u32,
-    pub memory_heaps: [MemoryHeap; MAX_MEMORY_HEAPS],
+    pub memory_heaps: [MaybeUninit<MemoryHeap>; MAX_MEMORY_HEAPS],
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for PhysicalDeviceMemoryProperties {
@@ -11576,8 +11577,8 @@ pub struct PhysicalDeviceDriverProperties<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub driver_id: DriverId,
-    pub driver_name: [c_char; MAX_DRIVER_NAME_SIZE],
-    pub driver_info: [c_char; MAX_DRIVER_INFO_SIZE],
+    pub driver_name: [MaybeUninit<c_char>; MAX_DRIVER_NAME_SIZE],
+    pub driver_info: [MaybeUninit<c_char>; MAX_DRIVER_INFO_SIZE],
     pub conformance_version: ConformanceVersion,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -13965,7 +13966,7 @@ pub struct PhysicalDeviceGroupProperties<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub physical_device_count: u32,
-    pub physical_devices: [PhysicalDevice; MAX_DEVICE_GROUP_SIZE],
+    pub physical_devices: [MaybeUninit<PhysicalDevice>; MAX_DEVICE_GROUP_SIZE],
     pub subset_allocation: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -19522,7 +19523,7 @@ pub struct QueueFamilyGlobalPriorityPropertiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub priority_count: u32,
-    pub priorities: [QueueGlobalPriorityKHR; MAX_GLOBAL_PRIORITY_SIZE_KHR],
+    pub priorities: [MaybeUninit<QueueGlobalPriorityKHR>; MAX_GLOBAL_PRIORITY_SIZE_KHR],
     pub _marker: PhantomData<&'a ()>,
 }
 unsafe impl Send for QueueFamilyGlobalPriorityPropertiesKHR<'_> {}
@@ -28920,9 +28921,9 @@ pub struct PerformanceCounterDescriptionKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub flags: PerformanceCounterDescriptionFlagsKHR,
-    pub name: [c_char; MAX_DESCRIPTION_SIZE],
-    pub category: [c_char; MAX_DESCRIPTION_SIZE],
-    pub description: [c_char; MAX_DESCRIPTION_SIZE],
+    pub name: [MaybeUninit<c_char>; MAX_DESCRIPTION_SIZE],
+    pub category: [MaybeUninit<c_char>; MAX_DESCRIPTION_SIZE],
+    pub description: [MaybeUninit<c_char>; MAX_DESCRIPTION_SIZE],
     pub _marker: PhantomData<&'a ()>,
 }
 unsafe impl Send for PerformanceCounterDescriptionKHR<'_> {}
@@ -30095,8 +30096,8 @@ pub struct PipelineExecutablePropertiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub stages: ShaderStageFlags,
-    pub name: [c_char; MAX_DESCRIPTION_SIZE],
-    pub description: [c_char; MAX_DESCRIPTION_SIZE],
+    pub name: [MaybeUninit<c_char>; MAX_DESCRIPTION_SIZE],
+    pub description: [MaybeUninit<c_char>; MAX_DESCRIPTION_SIZE],
     pub subgroup_size: u32,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -30226,8 +30227,8 @@ impl ::core::default::Default for PipelineExecutableStatisticValueKHR {
 pub struct PipelineExecutableStatisticKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub name: [c_char; MAX_DESCRIPTION_SIZE],
-    pub description: [c_char; MAX_DESCRIPTION_SIZE],
+    pub name: [MaybeUninit<c_char>; MAX_DESCRIPTION_SIZE],
+    pub description: [MaybeUninit<c_char>; MAX_DESCRIPTION_SIZE],
     pub format: PipelineExecutableStatisticFormatKHR,
     pub value: PipelineExecutableStatisticValueKHR,
     pub _marker: PhantomData<&'a ()>,
@@ -30302,8 +30303,8 @@ impl<'a> PipelineExecutableStatisticKHR<'a> {
 pub struct PipelineExecutableInternalRepresentationKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub name: [c_char; MAX_DESCRIPTION_SIZE],
-    pub description: [c_char; MAX_DESCRIPTION_SIZE],
+    pub name: [MaybeUninit<c_char>; MAX_DESCRIPTION_SIZE],
+    pub description: [MaybeUninit<c_char>; MAX_DESCRIPTION_SIZE],
     pub is_text: Bool32,
     pub data_size: usize,
     pub p_data: *mut c_void,
@@ -31825,8 +31826,8 @@ pub struct PhysicalDeviceVulkan12Properties<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub driver_id: DriverId,
-    pub driver_name: [c_char; MAX_DRIVER_NAME_SIZE],
-    pub driver_info: [c_char; MAX_DRIVER_INFO_SIZE],
+    pub driver_name: [MaybeUninit<c_char>; MAX_DRIVER_NAME_SIZE],
+    pub driver_info: [MaybeUninit<c_char>; MAX_DRIVER_INFO_SIZE],
     pub conformance_version: ConformanceVersion,
     pub denorm_behavior_independence: ShaderFloatControlsIndependence,
     pub rounding_mode_independence: ShaderFloatControlsIndependence,
@@ -33251,11 +33252,11 @@ impl<'a> PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
 pub struct PhysicalDeviceToolProperties<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub name: [c_char; MAX_EXTENSION_NAME_SIZE],
-    pub version: [c_char; MAX_EXTENSION_NAME_SIZE],
+    pub name: [MaybeUninit<c_char>; MAX_EXTENSION_NAME_SIZE],
+    pub version: [MaybeUninit<c_char>; MAX_EXTENSION_NAME_SIZE],
     pub purposes: ToolPurposeFlags,
-    pub description: [c_char; MAX_DESCRIPTION_SIZE],
-    pub layer: [c_char; MAX_EXTENSION_NAME_SIZE],
+    pub description: [MaybeUninit<c_char>; MAX_DESCRIPTION_SIZE],
+    pub layer: [MaybeUninit<c_char>; MAX_EXTENSION_NAME_SIZE],
     pub _marker: PhantomData<&'a ()>,
 }
 unsafe impl Send for PhysicalDeviceToolProperties<'_> {}
@@ -48587,7 +48588,7 @@ pub struct ShaderModuleIdentifierEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub identifier_size: u32,
-    pub identifier: [u8; MAX_SHADER_MODULE_IDENTIFIER_SIZE_EXT],
+    pub identifier: [MaybeUninit<u8>; MAX_SHADER_MODULE_IDENTIFIER_SIZE_EXT],
     pub _marker: PhantomData<&'a ()>,
 }
 unsafe impl Send for ShaderModuleIdentifierEXT<'_> {}
@@ -48995,7 +48996,7 @@ impl<'a> RenderPassCreationFeedbackCreateInfoEXT<'a> {
 #[must_use]
 pub struct RenderPassSubpassFeedbackInfoEXT {
     pub subpass_merge_status: SubpassMergeStatusEXT,
-    pub description: [c_char; MAX_DESCRIPTION_SIZE],
+    pub description: [MaybeUninit<c_char>; MAX_DESCRIPTION_SIZE],
     pub post_merge_index: u32,
 }
 #[cfg(feature = "debug")]
@@ -51942,7 +51943,7 @@ impl DeviceFaultAddressInfoEXT {
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultVendorInfoEXT.html>"]
 #[must_use]
 pub struct DeviceFaultVendorInfoEXT {
-    pub description: [c_char; MAX_DESCRIPTION_SIZE],
+    pub description: [MaybeUninit<c_char>; MAX_DESCRIPTION_SIZE],
     pub vendor_fault_code: u64,
     pub vendor_fault_data: u64,
 }
@@ -52044,7 +52045,7 @@ impl<'a> DeviceFaultCountsEXT<'a> {
 pub struct DeviceFaultInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub description: [c_char; MAX_DESCRIPTION_SIZE],
+    pub description: [MaybeUninit<c_char>; MAX_DESCRIPTION_SIZE],
     pub p_address_infos: *mut DeviceFaultAddressInfoEXT,
     pub p_vendor_infos: *mut DeviceFaultVendorInfoEXT,
     pub p_vendor_binary_data: *mut c_void,
