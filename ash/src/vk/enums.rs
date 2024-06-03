@@ -1757,6 +1757,8 @@ impl VendorId {
     }
 }
 impl VendorId {
+    #[doc = "Khronos vendor ID"]
+    pub const KHRONOS: Self = Self(0x1_0000);
     #[doc = "Vivante vendor ID"]
     pub const VIV: Self = Self(0x1_0001);
     #[doc = "VeriSilicon vendor ID"]
@@ -1839,6 +1841,8 @@ impl DriverId {
     pub const IMAGINATION_OPEN_SOURCE_MESA: Self = Self(25);
     #[doc = "Mesa open source project"]
     pub const MESA_AGXV: Self = Self(26);
+    #[doc = "Reserved for undisclosed driver project"]
+    pub const RESERVED_27: Self = Self(27);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]

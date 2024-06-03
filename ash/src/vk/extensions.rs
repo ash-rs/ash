@@ -3961,6 +3961,10 @@ impl StructureType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV: Self = Self(1_000_563_000);
 }
+#[doc = "Generated from 'VK_EXT_shader_replicated_composites'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_REPLICATED_COMPOSITES_FEATURES_EXT: Self = Self(1_000_564_000);
+}
 #[doc = "Generated from 'VK_NV_ray_tracing_validation'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV: Self = Self(1_000_568_000);
@@ -7897,6 +7901,9 @@ pub const NV_RAW_ACCESS_CHAINS_SPEC_VERSION: u32 = 1u32;
 pub const NV_SHADER_ATOMIC_FLOAT16_VECTOR_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_atomic_float16_vector\0") };
 pub const NV_SHADER_ATOMIC_FLOAT16_VECTOR_SPEC_VERSION: u32 = 1u32;
+pub const EXT_SHADER_REPLICATED_COMPOSITES_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_replicated_composites\0") };
+pub const EXT_SHADER_REPLICATED_COMPOSITES_SPEC_VERSION: u32 = 1u32;
 pub const NV_RAY_TRACING_VALIDATION_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_validation\0") };
 pub const NV_RAY_TRACING_VALIDATION_SPEC_VERSION: u32 = 1u32;

@@ -8414,6 +8414,14 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_shader_replicated_composites"]
+    pub mod shader_replicated_composites {
+        use super::super::*;
+        pub use {
+            crate::vk::EXT_SHADER_REPLICATED_COMPOSITES_NAME as NAME,
+            crate::vk::EXT_SHADER_REPLICATED_COMPOSITES_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged FUCHSIA"]
 pub mod fuchsia {
