@@ -1676,6 +1676,7 @@ impl fmt::Debug for DriverId {
             Self::MESA_NVK => Some("MESA_NVK"),
             Self::IMAGINATION_OPEN_SOURCE_MESA => Some("IMAGINATION_OPEN_SOURCE_MESA"),
             Self::MESA_AGXV => Some("MESA_AGXV"),
+            Self::RESERVED_27 => Some("RESERVED_27"),
             _ => None,
         };
         if let Some(x) = name {
@@ -6620,6 +6621,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV")
             }
+            Self::PHYSICAL_DEVICE_SHADER_REPLICATED_COMPOSITES_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_REPLICATED_COMPOSITES_FEATURES_EXT")
+            }
             Self::PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV")
             }
@@ -7288,6 +7292,7 @@ impl fmt::Debug for ValidationFeatureEnableEXT {
 impl fmt::Debug for VendorId {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
+            Self::KHRONOS => Some("KHRONOS"),
             Self::VIV => Some("VIV"),
             Self::VSI => Some("VSI"),
             Self::KAZAN => Some("KAZAN"),
