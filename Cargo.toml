@@ -9,8 +9,3 @@ members = [
     "generator",
     "generator-rewrite",
 ]
-
-[patch.crates-io]
-# https://github.com/krolli/vk-parse/pull/32
-# https://togithub.com/KhronosGroup/Vulkan-Docs/pull/2366
-vk-parse = { git = "https://github.com/MarijnS95/vk-parse", rev = "97848b1" }
