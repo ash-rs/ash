@@ -14994,7 +14994,7 @@ pub mod khr {
                     cmd_set_rendering_input_attachment_indices_khr: unsafe {
                         unsafe extern "system" fn cmd_set_rendering_input_attachment_indices_khr(
                             _command_buffer: CommandBuffer,
-                            _p_location_info: *const RenderingInputAttachmentIndexInfoKHR<'_>,
+                            _p_input_attachment_index_info : * const RenderingInputAttachmentIndexInfoKHR < '_ >,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
