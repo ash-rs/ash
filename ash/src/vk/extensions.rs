@@ -6112,7 +6112,7 @@ pub type PFN_vkCmdSetRenderingAttachmentLocationsKHR = unsafe extern "system" fn
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetRenderingInputAttachmentIndicesKHR = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    p_location_info: *const RenderingInputAttachmentIndexInfoKHR<'_>,
+    p_input_attachment_index_info: *const RenderingInputAttachmentIndexInfoKHR<'_>,
 );
 pub const EXT_SHADER_IMAGE_ATOMIC_INT64_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_image_atomic_int64\0") };

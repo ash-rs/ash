@@ -1675,7 +1675,7 @@ impl fmt::Debug for DriverId {
             Self::MESA_DOZEN => Some("MESA_DOZEN"),
             Self::MESA_NVK => Some("MESA_NVK"),
             Self::IMAGINATION_OPEN_SOURCE_MESA => Some("IMAGINATION_OPEN_SOURCE_MESA"),
-            Self::MESA_AGXV => Some("MESA_AGXV"),
+            Self::MESA_HONEYKRISP => Some("MESA_HONEYKRISP"),
             Self::RESERVED_27 => Some("RESERVED_27"),
             _ => None,
         };

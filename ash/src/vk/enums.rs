@@ -1840,7 +1840,7 @@ impl DriverId {
     #[doc = "Imagination Technologies"]
     pub const IMAGINATION_OPEN_SOURCE_MESA: Self = Self(25);
     #[doc = "Mesa open source project"]
-    pub const MESA_AGXV: Self = Self(26);
+    pub const MESA_HONEYKRISP: Self = Self(26);
     #[doc = "Reserved for undisclosed driver project"]
     pub const RESERVED_27: Self = Self(27);
 }
