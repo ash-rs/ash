@@ -23,7 +23,10 @@ impl crate::ext::shader_object::Device {
         create_infos: &[vk::ShaderCreateInfoEXT<'_>],
         allocator: Option<&vk::AllocationCallbacks<'_>>,
     ) -> Result<Vec<vk::ShaderEXT>, (Vec<vk::ShaderEXT>, vk::Result)> {
-        let mut shaders = Vec::with_capacity(create_infos.len());
+        let mut shaders = Vec::new();
+        shaders
+            .try_reserve(create_infos.len())
+            .map_err(|_| (Vec::new(), vk::Result::ERROR_OUT_OF_HOST_MEMORY))?;
         let err_code = (self.fp.create_shaders_ext)(
             self.handle,
             create_infos.len() as u32,

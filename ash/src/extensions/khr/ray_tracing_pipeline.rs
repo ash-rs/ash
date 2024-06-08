@@ -44,7 +44,10 @@ impl crate::khr::ray_tracing_pipeline::Device {
         create_infos: &[vk::RayTracingPipelineCreateInfoKHR<'_>],
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
-        let mut pipelines = Vec::with_capacity(create_infos.len());
+        let mut pipelines = Vec::new();
+        pipelines
+            .try_reserve(create_infos.len())
+            .map_err(|_| (Vec::new(), vk::Result::ERROR_OUT_OF_HOST_MEMORY))?;
         let err_code = (self.fp.create_ray_tracing_pipelines_khr)(
             self.handle,
             deferred_operation,
@@ -70,7 +73,9 @@ impl crate::khr::ray_tracing_pipeline::Device {
         group_count: u32,
         data_size: usize,
     ) -> VkResult<Vec<u8>> {
-        let mut data = Vec::<u8>::with_capacity(data_size);
+        let mut data = Vec::<u8>::new();
+        data.try_reserve(data_size)
+            .map_err(|_| vk::Result::ERROR_OUT_OF_HOST_MEMORY)?;
         (self.fp.get_ray_tracing_shader_group_handles_khr)(
             self.handle,
             pipeline,
@@ -91,7 +96,9 @@ impl crate::khr::ray_tracing_pipeline::Device {
         group_count: u32,
         data_size: usize,
     ) -> VkResult<Vec<u8>> {
-        let mut data = Vec::<u8>::with_capacity(data_size);
+        let mut data = Vec::<u8>::new();
+        data.try_reserve(data_size)
+            .map_err(|_| vk::Result::ERROR_OUT_OF_HOST_MEMORY)?;
         (self
             .fp
             .get_ray_tracing_capture_replay_shader_group_handles_khr)(
