@@ -16993,6 +16993,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_shader_relaxed_extended_instruction"]
+    pub mod shader_relaxed_extended_instruction {
+        use super::super::*;
+        pub use {
+            crate::vk::KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_NAME as NAME,
+            crate::vk::KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged LUNARG"]
 pub mod lunarg {
