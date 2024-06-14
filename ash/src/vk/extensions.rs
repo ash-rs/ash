@@ -3957,6 +3957,11 @@ impl StructureType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_RAW_ACCESS_CHAINS_FEATURES_NV: Self = Self(1_000_555_000);
 }
+#[doc = "Generated from 'VK_KHR_shader_relaxed_extended_instruction'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_RELAXED_EXTENDED_INSTRUCTION_FEATURES_KHR: Self =
+        Self(1_000_558_000);
+}
 #[doc = "Generated from 'VK_NV_shader_atomic_float16_vector'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV: Self = Self(1_000_563_000);
@@ -7898,6 +7903,9 @@ pub const NV_DESCRIPTOR_POOL_OVERALLOCATION_SPEC_VERSION: u32 = 1u32;
 pub const NV_RAW_ACCESS_CHAINS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_raw_access_chains\0") };
 pub const NV_RAW_ACCESS_CHAINS_SPEC_VERSION: u32 = 1u32;
+pub const KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_relaxed_extended_instruction\0") };
+pub const KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_SPEC_VERSION: u32 = 1u32;
 pub const NV_SHADER_ATOMIC_FLOAT16_VECTOR_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_atomic_float16_vector\0") };
 pub const NV_SHADER_ATOMIC_FLOAT16_VECTOR_SPEC_VERSION: u32 = 1u32;
