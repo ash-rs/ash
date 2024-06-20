@@ -10,8 +10,9 @@
     unused_qualifications
 )]
 #![allow(
-    clippy::too_many_arguments,
     clippy::missing_safety_doc,
+    clippy::missing_transmute_annotations,
+    clippy::too_many_arguments,
     clippy::upper_case_acronyms
 )]
 #![cfg_attr(docsrs, feature(doc_cfg))]
