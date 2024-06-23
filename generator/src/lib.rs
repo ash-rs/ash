@@ -2349,7 +2349,17 @@ fn derive_getters_and_setters(
     // Root structs come with their own trait that structs that extend
     // this struct will implement
     let next_trait = if root_struct_next_field.is_some() {
-        quote!(pub unsafe trait #extends_name {})
+        let message = format!("`{{Self}}` is not allowed in the `pNext` chain of `vk::{name}`");
+        let label = format!("`{{Self}}` does not extend `vk::{name}`");
+        let note = format!("See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{}.html#VUID-{}-pNext-pNext>", struct_.name, struct_.name);
+        quote! {
+            #[diagnostic::on_unimplemented(
+                message = #message,
+                label = #label,
+                note = #note
+            )]
+            pub unsafe trait #extends_name {}
+        }
     } else {
         quote!()
     };
