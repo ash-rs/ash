@@ -1547,7 +1547,10 @@ impl Device {
         &self,
         allocate_info: &vk::DescriptorSetAllocateInfo<'_>,
     ) -> VkResult<Vec<vk::DescriptorSet>> {
-        let mut desc_set = Vec::with_capacity(allocate_info.descriptor_set_count as usize);
+        let mut desc_set = Vec::new();
+        desc_set
+            .try_reserve(allocate_info.descriptor_set_count as usize)
+            .map_err(|_| vk::Result::ERROR_OUT_OF_HOST_MEMORY)?;
         (self.device_fn_1_0.allocate_descriptor_sets)(
             self.handle(),
             allocate_info,
@@ -2153,7 +2156,10 @@ impl Device {
         create_infos: &[vk::GraphicsPipelineCreateInfo<'_>],
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
-        let mut pipelines = Vec::with_capacity(create_infos.len());
+        let mut pipelines = Vec::new();
+        pipelines
+            .try_reserve(create_infos.len())
+            .map_err(|_| (Vec::new(), vk::Result::ERROR_OUT_OF_HOST_MEMORY))?;
         let err_code = (self.device_fn_1_0.create_graphics_pipelines)(
             self.handle(),
             pipeline_cache,
@@ -2181,7 +2187,10 @@ impl Device {
         create_infos: &[vk::ComputePipelineCreateInfo<'_>],
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
-        let mut pipelines = Vec::with_capacity(create_infos.len());
+        let mut pipelines = Vec::new();
+        pipelines
+            .try_reserve(create_infos.len())
+            .map_err(|_| (Vec::new(), vk::Result::ERROR_OUT_OF_HOST_MEMORY))?;
         let err_code = (self.device_fn_1_0.create_compute_pipelines)(
             self.handle(),
             pipeline_cache,
@@ -2542,7 +2551,10 @@ impl Device {
         &self,
         allocate_info: &vk::CommandBufferAllocateInfo<'_>,
     ) -> VkResult<Vec<vk::CommandBuffer>> {
-        let mut buffers = Vec::with_capacity(allocate_info.command_buffer_count as usize);
+        let mut buffers = Vec::new();
+        buffers
+            .try_reserve(allocate_info.command_buffer_count as usize)
+            .map_err(|_| vk::Result::ERROR_OUT_OF_HOST_MEMORY)?;
         (self.device_fn_1_0.allocate_command_buffers)(
             self.handle(),
             allocate_info,
