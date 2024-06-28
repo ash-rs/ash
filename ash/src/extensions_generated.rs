@@ -8314,6 +8314,14 @@ pub mod ext {
             crate::vk::EXT_MUTABLE_DESCRIPTOR_TYPE_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_EXT_legacy_vertex_attributes"]
+    pub mod legacy_vertex_attributes {
+        use super::super::*;
+        pub use {
+            crate::vk::EXT_LEGACY_VERTEX_ATTRIBUTES_NAME as NAME,
+            crate::vk::EXT_LEGACY_VERTEX_ATTRIBUTES_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_EXT_layer_settings"]
     pub mod layer_settings {
         use super::super::*;
@@ -8405,6 +8413,14 @@ pub mod ext {
                 }
             }
         }
+    }
+    #[doc = "VK_EXT_shader_replicated_composites"]
+    pub mod shader_replicated_composites {
+        use super::super::*;
+        pub use {
+            crate::vk::EXT_SHADER_REPLICATED_COMPOSITES_NAME as NAME,
+            crate::vk::EXT_SHADER_REPLICATED_COMPOSITES_SPEC_VERSION as SPEC_VERSION,
+        };
     }
 }
 #[doc = "Extensions tagged FUCHSIA"]
@@ -14978,7 +14994,7 @@ pub mod khr {
                     cmd_set_rendering_input_attachment_indices_khr: unsafe {
                         unsafe extern "system" fn cmd_set_rendering_input_attachment_indices_khr(
                             _command_buffer: CommandBuffer,
-                            _p_location_info: *const RenderingInputAttachmentIndexInfoKHR<'_>,
+                            _p_input_attachment_index_info : * const RenderingInputAttachmentIndexInfoKHR < '_ >,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -16977,6 +16993,22 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_shader_relaxed_extended_instruction"]
+    pub mod shader_relaxed_extended_instruction {
+        use super::super::*;
+        pub use {
+            crate::vk::KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_NAME as NAME,
+            crate::vk::KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_maintenance7"]
+    pub mod maintenance7 {
+        use super::super::*;
+        pub use {
+            crate::vk::KHR_MAINTENANCE7_NAME as NAME,
+            crate::vk::KHR_MAINTENANCE7_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged LUNARG"]
 pub mod lunarg {
@@ -16986,6 +17018,17 @@ pub mod lunarg {
         pub use {
             crate::vk::LUNARG_DIRECT_DRIVER_LOADING_NAME as NAME,
             crate::vk::LUNARG_DIRECT_DRIVER_LOADING_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+}
+#[doc = "Extensions tagged MESA"]
+pub mod mesa {
+    #[doc = "VK_MESA_image_alignment_control"]
+    pub mod image_alignment_control {
+        use super::super::*;
+        pub use {
+            crate::vk::MESA_IMAGE_ALIGNMENT_CONTROL_NAME as NAME,
+            crate::vk::MESA_IMAGE_ALIGNMENT_CONTROL_SPEC_VERSION as SPEC_VERSION,
         };
     }
 }

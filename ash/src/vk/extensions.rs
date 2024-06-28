@@ -3431,7 +3431,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_EXT_nested_command_buffer'"]
 impl RenderingFlags {
-    pub const CONTENTS_INLINE_EXT: Self = Self(0b1_0000);
+    pub const CONTENTS_INLINE_EXT: Self = Self::CONTENTS_INLINE_KHR;
 }
 #[doc = "Generated from 'VK_EXT_nested_command_buffer'"]
 impl StructureType {
@@ -3440,7 +3440,8 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_EXT_nested_command_buffer'"]
 impl SubpassContents {
-    pub const INLINE_AND_SECONDARY_COMMAND_BUFFERS_EXT: Self = Self(1_000_451_000);
+    pub const INLINE_AND_SECONDARY_COMMAND_BUFFERS_EXT: Self =
+        Self::INLINE_AND_SECONDARY_COMMAND_BUFFERS_KHR;
 }
 #[doc = "Generated from 'VK_EXT_external_memory_acquire_unmodified'"]
 impl StructureType {
@@ -3533,7 +3534,7 @@ impl AccessFlags2 {
 }
 #[doc = "Generated from 'VK_NV_optical_flow'"]
 impl Format {
-    pub const R16G16_S10_5_NV: Self = Self(1_000_464_000);
+    pub const R16G16_SFIXED5_NV: Self = Self(1_000_464_000);
 }
 #[doc = "Generated from 'VK_NV_optical_flow'"]
 impl FormatFeatureFlags2 {
@@ -3565,6 +3566,11 @@ impl StructureType {
     pub const OPTICAL_FLOW_SESSION_CREATE_INFO_NV: Self = Self(1_000_464_004);
     pub const OPTICAL_FLOW_EXECUTE_INFO_NV: Self = Self(1_000_464_005);
     pub const OPTICAL_FLOW_SESSION_CREATE_PRIVATE_DATA_INFO_NV: Self = Self(1_000_464_010);
+}
+#[doc = "Generated from 'VK_EXT_legacy_dithering'"]
+impl PipelineCreateFlags2KHR {
+    pub const ENABLE_LEGACY_DITHERING_EXT: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_EXT_legacy_dithering'"]
 impl RenderingFlags {
@@ -3748,6 +3754,11 @@ impl DescriptorType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT: Self = Self(1_000_351_000);
     pub const MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT: Self = Self(1_000_351_002);
+}
+#[doc = "Generated from 'VK_EXT_legacy_vertex_attributes'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_FEATURES_EXT: Self = Self(1_000_495_000);
+    pub const PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_PROPERTIES_EXT: Self = Self(1_000_495_001);
 }
 #[doc = "Generated from 'VK_EXT_layer_settings'"]
 impl StructureType {
@@ -3947,13 +3958,45 @@ impl StructureType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_RAW_ACCESS_CHAINS_FEATURES_NV: Self = Self(1_000_555_000);
 }
+#[doc = "Generated from 'VK_KHR_shader_relaxed_extended_instruction'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_RELAXED_EXTENDED_INSTRUCTION_FEATURES_KHR: Self =
+        Self(1_000_558_000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance7'"]
+impl RenderingFlags {
+    #[doc = "Promoted from extension 452"]
+    pub const CONTENTS_INLINE_KHR: Self = Self(0b1_0000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance7'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MAINTENANCE_7_FEATURES_KHR: Self = Self(1_000_562_000);
+    pub const PHYSICAL_DEVICE_MAINTENANCE_7_PROPERTIES_KHR: Self = Self(1_000_562_001);
+    pub const PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_LIST_KHR: Self = Self(1_000_562_002);
+    pub const PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_KHR: Self = Self(1_000_562_003);
+    pub const PHYSICAL_DEVICE_LAYERED_API_VULKAN_PROPERTIES_KHR: Self = Self(1_000_562_004);
+}
+#[doc = "Generated from 'VK_KHR_maintenance7'"]
+impl SubpassContents {
+    pub const INLINE_AND_SECONDARY_COMMAND_BUFFERS_KHR: Self = Self(1_000_451_000);
+}
 #[doc = "Generated from 'VK_NV_shader_atomic_float16_vector'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV: Self = Self(1_000_563_000);
 }
+#[doc = "Generated from 'VK_EXT_shader_replicated_composites'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_REPLICATED_COMPOSITES_FEATURES_EXT: Self = Self(1_000_564_000);
+}
 #[doc = "Generated from 'VK_NV_ray_tracing_validation'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV: Self = Self(1_000_568_000);
+}
+#[doc = "Generated from 'VK_MESA_image_alignment_control'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_FEATURES_MESA: Self = Self(1_000_575_000);
+    pub const PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_PROPERTIES_MESA: Self = Self(1_000_575_001);
+    pub const IMAGE_ALIGNMENT_CONTROL_CREATE_INFO_MESA: Self = Self(1_000_575_002);
 }
 pub const KHR_SURFACE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_surface\0") };
@@ -6092,7 +6135,7 @@ pub type PFN_vkCmdSetRenderingAttachmentLocationsKHR = unsafe extern "system" fn
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetRenderingInputAttachmentIndicesKHR = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    p_location_info: *const RenderingInputAttachmentIndexInfoKHR<'_>,
+    p_input_attachment_index_info: *const RenderingInputAttachmentIndexInfoKHR<'_>,
 );
 pub const EXT_SHADER_IMAGE_ATOMIC_INT64_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_image_atomic_int64\0") };
@@ -6635,7 +6678,7 @@ pub const NV_LOW_LATENCY_NAME: &CStr =
 pub const NV_LOW_LATENCY_SPEC_VERSION: u32 = 1u32;
 pub const EXT_METAL_OBJECTS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_metal_objects\0") };
-pub const EXT_METAL_OBJECTS_SPEC_VERSION: u32 = 1u32;
+pub const EXT_METAL_OBJECTS_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkExportMetalObjectsEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -7343,7 +7386,7 @@ pub const ARM_RENDER_PASS_STRIPED_NAME: &CStr =
 pub const ARM_RENDER_PASS_STRIPED_SPEC_VERSION: u32 = 1u32;
 pub const QCOM_FRAGMENT_DENSITY_MAP_OFFSET_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_fragment_density_map_offset\0") };
-pub const QCOM_FRAGMENT_DENSITY_MAP_OFFSET_SPEC_VERSION: u32 = 1u32;
+pub const QCOM_FRAGMENT_DENSITY_MAP_OFFSET_SPEC_VERSION: u32 = 2u32;
 pub const NV_COPY_MEMORY_INDIRECT_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_copy_memory_indirect\0") };
 pub const NV_COPY_MEMORY_INDIRECT_SPEC_VERSION: u32 = 1u32;
@@ -7627,7 +7670,7 @@ pub type PFN_vkCmdOpticalFlowExecuteNV = unsafe extern "system" fn(
 );
 pub const EXT_LEGACY_DITHERING_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_legacy_dithering\0") };
-pub const EXT_LEGACY_DITHERING_SPEC_VERSION: u32 = 1u32;
+pub const EXT_LEGACY_DITHERING_SPEC_VERSION: u32 = 2u32;
 pub const EXT_PIPELINE_PROTECTED_ACCESS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_protected_access\0") };
 pub const EXT_PIPELINE_PROTECTED_ACCESS_SPEC_VERSION: u32 = 1u32;
@@ -7722,6 +7765,9 @@ pub const NV_EXTENDED_SPARSE_ADDRESS_SPACE_SPEC_VERSION: u32 = 1u32;
 pub const EXT_MUTABLE_DESCRIPTOR_TYPE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mutable_descriptor_type\0") };
 pub const EXT_MUTABLE_DESCRIPTOR_TYPE_SPEC_VERSION: u32 = 1u32;
+pub const EXT_LEGACY_VERTEX_ATTRIBUTES_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_legacy_vertex_attributes\0") };
+pub const EXT_LEGACY_VERTEX_ATTRIBUTES_SPEC_VERSION: u32 = 1u32;
 pub const EXT_LAYER_SETTINGS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_layer_settings\0") };
 pub const EXT_LAYER_SETTINGS_SPEC_VERSION: u32 = 2u32;
@@ -7875,9 +7921,21 @@ pub const NV_DESCRIPTOR_POOL_OVERALLOCATION_SPEC_VERSION: u32 = 1u32;
 pub const NV_RAW_ACCESS_CHAINS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_raw_access_chains\0") };
 pub const NV_RAW_ACCESS_CHAINS_SPEC_VERSION: u32 = 1u32;
+pub const KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_relaxed_extended_instruction\0") };
+pub const KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_SPEC_VERSION: u32 = 1u32;
+pub const KHR_MAINTENANCE7_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance7\0") };
+pub const KHR_MAINTENANCE7_SPEC_VERSION: u32 = 1u32;
 pub const NV_SHADER_ATOMIC_FLOAT16_VECTOR_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_atomic_float16_vector\0") };
 pub const NV_SHADER_ATOMIC_FLOAT16_VECTOR_SPEC_VERSION: u32 = 1u32;
+pub const EXT_SHADER_REPLICATED_COMPOSITES_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_replicated_composites\0") };
+pub const EXT_SHADER_REPLICATED_COMPOSITES_SPEC_VERSION: u32 = 1u32;
 pub const NV_RAY_TRACING_VALIDATION_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_validation\0") };
 pub const NV_RAY_TRACING_VALIDATION_SPEC_VERSION: u32 = 1u32;
+pub const MESA_IMAGE_ALIGNMENT_CONTROL_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_MESA_image_alignment_control\0") };
+pub const MESA_IMAGE_ALIGNMENT_CONTROL_SPEC_VERSION: u32 = 1u32;

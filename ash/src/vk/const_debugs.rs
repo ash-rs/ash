@@ -1675,7 +1675,8 @@ impl fmt::Debug for DriverId {
             Self::MESA_DOZEN => Some("MESA_DOZEN"),
             Self::MESA_NVK => Some("MESA_NVK"),
             Self::IMAGINATION_OPEN_SOURCE_MESA => Some("IMAGINATION_OPEN_SOURCE_MESA"),
-            Self::MESA_AGXV => Some("MESA_AGXV"),
+            Self::MESA_HONEYKRISP => Some("MESA_HONEYKRISP"),
+            Self::RESERVED_27 => Some("RESERVED_27"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2201,7 +2202,7 @@ impl fmt::Debug for Format {
             Self::PVRTC1_4BPP_SRGB_BLOCK_IMG => Some("PVRTC1_4BPP_SRGB_BLOCK_IMG"),
             Self::PVRTC2_2BPP_SRGB_BLOCK_IMG => Some("PVRTC2_2BPP_SRGB_BLOCK_IMG"),
             Self::PVRTC2_4BPP_SRGB_BLOCK_IMG => Some("PVRTC2_4BPP_SRGB_BLOCK_IMG"),
-            Self::R16G16_S10_5_NV => Some("R16G16_S10_5_NV"),
+            Self::R16G16_SFIXED5_NV => Some("R16G16_SFIXED5_NV"),
             Self::A1B5G5R5_UNORM_PACK16_KHR => Some("A1B5G5R5_UNORM_PACK16_KHR"),
             Self::A8_UNORM_KHR => Some("A8_UNORM_KHR"),
             Self::G8B8G8R8_422_UNORM => Some("G8B8G8R8_422_UNORM"),
@@ -3482,6 +3483,23 @@ impl fmt::Debug for PerformanceValueTypeINTEL {
         }
     }
 }
+impl fmt::Debug for PhysicalDeviceLayeredApiKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::VULKAN => Some("VULKAN"),
+            Self::D3D12 => Some("D3D12"),
+            Self::METAL => Some("METAL"),
+            Self::OPENGL => Some("OPENGL"),
+            Self::OPENGLES => Some("OPENGLES"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for PhysicalDeviceSchedulingControlsFlagsARM {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags64, &str)] = &[(
@@ -3711,6 +3729,10 @@ impl fmt::Debug for PipelineCreateFlags2KHR {
                 "ALLOW_DERIVATIVES",
             ),
             (PipelineCreateFlags2KHR::DERIVATIVE.0, "DERIVATIVE"),
+            (
+                PipelineCreateFlags2KHR::ENABLE_LEGACY_DITHERING_EXT.0,
+                "ENABLE_LEGACY_DITHERING_EXT",
+            ),
             (
                 PipelineCreateFlags2KHR::VIEW_INDEX_FROM_DEVICE_INDEX.0,
                 "VIEW_INDEX_FROM_DEVICE_INDEX",
@@ -4520,11 +4542,11 @@ impl fmt::Debug for RenderingFlags {
             ),
             (RenderingFlags::SUSPENDING.0, "SUSPENDING"),
             (RenderingFlags::RESUMING.0, "RESUMING"),
-            (RenderingFlags::CONTENTS_INLINE_EXT.0, "CONTENTS_INLINE_EXT"),
             (
                 RenderingFlags::ENABLE_LEGACY_DITHERING_EXT.0,
                 "ENABLE_LEGACY_DITHERING_EXT",
             ),
+            (RenderingFlags::CONTENTS_INLINE_KHR.0, "CONTENTS_INLINE_KHR"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -6465,6 +6487,12 @@ impl fmt::Debug for StructureType {
             Self::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT => {
                 Some("MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT")
             }
+            Self::PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_PROPERTIES_EXT")
+            }
             Self::LAYER_SETTINGS_CREATE_INFO_EXT => Some("LAYER_SETTINGS_CREATE_INFO_EXT"),
             Self::PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_FEATURES_ARM => {
                 Some("PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_FEATURES_ARM")
@@ -6607,11 +6635,41 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_RAW_ACCESS_CHAINS_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_RAW_ACCESS_CHAINS_FEATURES_NV")
             }
+            Self::PHYSICAL_DEVICE_SHADER_RELAXED_EXTENDED_INSTRUCTION_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_RELAXED_EXTENDED_INSTRUCTION_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_7_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_7_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_7_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_7_PROPERTIES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_LIST_KHR => {
+                Some("PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_LIST_KHR")
+            }
+            Self::PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_LAYERED_API_VULKAN_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_LAYERED_API_VULKAN_PROPERTIES_KHR")
+            }
             Self::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV")
             }
+            Self::PHYSICAL_DEVICE_SHADER_REPLICATED_COMPOSITES_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_REPLICATED_COMPOSITES_FEATURES_EXT")
+            }
             Self::PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_FEATURES_MESA => {
+                Some("PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_FEATURES_MESA")
+            }
+            Self::PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_PROPERTIES_MESA => {
+                Some("PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_PROPERTIES_MESA")
+            }
+            Self::IMAGE_ALIGNMENT_CONTROL_CREATE_INFO_MESA => {
+                Some("IMAGE_ALIGNMENT_CONTROL_CREATE_INFO_MESA")
             }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
@@ -6991,8 +7049,8 @@ impl fmt::Debug for SubpassContents {
         let name = match *self {
             Self::INLINE => Some("INLINE"),
             Self::SECONDARY_COMMAND_BUFFERS => Some("SECONDARY_COMMAND_BUFFERS"),
-            Self::INLINE_AND_SECONDARY_COMMAND_BUFFERS_EXT => {
-                Some("INLINE_AND_SECONDARY_COMMAND_BUFFERS_EXT")
+            Self::INLINE_AND_SECONDARY_COMMAND_BUFFERS_KHR => {
+                Some("INLINE_AND_SECONDARY_COMMAND_BUFFERS_KHR")
             }
             _ => None,
         };
@@ -7269,6 +7327,7 @@ impl fmt::Debug for ValidationFeatureEnableEXT {
 impl fmt::Debug for VendorId {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
+            Self::KHRONOS => Some("KHRONOS"),
             Self::VIV => Some("VIV"),
             Self::VSI => Some("VSI"),
             Self::KAZAN => Some("KAZAN"),
