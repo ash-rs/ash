@@ -2877,6 +2877,27 @@ impl BlockMatchWindowCompareModeQCOM {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceLayeredApiKHR.html>"]
+pub struct PhysicalDeviceLayeredApiKHR(pub(crate) i32);
+impl PhysicalDeviceLayeredApiKHR {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl PhysicalDeviceLayeredApiKHR {
+    pub const VULKAN: Self = Self(0);
+    pub const D3D12: Self = Self(1);
+    pub const METAL: Self = Self(2);
+    pub const OPENGL: Self = Self(3);
+    pub const OPENGLES: Self = Self(4);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLayeredDriverUnderlyingApiMSFT.html>"]
 pub struct LayeredDriverUnderlyingApiMSFT(pub(crate) i32);
 impl LayeredDriverUnderlyingApiMSFT {

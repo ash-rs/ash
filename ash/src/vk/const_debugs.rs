@@ -3483,6 +3483,23 @@ impl fmt::Debug for PerformanceValueTypeINTEL {
         }
     }
 }
+impl fmt::Debug for PhysicalDeviceLayeredApiKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::VULKAN => Some("VULKAN"),
+            Self::D3D12 => Some("D3D12"),
+            Self::METAL => Some("METAL"),
+            Self::OPENGL => Some("OPENGL"),
+            Self::OPENGLES => Some("OPENGLES"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for PhysicalDeviceSchedulingControlsFlagsARM {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags64, &str)] = &[(
@@ -4525,11 +4542,11 @@ impl fmt::Debug for RenderingFlags {
             ),
             (RenderingFlags::SUSPENDING.0, "SUSPENDING"),
             (RenderingFlags::RESUMING.0, "RESUMING"),
-            (RenderingFlags::CONTENTS_INLINE_EXT.0, "CONTENTS_INLINE_EXT"),
             (
                 RenderingFlags::ENABLE_LEGACY_DITHERING_EXT.0,
                 "ENABLE_LEGACY_DITHERING_EXT",
             ),
+            (RenderingFlags::CONTENTS_INLINE_KHR.0, "CONTENTS_INLINE_KHR"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -6621,6 +6638,21 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_SHADER_RELAXED_EXTENDED_INSTRUCTION_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_SHADER_RELAXED_EXTENDED_INSTRUCTION_FEATURES_KHR")
             }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_7_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_7_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_7_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_7_PROPERTIES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_LIST_KHR => {
+                Some("PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_LIST_KHR")
+            }
+            Self::PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_LAYERED_API_VULKAN_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_LAYERED_API_VULKAN_PROPERTIES_KHR")
+            }
             Self::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV")
             }
@@ -7017,8 +7049,8 @@ impl fmt::Debug for SubpassContents {
         let name = match *self {
             Self::INLINE => Some("INLINE"),
             Self::SECONDARY_COMMAND_BUFFERS => Some("SECONDARY_COMMAND_BUFFERS"),
-            Self::INLINE_AND_SECONDARY_COMMAND_BUFFERS_EXT => {
-                Some("INLINE_AND_SECONDARY_COMMAND_BUFFERS_EXT")
+            Self::INLINE_AND_SECONDARY_COMMAND_BUFFERS_KHR => {
+                Some("INLINE_AND_SECONDARY_COMMAND_BUFFERS_KHR")
             }
             _ => None,
         };

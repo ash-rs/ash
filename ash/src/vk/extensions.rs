@@ -3431,7 +3431,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_EXT_nested_command_buffer'"]
 impl RenderingFlags {
-    pub const CONTENTS_INLINE_EXT: Self = Self(0b1_0000);
+    pub const CONTENTS_INLINE_EXT: Self = Self::CONTENTS_INLINE_KHR;
 }
 #[doc = "Generated from 'VK_EXT_nested_command_buffer'"]
 impl StructureType {
@@ -3440,7 +3440,8 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_EXT_nested_command_buffer'"]
 impl SubpassContents {
-    pub const INLINE_AND_SECONDARY_COMMAND_BUFFERS_EXT: Self = Self(1_000_451_000);
+    pub const INLINE_AND_SECONDARY_COMMAND_BUFFERS_EXT: Self =
+        Self::INLINE_AND_SECONDARY_COMMAND_BUFFERS_KHR;
 }
 #[doc = "Generated from 'VK_EXT_external_memory_acquire_unmodified'"]
 impl StructureType {
@@ -3961,6 +3962,23 @@ impl StructureType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_RELAXED_EXTENDED_INSTRUCTION_FEATURES_KHR: Self =
         Self(1_000_558_000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance7'"]
+impl RenderingFlags {
+    #[doc = "Promoted from extension 452"]
+    pub const CONTENTS_INLINE_KHR: Self = Self(0b1_0000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance7'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MAINTENANCE_7_FEATURES_KHR: Self = Self(1_000_562_000);
+    pub const PHYSICAL_DEVICE_MAINTENANCE_7_PROPERTIES_KHR: Self = Self(1_000_562_001);
+    pub const PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_LIST_KHR: Self = Self(1_000_562_002);
+    pub const PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_KHR: Self = Self(1_000_562_003);
+    pub const PHYSICAL_DEVICE_LAYERED_API_VULKAN_PROPERTIES_KHR: Self = Self(1_000_562_004);
+}
+#[doc = "Generated from 'VK_KHR_maintenance7'"]
+impl SubpassContents {
+    pub const INLINE_AND_SECONDARY_COMMAND_BUFFERS_KHR: Self = Self(1_000_451_000);
 }
 #[doc = "Generated from 'VK_NV_shader_atomic_float16_vector'"]
 impl StructureType {
@@ -7368,7 +7386,7 @@ pub const ARM_RENDER_PASS_STRIPED_NAME: &CStr =
 pub const ARM_RENDER_PASS_STRIPED_SPEC_VERSION: u32 = 1u32;
 pub const QCOM_FRAGMENT_DENSITY_MAP_OFFSET_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_fragment_density_map_offset\0") };
-pub const QCOM_FRAGMENT_DENSITY_MAP_OFFSET_SPEC_VERSION: u32 = 1u32;
+pub const QCOM_FRAGMENT_DENSITY_MAP_OFFSET_SPEC_VERSION: u32 = 2u32;
 pub const NV_COPY_MEMORY_INDIRECT_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_copy_memory_indirect\0") };
 pub const NV_COPY_MEMORY_INDIRECT_SPEC_VERSION: u32 = 1u32;
@@ -7906,6 +7924,9 @@ pub const NV_RAW_ACCESS_CHAINS_SPEC_VERSION: u32 = 1u32;
 pub const KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_relaxed_extended_instruction\0") };
 pub const KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_SPEC_VERSION: u32 = 1u32;
+pub const KHR_MAINTENANCE7_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance7\0") };
+pub const KHR_MAINTENANCE7_SPEC_VERSION: u32 = 1u32;
 pub const NV_SHADER_ATOMIC_FLOAT16_VECTOR_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_atomic_float16_vector\0") };
 pub const NV_SHADER_ATOMIC_FLOAT16_VECTOR_SPEC_VERSION: u32 = 1u32;
