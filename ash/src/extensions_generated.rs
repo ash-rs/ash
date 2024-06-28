@@ -17001,6 +17001,14 @@ pub mod khr {
             crate::vk::KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_KHR_maintenance7"]
+    pub mod maintenance7 {
+        use super::super::*;
+        pub use {
+            crate::vk::KHR_MAINTENANCE7_NAME as NAME,
+            crate::vk::KHR_MAINTENANCE7_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged LUNARG"]
 pub mod lunarg {
