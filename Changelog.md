@@ -90,6 +90,7 @@ By disabling the default `std` feature, this crate compiles in a [`no_std` envir
 - Added `VK_KHR_calibrated_timestamps` device extension (#890)
 - Added `VK_KHR_maintenance6` device extension (#891)
 - Added `VK_NV_copy_memory_indirect` device extension (#892)
+- Added support for vulkan video extensions (#916)
 
 ### Changed
 
