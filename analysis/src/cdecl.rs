@@ -33,7 +33,7 @@ pub struct UnsupportedCTok<'a>(&'a str);
 impl<'a> CTok<'a> {
     pub const SUPPORTED_KEYWORDS: &'static [&'static str] = &["const", "struct", "typedef", "void"];
 
-    pub fn lex_into(
+    pub(crate) fn lex_into(
         s: &'a str,
         out: &mut impl Extend<CTok<'a>>,
     ) -> Result<(), UnsupportedCTok<'a>> {
@@ -143,7 +143,7 @@ pub enum CDeclParseErrorKind<'a> {
 
 impl<'a> CDecl<'a> {
     // HACK(eddyb) this split is literally just to simplify error tracking.
-    pub fn parse<'b>(
+    pub(crate) fn parse<'b>(
         mode: CDeclMode,
         tokens: &'b [CTok<'a>],
     ) -> Result<CDecl<'a>, CDeclParseError<'a, 'b>> {

@@ -2,6 +2,6 @@ use analysis::Analysis;
 
 fn main() {
     tracing_subscriber::fmt::init();
-    let _analysis = Analysis::new("generator/Vulkan-Headers");
-    // dbg!(_analysis);
+    let analysis = Analysis::new("generator/Vulkan-Headers");
+    generator_rewrite::generate(&analysis, "ash-rewrite/src/generated").unwrap();
 }

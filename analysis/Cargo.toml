@@ -6,3 +6,4 @@ edition = "2021"
 [dependencies]
 roxmltree = "0.20"
 tracing = "0.1"
+indexmap = "2"
