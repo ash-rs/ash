@@ -28,6 +28,7 @@ use regex::Regex;
 use std::{
     borrow::Cow,
     collections::{BTreeMap, HashMap, HashSet},
+    ffi::CString,
     fmt::Display,
     ops::Not,
     path::Path,
@@ -1085,15 +1086,14 @@ fn generate_function_pointers<'a>(
             let returns = &self.0.returns;
 
             let byte_function_name =
-                Literal::byte_string(format!("{}\0", self.0.function_name_c).as_bytes());
+                Literal::c_string(&CString::new(self.0.function_name_c).unwrap());
 
             quote!(
                 #function_name_rust: unsafe {
                     unsafe extern "system" fn #function_name_rust (#parameters_unused) #returns {
                         panic!(concat!("Unable to load ", stringify!(#function_name_rust)))
                     }
-                    let cname = CStr::from_bytes_with_nul_unchecked(#byte_function_name);
-                    let val = _f(cname);
+                    let val = _f(#byte_function_name);
                     if val.is_null() {
                         #function_name_rust
                     } else {
@@ -1271,8 +1271,6 @@ pub fn generate_extension_commands<'a>(
     fn_cache: &mut HashSet<&'a str>,
     has_lifetimes: &HashSet<Ident>,
 ) -> ExtensionCommands<'a> {
-    let byte_name_ident = Literal::byte_string(format!("{full_extension_name}\0").as_bytes());
-
     let extension_name = full_extension_name.strip_prefix("VK_").unwrap();
     let (vendor, extension_ident) = extension_name.split_once('_').unwrap();
     let extension_ident = match extension_ident.chars().next().unwrap().is_ascii_digit() {
@@ -1289,13 +1287,11 @@ pub fn generate_extension_commands<'a>(
         .flatten()
         .filter_map(get_variant!(vk_parse::InterfaceItem::Enum))
         .find(|e| e.name.contains("SPEC_VERSION"))
-        .and_then(|e| {
-            if let vk_parse::EnumSpec::Value { value, .. } = &e.spec {
-                let v: u32 = str::parse(value).unwrap();
-                Some(quote!(pub const #spec_version_ident: u32 = #v;))
-            } else {
-                None
-            }
+        .map(|e| &e.spec)
+        .and_then(get_variant!(vk_parse::EnumSpec::Value { value }))
+        .map(|value| {
+            let v: u32 = str::parse(value).unwrap();
+            quote!(pub const #spec_version_ident: u32 = #v;)
         });
 
     let mut instance_commands = Vec::new();
@@ -1427,12 +1423,12 @@ pub fn generate_extension_commands<'a>(
     let (raw_instance_fp, hl_instance_fp) =
         instance_fp.map_or((None, None), |(a, b)| (Some(a), Some(b)));
 
+    let byte_name_ident = Literal::c_string(&CString::new(extension_name).unwrap());
+
     ExtensionCommands {
         vendor,
         raw: quote! {
-                pub const #name_ident: &CStr = unsafe {
-                    CStr::from_bytes_with_nul_unchecked(#byte_name_ident)
-                };
+                pub const #name_ident: &CStr = #byte_name_ident;
                 #spec_version
                 #raw_instance_fp
                 #raw_device_fp
@@ -3457,6 +3453,8 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     fn write_formatted(text: &[u8], out: File) -> std::process::Child {
         let mut child = std::process::Command::new("rustfmt")
+            // Required for formatting c-string literals:
+            .arg("--edition=2021")
             .stdin(std::process::Stdio::piped())
             .stdout(out)
             .spawn()

@@ -221,7 +221,7 @@ impl Entry {
     #[inline]
     pub unsafe fn try_enumerate_instance_version(&self) -> VkResult<Option<u32>> {
         let enumerate_instance_version: Option<vk::PFN_vkEnumerateInstanceVersion> = {
-            let name = ffi::CStr::from_bytes_with_nul_unchecked(b"vkEnumerateInstanceVersion\0");
+            let name = c"vkEnumerateInstanceVersion";
             mem::transmute((self.static_fn.get_instance_proc_addr)(
                 vk::Instance::null(),
                 name.as_ptr(),
@@ -333,7 +333,7 @@ impl crate::StaticFn {
     {
         Ok(Self {
             get_instance_proc_addr: unsafe {
-                let cname = ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetInstanceProcAddr\0");
+                let cname = c"vkGetInstanceProcAddr";
                 let val = _f(cname);
                 if val.is_null() {
                     return Err(MissingEntryPoint);

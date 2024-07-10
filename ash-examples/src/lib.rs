@@ -212,11 +212,9 @@ impl ExampleBase {
                 .build(&event_loop)
                 .unwrap();
             let entry = Entry::linked();
-            let app_name = ffi::CStr::from_bytes_with_nul_unchecked(b"VulkanTriangle\0");
+            let app_name = c"VulkanTriangle";
 
-            let layer_names = [ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_LAYER_KHRONOS_validation\0",
-            )];
+            let layer_names = [c"VK_LAYER_KHRONOS_validation"];
             let layers_names_raw: Vec<*const c_char> = layer_names
                 .iter()
                 .map(|raw_name| raw_name.as_ptr())
