@@ -5043,10 +5043,10 @@ pub const EXT_DEPTH_CLIP_ENABLE_NAME: &CStr =
 pub const EXT_DEPTH_CLIP_ENABLE_SPEC_VERSION: u32 = 1u32;
 pub const EXT_SWAPCHAIN_COLORSPACE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_swapchain_colorspace\0") };
-pub const EXT_SWAPCHAIN_COLORSPACE_SPEC_VERSION: u32 = 4u32;
+pub const EXT_SWAPCHAIN_COLORSPACE_SPEC_VERSION: u32 = 5u32;
 pub const EXT_HDR_METADATA_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_hdr_metadata\0") };
-pub const EXT_HDR_METADATA_SPEC_VERSION: u32 = 2u32;
+pub const EXT_HDR_METADATA_SPEC_VERSION: u32 = 3u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkSetHdrMetadataEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
