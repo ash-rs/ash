@@ -338,6 +338,35 @@ impl fmt::Debug for AndroidSurfaceCreateFlagsKHR {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for AntiLagModeAMD {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::DRIVER_CONTROL => Some("DRIVER_CONTROL"),
+            Self::ON => Some("ON"),
+            Self::OFF => Some("OFF"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for AntiLagStageAMD {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::INPUT => Some("INPUT"),
+            Self::PRESENT => Some("PRESENT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for AttachmentDescriptionFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(AttachmentDescriptionFlags::MAY_ALIAS.0, "MAY_ALIAS")];
@@ -6448,6 +6477,11 @@ impl fmt::Debug for StructureType {
             Self::BUFFER_USAGE_FLAGS_2_CREATE_INFO_KHR => {
                 Some("BUFFER_USAGE_FLAGS_2_CREATE_INFO_KHR")
             }
+            Self::PHYSICAL_DEVICE_ANTI_LAG_FEATURES_AMD => {
+                Some("PHYSICAL_DEVICE_ANTI_LAG_FEATURES_AMD")
+            }
+            Self::ANTI_LAG_DATA_AMD => Some("ANTI_LAG_DATA_AMD"),
+            Self::ANTI_LAG_PRESENTATION_INFO_AMD => Some("ANTI_LAG_PRESENTATION_INFO_AMD"),
             Self::PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR")
             }
