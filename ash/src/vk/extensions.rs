@@ -3677,6 +3677,12 @@ impl StructureType {
     pub const PIPELINE_CREATE_FLAGS_2_CREATE_INFO_KHR: Self = Self(1_000_470_005);
     pub const BUFFER_USAGE_FLAGS_2_CREATE_INFO_KHR: Self = Self(1_000_470_006);
 }
+#[doc = "Generated from 'VK_AMD_anti_lag'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_ANTI_LAG_FEATURES_AMD: Self = Self(1_000_476_000);
+    pub const ANTI_LAG_DATA_AMD: Self = Self(1_000_476_001);
+    pub const ANTI_LAG_PRESENTATION_INFO_AMD: Self = Self(1_000_476_002);
+}
 #[doc = "Generated from 'VK_KHR_ray_tracing_position_fetch'"]
 impl BuildAccelerationStructureFlagsKHR {
     pub const ALLOW_DATA_ACCESS: Self = Self(0b1000_0000_0000);
@@ -7700,6 +7706,12 @@ pub type PFN_vkGetDeviceImageSubresourceLayoutKHR = unsafe extern "system" fn(
     p_info: *const DeviceImageSubresourceInfoKHR<'_>,
     p_layout: *mut SubresourceLayout2KHR<'_>,
 );
+pub const AMD_ANTI_LAG_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_anti_lag\0") };
+pub const AMD_ANTI_LAG_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkAntiLagUpdateAMD =
+    unsafe extern "system" fn(device: crate::vk::Device, p_data: *const AntiLagDataAMD<'_>);
 pub const KHR_RAY_TRACING_POSITION_FETCH_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_tracing_position_fetch\0") };
 pub const KHR_RAY_TRACING_POSITION_FETCH_SPEC_VERSION: u32 = 1u32;

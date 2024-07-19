@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 290;
+pub const HEADER_VERSION: u32 = 291;
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -55367,6 +55367,134 @@ impl DispatchGraphCountInfoAMDX {
     #[inline]
     pub fn stride(mut self, stride: u64) -> Self {
         self.stride = stride;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceAntiLagFeaturesAMD.html>"]
+#[must_use]
+pub struct PhysicalDeviceAntiLagFeaturesAMD<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub anti_lag: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceAntiLagFeaturesAMD<'_> {}
+unsafe impl Sync for PhysicalDeviceAntiLagFeaturesAMD<'_> {}
+impl ::core::default::Default for PhysicalDeviceAntiLagFeaturesAMD<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            anti_lag: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceAntiLagFeaturesAMD<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_ANTI_LAG_FEATURES_AMD;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceAntiLagFeaturesAMD<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceAntiLagFeaturesAMD<'_> {}
+impl<'a> PhysicalDeviceAntiLagFeaturesAMD<'a> {
+    #[inline]
+    pub fn anti_lag(mut self, anti_lag: bool) -> Self {
+        self.anti_lag = anti_lag.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAntiLagDataAMD.html>"]
+#[must_use]
+pub struct AntiLagDataAMD<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub mode: AntiLagModeAMD,
+    pub max_fps: u32,
+    pub p_presentation_info: *const AntiLagPresentationInfoAMD<'a>,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for AntiLagDataAMD<'_> {}
+unsafe impl Sync for AntiLagDataAMD<'_> {}
+impl ::core::default::Default for AntiLagDataAMD<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            mode: AntiLagModeAMD::default(),
+            max_fps: u32::default(),
+            p_presentation_info: ::core::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for AntiLagDataAMD<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::ANTI_LAG_DATA_AMD;
+}
+impl<'a> AntiLagDataAMD<'a> {
+    #[inline]
+    pub fn mode(mut self, mode: AntiLagModeAMD) -> Self {
+        self.mode = mode;
+        self
+    }
+    #[inline]
+    pub fn max_fps(mut self, max_fps: u32) -> Self {
+        self.max_fps = max_fps;
+        self
+    }
+    #[inline]
+    pub fn presentation_info(
+        mut self,
+        presentation_info: &'a AntiLagPresentationInfoAMD<'a>,
+    ) -> Self {
+        self.p_presentation_info = presentation_info;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAntiLagPresentationInfoAMD.html>"]
+#[must_use]
+pub struct AntiLagPresentationInfoAMD<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub stage: AntiLagStageAMD,
+    pub frame_index: u64,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for AntiLagPresentationInfoAMD<'_> {}
+unsafe impl Sync for AntiLagPresentationInfoAMD<'_> {}
+impl ::core::default::Default for AntiLagPresentationInfoAMD<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            stage: AntiLagStageAMD::default(),
+            frame_index: u64::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for AntiLagPresentationInfoAMD<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::ANTI_LAG_PRESENTATION_INFO_AMD;
+}
+impl<'a> AntiLagPresentationInfoAMD<'a> {
+    #[inline]
+    pub fn stage(mut self, stage: AntiLagStageAMD) -> Self {
+        self.stage = stage;
+        self
+    }
+    #[inline]
+    pub fn frame_index(mut self, frame_index: u64) -> Self {
+        self.frame_index = frame_index;
         self
     }
 }

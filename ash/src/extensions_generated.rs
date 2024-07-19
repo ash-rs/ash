@@ -445,6 +445,68 @@ pub mod amd {
             crate::vk::AMD_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_AMD_anti_lag"]
+    pub mod anti_lag {
+        use super::super::*;
+        pub use {
+            crate::vk::AMD_ANTI_LAG_NAME as NAME,
+            crate::vk::AMD_ANTI_LAG_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_AMD_anti_lag device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle();
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_AMD_anti_lag device-level function pointers"]
+        pub struct DeviceFn {
+            pub anti_lag_update_amd: PFN_vkAntiLagUpdateAMD,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    anti_lag_update_amd: unsafe {
+                        unsafe extern "system" fn anti_lag_update_amd(
+                            _device: crate::vk::Device,
+                            _p_data: *const AntiLagDataAMD<'_>,
+                        ) {
+                            panic!(concat!("Unable to load ", stringify!(anti_lag_update_amd)))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkAntiLagUpdateAMD\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            anti_lag_update_amd
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
 }
 #[doc = "Extensions tagged AMDX"]
 pub mod amdx {
