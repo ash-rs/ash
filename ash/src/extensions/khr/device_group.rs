@@ -94,8 +94,6 @@ impl crate::khr::device_group::Device {
         .assume_init_on_success(modes)
     }
 
-    /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.
-    ///
     /// Requires [`VK_KHR_swapchain`] to be enabled.
     ///
     /// Also available as [`khr::swapchain::Device::acquire_next_image2()`] since [Vulkan 1.1].
@@ -104,6 +102,11 @@ impl crate::khr::device_group::Device {
     ///
     /// [Vulkan 1.1]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
     /// [`VK_KHR_swapchain`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html
+    ///
+    /// # Returns
+    /// Returns the next image's index, and [`false`] if the swapchain is optimal for the surface
+    /// ([`vk::Result::SUCCESS`]), [`true`] if the swapchain is _suboptimal_ for the surface
+    /// ([`vk::Result::SUBOPTIMAL_KHR`]), or [`Err`] on failure.
     #[inline]
     pub unsafe fn acquire_next_image2(
         &self,
