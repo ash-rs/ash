@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 291;
+pub const HEADER_VERSION: u32 = 292;
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -45490,7 +45490,7 @@ impl<'a> DescriptorAddressInfoEXT<'a> {
 #[must_use]
 pub struct DescriptorBufferBindingInfoEXT<'a> {
     pub s_type: StructureType,
-    pub p_next: *mut c_void,
+    pub p_next: *const c_void,
     pub address: DeviceAddress,
     pub usage: BufferUsageFlags,
     pub _marker: PhantomData<&'a ()>,
@@ -45502,7 +45502,7 @@ impl ::core::default::Default for DescriptorBufferBindingInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
+            p_next: ::core::ptr::null(),
             address: DeviceAddress::default(),
             usage: BufferUsageFlags::default(),
             _marker: PhantomData,
@@ -45534,7 +45534,7 @@ impl<'a> DescriptorBufferBindingInfoEXT<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = <*mut T>::cast(next);
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.p_next as _;
             self.p_next = next_ptr;
@@ -45549,7 +45549,7 @@ impl<'a> DescriptorBufferBindingInfoEXT<'a> {
 #[must_use]
 pub struct DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
     pub s_type: StructureType,
-    pub p_next: *mut c_void,
+    pub p_next: *const c_void,
     pub buffer: Buffer,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -45560,7 +45560,7 @@ impl ::core::default::Default for DescriptorBufferBindingPushDescriptorBufferHan
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
+            p_next: ::core::ptr::null(),
             buffer: Buffer::default(),
             _marker: PhantomData,
         }
