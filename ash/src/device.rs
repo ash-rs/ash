@@ -1051,9 +1051,11 @@ impl Device {
         .assume_init_on_success(event)
     }
 
-    /// Returns [`true`] if the event was set, and [`false`] if the event was reset, otherwise it will
-    /// return the error code.
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetEventStatus.html>
+    ///
+    /// # Returns
+    /// Returns [`true`] if the event is _signaled_ ([`vk::Result::EVENT_SET`]), [`false`] if the
+    /// event is _unsignaled_ ([`vk::Result::EVENT_RESET`]), or [`Err`] on failure.
     #[inline]
     pub unsafe fn get_event_status(&self, event: vk::Event) -> VkResult<bool> {
         let err_code = (self.device_fn_1_0.get_event_status)(self.handle(), event);
@@ -2443,6 +2445,10 @@ impl Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetFenceStatus.html>
+    ///
+    /// # Returns
+    /// Returns [`true`] if the fence is _signaled_ ([`vk::Result::SUCCESS`]), [`false`] if the
+    /// fence is _unsignaled_ ([`vk::Result::NOT_READY`]), or [`Err`] on failure.
     #[inline]
     pub unsafe fn get_fence_status(&self, fence: vk::Fence) -> VkResult<bool> {
         let err_code = (self.device_fn_1_0.get_fence_status)(self.handle(), fence);
