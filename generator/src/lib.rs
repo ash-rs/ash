@@ -1264,13 +1264,18 @@ pub struct ExtensionCommands<'a> {
 }
 
 pub fn generate_extension_commands<'a>(
-    full_extension_name: &'a str,
-    items: &'a [vk_parse::ExtensionChild],
+    extension: &'a vk_parse::Extension,
     cmd_map: &CommandMap<'a>,
     cmd_aliases: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
     has_lifetimes: &HashSet<Ident>,
 ) -> ExtensionCommands<'a> {
+    let vk_parse::Extension {
+        name: full_extension_name,
+        children: items,
+        promotedto,
+        ..
+    } = extension;
     let byte_name_ident = Literal::byte_string(format!("{full_extension_name}\0").as_bytes());
 
     let extension_name = full_extension_name.strip_prefix("VK_").unwrap();
@@ -1423,6 +1428,56 @@ pub fn generate_extension_commands<'a>(
         })
     });
 
+    let meta_impl = {
+        let promoted_version = match promotedto.as_ref().map(String::as_str) {
+            Some("VK_VERSION_1_1") => quote!(PromotionStatus::PromotedToCore(API_VERSION_1_1)),
+            Some("VK_VERSION_1_2") => quote!(PromotionStatus::PromotedToCore(API_VERSION_1_2)),
+            Some("VK_VERSION_1_3") => quote!(PromotionStatus::PromotedToCore(API_VERSION_1_3)),
+            Some(full_name) => {
+                let ext_name = full_name.strip_prefix("VK_").unwrap();
+                let ident = format_ident!("{}_NAME", ext_name.to_uppercase());
+                quote!(PromotionStatus::PromotedToExtension(#ident))
+            }
+            _ => quote!(PromotionStatus::None),
+        };
+        let device_impl = if device_fp.is_some() {
+            quote! {
+                type Device = Device;
+                fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                    Device::new(instance, device)
+                }
+            }
+        } else {
+            quote! {
+                type Device = ();
+                fn new_device(_instance: &crate::Instance, _device: &crate::Device){}
+            }
+        };
+        let instance_impl = if instance_fp.is_some() {
+            quote! {
+                type Instance = Instance;
+                fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                    Instance::new(entry, instance)
+                }
+            }
+        } else {
+            quote! {
+                type Instance = ();
+                fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance){}
+            }
+        };
+        quote! {
+            pub struct Meta;
+            impl ExtensionMeta for Meta {
+                const NAME: &'static CStr = #name_ident;
+                const SPEC_VERSION: u32 = #spec_version_ident;
+                const PROMOTION_STATUS: PromotionStatus = #promoted_version;
+                #device_impl
+                #instance_impl
+            }
+        }
+    };
+
     let (raw_device_fp, hl_device_fp) = device_fp.map_or((None, None), |(a, b)| (Some(a), Some(b)));
     let (raw_instance_fp, hl_instance_fp) =
         instance_fp.map_or((None, None), |(a, b)| (Some(a), Some(b)));
@@ -1446,6 +1501,7 @@ pub fn generate_extension_commands<'a>(
 
                 #hl_instance_fp
                 #hl_device_fp
+                #meta_impl
             }
         },
     }
@@ -3259,8 +3315,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let mut extension_cmds = Vec::<TokenStream>::new();
     for ext in extensions.iter() {
         let cmds = generate_extension_commands(
-            &ext.name,
-            &ext.children,
+            ext,
             &commands,
             &cmd_aliases,
             &mut fn_cache,
