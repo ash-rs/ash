@@ -1122,6 +1122,43 @@ impl DirectDriverLoadingModeLUNARG {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAntiLagModeAMD.html>"]
+pub struct AntiLagModeAMD(pub(crate) i32);
+impl AntiLagModeAMD {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl AntiLagModeAMD {
+    pub const DRIVER_CONTROL: Self = Self(0);
+    pub const ON: Self = Self(1);
+    pub const OFF: Self = Self(2);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAntiLagStageAMD.html>"]
+pub struct AntiLagStageAMD(pub(crate) i32);
+impl AntiLagStageAMD {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl AntiLagStageAMD {
+    pub const INPUT: Self = Self(0);
+    pub const PRESENT: Self = Self(1);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSemaphoreType.html>"]
 pub struct SemaphoreType(pub(crate) i32);
 impl SemaphoreType {
@@ -1757,6 +1794,8 @@ impl VendorId {
     }
 }
 impl VendorId {
+    #[doc = "Khronos vendor ID"]
+    pub const KHRONOS: Self = Self(0x1_0000);
     #[doc = "Vivante vendor ID"]
     pub const VIV: Self = Self(0x1_0001);
     #[doc = "VeriSilicon vendor ID"]
@@ -1838,7 +1877,9 @@ impl DriverId {
     #[doc = "Imagination Technologies"]
     pub const IMAGINATION_OPEN_SOURCE_MESA: Self = Self(25);
     #[doc = "Mesa open source project"]
-    pub const MESA_AGXV: Self = Self(26);
+    pub const MESA_HONEYKRISP: Self = Self(26);
+    #[doc = "Reserved for undisclosed driver project"]
+    pub const RESERVED_27: Self = Self(27);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -2870,6 +2911,27 @@ impl BlockMatchWindowCompareModeQCOM {
 impl BlockMatchWindowCompareModeQCOM {
     pub const MIN: Self = Self(0);
     pub const MAX: Self = Self(1);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceLayeredApiKHR.html>"]
+pub struct PhysicalDeviceLayeredApiKHR(pub(crate) i32);
+impl PhysicalDeviceLayeredApiKHR {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl PhysicalDeviceLayeredApiKHR {
+    pub const VULKAN: Self = Self(0);
+    pub const D3D12: Self = Self(1);
+    pub const METAL: Self = Self(2);
+    pub const OPENGL: Self = Self(3);
+    pub const OPENGLES: Self = Self(4);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]

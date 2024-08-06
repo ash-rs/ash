@@ -445,6 +445,68 @@ pub mod amd {
             crate::vk::AMD_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_AMD_anti_lag"]
+    pub mod anti_lag {
+        use super::super::*;
+        pub use {
+            crate::vk::AMD_ANTI_LAG_NAME as NAME,
+            crate::vk::AMD_ANTI_LAG_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_AMD_anti_lag device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle();
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_AMD_anti_lag device-level function pointers"]
+        pub struct DeviceFn {
+            pub anti_lag_update_amd: PFN_vkAntiLagUpdateAMD,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    anti_lag_update_amd: unsafe {
+                        unsafe extern "system" fn anti_lag_update_amd(
+                            _device: crate::vk::Device,
+                            _p_data: *const AntiLagDataAMD<'_>,
+                        ) {
+                            panic!(concat!("Unable to load ", stringify!(anti_lag_update_amd)))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkAntiLagUpdateAMD\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            anti_lag_update_amd
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
 }
 #[doc = "Extensions tagged AMDX"]
 pub mod amdx {
@@ -8314,6 +8376,14 @@ pub mod ext {
             crate::vk::EXT_MUTABLE_DESCRIPTOR_TYPE_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_EXT_legacy_vertex_attributes"]
+    pub mod legacy_vertex_attributes {
+        use super::super::*;
+        pub use {
+            crate::vk::EXT_LEGACY_VERTEX_ATTRIBUTES_NAME as NAME,
+            crate::vk::EXT_LEGACY_VERTEX_ATTRIBUTES_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_EXT_layer_settings"]
     pub mod layer_settings {
         use super::super::*;
@@ -8405,6 +8475,14 @@ pub mod ext {
                 }
             }
         }
+    }
+    #[doc = "VK_EXT_shader_replicated_composites"]
+    pub mod shader_replicated_composites {
+        use super::super::*;
+        pub use {
+            crate::vk::EXT_SHADER_REPLICATED_COMPOSITES_NAME as NAME,
+            crate::vk::EXT_SHADER_REPLICATED_COMPOSITES_SPEC_VERSION as SPEC_VERSION,
+        };
     }
 }
 #[doc = "Extensions tagged FUCHSIA"]
@@ -14978,7 +15056,7 @@ pub mod khr {
                     cmd_set_rendering_input_attachment_indices_khr: unsafe {
                         unsafe extern "system" fn cmd_set_rendering_input_attachment_indices_khr(
                             _command_buffer: CommandBuffer,
-                            _p_location_info: *const RenderingInputAttachmentIndexInfoKHR<'_>,
+                            _p_input_attachment_index_info : * const RenderingInputAttachmentIndexInfoKHR < '_ >,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -16977,6 +17055,22 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_shader_relaxed_extended_instruction"]
+    pub mod shader_relaxed_extended_instruction {
+        use super::super::*;
+        pub use {
+            crate::vk::KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_NAME as NAME,
+            crate::vk::KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_maintenance7"]
+    pub mod maintenance7 {
+        use super::super::*;
+        pub use {
+            crate::vk::KHR_MAINTENANCE7_NAME as NAME,
+            crate::vk::KHR_MAINTENANCE7_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged LUNARG"]
 pub mod lunarg {
@@ -16986,6 +17080,17 @@ pub mod lunarg {
         pub use {
             crate::vk::LUNARG_DIRECT_DRIVER_LOADING_NAME as NAME,
             crate::vk::LUNARG_DIRECT_DRIVER_LOADING_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+}
+#[doc = "Extensions tagged MESA"]
+pub mod mesa {
+    #[doc = "VK_MESA_image_alignment_control"]
+    pub mod image_alignment_control {
+        use super::super::*;
+        pub use {
+            crate::vk::MESA_IMAGE_ALIGNMENT_CONTROL_NAME as NAME,
+            crate::vk::MESA_IMAGE_ALIGNMENT_CONTROL_SPEC_VERSION as SPEC_VERSION,
         };
     }
 }
