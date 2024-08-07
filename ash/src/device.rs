@@ -5,6 +5,7 @@ use crate::RawPtr;
 use alloc::vec::Vec;
 use core::ffi;
 use core::mem;
+use core::mem::{size_of, size_of_val}; // TODO: Remove when bumping MSRV to 1.80
 use core::ptr;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDevice.html>
@@ -2065,7 +2066,7 @@ impl Device {
         data: &mut [T],
         flags: vk::QueryResultFlags,
     ) -> VkResult<()> {
-        let data_size = mem::size_of_val(data);
+        let data_size = size_of_val(data);
         (self.device_fn_1_0.get_query_pool_results)(
             self.handle(),
             query_pool,
@@ -2073,7 +2074,7 @@ impl Device {
             data.len() as u32,
             data_size,
             data.as_mut_ptr().cast(),
-            mem::size_of::<T>() as _,
+            size_of::<T>() as _,
             flags,
         )
         .result()

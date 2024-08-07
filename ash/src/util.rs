@@ -2,7 +2,7 @@ use crate::vk;
 use core::ffi::c_void;
 use core::iter::Iterator;
 use core::marker::PhantomData;
-use core::mem::size_of;
+use core::mem::size_of; // TODO: Remove when bumping MSRV to 1.80
 use core::slice;
 #[cfg(feature = "std")]
 use std::io;
