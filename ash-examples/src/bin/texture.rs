@@ -98,7 +98,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             .collect();
         let index_buffer_data = [0u32, 1, 2, 2, 3, 0];
         let index_buffer_info = vk::BufferCreateInfo {
-            size: mem::size_of_val(&index_buffer_data) as u64,
+            size: size_of_val(&index_buffer_data) as u64,
             usage: vk::BufferUsageFlags::INDEX_BUFFER,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
             ..Default::default()
@@ -131,7 +131,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             .unwrap();
         let mut index_slice = Align::new(
             index_ptr,
-            mem::align_of::<u32>() as u64,
+            align_of::<u32>() as u64,
             index_buffer_memory_req.size,
         );
         index_slice.copy_from_slice(&index_buffer_data);
@@ -159,7 +159,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             },
         ];
         let vertex_input_buffer_info = vk::BufferCreateInfo {
-            size: mem::size_of_val(&vertices) as u64,
+            size: size_of_val(&vertices) as u64,
             usage: vk::BufferUsageFlags::VERTEX_BUFFER,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
             ..Default::default()
@@ -199,7 +199,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             .unwrap();
         let mut slice = Align::new(
             vert_ptr,
-            mem::align_of::<Vertex>() as u64,
+            align_of::<Vertex>() as u64,
             vertex_input_buffer_memory_req.size,
         );
         slice.copy_from_slice(&vertices);
@@ -215,7 +215,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             _pad: 0.0,
         };
         let uniform_color_buffer_info = vk::BufferCreateInfo {
-            size: mem::size_of_val(&uniform_color_buffer_data) as u64,
+            size: size_of_val(&uniform_color_buffer_data) as u64,
             usage: vk::BufferUsageFlags::UNIFORM_BUFFER,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
             ..Default::default()
@@ -254,7 +254,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             .unwrap();
         let mut uniform_aligned_slice = Align::new(
             uniform_ptr,
-            mem::align_of::<Vector3>() as u64,
+            align_of::<Vector3>() as u64,
             uniform_color_buffer_memory_req.size,
         );
         uniform_aligned_slice.copy_from_slice(&[uniform_color_buffer_data]);
@@ -270,7 +270,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         let image_extent = vk::Extent2D { width, height };
         let image_data = image.into_raw();
         let image_buffer_info = vk::BufferCreateInfo {
-            size: (mem::size_of::<u8>() * image_data.len()) as u64,
+            size: (size_of::<u8>() * image_data.len()) as u64,
             usage: vk::BufferUsageFlags::TRANSFER_SRC,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
             ..Default::default()
@@ -304,7 +304,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             .unwrap();
         let mut image_slice = Align::new(
             image_ptr,
-            mem::align_of::<u8>() as u64,
+            align_of::<u8>() as u64,
             image_buffer_memory_req.size,
         );
         image_slice.copy_from_slice(&image_data);
@@ -510,7 +510,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         let uniform_color_buffer_descriptor = vk::DescriptorBufferInfo {
             buffer: uniform_color_buffer,
             offset: 0,
-            range: mem::size_of_val(&uniform_color_buffer_data) as u64,
+            range: size_of_val(&uniform_color_buffer_data) as u64,
         };
 
         let tex_descriptor = vk::DescriptorImageInfo {
@@ -584,7 +584,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         ];
         let vertex_input_binding_descriptions = [vk::VertexInputBindingDescription {
             binding: 0,
-            stride: mem::size_of::<Vertex>() as u32,
+            stride: size_of::<Vertex>() as u32,
             input_rate: vk::VertexInputRate::VERTEX,
         }];
         let vertex_input_attribute_descriptions = [

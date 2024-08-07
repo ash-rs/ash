@@ -14,7 +14,7 @@ impl crate::amd::shader_info::Device {
         shader_stage: vk::ShaderStageFlags,
     ) -> VkResult<vk::ShaderStatisticsInfoAMD> {
         let mut info = mem::MaybeUninit::<vk::ShaderStatisticsInfoAMD>::uninit();
-        let mut size = mem::size_of_val(&info);
+        let mut size = size_of_val(&info);
         (self.fp.get_shader_info_amd)(
             self.handle,
             pipeline,
@@ -24,7 +24,7 @@ impl crate::amd::shader_info::Device {
             info.as_mut_ptr().cast(),
         )
         .result()?;
-        assert_eq!(size, mem::size_of_val(&info));
+        assert_eq!(size, size_of_val(&info));
         Ok(info.assume_init())
     }
 
