@@ -3067,7 +3067,11 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let vk_xml = vk_headers_dir.join("registry/vk.xml");
     use std::fs::File;
     use std::io::Write;
-    let (spec2, _errors) = vk_parse::parse_file(&vk_xml).expect("Invalid xml file");
+    let (spec2, errors) = vk_parse::parse_file(&vk_xml).expect("Invalid xml file");
+    assert!(
+        errors.is_empty(),
+        "vk_parse encountered one or more errors while parsing: {errors:?}"
+    );
     let extensions: Vec<&vk_parse::Extension> = spec2
         .0
         .iter()
