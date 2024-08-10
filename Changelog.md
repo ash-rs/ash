@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update Vulkan-Headers to 1.4.350 (#910, #951)
 - Added `VK_KHR_get_display_properties2` instance extension (#932)
 - Added `VK_EXT_display_surface_counter` instance extension (#933)
+- Added `VK_EXT_display_control` display extension (#934)
 - Added `VK_EXT_metal_objects` device extension (#942)
 - Added `VK_AMD_anti_lag` device extension (#943)
 - Added `VK_KHR_video_queue`, `VK_KHR_video_encode_queue`, and `VK_KHR_video_decode_queue` device extensions (#965)
