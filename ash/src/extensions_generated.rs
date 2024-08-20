@@ -19850,6 +19850,14 @@ pub mod nv {
             crate::vk::NV_RAW_ACCESS_CHAINS_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_NV_command_buffer_inheritance"]
+    pub mod command_buffer_inheritance {
+        use super::super::*;
+        pub use {
+            crate::vk::NV_COMMAND_BUFFER_INHERITANCE_NAME as NAME,
+            crate::vk::NV_COMMAND_BUFFER_INHERITANCE_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_NV_shader_atomic_float16_vector"]
     pub mod shader_atomic_float16_vector {
         use super::super::*;

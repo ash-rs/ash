@@ -3969,6 +3969,10 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_RELAXED_EXTENDED_INSTRUCTION_FEATURES_KHR: Self =
         Self(1_000_558_000);
 }
+#[doc = "Generated from 'VK_NV_command_buffer_inheritance'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_COMMAND_BUFFER_INHERITANCE_FEATURES_NV: Self = Self(1_000_559_000);
+}
 #[doc = "Generated from 'VK_KHR_maintenance7'"]
 impl RenderingFlags {
     #[doc = "Promoted from extension 452"]
@@ -7936,6 +7940,9 @@ pub const NV_RAW_ACCESS_CHAINS_SPEC_VERSION: u32 = 1u32;
 pub const KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_relaxed_extended_instruction\0") };
 pub const KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_SPEC_VERSION: u32 = 1u32;
+pub const NV_COMMAND_BUFFER_INHERITANCE_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_command_buffer_inheritance\0") };
+pub const NV_COMMAND_BUFFER_INHERITANCE_SPEC_VERSION: u32 = 1u32;
 pub const KHR_MAINTENANCE7_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance7\0") };
 pub const KHR_MAINTENANCE7_SPEC_VERSION: u32 = 1u32;
