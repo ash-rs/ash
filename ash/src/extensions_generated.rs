@@ -16562,6 +16562,157 @@ pub mod khr {
             crate::vk::KHR_RAY_TRACING_POSITION_FETCH_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_KHR_pipeline_binary"]
+    pub mod pipeline_binary {
+        use super::super::*;
+        pub use {
+            crate::vk::KHR_PIPELINE_BINARY_NAME as NAME,
+            crate::vk::KHR_PIPELINE_BINARY_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_KHR_pipeline_binary device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle();
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_KHR_pipeline_binary device-level function pointers"]
+        pub struct DeviceFn {
+            pub create_pipeline_binaries_khr: PFN_vkCreatePipelineBinariesKHR,
+            pub destroy_pipeline_binary_khr: PFN_vkDestroyPipelineBinaryKHR,
+            pub get_pipeline_key_khr: PFN_vkGetPipelineKeyKHR,
+            pub get_pipeline_binary_data_khr: PFN_vkGetPipelineBinaryDataKHR,
+            pub release_captured_pipeline_data_khr: PFN_vkReleaseCapturedPipelineDataKHR,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    create_pipeline_binaries_khr: unsafe {
+                        unsafe extern "system" fn create_pipeline_binaries_khr(
+                            _device: crate::vk::Device,
+                            _p_create_info: *const PipelineBinaryCreateInfoKHR<'_>,
+                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_binaries: *mut PipelineBinaryHandlesInfoKHR<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(create_pipeline_binaries_khr)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkCreatePipelineBinariesKHR\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            create_pipeline_binaries_khr
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    destroy_pipeline_binary_khr: unsafe {
+                        unsafe extern "system" fn destroy_pipeline_binary_khr(
+                            _device: crate::vk::Device,
+                            _pipeline_binary: PipelineBinaryKHR,
+                            _p_allocator: *const AllocationCallbacks<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(destroy_pipeline_binary_khr)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkDestroyPipelineBinaryKHR\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            destroy_pipeline_binary_khr
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_pipeline_key_khr: unsafe {
+                        unsafe extern "system" fn get_pipeline_key_khr(
+                            _device: crate::vk::Device,
+                            _p_pipeline_create_info: *const PipelineCreateInfoKHR<'_>,
+                            _p_pipeline_key: *mut PipelineBinaryKeyKHR<'_>,
+                        ) -> Result {
+                            panic!(concat!("Unable to load ", stringify!(get_pipeline_key_khr)))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetPipelineKeyKHR\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_pipeline_key_khr
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_pipeline_binary_data_khr: unsafe {
+                        unsafe extern "system" fn get_pipeline_binary_data_khr(
+                            _device: crate::vk::Device,
+                            _p_info: *const PipelineBinaryDataInfoKHR<'_>,
+                            _p_pipeline_binary_key: *mut PipelineBinaryKeyKHR<'_>,
+                            _p_pipeline_binary_data_size: *mut usize,
+                            _p_pipeline_binary_data: *mut c_void,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_pipeline_binary_data_khr)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetPipelineBinaryDataKHR\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_pipeline_binary_data_khr
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    release_captured_pipeline_data_khr: unsafe {
+                        unsafe extern "system" fn release_captured_pipeline_data_khr(
+                            _device: crate::vk::Device,
+                            _p_info: *const ReleaseCapturedPipelineDataInfoKHR<'_>,
+                            _p_allocator: *const AllocationCallbacks<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(release_captured_pipeline_data_khr)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkReleaseCapturedPipelineDataKHR\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            release_captured_pipeline_data_khr
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
     #[doc = "VK_KHR_cooperative_matrix"]
     pub mod cooperative_matrix {
         use super::super::*;

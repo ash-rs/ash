@@ -3716,6 +3716,32 @@ impl StructureType {
     pub const SHADER_REQUIRED_SUBGROUP_SIZE_CREATE_INFO_EXT: Self =
         Self::PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO;
 }
+#[doc = "Generated from 'VK_KHR_pipeline_binary'"]
+impl ObjectType {
+    pub const PIPELINE_BINARY_KHR: Self = Self(1_000_483_000);
+}
+#[doc = "Generated from 'VK_KHR_pipeline_binary'"]
+impl PipelineCreateFlags2KHR {
+    pub const CAPTURE_DATA: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_pipeline_binary'"]
+impl Result {
+    pub const PIPELINE_BINARY_MISSING_KHR: Self = Self(1_000_483_000);
+    pub const ERROR_NOT_ENOUGH_SPACE_KHR: Self = Self(-1_000_483_000);
+}
+#[doc = "Generated from 'VK_KHR_pipeline_binary'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PIPELINE_BINARY_FEATURES_KHR: Self = Self(1_000_483_000);
+    pub const PIPELINE_BINARY_CREATE_INFO_KHR: Self = Self(1_000_483_001);
+    pub const PIPELINE_BINARY_INFO_KHR: Self = Self(1_000_483_002);
+    pub const PIPELINE_BINARY_KEY_KHR: Self = Self(1_000_483_003);
+    pub const PHYSICAL_DEVICE_PIPELINE_BINARY_PROPERTIES_KHR: Self = Self(1_000_483_004);
+    pub const RELEASE_CAPTURED_PIPELINE_DATA_INFO_KHR: Self = Self(1_000_483_005);
+    pub const PIPELINE_BINARY_DATA_INFO_KHR: Self = Self(1_000_483_006);
+    pub const PIPELINE_CREATE_INFO_KHR: Self = Self(1_000_483_007);
+    pub const DEVICE_PIPELINE_BINARY_INTERNAL_CACHE_CONTROL_KHR: Self = Self(1_000_483_008);
+    pub const PIPELINE_BINARY_HANDLES_INFO_KHR: Self = Self(1_000_483_009);
+}
 #[doc = "Generated from 'VK_QCOM_tile_properties'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM: Self = Self(1_000_484_000);
@@ -7750,6 +7776,42 @@ pub type PFN_vkCmdBindShadersEXT = unsafe extern "system" fn(
     p_stages: *const ShaderStageFlags,
     p_shaders: *const ShaderEXT,
 );
+pub const KHR_PIPELINE_BINARY_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_pipeline_binary\0") };
+pub const KHR_PIPELINE_BINARY_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreatePipelineBinariesKHR = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_create_info: *const PipelineBinaryCreateInfoKHR<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
+    p_binaries: *mut PipelineBinaryHandlesInfoKHR<'_>,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyPipelineBinaryKHR = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    pipeline_binary: PipelineBinaryKHR,
+    p_allocator: *const AllocationCallbacks<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPipelineKeyKHR = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_pipeline_create_info: *const PipelineCreateInfoKHR<'_>,
+    p_pipeline_key: *mut PipelineBinaryKeyKHR<'_>,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPipelineBinaryDataKHR = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_info: *const PipelineBinaryDataInfoKHR<'_>,
+    p_pipeline_binary_key: *mut PipelineBinaryKeyKHR<'_>,
+    p_pipeline_binary_data_size: *mut usize,
+    p_pipeline_binary_data: *mut c_void,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkReleaseCapturedPipelineDataKHR = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_info: *const ReleaseCapturedPipelineDataInfoKHR<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
+) -> Result;
 pub const QCOM_TILE_PROPERTIES_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_tile_properties\0") };
 pub const QCOM_TILE_PROPERTIES_SPEC_VERSION: u32 = 1u32;

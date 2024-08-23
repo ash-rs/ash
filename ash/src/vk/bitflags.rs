@@ -1736,3 +1736,9 @@ impl ShaderCreateFlagsEXT {
 pub struct MemoryUnmapFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(MemoryUnmapFlagsKHR, Flags);
 impl MemoryUnmapFlagsKHR {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkWaylandSurfaceCreateFlagBitsKHR.html>"]
+pub struct WaylandSurfaceCreateFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(WaylandSurfaceCreateFlagsKHR, Flags);
+impl WaylandSurfaceCreateFlagsKHR {}

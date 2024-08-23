@@ -3868,6 +3868,7 @@ impl fmt::Debug for PipelineCreateFlags2KHR {
                 PipelineCreateFlags2KHR::DESCRIPTOR_BUFFER_EXT.0,
                 "DESCRIPTOR_BUFFER_EXT",
             ),
+            (PipelineCreateFlags2KHR::CAPTURE_DATA.0, "CAPTURE_DATA"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -6492,6 +6493,24 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_SHADER_OBJECT_PROPERTIES_EXT")
             }
             Self::SHADER_CREATE_INFO_EXT => Some("SHADER_CREATE_INFO_EXT"),
+            Self::PHYSICAL_DEVICE_PIPELINE_BINARY_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_PIPELINE_BINARY_FEATURES_KHR")
+            }
+            Self::PIPELINE_BINARY_CREATE_INFO_KHR => Some("PIPELINE_BINARY_CREATE_INFO_KHR"),
+            Self::PIPELINE_BINARY_INFO_KHR => Some("PIPELINE_BINARY_INFO_KHR"),
+            Self::PIPELINE_BINARY_KEY_KHR => Some("PIPELINE_BINARY_KEY_KHR"),
+            Self::PHYSICAL_DEVICE_PIPELINE_BINARY_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_PIPELINE_BINARY_PROPERTIES_KHR")
+            }
+            Self::RELEASE_CAPTURED_PIPELINE_DATA_INFO_KHR => {
+                Some("RELEASE_CAPTURED_PIPELINE_DATA_INFO_KHR")
+            }
+            Self::PIPELINE_BINARY_DATA_INFO_KHR => Some("PIPELINE_BINARY_DATA_INFO_KHR"),
+            Self::PIPELINE_CREATE_INFO_KHR => Some("PIPELINE_CREATE_INFO_KHR"),
+            Self::DEVICE_PIPELINE_BINARY_INTERNAL_CACHE_CONTROL_KHR => {
+                Some("DEVICE_PIPELINE_BINARY_INTERNAL_CACHE_CONTROL_KHR")
+            }
+            Self::PIPELINE_BINARY_HANDLES_INFO_KHR => Some("PIPELINE_BINARY_HANDLES_INFO_KHR"),
             Self::PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM")
             }

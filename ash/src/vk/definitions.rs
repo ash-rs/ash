@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 293;
+pub const HEADER_VERSION: u32 = 294;
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -168,11 +168,6 @@ vk_bitflags_wrapped!(AndroidSurfaceCreateFlagsKHR, Flags);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkViSurfaceCreateFlagsNN.html>"]
 pub struct ViSurfaceCreateFlagsNN(pub(crate) Flags);
 vk_bitflags_wrapped!(ViSurfaceCreateFlagsNN, Flags);
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkWaylandSurfaceCreateFlagsKHR.html>"]
-pub struct WaylandSurfaceCreateFlagsKHR(pub(crate) Flags);
-vk_bitflags_wrapped!(WaylandSurfaceCreateFlagsKHR, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkWin32SurfaceCreateFlagsKHR.html>"]
@@ -445,6 +440,7 @@ handle_nondispatchable!(
     doc =
         "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCache.html>"
 );
+handle_nondispatchable ! (PipelineBinaryKHR , PIPELINE_BINARY_KHR , doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineBinaryKHR.html>") ;
 handle_nondispatchable ! (IndirectCommandsLayoutNV , INDIRECT_COMMANDS_LAYOUT_NV , doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsLayoutNV.html>") ;
 handle_nondispatchable ! (DescriptorUpdateTemplate , DESCRIPTOR_UPDATE_TEMPLATE , doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorUpdateTemplate.html>") ;
 handle_nondispatchable ! (SamplerYcbcrConversion , SAMPLER_YCBCR_CONVERSION , doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerYcbcrConversion.html>") ;
@@ -3944,6 +3940,7 @@ impl ::core::default::Default for ComputePipelineCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for ComputePipelineCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_PIPELINE_CREATE_INFO;
 }
+unsafe impl ExtendsPipelineCreateInfoKHR for ComputePipelineCreateInfo<'_> {}
 pub unsafe trait ExtendsComputePipelineCreateInfo {}
 impl<'a> ComputePipelineCreateInfo<'a> {
     #[inline]
@@ -5022,6 +5019,7 @@ impl ::core::default::Default for GraphicsPipelineCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for GraphicsPipelineCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GRAPHICS_PIPELINE_CREATE_INFO;
 }
+unsafe impl ExtendsPipelineCreateInfoKHR for GraphicsPipelineCreateInfo<'_> {}
 pub unsafe trait ExtendsGraphicsPipelineCreateInfo {}
 impl<'a> GraphicsPipelineCreateInfo<'a> {
     #[inline]
@@ -5266,6 +5264,362 @@ impl PushConstantRange {
     #[inline]
     pub fn size(mut self, size: u32) -> Self {
         self.size = size;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineBinaryCreateInfoKHR.html>"]
+#[must_use]
+pub struct PipelineBinaryCreateInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_keys_and_data_info: *const PipelineBinaryKeysAndDataKHR<'a>,
+    pub pipeline: Pipeline,
+    pub p_pipeline_create_info: *const PipelineCreateInfoKHR<'a>,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PipelineBinaryCreateInfoKHR<'_> {}
+unsafe impl Sync for PipelineBinaryCreateInfoKHR<'_> {}
+impl ::core::default::Default for PipelineBinaryCreateInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            p_keys_and_data_info: ::core::ptr::null(),
+            pipeline: Pipeline::default(),
+            p_pipeline_create_info: ::core::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PipelineBinaryCreateInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_CREATE_INFO_KHR;
+}
+impl<'a> PipelineBinaryCreateInfoKHR<'a> {
+    #[inline]
+    pub fn keys_and_data_info(
+        mut self,
+        keys_and_data_info: &'a PipelineBinaryKeysAndDataKHR<'a>,
+    ) -> Self {
+        self.p_keys_and_data_info = keys_and_data_info;
+        self
+    }
+    #[inline]
+    pub fn pipeline(mut self, pipeline: Pipeline) -> Self {
+        self.pipeline = pipeline;
+        self
+    }
+    #[inline]
+    pub fn pipeline_create_info(
+        mut self,
+        pipeline_create_info: &'a PipelineCreateInfoKHR<'a>,
+    ) -> Self {
+        self.p_pipeline_create_info = pipeline_create_info;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineBinaryHandlesInfoKHR.html>"]
+#[must_use]
+pub struct PipelineBinaryHandlesInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub pipeline_binary_count: u32,
+    pub p_pipeline_binaries: *mut PipelineBinaryKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PipelineBinaryHandlesInfoKHR<'_> {}
+unsafe impl Sync for PipelineBinaryHandlesInfoKHR<'_> {}
+impl ::core::default::Default for PipelineBinaryHandlesInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            pipeline_binary_count: u32::default(),
+            p_pipeline_binaries: ::core::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PipelineBinaryHandlesInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_HANDLES_INFO_KHR;
+}
+impl<'a> PipelineBinaryHandlesInfoKHR<'a> {
+    #[inline]
+    pub fn pipeline_binaries(mut self, pipeline_binaries: &'a mut [PipelineBinaryKHR]) -> Self {
+        self.pipeline_binary_count = pipeline_binaries.len() as _;
+        self.p_pipeline_binaries = pipeline_binaries.as_mut_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineBinaryDataKHR.html>"]
+#[must_use]
+pub struct PipelineBinaryDataKHR<'a> {
+    pub data_size: usize,
+    pub p_data: *mut c_void,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PipelineBinaryDataKHR<'_> {}
+unsafe impl Sync for PipelineBinaryDataKHR<'_> {}
+impl ::core::default::Default for PipelineBinaryDataKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            data_size: usize::default(),
+            p_data: ::core::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+impl<'a> PipelineBinaryDataKHR<'a> {
+    #[inline]
+    pub fn data(mut self, data: &'a mut [u8]) -> Self {
+        self.data_size = data.len();
+        self.p_data = data.as_mut_ptr().cast();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineBinaryKeysAndDataKHR.html>"]
+#[must_use]
+pub struct PipelineBinaryKeysAndDataKHR<'a> {
+    pub binary_count: u32,
+    pub p_pipeline_binary_keys: *const PipelineBinaryKeyKHR<'a>,
+    pub p_pipeline_binary_data: *const PipelineBinaryDataKHR<'a>,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PipelineBinaryKeysAndDataKHR<'_> {}
+unsafe impl Sync for PipelineBinaryKeysAndDataKHR<'_> {}
+impl ::core::default::Default for PipelineBinaryKeysAndDataKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            binary_count: u32::default(),
+            p_pipeline_binary_keys: ::core::ptr::null(),
+            p_pipeline_binary_data: ::core::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+impl<'a> PipelineBinaryKeysAndDataKHR<'a> {
+    #[inline]
+    pub fn pipeline_binary_keys(
+        mut self,
+        pipeline_binary_keys: &'a [PipelineBinaryKeyKHR<'a>],
+    ) -> Self {
+        self.binary_count = pipeline_binary_keys.len() as _;
+        self.p_pipeline_binary_keys = pipeline_binary_keys.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn pipeline_binary_data(
+        mut self,
+        pipeline_binary_data: &'a [PipelineBinaryDataKHR<'a>],
+    ) -> Self {
+        self.binary_count = pipeline_binary_data.len() as _;
+        self.p_pipeline_binary_data = pipeline_binary_data.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineBinaryKeyKHR.html>"]
+#[must_use]
+pub struct PipelineBinaryKeyKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub key_size: u32,
+    pub key: [u8; MAX_PIPELINE_BINARY_KEY_SIZE_KHR],
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PipelineBinaryKeyKHR<'_> {}
+unsafe impl Sync for PipelineBinaryKeyKHR<'_> {}
+impl ::core::default::Default for PipelineBinaryKeyKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            key_size: u32::default(),
+            key: unsafe { ::core::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PipelineBinaryKeyKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_KEY_KHR;
+}
+impl<'a> PipelineBinaryKeyKHR<'a> {
+    #[inline]
+    pub fn key_size(mut self, key_size: u32) -> Self {
+        self.key_size = key_size;
+        self
+    }
+    #[inline]
+    pub fn key(mut self, key: [u8; MAX_PIPELINE_BINARY_KEY_SIZE_KHR]) -> Self {
+        self.key = key;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineBinaryInfoKHR.html>"]
+#[must_use]
+pub struct PipelineBinaryInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub binary_count: u32,
+    pub p_pipeline_binaries: *const PipelineBinaryKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PipelineBinaryInfoKHR<'_> {}
+unsafe impl Sync for PipelineBinaryInfoKHR<'_> {}
+impl ::core::default::Default for PipelineBinaryInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            binary_count: u32::default(),
+            p_pipeline_binaries: ::core::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PipelineBinaryInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_INFO_KHR;
+}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineBinaryInfoKHR<'_> {}
+unsafe impl ExtendsComputePipelineCreateInfo for PipelineBinaryInfoKHR<'_> {}
+unsafe impl ExtendsRayTracingPipelineCreateInfoKHR for PipelineBinaryInfoKHR<'_> {}
+impl<'a> PipelineBinaryInfoKHR<'a> {
+    #[inline]
+    pub fn pipeline_binaries(mut self, pipeline_binaries: &'a [PipelineBinaryKHR]) -> Self {
+        self.binary_count = pipeline_binaries.len() as _;
+        self.p_pipeline_binaries = pipeline_binaries.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkReleaseCapturedPipelineDataInfoKHR.html>"]
+#[must_use]
+pub struct ReleaseCapturedPipelineDataInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub pipeline: Pipeline,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for ReleaseCapturedPipelineDataInfoKHR<'_> {}
+unsafe impl Sync for ReleaseCapturedPipelineDataInfoKHR<'_> {}
+impl ::core::default::Default for ReleaseCapturedPipelineDataInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            pipeline: Pipeline::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ReleaseCapturedPipelineDataInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::RELEASE_CAPTURED_PIPELINE_DATA_INFO_KHR;
+}
+impl<'a> ReleaseCapturedPipelineDataInfoKHR<'a> {
+    #[inline]
+    pub fn pipeline(mut self, pipeline: Pipeline) -> Self {
+        self.pipeline = pipeline;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineBinaryDataInfoKHR.html>"]
+#[must_use]
+pub struct PipelineBinaryDataInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub pipeline_binary: PipelineBinaryKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PipelineBinaryDataInfoKHR<'_> {}
+unsafe impl Sync for PipelineBinaryDataInfoKHR<'_> {}
+impl ::core::default::Default for PipelineBinaryDataInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            pipeline_binary: PipelineBinaryKHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PipelineBinaryDataInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_DATA_INFO_KHR;
+}
+impl<'a> PipelineBinaryDataInfoKHR<'a> {
+    #[inline]
+    pub fn pipeline_binary(mut self, pipeline_binary: PipelineBinaryKHR) -> Self {
+        self.pipeline_binary = pipeline_binary;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCreateInfoKHR.html>"]
+#[must_use]
+pub struct PipelineCreateInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PipelineCreateInfoKHR<'_> {}
+unsafe impl Sync for PipelineCreateInfoKHR<'_> {}
+impl ::core::default::Default for PipelineCreateInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PipelineCreateInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CREATE_INFO_KHR;
+}
+pub unsafe trait ExtendsPipelineCreateInfoKHR {}
+impl<'a> PipelineCreateInfoKHR<'a> {
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPipelineCreateInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*mut T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -25469,6 +25823,7 @@ impl ::core::default::Default for RayTracingPipelineCreateInfoNV<'_> {
 unsafe impl<'a> TaggedStructure for RayTracingPipelineCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_NV;
 }
+unsafe impl ExtendsPipelineCreateInfoKHR for RayTracingPipelineCreateInfoNV<'_> {}
 pub unsafe trait ExtendsRayTracingPipelineCreateInfoNV {}
 impl<'a> RayTracingPipelineCreateInfoNV<'a> {
     #[inline]
@@ -25575,6 +25930,7 @@ impl ::core::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for RayTracingPipelineCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_KHR;
 }
+unsafe impl ExtendsPipelineCreateInfoKHR for RayTracingPipelineCreateInfoKHR<'_> {}
 pub unsafe trait ExtendsRayTracingPipelineCreateInfoKHR {}
 impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
     #[inline]
@@ -48599,6 +48955,156 @@ impl<'a> PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePipelineBinaryFeaturesKHR.html>"]
+#[must_use]
+pub struct PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub pipeline_binaries: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {}
+impl ::core::default::Default for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            pipeline_binaries: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_PIPELINE_BINARY_FEATURES_KHR;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {}
+impl<'a> PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
+    #[inline]
+    pub fn pipeline_binaries(mut self, pipeline_binaries: bool) -> Self {
+        self.pipeline_binaries = pipeline_binaries.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDevicePipelineBinaryInternalCacheControlKHR.html>"]
+#[must_use]
+pub struct DevicePipelineBinaryInternalCacheControlKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub disable_internal_cache: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for DevicePipelineBinaryInternalCacheControlKHR<'_> {}
+unsafe impl Sync for DevicePipelineBinaryInternalCacheControlKHR<'_> {}
+impl ::core::default::Default for DevicePipelineBinaryInternalCacheControlKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            disable_internal_cache: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DevicePipelineBinaryInternalCacheControlKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::DEVICE_PIPELINE_BINARY_INTERNAL_CACHE_CONTROL_KHR;
+}
+unsafe impl ExtendsDeviceCreateInfo for DevicePipelineBinaryInternalCacheControlKHR<'_> {}
+impl<'a> DevicePipelineBinaryInternalCacheControlKHR<'a> {
+    #[inline]
+    pub fn disable_internal_cache(mut self, disable_internal_cache: bool) -> Self {
+        self.disable_internal_cache = disable_internal_cache.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePipelineBinaryPropertiesKHR.html>"]
+#[must_use]
+pub struct PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub pipeline_binary_internal_cache: Bool32,
+    pub pipeline_binary_internal_cache_control: Bool32,
+    pub pipeline_binary_prefers_internal_cache: Bool32,
+    pub pipeline_binary_precompiled_internal_cache: Bool32,
+    pub pipeline_binary_compressed_data: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {}
+impl ::core::default::Default for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            pipeline_binary_internal_cache: Bool32::default(),
+            pipeline_binary_internal_cache_control: Bool32::default(),
+            pipeline_binary_prefers_internal_cache: Bool32::default(),
+            pipeline_binary_precompiled_internal_cache: Bool32::default(),
+            pipeline_binary_compressed_data: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_PIPELINE_BINARY_PROPERTIES_KHR;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {}
+impl<'a> PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
+    #[inline]
+    pub fn pipeline_binary_internal_cache(mut self, pipeline_binary_internal_cache: bool) -> Self {
+        self.pipeline_binary_internal_cache = pipeline_binary_internal_cache.into();
+        self
+    }
+    #[inline]
+    pub fn pipeline_binary_internal_cache_control(
+        mut self,
+        pipeline_binary_internal_cache_control: bool,
+    ) -> Self {
+        self.pipeline_binary_internal_cache_control = pipeline_binary_internal_cache_control.into();
+        self
+    }
+    #[inline]
+    pub fn pipeline_binary_prefers_internal_cache(
+        mut self,
+        pipeline_binary_prefers_internal_cache: bool,
+    ) -> Self {
+        self.pipeline_binary_prefers_internal_cache = pipeline_binary_prefers_internal_cache.into();
+        self
+    }
+    #[inline]
+    pub fn pipeline_binary_precompiled_internal_cache(
+        mut self,
+        pipeline_binary_precompiled_internal_cache: bool,
+    ) -> Self {
+        self.pipeline_binary_precompiled_internal_cache =
+            pipeline_binary_precompiled_internal_cache.into();
+        self
+    }
+    #[inline]
+    pub fn pipeline_binary_compressed_data(
+        mut self,
+        pipeline_binary_compressed_data: bool,
+    ) -> Self {
+        self.pipeline_binary_compressed_data = pipeline_binary_compressed_data.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceGraphicsPipelineLibraryPropertiesEXT.html>"]
 #[must_use]
 pub struct PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
@@ -55155,6 +55661,7 @@ impl ::core::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
 unsafe impl<'a> TaggedStructure for ExecutionGraphPipelineCreateInfoAMDX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXECUTION_GRAPH_PIPELINE_CREATE_INFO_AMDX;
 }
+unsafe impl ExtendsPipelineCreateInfoKHR for ExecutionGraphPipelineCreateInfoAMDX<'_> {}
 pub unsafe trait ExtendsExecutionGraphPipelineCreateInfoAMDX {}
 impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
     #[inline]
