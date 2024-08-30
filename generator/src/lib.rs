@@ -323,7 +323,7 @@ pub trait ConstantExt {
     fn is_alias(&self) -> bool {
         false
     }
-    fn is_deprecated(&self) -> bool;
+    fn deprecated(&self) -> Option<&str>;
     fn doc_attribute(&self) -> Option<TokenStream> {
         self.formatted_notation().map(|n| quote!(#[doc = #n]))
     }
@@ -339,7 +339,7 @@ impl ConstantExt for vkxml::ExtensionEnum {
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
     }
-    fn is_deprecated(&self) -> bool {
+    fn deprecated(&self) -> Option<&str> {
         todo!()
     }
 }
@@ -359,8 +359,8 @@ impl ConstantExt for vk_parse::Enum {
     fn is_alias(&self) -> bool {
         matches!(self.spec, vk_parse::EnumSpec::Alias { .. })
     }
-    fn is_deprecated(&self) -> bool {
-        self.deprecated.is_some()
+    fn deprecated(&self) -> Option<&str> {
+        self.deprecated.as_deref()
     }
 }
 
@@ -374,7 +374,7 @@ impl ConstantExt for vkxml::Constant {
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
     }
-    fn is_deprecated(&self) -> bool {
+    fn deprecated(&self) -> Option<&str> {
         todo!()
     }
 }
@@ -1162,6 +1162,7 @@ pub struct ExtensionConstant<'a> {
     pub name: &'a str,
     pub constant: Constant,
     pub notation: Option<&'a str>,
+    pub deprecated: Option<&'a str>,
 }
 impl<'a> ConstantExt for ExtensionConstant<'a> {
     fn constant(&self, _enum_name: &str) -> Constant {
@@ -1173,9 +1174,8 @@ impl<'a> ConstantExt for ExtensionConstant<'a> {
     fn notation(&self) -> Option<&str> {
         self.notation
     }
-    fn is_deprecated(&self) -> bool {
-        // We won't create this struct if the extension constant was deprecated
-        false
+    fn deprecated(&self) -> Option<&str> {
+        self.deprecated
     }
 }
 
@@ -1207,8 +1207,10 @@ pub fn generate_extension_constants<'a>(
                 continue;
             }
 
-            if enum_.deprecated.is_some() {
-                continue;
+            match enum_.deprecated.as_deref() {
+                None | Some("true") => {}
+                Some("aliased") => continue,
+                x => panic!("Unknown deprecation reason {x:?}"),
             }
 
             let (constant, extends, is_alias) = if let Some(r) =
@@ -1227,6 +1229,7 @@ pub fn generate_extension_constants<'a>(
                 name: &enum_.name,
                 constant,
                 notation: enum_.comment.as_deref(),
+                deprecated: enum_.deprecated.as_deref(),
             };
             let ident = name_to_tokens(&extends);
             const_values
@@ -1236,6 +1239,7 @@ pub fn generate_extension_constants<'a>(
                 .push(ConstantMatchInfo {
                     ident: ext_constant.variant_ident(&extends),
                     is_alias,
+                    is_deprecated: enum_.deprecated.is_some(),
                 });
 
             extended_enums
@@ -1483,9 +1487,6 @@ pub fn generate_define(
             .map(|comment| quote!(#[deprecated = #comment]))
             .or_else(|| match define.deprecated.as_ref()?.as_str() {
                 "true" => Some(quote!(#[deprecated])),
-                "aliased" => {
-                    Some(quote!(#[deprecated = "an old name not following Vulkan conventions"]))
-                }
                 x => panic!("Unknown deprecation reason {}", x),
             });
 
@@ -1654,24 +1655,26 @@ pub fn bitflags_impl_block(
     enum_name: &str,
     constants: &[&impl ConstantExt],
 ) -> TokenStream {
-    let variants = constants
-        .iter()
-        .filter(|constant| !constant.is_deprecated())
-        .map(|constant| {
-            let variant_ident = constant.variant_ident(enum_name);
-            let notation = constant.doc_attribute();
-            let constant = constant.constant(enum_name);
-            let value = if let Constant::Alias(_) = &constant {
-                quote!(#constant)
-            } else {
-                quote!(Self(#constant))
-            };
-
-            quote! {
-                #notation
-                pub const #variant_ident: Self = #value;
-            }
+    let variants = constants.iter().map(|constant| {
+        let deprecated = constant.deprecated().map(|deprecated| match deprecated {
+            "true" => quote!(#[deprecated]),
+            x => panic!("Unknown deprecation reason {}", x),
         });
+        let variant_ident = constant.variant_ident(enum_name);
+        let notation = constant.doc_attribute();
+        let constant = constant.constant(enum_name);
+        let value = if let Constant::Alias(_) = &constant {
+            quote!(#constant)
+        } else {
+            quote!(Self(#constant))
+        };
+
+        quote! {
+            #deprecated
+            #notation
+            pub const #variant_ident: Self = #value;
+        }
+    });
 
     quote! {
         impl #ident {
@@ -1694,7 +1697,11 @@ pub fn generate_enum<'a>(
         .children
         .iter()
         .filter_map(get_variant!(vk_parse::EnumsChild::Enum))
-        .filter(|constant| !constant.is_deprecated())
+        .filter(|constant| match constant.deprecated() {
+            None => true,
+            Some("aliased") => false,
+            x => panic!("Unknown deprecation reason {x:?}"),
+        })
         .collect_vec();
 
     let mut values = Vec::with_capacity(constants.len());
@@ -1703,6 +1710,7 @@ pub fn generate_enum<'a>(
         values.push(ConstantMatchInfo {
             ident: constant.variant_ident(name),
             is_alias: constant.is_alias(),
+            is_deprecated: constant.deprecated.is_some(),
         });
     }
     const_values.insert(
@@ -2898,6 +2906,7 @@ pub fn generate_feature_extension<'a>(
 pub struct ConstantMatchInfo {
     pub ident: Ident,
     pub is_alias: bool,
+    pub is_deprecated: bool,
 }
 
 #[derive(Default)]
@@ -2948,7 +2957,9 @@ pub fn generate_const_debugs(const_values: &BTreeMap<Ident, ConstantTypeInfo>) -
                 } else {
                     let ident = &value.ident;
                     let name = ident.to_string();
-                    Some(quote! { Self::#ident => Some(#name), })
+                    let allow_deprecated =
+                        value.is_deprecated.then(|| quote!(#[allow(deprecated)]));
+                    Some(quote! { #allow_deprecated Self::#ident => Some(#name), })
                 }
             });
             quote! {

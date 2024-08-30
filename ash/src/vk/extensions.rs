@@ -755,6 +755,7 @@ impl ColorSpaceKHR {
     pub const BT709_NONLINEAR_EXT: Self = Self(1_000_104_006);
     pub const BT2020_LINEAR_EXT: Self = Self(1_000_104_007);
     pub const HDR10_ST2084_EXT: Self = Self(1_000_104_008);
+    #[deprecated]
     pub const DOLBYVISION_EXT: Self = Self(1_000_104_009);
     pub const HDR10_HLG_EXT: Self = Self(1_000_104_010);
     pub const ADOBERGB_LINEAR_EXT: Self = Self(1_000_104_011);
@@ -1740,7 +1741,8 @@ impl SwapchainCreateFlagsKHR {
 }
 #[doc = "Generated from 'VK_NV_compute_shader_derivatives'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_NV: Self = Self(1_000_201_000);
+    pub const PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_NV: Self =
+        Self::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_KHR;
 }
 #[doc = "Generated from 'VK_NV_mesh_shader'"]
 impl PipelineStageFlags {
@@ -3835,6 +3837,11 @@ impl StructureType {
         Self(1_000_510_000);
     pub const MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM: Self =
         Self(1_000_510_001);
+}
+#[doc = "Generated from 'VK_KHR_compute_shader_derivatives'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_KHR: Self = Self(1_000_201_000);
+    pub const PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_PROPERTIES_KHR: Self = Self(1_000_511_000);
 }
 #[doc = "Generated from 'VK_KHR_video_decode_av1'"]
 impl StructureType {
@@ -7902,6 +7909,9 @@ pub type PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR =
 pub const QCOM_MULTIVIEW_PER_VIEW_RENDER_AREAS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_multiview_per_view_render_areas\0") };
 pub const QCOM_MULTIVIEW_PER_VIEW_RENDER_AREAS_SPEC_VERSION: u32 = 1u32;
+pub const KHR_COMPUTE_SHADER_DERIVATIVES_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_compute_shader_derivatives\0") };
+pub const KHR_COMPUTE_SHADER_DERIVATIVES_SPEC_VERSION: u32 = 1u32;
 pub const KHR_VIDEO_DECODE_AV1_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_av1\0") };
 pub const KHR_VIDEO_DECODE_AV1_SPEC_VERSION: u32 = 1u32;

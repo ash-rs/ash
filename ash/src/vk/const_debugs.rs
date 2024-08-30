@@ -891,6 +891,7 @@ impl fmt::Debug for ColorSpaceKHR {
             Self::BT709_NONLINEAR_EXT => Some("BT709_NONLINEAR_EXT"),
             Self::BT2020_LINEAR_EXT => Some("BT2020_LINEAR_EXT"),
             Self::HDR10_ST2084_EXT => Some("HDR10_ST2084_EXT"),
+            #[allow(deprecated)]
             Self::DOLBYVISION_EXT => Some("DOLBYVISION_EXT"),
             Self::HDR10_HLG_EXT => Some("HDR10_HLG_EXT"),
             Self::ADOBERGB_LINEAR_EXT => Some("ADOBERGB_LINEAR_EXT"),
@@ -5652,9 +5653,6 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT")
             }
             Self::PRESENT_FRAME_TOKEN_GGP => Some("PRESENT_FRAME_TOKEN_GGP"),
-            Self::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_NV => {
-                Some("PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_NV")
-            }
             Self::PHYSICAL_DEVICE_MESH_SHADER_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_MESH_SHADER_FEATURES_NV")
             }
@@ -6580,6 +6578,12 @@ impl fmt::Debug for StructureType {
             }
             Self::MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM => {
                 Some("MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM")
+            }
+            Self::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_PROPERTIES_KHR")
             }
             Self::VIDEO_DECODE_AV1_CAPABILITIES_KHR => Some("VIDEO_DECODE_AV1_CAPABILITIES_KHR"),
             Self::VIDEO_DECODE_AV1_PICTURE_INFO_KHR => Some("VIDEO_DECODE_AV1_PICTURE_INFO_KHR"),

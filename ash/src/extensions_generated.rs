@@ -16782,6 +16782,14 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_compute_shader_derivatives"]
+    pub mod compute_shader_derivatives {
+        use super::super::*;
+        pub use {
+            crate::vk::KHR_COMPUTE_SHADER_DERIVATIVES_NAME as NAME,
+            crate::vk::KHR_COMPUTE_SHADER_DERIVATIVES_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_KHR_video_decode_av1"]
     pub mod video_decode_av1 {
         use super::super::*;

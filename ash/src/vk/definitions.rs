@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 294;
+pub const HEADER_VERSION: u32 = 295;
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -3940,7 +3940,6 @@ impl ::core::default::Default for ComputePipelineCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for ComputePipelineCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_PIPELINE_CREATE_INFO;
 }
-unsafe impl ExtendsPipelineCreateInfoKHR for ComputePipelineCreateInfo<'_> {}
 pub unsafe trait ExtendsComputePipelineCreateInfo {}
 impl<'a> ComputePipelineCreateInfo<'a> {
     #[inline]
@@ -5019,7 +5018,6 @@ impl ::core::default::Default for GraphicsPipelineCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for GraphicsPipelineCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GRAPHICS_PIPELINE_CREATE_INFO;
 }
-unsafe impl ExtendsPipelineCreateInfoKHR for GraphicsPipelineCreateInfo<'_> {}
 pub unsafe trait ExtendsGraphicsPipelineCreateInfo {}
 impl<'a> GraphicsPipelineCreateInfo<'a> {
     #[inline]
@@ -5606,23 +5604,7 @@ impl ::core::default::Default for PipelineCreateInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for PipelineCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CREATE_INFO_KHR;
 }
-pub unsafe trait ExtendsPipelineCreateInfoKHR {}
-impl<'a> PipelineCreateInfoKHR<'a> {
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineCreateInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
-}
+impl<'a> PipelineCreateInfoKHR<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -24476,18 +24458,18 @@ impl<'a> PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceComputeShaderDerivativesFeaturesNV.html>"]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceComputeShaderDerivativesFeaturesKHR.html>"]
 #[must_use]
-pub struct PhysicalDeviceComputeShaderDerivativesFeaturesNV<'a> {
+pub struct PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub compute_derivative_group_quads: Bool32,
     pub compute_derivative_group_linear: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
-unsafe impl Send for PhysicalDeviceComputeShaderDerivativesFeaturesNV<'_> {}
-unsafe impl Sync for PhysicalDeviceComputeShaderDerivativesFeaturesNV<'_> {}
-impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesFeaturesNV<'_> {
+unsafe impl Send for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {}
+impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -24499,16 +24481,16 @@ impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceComputeShaderDerivativesFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
-        StructureType::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_NV;
+        StructureType::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_KHR;
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceComputeShaderDerivativesFeaturesNV<'_>
+    for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceComputeShaderDerivativesFeaturesNV<'_> {}
-impl<'a> PhysicalDeviceComputeShaderDerivativesFeaturesNV<'a> {
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {}
+impl<'a> PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
     #[inline]
     pub fn compute_derivative_group_quads(mut self, compute_derivative_group_quads: bool) -> Self {
         self.compute_derivative_group_quads = compute_derivative_group_quads.into();
@@ -24520,6 +24502,48 @@ impl<'a> PhysicalDeviceComputeShaderDerivativesFeaturesNV<'a> {
         compute_derivative_group_linear: bool,
     ) -> Self {
         self.compute_derivative_group_linear = compute_derivative_group_linear.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceComputeShaderDerivativesPropertiesKHR.html>"]
+#[must_use]
+pub struct PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub mesh_and_task_shader_derivatives: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {}
+impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            mesh_and_task_shader_derivatives: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_PROPERTIES_KHR;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_>
+{
+}
+impl<'a> PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
+    #[inline]
+    pub fn mesh_and_task_shader_derivatives(
+        mut self,
+        mesh_and_task_shader_derivatives: bool,
+    ) -> Self {
+        self.mesh_and_task_shader_derivatives = mesh_and_task_shader_derivatives.into();
         self
     }
 }
@@ -25823,7 +25847,6 @@ impl ::core::default::Default for RayTracingPipelineCreateInfoNV<'_> {
 unsafe impl<'a> TaggedStructure for RayTracingPipelineCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_NV;
 }
-unsafe impl ExtendsPipelineCreateInfoKHR for RayTracingPipelineCreateInfoNV<'_> {}
 pub unsafe trait ExtendsRayTracingPipelineCreateInfoNV {}
 impl<'a> RayTracingPipelineCreateInfoNV<'a> {
     #[inline]
@@ -25930,7 +25953,6 @@ impl ::core::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for RayTracingPipelineCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsPipelineCreateInfoKHR for RayTracingPipelineCreateInfoKHR<'_> {}
 pub unsafe trait ExtendsRayTracingPipelineCreateInfoKHR {}
 impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
     #[inline]
@@ -55661,7 +55683,6 @@ impl ::core::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
 unsafe impl<'a> TaggedStructure for ExecutionGraphPipelineCreateInfoAMDX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXECUTION_GRAPH_PIPELINE_CREATE_INFO_AMDX;
 }
-unsafe impl ExtendsPipelineCreateInfoKHR for ExecutionGraphPipelineCreateInfoAMDX<'_> {}
 pub unsafe trait ExtendsExecutionGraphPipelineCreateInfoAMDX {}
 impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
     #[inline]
