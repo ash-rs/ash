@@ -95,28 +95,20 @@ pub unsafe fn create_surface(
             surface_fn.create_android_surface(&surface_desc, allocation_callbacks)
         }
 
-        #[cfg(target_os = "macos")]
-        (RawDisplayHandle::AppKit(_), RawWindowHandle::AppKit(window)) => {
-            use raw_window_metal::{appkit, Layer};
+        #[cfg(target_vendor = "apple")]
+        (RawDisplayHandle::AppKit(_), RawWindowHandle::AppKit(handle)) => {
+            let layer = raw_window_metal::Layer::from_ns_view(handle.ns_view);
 
-            let layer = match appkit::metal_layer_from_handle(window) {
-                Layer::Existing(layer) | Layer::Allocated(layer) => layer.cast(),
-            };
-
-            let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(&*layer);
+            let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(layer.as_ptr());
             let surface_fn = metal_surface::Instance::new(entry, instance);
             surface_fn.create_metal_surface(&surface_desc, allocation_callbacks)
         }
 
-        #[cfg(target_os = "ios")]
-        (RawDisplayHandle::UiKit(_), RawWindowHandle::UiKit(window)) => {
-            use raw_window_metal::{uikit, Layer};
+        #[cfg(target_vendor = "apple")]
+        (RawDisplayHandle::UiKit(_), RawWindowHandle::UiKit(handle)) => {
+            let layer = raw_window_metal::Layer::from_ui_view(handle.ui_view);
 
-            let layer = match uikit::metal_layer_from_handle(window) {
-                Layer::Existing(layer) | Layer::Allocated(layer) => layer.cast(),
-            };
-
-            let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(&*layer);
+            let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(layer.as_ptr());
             let surface_fn = metal_surface::Instance::new(entry, instance);
             surface_fn.create_metal_surface(&surface_desc, allocation_callbacks)
         }
