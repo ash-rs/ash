@@ -41,7 +41,7 @@ ash = "0.37"
 
 - [x] Windows (`VK_KHR_win32_surface`)
 - [x] Unix (`VK_KHR_xlib_surface`/`VK_KHR_xcb_surface`/`VK_KHR_wayland_surface`)
-- [x] macOS/iOS/tvOS (`VK_EXT_metal_surface`)
+- [x] macOS/iOS/tvOS/visionOS (`VK_EXT_metal_surface`)
 - [x] Android (`VK_KHR_android_surface`)
 
 ## License
