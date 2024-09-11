@@ -99,7 +99,8 @@ pub unsafe fn create_surface(
         (RawDisplayHandle::AppKit(_), RawWindowHandle::AppKit(handle)) => {
             let layer = raw_window_metal::Layer::from_ns_view(handle.ns_view);
 
-            let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(layer.as_ptr());
+            let surface_desc =
+                vk::MetalSurfaceCreateInfoEXT::default().layer(layer.as_ptr().as_ptr());
             let surface_fn = metal_surface::Instance::new(entry, instance);
             surface_fn.create_metal_surface(&surface_desc, allocation_callbacks)
         }
@@ -108,7 +109,8 @@ pub unsafe fn create_surface(
         (RawDisplayHandle::UiKit(_), RawWindowHandle::UiKit(handle)) => {
             let layer = raw_window_metal::Layer::from_ui_view(handle.ui_view);
 
-            let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(layer.as_ptr());
+            let surface_desc =
+                vk::MetalSurfaceCreateInfoEXT::default().layer(layer.as_ptr().as_ptr());
             let surface_fn = metal_surface::Instance::new(entry, instance);
             surface_fn.create_metal_surface(&surface_desc, allocation_callbacks)
         }
