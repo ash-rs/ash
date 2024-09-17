@@ -52,10 +52,6 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(
 ) {
     unsafe {
         device
-            .wait_for_fences(&[command_buffer_reuse_fence], true, u64::MAX)
-            .expect("Wait for fence failed.");
-
-        device
             .reset_fences(&[command_buffer_reuse_fence])
             .expect("Reset fences failed.");
 
@@ -169,8 +165,7 @@ pub struct ExampleBase {
     pub present_complete_semaphore: vk::Semaphore,
     pub rendering_complete_semaphore: vk::Semaphore,
 
-    pub draw_commands_reuse_fence: vk::Fence,
-    pub setup_commands_reuse_fence: vk::Fence,
+    pub submit_complete_fence: vk::Fence,
 }
 
 impl ExampleBase {
@@ -194,7 +189,14 @@ impl ExampleBase {
                 } => {
                     elwp.exit();
                 }
-                Event::AboutToWait => f(),
+                Event::AboutToWait => {
+                    unsafe {
+                        self.device
+                            .wait_for_fences(&[self.submit_complete_fence], true, u64::MAX)
+                            .expect("Wait for fence failed.");
+                    }
+                    f()
+                }
                 _ => (),
             }
         })
@@ -472,17 +474,14 @@ impl ExampleBase {
             let fence_create_info =
                 vk::FenceCreateInfo::default().flags(vk::FenceCreateFlags::SIGNALED);
 
-            let draw_commands_reuse_fence = device
-                .create_fence(&fence_create_info, None)
-                .expect("Create fence failed.");
-            let setup_commands_reuse_fence = device
+            let submit_complete_fence = device
                 .create_fence(&fence_create_info, None)
                 .expect("Create fence failed.");
 
             record_submit_commandbuffer(
                 &device,
                 setup_command_buffer,
-                setup_commands_reuse_fence,
+                submit_complete_fence,
                 present_queue,
                 &[],
                 &[],
@@ -514,6 +513,9 @@ impl ExampleBase {
                     );
                 },
             );
+            device
+                .wait_for_fences(&[submit_complete_fence], true, u64::MAX)
+                .expect("Wait for fence failed.");
 
             let depth_image_view_info = vk::ImageViewCreateInfo::default()
                 .subresource_range(
@@ -563,8 +565,7 @@ impl ExampleBase {
                 depth_image_view,
                 present_complete_semaphore,
                 rendering_complete_semaphore,
-                draw_commands_reuse_fence,
-                setup_commands_reuse_fence,
+                submit_complete_fence,
                 surface,
                 debug_call_back,
                 debug_utils_loader,
@@ -582,10 +583,7 @@ impl Drop for ExampleBase {
                 .destroy_semaphore(self.present_complete_semaphore, None);
             self.device
                 .destroy_semaphore(self.rendering_complete_semaphore, None);
-            self.device
-                .destroy_fence(self.draw_commands_reuse_fence, None);
-            self.device
-                .destroy_fence(self.setup_commands_reuse_fence, None);
+            self.device.destroy_fence(self.submit_complete_fence, None);
             self.device.free_memory(self.depth_image_memory, None);
             self.device.destroy_image_view(self.depth_image_view, None);
             self.device.destroy_image(self.depth_image, None);
