@@ -17,6 +17,7 @@ pub mod host_image_copy;
 pub mod image_compression_control;
 pub mod image_drm_format_modifier;
 pub mod mesh_shader;
+pub mod metal_objects;
 pub mod metal_surface;
 pub mod pipeline_properties;
 pub mod private_data;
