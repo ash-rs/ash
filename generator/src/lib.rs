@@ -2323,22 +2323,45 @@ fn derive_getters_and_setters(
             /// valid extension structs can be pushed into the chain.
             /// If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the
             /// chain will look like `A -> D -> B -> C`.
-            pub fn push_next<T: #extends_name + ?Sized>(mut self, next: &'a mut T) -> Self {
-                unsafe {
-                    let next_ptr = <*#mutability T>::cast(next);
-                    // `next` here can contain a pointer chain. This means that we must correctly
-                    // attach he head to the root and the tail to the rest of the chain
-                    // For example:
-                    //
-                    // next = A -> B
-                    // Before: `Root -> C -> D -> E`
-                    // After: `Root -> A -> B -> C -> D -> E`
-                    //                 ^^^^^^
-                    //                 next chain
-                    let last_next = ptr_chain_iter(next).last().unwrap();
-                    (*last_next).p_next = self.p_next as _;
-                    self.p_next = next_ptr;
-                }
+            ///
+            /// # Safety
+            /// This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring
+            /// all non-`NULL` pointers to point to a valid Vulkan structure starting with the
+            /// [`BaseOutStructure`] layout.
+            pub unsafe fn push_next<T: #extends_name + ?Sized>(mut self, next: &'a mut T) -> Self {
+                let next_ptr = <*#mutability T>::cast(next);
+                // `next` here can contain a pointer chain. This means that we must correctly
+                // attach he head to the root and the tail to the rest of the chain
+                // For example:
+                //
+                // next = A -> B
+                // Before: `Root -> C -> D -> E`
+                // After: `Root -> A -> B -> C -> D -> E`
+                //                 ^^^^^^
+                //                 next chain
+                let last_next = ptr_chain_iter(next).last().unwrap();
+                (*last_next).p_next = self.p_next as _;
+                self.p_next = next_ptr;
+                self
+            }
+
+            /// Prepends the given extension struct between the root and the first pointer. This
+            /// method only exists on structs that can be passed to a function directly. Only
+            /// valid extension structs can be pushed into the chain.
+            /// If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the
+            /// chain will look like `A -> D -> B -> C`.
+            ///
+            /// # Panics
+            /// If `next` contains a pointer chain of its own, this function will panic.  Call
+            /// `unsafe` [`Self::push_next()`] to insert this chain instead.
+            pub fn push_next_one<T: #extends_name + ?Sized>(mut self, next: &'a mut T) -> Self {
+                // SAFETY: All implementors of T are required to have the `BaseOutStructure` layout
+                let base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+                // `next` here can contain a pointer chain.  This function refuses to insert the struct,
+                // in favour of calling unsafe push_next().
+                assert!(base.p_next.is_null(), "push_next_one() expects a struct without an existing p_next pointer chain (equal to NULL)");
+                base.p_next = self.p_next as _;
+                self.p_next = <*#mutability _>::cast(next);
                 self
             }
         }
