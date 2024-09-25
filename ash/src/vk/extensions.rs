@@ -3955,8 +3955,7 @@ impl StructureType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV: Self = Self(1_000_568_000);
 }
-pub const KHR_SURFACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_surface\0") };
+pub const KHR_SURFACE_NAME: &CStr = c"KHR_surface";
 pub const KHR_SURFACE_SPEC_VERSION: u32 = 25u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroySurfaceKHR = unsafe extern "system" fn(
@@ -3991,8 +3990,7 @@ pub type PFN_vkGetPhysicalDeviceSurfacePresentModesKHR = unsafe extern "system" 
     p_present_mode_count: *mut u32,
     p_present_modes: *mut PresentModeKHR,
 ) -> Result;
-pub const KHR_SWAPCHAIN_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_swapchain\0") };
+pub const KHR_SWAPCHAIN_NAME: &CStr = c"KHR_swapchain";
 pub const KHR_SWAPCHAIN_SPEC_VERSION: u32 = 70u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDevicePresentRectanglesKHR = unsafe extern "system" fn(
@@ -4050,8 +4048,7 @@ pub type PFN_vkAcquireNextImage2KHR = unsafe extern "system" fn(
     p_acquire_info: *const AcquireNextImageInfoKHR<'_>,
     p_image_index: *mut u32,
 ) -> Result;
-pub const KHR_DISPLAY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_display\0") };
+pub const KHR_DISPLAY_NAME: &CStr = c"KHR_display";
 pub const KHR_DISPLAY_SPEC_VERSION: u32 = 23u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceDisplayPropertiesKHR = unsafe extern "system" fn(
@@ -4101,8 +4098,7 @@ pub type PFN_vkCreateDisplayPlaneSurfaceKHR = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks<'_>,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
-pub const KHR_DISPLAY_SWAPCHAIN_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_display_swapchain\0") };
+pub const KHR_DISPLAY_SWAPCHAIN_NAME: &CStr = c"KHR_display_swapchain";
 pub const KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION: u32 = 10u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateSharedSwapchainsKHR = unsafe extern "system" fn(
@@ -4112,8 +4108,7 @@ pub type PFN_vkCreateSharedSwapchainsKHR = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks<'_>,
     p_swapchains: *mut SwapchainKHR,
 ) -> Result;
-pub const KHR_XLIB_SURFACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_xlib_surface\0") };
+pub const KHR_XLIB_SURFACE_NAME: &CStr = c"KHR_xlib_surface";
 pub const KHR_XLIB_SURFACE_SPEC_VERSION: u32 = 6u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateXlibSurfaceKHR = unsafe extern "system" fn(
@@ -4129,8 +4124,7 @@ pub type PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR = unsafe extern "syst
     dpy: *mut Display,
     visual_id: VisualID,
 ) -> Bool32;
-pub const KHR_XCB_SURFACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_xcb_surface\0") };
+pub const KHR_XCB_SURFACE_NAME: &CStr = c"KHR_xcb_surface";
 pub const KHR_XCB_SURFACE_SPEC_VERSION: u32 = 6u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateXcbSurfaceKHR = unsafe extern "system" fn(
@@ -4146,8 +4140,7 @@ pub type PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR = unsafe extern "syste
     connection: *mut xcb_connection_t,
     visual_id: xcb_visualid_t,
 ) -> Bool32;
-pub const KHR_WAYLAND_SURFACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_wayland_surface\0") };
+pub const KHR_WAYLAND_SURFACE_NAME: &CStr = c"KHR_wayland_surface";
 pub const KHR_WAYLAND_SURFACE_SPEC_VERSION: u32 = 6u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateWaylandSurfaceKHR = unsafe extern "system" fn(
@@ -4163,8 +4156,7 @@ pub type PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR = unsafe extern "s
     display: *mut wl_display,
 )
     -> Bool32;
-pub const KHR_ANDROID_SURFACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_android_surface\0") };
+pub const KHR_ANDROID_SURFACE_NAME: &CStr = c"KHR_android_surface";
 pub const KHR_ANDROID_SURFACE_SPEC_VERSION: u32 = 6u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateAndroidSurfaceKHR = unsafe extern "system" fn(
@@ -4173,8 +4165,7 @@ pub type PFN_vkCreateAndroidSurfaceKHR = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks<'_>,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
-pub const KHR_WIN32_SURFACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_win32_surface\0") };
+pub const KHR_WIN32_SURFACE_NAME: &CStr = c"KHR_win32_surface";
 pub const KHR_WIN32_SURFACE_SPEC_VERSION: u32 = 6u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateWin32SurfaceKHR = unsafe extern "system" fn(
@@ -4186,8 +4177,7 @@ pub type PFN_vkCreateWin32SurfaceKHR = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR =
     unsafe extern "system" fn(physical_device: PhysicalDevice, queue_family_index: u32) -> Bool32;
-pub const ANDROID_NATIVE_BUFFER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ANDROID_native_buffer\0") };
+pub const ANDROID_NATIVE_BUFFER_NAME: &CStr = c"ANDROID_native_buffer";
 pub const ANDROID_NATIVE_BUFFER_SPEC_VERSION: u32 = 8u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetSwapchainGrallocUsageANDROID = unsafe extern "system" fn(
@@ -4221,8 +4211,7 @@ pub type PFN_vkGetSwapchainGrallocUsage2ANDROID = unsafe extern "system" fn(
     gralloc_consumer_usage: *mut u64,
     gralloc_producer_usage: *mut u64,
 ) -> Result;
-pub const EXT_DEBUG_REPORT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_report\0") };
+pub const EXT_DEBUG_REPORT_NAME: &CStr = c"EXT_debug_report";
 pub const EXT_DEBUG_REPORT_SPEC_VERSION: u32 = 10u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDebugReportCallbackEXT = unsafe extern "system" fn(
@@ -4248,29 +4237,22 @@ pub type PFN_vkDebugReportMessageEXT = unsafe extern "system" fn(
     p_layer_prefix: *const c_char,
     p_message: *const c_char,
 );
-pub const NV_GLSL_SHADER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_glsl_shader\0") };
+pub const NV_GLSL_SHADER_NAME: &CStr = c"NV_glsl_shader";
 pub const NV_GLSL_SHADER_SPEC_VERSION: u32 = 1u32;
-pub const EXT_DEPTH_RANGE_UNRESTRICTED_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_range_unrestricted\0") };
+pub const EXT_DEPTH_RANGE_UNRESTRICTED_NAME: &CStr = c"EXT_depth_range_unrestricted";
 pub const EXT_DEPTH_RANGE_UNRESTRICTED_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_sampler_mirror_clamp_to_edge\0") };
+pub const KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_NAME: &CStr = c"KHR_sampler_mirror_clamp_to_edge";
 pub const KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_SPEC_VERSION: u32 = 3u32;
-pub const IMG_FILTER_CUBIC_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_IMG_filter_cubic\0") };
+pub const IMG_FILTER_CUBIC_NAME: &CStr = c"IMG_filter_cubic";
 pub const IMG_FILTER_CUBIC_SPEC_VERSION: u32 = 1u32;
-pub const AMD_RASTERIZATION_ORDER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_rasterization_order\0") };
+pub const AMD_RASTERIZATION_ORDER_NAME: &CStr = c"AMD_rasterization_order";
 pub const AMD_RASTERIZATION_ORDER_SPEC_VERSION: u32 = 1u32;
-pub const AMD_SHADER_TRINARY_MINMAX_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_trinary_minmax\0") };
+pub const AMD_SHADER_TRINARY_MINMAX_NAME: &CStr = c"AMD_shader_trinary_minmax";
 pub const AMD_SHADER_TRINARY_MINMAX_SPEC_VERSION: u32 = 1u32;
 pub const AMD_SHADER_EXPLICIT_VERTEX_PARAMETER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_explicit_vertex_parameter\0") };
+    c"AMD_shader_explicit_vertex_parameter";
 pub const AMD_SHADER_EXPLICIT_VERTEX_PARAMETER_SPEC_VERSION: u32 = 1u32;
-pub const EXT_DEBUG_MARKER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_marker\0") };
+pub const EXT_DEBUG_MARKER_NAME: &CStr = c"EXT_debug_marker";
 pub const EXT_DEBUG_MARKER_SPEC_VERSION: u32 = 4u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDebugMarkerSetObjectTagEXT = unsafe extern "system" fn(
@@ -4294,8 +4276,7 @@ pub type PFN_vkCmdDebugMarkerInsertEXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_marker_info: *const DebugMarkerMarkerInfoEXT<'_>,
 );
-pub const KHR_VIDEO_QUEUE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_queue\0") };
+pub const KHR_VIDEO_QUEUE_NAME: &CStr = c"KHR_video_queue";
 pub const KHR_VIDEO_QUEUE_SPEC_VERSION: u32 = 8u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR = unsafe extern "system" fn(
@@ -4371,22 +4352,18 @@ pub type PFN_vkCmdControlVideoCodingKHR = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_coding_control_info: *const VideoCodingControlInfoKHR<'_>,
 );
-pub const KHR_VIDEO_DECODE_QUEUE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_queue\0") };
+pub const KHR_VIDEO_DECODE_QUEUE_NAME: &CStr = c"KHR_video_decode_queue";
 pub const KHR_VIDEO_DECODE_QUEUE_SPEC_VERSION: u32 = 8u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDecodeVideoKHR = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_decode_info: *const VideoDecodeInfoKHR<'_>,
 );
-pub const AMD_GCN_SHADER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gcn_shader\0") };
+pub const AMD_GCN_SHADER_NAME: &CStr = c"AMD_gcn_shader";
 pub const AMD_GCN_SHADER_SPEC_VERSION: u32 = 1u32;
-pub const NV_DEDICATED_ALLOCATION_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_dedicated_allocation\0") };
+pub const NV_DEDICATED_ALLOCATION_NAME: &CStr = c"NV_dedicated_allocation";
 pub const NV_DEDICATED_ALLOCATION_SPEC_VERSION: u32 = 1u32;
-pub const EXT_TRANSFORM_FEEDBACK_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_transform_feedback\0") };
+pub const EXT_TRANSFORM_FEEDBACK_NAME: &CStr = c"EXT_transform_feedback";
 pub const EXT_TRANSFORM_FEEDBACK_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindTransformFeedbackBuffersEXT = unsafe extern "system" fn(
@@ -4438,8 +4415,7 @@ pub type PFN_vkCmdDrawIndirectByteCountEXT = unsafe extern "system" fn(
     counter_offset: u32,
     vertex_stride: u32,
 );
-pub const NVX_BINARY_IMPORT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NVX_binary_import\0") };
+pub const NVX_BINARY_IMPORT_NAME: &CStr = c"NVX_binary_import";
 pub const NVX_BINARY_IMPORT_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateCuModuleNVX = unsafe extern "system" fn(
@@ -4472,8 +4448,7 @@ pub type PFN_vkCmdCuLaunchKernelNVX = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_launch_info: *const CuLaunchInfoNVX<'_>,
 );
-pub const NVX_IMAGE_VIEW_HANDLE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NVX_image_view_handle\0") };
+pub const NVX_IMAGE_VIEW_HANDLE_NAME: &CStr = c"NVX_image_view_handle";
 pub const NVX_IMAGE_VIEW_HANDLE_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageViewHandleNVX = unsafe extern "system" fn(
@@ -4486,8 +4461,7 @@ pub type PFN_vkGetImageViewAddressNVX = unsafe extern "system" fn(
     image_view: ImageView,
     p_properties: *mut ImageViewAddressPropertiesNVX<'_>,
 ) -> Result;
-pub const AMD_DRAW_INDIRECT_COUNT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_draw_indirect_count\0") };
+pub const AMD_DRAW_INDIRECT_COUNT_NAME: &CStr = c"AMD_draw_indirect_count";
 pub const AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawIndirectCount = unsafe extern "system" fn(
@@ -4509,29 +4483,21 @@ pub type PFN_vkCmdDrawIndexedIndirectCount = unsafe extern "system" fn(
     max_draw_count: u32,
     stride: u32,
 );
-pub const AMD_NEGATIVE_VIEWPORT_HEIGHT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_negative_viewport_height\0") };
+pub const AMD_NEGATIVE_VIEWPORT_HEIGHT_NAME: &CStr = c"AMD_negative_viewport_height";
 pub const AMD_NEGATIVE_VIEWPORT_HEIGHT_SPEC_VERSION: u32 = 1u32;
-pub const AMD_GPU_SHADER_HALF_FLOAT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_half_float\0") };
+pub const AMD_GPU_SHADER_HALF_FLOAT_NAME: &CStr = c"AMD_gpu_shader_half_float";
 pub const AMD_GPU_SHADER_HALF_FLOAT_SPEC_VERSION: u32 = 2u32;
-pub const AMD_SHADER_BALLOT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_ballot\0") };
+pub const AMD_SHADER_BALLOT_NAME: &CStr = c"AMD_shader_ballot";
 pub const AMD_SHADER_BALLOT_SPEC_VERSION: u32 = 1u32;
-pub const KHR_VIDEO_ENCODE_H264_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_h264\0") };
+pub const KHR_VIDEO_ENCODE_H264_NAME: &CStr = c"KHR_video_encode_h264";
 pub const KHR_VIDEO_ENCODE_H264_SPEC_VERSION: u32 = 14u32;
-pub const KHR_VIDEO_ENCODE_H265_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_h265\0") };
+pub const KHR_VIDEO_ENCODE_H265_NAME: &CStr = c"KHR_video_encode_h265";
 pub const KHR_VIDEO_ENCODE_H265_SPEC_VERSION: u32 = 14u32;
-pub const KHR_VIDEO_DECODE_H264_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_h264\0") };
+pub const KHR_VIDEO_DECODE_H264_NAME: &CStr = c"KHR_video_decode_h264";
 pub const KHR_VIDEO_DECODE_H264_SPEC_VERSION: u32 = 9u32;
-pub const AMD_TEXTURE_GATHER_BIAS_LOD_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_texture_gather_bias_lod\0") };
+pub const AMD_TEXTURE_GATHER_BIAS_LOD_NAME: &CStr = c"AMD_texture_gather_bias_lod";
 pub const AMD_TEXTURE_GATHER_BIAS_LOD_SPEC_VERSION: u32 = 1u32;
-pub const AMD_SHADER_INFO_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_info\0") };
+pub const AMD_SHADER_INFO_NAME: &CStr = c"AMD_shader_info";
 pub const AMD_SHADER_INFO_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetShaderInfoAMD = unsafe extern "system" fn(
@@ -4542,8 +4508,7 @@ pub type PFN_vkGetShaderInfoAMD = unsafe extern "system" fn(
     p_info_size: *mut usize,
     p_info: *mut c_void,
 ) -> Result;
-pub const KHR_DYNAMIC_RENDERING_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_dynamic_rendering\0") };
+pub const KHR_DYNAMIC_RENDERING_NAME: &CStr = c"KHR_dynamic_rendering";
 pub const KHR_DYNAMIC_RENDERING_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginRendering = unsafe extern "system" fn(
@@ -4552,11 +4517,9 @@ pub type PFN_vkCmdBeginRendering = unsafe extern "system" fn(
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEndRendering = unsafe extern "system" fn(command_buffer: CommandBuffer);
-pub const AMD_SHADER_IMAGE_LOAD_STORE_LOD_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_image_load_store_lod\0") };
+pub const AMD_SHADER_IMAGE_LOAD_STORE_LOD_NAME: &CStr = c"AMD_shader_image_load_store_lod";
 pub const AMD_SHADER_IMAGE_LOAD_STORE_LOD_SPEC_VERSION: u32 = 1u32;
-pub const GGP_STREAM_DESCRIPTOR_SURFACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_GGP_stream_descriptor_surface\0") };
+pub const GGP_STREAM_DESCRIPTOR_SURFACE_NAME: &CStr = c"GGP_stream_descriptor_surface";
 pub const GGP_STREAM_DESCRIPTOR_SURFACE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateStreamDescriptorSurfaceGGP = unsafe extern "system" fn(
@@ -4565,17 +4528,13 @@ pub type PFN_vkCreateStreamDescriptorSurfaceGGP = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks<'_>,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
-pub const NV_CORNER_SAMPLED_IMAGE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_corner_sampled_image\0") };
+pub const NV_CORNER_SAMPLED_IMAGE_NAME: &CStr = c"NV_corner_sampled_image";
 pub const NV_CORNER_SAMPLED_IMAGE_SPEC_VERSION: u32 = 2u32;
-pub const KHR_MULTIVIEW_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_multiview\0") };
+pub const KHR_MULTIVIEW_NAME: &CStr = c"KHR_multiview";
 pub const KHR_MULTIVIEW_SPEC_VERSION: u32 = 1u32;
-pub const IMG_FORMAT_PVRTC_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_IMG_format_pvrtc\0") };
+pub const IMG_FORMAT_PVRTC_NAME: &CStr = c"IMG_format_pvrtc";
 pub const IMG_FORMAT_PVRTC_SPEC_VERSION: u32 = 1u32;
-pub const NV_EXTERNAL_MEMORY_CAPABILITIES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_capabilities\0") };
+pub const NV_EXTERNAL_MEMORY_CAPABILITIES_NAME: &CStr = c"NV_external_memory_capabilities";
 pub const NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV =
@@ -4589,11 +4548,9 @@ pub type PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV =
         external_handle_type: ExternalMemoryHandleTypeFlagsNV,
         p_external_image_format_properties: *mut ExternalImageFormatPropertiesNV,
     ) -> Result;
-pub const NV_EXTERNAL_MEMORY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory\0") };
+pub const NV_EXTERNAL_MEMORY_NAME: &CStr = c"NV_external_memory";
 pub const NV_EXTERNAL_MEMORY_SPEC_VERSION: u32 = 1u32;
-pub const NV_EXTERNAL_MEMORY_WIN32_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_win32\0") };
+pub const NV_EXTERNAL_MEMORY_WIN32_NAME: &CStr = c"NV_external_memory_win32";
 pub const NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetMemoryWin32HandleNV = unsafe extern "system" fn(
@@ -4602,11 +4559,9 @@ pub type PFN_vkGetMemoryWin32HandleNV = unsafe extern "system" fn(
     handle_type: ExternalMemoryHandleTypeFlagsNV,
     p_handle: *mut HANDLE,
 ) -> Result;
-pub const NV_WIN32_KEYED_MUTEX_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_win32_keyed_mutex\0") };
+pub const NV_WIN32_KEYED_MUTEX_NAME: &CStr = c"NV_win32_keyed_mutex";
 pub const NV_WIN32_KEYED_MUTEX_SPEC_VERSION: u32 = 2u32;
-pub const KHR_GET_PHYSICAL_DEVICE_PROPERTIES2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_physical_device_properties2\0") };
+pub const KHR_GET_PHYSICAL_DEVICE_PROPERTIES2_NAME: &CStr = c"KHR_get_physical_device_properties2";
 pub const KHR_GET_PHYSICAL_DEVICE_PROPERTIES2_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceFeatures2 = unsafe extern "system" fn(
@@ -4648,8 +4603,7 @@ pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 = unsafe extern "sy
     p_property_count: *mut u32,
     p_properties: *mut SparseImageFormatProperties2<'_>,
 );
-pub const KHR_DEVICE_GROUP_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_device_group\0") };
+pub const KHR_DEVICE_GROUP_NAME: &CStr = c"KHR_device_group";
 pub const KHR_DEVICE_GROUP_SPEC_VERSION: u32 = 4u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceGroupPeerMemoryFeatures = unsafe extern "system" fn(
@@ -4672,11 +4626,9 @@ pub type PFN_vkCmdDispatchBase = unsafe extern "system" fn(
     group_count_y: u32,
     group_count_z: u32,
 );
-pub const EXT_VALIDATION_FLAGS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_flags\0") };
+pub const EXT_VALIDATION_FLAGS_NAME: &CStr = c"EXT_validation_flags";
 pub const EXT_VALIDATION_FLAGS_SPEC_VERSION: u32 = 3u32;
-pub const NN_VI_SURFACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NN_vi_surface\0") };
+pub const NN_VI_SURFACE_NAME: &CStr = c"NN_vi_surface";
 pub const NN_VI_SURFACE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateViSurfaceNN = unsafe extern "system" fn(
@@ -4685,26 +4637,19 @@ pub type PFN_vkCreateViSurfaceNN = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks<'_>,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
-pub const KHR_SHADER_DRAW_PARAMETERS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_draw_parameters\0") };
+pub const KHR_SHADER_DRAW_PARAMETERS_NAME: &CStr = c"KHR_shader_draw_parameters";
 pub const KHR_SHADER_DRAW_PARAMETERS_SPEC_VERSION: u32 = 1u32;
-pub const EXT_SHADER_SUBGROUP_BALLOT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_ballot\0") };
+pub const EXT_SHADER_SUBGROUP_BALLOT_NAME: &CStr = c"EXT_shader_subgroup_ballot";
 pub const EXT_SHADER_SUBGROUP_BALLOT_SPEC_VERSION: u32 = 1u32;
-pub const EXT_SHADER_SUBGROUP_VOTE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_vote\0") };
+pub const EXT_SHADER_SUBGROUP_VOTE_NAME: &CStr = c"EXT_shader_subgroup_vote";
 pub const EXT_SHADER_SUBGROUP_VOTE_SPEC_VERSION: u32 = 1u32;
-pub const EXT_TEXTURE_COMPRESSION_ASTC_HDR_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_texture_compression_astc_hdr\0") };
+pub const EXT_TEXTURE_COMPRESSION_ASTC_HDR_NAME: &CStr = c"EXT_texture_compression_astc_hdr";
 pub const EXT_TEXTURE_COMPRESSION_ASTC_HDR_SPEC_VERSION: u32 = 1u32;
-pub const EXT_ASTC_DECODE_MODE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_astc_decode_mode\0") };
+pub const EXT_ASTC_DECODE_MODE_NAME: &CStr = c"EXT_astc_decode_mode";
 pub const EXT_ASTC_DECODE_MODE_SPEC_VERSION: u32 = 1u32;
-pub const EXT_PIPELINE_ROBUSTNESS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_robustness\0") };
+pub const EXT_PIPELINE_ROBUSTNESS_NAME: &CStr = c"EXT_pipeline_robustness";
 pub const EXT_PIPELINE_ROBUSTNESS_SPEC_VERSION: u32 = 1u32;
-pub const KHR_MAINTENANCE1_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance1\0") };
+pub const KHR_MAINTENANCE1_NAME: &CStr = c"KHR_maintenance1";
 pub const KHR_MAINTENANCE1_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkTrimCommandPool = unsafe extern "system" fn(
@@ -4712,8 +4657,7 @@ pub type PFN_vkTrimCommandPool = unsafe extern "system" fn(
     command_pool: CommandPool,
     flags: CommandPoolTrimFlags,
 );
-pub const KHR_DEVICE_GROUP_CREATION_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_device_group_creation\0") };
+pub const KHR_DEVICE_GROUP_CREATION_NAME: &CStr = c"KHR_device_group_creation";
 pub const KHR_DEVICE_GROUP_CREATION_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumeratePhysicalDeviceGroups = unsafe extern "system" fn(
@@ -4721,8 +4665,7 @@ pub type PFN_vkEnumeratePhysicalDeviceGroups = unsafe extern "system" fn(
     p_physical_device_group_count: *mut u32,
     p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties<'_>,
 ) -> Result;
-pub const KHR_EXTERNAL_MEMORY_CAPABILITIES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory_capabilities\0") };
+pub const KHR_EXTERNAL_MEMORY_CAPABILITIES_NAME: &CStr = c"KHR_external_memory_capabilities";
 pub const KHR_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceExternalBufferProperties = unsafe extern "system" fn(
@@ -4730,11 +4673,9 @@ pub type PFN_vkGetPhysicalDeviceExternalBufferProperties = unsafe extern "system
     p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo<'_>,
     p_external_buffer_properties: *mut ExternalBufferProperties<'_>,
 );
-pub const KHR_EXTERNAL_MEMORY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory\0") };
+pub const KHR_EXTERNAL_MEMORY_NAME: &CStr = c"KHR_external_memory";
 pub const KHR_EXTERNAL_MEMORY_SPEC_VERSION: u32 = 1u32;
-pub const KHR_EXTERNAL_MEMORY_WIN32_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory_win32\0") };
+pub const KHR_EXTERNAL_MEMORY_WIN32_NAME: &CStr = c"KHR_external_memory_win32";
 pub const KHR_EXTERNAL_MEMORY_WIN32_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetMemoryWin32HandleKHR = unsafe extern "system" fn(
@@ -4749,8 +4690,7 @@ pub type PFN_vkGetMemoryWin32HandlePropertiesKHR = unsafe extern "system" fn(
     handle: HANDLE,
     p_memory_win32_handle_properties: *mut MemoryWin32HandlePropertiesKHR<'_>,
 ) -> Result;
-pub const KHR_EXTERNAL_MEMORY_FD_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory_fd\0") };
+pub const KHR_EXTERNAL_MEMORY_FD_NAME: &CStr = c"KHR_external_memory_fd";
 pub const KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetMemoryFdKHR = unsafe extern "system" fn(
@@ -4765,11 +4705,9 @@ pub type PFN_vkGetMemoryFdPropertiesKHR = unsafe extern "system" fn(
     fd: c_int,
     p_memory_fd_properties: *mut MemoryFdPropertiesKHR<'_>,
 ) -> Result;
-pub const KHR_WIN32_KEYED_MUTEX_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_win32_keyed_mutex\0") };
+pub const KHR_WIN32_KEYED_MUTEX_NAME: &CStr = c"KHR_win32_keyed_mutex";
 pub const KHR_WIN32_KEYED_MUTEX_SPEC_VERSION: u32 = 1u32;
-pub const KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore_capabilities\0") };
+pub const KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_NAME: &CStr = c"KHR_external_semaphore_capabilities";
 pub const KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceExternalSemaphoreProperties = unsafe extern "system" fn(
@@ -4777,11 +4715,9 @@ pub type PFN_vkGetPhysicalDeviceExternalSemaphoreProperties = unsafe extern "sys
     p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo<'_>,
     p_external_semaphore_properties: *mut ExternalSemaphoreProperties<'_>,
 );
-pub const KHR_EXTERNAL_SEMAPHORE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore\0") };
+pub const KHR_EXTERNAL_SEMAPHORE_NAME: &CStr = c"KHR_external_semaphore";
 pub const KHR_EXTERNAL_SEMAPHORE_SPEC_VERSION: u32 = 1u32;
-pub const KHR_EXTERNAL_SEMAPHORE_WIN32_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore_win32\0") };
+pub const KHR_EXTERNAL_SEMAPHORE_WIN32_NAME: &CStr = c"KHR_external_semaphore_win32";
 pub const KHR_EXTERNAL_SEMAPHORE_WIN32_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkImportSemaphoreWin32HandleKHR = unsafe extern "system" fn(
@@ -4794,8 +4730,7 @@ pub type PFN_vkGetSemaphoreWin32HandleKHR = unsafe extern "system" fn(
     p_get_win32_handle_info: *const SemaphoreGetWin32HandleInfoKHR<'_>,
     p_handle: *mut HANDLE,
 ) -> Result;
-pub const KHR_EXTERNAL_SEMAPHORE_FD_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore_fd\0") };
+pub const KHR_EXTERNAL_SEMAPHORE_FD_NAME: &CStr = c"KHR_external_semaphore_fd";
 pub const KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkImportSemaphoreFdKHR = unsafe extern "system" fn(
@@ -4808,8 +4743,7 @@ pub type PFN_vkGetSemaphoreFdKHR = unsafe extern "system" fn(
     p_get_fd_info: *const SemaphoreGetFdInfoKHR<'_>,
     p_fd: *mut c_int,
 ) -> Result;
-pub const KHR_PUSH_DESCRIPTOR_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_push_descriptor\0") };
+pub const KHR_PUSH_DESCRIPTOR_NAME: &CStr = c"KHR_push_descriptor";
 pub const KHR_PUSH_DESCRIPTOR_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdPushDescriptorSetKHR = unsafe extern "system" fn(
@@ -4828,8 +4762,7 @@ pub type PFN_vkCmdPushDescriptorSetWithTemplateKHR = unsafe extern "system" fn(
     set: u32,
     p_data: *const c_void,
 );
-pub const EXT_CONDITIONAL_RENDERING_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_conditional_rendering\0") };
+pub const EXT_CONDITIONAL_RENDERING_NAME: &CStr = c"EXT_conditional_rendering";
 pub const EXT_CONDITIONAL_RENDERING_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginConditionalRenderingEXT = unsafe extern "system" fn(
@@ -4839,17 +4772,13 @@ pub type PFN_vkCmdBeginConditionalRenderingEXT = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEndConditionalRenderingEXT =
     unsafe extern "system" fn(command_buffer: CommandBuffer);
-pub const KHR_SHADER_FLOAT16_INT8_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_float16_int8\0") };
+pub const KHR_SHADER_FLOAT16_INT8_NAME: &CStr = c"KHR_shader_float16_int8";
 pub const KHR_SHADER_FLOAT16_INT8_SPEC_VERSION: u32 = 1u32;
-pub const KHR_16BIT_STORAGE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_16bit_storage\0") };
+pub const KHR_16BIT_STORAGE_NAME: &CStr = c"KHR_16bit_storage";
 pub const KHR_16BIT_STORAGE_SPEC_VERSION: u32 = 1u32;
-pub const KHR_INCREMENTAL_PRESENT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_incremental_present\0") };
+pub const KHR_INCREMENTAL_PRESENT_NAME: &CStr = c"KHR_incremental_present";
 pub const KHR_INCREMENTAL_PRESENT_SPEC_VERSION: u32 = 2u32;
-pub const KHR_DESCRIPTOR_UPDATE_TEMPLATE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_descriptor_update_template\0") };
+pub const KHR_DESCRIPTOR_UPDATE_TEMPLATE_NAME: &CStr = c"KHR_descriptor_update_template";
 pub const KHR_DESCRIPTOR_UPDATE_TEMPLATE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDescriptorUpdateTemplate = unsafe extern "system" fn(
@@ -4871,8 +4800,7 @@ pub type PFN_vkUpdateDescriptorSetWithTemplate = unsafe extern "system" fn(
     descriptor_update_template: DescriptorUpdateTemplate,
     p_data: *const c_void,
 );
-pub const NV_CLIP_SPACE_W_SCALING_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_clip_space_w_scaling\0") };
+pub const NV_CLIP_SPACE_W_SCALING_NAME: &CStr = c"NV_clip_space_w_scaling";
 pub const NV_CLIP_SPACE_W_SCALING_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetViewportWScalingNV = unsafe extern "system" fn(
@@ -4881,14 +4809,12 @@ pub type PFN_vkCmdSetViewportWScalingNV = unsafe extern "system" fn(
     viewport_count: u32,
     p_viewport_w_scalings: *const ViewportWScalingNV,
 );
-pub const EXT_DIRECT_MODE_DISPLAY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_direct_mode_display\0") };
+pub const EXT_DIRECT_MODE_DISPLAY_NAME: &CStr = c"EXT_direct_mode_display";
 pub const EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkReleaseDisplayEXT =
     unsafe extern "system" fn(physical_device: PhysicalDevice, display: DisplayKHR) -> Result;
-pub const EXT_ACQUIRE_XLIB_DISPLAY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_acquire_xlib_display\0") };
+pub const EXT_ACQUIRE_XLIB_DISPLAY_NAME: &CStr = c"EXT_acquire_xlib_display";
 pub const EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkAcquireXlibDisplayEXT = unsafe extern "system" fn(
@@ -4903,8 +4829,7 @@ pub type PFN_vkGetRandROutputDisplayEXT = unsafe extern "system" fn(
     rr_output: RROutput,
     p_display: *mut DisplayKHR,
 ) -> Result;
-pub const EXT_DISPLAY_SURFACE_COUNTER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_display_surface_counter\0") };
+pub const EXT_DISPLAY_SURFACE_COUNTER_NAME: &CStr = c"EXT_display_surface_counter";
 pub const EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT = unsafe extern "system" fn(
@@ -4912,8 +4837,7 @@ pub type PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT = unsafe extern "system"
     surface: SurfaceKHR,
     p_surface_capabilities: *mut SurfaceCapabilities2EXT<'_>,
 ) -> Result;
-pub const EXT_DISPLAY_CONTROL_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_display_control\0") };
+pub const EXT_DISPLAY_CONTROL_NAME: &CStr = c"EXT_display_control";
 pub const EXT_DISPLAY_CONTROL_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDisplayPowerControlEXT = unsafe extern "system" fn(
@@ -4943,8 +4867,7 @@ pub type PFN_vkGetSwapchainCounterEXT = unsafe extern "system" fn(
     counter: SurfaceCounterFlagsEXT,
     p_counter_value: *mut u64,
 ) -> Result;
-pub const GOOGLE_DISPLAY_TIMING_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_display_timing\0") };
+pub const GOOGLE_DISPLAY_TIMING_NAME: &CStr = c"GOOGLE_display_timing";
 pub const GOOGLE_DISPLAY_TIMING_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetRefreshCycleDurationGOOGLE = unsafe extern "system" fn(
@@ -4959,23 +4882,17 @@ pub type PFN_vkGetPastPresentationTimingGOOGLE = unsafe extern "system" fn(
     p_presentation_timing_count: *mut u32,
     p_presentation_timings: *mut PastPresentationTimingGOOGLE,
 ) -> Result;
-pub const NV_SAMPLE_MASK_OVERRIDE_COVERAGE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_sample_mask_override_coverage\0") };
+pub const NV_SAMPLE_MASK_OVERRIDE_COVERAGE_NAME: &CStr = c"NV_sample_mask_override_coverage";
 pub const NV_SAMPLE_MASK_OVERRIDE_COVERAGE_SPEC_VERSION: u32 = 1u32;
-pub const NV_GEOMETRY_SHADER_PASSTHROUGH_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_geometry_shader_passthrough\0") };
+pub const NV_GEOMETRY_SHADER_PASSTHROUGH_NAME: &CStr = c"NV_geometry_shader_passthrough";
 pub const NV_GEOMETRY_SHADER_PASSTHROUGH_SPEC_VERSION: u32 = 1u32;
-pub const NV_VIEWPORT_ARRAY2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_viewport_array2\0") };
+pub const NV_VIEWPORT_ARRAY2_NAME: &CStr = c"NV_viewport_array2";
 pub const NV_VIEWPORT_ARRAY2_SPEC_VERSION: u32 = 1u32;
-pub const NVX_MULTIVIEW_PER_VIEW_ATTRIBUTES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NVX_multiview_per_view_attributes\0") };
+pub const NVX_MULTIVIEW_PER_VIEW_ATTRIBUTES_NAME: &CStr = c"NVX_multiview_per_view_attributes";
 pub const NVX_MULTIVIEW_PER_VIEW_ATTRIBUTES_SPEC_VERSION: u32 = 1u32;
-pub const NV_VIEWPORT_SWIZZLE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_viewport_swizzle\0") };
+pub const NV_VIEWPORT_SWIZZLE_NAME: &CStr = c"NV_viewport_swizzle";
 pub const NV_VIEWPORT_SWIZZLE_SPEC_VERSION: u32 = 1u32;
-pub const EXT_DISCARD_RECTANGLES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_discard_rectangles\0") };
+pub const EXT_DISCARD_RECTANGLES_NAME: &CStr = c"EXT_discard_rectangles";
 pub const EXT_DISCARD_RECTANGLES_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDiscardRectangleEXT = unsafe extern "system" fn(
@@ -4992,17 +4909,13 @@ pub type PFN_vkCmdSetDiscardRectangleModeEXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     discard_rectangle_mode: DiscardRectangleModeEXT,
 );
-pub const EXT_CONSERVATIVE_RASTERIZATION_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_conservative_rasterization\0") };
+pub const EXT_CONSERVATIVE_RASTERIZATION_NAME: &CStr = c"EXT_conservative_rasterization";
 pub const EXT_CONSERVATIVE_RASTERIZATION_SPEC_VERSION: u32 = 1u32;
-pub const EXT_DEPTH_CLIP_ENABLE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clip_enable\0") };
+pub const EXT_DEPTH_CLIP_ENABLE_NAME: &CStr = c"EXT_depth_clip_enable";
 pub const EXT_DEPTH_CLIP_ENABLE_SPEC_VERSION: u32 = 1u32;
-pub const EXT_SWAPCHAIN_COLORSPACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_swapchain_colorspace\0") };
+pub const EXT_SWAPCHAIN_COLORSPACE_NAME: &CStr = c"EXT_swapchain_colorspace";
 pub const EXT_SWAPCHAIN_COLORSPACE_SPEC_VERSION: u32 = 4u32;
-pub const EXT_HDR_METADATA_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_hdr_metadata\0") };
+pub const EXT_HDR_METADATA_NAME: &CStr = c"EXT_hdr_metadata";
 pub const EXT_HDR_METADATA_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkSetHdrMetadataEXT = unsafe extern "system" fn(
@@ -5011,11 +4924,9 @@ pub type PFN_vkSetHdrMetadataEXT = unsafe extern "system" fn(
     p_swapchains: *const SwapchainKHR,
     p_metadata: *const HdrMetadataEXT<'_>,
 );
-pub const KHR_IMAGELESS_FRAMEBUFFER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_imageless_framebuffer\0") };
+pub const KHR_IMAGELESS_FRAMEBUFFER_NAME: &CStr = c"KHR_imageless_framebuffer";
 pub const KHR_IMAGELESS_FRAMEBUFFER_SPEC_VERSION: u32 = 1u32;
-pub const KHR_CREATE_RENDERPASS2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_create_renderpass2\0") };
+pub const KHR_CREATE_RENDERPASS2_NAME: &CStr = c"KHR_create_renderpass2";
 pub const KHR_CREATE_RENDERPASS2_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateRenderPass2 = unsafe extern "system" fn(
@@ -5041,17 +4952,14 @@ pub type PFN_vkCmdEndRenderPass2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_subpass_end_info: *const SubpassEndInfo<'_>,
 );
-pub const IMG_RELAXED_LINE_RASTERIZATION_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_IMG_relaxed_line_rasterization\0") };
+pub const IMG_RELAXED_LINE_RASTERIZATION_NAME: &CStr = c"IMG_relaxed_line_rasterization";
 pub const IMG_RELAXED_LINE_RASTERIZATION_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SHARED_PRESENTABLE_IMAGE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shared_presentable_image\0") };
+pub const KHR_SHARED_PRESENTABLE_IMAGE_NAME: &CStr = c"KHR_shared_presentable_image";
 pub const KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetSwapchainStatusKHR =
     unsafe extern "system" fn(device: crate::vk::Device, swapchain: SwapchainKHR) -> Result;
-pub const KHR_EXTERNAL_FENCE_CAPABILITIES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence_capabilities\0") };
+pub const KHR_EXTERNAL_FENCE_CAPABILITIES_NAME: &CStr = c"KHR_external_fence_capabilities";
 pub const KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceExternalFenceProperties = unsafe extern "system" fn(
@@ -5059,11 +4967,9 @@ pub type PFN_vkGetPhysicalDeviceExternalFenceProperties = unsafe extern "system"
     p_external_fence_info: *const PhysicalDeviceExternalFenceInfo<'_>,
     p_external_fence_properties: *mut ExternalFenceProperties<'_>,
 );
-pub const KHR_EXTERNAL_FENCE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence\0") };
+pub const KHR_EXTERNAL_FENCE_NAME: &CStr = c"KHR_external_fence";
 pub const KHR_EXTERNAL_FENCE_SPEC_VERSION: u32 = 1u32;
-pub const KHR_EXTERNAL_FENCE_WIN32_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence_win32\0") };
+pub const KHR_EXTERNAL_FENCE_WIN32_NAME: &CStr = c"KHR_external_fence_win32";
 pub const KHR_EXTERNAL_FENCE_WIN32_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkImportFenceWin32HandleKHR = unsafe extern "system" fn(
@@ -5076,8 +4982,7 @@ pub type PFN_vkGetFenceWin32HandleKHR = unsafe extern "system" fn(
     p_get_win32_handle_info: *const FenceGetWin32HandleInfoKHR<'_>,
     p_handle: *mut HANDLE,
 ) -> Result;
-pub const KHR_EXTERNAL_FENCE_FD_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence_fd\0") };
+pub const KHR_EXTERNAL_FENCE_FD_NAME: &CStr = c"KHR_external_fence_fd";
 pub const KHR_EXTERNAL_FENCE_FD_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkImportFenceFdKHR = unsafe extern "system" fn(
@@ -5090,8 +4995,7 @@ pub type PFN_vkGetFenceFdKHR = unsafe extern "system" fn(
     p_get_fd_info: *const FenceGetFdInfoKHR<'_>,
     p_fd: *mut c_int,
 ) -> Result;
-pub const KHR_PERFORMANCE_QUERY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_performance_query\0") };
+pub const KHR_PERFORMANCE_QUERY_NAME: &CStr = c"KHR_performance_query";
 pub const KHR_PERFORMANCE_QUERY_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR =
@@ -5116,11 +5020,9 @@ pub type PFN_vkAcquireProfilingLockKHR = unsafe extern "system" fn(
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkReleaseProfilingLockKHR = unsafe extern "system" fn(device: crate::vk::Device);
-pub const KHR_MAINTENANCE2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance2\0") };
+pub const KHR_MAINTENANCE2_NAME: &CStr = c"KHR_maintenance2";
 pub const KHR_MAINTENANCE2_SPEC_VERSION: u32 = 1u32;
-pub const KHR_GET_SURFACE_CAPABILITIES2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_surface_capabilities2\0") };
+pub const KHR_GET_SURFACE_CAPABILITIES2_NAME: &CStr = c"KHR_get_surface_capabilities2";
 pub const KHR_GET_SURFACE_CAPABILITIES2_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR = unsafe extern "system" fn(
@@ -5135,11 +5037,9 @@ pub type PFN_vkGetPhysicalDeviceSurfaceFormats2KHR = unsafe extern "system" fn(
     p_surface_format_count: *mut u32,
     p_surface_formats: *mut SurfaceFormat2KHR<'_>,
 ) -> Result;
-pub const KHR_VARIABLE_POINTERS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_variable_pointers\0") };
+pub const KHR_VARIABLE_POINTERS_NAME: &CStr = c"KHR_variable_pointers";
 pub const KHR_VARIABLE_POINTERS_SPEC_VERSION: u32 = 1u32;
-pub const KHR_GET_DISPLAY_PROPERTIES2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_display_properties2\0") };
+pub const KHR_GET_DISPLAY_PROPERTIES2_NAME: &CStr = c"KHR_get_display_properties2";
 pub const KHR_GET_DISPLAY_PROPERTIES2_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceDisplayProperties2KHR = unsafe extern "system" fn(
@@ -5166,8 +5066,7 @@ pub type PFN_vkGetDisplayPlaneCapabilities2KHR = unsafe extern "system" fn(
     p_display_plane_info: *const DisplayPlaneInfo2KHR<'_>,
     p_capabilities: *mut DisplayPlaneCapabilities2KHR<'_>,
 ) -> Result;
-pub const MVK_IOS_SURFACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_MVK_ios_surface\0") };
+pub const MVK_IOS_SURFACE_NAME: &CStr = c"MVK_ios_surface";
 pub const MVK_IOS_SURFACE_SPEC_VERSION: u32 = 3u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateIOSSurfaceMVK = unsafe extern "system" fn(
@@ -5176,8 +5075,7 @@ pub type PFN_vkCreateIOSSurfaceMVK = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks<'_>,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
-pub const MVK_MACOS_SURFACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_MVK_macos_surface\0") };
+pub const MVK_MACOS_SURFACE_NAME: &CStr = c"MVK_macos_surface";
 pub const MVK_MACOS_SURFACE_SPEC_VERSION: u32 = 3u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateMacOSSurfaceMVK = unsafe extern "system" fn(
@@ -5186,17 +5084,13 @@ pub type PFN_vkCreateMacOSSurfaceMVK = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks<'_>,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
-pub const EXT_EXTERNAL_MEMORY_DMA_BUF_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_external_memory_dma_buf\0") };
+pub const EXT_EXTERNAL_MEMORY_DMA_BUF_NAME: &CStr = c"EXT_external_memory_dma_buf";
 pub const EXT_EXTERNAL_MEMORY_DMA_BUF_SPEC_VERSION: u32 = 1u32;
-pub const EXT_QUEUE_FAMILY_FOREIGN_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_queue_family_foreign\0") };
+pub const EXT_QUEUE_FAMILY_FOREIGN_NAME: &CStr = c"EXT_queue_family_foreign";
 pub const EXT_QUEUE_FAMILY_FOREIGN_SPEC_VERSION: u32 = 1u32;
-pub const KHR_DEDICATED_ALLOCATION_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_dedicated_allocation\0") };
+pub const KHR_DEDICATED_ALLOCATION_NAME: &CStr = c"KHR_dedicated_allocation";
 pub const KHR_DEDICATED_ALLOCATION_SPEC_VERSION: u32 = 3u32;
-pub const EXT_DEBUG_UTILS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_utils\0") };
+pub const EXT_DEBUG_UTILS_NAME: &CStr = c"EXT_debug_utils";
 pub const EXT_DEBUG_UTILS_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDebugUtilsMessengerEXT = unsafe extern "system" fn(
@@ -5248,9 +5142,8 @@ pub type PFN_vkCmdInsertDebugUtilsLabelEXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_label_info: *const DebugUtilsLabelEXT<'_>,
 );
-pub const ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_NAME: &CStr = unsafe {
-    CStr::from_bytes_with_nul_unchecked(b"VK_ANDROID_external_memory_android_hardware_buffer\0")
-};
+pub const ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_NAME: &CStr =
+    c"ANDROID_external_memory_android_hardware_buffer";
 pub const ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_SPEC_VERSION: u32 = 5u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetAndroidHardwareBufferPropertiesANDROID = unsafe extern "system" fn(
@@ -5264,17 +5157,13 @@ pub type PFN_vkGetMemoryAndroidHardwareBufferANDROID = unsafe extern "system" fn
     p_info: *const MemoryGetAndroidHardwareBufferInfoANDROID<'_>,
     p_buffer: *mut *mut AHardwareBuffer,
 ) -> Result;
-pub const EXT_SAMPLER_FILTER_MINMAX_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_sampler_filter_minmax\0") };
+pub const EXT_SAMPLER_FILTER_MINMAX_NAME: &CStr = c"EXT_sampler_filter_minmax";
 pub const EXT_SAMPLER_FILTER_MINMAX_SPEC_VERSION: u32 = 2u32;
-pub const KHR_STORAGE_BUFFER_STORAGE_CLASS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_storage_buffer_storage_class\0") };
+pub const KHR_STORAGE_BUFFER_STORAGE_CLASS_NAME: &CStr = c"KHR_storage_buffer_storage_class";
 pub const KHR_STORAGE_BUFFER_STORAGE_CLASS_SPEC_VERSION: u32 = 1u32;
-pub const AMD_GPU_SHADER_INT16_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_int16\0") };
+pub const AMD_GPU_SHADER_INT16_NAME: &CStr = c"AMD_gpu_shader_int16";
 pub const AMD_GPU_SHADER_INT16_SPEC_VERSION: u32 = 2u32;
-pub const AMDX_SHADER_ENQUEUE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMDX_shader_enqueue\0") };
+pub const AMDX_SHADER_ENQUEUE_NAME: &CStr = c"AMDX_shader_enqueue";
 pub const AMDX_SHADER_ENQUEUE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateExecutionGraphPipelinesAMDX = unsafe extern "system" fn(
@@ -5319,20 +5208,15 @@ pub type PFN_vkCmdDispatchGraphIndirectCountAMDX = unsafe extern "system" fn(
     scratch: DeviceAddress,
     count_info: DeviceAddress,
 );
-pub const AMD_MIXED_ATTACHMENT_SAMPLES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_mixed_attachment_samples\0") };
+pub const AMD_MIXED_ATTACHMENT_SAMPLES_NAME: &CStr = c"AMD_mixed_attachment_samples";
 pub const AMD_MIXED_ATTACHMENT_SAMPLES_SPEC_VERSION: u32 = 1u32;
-pub const AMD_SHADER_FRAGMENT_MASK_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_fragment_mask\0") };
+pub const AMD_SHADER_FRAGMENT_MASK_NAME: &CStr = c"AMD_shader_fragment_mask";
 pub const AMD_SHADER_FRAGMENT_MASK_SPEC_VERSION: u32 = 1u32;
-pub const EXT_INLINE_UNIFORM_BLOCK_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_inline_uniform_block\0") };
+pub const EXT_INLINE_UNIFORM_BLOCK_NAME: &CStr = c"EXT_inline_uniform_block";
 pub const EXT_INLINE_UNIFORM_BLOCK_SPEC_VERSION: u32 = 1u32;
-pub const EXT_SHADER_STENCIL_EXPORT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_stencil_export\0") };
+pub const EXT_SHADER_STENCIL_EXPORT_NAME: &CStr = c"EXT_shader_stencil_export";
 pub const EXT_SHADER_STENCIL_EXPORT_SPEC_VERSION: u32 = 1u32;
-pub const EXT_SAMPLE_LOCATIONS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_sample_locations\0") };
+pub const EXT_SAMPLE_LOCATIONS_NAME: &CStr = c"EXT_sample_locations";
 pub const EXT_SAMPLE_LOCATIONS_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT = unsafe extern "system" fn(
@@ -5345,11 +5229,9 @@ pub type PFN_vkCmdSetSampleLocationsEXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_sample_locations_info: *const SampleLocationsInfoEXT<'_>,
 );
-pub const KHR_RELAXED_BLOCK_LAYOUT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_relaxed_block_layout\0") };
+pub const KHR_RELAXED_BLOCK_LAYOUT_NAME: &CStr = c"KHR_relaxed_block_layout";
 pub const KHR_RELAXED_BLOCK_LAYOUT_SPEC_VERSION: u32 = 1u32;
-pub const KHR_GET_MEMORY_REQUIREMENTS2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_memory_requirements2\0") };
+pub const KHR_GET_MEMORY_REQUIREMENTS2_NAME: &CStr = c"KHR_get_memory_requirements2";
 pub const KHR_GET_MEMORY_REQUIREMENTS2_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageMemoryRequirements2 = unsafe extern "system" fn(
@@ -5370,17 +5252,13 @@ pub type PFN_vkGetImageSparseMemoryRequirements2 = unsafe extern "system" fn(
     p_sparse_memory_requirement_count: *mut u32,
     p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2<'_>,
 );
-pub const KHR_IMAGE_FORMAT_LIST_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_image_format_list\0") };
+pub const KHR_IMAGE_FORMAT_LIST_NAME: &CStr = c"KHR_image_format_list";
 pub const KHR_IMAGE_FORMAT_LIST_SPEC_VERSION: u32 = 1u32;
-pub const EXT_BLEND_OPERATION_ADVANCED_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_blend_operation_advanced\0") };
+pub const EXT_BLEND_OPERATION_ADVANCED_NAME: &CStr = c"EXT_blend_operation_advanced";
 pub const EXT_BLEND_OPERATION_ADVANCED_SPEC_VERSION: u32 = 2u32;
-pub const NV_FRAGMENT_COVERAGE_TO_COLOR_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_coverage_to_color\0") };
+pub const NV_FRAGMENT_COVERAGE_TO_COLOR_NAME: &CStr = c"NV_fragment_coverage_to_color";
 pub const NV_FRAGMENT_COVERAGE_TO_COLOR_SPEC_VERSION: u32 = 1u32;
-pub const KHR_ACCELERATION_STRUCTURE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_acceleration_structure\0") };
+pub const KHR_ACCELERATION_STRUCTURE_NAME: &CStr = c"KHR_acceleration_structure";
 pub const KHR_ACCELERATION_STRUCTURE_SPEC_VERSION: u32 = 13u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateAccelerationStructureKHR = unsafe extern "system" fn(
@@ -5491,8 +5369,7 @@ pub type PFN_vkGetAccelerationStructureBuildSizesKHR = unsafe extern "system" fn
     p_max_primitive_counts: *const u32,
     p_size_info: *mut AccelerationStructureBuildSizesInfoKHR<'_>,
 );
-pub const KHR_RAY_TRACING_PIPELINE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_tracing_pipeline\0") };
+pub const KHR_RAY_TRACING_PIPELINE_NAME: &CStr = c"KHR_ray_tracing_pipeline";
 pub const KHR_RAY_TRACING_PIPELINE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdTraceRaysKHR = unsafe extern "system" fn(
@@ -5553,23 +5430,17 @@ pub type PFN_vkGetRayTracingShaderGroupStackSizeKHR = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetRayTracingPipelineStackSizeKHR =
     unsafe extern "system" fn(command_buffer: CommandBuffer, pipeline_stack_size: u32);
-pub const KHR_RAY_QUERY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_query\0") };
+pub const KHR_RAY_QUERY_NAME: &CStr = c"KHR_ray_query";
 pub const KHR_RAY_QUERY_SPEC_VERSION: u32 = 1u32;
-pub const NV_FRAMEBUFFER_MIXED_SAMPLES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_framebuffer_mixed_samples\0") };
+pub const NV_FRAMEBUFFER_MIXED_SAMPLES_NAME: &CStr = c"NV_framebuffer_mixed_samples";
 pub const NV_FRAMEBUFFER_MIXED_SAMPLES_SPEC_VERSION: u32 = 1u32;
-pub const NV_FILL_RECTANGLE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_fill_rectangle\0") };
+pub const NV_FILL_RECTANGLE_NAME: &CStr = c"NV_fill_rectangle";
 pub const NV_FILL_RECTANGLE_SPEC_VERSION: u32 = 1u32;
-pub const NV_SHADER_SM_BUILTINS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_sm_builtins\0") };
+pub const NV_SHADER_SM_BUILTINS_NAME: &CStr = c"NV_shader_sm_builtins";
 pub const NV_SHADER_SM_BUILTINS_SPEC_VERSION: u32 = 1u32;
-pub const EXT_POST_DEPTH_COVERAGE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_post_depth_coverage\0") };
+pub const EXT_POST_DEPTH_COVERAGE_NAME: &CStr = c"EXT_post_depth_coverage";
 pub const EXT_POST_DEPTH_COVERAGE_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SAMPLER_YCBCR_CONVERSION_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_sampler_ycbcr_conversion\0") };
+pub const KHR_SAMPLER_YCBCR_CONVERSION_NAME: &CStr = c"KHR_sampler_ycbcr_conversion";
 pub const KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION: u32 = 14u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateSamplerYcbcrConversion = unsafe extern "system" fn(
@@ -5584,8 +5455,7 @@ pub type PFN_vkDestroySamplerYcbcrConversion = unsafe extern "system" fn(
     ycbcr_conversion: SamplerYcbcrConversion,
     p_allocator: *const AllocationCallbacks<'_>,
 );
-pub const KHR_BIND_MEMORY2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_bind_memory2\0") };
+pub const KHR_BIND_MEMORY2_NAME: &CStr = c"KHR_bind_memory2";
 pub const KHR_BIND_MEMORY2_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkBindBufferMemory2 = unsafe extern "system" fn(
@@ -5599,8 +5469,7 @@ pub type PFN_vkBindImageMemory2 = unsafe extern "system" fn(
     bind_info_count: u32,
     p_bind_infos: *const BindImageMemoryInfo<'_>,
 ) -> Result;
-pub const EXT_IMAGE_DRM_FORMAT_MODIFIER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_drm_format_modifier\0") };
+pub const EXT_IMAGE_DRM_FORMAT_MODIFIER_NAME: &CStr = c"EXT_image_drm_format_modifier";
 pub const EXT_IMAGE_DRM_FORMAT_MODIFIER_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageDrmFormatModifierPropertiesEXT = unsafe extern "system" fn(
@@ -5608,8 +5477,7 @@ pub type PFN_vkGetImageDrmFormatModifierPropertiesEXT = unsafe extern "system" f
     image: Image,
     p_properties: *mut ImageDrmFormatModifierPropertiesEXT<'_>,
 ) -> Result;
-pub const EXT_VALIDATION_CACHE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_cache\0") };
+pub const EXT_VALIDATION_CACHE_NAME: &CStr = c"EXT_validation_cache";
 pub const EXT_VALIDATION_CACHE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateValidationCacheEXT = unsafe extern "system" fn(
@@ -5638,17 +5506,13 @@ pub type PFN_vkGetValidationCacheDataEXT = unsafe extern "system" fn(
     p_data_size: *mut usize,
     p_data: *mut c_void,
 ) -> Result;
-pub const EXT_DESCRIPTOR_INDEXING_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_descriptor_indexing\0") };
+pub const EXT_DESCRIPTOR_INDEXING_NAME: &CStr = c"EXT_descriptor_indexing";
 pub const EXT_DESCRIPTOR_INDEXING_SPEC_VERSION: u32 = 2u32;
-pub const EXT_SHADER_VIEWPORT_INDEX_LAYER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_viewport_index_layer\0") };
+pub const EXT_SHADER_VIEWPORT_INDEX_LAYER_NAME: &CStr = c"EXT_shader_viewport_index_layer";
 pub const EXT_SHADER_VIEWPORT_INDEX_LAYER_SPEC_VERSION: u32 = 1u32;
-pub const KHR_PORTABILITY_SUBSET_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_portability_subset\0") };
+pub const KHR_PORTABILITY_SUBSET_NAME: &CStr = c"KHR_portability_subset";
 pub const KHR_PORTABILITY_SUBSET_SPEC_VERSION: u32 = 1u32;
-pub const NV_SHADING_RATE_IMAGE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_shading_rate_image\0") };
+pub const NV_SHADING_RATE_IMAGE_NAME: &CStr = c"NV_shading_rate_image";
 pub const NV_SHADING_RATE_IMAGE_SPEC_VERSION: u32 = 3u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindShadingRateImageNV = unsafe extern "system" fn(
@@ -5670,8 +5534,7 @@ pub type PFN_vkCmdSetCoarseSampleOrderNV = unsafe extern "system" fn(
     custom_sample_order_count: u32,
     p_custom_sample_orders: *const CoarseSampleOrderCustomNV<'_>,
 );
-pub const NV_RAY_TRACING_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing\0") };
+pub const NV_RAY_TRACING_NAME: &CStr = c"NV_ray_tracing";
 pub const NV_RAY_TRACING_SPEC_VERSION: u32 = 3u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateAccelerationStructureNV = unsafe extern "system" fn(
@@ -5763,11 +5626,9 @@ pub type PFN_vkCmdWriteAccelerationStructuresPropertiesNV = unsafe extern "syste
 #[allow(non_camel_case_types)]
 pub type PFN_vkCompileDeferredNV =
     unsafe extern "system" fn(device: crate::vk::Device, pipeline: Pipeline, shader: u32) -> Result;
-pub const NV_REPRESENTATIVE_FRAGMENT_TEST_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_representative_fragment_test\0") };
+pub const NV_REPRESENTATIVE_FRAGMENT_TEST_NAME: &CStr = c"NV_representative_fragment_test";
 pub const NV_REPRESENTATIVE_FRAGMENT_TEST_SPEC_VERSION: u32 = 2u32;
-pub const KHR_MAINTENANCE3_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance3\0") };
+pub const KHR_MAINTENANCE3_NAME: &CStr = c"KHR_maintenance3";
 pub const KHR_MAINTENANCE3_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDescriptorSetLayoutSupport = unsafe extern "system" fn(
@@ -5775,26 +5636,19 @@ pub type PFN_vkGetDescriptorSetLayoutSupport = unsafe extern "system" fn(
     p_create_info: *const DescriptorSetLayoutCreateInfo<'_>,
     p_support: *mut DescriptorSetLayoutSupport<'_>,
 );
-pub const KHR_DRAW_INDIRECT_COUNT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_draw_indirect_count\0") };
+pub const KHR_DRAW_INDIRECT_COUNT_NAME: &CStr = c"KHR_draw_indirect_count";
 pub const KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION: u32 = 1u32;
-pub const EXT_FILTER_CUBIC_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_filter_cubic\0") };
+pub const EXT_FILTER_CUBIC_NAME: &CStr = c"EXT_filter_cubic";
 pub const EXT_FILTER_CUBIC_SPEC_VERSION: u32 = 3u32;
-pub const QCOM_RENDER_PASS_SHADER_RESOLVE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_shader_resolve\0") };
+pub const QCOM_RENDER_PASS_SHADER_RESOLVE_NAME: &CStr = c"QCOM_render_pass_shader_resolve";
 pub const QCOM_RENDER_PASS_SHADER_RESOLVE_SPEC_VERSION: u32 = 4u32;
-pub const EXT_GLOBAL_PRIORITY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_global_priority\0") };
+pub const EXT_GLOBAL_PRIORITY_NAME: &CStr = c"EXT_global_priority";
 pub const EXT_GLOBAL_PRIORITY_SPEC_VERSION: u32 = 2u32;
-pub const KHR_SHADER_SUBGROUP_EXTENDED_TYPES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_subgroup_extended_types\0") };
+pub const KHR_SHADER_SUBGROUP_EXTENDED_TYPES_NAME: &CStr = c"KHR_shader_subgroup_extended_types";
 pub const KHR_SHADER_SUBGROUP_EXTENDED_TYPES_SPEC_VERSION: u32 = 1u32;
-pub const KHR_8BIT_STORAGE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_8bit_storage\0") };
+pub const KHR_8BIT_STORAGE_NAME: &CStr = c"KHR_8bit_storage";
 pub const KHR_8BIT_STORAGE_SPEC_VERSION: u32 = 1u32;
-pub const EXT_EXTERNAL_MEMORY_HOST_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_external_memory_host\0") };
+pub const EXT_EXTERNAL_MEMORY_HOST_NAME: &CStr = c"EXT_external_memory_host";
 pub const EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetMemoryHostPointerPropertiesEXT = unsafe extern "system" fn(
@@ -5803,8 +5657,7 @@ pub type PFN_vkGetMemoryHostPointerPropertiesEXT = unsafe extern "system" fn(
     p_host_pointer: *const c_void,
     p_memory_host_pointer_properties: *mut MemoryHostPointerPropertiesEXT<'_>,
 ) -> Result;
-pub const AMD_BUFFER_MARKER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_buffer_marker\0") };
+pub const AMD_BUFFER_MARKER_NAME: &CStr = c"AMD_buffer_marker";
 pub const AMD_BUFFER_MARKER_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdWriteBufferMarkerAMD = unsafe extern "system" fn(
@@ -5814,17 +5667,13 @@ pub type PFN_vkCmdWriteBufferMarkerAMD = unsafe extern "system" fn(
     dst_offset: DeviceSize,
     marker: u32,
 );
-pub const KHR_SHADER_ATOMIC_INT64_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_atomic_int64\0") };
+pub const KHR_SHADER_ATOMIC_INT64_NAME: &CStr = c"KHR_shader_atomic_int64";
 pub const KHR_SHADER_ATOMIC_INT64_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SHADER_CLOCK_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_clock\0") };
+pub const KHR_SHADER_CLOCK_NAME: &CStr = c"KHR_shader_clock";
 pub const KHR_SHADER_CLOCK_SPEC_VERSION: u32 = 1u32;
-pub const AMD_PIPELINE_COMPILER_CONTROL_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_pipeline_compiler_control\0") };
+pub const AMD_PIPELINE_COMPILER_CONTROL_NAME: &CStr = c"AMD_pipeline_compiler_control";
 pub const AMD_PIPELINE_COMPILER_CONTROL_SPEC_VERSION: u32 = 1u32;
-pub const EXT_CALIBRATED_TIMESTAMPS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_calibrated_timestamps\0") };
+pub const EXT_CALIBRATED_TIMESTAMPS_NAME: &CStr = c"EXT_calibrated_timestamps";
 pub const EXT_CALIBRATED_TIMESTAMPS_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsKHR = unsafe extern "system" fn(
@@ -5840,47 +5689,33 @@ pub type PFN_vkGetCalibratedTimestampsKHR = unsafe extern "system" fn(
     p_timestamps: *mut u64,
     p_max_deviation: *mut u64,
 ) -> Result;
-pub const AMD_SHADER_CORE_PROPERTIES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_core_properties\0") };
+pub const AMD_SHADER_CORE_PROPERTIES_NAME: &CStr = c"AMD_shader_core_properties";
 pub const AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION: u32 = 2u32;
-pub const KHR_VIDEO_DECODE_H265_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_h265\0") };
+pub const KHR_VIDEO_DECODE_H265_NAME: &CStr = c"KHR_video_decode_h265";
 pub const KHR_VIDEO_DECODE_H265_SPEC_VERSION: u32 = 8u32;
-pub const KHR_GLOBAL_PRIORITY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_global_priority\0") };
+pub const KHR_GLOBAL_PRIORITY_NAME: &CStr = c"KHR_global_priority";
 pub const KHR_GLOBAL_PRIORITY_SPEC_VERSION: u32 = 1u32;
-pub const AMD_MEMORY_OVERALLOCATION_BEHAVIOR_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_memory_overallocation_behavior\0") };
+pub const AMD_MEMORY_OVERALLOCATION_BEHAVIOR_NAME: &CStr = c"AMD_memory_overallocation_behavior";
 pub const AMD_MEMORY_OVERALLOCATION_BEHAVIOR_SPEC_VERSION: u32 = 1u32;
-pub const EXT_VERTEX_ATTRIBUTE_DIVISOR_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_vertex_attribute_divisor\0") };
+pub const EXT_VERTEX_ATTRIBUTE_DIVISOR_NAME: &CStr = c"EXT_vertex_attribute_divisor";
 pub const EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION: u32 = 3u32;
-pub const GGP_FRAME_TOKEN_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_GGP_frame_token\0") };
+pub const GGP_FRAME_TOKEN_NAME: &CStr = c"GGP_frame_token";
 pub const GGP_FRAME_TOKEN_SPEC_VERSION: u32 = 1u32;
-pub const EXT_PIPELINE_CREATION_FEEDBACK_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_creation_feedback\0") };
+pub const EXT_PIPELINE_CREATION_FEEDBACK_NAME: &CStr = c"EXT_pipeline_creation_feedback";
 pub const EXT_PIPELINE_CREATION_FEEDBACK_SPEC_VERSION: u32 = 1u32;
-pub const KHR_DRIVER_PROPERTIES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_driver_properties\0") };
+pub const KHR_DRIVER_PROPERTIES_NAME: &CStr = c"KHR_driver_properties";
 pub const KHR_DRIVER_PROPERTIES_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SHADER_FLOAT_CONTROLS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_float_controls\0") };
+pub const KHR_SHADER_FLOAT_CONTROLS_NAME: &CStr = c"KHR_shader_float_controls";
 pub const KHR_SHADER_FLOAT_CONTROLS_SPEC_VERSION: u32 = 4u32;
-pub const NV_SHADER_SUBGROUP_PARTITIONED_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_subgroup_partitioned\0") };
+pub const NV_SHADER_SUBGROUP_PARTITIONED_NAME: &CStr = c"NV_shader_subgroup_partitioned";
 pub const NV_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION: u32 = 1u32;
-pub const KHR_DEPTH_STENCIL_RESOLVE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_depth_stencil_resolve\0") };
+pub const KHR_DEPTH_STENCIL_RESOLVE_NAME: &CStr = c"KHR_depth_stencil_resolve";
 pub const KHR_DEPTH_STENCIL_RESOLVE_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SWAPCHAIN_MUTABLE_FORMAT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_swapchain_mutable_format\0") };
+pub const KHR_SWAPCHAIN_MUTABLE_FORMAT_NAME: &CStr = c"KHR_swapchain_mutable_format";
 pub const KHR_SWAPCHAIN_MUTABLE_FORMAT_SPEC_VERSION: u32 = 1u32;
-pub const NV_COMPUTE_SHADER_DERIVATIVES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_compute_shader_derivatives\0") };
+pub const NV_COMPUTE_SHADER_DERIVATIVES_NAME: &CStr = c"NV_compute_shader_derivatives";
 pub const NV_COMPUTE_SHADER_DERIVATIVES_SPEC_VERSION: u32 = 1u32;
-pub const NV_MESH_SHADER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_mesh_shader\0") };
+pub const NV_MESH_SHADER_NAME: &CStr = c"NV_mesh_shader";
 pub const NV_MESH_SHADER_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawMeshTasksNV =
@@ -5903,14 +5738,11 @@ pub type PFN_vkCmdDrawMeshTasksIndirectCountNV = unsafe extern "system" fn(
     max_draw_count: u32,
     stride: u32,
 );
-pub const NV_FRAGMENT_SHADER_BARYCENTRIC_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_shader_barycentric\0") };
+pub const NV_FRAGMENT_SHADER_BARYCENTRIC_NAME: &CStr = c"NV_fragment_shader_barycentric";
 pub const NV_FRAGMENT_SHADER_BARYCENTRIC_SPEC_VERSION: u32 = 1u32;
-pub const NV_SHADER_IMAGE_FOOTPRINT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_image_footprint\0") };
+pub const NV_SHADER_IMAGE_FOOTPRINT_NAME: &CStr = c"NV_shader_image_footprint";
 pub const NV_SHADER_IMAGE_FOOTPRINT_SPEC_VERSION: u32 = 2u32;
-pub const NV_SCISSOR_EXCLUSIVE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_scissor_exclusive\0") };
+pub const NV_SCISSOR_EXCLUSIVE_NAME: &CStr = c"NV_scissor_exclusive";
 pub const NV_SCISSOR_EXCLUSIVE_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetExclusiveScissorEnableNV = unsafe extern "system" fn(
@@ -5926,8 +5758,7 @@ pub type PFN_vkCmdSetExclusiveScissorNV = unsafe extern "system" fn(
     exclusive_scissor_count: u32,
     p_exclusive_scissors: *const Rect2D,
 );
-pub const NV_DEVICE_DIAGNOSTIC_CHECKPOINTS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_device_diagnostic_checkpoints\0") };
+pub const NV_DEVICE_DIAGNOSTIC_CHECKPOINTS_NAME: &CStr = c"NV_device_diagnostic_checkpoints";
 pub const NV_DEVICE_DIAGNOSTIC_CHECKPOINTS_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetCheckpointNV =
@@ -5938,8 +5769,7 @@ pub type PFN_vkGetQueueCheckpointDataNV = unsafe extern "system" fn(
     p_checkpoint_data_count: *mut u32,
     p_checkpoint_data: *mut CheckpointDataNV<'_>,
 );
-pub const KHR_TIMELINE_SEMAPHORE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_timeline_semaphore\0") };
+pub const KHR_TIMELINE_SEMAPHORE_NAME: &CStr = c"KHR_timeline_semaphore";
 pub const KHR_TIMELINE_SEMAPHORE_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetSemaphoreCounterValue = unsafe extern "system" fn(
@@ -5958,11 +5788,9 @@ pub type PFN_vkSignalSemaphore = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_signal_info: *const SemaphoreSignalInfo<'_>,
 ) -> Result;
-pub const INTEL_SHADER_INTEGER_FUNCTIONS2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_shader_integer_functions2\0") };
+pub const INTEL_SHADER_INTEGER_FUNCTIONS2_NAME: &CStr = c"INTEL_shader_integer_functions2";
 pub const INTEL_SHADER_INTEGER_FUNCTIONS2_SPEC_VERSION: u32 = 1u32;
-pub const INTEL_PERFORMANCE_QUERY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_performance_query\0") };
+pub const INTEL_PERFORMANCE_QUERY_NAME: &CStr = c"INTEL_performance_query";
 pub const INTEL_PERFORMANCE_QUERY_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkInitializePerformanceApiINTEL = unsafe extern "system" fn(
@@ -6007,14 +5835,11 @@ pub type PFN_vkGetPerformanceParameterINTEL = unsafe extern "system" fn(
     parameter: PerformanceParameterTypeINTEL,
     p_value: *mut PerformanceValueINTEL,
 ) -> Result;
-pub const KHR_VULKAN_MEMORY_MODEL_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_vulkan_memory_model\0") };
+pub const KHR_VULKAN_MEMORY_MODEL_NAME: &CStr = c"KHR_vulkan_memory_model";
 pub const KHR_VULKAN_MEMORY_MODEL_SPEC_VERSION: u32 = 3u32;
-pub const EXT_PCI_BUS_INFO_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pci_bus_info\0") };
+pub const EXT_PCI_BUS_INFO_NAME: &CStr = c"EXT_pci_bus_info";
 pub const EXT_PCI_BUS_INFO_SPEC_VERSION: u32 = 2u32;
-pub const AMD_DISPLAY_NATIVE_HDR_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_display_native_hdr\0") };
+pub const AMD_DISPLAY_NATIVE_HDR_NAME: &CStr = c"AMD_display_native_hdr";
 pub const AMD_DISPLAY_NATIVE_HDR_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkSetLocalDimmingAMD = unsafe extern "system" fn(
@@ -6022,8 +5847,7 @@ pub type PFN_vkSetLocalDimmingAMD = unsafe extern "system" fn(
     swap_chain: SwapchainKHR,
     local_dimming_enable: Bool32,
 );
-pub const FUCHSIA_IMAGEPIPE_SURFACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_imagepipe_surface\0") };
+pub const FUCHSIA_IMAGEPIPE_SURFACE_NAME: &CStr = c"FUCHSIA_imagepipe_surface";
 pub const FUCHSIA_IMAGEPIPE_SURFACE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateImagePipeSurfaceFUCHSIA = unsafe extern "system" fn(
@@ -6032,11 +5856,9 @@ pub type PFN_vkCreateImagePipeSurfaceFUCHSIA = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks<'_>,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
-pub const KHR_SHADER_TERMINATE_INVOCATION_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_terminate_invocation\0") };
+pub const KHR_SHADER_TERMINATE_INVOCATION_NAME: &CStr = c"KHR_shader_terminate_invocation";
 pub const KHR_SHADER_TERMINATE_INVOCATION_SPEC_VERSION: u32 = 1u32;
-pub const EXT_METAL_SURFACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_metal_surface\0") };
+pub const EXT_METAL_SURFACE_NAME: &CStr = c"EXT_metal_surface";
 pub const EXT_METAL_SURFACE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateMetalSurfaceEXT = unsafe extern "system" fn(
@@ -6045,23 +5867,17 @@ pub type PFN_vkCreateMetalSurfaceEXT = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks<'_>,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
-pub const EXT_FRAGMENT_DENSITY_MAP_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_density_map\0") };
+pub const EXT_FRAGMENT_DENSITY_MAP_NAME: &CStr = c"EXT_fragment_density_map";
 pub const EXT_FRAGMENT_DENSITY_MAP_SPEC_VERSION: u32 = 2u32;
-pub const EXT_SCALAR_BLOCK_LAYOUT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_scalar_block_layout\0") };
+pub const EXT_SCALAR_BLOCK_LAYOUT_NAME: &CStr = c"EXT_scalar_block_layout";
 pub const EXT_SCALAR_BLOCK_LAYOUT_SPEC_VERSION: u32 = 1u32;
-pub const GOOGLE_HLSL_FUNCTIONALITY1_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_hlsl_functionality1\0") };
+pub const GOOGLE_HLSL_FUNCTIONALITY1_NAME: &CStr = c"GOOGLE_hlsl_functionality1";
 pub const GOOGLE_HLSL_FUNCTIONALITY1_SPEC_VERSION: u32 = 1u32;
-pub const GOOGLE_DECORATE_STRING_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_decorate_string\0") };
+pub const GOOGLE_DECORATE_STRING_NAME: &CStr = c"GOOGLE_decorate_string";
 pub const GOOGLE_DECORATE_STRING_SPEC_VERSION: u32 = 1u32;
-pub const EXT_SUBGROUP_SIZE_CONTROL_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_subgroup_size_control\0") };
+pub const EXT_SUBGROUP_SIZE_CONTROL_NAME: &CStr = c"EXT_subgroup_size_control";
 pub const EXT_SUBGROUP_SIZE_CONTROL_SPEC_VERSION: u32 = 2u32;
-pub const KHR_FRAGMENT_SHADING_RATE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_fragment_shading_rate\0") };
+pub const KHR_FRAGMENT_SHADING_RATE_NAME: &CStr = c"KHR_fragment_shading_rate";
 pub const KHR_FRAGMENT_SHADING_RATE_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceFragmentShadingRatesKHR = unsafe extern "system" fn(
@@ -6075,14 +5891,11 @@ pub type PFN_vkCmdSetFragmentShadingRateKHR = unsafe extern "system" fn(
     p_fragment_size: *const Extent2D,
     combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2usize],
 );
-pub const AMD_SHADER_CORE_PROPERTIES2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_core_properties2\0") };
+pub const AMD_SHADER_CORE_PROPERTIES2_NAME: &CStr = c"AMD_shader_core_properties2";
 pub const AMD_SHADER_CORE_PROPERTIES2_SPEC_VERSION: u32 = 1u32;
-pub const AMD_DEVICE_COHERENT_MEMORY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_device_coherent_memory\0") };
+pub const AMD_DEVICE_COHERENT_MEMORY_NAME: &CStr = c"AMD_device_coherent_memory";
 pub const AMD_DEVICE_COHERENT_MEMORY_SPEC_VERSION: u32 = 1u32;
-pub const KHR_DYNAMIC_RENDERING_LOCAL_READ_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_dynamic_rendering_local_read\0") };
+pub const KHR_DYNAMIC_RENDERING_LOCAL_READ_NAME: &CStr = c"KHR_dynamic_rendering_local_read";
 pub const KHR_DYNAMIC_RENDERING_LOCAL_READ_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetRenderingAttachmentLocationsKHR = unsafe extern "system" fn(
@@ -6094,40 +5907,31 @@ pub type PFN_vkCmdSetRenderingInputAttachmentIndicesKHR = unsafe extern "system"
     command_buffer: CommandBuffer,
     p_location_info: *const RenderingInputAttachmentIndexInfoKHR<'_>,
 );
-pub const EXT_SHADER_IMAGE_ATOMIC_INT64_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_image_atomic_int64\0") };
+pub const EXT_SHADER_IMAGE_ATOMIC_INT64_NAME: &CStr = c"EXT_shader_image_atomic_int64";
 pub const EXT_SHADER_IMAGE_ATOMIC_INT64_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SHADER_QUAD_CONTROL_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_quad_control\0") };
+pub const KHR_SHADER_QUAD_CONTROL_NAME: &CStr = c"KHR_shader_quad_control";
 pub const KHR_SHADER_QUAD_CONTROL_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SPIRV_1_4_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_spirv_1_4\0") };
+pub const KHR_SPIRV_1_4_NAME: &CStr = c"KHR_spirv_1_4";
 pub const KHR_SPIRV_1_4_SPEC_VERSION: u32 = 1u32;
-pub const EXT_MEMORY_BUDGET_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_memory_budget\0") };
+pub const EXT_MEMORY_BUDGET_NAME: &CStr = c"EXT_memory_budget";
 pub const EXT_MEMORY_BUDGET_SPEC_VERSION: u32 = 1u32;
-pub const EXT_MEMORY_PRIORITY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_memory_priority\0") };
+pub const EXT_MEMORY_PRIORITY_NAME: &CStr = c"EXT_memory_priority";
 pub const EXT_MEMORY_PRIORITY_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SURFACE_PROTECTED_CAPABILITIES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_surface_protected_capabilities\0") };
+pub const KHR_SURFACE_PROTECTED_CAPABILITIES_NAME: &CStr = c"KHR_surface_protected_capabilities";
 pub const KHR_SURFACE_PROTECTED_CAPABILITIES_SPEC_VERSION: u32 = 1u32;
 pub const NV_DEDICATED_ALLOCATION_IMAGE_ALIASING_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_dedicated_allocation_image_aliasing\0") };
+    c"NV_dedicated_allocation_image_aliasing";
 pub const NV_DEDICATED_ALLOCATION_IMAGE_ALIASING_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SEPARATE_DEPTH_STENCIL_LAYOUTS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_separate_depth_stencil_layouts\0") };
+pub const KHR_SEPARATE_DEPTH_STENCIL_LAYOUTS_NAME: &CStr = c"KHR_separate_depth_stencil_layouts";
 pub const KHR_SEPARATE_DEPTH_STENCIL_LAYOUTS_SPEC_VERSION: u32 = 1u32;
-pub const EXT_BUFFER_DEVICE_ADDRESS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_buffer_device_address\0") };
+pub const EXT_BUFFER_DEVICE_ADDRESS_NAME: &CStr = c"EXT_buffer_device_address";
 pub const EXT_BUFFER_DEVICE_ADDRESS_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetBufferDeviceAddress = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_info: *const BufferDeviceAddressInfo<'_>,
 ) -> DeviceAddress;
-pub const EXT_TOOLING_INFO_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_tooling_info\0") };
+pub const EXT_TOOLING_INFO_NAME: &CStr = c"EXT_tooling_info";
 pub const EXT_TOOLING_INFO_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceToolProperties = unsafe extern "system" fn(
@@ -6135,14 +5939,11 @@ pub type PFN_vkGetPhysicalDeviceToolProperties = unsafe extern "system" fn(
     p_tool_count: *mut u32,
     p_tool_properties: *mut PhysicalDeviceToolProperties<'_>,
 ) -> Result;
-pub const EXT_SEPARATE_STENCIL_USAGE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_separate_stencil_usage\0") };
+pub const EXT_SEPARATE_STENCIL_USAGE_NAME: &CStr = c"EXT_separate_stencil_usage";
 pub const EXT_SEPARATE_STENCIL_USAGE_SPEC_VERSION: u32 = 1u32;
-pub const EXT_VALIDATION_FEATURES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_features\0") };
+pub const EXT_VALIDATION_FEATURES_NAME: &CStr = c"EXT_validation_features";
 pub const EXT_VALIDATION_FEATURES_SPEC_VERSION: u32 = 6u32;
-pub const KHR_PRESENT_WAIT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_present_wait\0") };
+pub const KHR_PRESENT_WAIT_NAME: &CStr = c"KHR_present_wait";
 pub const KHR_PRESENT_WAIT_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkWaitForPresentKHR = unsafe extern "system" fn(
@@ -6151,8 +5952,7 @@ pub type PFN_vkWaitForPresentKHR = unsafe extern "system" fn(
     present_id: u64,
     timeout: u64,
 ) -> Result;
-pub const NV_COOPERATIVE_MATRIX_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_cooperative_matrix\0") };
+pub const NV_COOPERATIVE_MATRIX_NAME: &CStr = c"NV_cooperative_matrix";
 pub const NV_COOPERATIVE_MATRIX_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV = unsafe extern "system" fn(
@@ -6161,8 +5961,7 @@ pub type PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV = unsafe extern "s
     p_properties: *mut CooperativeMatrixPropertiesNV<'_>,
 )
     -> Result;
-pub const NV_COVERAGE_REDUCTION_MODE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_coverage_reduction_mode\0") };
+pub const NV_COVERAGE_REDUCTION_MODE_NAME: &CStr = c"NV_coverage_reduction_mode";
 pub const NV_COVERAGE_REDUCTION_MODE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV =
@@ -6171,20 +5970,15 @@ pub type PFN_vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV =
         p_combination_count: *mut u32,
         p_combinations: *mut FramebufferMixedSamplesCombinationNV<'_>,
     ) -> Result;
-pub const EXT_FRAGMENT_SHADER_INTERLOCK_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_shader_interlock\0") };
+pub const EXT_FRAGMENT_SHADER_INTERLOCK_NAME: &CStr = c"EXT_fragment_shader_interlock";
 pub const EXT_FRAGMENT_SHADER_INTERLOCK_SPEC_VERSION: u32 = 1u32;
-pub const EXT_YCBCR_IMAGE_ARRAYS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_ycbcr_image_arrays\0") };
+pub const EXT_YCBCR_IMAGE_ARRAYS_NAME: &CStr = c"EXT_ycbcr_image_arrays";
 pub const EXT_YCBCR_IMAGE_ARRAYS_SPEC_VERSION: u32 = 1u32;
-pub const KHR_UNIFORM_BUFFER_STANDARD_LAYOUT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_uniform_buffer_standard_layout\0") };
+pub const KHR_UNIFORM_BUFFER_STANDARD_LAYOUT_NAME: &CStr = c"KHR_uniform_buffer_standard_layout";
 pub const KHR_UNIFORM_BUFFER_STANDARD_LAYOUT_SPEC_VERSION: u32 = 1u32;
-pub const EXT_PROVOKING_VERTEX_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_provoking_vertex\0") };
+pub const EXT_PROVOKING_VERTEX_NAME: &CStr = c"EXT_provoking_vertex";
 pub const EXT_PROVOKING_VERTEX_SPEC_VERSION: u32 = 1u32;
-pub const EXT_FULL_SCREEN_EXCLUSIVE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_full_screen_exclusive\0") };
+pub const EXT_FULL_SCREEN_EXCLUSIVE_NAME: &CStr = c"EXT_full_screen_exclusive";
 pub const EXT_FULL_SCREEN_EXCLUSIVE_SPEC_VERSION: u32 = 4u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT = unsafe extern "system" fn(
@@ -6205,8 +5999,7 @@ pub type PFN_vkGetDeviceGroupSurfacePresentModes2EXT = unsafe extern "system" fn
     p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR<'_>,
     p_modes: *mut DeviceGroupPresentModeFlagsKHR,
 ) -> Result;
-pub const EXT_HEADLESS_SURFACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_headless_surface\0") };
+pub const EXT_HEADLESS_SURFACE_NAME: &CStr = c"EXT_headless_surface";
 pub const EXT_HEADLESS_SURFACE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateHeadlessSurfaceEXT = unsafe extern "system" fn(
@@ -6215,8 +6008,7 @@ pub type PFN_vkCreateHeadlessSurfaceEXT = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks<'_>,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
-pub const KHR_BUFFER_DEVICE_ADDRESS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_buffer_device_address\0") };
+pub const KHR_BUFFER_DEVICE_ADDRESS_NAME: &CStr = c"KHR_buffer_device_address";
 pub const KHR_BUFFER_DEVICE_ADDRESS_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetBufferOpaqueCaptureAddress = unsafe extern "system" fn(
@@ -6228,8 +6020,7 @@ pub type PFN_vkGetDeviceMemoryOpaqueCaptureAddress = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_info: *const DeviceMemoryOpaqueCaptureAddressInfo<'_>,
 ) -> u64;
-pub const EXT_LINE_RASTERIZATION_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_line_rasterization\0") };
+pub const EXT_LINE_RASTERIZATION_NAME: &CStr = c"EXT_line_rasterization";
 pub const EXT_LINE_RASTERIZATION_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetLineStippleKHR = unsafe extern "system" fn(
@@ -6237,11 +6028,9 @@ pub type PFN_vkCmdSetLineStippleKHR = unsafe extern "system" fn(
     line_stipple_factor: u32,
     line_stipple_pattern: u16,
 );
-pub const EXT_SHADER_ATOMIC_FLOAT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_atomic_float\0") };
+pub const EXT_SHADER_ATOMIC_FLOAT_NAME: &CStr = c"EXT_shader_atomic_float";
 pub const EXT_SHADER_ATOMIC_FLOAT_SPEC_VERSION: u32 = 1u32;
-pub const EXT_HOST_QUERY_RESET_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_host_query_reset\0") };
+pub const EXT_HOST_QUERY_RESET_NAME: &CStr = c"EXT_host_query_reset";
 pub const EXT_HOST_QUERY_RESET_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetQueryPool = unsafe extern "system" fn(
@@ -6250,11 +6039,9 @@ pub type PFN_vkResetQueryPool = unsafe extern "system" fn(
     first_query: u32,
     query_count: u32,
 );
-pub const EXT_INDEX_TYPE_UINT8_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_index_type_uint8\0") };
+pub const EXT_INDEX_TYPE_UINT8_NAME: &CStr = c"EXT_index_type_uint8";
 pub const EXT_INDEX_TYPE_UINT8_SPEC_VERSION: u32 = 1u32;
-pub const EXT_EXTENDED_DYNAMIC_STATE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state\0") };
+pub const EXT_EXTENDED_DYNAMIC_STATE_NAME: &CStr = c"EXT_extended_dynamic_state";
 pub const EXT_EXTENDED_DYNAMIC_STATE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetCullMode =
@@ -6311,8 +6098,7 @@ pub type PFN_vkCmdSetStencilOp = unsafe extern "system" fn(
     depth_fail_op: StencilOp,
     compare_op: CompareOp,
 );
-pub const KHR_DEFERRED_HOST_OPERATIONS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_deferred_host_operations\0") };
+pub const KHR_DEFERRED_HOST_OPERATIONS_NAME: &CStr = c"KHR_deferred_host_operations";
 pub const KHR_DEFERRED_HOST_OPERATIONS_SPEC_VERSION: u32 = 4u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDeferredOperationKHR = unsafe extern "system" fn(
@@ -6335,8 +6121,7 @@ pub type PFN_vkGetDeferredOperationResultKHR =
 #[allow(non_camel_case_types)]
 pub type PFN_vkDeferredOperationJoinKHR =
     unsafe extern "system" fn(device: crate::vk::Device, operation: DeferredOperationKHR) -> Result;
-pub const KHR_PIPELINE_EXECUTABLE_PROPERTIES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_pipeline_executable_properties\0") };
+pub const KHR_PIPELINE_EXECUTABLE_PROPERTIES_NAME: &CStr = c"KHR_pipeline_executable_properties";
 pub const KHR_PIPELINE_EXECUTABLE_PROPERTIES_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPipelineExecutablePropertiesKHR = unsafe extern "system" fn(
@@ -6360,8 +6145,7 @@ pub type PFN_vkGetPipelineExecutableInternalRepresentationsKHR =
         p_internal_representation_count: *mut u32,
         p_internal_representations: *mut PipelineExecutableInternalRepresentationKHR<'_>,
     ) -> Result;
-pub const EXT_HOST_IMAGE_COPY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_host_image_copy\0") };
+pub const EXT_HOST_IMAGE_COPY_NAME: &CStr = c"EXT_host_image_copy";
 pub const EXT_HOST_IMAGE_COPY_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCopyMemoryToImageEXT = unsafe extern "system" fn(
@@ -6391,8 +6175,7 @@ pub type PFN_vkGetImageSubresourceLayout2KHR = unsafe extern "system" fn(
     p_subresource: *const ImageSubresource2KHR<'_>,
     p_layout: *mut SubresourceLayout2KHR<'_>,
 );
-pub const KHR_MAP_MEMORY2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_map_memory2\0") };
+pub const KHR_MAP_MEMORY2_NAME: &CStr = c"KHR_map_memory2";
 pub const KHR_MAP_MEMORY2_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkMapMemory2KHR = unsafe extern "system" fn(
@@ -6405,17 +6188,13 @@ pub type PFN_vkUnmapMemory2KHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_memory_unmap_info: *const MemoryUnmapInfoKHR<'_>,
 ) -> Result;
-pub const EXT_MAP_MEMORY_PLACED_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_map_memory_placed\0") };
+pub const EXT_MAP_MEMORY_PLACED_NAME: &CStr = c"EXT_map_memory_placed";
 pub const EXT_MAP_MEMORY_PLACED_SPEC_VERSION: u32 = 1u32;
-pub const EXT_SHADER_ATOMIC_FLOAT2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_atomic_float2\0") };
+pub const EXT_SHADER_ATOMIC_FLOAT2_NAME: &CStr = c"EXT_shader_atomic_float2";
 pub const EXT_SHADER_ATOMIC_FLOAT2_SPEC_VERSION: u32 = 1u32;
-pub const EXT_SURFACE_MAINTENANCE1_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_surface_maintenance1\0") };
+pub const EXT_SURFACE_MAINTENANCE1_NAME: &CStr = c"EXT_surface_maintenance1";
 pub const EXT_SURFACE_MAINTENANCE1_SPEC_VERSION: u32 = 1u32;
-pub const EXT_SWAPCHAIN_MAINTENANCE1_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_swapchain_maintenance1\0") };
+pub const EXT_SWAPCHAIN_MAINTENANCE1_NAME: &CStr = c"EXT_swapchain_maintenance1";
 pub const EXT_SWAPCHAIN_MAINTENANCE1_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkReleaseSwapchainImagesEXT = unsafe extern "system" fn(
@@ -6423,10 +6202,9 @@ pub type PFN_vkReleaseSwapchainImagesEXT = unsafe extern "system" fn(
     p_release_info: *const ReleaseSwapchainImagesInfoEXT<'_>,
 ) -> Result;
 pub const EXT_SHADER_DEMOTE_TO_HELPER_INVOCATION_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_demote_to_helper_invocation\0") };
+    c"EXT_shader_demote_to_helper_invocation";
 pub const EXT_SHADER_DEMOTE_TO_HELPER_INVOCATION_SPEC_VERSION: u32 = 1u32;
-pub const NV_DEVICE_GENERATED_COMMANDS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_device_generated_commands\0") };
+pub const NV_DEVICE_GENERATED_COMMANDS_NAME: &CStr = c"NV_device_generated_commands";
 pub const NV_DEVICE_GENERATED_COMMANDS_SPEC_VERSION: u32 = 3u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetGeneratedCommandsMemoryRequirementsNV = unsafe extern "system" fn(
@@ -6465,31 +6243,24 @@ pub type PFN_vkDestroyIndirectCommandsLayoutNV = unsafe extern "system" fn(
     indirect_commands_layout: IndirectCommandsLayoutNV,
     p_allocator: *const AllocationCallbacks<'_>,
 );
-pub const NV_INHERITED_VIEWPORT_SCISSOR_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_inherited_viewport_scissor\0") };
+pub const NV_INHERITED_VIEWPORT_SCISSOR_NAME: &CStr = c"NV_inherited_viewport_scissor";
 pub const NV_INHERITED_VIEWPORT_SCISSOR_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SHADER_INTEGER_DOT_PRODUCT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_integer_dot_product\0") };
+pub const KHR_SHADER_INTEGER_DOT_PRODUCT_NAME: &CStr = c"KHR_shader_integer_dot_product";
 pub const KHR_SHADER_INTEGER_DOT_PRODUCT_SPEC_VERSION: u32 = 1u32;
-pub const EXT_TEXEL_BUFFER_ALIGNMENT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_texel_buffer_alignment\0") };
+pub const EXT_TEXEL_BUFFER_ALIGNMENT_NAME: &CStr = c"EXT_texel_buffer_alignment";
 pub const EXT_TEXEL_BUFFER_ALIGNMENT_SPEC_VERSION: u32 = 1u32;
-pub const QCOM_RENDER_PASS_TRANSFORM_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_transform\0") };
+pub const QCOM_RENDER_PASS_TRANSFORM_NAME: &CStr = c"QCOM_render_pass_transform";
 pub const QCOM_RENDER_PASS_TRANSFORM_SPEC_VERSION: u32 = 4u32;
-pub const EXT_DEPTH_BIAS_CONTROL_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_bias_control\0") };
+pub const EXT_DEPTH_BIAS_CONTROL_NAME: &CStr = c"EXT_depth_bias_control";
 pub const EXT_DEPTH_BIAS_CONTROL_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDepthBias2EXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_depth_bias_info: *const DepthBiasInfoEXT<'_>,
 );
-pub const EXT_DEVICE_MEMORY_REPORT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_memory_report\0") };
+pub const EXT_DEVICE_MEMORY_REPORT_NAME: &CStr = c"EXT_device_memory_report";
 pub const EXT_DEVICE_MEMORY_REPORT_SPEC_VERSION: u32 = 2u32;
-pub const EXT_ACQUIRE_DRM_DISPLAY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_acquire_drm_display\0") };
+pub const EXT_ACQUIRE_DRM_DISPLAY_NAME: &CStr = c"EXT_acquire_drm_display";
 pub const EXT_ACQUIRE_DRM_DISPLAY_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkAcquireDrmDisplayEXT = unsafe extern "system" fn(
@@ -6504,29 +6275,21 @@ pub type PFN_vkGetDrmDisplayEXT = unsafe extern "system" fn(
     connector_id: u32,
     display: *mut DisplayKHR,
 ) -> Result;
-pub const EXT_ROBUSTNESS2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_robustness2\0") };
+pub const EXT_ROBUSTNESS2_NAME: &CStr = c"EXT_robustness2";
 pub const EXT_ROBUSTNESS2_SPEC_VERSION: u32 = 1u32;
-pub const EXT_CUSTOM_BORDER_COLOR_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_custom_border_color\0") };
+pub const EXT_CUSTOM_BORDER_COLOR_NAME: &CStr = c"EXT_custom_border_color";
 pub const EXT_CUSTOM_BORDER_COLOR_SPEC_VERSION: u32 = 12u32;
-pub const GOOGLE_USER_TYPE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_user_type\0") };
+pub const GOOGLE_USER_TYPE_NAME: &CStr = c"GOOGLE_user_type";
 pub const GOOGLE_USER_TYPE_SPEC_VERSION: u32 = 1u32;
-pub const KHR_PIPELINE_LIBRARY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_pipeline_library\0") };
+pub const KHR_PIPELINE_LIBRARY_NAME: &CStr = c"KHR_pipeline_library";
 pub const KHR_PIPELINE_LIBRARY_SPEC_VERSION: u32 = 1u32;
-pub const NV_PRESENT_BARRIER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_present_barrier\0") };
+pub const NV_PRESENT_BARRIER_NAME: &CStr = c"NV_present_barrier";
 pub const NV_PRESENT_BARRIER_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SHADER_NON_SEMANTIC_INFO_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_non_semantic_info\0") };
+pub const KHR_SHADER_NON_SEMANTIC_INFO_NAME: &CStr = c"KHR_shader_non_semantic_info";
 pub const KHR_SHADER_NON_SEMANTIC_INFO_SPEC_VERSION: u32 = 1u32;
-pub const KHR_PRESENT_ID_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_present_id\0") };
+pub const KHR_PRESENT_ID_NAME: &CStr = c"KHR_present_id";
 pub const KHR_PRESENT_ID_SPEC_VERSION: u32 = 1u32;
-pub const EXT_PRIVATE_DATA_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_private_data\0") };
+pub const EXT_PRIVATE_DATA_NAME: &CStr = c"EXT_private_data";
 pub const EXT_PRIVATE_DATA_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreatePrivateDataSlot = unsafe extern "system" fn(
@@ -6557,11 +6320,9 @@ pub type PFN_vkGetPrivateData = unsafe extern "system" fn(
     private_data_slot: PrivateDataSlot,
     p_data: *mut u64,
 );
-pub const EXT_PIPELINE_CREATION_CACHE_CONTROL_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_creation_cache_control\0") };
+pub const EXT_PIPELINE_CREATION_CACHE_CONTROL_NAME: &CStr = c"EXT_pipeline_creation_cache_control";
 pub const EXT_PIPELINE_CREATION_CACHE_CONTROL_SPEC_VERSION: u32 = 3u32;
-pub const KHR_VIDEO_ENCODE_QUEUE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_queue\0") };
+pub const KHR_VIDEO_ENCODE_QUEUE_NAME: &CStr = c"KHR_video_encode_queue";
 pub const KHR_VIDEO_ENCODE_QUEUE_SPEC_VERSION: u32 = 12u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR =
@@ -6583,14 +6344,11 @@ pub type PFN_vkCmdEncodeVideoKHR = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_encode_info: *const VideoEncodeInfoKHR<'_>,
 );
-pub const NV_DEVICE_DIAGNOSTICS_CONFIG_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_device_diagnostics_config\0") };
+pub const NV_DEVICE_DIAGNOSTICS_CONFIG_NAME: &CStr = c"NV_device_diagnostics_config";
 pub const NV_DEVICE_DIAGNOSTICS_CONFIG_SPEC_VERSION: u32 = 2u32;
-pub const QCOM_RENDER_PASS_STORE_OPS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_store_ops\0") };
+pub const QCOM_RENDER_PASS_STORE_OPS_NAME: &CStr = c"QCOM_render_pass_store_ops";
 pub const QCOM_RENDER_PASS_STORE_OPS_SPEC_VERSION: u32 = 2u32;
-pub const NV_CUDA_KERNEL_LAUNCH_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_cuda_kernel_launch\0") };
+pub const NV_CUDA_KERNEL_LAUNCH_NAME: &CStr = c"NV_cuda_kernel_launch";
 pub const NV_CUDA_KERNEL_LAUNCH_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateCudaModuleNV = unsafe extern "system" fn(
@@ -6630,19 +6388,16 @@ pub type PFN_vkCmdCudaLaunchKernelNV = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_launch_info: *const CudaLaunchInfoNV<'_>,
 );
-pub const NV_LOW_LATENCY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_low_latency\0") };
+pub const NV_LOW_LATENCY_NAME: &CStr = c"NV_low_latency";
 pub const NV_LOW_LATENCY_SPEC_VERSION: u32 = 1u32;
-pub const EXT_METAL_OBJECTS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_metal_objects\0") };
+pub const EXT_METAL_OBJECTS_NAME: &CStr = c"EXT_metal_objects";
 pub const EXT_METAL_OBJECTS_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkExportMetalObjectsEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_metal_objects_info: *mut ExportMetalObjectsInfoEXT<'_>,
 );
-pub const KHR_SYNCHRONIZATION2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_synchronization2\0") };
+pub const KHR_SYNCHRONIZATION2_NAME: &CStr = c"KHR_synchronization2";
 pub const KHR_SYNCHRONIZATION2_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetEvent2 = unsafe extern "system" fn(
@@ -6696,8 +6451,7 @@ pub type PFN_vkGetQueueCheckpointData2NV = unsafe extern "system" fn(
     p_checkpoint_data_count: *mut u32,
     p_checkpoint_data: *mut CheckpointData2NV<'_>,
 );
-pub const EXT_DESCRIPTOR_BUFFER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_descriptor_buffer\0") };
+pub const EXT_DESCRIPTOR_BUFFER_NAME: &CStr = c"EXT_descriptor_buffer";
 pub const EXT_DESCRIPTOR_BUFFER_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDescriptorSetLayoutSizeEXT = unsafe extern "system" fn(
@@ -6773,25 +6527,20 @@ pub type PFN_vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT =
         p_info: *const AccelerationStructureCaptureDescriptorDataInfoEXT<'_>,
         p_data: *mut c_void,
     ) -> Result;
-pub const EXT_GRAPHICS_PIPELINE_LIBRARY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_graphics_pipeline_library\0") };
+pub const EXT_GRAPHICS_PIPELINE_LIBRARY_NAME: &CStr = c"EXT_graphics_pipeline_library";
 pub const EXT_GRAPHICS_PIPELINE_LIBRARY_SPEC_VERSION: u32 = 1u32;
-pub const AMD_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_NAME: &CStr = unsafe {
-    CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_early_and_late_fragment_tests\0")
-};
+pub const AMD_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_NAME: &CStr =
+    c"AMD_shader_early_and_late_fragment_tests";
 pub const AMD_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_SPEC_VERSION: u32 = 1u32;
-pub const KHR_FRAGMENT_SHADER_BARYCENTRIC_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_fragment_shader_barycentric\0") };
+pub const KHR_FRAGMENT_SHADER_BARYCENTRIC_NAME: &CStr = c"KHR_fragment_shader_barycentric";
 pub const KHR_FRAGMENT_SHADER_BARYCENTRIC_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_NAME: &CStr = unsafe {
-    CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_subgroup_uniform_control_flow\0")
-};
+pub const KHR_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_NAME: &CStr =
+    c"KHR_shader_subgroup_uniform_control_flow";
 pub const KHR_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_SPEC_VERSION: u32 = 1u32;
 pub const KHR_ZERO_INITIALIZE_WORKGROUP_MEMORY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_zero_initialize_workgroup_memory\0") };
+    c"KHR_zero_initialize_workgroup_memory";
 pub const KHR_ZERO_INITIALIZE_WORKGROUP_MEMORY_SPEC_VERSION: u32 = 1u32;
-pub const NV_FRAGMENT_SHADING_RATE_ENUMS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_shading_rate_enums\0") };
+pub const NV_FRAGMENT_SHADING_RATE_ENUMS_NAME: &CStr = c"NV_fragment_shading_rate_enums";
 pub const NV_FRAGMENT_SHADING_RATE_ENUMS_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetFragmentShadingRateEnumNV = unsafe extern "system" fn(
@@ -6799,11 +6548,9 @@ pub type PFN_vkCmdSetFragmentShadingRateEnumNV = unsafe extern "system" fn(
     shading_rate: FragmentShadingRateNV,
     combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2usize],
 );
-pub const NV_RAY_TRACING_MOTION_BLUR_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_motion_blur\0") };
+pub const NV_RAY_TRACING_MOTION_BLUR_NAME: &CStr = c"NV_ray_tracing_motion_blur";
 pub const NV_RAY_TRACING_MOTION_BLUR_SPEC_VERSION: u32 = 1u32;
-pub const EXT_MESH_SHADER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mesh_shader\0") };
+pub const EXT_MESH_SHADER_NAME: &CStr = c"EXT_mesh_shader";
 pub const EXT_MESH_SHADER_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawMeshTasksEXT = unsafe extern "system" fn(
@@ -6830,23 +6577,18 @@ pub type PFN_vkCmdDrawMeshTasksIndirectCountEXT = unsafe extern "system" fn(
     max_draw_count: u32,
     stride: u32,
 );
-pub const EXT_YCBCR_2PLANE_444_FORMATS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_ycbcr_2plane_444_formats\0") };
+pub const EXT_YCBCR_2PLANE_444_FORMATS_NAME: &CStr = c"EXT_ycbcr_2plane_444_formats";
 pub const EXT_YCBCR_2PLANE_444_FORMATS_SPEC_VERSION: u32 = 1u32;
-pub const EXT_FRAGMENT_DENSITY_MAP2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_density_map2\0") };
+pub const EXT_FRAGMENT_DENSITY_MAP2_NAME: &CStr = c"EXT_fragment_density_map2";
 pub const EXT_FRAGMENT_DENSITY_MAP2_SPEC_VERSION: u32 = 1u32;
-pub const QCOM_ROTATED_COPY_COMMANDS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_rotated_copy_commands\0") };
+pub const QCOM_ROTATED_COPY_COMMANDS_NAME: &CStr = c"QCOM_rotated_copy_commands";
 pub const QCOM_ROTATED_COPY_COMMANDS_SPEC_VERSION: u32 = 2u32;
-pub const EXT_IMAGE_ROBUSTNESS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_robustness\0") };
+pub const EXT_IMAGE_ROBUSTNESS_NAME: &CStr = c"EXT_image_robustness";
 pub const EXT_IMAGE_ROBUSTNESS_SPEC_VERSION: u32 = 1u32;
 pub const KHR_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_workgroup_memory_explicit_layout\0") };
+    c"KHR_workgroup_memory_explicit_layout";
 pub const KHR_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_SPEC_VERSION: u32 = 1u32;
-pub const KHR_COPY_COMMANDS2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_copy_commands2\0") };
+pub const KHR_COPY_COMMANDS2_NAME: &CStr = c"KHR_copy_commands2";
 pub const KHR_COPY_COMMANDS2_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyBuffer2 = unsafe extern "system" fn(
@@ -6878,17 +6620,13 @@ pub type PFN_vkCmdResolveImage2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_resolve_image_info: *const ResolveImageInfo2<'_>,
 );
-pub const EXT_IMAGE_COMPRESSION_CONTROL_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_compression_control\0") };
+pub const EXT_IMAGE_COMPRESSION_CONTROL_NAME: &CStr = c"EXT_image_compression_control";
 pub const EXT_IMAGE_COMPRESSION_CONTROL_SPEC_VERSION: u32 = 1u32;
-pub const EXT_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_attachment_feedback_loop_layout\0") };
+pub const EXT_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_NAME: &CStr = c"EXT_attachment_feedback_loop_layout";
 pub const EXT_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_SPEC_VERSION: u32 = 2u32;
-pub const EXT_4444_FORMATS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_4444_formats\0") };
+pub const EXT_4444_FORMATS_NAME: &CStr = c"EXT_4444_formats";
 pub const EXT_4444_FORMATS_SPEC_VERSION: u32 = 1u32;
-pub const EXT_DEVICE_FAULT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_fault\0") };
+pub const EXT_DEVICE_FAULT_NAME: &CStr = c"EXT_device_fault";
 pub const EXT_DEVICE_FAULT_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceFaultInfoEXT = unsafe extern "system" fn(
@@ -6896,15 +6634,12 @@ pub type PFN_vkGetDeviceFaultInfoEXT = unsafe extern "system" fn(
     p_fault_counts: *mut DeviceFaultCountsEXT<'_>,
     p_fault_info: *mut DeviceFaultInfoEXT<'_>,
 ) -> Result;
-pub const ARM_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_NAME: &CStr = unsafe {
-    CStr::from_bytes_with_nul_unchecked(b"VK_ARM_rasterization_order_attachment_access\0")
-};
+pub const ARM_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_NAME: &CStr =
+    c"ARM_rasterization_order_attachment_access";
 pub const ARM_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_SPEC_VERSION: u32 = 1u32;
-pub const EXT_RGBA10X6_FORMATS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_rgba10x6_formats\0") };
+pub const EXT_RGBA10X6_FORMATS_NAME: &CStr = c"EXT_rgba10x6_formats";
 pub const EXT_RGBA10X6_FORMATS_SPEC_VERSION: u32 = 1u32;
-pub const NV_ACQUIRE_WINRT_DISPLAY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_acquire_winrt_display\0") };
+pub const NV_ACQUIRE_WINRT_DISPLAY_NAME: &CStr = c"NV_acquire_winrt_display";
 pub const NV_ACQUIRE_WINRT_DISPLAY_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkAcquireWinrtDisplayNV =
@@ -6915,8 +6650,7 @@ pub type PFN_vkGetWinrtDisplayNV = unsafe extern "system" fn(
     device_relative_id: u32,
     p_display: *mut DisplayKHR,
 ) -> Result;
-pub const EXT_DIRECTFB_SURFACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_directfb_surface\0") };
+pub const EXT_DIRECTFB_SURFACE_NAME: &CStr = c"EXT_directfb_surface";
 pub const EXT_DIRECTFB_SURFACE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDirectFBSurfaceEXT = unsafe extern "system" fn(
@@ -6932,11 +6666,9 @@ pub type PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT =
         queue_family_index: u32,
         dfb: *mut IDirectFB,
     ) -> Bool32;
-pub const VALVE_MUTABLE_DESCRIPTOR_TYPE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_VALVE_mutable_descriptor_type\0") };
+pub const VALVE_MUTABLE_DESCRIPTOR_TYPE_NAME: &CStr = c"VALVE_mutable_descriptor_type";
 pub const VALVE_MUTABLE_DESCRIPTOR_TYPE_SPEC_VERSION: u32 = 1u32;
-pub const EXT_VERTEX_INPUT_DYNAMIC_STATE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_vertex_input_dynamic_state\0") };
+pub const EXT_VERTEX_INPUT_DYNAMIC_STATE_NAME: &CStr = c"EXT_vertex_input_dynamic_state";
 pub const EXT_VERTEX_INPUT_DYNAMIC_STATE_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetVertexInputEXT = unsafe extern "system" fn(
@@ -6946,23 +6678,17 @@ pub type PFN_vkCmdSetVertexInputEXT = unsafe extern "system" fn(
     vertex_attribute_description_count: u32,
     p_vertex_attribute_descriptions: *const VertexInputAttributeDescription2EXT<'_>,
 );
-pub const EXT_PHYSICAL_DEVICE_DRM_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_physical_device_drm\0") };
+pub const EXT_PHYSICAL_DEVICE_DRM_NAME: &CStr = c"EXT_physical_device_drm";
 pub const EXT_PHYSICAL_DEVICE_DRM_SPEC_VERSION: u32 = 1u32;
-pub const EXT_DEVICE_ADDRESS_BINDING_REPORT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_address_binding_report\0") };
+pub const EXT_DEVICE_ADDRESS_BINDING_REPORT_NAME: &CStr = c"EXT_device_address_binding_report";
 pub const EXT_DEVICE_ADDRESS_BINDING_REPORT_SPEC_VERSION: u32 = 1u32;
-pub const EXT_DEPTH_CLIP_CONTROL_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clip_control\0") };
+pub const EXT_DEPTH_CLIP_CONTROL_NAME: &CStr = c"EXT_depth_clip_control";
 pub const EXT_DEPTH_CLIP_CONTROL_SPEC_VERSION: u32 = 1u32;
-pub const EXT_PRIMITIVE_TOPOLOGY_LIST_RESTART_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_primitive_topology_list_restart\0") };
+pub const EXT_PRIMITIVE_TOPOLOGY_LIST_RESTART_NAME: &CStr = c"EXT_primitive_topology_list_restart";
 pub const EXT_PRIMITIVE_TOPOLOGY_LIST_RESTART_SPEC_VERSION: u32 = 1u32;
-pub const KHR_FORMAT_FEATURE_FLAGS2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_format_feature_flags2\0") };
+pub const KHR_FORMAT_FEATURE_FLAGS2_NAME: &CStr = c"KHR_format_feature_flags2";
 pub const KHR_FORMAT_FEATURE_FLAGS2_SPEC_VERSION: u32 = 2u32;
-pub const FUCHSIA_EXTERNAL_MEMORY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_external_memory\0") };
+pub const FUCHSIA_EXTERNAL_MEMORY_NAME: &CStr = c"FUCHSIA_external_memory";
 pub const FUCHSIA_EXTERNAL_MEMORY_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetMemoryZirconHandleFUCHSIA = unsafe extern "system" fn(
@@ -6977,8 +6703,7 @@ pub type PFN_vkGetMemoryZirconHandlePropertiesFUCHSIA = unsafe extern "system" f
     zircon_handle: zx_handle_t,
     p_memory_zircon_handle_properties: *mut MemoryZirconHandlePropertiesFUCHSIA<'_>,
 ) -> Result;
-pub const FUCHSIA_EXTERNAL_SEMAPHORE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_external_semaphore\0") };
+pub const FUCHSIA_EXTERNAL_SEMAPHORE_NAME: &CStr = c"FUCHSIA_external_semaphore";
 pub const FUCHSIA_EXTERNAL_SEMAPHORE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkImportSemaphoreZirconHandleFUCHSIA = unsafe extern "system" fn(
@@ -6991,8 +6716,7 @@ pub type PFN_vkGetSemaphoreZirconHandleFUCHSIA = unsafe extern "system" fn(
     p_get_zircon_handle_info: *const SemaphoreGetZirconHandleInfoFUCHSIA<'_>,
     p_zircon_handle: *mut zx_handle_t,
 ) -> Result;
-pub const FUCHSIA_BUFFER_COLLECTION_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_buffer_collection\0") };
+pub const FUCHSIA_BUFFER_COLLECTION_NAME: &CStr = c"FUCHSIA_buffer_collection";
 pub const FUCHSIA_BUFFER_COLLECTION_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateBufferCollectionFUCHSIA = unsafe extern "system" fn(
@@ -7025,8 +6749,7 @@ pub type PFN_vkGetBufferCollectionPropertiesFUCHSIA = unsafe extern "system" fn(
     collection: BufferCollectionFUCHSIA,
     p_properties: *mut BufferCollectionPropertiesFUCHSIA<'_>,
 ) -> Result;
-pub const HUAWEI_SUBPASS_SHADING_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_subpass_shading\0") };
+pub const HUAWEI_SUBPASS_SHADING_NAME: &CStr = c"HUAWEI_subpass_shading";
 pub const HUAWEI_SUBPASS_SHADING_SPEC_VERSION: u32 = 3u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI = unsafe extern "system" fn(
@@ -7036,8 +6759,7 @@ pub type PFN_vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI = unsafe extern "sy
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSubpassShadingHUAWEI = unsafe extern "system" fn(command_buffer: CommandBuffer);
-pub const HUAWEI_INVOCATION_MASK_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_invocation_mask\0") };
+pub const HUAWEI_INVOCATION_MASK_NAME: &CStr = c"HUAWEI_invocation_mask";
 pub const HUAWEI_INVOCATION_MASK_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindInvocationMaskHUAWEI = unsafe extern "system" fn(
@@ -7045,8 +6767,7 @@ pub type PFN_vkCmdBindInvocationMaskHUAWEI = unsafe extern "system" fn(
     image_view: ImageView,
     image_layout: ImageLayout,
 );
-pub const NV_EXTERNAL_MEMORY_RDMA_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_rdma\0") };
+pub const NV_EXTERNAL_MEMORY_RDMA_NAME: &CStr = c"NV_external_memory_rdma";
 pub const NV_EXTERNAL_MEMORY_RDMA_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetMemoryRemoteAddressNV = unsafe extern "system" fn(
@@ -7054,8 +6775,7 @@ pub type PFN_vkGetMemoryRemoteAddressNV = unsafe extern "system" fn(
     p_memory_get_remote_address_info: *const MemoryGetRemoteAddressInfoNV<'_>,
     p_address: *mut RemoteAddressNV,
 ) -> Result;
-pub const EXT_PIPELINE_PROPERTIES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_properties\0") };
+pub const EXT_PIPELINE_PROPERTIES_NAME: &CStr = c"EXT_pipeline_properties";
 pub const EXT_PIPELINE_PROPERTIES_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPipelinePropertiesEXT = unsafe extern "system" fn(
@@ -7063,15 +6783,12 @@ pub type PFN_vkGetPipelinePropertiesEXT = unsafe extern "system" fn(
     p_pipeline_info: *const PipelineInfoEXT<'_>,
     p_pipeline_properties: *mut BaseOutStructure<'_>,
 ) -> Result;
-pub const EXT_FRAME_BOUNDARY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_frame_boundary\0") };
+pub const EXT_FRAME_BOUNDARY_NAME: &CStr = c"EXT_frame_boundary";
 pub const EXT_FRAME_BOUNDARY_SPEC_VERSION: u32 = 1u32;
-pub const EXT_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_NAME: &CStr = unsafe {
-    CStr::from_bytes_with_nul_unchecked(b"VK_EXT_multisampled_render_to_single_sampled\0")
-};
+pub const EXT_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_NAME: &CStr =
+    c"EXT_multisampled_render_to_single_sampled";
 pub const EXT_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_SPEC_VERSION: u32 = 1u32;
-pub const EXT_EXTENDED_DYNAMIC_STATE2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state2\0") };
+pub const EXT_EXTENDED_DYNAMIC_STATE2_NAME: &CStr = c"EXT_extended_dynamic_state2";
 pub const EXT_EXTENDED_DYNAMIC_STATE2_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetPatchControlPointsEXT =
@@ -7088,8 +6805,7 @@ pub type PFN_vkCmdSetLogicOpEXT =
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetPrimitiveRestartEnable =
     unsafe extern "system" fn(command_buffer: CommandBuffer, primitive_restart_enable: Bool32);
-pub const QNX_SCREEN_SURFACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QNX_screen_surface\0") };
+pub const QNX_SCREEN_SURFACE_NAME: &CStr = c"QNX_screen_surface";
 pub const QNX_SCREEN_SURFACE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateScreenSurfaceQNX = unsafe extern "system" fn(
@@ -7104,8 +6820,7 @@ pub type PFN_vkGetPhysicalDeviceScreenPresentationSupportQNX = unsafe extern "sy
     queue_family_index: u32,
     window: *mut _screen_window,
 ) -> Bool32;
-pub const EXT_COLOR_WRITE_ENABLE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_color_write_enable\0") };
+pub const EXT_COLOR_WRITE_ENABLE_NAME: &CStr = c"EXT_color_write_enable";
 pub const EXT_COLOR_WRITE_ENABLE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetColorWriteEnableEXT = unsafe extern "system" fn(
@@ -7113,25 +6828,20 @@ pub type PFN_vkCmdSetColorWriteEnableEXT = unsafe extern "system" fn(
     attachment_count: u32,
     p_color_write_enables: *const Bool32,
 );
-pub const EXT_PRIMITIVES_GENERATED_QUERY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_primitives_generated_query\0") };
+pub const EXT_PRIMITIVES_GENERATED_QUERY_NAME: &CStr = c"EXT_primitives_generated_query";
 pub const EXT_PRIMITIVES_GENERATED_QUERY_SPEC_VERSION: u32 = 1u32;
-pub const KHR_RAY_TRACING_MAINTENANCE1_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_tracing_maintenance1\0") };
+pub const KHR_RAY_TRACING_MAINTENANCE1_NAME: &CStr = c"KHR_ray_tracing_maintenance1";
 pub const KHR_RAY_TRACING_MAINTENANCE1_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdTraceRaysIndirect2KHR = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     indirect_device_address: DeviceAddress,
 );
-pub const EXT_GLOBAL_PRIORITY_QUERY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_global_priority_query\0") };
+pub const EXT_GLOBAL_PRIORITY_QUERY_NAME: &CStr = c"EXT_global_priority_query";
 pub const EXT_GLOBAL_PRIORITY_QUERY_SPEC_VERSION: u32 = 1u32;
-pub const EXT_IMAGE_VIEW_MIN_LOD_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_view_min_lod\0") };
+pub const EXT_IMAGE_VIEW_MIN_LOD_NAME: &CStr = c"EXT_image_view_min_lod";
 pub const EXT_IMAGE_VIEW_MIN_LOD_SPEC_VERSION: u32 = 1u32;
-pub const EXT_MULTI_DRAW_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_multi_draw\0") };
+pub const EXT_MULTI_DRAW_NAME: &CStr = c"EXT_multi_draw";
 pub const EXT_MULTI_DRAW_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawMultiEXT = unsafe extern "system" fn(
@@ -7152,17 +6862,13 @@ pub type PFN_vkCmdDrawMultiIndexedEXT = unsafe extern "system" fn(
     stride: u32,
     p_vertex_offset: *const i32,
 );
-pub const EXT_IMAGE_2D_VIEW_OF_3D_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_2d_view_of_3d\0") };
+pub const EXT_IMAGE_2D_VIEW_OF_3D_NAME: &CStr = c"EXT_image_2d_view_of_3d";
 pub const EXT_IMAGE_2D_VIEW_OF_3D_SPEC_VERSION: u32 = 1u32;
-pub const KHR_PORTABILITY_ENUMERATION_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_portability_enumeration\0") };
+pub const KHR_PORTABILITY_ENUMERATION_NAME: &CStr = c"KHR_portability_enumeration";
 pub const KHR_PORTABILITY_ENUMERATION_SPEC_VERSION: u32 = 1u32;
-pub const EXT_SHADER_TILE_IMAGE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_tile_image\0") };
+pub const EXT_SHADER_TILE_IMAGE_NAME: &CStr = c"EXT_shader_tile_image";
 pub const EXT_SHADER_TILE_IMAGE_SPEC_VERSION: u32 = 1u32;
-pub const EXT_OPACITY_MICROMAP_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_opacity_micromap\0") };
+pub const EXT_OPACITY_MICROMAP_NAME: &CStr = c"EXT_opacity_micromap";
 pub const EXT_OPACITY_MICROMAP_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateMicromapEXT = unsafe extern "system" fn(
@@ -7255,14 +6961,11 @@ pub type PFN_vkGetMicromapBuildSizesEXT = unsafe extern "system" fn(
     p_build_info: *const MicromapBuildInfoEXT<'_>,
     p_size_info: *mut MicromapBuildSizesInfoEXT<'_>,
 );
-pub const NV_DISPLACEMENT_MICROMAP_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_displacement_micromap\0") };
+pub const NV_DISPLACEMENT_MICROMAP_NAME: &CStr = c"NV_displacement_micromap";
 pub const NV_DISPLACEMENT_MICROMAP_SPEC_VERSION: u32 = 2u32;
-pub const EXT_LOAD_STORE_OP_NONE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_load_store_op_none\0") };
+pub const EXT_LOAD_STORE_OP_NONE_NAME: &CStr = c"EXT_load_store_op_none";
 pub const EXT_LOAD_STORE_OP_NONE_SPEC_VERSION: u32 = 1u32;
-pub const HUAWEI_CLUSTER_CULLING_SHADER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_cluster_culling_shader\0") };
+pub const HUAWEI_CLUSTER_CULLING_SHADER_NAME: &CStr = c"HUAWEI_cluster_culling_shader";
 pub const HUAWEI_CLUSTER_CULLING_SHADER_SPEC_VERSION: u32 = 3u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawClusterHUAWEI = unsafe extern "system" fn(
@@ -7274,17 +6977,14 @@ pub type PFN_vkCmdDrawClusterHUAWEI = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawClusterIndirectHUAWEI =
     unsafe extern "system" fn(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize);
-pub const EXT_BORDER_COLOR_SWIZZLE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_border_color_swizzle\0") };
+pub const EXT_BORDER_COLOR_SWIZZLE_NAME: &CStr = c"EXT_border_color_swizzle";
 pub const EXT_BORDER_COLOR_SWIZZLE_SPEC_VERSION: u32 = 1u32;
-pub const EXT_PAGEABLE_DEVICE_LOCAL_MEMORY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pageable_device_local_memory\0") };
+pub const EXT_PAGEABLE_DEVICE_LOCAL_MEMORY_NAME: &CStr = c"EXT_pageable_device_local_memory";
 pub const EXT_PAGEABLE_DEVICE_LOCAL_MEMORY_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkSetDeviceMemoryPriorityEXT =
     unsafe extern "system" fn(device: crate::vk::Device, memory: DeviceMemory, priority: f32);
-pub const KHR_MAINTENANCE4_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance4\0") };
+pub const KHR_MAINTENANCE4_NAME: &CStr = c"KHR_maintenance4";
 pub const KHR_MAINTENANCE4_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceBufferMemoryRequirements = unsafe extern "system" fn(
@@ -7305,20 +7005,15 @@ pub type PFN_vkGetDeviceImageSparseMemoryRequirements = unsafe extern "system" f
     p_sparse_memory_requirement_count: *mut u32,
     p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2<'_>,
 );
-pub const ARM_SHADER_CORE_PROPERTIES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_shader_core_properties\0") };
+pub const ARM_SHADER_CORE_PROPERTIES_NAME: &CStr = c"ARM_shader_core_properties";
 pub const ARM_SHADER_CORE_PROPERTIES_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SHADER_SUBGROUP_ROTATE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_subgroup_rotate\0") };
+pub const KHR_SHADER_SUBGROUP_ROTATE_NAME: &CStr = c"KHR_shader_subgroup_rotate";
 pub const KHR_SHADER_SUBGROUP_ROTATE_SPEC_VERSION: u32 = 2u32;
-pub const ARM_SCHEDULING_CONTROLS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_scheduling_controls\0") };
+pub const ARM_SCHEDULING_CONTROLS_NAME: &CStr = c"ARM_scheduling_controls";
 pub const ARM_SCHEDULING_CONTROLS_SPEC_VERSION: u32 = 1u32;
-pub const EXT_IMAGE_SLICED_VIEW_OF_3D_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_sliced_view_of_3d\0") };
+pub const EXT_IMAGE_SLICED_VIEW_OF_3D_NAME: &CStr = c"EXT_image_sliced_view_of_3d";
 pub const EXT_IMAGE_SLICED_VIEW_OF_3D_SPEC_VERSION: u32 = 1u32;
-pub const VALVE_DESCRIPTOR_SET_HOST_MAPPING_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_VALVE_descriptor_set_host_mapping\0") };
+pub const VALVE_DESCRIPTOR_SET_HOST_MAPPING_NAME: &CStr = c"VALVE_descriptor_set_host_mapping";
 pub const VALVE_DESCRIPTOR_SET_HOST_MAPPING_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDescriptorSetLayoutHostMappingInfoVALVE = unsafe extern "system" fn(
@@ -7332,20 +7027,15 @@ pub type PFN_vkGetDescriptorSetHostMappingVALVE = unsafe extern "system" fn(
     descriptor_set: DescriptorSet,
     pp_data: *mut *mut c_void,
 );
-pub const EXT_DEPTH_CLAMP_ZERO_ONE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clamp_zero_one\0") };
+pub const EXT_DEPTH_CLAMP_ZERO_ONE_NAME: &CStr = c"EXT_depth_clamp_zero_one";
 pub const EXT_DEPTH_CLAMP_ZERO_ONE_SPEC_VERSION: u32 = 1u32;
-pub const EXT_NON_SEAMLESS_CUBE_MAP_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_non_seamless_cube_map\0") };
+pub const EXT_NON_SEAMLESS_CUBE_MAP_NAME: &CStr = c"EXT_non_seamless_cube_map";
 pub const EXT_NON_SEAMLESS_CUBE_MAP_SPEC_VERSION: u32 = 1u32;
-pub const ARM_RENDER_PASS_STRIPED_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_render_pass_striped\0") };
+pub const ARM_RENDER_PASS_STRIPED_NAME: &CStr = c"ARM_render_pass_striped";
 pub const ARM_RENDER_PASS_STRIPED_SPEC_VERSION: u32 = 1u32;
-pub const QCOM_FRAGMENT_DENSITY_MAP_OFFSET_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_fragment_density_map_offset\0") };
+pub const QCOM_FRAGMENT_DENSITY_MAP_OFFSET_NAME: &CStr = c"QCOM_fragment_density_map_offset";
 pub const QCOM_FRAGMENT_DENSITY_MAP_OFFSET_SPEC_VERSION: u32 = 1u32;
-pub const NV_COPY_MEMORY_INDIRECT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_copy_memory_indirect\0") };
+pub const NV_COPY_MEMORY_INDIRECT_NAME: &CStr = c"NV_copy_memory_indirect";
 pub const NV_COPY_MEMORY_INDIRECT_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyMemoryIndirectNV = unsafe extern "system" fn(
@@ -7364,8 +7054,7 @@ pub type PFN_vkCmdCopyMemoryToImageIndirectNV = unsafe extern "system" fn(
     dst_image_layout: ImageLayout,
     p_image_subresources: *const ImageSubresourceLayers,
 );
-pub const NV_MEMORY_DECOMPRESSION_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_memory_decompression\0") };
+pub const NV_MEMORY_DECOMPRESSION_NAME: &CStr = c"NV_memory_decompression";
 pub const NV_MEMORY_DECOMPRESSION_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDecompressMemoryNV = unsafe extern "system" fn(
@@ -7381,7 +7070,7 @@ pub type PFN_vkCmdDecompressMemoryIndirectCountNV = unsafe extern "system" fn(
     stride: u32,
 );
 pub const NV_DEVICE_GENERATED_COMMANDS_COMPUTE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_device_generated_commands_compute\0") };
+    c"NV_device_generated_commands_compute";
 pub const NV_DEVICE_GENERATED_COMMANDS_COMPUTE_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPipelineIndirectMemoryRequirementsNV = unsafe extern "system" fn(
@@ -7400,29 +7089,23 @@ pub type PFN_vkGetPipelineIndirectDeviceAddressNV = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_info: *const PipelineIndirectDeviceAddressInfoNV<'_>,
 ) -> DeviceAddress;
-pub const NV_LINEAR_COLOR_ATTACHMENT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_linear_color_attachment\0") };
+pub const NV_LINEAR_COLOR_ATTACHMENT_NAME: &CStr = c"NV_linear_color_attachment";
 pub const NV_LINEAR_COLOR_ATTACHMENT_SPEC_VERSION: u32 = 1u32;
-pub const GOOGLE_SURFACELESS_QUERY_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_surfaceless_query\0") };
+pub const GOOGLE_SURFACELESS_QUERY_NAME: &CStr = c"GOOGLE_surfaceless_query";
 pub const GOOGLE_SURFACELESS_QUERY_SPEC_VERSION: u32 = 2u32;
-pub const KHR_SHADER_MAXIMAL_RECONVERGENCE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_maximal_reconvergence\0") };
+pub const KHR_SHADER_MAXIMAL_RECONVERGENCE_NAME: &CStr = c"KHR_shader_maximal_reconvergence";
 pub const KHR_SHADER_MAXIMAL_RECONVERGENCE_SPEC_VERSION: u32 = 1u32;
 pub const EXT_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_compression_control_swapchain\0") };
+    c"EXT_image_compression_control_swapchain";
 pub const EXT_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_SPEC_VERSION: u32 = 1u32;
-pub const QCOM_IMAGE_PROCESSING_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_image_processing\0") };
+pub const QCOM_IMAGE_PROCESSING_NAME: &CStr = c"QCOM_image_processing";
 pub const QCOM_IMAGE_PROCESSING_SPEC_VERSION: u32 = 1u32;
-pub const EXT_NESTED_COMMAND_BUFFER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_nested_command_buffer\0") };
+pub const EXT_NESTED_COMMAND_BUFFER_NAME: &CStr = c"EXT_nested_command_buffer";
 pub const EXT_NESTED_COMMAND_BUFFER_SPEC_VERSION: u32 = 1u32;
 pub const EXT_EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_external_memory_acquire_unmodified\0") };
+    c"EXT_external_memory_acquire_unmodified";
 pub const EXT_EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_SPEC_VERSION: u32 = 1u32;
-pub const EXT_EXTENDED_DYNAMIC_STATE3_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state3\0") };
+pub const EXT_EXTENDED_DYNAMIC_STATE3_NAME: &CStr = c"EXT_extended_dynamic_state3";
 pub const EXT_EXTENDED_DYNAMIC_STATE3_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDepthClampEnableEXT =
@@ -7563,14 +7246,11 @@ pub type PFN_vkCmdSetCoverageReductionModeNV = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     coverage_reduction_mode: CoverageReductionModeNV,
 );
-pub const EXT_SUBPASS_MERGE_FEEDBACK_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_subpass_merge_feedback\0") };
+pub const EXT_SUBPASS_MERGE_FEEDBACK_NAME: &CStr = c"EXT_subpass_merge_feedback";
 pub const EXT_SUBPASS_MERGE_FEEDBACK_SPEC_VERSION: u32 = 2u32;
-pub const LUNARG_DIRECT_DRIVER_LOADING_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_LUNARG_direct_driver_loading\0") };
+pub const LUNARG_DIRECT_DRIVER_LOADING_NAME: &CStr = c"LUNARG_direct_driver_loading";
 pub const LUNARG_DIRECT_DRIVER_LOADING_SPEC_VERSION: u32 = 1u32;
-pub const EXT_SHADER_MODULE_IDENTIFIER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_module_identifier\0") };
+pub const EXT_SHADER_MODULE_IDENTIFIER_NAME: &CStr = c"EXT_shader_module_identifier";
 pub const EXT_SHADER_MODULE_IDENTIFIER_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetShaderModuleIdentifierEXT = unsafe extern "system" fn(
@@ -7584,12 +7264,10 @@ pub type PFN_vkGetShaderModuleCreateInfoIdentifierEXT = unsafe extern "system" f
     p_create_info: *const ShaderModuleCreateInfo<'_>,
     p_identifier: *mut ShaderModuleIdentifierEXT<'_>,
 );
-pub const EXT_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_NAME: &CStr = unsafe {
-    CStr::from_bytes_with_nul_unchecked(b"VK_EXT_rasterization_order_attachment_access\0")
-};
+pub const EXT_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_NAME: &CStr =
+    c"EXT_rasterization_order_attachment_access";
 pub const EXT_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_SPEC_VERSION: u32 = 1u32;
-pub const NV_OPTICAL_FLOW_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_optical_flow\0") };
+pub const NV_OPTICAL_FLOW_NAME: &CStr = c"NV_optical_flow";
 pub const NV_OPTICAL_FLOW_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceOpticalFlowImageFormatsNV = unsafe extern "system" fn(
@@ -7625,17 +7303,13 @@ pub type PFN_vkCmdOpticalFlowExecuteNV = unsafe extern "system" fn(
     session: OpticalFlowSessionNV,
     p_execute_info: *const OpticalFlowExecuteInfoNV<'_>,
 );
-pub const EXT_LEGACY_DITHERING_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_legacy_dithering\0") };
+pub const EXT_LEGACY_DITHERING_NAME: &CStr = c"EXT_legacy_dithering";
 pub const EXT_LEGACY_DITHERING_SPEC_VERSION: u32 = 1u32;
-pub const EXT_PIPELINE_PROTECTED_ACCESS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_protected_access\0") };
+pub const EXT_PIPELINE_PROTECTED_ACCESS_NAME: &CStr = c"EXT_pipeline_protected_access";
 pub const EXT_PIPELINE_PROTECTED_ACCESS_SPEC_VERSION: u32 = 1u32;
-pub const ANDROID_EXTERNAL_FORMAT_RESOLVE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ANDROID_external_format_resolve\0") };
+pub const ANDROID_EXTERNAL_FORMAT_RESOLVE_NAME: &CStr = c"ANDROID_external_format_resolve";
 pub const ANDROID_EXTERNAL_FORMAT_RESOLVE_SPEC_VERSION: u32 = 1u32;
-pub const KHR_MAINTENANCE5_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance5\0") };
+pub const KHR_MAINTENANCE5_NAME: &CStr = c"KHR_maintenance5";
 pub const KHR_MAINTENANCE5_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindIndexBuffer2KHR = unsafe extern "system" fn(
@@ -7657,11 +7331,9 @@ pub type PFN_vkGetDeviceImageSubresourceLayoutKHR = unsafe extern "system" fn(
     p_info: *const DeviceImageSubresourceInfoKHR<'_>,
     p_layout: *mut SubresourceLayout2KHR<'_>,
 );
-pub const KHR_RAY_TRACING_POSITION_FETCH_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_tracing_position_fetch\0") };
+pub const KHR_RAY_TRACING_POSITION_FETCH_NAME: &CStr = c"KHR_ray_tracing_position_fetch";
 pub const KHR_RAY_TRACING_POSITION_FETCH_SPEC_VERSION: u32 = 1u32;
-pub const EXT_SHADER_OBJECT_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_object\0") };
+pub const EXT_SHADER_OBJECT_NAME: &CStr = c"EXT_shader_object";
 pub const EXT_SHADER_OBJECT_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateShadersEXT = unsafe extern "system" fn(
@@ -7691,8 +7363,7 @@ pub type PFN_vkCmdBindShadersEXT = unsafe extern "system" fn(
     p_stages: *const ShaderStageFlags,
     p_shaders: *const ShaderEXT,
 );
-pub const QCOM_TILE_PROPERTIES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_tile_properties\0") };
+pub const QCOM_TILE_PROPERTIES_NAME: &CStr = c"QCOM_tile_properties";
 pub const QCOM_TILE_PROPERTIES_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetFramebufferTilePropertiesQCOM = unsafe extern "system" fn(
@@ -7707,36 +7378,26 @@ pub type PFN_vkGetDynamicRenderingTilePropertiesQCOM = unsafe extern "system" fn
     p_rendering_info: *const RenderingInfo<'_>,
     p_properties: *mut TilePropertiesQCOM<'_>,
 ) -> Result;
-pub const SEC_AMIGO_PROFILING_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_SEC_amigo_profiling\0") };
+pub const SEC_AMIGO_PROFILING_NAME: &CStr = c"SEC_amigo_profiling";
 pub const SEC_AMIGO_PROFILING_SPEC_VERSION: u32 = 1u32;
-pub const QCOM_MULTIVIEW_PER_VIEW_VIEWPORTS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_multiview_per_view_viewports\0") };
+pub const QCOM_MULTIVIEW_PER_VIEW_VIEWPORTS_NAME: &CStr = c"QCOM_multiview_per_view_viewports";
 pub const QCOM_MULTIVIEW_PER_VIEW_VIEWPORTS_SPEC_VERSION: u32 = 1u32;
-pub const NV_RAY_TRACING_INVOCATION_REORDER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_invocation_reorder\0") };
+pub const NV_RAY_TRACING_INVOCATION_REORDER_NAME: &CStr = c"NV_ray_tracing_invocation_reorder";
 pub const NV_RAY_TRACING_INVOCATION_REORDER_SPEC_VERSION: u32 = 1u32;
-pub const NV_EXTENDED_SPARSE_ADDRESS_SPACE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_extended_sparse_address_space\0") };
+pub const NV_EXTENDED_SPARSE_ADDRESS_SPACE_NAME: &CStr = c"NV_extended_sparse_address_space";
 pub const NV_EXTENDED_SPARSE_ADDRESS_SPACE_SPEC_VERSION: u32 = 1u32;
-pub const EXT_MUTABLE_DESCRIPTOR_TYPE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mutable_descriptor_type\0") };
+pub const EXT_MUTABLE_DESCRIPTOR_TYPE_NAME: &CStr = c"EXT_mutable_descriptor_type";
 pub const EXT_MUTABLE_DESCRIPTOR_TYPE_SPEC_VERSION: u32 = 1u32;
-pub const EXT_LAYER_SETTINGS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_layer_settings\0") };
+pub const EXT_LAYER_SETTINGS_NAME: &CStr = c"EXT_layer_settings";
 pub const EXT_LAYER_SETTINGS_SPEC_VERSION: u32 = 2u32;
-pub const ARM_SHADER_CORE_BUILTINS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_shader_core_builtins\0") };
+pub const ARM_SHADER_CORE_BUILTINS_NAME: &CStr = c"ARM_shader_core_builtins";
 pub const ARM_SHADER_CORE_BUILTINS_SPEC_VERSION: u32 = 2u32;
-pub const EXT_PIPELINE_LIBRARY_GROUP_HANDLES_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_library_group_handles\0") };
+pub const EXT_PIPELINE_LIBRARY_GROUP_HANDLES_NAME: &CStr = c"EXT_pipeline_library_group_handles";
 pub const EXT_PIPELINE_LIBRARY_GROUP_HANDLES_SPEC_VERSION: u32 = 1u32;
-pub const EXT_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_NAME: &CStr = unsafe {
-    CStr::from_bytes_with_nul_unchecked(b"VK_EXT_dynamic_rendering_unused_attachments\0")
-};
+pub const EXT_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_NAME: &CStr =
+    c"EXT_dynamic_rendering_unused_attachments";
 pub const EXT_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_SPEC_VERSION: u32 = 1u32;
-pub const NV_LOW_LATENCY2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_low_latency2\0") };
+pub const NV_LOW_LATENCY2_NAME: &CStr = c"NV_low_latency2";
 pub const NV_LOW_LATENCY2_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkSetLatencySleepModeNV = unsafe extern "system" fn(
@@ -7765,8 +7426,7 @@ pub type PFN_vkGetLatencyTimingsNV = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkQueueNotifyOutOfBandNV =
     unsafe extern "system" fn(queue: Queue, p_queue_type_info: *const OutOfBandQueueTypeInfoNV<'_>);
-pub const KHR_COOPERATIVE_MATRIX_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_cooperative_matrix\0") };
+pub const KHR_COOPERATIVE_MATRIX_NAME: &CStr = c"KHR_cooperative_matrix";
 pub const KHR_COOPERATIVE_MATRIX_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR =
@@ -7776,47 +7436,35 @@ pub type PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR =
         p_properties: *mut CooperativeMatrixPropertiesKHR<'_>,
     ) -> Result;
 pub const QCOM_MULTIVIEW_PER_VIEW_RENDER_AREAS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_multiview_per_view_render_areas\0") };
+    c"QCOM_multiview_per_view_render_areas";
 pub const QCOM_MULTIVIEW_PER_VIEW_RENDER_AREAS_SPEC_VERSION: u32 = 1u32;
-pub const KHR_VIDEO_DECODE_AV1_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_av1\0") };
+pub const KHR_VIDEO_DECODE_AV1_NAME: &CStr = c"KHR_video_decode_av1";
 pub const KHR_VIDEO_DECODE_AV1_SPEC_VERSION: u32 = 1u32;
-pub const KHR_VIDEO_MAINTENANCE1_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_maintenance1\0") };
+pub const KHR_VIDEO_MAINTENANCE1_NAME: &CStr = c"KHR_video_maintenance1";
 pub const KHR_VIDEO_MAINTENANCE1_SPEC_VERSION: u32 = 1u32;
-pub const NV_PER_STAGE_DESCRIPTOR_SET_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_per_stage_descriptor_set\0") };
+pub const NV_PER_STAGE_DESCRIPTOR_SET_NAME: &CStr = c"NV_per_stage_descriptor_set";
 pub const NV_PER_STAGE_DESCRIPTOR_SET_SPEC_VERSION: u32 = 1u32;
-pub const QCOM_IMAGE_PROCESSING2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_image_processing2\0") };
+pub const QCOM_IMAGE_PROCESSING2_NAME: &CStr = c"QCOM_image_processing2";
 pub const QCOM_IMAGE_PROCESSING2_SPEC_VERSION: u32 = 1u32;
-pub const QCOM_FILTER_CUBIC_WEIGHTS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_filter_cubic_weights\0") };
+pub const QCOM_FILTER_CUBIC_WEIGHTS_NAME: &CStr = c"QCOM_filter_cubic_weights";
 pub const QCOM_FILTER_CUBIC_WEIGHTS_SPEC_VERSION: u32 = 1u32;
-pub const QCOM_YCBCR_DEGAMMA_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_ycbcr_degamma\0") };
+pub const QCOM_YCBCR_DEGAMMA_NAME: &CStr = c"QCOM_ycbcr_degamma";
 pub const QCOM_YCBCR_DEGAMMA_SPEC_VERSION: u32 = 1u32;
-pub const QCOM_FILTER_CUBIC_CLAMP_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_filter_cubic_clamp\0") };
+pub const QCOM_FILTER_CUBIC_CLAMP_NAME: &CStr = c"QCOM_filter_cubic_clamp";
 pub const QCOM_FILTER_CUBIC_CLAMP_SPEC_VERSION: u32 = 1u32;
-pub const EXT_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_NAME: &CStr = unsafe {
-    CStr::from_bytes_with_nul_unchecked(b"VK_EXT_attachment_feedback_loop_dynamic_state\0")
-};
+pub const EXT_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_NAME: &CStr =
+    c"EXT_attachment_feedback_loop_dynamic_state";
 pub const EXT_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetAttachmentFeedbackLoopEnableEXT =
     unsafe extern "system" fn(command_buffer: CommandBuffer, aspect_mask: ImageAspectFlags);
-pub const KHR_VERTEX_ATTRIBUTE_DIVISOR_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_vertex_attribute_divisor\0") };
+pub const KHR_VERTEX_ATTRIBUTE_DIVISOR_NAME: &CStr = c"KHR_vertex_attribute_divisor";
 pub const KHR_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION: u32 = 1u32;
-pub const KHR_LOAD_STORE_OP_NONE_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_load_store_op_none\0") };
+pub const KHR_LOAD_STORE_OP_NONE_NAME: &CStr = c"KHR_load_store_op_none";
 pub const KHR_LOAD_STORE_OP_NONE_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SHADER_FLOAT_CONTROLS2_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_float_controls2\0") };
+pub const KHR_SHADER_FLOAT_CONTROLS2_NAME: &CStr = c"KHR_shader_float_controls2";
 pub const KHR_SHADER_FLOAT_CONTROLS2_SPEC_VERSION: u32 = 1u32;
-pub const QNX_EXTERNAL_MEMORY_SCREEN_BUFFER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QNX_external_memory_screen_buffer\0") };
+pub const QNX_EXTERNAL_MEMORY_SCREEN_BUFFER_NAME: &CStr = c"QNX_external_memory_screen_buffer";
 pub const QNX_EXTERNAL_MEMORY_SCREEN_BUFFER_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetScreenBufferPropertiesQNX = unsafe extern "system" fn(
@@ -7824,23 +7472,17 @@ pub type PFN_vkGetScreenBufferPropertiesQNX = unsafe extern "system" fn(
     buffer: *const _screen_buffer,
     p_properties: *mut ScreenBufferPropertiesQNX<'_>,
 ) -> Result;
-pub const MSFT_LAYERED_DRIVER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_MSFT_layered_driver\0") };
+pub const MSFT_LAYERED_DRIVER_NAME: &CStr = c"MSFT_layered_driver";
 pub const MSFT_LAYERED_DRIVER_SPEC_VERSION: u32 = 1u32;
-pub const KHR_INDEX_TYPE_UINT8_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_index_type_uint8\0") };
+pub const KHR_INDEX_TYPE_UINT8_NAME: &CStr = c"KHR_index_type_uint8";
 pub const KHR_INDEX_TYPE_UINT8_SPEC_VERSION: u32 = 1u32;
-pub const KHR_LINE_RASTERIZATION_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_line_rasterization\0") };
+pub const KHR_LINE_RASTERIZATION_NAME: &CStr = c"KHR_line_rasterization";
 pub const KHR_LINE_RASTERIZATION_SPEC_VERSION: u32 = 1u32;
-pub const KHR_CALIBRATED_TIMESTAMPS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_calibrated_timestamps\0") };
+pub const KHR_CALIBRATED_TIMESTAMPS_NAME: &CStr = c"KHR_calibrated_timestamps";
 pub const KHR_CALIBRATED_TIMESTAMPS_SPEC_VERSION: u32 = 1u32;
-pub const KHR_SHADER_EXPECT_ASSUME_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_expect_assume\0") };
+pub const KHR_SHADER_EXPECT_ASSUME_NAME: &CStr = c"KHR_shader_expect_assume";
 pub const KHR_SHADER_EXPECT_ASSUME_SPEC_VERSION: u32 = 1u32;
-pub const KHR_MAINTENANCE6_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance6\0") };
+pub const KHR_MAINTENANCE6_NAME: &CStr = c"KHR_maintenance6";
 pub const KHR_MAINTENANCE6_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindDescriptorSets2KHR = unsafe extern "system" fn(
@@ -7869,15 +7511,11 @@ pub type PFN_vkCmdSetDescriptorBufferOffsets2EXT = unsafe extern "system" fn(
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindDescriptorBufferEmbeddedSamplers2EXT = unsafe extern "system" fn (command_buffer : CommandBuffer , p_bind_descriptor_buffer_embedded_samplers_info : * const BindDescriptorBufferEmbeddedSamplersInfoEXT < '_ > ,) ;
-pub const NV_DESCRIPTOR_POOL_OVERALLOCATION_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_descriptor_pool_overallocation\0") };
+pub const NV_DESCRIPTOR_POOL_OVERALLOCATION_NAME: &CStr = c"NV_descriptor_pool_overallocation";
 pub const NV_DESCRIPTOR_POOL_OVERALLOCATION_SPEC_VERSION: u32 = 1u32;
-pub const NV_RAW_ACCESS_CHAINS_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_raw_access_chains\0") };
+pub const NV_RAW_ACCESS_CHAINS_NAME: &CStr = c"NV_raw_access_chains";
 pub const NV_RAW_ACCESS_CHAINS_SPEC_VERSION: u32 = 1u32;
-pub const NV_SHADER_ATOMIC_FLOAT16_VECTOR_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_atomic_float16_vector\0") };
+pub const NV_SHADER_ATOMIC_FLOAT16_VECTOR_NAME: &CStr = c"NV_shader_atomic_float16_vector";
 pub const NV_SHADER_ATOMIC_FLOAT16_VECTOR_SPEC_VERSION: u32 = 1u32;
-pub const NV_RAY_TRACING_VALIDATION_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_validation\0") };
+pub const NV_RAY_TRACING_VALIDATION_NAME: &CStr = c"NV_ray_tracing_validation";
 pub const NV_RAY_TRACING_VALIDATION_SPEC_VERSION: u32 = 1u32;
