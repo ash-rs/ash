@@ -10,6 +10,16 @@ pub mod amd {
             crate::vk::AMD_RASTERIZATION_ORDER_NAME as NAME,
             crate::vk::AMD_RASTERIZATION_ORDER_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_RASTERIZATION_ORDER_NAME;
+            const SPEC_VERSION: u32 = AMD_RASTERIZATION_ORDER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_shader_trinary_minmax"]
     pub mod shader_trinary_minmax {
@@ -18,6 +28,16 @@ pub mod amd {
             crate::vk::AMD_SHADER_TRINARY_MINMAX_NAME as NAME,
             crate::vk::AMD_SHADER_TRINARY_MINMAX_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_SHADER_TRINARY_MINMAX_NAME;
+            const SPEC_VERSION: u32 = AMD_SHADER_TRINARY_MINMAX_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_shader_explicit_vertex_parameter"]
     pub mod shader_explicit_vertex_parameter {
@@ -26,6 +46,16 @@ pub mod amd {
             crate::vk::AMD_SHADER_EXPLICIT_VERTEX_PARAMETER_NAME as NAME,
             crate::vk::AMD_SHADER_EXPLICIT_VERTEX_PARAMETER_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_SHADER_EXPLICIT_VERTEX_PARAMETER_NAME;
+            const SPEC_VERSION: u32 = AMD_SHADER_EXPLICIT_VERTEX_PARAMETER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_gcn_shader"]
     pub mod gcn_shader {
@@ -34,6 +64,16 @@ pub mod amd {
             crate::vk::AMD_GCN_SHADER_NAME as NAME,
             crate::vk::AMD_GCN_SHADER_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_GCN_SHADER_NAME;
+            const SPEC_VERSION: u32 = AMD_GCN_SHADER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_draw_indirect_count"]
     pub mod draw_indirect_count {
@@ -131,6 +171,19 @@ pub mod amd {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_DRAW_INDIRECT_COUNT_NAME;
+            const SPEC_VERSION: u32 = AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(KHR_DRAW_INDIRECT_COUNT_NAME);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_negative_viewport_height"]
     pub mod negative_viewport_height {
@@ -139,6 +192,16 @@ pub mod amd {
             crate::vk::AMD_NEGATIVE_VIEWPORT_HEIGHT_NAME as NAME,
             crate::vk::AMD_NEGATIVE_VIEWPORT_HEIGHT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_NEGATIVE_VIEWPORT_HEIGHT_NAME;
+            const SPEC_VERSION: u32 = AMD_NEGATIVE_VIEWPORT_HEIGHT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_gpu_shader_half_float"]
     pub mod gpu_shader_half_float {
@@ -147,6 +210,16 @@ pub mod amd {
             crate::vk::AMD_GPU_SHADER_HALF_FLOAT_NAME as NAME,
             crate::vk::AMD_GPU_SHADER_HALF_FLOAT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_GPU_SHADER_HALF_FLOAT_NAME;
+            const SPEC_VERSION: u32 = AMD_GPU_SHADER_HALF_FLOAT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_shader_ballot"]
     pub mod shader_ballot {
@@ -155,6 +228,16 @@ pub mod amd {
             crate::vk::AMD_SHADER_BALLOT_NAME as NAME,
             crate::vk::AMD_SHADER_BALLOT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_SHADER_BALLOT_NAME;
+            const SPEC_VERSION: u32 = AMD_SHADER_BALLOT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_texture_gather_bias_lod"]
     pub mod texture_gather_bias_lod {
@@ -163,6 +246,16 @@ pub mod amd {
             crate::vk::AMD_TEXTURE_GATHER_BIAS_LOD_NAME as NAME,
             crate::vk::AMD_TEXTURE_GATHER_BIAS_LOD_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_TEXTURE_GATHER_BIAS_LOD_NAME;
+            const SPEC_VERSION: u32 = AMD_TEXTURE_GATHER_BIAS_LOD_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_shader_info"]
     pub mod shader_info {
@@ -229,6 +322,18 @@ pub mod amd {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_SHADER_INFO_NAME;
+            const SPEC_VERSION: u32 = AMD_SHADER_INFO_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_shader_image_load_store_lod"]
     pub mod shader_image_load_store_lod {
@@ -237,6 +342,16 @@ pub mod amd {
             crate::vk::AMD_SHADER_IMAGE_LOAD_STORE_LOD_NAME as NAME,
             crate::vk::AMD_SHADER_IMAGE_LOAD_STORE_LOD_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_SHADER_IMAGE_LOAD_STORE_LOD_NAME;
+            const SPEC_VERSION: u32 = AMD_SHADER_IMAGE_LOAD_STORE_LOD_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_gpu_shader_int16"]
     pub mod gpu_shader_int16 {
@@ -245,6 +360,16 @@ pub mod amd {
             crate::vk::AMD_GPU_SHADER_INT16_NAME as NAME,
             crate::vk::AMD_GPU_SHADER_INT16_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_GPU_SHADER_INT16_NAME;
+            const SPEC_VERSION: u32 = AMD_GPU_SHADER_INT16_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_mixed_attachment_samples"]
     pub mod mixed_attachment_samples {
@@ -253,6 +378,16 @@ pub mod amd {
             crate::vk::AMD_MIXED_ATTACHMENT_SAMPLES_NAME as NAME,
             crate::vk::AMD_MIXED_ATTACHMENT_SAMPLES_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_MIXED_ATTACHMENT_SAMPLES_NAME;
+            const SPEC_VERSION: u32 = AMD_MIXED_ATTACHMENT_SAMPLES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_shader_fragment_mask"]
     pub mod shader_fragment_mask {
@@ -261,6 +396,16 @@ pub mod amd {
             crate::vk::AMD_SHADER_FRAGMENT_MASK_NAME as NAME,
             crate::vk::AMD_SHADER_FRAGMENT_MASK_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_SHADER_FRAGMENT_MASK_NAME;
+            const SPEC_VERSION: u32 = AMD_SHADER_FRAGMENT_MASK_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_buffer_marker"]
     pub mod buffer_marker {
@@ -330,6 +475,18 @@ pub mod amd {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_BUFFER_MARKER_NAME;
+            const SPEC_VERSION: u32 = AMD_BUFFER_MARKER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_pipeline_compiler_control"]
     pub mod pipeline_compiler_control {
@@ -338,6 +495,16 @@ pub mod amd {
             crate::vk::AMD_PIPELINE_COMPILER_CONTROL_NAME as NAME,
             crate::vk::AMD_PIPELINE_COMPILER_CONTROL_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_PIPELINE_COMPILER_CONTROL_NAME;
+            const SPEC_VERSION: u32 = AMD_PIPELINE_COMPILER_CONTROL_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_shader_core_properties"]
     pub mod shader_core_properties {
@@ -346,6 +513,16 @@ pub mod amd {
             crate::vk::AMD_SHADER_CORE_PROPERTIES_NAME as NAME,
             crate::vk::AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_SHADER_CORE_PROPERTIES_NAME;
+            const SPEC_VERSION: u32 = AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_memory_overallocation_behavior"]
     pub mod memory_overallocation_behavior {
@@ -354,6 +531,16 @@ pub mod amd {
             crate::vk::AMD_MEMORY_OVERALLOCATION_BEHAVIOR_NAME as NAME,
             crate::vk::AMD_MEMORY_OVERALLOCATION_BEHAVIOR_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_MEMORY_OVERALLOCATION_BEHAVIOR_NAME;
+            const SPEC_VERSION: u32 = AMD_MEMORY_OVERALLOCATION_BEHAVIOR_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_display_native_hdr"]
     pub mod display_native_hdr {
@@ -420,6 +607,18 @@ pub mod amd {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_DISPLAY_NATIVE_HDR_NAME;
+            const SPEC_VERSION: u32 = AMD_DISPLAY_NATIVE_HDR_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_shader_core_properties2"]
     pub mod shader_core_properties2 {
@@ -428,6 +627,16 @@ pub mod amd {
             crate::vk::AMD_SHADER_CORE_PROPERTIES2_NAME as NAME,
             crate::vk::AMD_SHADER_CORE_PROPERTIES2_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_SHADER_CORE_PROPERTIES2_NAME;
+            const SPEC_VERSION: u32 = AMD_SHADER_CORE_PROPERTIES2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_device_coherent_memory"]
     pub mod device_coherent_memory {
@@ -436,6 +645,16 @@ pub mod amd {
             crate::vk::AMD_DEVICE_COHERENT_MEMORY_NAME as NAME,
             crate::vk::AMD_DEVICE_COHERENT_MEMORY_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_DEVICE_COHERENT_MEMORY_NAME;
+            const SPEC_VERSION: u32 = AMD_DEVICE_COHERENT_MEMORY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_shader_early_and_late_fragment_tests"]
     pub mod shader_early_and_late_fragment_tests {
@@ -444,6 +663,16 @@ pub mod amd {
             crate::vk::AMD_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_NAME as NAME,
             crate::vk::AMD_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMD_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_NAME;
+            const SPEC_VERSION: u32 = AMD_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_AMD_anti_lag"]
     pub mod anti_lag {
@@ -713,6 +942,18 @@ pub mod amdx {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = AMDX_SHADER_ENQUEUE_NAME;
+            const SPEC_VERSION: u32 = AMDX_SHADER_ENQUEUE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged ANDROID"]
@@ -856,6 +1097,18 @@ pub mod android {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = ANDROID_NATIVE_BUFFER_NAME;
+            const SPEC_VERSION: u32 = ANDROID_NATIVE_BUFFER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_ANDROID_external_memory_android_hardware_buffer"]
     pub mod external_memory_android_hardware_buffer {
@@ -948,6 +1201,18 @@ pub mod android {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_NAME;
+            const SPEC_VERSION: u32 = ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_ANDROID_external_format_resolve"]
     pub mod external_format_resolve {
@@ -956,6 +1221,16 @@ pub mod android {
             crate::vk::ANDROID_EXTERNAL_FORMAT_RESOLVE_NAME as NAME,
             crate::vk::ANDROID_EXTERNAL_FORMAT_RESOLVE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = ANDROID_EXTERNAL_FORMAT_RESOLVE_NAME;
+            const SPEC_VERSION: u32 = ANDROID_EXTERNAL_FORMAT_RESOLVE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged ARM"]
@@ -967,6 +1242,18 @@ pub mod arm {
             crate::vk::ARM_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_NAME as NAME,
             crate::vk::ARM_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = ARM_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_NAME;
+            const SPEC_VERSION: u32 = ARM_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::PromotedToExtension(
+                EXT_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_NAME,
+            );
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_ARM_shader_core_properties"]
     pub mod shader_core_properties {
@@ -975,6 +1262,16 @@ pub mod arm {
             crate::vk::ARM_SHADER_CORE_PROPERTIES_NAME as NAME,
             crate::vk::ARM_SHADER_CORE_PROPERTIES_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = ARM_SHADER_CORE_PROPERTIES_NAME;
+            const SPEC_VERSION: u32 = ARM_SHADER_CORE_PROPERTIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_ARM_scheduling_controls"]
     pub mod scheduling_controls {
@@ -983,6 +1280,16 @@ pub mod arm {
             crate::vk::ARM_SCHEDULING_CONTROLS_NAME as NAME,
             crate::vk::ARM_SCHEDULING_CONTROLS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = ARM_SCHEDULING_CONTROLS_NAME;
+            const SPEC_VERSION: u32 = ARM_SCHEDULING_CONTROLS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_ARM_render_pass_striped"]
     pub mod render_pass_striped {
@@ -991,6 +1298,16 @@ pub mod arm {
             crate::vk::ARM_RENDER_PASS_STRIPED_NAME as NAME,
             crate::vk::ARM_RENDER_PASS_STRIPED_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = ARM_RENDER_PASS_STRIPED_NAME;
+            const SPEC_VERSION: u32 = ARM_RENDER_PASS_STRIPED_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_ARM_shader_core_builtins"]
     pub mod shader_core_builtins {
@@ -999,6 +1316,16 @@ pub mod arm {
             crate::vk::ARM_SHADER_CORE_BUILTINS_NAME as NAME,
             crate::vk::ARM_SHADER_CORE_BUILTINS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = ARM_SHADER_CORE_BUILTINS_NAME;
+            const SPEC_VERSION: u32 = ARM_SHADER_CORE_BUILTINS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged EXT"]
@@ -1119,6 +1446,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DEBUG_REPORT_NAME;
+            const SPEC_VERSION: u32 = EXT_DEBUG_REPORT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_EXT_depth_range_unrestricted"]
     pub mod depth_range_unrestricted {
@@ -1127,6 +1466,16 @@ pub mod ext {
             crate::vk::EXT_DEPTH_RANGE_UNRESTRICTED_NAME as NAME,
             crate::vk::EXT_DEPTH_RANGE_UNRESTRICTED_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DEPTH_RANGE_UNRESTRICTED_NAME;
+            const SPEC_VERSION: u32 = EXT_DEPTH_RANGE_UNRESTRICTED_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_debug_marker"]
     pub mod debug_marker {
@@ -1271,6 +1620,19 @@ pub mod ext {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DEBUG_MARKER_NAME;
+            const SPEC_VERSION: u32 = EXT_DEBUG_MARKER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(EXT_DEBUG_UTILS_NAME);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_EXT_transform_feedback"]
@@ -1460,6 +1822,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_TRANSFORM_FEEDBACK_NAME;
+            const SPEC_VERSION: u32 = EXT_TRANSFORM_FEEDBACK_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_validation_flags"]
     pub mod validation_flags {
@@ -1468,6 +1842,16 @@ pub mod ext {
             crate::vk::EXT_VALIDATION_FLAGS_NAME as NAME,
             crate::vk::EXT_VALIDATION_FLAGS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_VALIDATION_FLAGS_NAME;
+            const SPEC_VERSION: u32 = EXT_VALIDATION_FLAGS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_shader_subgroup_ballot"]
     pub mod shader_subgroup_ballot {
@@ -1476,6 +1860,16 @@ pub mod ext {
             crate::vk::EXT_SHADER_SUBGROUP_BALLOT_NAME as NAME,
             crate::vk::EXT_SHADER_SUBGROUP_BALLOT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SHADER_SUBGROUP_BALLOT_NAME;
+            const SPEC_VERSION: u32 = EXT_SHADER_SUBGROUP_BALLOT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_shader_subgroup_vote"]
     pub mod shader_subgroup_vote {
@@ -1484,6 +1878,16 @@ pub mod ext {
             crate::vk::EXT_SHADER_SUBGROUP_VOTE_NAME as NAME,
             crate::vk::EXT_SHADER_SUBGROUP_VOTE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SHADER_SUBGROUP_VOTE_NAME;
+            const SPEC_VERSION: u32 = EXT_SHADER_SUBGROUP_VOTE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_texture_compression_astc_hdr"]
     pub mod texture_compression_astc_hdr {
@@ -1492,6 +1896,17 @@ pub mod ext {
             crate::vk::EXT_TEXTURE_COMPRESSION_ASTC_HDR_NAME as NAME,
             crate::vk::EXT_TEXTURE_COMPRESSION_ASTC_HDR_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_TEXTURE_COMPRESSION_ASTC_HDR_NAME;
+            const SPEC_VERSION: u32 = EXT_TEXTURE_COMPRESSION_ASTC_HDR_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_astc_decode_mode"]
     pub mod astc_decode_mode {
@@ -1500,6 +1915,16 @@ pub mod ext {
             crate::vk::EXT_ASTC_DECODE_MODE_NAME as NAME,
             crate::vk::EXT_ASTC_DECODE_MODE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_ASTC_DECODE_MODE_NAME;
+            const SPEC_VERSION: u32 = EXT_ASTC_DECODE_MODE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_pipeline_robustness"]
     pub mod pipeline_robustness {
@@ -1508,6 +1933,16 @@ pub mod ext {
             crate::vk::EXT_PIPELINE_ROBUSTNESS_NAME as NAME,
             crate::vk::EXT_PIPELINE_ROBUSTNESS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_PIPELINE_ROBUSTNESS_NAME;
+            const SPEC_VERSION: u32 = EXT_PIPELINE_ROBUSTNESS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_conditional_rendering"]
     pub mod conditional_rendering {
@@ -1597,6 +2032,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_CONDITIONAL_RENDERING_NAME;
+            const SPEC_VERSION: u32 = EXT_CONDITIONAL_RENDERING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_direct_mode_display"]
     pub mod direct_mode_display {
@@ -1657,6 +2104,18 @@ pub mod ext {
                         }
                     },
                 }
+            }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DIRECT_MODE_DISPLAY_NAME;
+            const SPEC_VERSION: u32 = EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
             }
         }
     }
@@ -1748,6 +2207,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_ACQUIRE_XLIB_DISPLAY_NAME;
+            const SPEC_VERSION: u32 = EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_EXT_display_surface_counter"]
     pub mod display_surface_counter {
@@ -1815,6 +2286,18 @@ pub mod ext {
                         }
                     },
                 }
+            }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DISPLAY_SURFACE_COUNTER_NAME;
+            const SPEC_VERSION: u32 = EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
             }
         }
     }
@@ -1951,6 +2434,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DISPLAY_CONTROL_NAME;
+            const SPEC_VERSION: u32 = EXT_DISPLAY_CONTROL_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_discard_rectangles"]
     pub mod discard_rectangles {
@@ -2061,6 +2556,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DISCARD_RECTANGLES_NAME;
+            const SPEC_VERSION: u32 = EXT_DISCARD_RECTANGLES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_conservative_rasterization"]
     pub mod conservative_rasterization {
@@ -2069,6 +2576,16 @@ pub mod ext {
             crate::vk::EXT_CONSERVATIVE_RASTERIZATION_NAME as NAME,
             crate::vk::EXT_CONSERVATIVE_RASTERIZATION_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_CONSERVATIVE_RASTERIZATION_NAME;
+            const SPEC_VERSION: u32 = EXT_CONSERVATIVE_RASTERIZATION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_depth_clip_enable"]
     pub mod depth_clip_enable {
@@ -2077,6 +2594,16 @@ pub mod ext {
             crate::vk::EXT_DEPTH_CLIP_ENABLE_NAME as NAME,
             crate::vk::EXT_DEPTH_CLIP_ENABLE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DEPTH_CLIP_ENABLE_NAME;
+            const SPEC_VERSION: u32 = EXT_DEPTH_CLIP_ENABLE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_swapchain_colorspace"]
     pub mod swapchain_colorspace {
@@ -2085,6 +2612,16 @@ pub mod ext {
             crate::vk::EXT_SWAPCHAIN_COLORSPACE_NAME as NAME,
             crate::vk::EXT_SWAPCHAIN_COLORSPACE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SWAPCHAIN_COLORSPACE_NAME;
+            const SPEC_VERSION: u32 = EXT_SWAPCHAIN_COLORSPACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_hdr_metadata"]
     pub mod hdr_metadata {
@@ -2149,6 +2686,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_HDR_METADATA_NAME;
+            const SPEC_VERSION: u32 = EXT_HDR_METADATA_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_external_memory_dma_buf"]
     pub mod external_memory_dma_buf {
@@ -2157,6 +2706,16 @@ pub mod ext {
             crate::vk::EXT_EXTERNAL_MEMORY_DMA_BUF_NAME as NAME,
             crate::vk::EXT_EXTERNAL_MEMORY_DMA_BUF_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_EXTERNAL_MEMORY_DMA_BUF_NAME;
+            const SPEC_VERSION: u32 = EXT_EXTERNAL_MEMORY_DMA_BUF_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_queue_family_foreign"]
     pub mod queue_family_foreign {
@@ -2165,6 +2724,16 @@ pub mod ext {
             crate::vk::EXT_QUEUE_FAMILY_FOREIGN_NAME as NAME,
             crate::vk::EXT_QUEUE_FAMILY_FOREIGN_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_QUEUE_FAMILY_FOREIGN_NAME;
+            const SPEC_VERSION: u32 = EXT_QUEUE_FAMILY_FOREIGN_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_debug_utils"]
     pub mod debug_utils {
@@ -2474,6 +3043,20 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DEBUG_UTILS_NAME;
+            const SPEC_VERSION: u32 = EXT_DEBUG_UTILS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_EXT_sampler_filter_minmax"]
     pub mod sampler_filter_minmax {
@@ -2482,6 +3065,17 @@ pub mod ext {
             crate::vk::EXT_SAMPLER_FILTER_MINMAX_NAME as NAME,
             crate::vk::EXT_SAMPLER_FILTER_MINMAX_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SAMPLER_FILTER_MINMAX_NAME;
+            const SPEC_VERSION: u32 = EXT_SAMPLER_FILTER_MINMAX_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_inline_uniform_block"]
     pub mod inline_uniform_block {
@@ -2490,6 +3084,17 @@ pub mod ext {
             crate::vk::EXT_INLINE_UNIFORM_BLOCK_NAME as NAME,
             crate::vk::EXT_INLINE_UNIFORM_BLOCK_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_INLINE_UNIFORM_BLOCK_NAME;
+            const SPEC_VERSION: u32 = EXT_INLINE_UNIFORM_BLOCK_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_shader_stencil_export"]
     pub mod shader_stencil_export {
@@ -2498,6 +3103,16 @@ pub mod ext {
             crate::vk::EXT_SHADER_STENCIL_EXPORT_NAME as NAME,
             crate::vk::EXT_SHADER_STENCIL_EXPORT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SHADER_STENCIL_EXPORT_NAME;
+            const SPEC_VERSION: u32 = EXT_SHADER_STENCIL_EXPORT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_sample_locations"]
     pub mod sample_locations {
@@ -2625,6 +3240,20 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SAMPLE_LOCATIONS_NAME;
+            const SPEC_VERSION: u32 = EXT_SAMPLE_LOCATIONS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_EXT_blend_operation_advanced"]
     pub mod blend_operation_advanced {
@@ -2633,6 +3262,16 @@ pub mod ext {
             crate::vk::EXT_BLEND_OPERATION_ADVANCED_NAME as NAME,
             crate::vk::EXT_BLEND_OPERATION_ADVANCED_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_BLEND_OPERATION_ADVANCED_NAME;
+            const SPEC_VERSION: u32 = EXT_BLEND_OPERATION_ADVANCED_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_post_depth_coverage"]
     pub mod post_depth_coverage {
@@ -2641,6 +3280,16 @@ pub mod ext {
             crate::vk::EXT_POST_DEPTH_COVERAGE_NAME as NAME,
             crate::vk::EXT_POST_DEPTH_COVERAGE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_POST_DEPTH_COVERAGE_NAME;
+            const SPEC_VERSION: u32 = EXT_POST_DEPTH_COVERAGE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_image_drm_format_modifier"]
     pub mod image_drm_format_modifier {
@@ -2709,6 +3358,18 @@ pub mod ext {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_IMAGE_DRM_FORMAT_MODIFIER_NAME;
+            const SPEC_VERSION: u32 = EXT_IMAGE_DRM_FORMAT_MODIFIER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_EXT_validation_cache"]
@@ -2843,6 +3504,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_VALIDATION_CACHE_NAME;
+            const SPEC_VERSION: u32 = EXT_VALIDATION_CACHE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_descriptor_indexing"]
     pub mod descriptor_indexing {
@@ -2851,6 +3524,17 @@ pub mod ext {
             crate::vk::EXT_DESCRIPTOR_INDEXING_NAME as NAME,
             crate::vk::EXT_DESCRIPTOR_INDEXING_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DESCRIPTOR_INDEXING_NAME;
+            const SPEC_VERSION: u32 = EXT_DESCRIPTOR_INDEXING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_shader_viewport_index_layer"]
     pub mod shader_viewport_index_layer {
@@ -2859,6 +3543,17 @@ pub mod ext {
             crate::vk::EXT_SHADER_VIEWPORT_INDEX_LAYER_NAME as NAME,
             crate::vk::EXT_SHADER_VIEWPORT_INDEX_LAYER_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SHADER_VIEWPORT_INDEX_LAYER_NAME;
+            const SPEC_VERSION: u32 = EXT_SHADER_VIEWPORT_INDEX_LAYER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_filter_cubic"]
     pub mod filter_cubic {
@@ -2867,6 +3562,16 @@ pub mod ext {
             crate::vk::EXT_FILTER_CUBIC_NAME as NAME,
             crate::vk::EXT_FILTER_CUBIC_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_FILTER_CUBIC_NAME;
+            const SPEC_VERSION: u32 = EXT_FILTER_CUBIC_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_global_priority"]
     pub mod global_priority {
@@ -2875,6 +3580,17 @@ pub mod ext {
             crate::vk::EXT_GLOBAL_PRIORITY_NAME as NAME,
             crate::vk::EXT_GLOBAL_PRIORITY_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_GLOBAL_PRIORITY_NAME;
+            const SPEC_VERSION: u32 = EXT_GLOBAL_PRIORITY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(KHR_GLOBAL_PRIORITY_NAME);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_external_memory_host"]
     pub mod external_memory_host {
@@ -2945,6 +3661,18 @@ pub mod ext {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_EXTERNAL_MEMORY_HOST_NAME;
+            const SPEC_VERSION: u32 = EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_EXT_calibrated_timestamps"]
@@ -3076,6 +3804,21 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_CALIBRATED_TIMESTAMPS_NAME;
+            const SPEC_VERSION: u32 = EXT_CALIBRATED_TIMESTAMPS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(KHR_CALIBRATED_TIMESTAMPS_NAME);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_EXT_vertex_attribute_divisor"]
     pub mod vertex_attribute_divisor {
@@ -3084,6 +3827,17 @@ pub mod ext {
             crate::vk::EXT_VERTEX_ATTRIBUTE_DIVISOR_NAME as NAME,
             crate::vk::EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_VERTEX_ATTRIBUTE_DIVISOR_NAME;
+            const SPEC_VERSION: u32 = EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(KHR_VERTEX_ATTRIBUTE_DIVISOR_NAME);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_pipeline_creation_feedback"]
     pub mod pipeline_creation_feedback {
@@ -3092,6 +3846,17 @@ pub mod ext {
             crate::vk::EXT_PIPELINE_CREATION_FEEDBACK_NAME as NAME,
             crate::vk::EXT_PIPELINE_CREATION_FEEDBACK_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_PIPELINE_CREATION_FEEDBACK_NAME;
+            const SPEC_VERSION: u32 = EXT_PIPELINE_CREATION_FEEDBACK_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_pci_bus_info"]
     pub mod pci_bus_info {
@@ -3100,6 +3865,16 @@ pub mod ext {
             crate::vk::EXT_PCI_BUS_INFO_NAME as NAME,
             crate::vk::EXT_PCI_BUS_INFO_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_PCI_BUS_INFO_NAME;
+            const SPEC_VERSION: u32 = EXT_PCI_BUS_INFO_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_metal_surface"]
     pub mod metal_surface {
@@ -3168,6 +3943,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_METAL_SURFACE_NAME;
+            const SPEC_VERSION: u32 = EXT_METAL_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_EXT_fragment_density_map"]
     pub mod fragment_density_map {
@@ -3176,6 +3963,16 @@ pub mod ext {
             crate::vk::EXT_FRAGMENT_DENSITY_MAP_NAME as NAME,
             crate::vk::EXT_FRAGMENT_DENSITY_MAP_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_FRAGMENT_DENSITY_MAP_NAME;
+            const SPEC_VERSION: u32 = EXT_FRAGMENT_DENSITY_MAP_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_scalar_block_layout"]
     pub mod scalar_block_layout {
@@ -3184,6 +3981,17 @@ pub mod ext {
             crate::vk::EXT_SCALAR_BLOCK_LAYOUT_NAME as NAME,
             crate::vk::EXT_SCALAR_BLOCK_LAYOUT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SCALAR_BLOCK_LAYOUT_NAME;
+            const SPEC_VERSION: u32 = EXT_SCALAR_BLOCK_LAYOUT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_subgroup_size_control"]
     pub mod subgroup_size_control {
@@ -3192,6 +4000,17 @@ pub mod ext {
             crate::vk::EXT_SUBGROUP_SIZE_CONTROL_NAME as NAME,
             crate::vk::EXT_SUBGROUP_SIZE_CONTROL_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SUBGROUP_SIZE_CONTROL_NAME;
+            const SPEC_VERSION: u32 = EXT_SUBGROUP_SIZE_CONTROL_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_shader_image_atomic_int64"]
     pub mod shader_image_atomic_int64 {
@@ -3200,6 +4019,16 @@ pub mod ext {
             crate::vk::EXT_SHADER_IMAGE_ATOMIC_INT64_NAME as NAME,
             crate::vk::EXT_SHADER_IMAGE_ATOMIC_INT64_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SHADER_IMAGE_ATOMIC_INT64_NAME;
+            const SPEC_VERSION: u32 = EXT_SHADER_IMAGE_ATOMIC_INT64_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_memory_budget"]
     pub mod memory_budget {
@@ -3208,6 +4037,16 @@ pub mod ext {
             crate::vk::EXT_MEMORY_BUDGET_NAME as NAME,
             crate::vk::EXT_MEMORY_BUDGET_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_MEMORY_BUDGET_NAME;
+            const SPEC_VERSION: u32 = EXT_MEMORY_BUDGET_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_memory_priority"]
     pub mod memory_priority {
@@ -3216,6 +4055,16 @@ pub mod ext {
             crate::vk::EXT_MEMORY_PRIORITY_NAME as NAME,
             crate::vk::EXT_MEMORY_PRIORITY_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_MEMORY_PRIORITY_NAME;
+            const SPEC_VERSION: u32 = EXT_MEMORY_PRIORITY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_buffer_device_address"]
     pub mod buffer_device_address {
@@ -3281,6 +4130,18 @@ pub mod ext {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_BUFFER_DEVICE_ADDRESS_NAME;
+            const SPEC_VERSION: u32 = EXT_BUFFER_DEVICE_ADDRESS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_EXT_tooling_info"]
@@ -3350,6 +4211,19 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_TOOLING_INFO_NAME;
+            const SPEC_VERSION: u32 = EXT_TOOLING_INFO_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_EXT_separate_stencil_usage"]
     pub mod separate_stencil_usage {
@@ -3358,6 +4232,17 @@ pub mod ext {
             crate::vk::EXT_SEPARATE_STENCIL_USAGE_NAME as NAME,
             crate::vk::EXT_SEPARATE_STENCIL_USAGE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SEPARATE_STENCIL_USAGE_NAME;
+            const SPEC_VERSION: u32 = EXT_SEPARATE_STENCIL_USAGE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_validation_features"]
     pub mod validation_features {
@@ -3366,6 +4251,16 @@ pub mod ext {
             crate::vk::EXT_VALIDATION_FEATURES_NAME as NAME,
             crate::vk::EXT_VALIDATION_FEATURES_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_VALIDATION_FEATURES_NAME;
+            const SPEC_VERSION: u32 = EXT_VALIDATION_FEATURES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_fragment_shader_interlock"]
     pub mod fragment_shader_interlock {
@@ -3374,6 +4269,16 @@ pub mod ext {
             crate::vk::EXT_FRAGMENT_SHADER_INTERLOCK_NAME as NAME,
             crate::vk::EXT_FRAGMENT_SHADER_INTERLOCK_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_FRAGMENT_SHADER_INTERLOCK_NAME;
+            const SPEC_VERSION: u32 = EXT_FRAGMENT_SHADER_INTERLOCK_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_ycbcr_image_arrays"]
     pub mod ycbcr_image_arrays {
@@ -3382,6 +4287,16 @@ pub mod ext {
             crate::vk::EXT_YCBCR_IMAGE_ARRAYS_NAME as NAME,
             crate::vk::EXT_YCBCR_IMAGE_ARRAYS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_YCBCR_IMAGE_ARRAYS_NAME;
+            const SPEC_VERSION: u32 = EXT_YCBCR_IMAGE_ARRAYS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_provoking_vertex"]
     pub mod provoking_vertex {
@@ -3390,6 +4305,16 @@ pub mod ext {
             crate::vk::EXT_PROVOKING_VERTEX_NAME as NAME,
             crate::vk::EXT_PROVOKING_VERTEX_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_PROVOKING_VERTEX_NAME;
+            const SPEC_VERSION: u32 = EXT_PROVOKING_VERTEX_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_full_screen_exclusive"]
     pub mod full_screen_exclusive {
@@ -3563,6 +4488,20 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_FULL_SCREEN_EXCLUSIVE_NAME;
+            const SPEC_VERSION: u32 = EXT_FULL_SCREEN_EXCLUSIVE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_EXT_headless_surface"]
     pub mod headless_surface {
@@ -3629,6 +4568,18 @@ pub mod ext {
                         }
                     },
                 }
+            }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_HEADLESS_SURFACE_NAME;
+            const SPEC_VERSION: u32 = EXT_HEADLESS_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
             }
         }
     }
@@ -3698,6 +4649,19 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_LINE_RASTERIZATION_NAME;
+            const SPEC_VERSION: u32 = EXT_LINE_RASTERIZATION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(KHR_LINE_RASTERIZATION_NAME);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_shader_atomic_float"]
     pub mod shader_atomic_float {
@@ -3706,6 +4670,16 @@ pub mod ext {
             crate::vk::EXT_SHADER_ATOMIC_FLOAT_NAME as NAME,
             crate::vk::EXT_SHADER_ATOMIC_FLOAT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SHADER_ATOMIC_FLOAT_NAME;
+            const SPEC_VERSION: u32 = EXT_SHADER_ATOMIC_FLOAT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_host_query_reset"]
     pub mod host_query_reset {
@@ -3770,6 +4744,19 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_HOST_QUERY_RESET_NAME;
+            const SPEC_VERSION: u32 = EXT_HOST_QUERY_RESET_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_index_type_uint8"]
     pub mod index_type_uint8 {
@@ -3778,6 +4765,17 @@ pub mod ext {
             crate::vk::EXT_INDEX_TYPE_UINT8_NAME as NAME,
             crate::vk::EXT_INDEX_TYPE_UINT8_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_INDEX_TYPE_UINT8_NAME;
+            const SPEC_VERSION: u32 = EXT_INDEX_TYPE_UINT8_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(KHR_INDEX_TYPE_UINT8_NAME);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_extended_dynamic_state"]
     pub mod extended_dynamic_state {
@@ -4073,6 +5071,19 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_EXTENDED_DYNAMIC_STATE_NAME;
+            const SPEC_VERSION: u32 = EXT_EXTENDED_DYNAMIC_STATE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_host_image_copy"]
     pub mod host_image_copy {
@@ -4222,6 +5233,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_HOST_IMAGE_COPY_NAME;
+            const SPEC_VERSION: u32 = EXT_HOST_IMAGE_COPY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_map_memory_placed"]
     pub mod map_memory_placed {
@@ -4230,6 +5253,16 @@ pub mod ext {
             crate::vk::EXT_MAP_MEMORY_PLACED_NAME as NAME,
             crate::vk::EXT_MAP_MEMORY_PLACED_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_MAP_MEMORY_PLACED_NAME;
+            const SPEC_VERSION: u32 = EXT_MAP_MEMORY_PLACED_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_shader_atomic_float2"]
     pub mod shader_atomic_float2 {
@@ -4238,6 +5271,16 @@ pub mod ext {
             crate::vk::EXT_SHADER_ATOMIC_FLOAT2_NAME as NAME,
             crate::vk::EXT_SHADER_ATOMIC_FLOAT2_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SHADER_ATOMIC_FLOAT2_NAME;
+            const SPEC_VERSION: u32 = EXT_SHADER_ATOMIC_FLOAT2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_surface_maintenance1"]
     pub mod surface_maintenance1 {
@@ -4246,6 +5289,16 @@ pub mod ext {
             crate::vk::EXT_SURFACE_MAINTENANCE1_NAME as NAME,
             crate::vk::EXT_SURFACE_MAINTENANCE1_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SURFACE_MAINTENANCE1_NAME;
+            const SPEC_VERSION: u32 = EXT_SURFACE_MAINTENANCE1_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_swapchain_maintenance1"]
     pub mod swapchain_maintenance1 {
@@ -4312,6 +5365,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SWAPCHAIN_MAINTENANCE1_NAME;
+            const SPEC_VERSION: u32 = EXT_SWAPCHAIN_MAINTENANCE1_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_shader_demote_to_helper_invocation"]
     pub mod shader_demote_to_helper_invocation {
@@ -4320,6 +5385,17 @@ pub mod ext {
             crate::vk::EXT_SHADER_DEMOTE_TO_HELPER_INVOCATION_NAME as NAME,
             crate::vk::EXT_SHADER_DEMOTE_TO_HELPER_INVOCATION_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SHADER_DEMOTE_TO_HELPER_INVOCATION_NAME;
+            const SPEC_VERSION: u32 = EXT_SHADER_DEMOTE_TO_HELPER_INVOCATION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_texel_buffer_alignment"]
     pub mod texel_buffer_alignment {
@@ -4328,6 +5404,17 @@ pub mod ext {
             crate::vk::EXT_TEXEL_BUFFER_ALIGNMENT_NAME as NAME,
             crate::vk::EXT_TEXEL_BUFFER_ALIGNMENT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_TEXEL_BUFFER_ALIGNMENT_NAME;
+            const SPEC_VERSION: u32 = EXT_TEXEL_BUFFER_ALIGNMENT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_depth_bias_control"]
     pub mod depth_bias_control {
@@ -4393,6 +5480,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DEPTH_BIAS_CONTROL_NAME;
+            const SPEC_VERSION: u32 = EXT_DEPTH_BIAS_CONTROL_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_device_memory_report"]
     pub mod device_memory_report {
@@ -4401,6 +5500,16 @@ pub mod ext {
             crate::vk::EXT_DEVICE_MEMORY_REPORT_NAME as NAME,
             crate::vk::EXT_DEVICE_MEMORY_REPORT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DEVICE_MEMORY_REPORT_NAME;
+            const SPEC_VERSION: u32 = EXT_DEVICE_MEMORY_REPORT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_acquire_drm_display"]
     pub mod acquire_drm_display {
@@ -4486,6 +5595,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_ACQUIRE_DRM_DISPLAY_NAME;
+            const SPEC_VERSION: u32 = EXT_ACQUIRE_DRM_DISPLAY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_EXT_robustness2"]
     pub mod robustness2 {
@@ -4494,6 +5615,16 @@ pub mod ext {
             crate::vk::EXT_ROBUSTNESS2_NAME as NAME,
             crate::vk::EXT_ROBUSTNESS2_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_ROBUSTNESS2_NAME;
+            const SPEC_VERSION: u32 = EXT_ROBUSTNESS2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_custom_border_color"]
     pub mod custom_border_color {
@@ -4502,6 +5633,16 @@ pub mod ext {
             crate::vk::EXT_CUSTOM_BORDER_COLOR_NAME as NAME,
             crate::vk::EXT_CUSTOM_BORDER_COLOR_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_CUSTOM_BORDER_COLOR_NAME;
+            const SPEC_VERSION: u32 = EXT_CUSTOM_BORDER_COLOR_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_private_data"]
     pub mod private_data {
@@ -4629,6 +5770,19 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_PRIVATE_DATA_NAME;
+            const SPEC_VERSION: u32 = EXT_PRIVATE_DATA_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_pipeline_creation_cache_control"]
     pub mod pipeline_creation_cache_control {
@@ -4637,6 +5791,17 @@ pub mod ext {
             crate::vk::EXT_PIPELINE_CREATION_CACHE_CONTROL_NAME as NAME,
             crate::vk::EXT_PIPELINE_CREATION_CACHE_CONTROL_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_PIPELINE_CREATION_CACHE_CONTROL_NAME;
+            const SPEC_VERSION: u32 = EXT_PIPELINE_CREATION_CACHE_CONTROL_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_metal_objects"]
     pub mod metal_objects {
@@ -4702,6 +5867,18 @@ pub mod ext {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_METAL_OBJECTS_NAME;
+            const SPEC_VERSION: u32 = EXT_METAL_OBJECTS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_EXT_descriptor_buffer"]
@@ -5001,6 +6178,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DESCRIPTOR_BUFFER_NAME;
+            const SPEC_VERSION: u32 = EXT_DESCRIPTOR_BUFFER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_graphics_pipeline_library"]
     pub mod graphics_pipeline_library {
@@ -5009,6 +6198,16 @@ pub mod ext {
             crate::vk::EXT_GRAPHICS_PIPELINE_LIBRARY_NAME as NAME,
             crate::vk::EXT_GRAPHICS_PIPELINE_LIBRARY_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_GRAPHICS_PIPELINE_LIBRARY_NAME;
+            const SPEC_VERSION: u32 = EXT_GRAPHICS_PIPELINE_LIBRARY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_mesh_shader"]
     pub mod mesh_shader {
@@ -5125,6 +6324,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_MESH_SHADER_NAME;
+            const SPEC_VERSION: u32 = EXT_MESH_SHADER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_ycbcr_2plane_444_formats"]
     pub mod ycbcr_2plane_444_formats {
@@ -5133,6 +6344,17 @@ pub mod ext {
             crate::vk::EXT_YCBCR_2PLANE_444_FORMATS_NAME as NAME,
             crate::vk::EXT_YCBCR_2PLANE_444_FORMATS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_YCBCR_2PLANE_444_FORMATS_NAME;
+            const SPEC_VERSION: u32 = EXT_YCBCR_2PLANE_444_FORMATS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_fragment_density_map2"]
     pub mod fragment_density_map2 {
@@ -5141,6 +6363,16 @@ pub mod ext {
             crate::vk::EXT_FRAGMENT_DENSITY_MAP2_NAME as NAME,
             crate::vk::EXT_FRAGMENT_DENSITY_MAP2_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_FRAGMENT_DENSITY_MAP2_NAME;
+            const SPEC_VERSION: u32 = EXT_FRAGMENT_DENSITY_MAP2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_image_robustness"]
     pub mod image_robustness {
@@ -5149,6 +6381,17 @@ pub mod ext {
             crate::vk::EXT_IMAGE_ROBUSTNESS_NAME as NAME,
             crate::vk::EXT_IMAGE_ROBUSTNESS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_IMAGE_ROBUSTNESS_NAME;
+            const SPEC_VERSION: u32 = EXT_IMAGE_ROBUSTNESS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_image_compression_control"]
     pub mod image_compression_control {
@@ -5218,6 +6461,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_IMAGE_COMPRESSION_CONTROL_NAME;
+            const SPEC_VERSION: u32 = EXT_IMAGE_COMPRESSION_CONTROL_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_attachment_feedback_loop_layout"]
     pub mod attachment_feedback_loop_layout {
@@ -5226,6 +6481,16 @@ pub mod ext {
             crate::vk::EXT_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_NAME as NAME,
             crate::vk::EXT_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_NAME;
+            const SPEC_VERSION: u32 = EXT_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_4444_formats"]
     pub mod _4444_formats {
@@ -5234,6 +6499,17 @@ pub mod ext {
             crate::vk::EXT_4444_FORMATS_NAME as NAME,
             crate::vk::EXT_4444_FORMATS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_4444_FORMATS_NAME;
+            const SPEC_VERSION: u32 = EXT_4444_FORMATS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_device_fault"]
     pub mod device_fault {
@@ -5301,6 +6577,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DEVICE_FAULT_NAME;
+            const SPEC_VERSION: u32 = EXT_DEVICE_FAULT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_rgba10x6_formats"]
     pub mod rgba10x6_formats {
@@ -5309,6 +6597,16 @@ pub mod ext {
             crate::vk::EXT_RGBA10X6_FORMATS_NAME as NAME,
             crate::vk::EXT_RGBA10X6_FORMATS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_RGBA10X6_FORMATS_NAME;
+            const SPEC_VERSION: u32 = EXT_RGBA10X6_FORMATS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_directfb_surface"]
     pub mod directfb_surface {
@@ -5400,6 +6698,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DIRECTFB_SURFACE_NAME;
+            const SPEC_VERSION: u32 = EXT_DIRECTFB_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_EXT_vertex_input_dynamic_state"]
     pub mod vertex_input_dynamic_state {
@@ -5469,6 +6779,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_VERTEX_INPUT_DYNAMIC_STATE_NAME;
+            const SPEC_VERSION: u32 = EXT_VERTEX_INPUT_DYNAMIC_STATE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_physical_device_drm"]
     pub mod physical_device_drm {
@@ -5477,6 +6799,16 @@ pub mod ext {
             crate::vk::EXT_PHYSICAL_DEVICE_DRM_NAME as NAME,
             crate::vk::EXT_PHYSICAL_DEVICE_DRM_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_PHYSICAL_DEVICE_DRM_NAME;
+            const SPEC_VERSION: u32 = EXT_PHYSICAL_DEVICE_DRM_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_device_address_binding_report"]
     pub mod device_address_binding_report {
@@ -5485,6 +6817,16 @@ pub mod ext {
             crate::vk::EXT_DEVICE_ADDRESS_BINDING_REPORT_NAME as NAME,
             crate::vk::EXT_DEVICE_ADDRESS_BINDING_REPORT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DEVICE_ADDRESS_BINDING_REPORT_NAME;
+            const SPEC_VERSION: u32 = EXT_DEVICE_ADDRESS_BINDING_REPORT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_depth_clip_control"]
     pub mod depth_clip_control {
@@ -5493,6 +6835,16 @@ pub mod ext {
             crate::vk::EXT_DEPTH_CLIP_CONTROL_NAME as NAME,
             crate::vk::EXT_DEPTH_CLIP_CONTROL_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DEPTH_CLIP_CONTROL_NAME;
+            const SPEC_VERSION: u32 = EXT_DEPTH_CLIP_CONTROL_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_primitive_topology_list_restart"]
     pub mod primitive_topology_list_restart {
@@ -5501,6 +6853,16 @@ pub mod ext {
             crate::vk::EXT_PRIMITIVE_TOPOLOGY_LIST_RESTART_NAME as NAME,
             crate::vk::EXT_PRIMITIVE_TOPOLOGY_LIST_RESTART_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_PRIMITIVE_TOPOLOGY_LIST_RESTART_NAME;
+            const SPEC_VERSION: u32 = EXT_PRIMITIVE_TOPOLOGY_LIST_RESTART_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_pipeline_properties"]
     pub mod pipeline_properties {
@@ -5575,6 +6937,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_PIPELINE_PROPERTIES_NAME;
+            const SPEC_VERSION: u32 = EXT_PIPELINE_PROPERTIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_frame_boundary"]
     pub mod frame_boundary {
@@ -5583,6 +6957,16 @@ pub mod ext {
             crate::vk::EXT_FRAME_BOUNDARY_NAME as NAME,
             crate::vk::EXT_FRAME_BOUNDARY_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_FRAME_BOUNDARY_NAME;
+            const SPEC_VERSION: u32 = EXT_FRAME_BOUNDARY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_multisampled_render_to_single_sampled"]
     pub mod multisampled_render_to_single_sampled {
@@ -5591,6 +6975,16 @@ pub mod ext {
             crate::vk::EXT_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_NAME as NAME,
             crate::vk::EXT_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_NAME;
+            const SPEC_VERSION: u32 = EXT_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_extended_dynamic_state2"]
     pub mod extended_dynamic_state2 {
@@ -5735,6 +7129,19 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_EXTENDED_DYNAMIC_STATE2_NAME;
+            const SPEC_VERSION: u32 = EXT_EXTENDED_DYNAMIC_STATE2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_color_write_enable"]
     pub mod color_write_enable {
@@ -5802,6 +7209,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_COLOR_WRITE_ENABLE_NAME;
+            const SPEC_VERSION: u32 = EXT_COLOR_WRITE_ENABLE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_primitives_generated_query"]
     pub mod primitives_generated_query {
@@ -5810,6 +7229,16 @@ pub mod ext {
             crate::vk::EXT_PRIMITIVES_GENERATED_QUERY_NAME as NAME,
             crate::vk::EXT_PRIMITIVES_GENERATED_QUERY_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_PRIMITIVES_GENERATED_QUERY_NAME;
+            const SPEC_VERSION: u32 = EXT_PRIMITIVES_GENERATED_QUERY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_global_priority_query"]
     pub mod global_priority_query {
@@ -5818,6 +7247,17 @@ pub mod ext {
             crate::vk::EXT_GLOBAL_PRIORITY_QUERY_NAME as NAME,
             crate::vk::EXT_GLOBAL_PRIORITY_QUERY_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_GLOBAL_PRIORITY_QUERY_NAME;
+            const SPEC_VERSION: u32 = EXT_GLOBAL_PRIORITY_QUERY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(KHR_GLOBAL_PRIORITY_NAME);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_image_view_min_lod"]
     pub mod image_view_min_lod {
@@ -5826,6 +7266,16 @@ pub mod ext {
             crate::vk::EXT_IMAGE_VIEW_MIN_LOD_NAME as NAME,
             crate::vk::EXT_IMAGE_VIEW_MIN_LOD_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_IMAGE_VIEW_MIN_LOD_NAME;
+            const SPEC_VERSION: u32 = EXT_IMAGE_VIEW_MIN_LOD_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_multi_draw"]
     pub mod multi_draw {
@@ -5917,6 +7367,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_MULTI_DRAW_NAME;
+            const SPEC_VERSION: u32 = EXT_MULTI_DRAW_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_image_2d_view_of_3d"]
     pub mod image_2d_view_of_3d {
@@ -5925,6 +7387,16 @@ pub mod ext {
             crate::vk::EXT_IMAGE_2D_VIEW_OF_3D_NAME as NAME,
             crate::vk::EXT_IMAGE_2D_VIEW_OF_3D_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_IMAGE_2D_VIEW_OF_3D_NAME;
+            const SPEC_VERSION: u32 = EXT_IMAGE_2D_VIEW_OF_3D_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_shader_tile_image"]
     pub mod shader_tile_image {
@@ -5933,6 +7405,16 @@ pub mod ext {
             crate::vk::EXT_SHADER_TILE_IMAGE_NAME as NAME,
             crate::vk::EXT_SHADER_TILE_IMAGE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SHADER_TILE_IMAGE_NAME;
+            const SPEC_VERSION: u32 = EXT_SHADER_TILE_IMAGE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_opacity_micromap"]
     pub mod opacity_micromap {
@@ -6265,6 +7747,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_OPACITY_MICROMAP_NAME;
+            const SPEC_VERSION: u32 = EXT_OPACITY_MICROMAP_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_load_store_op_none"]
     pub mod load_store_op_none {
@@ -6273,6 +7767,17 @@ pub mod ext {
             crate::vk::EXT_LOAD_STORE_OP_NONE_NAME as NAME,
             crate::vk::EXT_LOAD_STORE_OP_NONE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_LOAD_STORE_OP_NONE_NAME;
+            const SPEC_VERSION: u32 = EXT_LOAD_STORE_OP_NONE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(KHR_LOAD_STORE_OP_NONE_NAME);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_border_color_swizzle"]
     pub mod border_color_swizzle {
@@ -6281,6 +7786,16 @@ pub mod ext {
             crate::vk::EXT_BORDER_COLOR_SWIZZLE_NAME as NAME,
             crate::vk::EXT_BORDER_COLOR_SWIZZLE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_BORDER_COLOR_SWIZZLE_NAME;
+            const SPEC_VERSION: u32 = EXT_BORDER_COLOR_SWIZZLE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_pageable_device_local_memory"]
     pub mod pageable_device_local_memory {
@@ -6348,6 +7863,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_PAGEABLE_DEVICE_LOCAL_MEMORY_NAME;
+            const SPEC_VERSION: u32 = EXT_PAGEABLE_DEVICE_LOCAL_MEMORY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_image_sliced_view_of_3d"]
     pub mod image_sliced_view_of_3d {
@@ -6356,6 +7883,16 @@ pub mod ext {
             crate::vk::EXT_IMAGE_SLICED_VIEW_OF_3D_NAME as NAME,
             crate::vk::EXT_IMAGE_SLICED_VIEW_OF_3D_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_IMAGE_SLICED_VIEW_OF_3D_NAME;
+            const SPEC_VERSION: u32 = EXT_IMAGE_SLICED_VIEW_OF_3D_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_depth_clamp_zero_one"]
     pub mod depth_clamp_zero_one {
@@ -6364,6 +7901,16 @@ pub mod ext {
             crate::vk::EXT_DEPTH_CLAMP_ZERO_ONE_NAME as NAME,
             crate::vk::EXT_DEPTH_CLAMP_ZERO_ONE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DEPTH_CLAMP_ZERO_ONE_NAME;
+            const SPEC_VERSION: u32 = EXT_DEPTH_CLAMP_ZERO_ONE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_non_seamless_cube_map"]
     pub mod non_seamless_cube_map {
@@ -6372,6 +7919,16 @@ pub mod ext {
             crate::vk::EXT_NON_SEAMLESS_CUBE_MAP_NAME as NAME,
             crate::vk::EXT_NON_SEAMLESS_CUBE_MAP_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_NON_SEAMLESS_CUBE_MAP_NAME;
+            const SPEC_VERSION: u32 = EXT_NON_SEAMLESS_CUBE_MAP_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_image_compression_control_swapchain"]
     pub mod image_compression_control_swapchain {
@@ -6380,6 +7937,16 @@ pub mod ext {
             crate::vk::EXT_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_NAME as NAME,
             crate::vk::EXT_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_NAME;
+            const SPEC_VERSION: u32 = EXT_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_nested_command_buffer"]
     pub mod nested_command_buffer {
@@ -6388,6 +7955,16 @@ pub mod ext {
             crate::vk::EXT_NESTED_COMMAND_BUFFER_NAME as NAME,
             crate::vk::EXT_NESTED_COMMAND_BUFFER_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_NESTED_COMMAND_BUFFER_NAME;
+            const SPEC_VERSION: u32 = EXT_NESTED_COMMAND_BUFFER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_external_memory_acquire_unmodified"]
     pub mod external_memory_acquire_unmodified {
@@ -6396,6 +7973,16 @@ pub mod ext {
             crate::vk::EXT_EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_NAME as NAME,
             crate::vk::EXT_EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_NAME;
+            const SPEC_VERSION: u32 = EXT_EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_extended_dynamic_state3"]
     pub mod extended_dynamic_state3 {
@@ -7097,6 +8684,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_EXTENDED_DYNAMIC_STATE3_NAME;
+            const SPEC_VERSION: u32 = EXT_EXTENDED_DYNAMIC_STATE3_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_subpass_merge_feedback"]
     pub mod subpass_merge_feedback {
@@ -7105,6 +8704,16 @@ pub mod ext {
             crate::vk::EXT_SUBPASS_MERGE_FEEDBACK_NAME as NAME,
             crate::vk::EXT_SUBPASS_MERGE_FEEDBACK_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SUBPASS_MERGE_FEEDBACK_NAME;
+            const SPEC_VERSION: u32 = EXT_SUBPASS_MERGE_FEEDBACK_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_shader_module_identifier"]
     pub mod shader_module_identifier {
@@ -7196,6 +8805,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SHADER_MODULE_IDENTIFIER_NAME;
+            const SPEC_VERSION: u32 = EXT_SHADER_MODULE_IDENTIFIER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_rasterization_order_attachment_access"]
     pub mod rasterization_order_attachment_access {
@@ -7204,6 +8825,16 @@ pub mod ext {
             crate::vk::EXT_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_NAME as NAME,
             crate::vk::EXT_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_NAME;
+            const SPEC_VERSION: u32 = EXT_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_legacy_dithering"]
     pub mod legacy_dithering {
@@ -7212,6 +8843,16 @@ pub mod ext {
             crate::vk::EXT_LEGACY_DITHERING_NAME as NAME,
             crate::vk::EXT_LEGACY_DITHERING_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_LEGACY_DITHERING_NAME;
+            const SPEC_VERSION: u32 = EXT_LEGACY_DITHERING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_pipeline_protected_access"]
     pub mod pipeline_protected_access {
@@ -7220,6 +8861,16 @@ pub mod ext {
             crate::vk::EXT_PIPELINE_PROTECTED_ACCESS_NAME as NAME,
             crate::vk::EXT_PIPELINE_PROTECTED_ACCESS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_PIPELINE_PROTECTED_ACCESS_NAME;
+            const SPEC_VERSION: u32 = EXT_PIPELINE_PROTECTED_ACCESS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_shader_object"]
     pub mod shader_object {
@@ -8388,6 +10039,18 @@ pub mod ext {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_SHADER_OBJECT_NAME;
+            const SPEC_VERSION: u32 = EXT_SHADER_OBJECT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_mutable_descriptor_type"]
     pub mod mutable_descriptor_type {
@@ -8396,6 +10059,16 @@ pub mod ext {
             crate::vk::EXT_MUTABLE_DESCRIPTOR_TYPE_NAME as NAME,
             crate::vk::EXT_MUTABLE_DESCRIPTOR_TYPE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_MUTABLE_DESCRIPTOR_TYPE_NAME;
+            const SPEC_VERSION: u32 = EXT_MUTABLE_DESCRIPTOR_TYPE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_legacy_vertex_attributes"]
     pub mod legacy_vertex_attributes {
@@ -8412,6 +10085,16 @@ pub mod ext {
             crate::vk::EXT_LAYER_SETTINGS_NAME as NAME,
             crate::vk::EXT_LAYER_SETTINGS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_LAYER_SETTINGS_NAME;
+            const SPEC_VERSION: u32 = EXT_LAYER_SETTINGS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_pipeline_library_group_handles"]
     pub mod pipeline_library_group_handles {
@@ -8420,6 +10103,16 @@ pub mod ext {
             crate::vk::EXT_PIPELINE_LIBRARY_GROUP_HANDLES_NAME as NAME,
             crate::vk::EXT_PIPELINE_LIBRARY_GROUP_HANDLES_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_PIPELINE_LIBRARY_GROUP_HANDLES_NAME;
+            const SPEC_VERSION: u32 = EXT_PIPELINE_LIBRARY_GROUP_HANDLES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_dynamic_rendering_unused_attachments"]
     pub mod dynamic_rendering_unused_attachments {
@@ -8428,6 +10121,16 @@ pub mod ext {
             crate::vk::EXT_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_NAME as NAME,
             crate::vk::EXT_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_NAME;
+            const SPEC_VERSION: u32 = EXT_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_EXT_attachment_feedback_loop_dynamic_state"]
     pub mod attachment_feedback_loop_dynamic_state {
@@ -8495,6 +10198,18 @@ pub mod ext {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = EXT_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_NAME;
+            const SPEC_VERSION: u32 = EXT_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_EXT_shader_replicated_composites"]
@@ -8895,6 +10610,18 @@ pub mod fuchsia {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = FUCHSIA_IMAGEPIPE_SURFACE_NAME;
+            const SPEC_VERSION: u32 = FUCHSIA_IMAGEPIPE_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_FUCHSIA_external_memory"]
     pub mod external_memory {
@@ -8987,6 +10714,18 @@ pub mod fuchsia {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = FUCHSIA_EXTERNAL_MEMORY_NAME;
+            const SPEC_VERSION: u32 = FUCHSIA_EXTERNAL_MEMORY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_FUCHSIA_external_semaphore"]
     pub mod external_semaphore {
@@ -9077,6 +10816,18 @@ pub mod fuchsia {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = FUCHSIA_EXTERNAL_SEMAPHORE_NAME;
+            const SPEC_VERSION: u32 = FUCHSIA_EXTERNAL_SEMAPHORE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_FUCHSIA_buffer_collection"]
@@ -9238,6 +10989,18 @@ pub mod fuchsia {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = FUCHSIA_BUFFER_COLLECTION_NAME;
+            const SPEC_VERSION: u32 = FUCHSIA_BUFFER_COLLECTION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged GGP"]
@@ -9310,6 +11073,18 @@ pub mod ggp {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = GGP_STREAM_DESCRIPTOR_SURFACE_NAME;
+            const SPEC_VERSION: u32 = GGP_STREAM_DESCRIPTOR_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_GGP_frame_token"]
     pub mod frame_token {
@@ -9318,6 +11093,16 @@ pub mod ggp {
             crate::vk::GGP_FRAME_TOKEN_NAME as NAME,
             crate::vk::GGP_FRAME_TOKEN_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = GGP_FRAME_TOKEN_NAME;
+            const SPEC_VERSION: u32 = GGP_FRAME_TOKEN_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged GOOGLE"]
@@ -9412,6 +11197,18 @@ pub mod google {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = GOOGLE_DISPLAY_TIMING_NAME;
+            const SPEC_VERSION: u32 = GOOGLE_DISPLAY_TIMING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_GOOGLE_hlsl_functionality1"]
     pub mod hlsl_functionality1 {
@@ -9420,6 +11217,16 @@ pub mod google {
             crate::vk::GOOGLE_HLSL_FUNCTIONALITY1_NAME as NAME,
             crate::vk::GOOGLE_HLSL_FUNCTIONALITY1_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = GOOGLE_HLSL_FUNCTIONALITY1_NAME;
+            const SPEC_VERSION: u32 = GOOGLE_HLSL_FUNCTIONALITY1_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_GOOGLE_decorate_string"]
     pub mod decorate_string {
@@ -9428,6 +11235,16 @@ pub mod google {
             crate::vk::GOOGLE_DECORATE_STRING_NAME as NAME,
             crate::vk::GOOGLE_DECORATE_STRING_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = GOOGLE_DECORATE_STRING_NAME;
+            const SPEC_VERSION: u32 = GOOGLE_DECORATE_STRING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_GOOGLE_user_type"]
     pub mod user_type {
@@ -9436,6 +11253,16 @@ pub mod google {
             crate::vk::GOOGLE_USER_TYPE_NAME as NAME,
             crate::vk::GOOGLE_USER_TYPE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = GOOGLE_USER_TYPE_NAME;
+            const SPEC_VERSION: u32 = GOOGLE_USER_TYPE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_GOOGLE_surfaceless_query"]
     pub mod surfaceless_query {
@@ -9444,6 +11271,16 @@ pub mod google {
             crate::vk::GOOGLE_SURFACELESS_QUERY_NAME as NAME,
             crate::vk::GOOGLE_SURFACELESS_QUERY_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = GOOGLE_SURFACELESS_QUERY_NAME;
+            const SPEC_VERSION: u32 = GOOGLE_SURFACELESS_QUERY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged HUAWEI"]
@@ -9535,6 +11372,18 @@ pub mod huawei {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = HUAWEI_SUBPASS_SHADING_NAME;
+            const SPEC_VERSION: u32 = HUAWEI_SUBPASS_SHADING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_HUAWEI_invocation_mask"]
     pub mod invocation_mask {
@@ -9601,6 +11450,18 @@ pub mod huawei {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = HUAWEI_INVOCATION_MASK_NAME;
+            const SPEC_VERSION: u32 = HUAWEI_INVOCATION_MASK_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_HUAWEI_cluster_culling_shader"]
@@ -9692,6 +11553,18 @@ pub mod huawei {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = HUAWEI_CLUSTER_CULLING_SHADER_NAME;
+            const SPEC_VERSION: u32 = HUAWEI_CLUSTER_CULLING_SHADER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged IMG"]
@@ -9703,6 +11576,16 @@ pub mod img {
             crate::vk::IMG_FILTER_CUBIC_NAME as NAME,
             crate::vk::IMG_FILTER_CUBIC_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = IMG_FILTER_CUBIC_NAME;
+            const SPEC_VERSION: u32 = IMG_FILTER_CUBIC_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_IMG_format_pvrtc"]
     pub mod format_pvrtc {
@@ -9711,6 +11594,16 @@ pub mod img {
             crate::vk::IMG_FORMAT_PVRTC_NAME as NAME,
             crate::vk::IMG_FORMAT_PVRTC_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = IMG_FORMAT_PVRTC_NAME;
+            const SPEC_VERSION: u32 = IMG_FORMAT_PVRTC_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_IMG_relaxed_line_rasterization"]
     pub mod relaxed_line_rasterization {
@@ -9719,6 +11612,16 @@ pub mod img {
             crate::vk::IMG_RELAXED_LINE_RASTERIZATION_NAME as NAME,
             crate::vk::IMG_RELAXED_LINE_RASTERIZATION_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = IMG_RELAXED_LINE_RASTERIZATION_NAME;
+            const SPEC_VERSION: u32 = IMG_RELAXED_LINE_RASTERIZATION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged INTEL"]
@@ -9730,6 +11633,16 @@ pub mod intel {
             crate::vk::INTEL_SHADER_INTEGER_FUNCTIONS2_NAME as NAME,
             crate::vk::INTEL_SHADER_INTEGER_FUNCTIONS2_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = INTEL_SHADER_INTEGER_FUNCTIONS2_NAME;
+            const SPEC_VERSION: u32 = INTEL_SHADER_INTEGER_FUNCTIONS2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_INTEL_performance_query"]
     pub mod performance_query {
@@ -9967,6 +11880,18 @@ pub mod intel {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = INTEL_PERFORMANCE_QUERY_NAME;
+            const SPEC_VERSION: u32 = INTEL_PERFORMANCE_QUERY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged KHR"]
@@ -10124,6 +12049,18 @@ pub mod khr {
                         }
                     },
                 }
+            }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SURFACE_NAME;
+            const SPEC_VERSION: u32 = KHR_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
             }
         }
     }
@@ -10399,6 +12336,20 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SWAPCHAIN_NAME;
+            const SPEC_VERSION: u32 = KHR_SWAPCHAIN_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_display"]
     pub mod display {
@@ -10605,6 +12556,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_DISPLAY_NAME;
+            const SPEC_VERSION: u32 = KHR_DISPLAY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_display_swapchain"]
     pub mod display_swapchain {
@@ -10673,6 +12636,18 @@ pub mod khr {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_DISPLAY_SWAPCHAIN_NAME;
+            const SPEC_VERSION: u32 = KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_KHR_xlib_surface"]
@@ -10766,6 +12741,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_XLIB_SURFACE_NAME;
+            const SPEC_VERSION: u32 = KHR_XLIB_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_xcb_surface"]
     pub mod xcb_surface {
@@ -10855,6 +12842,18 @@ pub mod khr {
                         }
                     },
                 }
+            }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_XCB_SURFACE_NAME;
+            const SPEC_VERSION: u32 = KHR_XCB_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
             }
         }
     }
@@ -10948,6 +12947,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_WAYLAND_SURFACE_NAME;
+            const SPEC_VERSION: u32 = KHR_WAYLAND_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_android_surface"]
     pub mod android_surface {
@@ -11014,6 +13025,18 @@ pub mod khr {
                         }
                     },
                 }
+            }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_ANDROID_SURFACE_NAME;
+            const SPEC_VERSION: u32 = KHR_ANDROID_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
             }
         }
     }
@@ -11106,6 +13129,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_WIN32_SURFACE_NAME;
+            const SPEC_VERSION: u32 = KHR_WIN32_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_sampler_mirror_clamp_to_edge"]
     pub mod sampler_mirror_clamp_to_edge {
@@ -11114,6 +13149,17 @@ pub mod khr {
             crate::vk::KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_NAME as NAME,
             crate::vk::KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_NAME;
+            const SPEC_VERSION: u32 = KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_video_queue"]
     pub mod video_queue {
@@ -11461,6 +13507,20 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_VIDEO_QUEUE_NAME;
+            const SPEC_VERSION: u32 = KHR_VIDEO_QUEUE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_video_decode_queue"]
     pub mod video_decode_queue {
@@ -11523,6 +13583,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_VIDEO_DECODE_QUEUE_NAME;
+            const SPEC_VERSION: u32 = KHR_VIDEO_DECODE_QUEUE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_video_encode_h264"]
     pub mod video_encode_h264 {
@@ -11531,6 +13603,16 @@ pub mod khr {
             crate::vk::KHR_VIDEO_ENCODE_H264_NAME as NAME,
             crate::vk::KHR_VIDEO_ENCODE_H264_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_VIDEO_ENCODE_H264_NAME;
+            const SPEC_VERSION: u32 = KHR_VIDEO_ENCODE_H264_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_video_encode_h265"]
     pub mod video_encode_h265 {
@@ -11539,6 +13621,16 @@ pub mod khr {
             crate::vk::KHR_VIDEO_ENCODE_H265_NAME as NAME,
             crate::vk::KHR_VIDEO_ENCODE_H265_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_VIDEO_ENCODE_H265_NAME;
+            const SPEC_VERSION: u32 = KHR_VIDEO_ENCODE_H265_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_video_decode_h264"]
     pub mod video_decode_h264 {
@@ -11547,6 +13639,16 @@ pub mod khr {
             crate::vk::KHR_VIDEO_DECODE_H264_NAME as NAME,
             crate::vk::KHR_VIDEO_DECODE_H264_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_VIDEO_DECODE_H264_NAME;
+            const SPEC_VERSION: u32 = KHR_VIDEO_DECODE_H264_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_dynamic_rendering"]
     pub mod dynamic_rendering {
@@ -11631,6 +13733,19 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_DYNAMIC_RENDERING_NAME;
+            const SPEC_VERSION: u32 = KHR_DYNAMIC_RENDERING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_multiview"]
     pub mod multiview {
@@ -11639,6 +13754,17 @@ pub mod khr {
             crate::vk::KHR_MULTIVIEW_NAME as NAME,
             crate::vk::KHR_MULTIVIEW_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_MULTIVIEW_NAME;
+            const SPEC_VERSION: u32 = KHR_MULTIVIEW_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_get_physical_device_properties2"]
     pub mod get_physical_device_properties2 {
@@ -11840,6 +13966,19 @@ pub mod khr {
                         }
                     },
                 }
+            }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_GET_PHYSICAL_DEVICE_PROPERTIES2_NAME;
+            const SPEC_VERSION: u32 = KHR_GET_PHYSICAL_DEVICE_PROPERTIES2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
             }
         }
     }
@@ -12083,6 +14222,21 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_DEVICE_GROUP_NAME;
+            const SPEC_VERSION: u32 = KHR_DEVICE_GROUP_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_shader_draw_parameters"]
     pub mod shader_draw_parameters {
@@ -12091,6 +14245,17 @@ pub mod khr {
             crate::vk::KHR_SHADER_DRAW_PARAMETERS_NAME as NAME,
             crate::vk::KHR_SHADER_DRAW_PARAMETERS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHADER_DRAW_PARAMETERS_NAME;
+            const SPEC_VERSION: u32 = KHR_SHADER_DRAW_PARAMETERS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_maintenance1"]
     pub mod maintenance1 {
@@ -12156,6 +14321,19 @@ pub mod khr {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_MAINTENANCE1_NAME;
+            const SPEC_VERSION: u32 = KHR_MAINTENANCE1_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_KHR_device_group_creation"]
@@ -12227,6 +14405,19 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_DEVICE_GROUP_CREATION_NAME;
+            const SPEC_VERSION: u32 = KHR_DEVICE_GROUP_CREATION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_external_memory_capabilities"]
     pub mod external_memory_capabilities {
@@ -12296,6 +14487,19 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_EXTERNAL_MEMORY_CAPABILITIES_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_external_memory"]
     pub mod external_memory {
@@ -12304,6 +14508,17 @@ pub mod khr {
             crate::vk::KHR_EXTERNAL_MEMORY_NAME as NAME,
             crate::vk::KHR_EXTERNAL_MEMORY_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_EXTERNAL_MEMORY_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_MEMORY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_external_memory_win32"]
     pub mod external_memory_win32 {
@@ -12396,6 +14611,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_EXTERNAL_MEMORY_WIN32_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_MEMORY_WIN32_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_external_memory_fd"]
     pub mod external_memory_fd {
@@ -12481,6 +14708,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_EXTERNAL_MEMORY_FD_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_win32_keyed_mutex"]
     pub mod win32_keyed_mutex {
@@ -12489,6 +14728,16 @@ pub mod khr {
             crate::vk::KHR_WIN32_KEYED_MUTEX_NAME as NAME,
             crate::vk::KHR_WIN32_KEYED_MUTEX_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_WIN32_KEYED_MUTEX_NAME;
+            const SPEC_VERSION: u32 = KHR_WIN32_KEYED_MUTEX_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_external_semaphore_capabilities"]
     pub mod external_semaphore_capabilities {
@@ -12560,6 +14809,19 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_external_semaphore"]
     pub mod external_semaphore {
@@ -12568,6 +14830,17 @@ pub mod khr {
             crate::vk::KHR_EXTERNAL_SEMAPHORE_NAME as NAME,
             crate::vk::KHR_EXTERNAL_SEMAPHORE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_EXTERNAL_SEMAPHORE_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_SEMAPHORE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_external_semaphore_win32"]
     pub mod external_semaphore_win32 {
@@ -12656,6 +14929,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_EXTERNAL_SEMAPHORE_WIN32_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_SEMAPHORE_WIN32_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_external_semaphore_fd"]
     pub mod external_semaphore_fd {
@@ -12738,6 +15023,18 @@ pub mod khr {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_EXTERNAL_SEMAPHORE_FD_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_KHR_push_descriptor"]
@@ -12834,6 +15131,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_PUSH_DESCRIPTOR_NAME;
+            const SPEC_VERSION: u32 = KHR_PUSH_DESCRIPTOR_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_shader_float16_int8"]
     pub mod shader_float16_int8 {
@@ -12842,6 +15151,17 @@ pub mod khr {
             crate::vk::KHR_SHADER_FLOAT16_INT8_NAME as NAME,
             crate::vk::KHR_SHADER_FLOAT16_INT8_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHADER_FLOAT16_INT8_NAME;
+            const SPEC_VERSION: u32 = KHR_SHADER_FLOAT16_INT8_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_16bit_storage"]
     pub mod _16bit_storage {
@@ -12850,6 +15170,17 @@ pub mod khr {
             crate::vk::KHR_16BIT_STORAGE_NAME as NAME,
             crate::vk::KHR_16BIT_STORAGE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_16BIT_STORAGE_NAME;
+            const SPEC_VERSION: u32 = KHR_16BIT_STORAGE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_incremental_present"]
     pub mod incremental_present {
@@ -12858,6 +15189,16 @@ pub mod khr {
             crate::vk::KHR_INCREMENTAL_PRESENT_NAME as NAME,
             crate::vk::KHR_INCREMENTAL_PRESENT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_INCREMENTAL_PRESENT_NAME;
+            const SPEC_VERSION: u32 = KHR_INCREMENTAL_PRESENT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_descriptor_update_template"]
     pub mod descriptor_update_template {
@@ -12997,6 +15338,19 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_DESCRIPTOR_UPDATE_TEMPLATE_NAME;
+            const SPEC_VERSION: u32 = KHR_DESCRIPTOR_UPDATE_TEMPLATE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_imageless_framebuffer"]
     pub mod imageless_framebuffer {
@@ -13005,6 +15359,17 @@ pub mod khr {
             crate::vk::KHR_IMAGELESS_FRAMEBUFFER_NAME as NAME,
             crate::vk::KHR_IMAGELESS_FRAMEBUFFER_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_IMAGELESS_FRAMEBUFFER_NAME;
+            const SPEC_VERSION: u32 = KHR_IMAGELESS_FRAMEBUFFER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_create_renderpass2"]
     pub mod create_renderpass2 {
@@ -13134,6 +15499,19 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_CREATE_RENDERPASS2_NAME;
+            const SPEC_VERSION: u32 = KHR_CREATE_RENDERPASS2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_shared_presentable_image"]
     pub mod shared_presentable_image {
@@ -13199,6 +15577,18 @@ pub mod khr {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHARED_PRESENTABLE_IMAGE_NAME;
+            const SPEC_VERSION: u32 = KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_KHR_external_fence_capabilities"]
@@ -13269,6 +15659,19 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_EXTERNAL_FENCE_CAPABILITIES_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_external_fence"]
     pub mod external_fence {
@@ -13277,6 +15680,17 @@ pub mod khr {
             crate::vk::KHR_EXTERNAL_FENCE_NAME as NAME,
             crate::vk::KHR_EXTERNAL_FENCE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_EXTERNAL_FENCE_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_FENCE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_external_fence_win32"]
     pub mod external_fence_win32 {
@@ -13366,6 +15780,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_EXTERNAL_FENCE_WIN32_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_FENCE_WIN32_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_external_fence_fd"]
     pub mod external_fence_fd {
@@ -13444,6 +15870,18 @@ pub mod khr {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_EXTERNAL_FENCE_FD_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_FENCE_FD_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_KHR_performance_query"]
@@ -13615,6 +16053,20 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_PERFORMANCE_QUERY_NAME;
+            const SPEC_VERSION: u32 = KHR_PERFORMANCE_QUERY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_maintenance2"]
     pub mod maintenance2 {
@@ -13623,6 +16075,17 @@ pub mod khr {
             crate::vk::KHR_MAINTENANCE2_NAME as NAME,
             crate::vk::KHR_MAINTENANCE2_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_MAINTENANCE2_NAME;
+            const SPEC_VERSION: u32 = KHR_MAINTENANCE2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_get_surface_capabilities2"]
     pub mod get_surface_capabilities2 {
@@ -13715,6 +16178,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_GET_SURFACE_CAPABILITIES2_NAME;
+            const SPEC_VERSION: u32 = KHR_GET_SURFACE_CAPABILITIES2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_variable_pointers"]
     pub mod variable_pointers {
@@ -13723,6 +16198,17 @@ pub mod khr {
             crate::vk::KHR_VARIABLE_POINTERS_NAME as NAME,
             crate::vk::KHR_VARIABLE_POINTERS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_VARIABLE_POINTERS_NAME;
+            const SPEC_VERSION: u32 = KHR_VARIABLE_POINTERS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_get_display_properties2"]
     pub mod get_display_properties2 {
@@ -13860,6 +16346,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_GET_DISPLAY_PROPERTIES2_NAME;
+            const SPEC_VERSION: u32 = KHR_GET_DISPLAY_PROPERTIES2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_dedicated_allocation"]
     pub mod dedicated_allocation {
@@ -13868,6 +16366,17 @@ pub mod khr {
             crate::vk::KHR_DEDICATED_ALLOCATION_NAME as NAME,
             crate::vk::KHR_DEDICATED_ALLOCATION_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_DEDICATED_ALLOCATION_NAME;
+            const SPEC_VERSION: u32 = KHR_DEDICATED_ALLOCATION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_storage_buffer_storage_class"]
     pub mod storage_buffer_storage_class {
@@ -13876,6 +16385,17 @@ pub mod khr {
             crate::vk::KHR_STORAGE_BUFFER_STORAGE_CLASS_NAME as NAME,
             crate::vk::KHR_STORAGE_BUFFER_STORAGE_CLASS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_STORAGE_BUFFER_STORAGE_CLASS_NAME;
+            const SPEC_VERSION: u32 = KHR_STORAGE_BUFFER_STORAGE_CLASS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_relaxed_block_layout"]
     pub mod relaxed_block_layout {
@@ -13884,6 +16404,17 @@ pub mod khr {
             crate::vk::KHR_RELAXED_BLOCK_LAYOUT_NAME as NAME,
             crate::vk::KHR_RELAXED_BLOCK_LAYOUT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_RELAXED_BLOCK_LAYOUT_NAME;
+            const SPEC_VERSION: u32 = KHR_RELAXED_BLOCK_LAYOUT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_get_memory_requirements2"]
     pub mod get_memory_requirements2 {
@@ -13997,6 +16528,19 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_GET_MEMORY_REQUIREMENTS2_NAME;
+            const SPEC_VERSION: u32 = KHR_GET_MEMORY_REQUIREMENTS2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_image_format_list"]
     pub mod image_format_list {
@@ -14005,6 +16549,17 @@ pub mod khr {
             crate::vk::KHR_IMAGE_FORMAT_LIST_NAME as NAME,
             crate::vk::KHR_IMAGE_FORMAT_LIST_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_IMAGE_FORMAT_LIST_NAME;
+            const SPEC_VERSION: u32 = KHR_IMAGE_FORMAT_LIST_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_acceleration_structure"]
     pub mod acceleration_structure {
@@ -14425,6 +16980,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_ACCELERATION_STRUCTURE_NAME;
+            const SPEC_VERSION: u32 = KHR_ACCELERATION_STRUCTURE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_ray_tracing_pipeline"]
     pub mod ray_tracing_pipeline {
@@ -14640,6 +17207,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_RAY_TRACING_PIPELINE_NAME;
+            const SPEC_VERSION: u32 = KHR_RAY_TRACING_PIPELINE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_ray_query"]
     pub mod ray_query {
@@ -14648,6 +17227,16 @@ pub mod khr {
             crate::vk::KHR_RAY_QUERY_NAME as NAME,
             crate::vk::KHR_RAY_QUERY_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_RAY_QUERY_NAME;
+            const SPEC_VERSION: u32 = KHR_RAY_QUERY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_sampler_ycbcr_conversion"]
     pub mod sampler_ycbcr_conversion {
@@ -14739,6 +17328,19 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SAMPLER_YCBCR_CONVERSION_NAME;
+            const SPEC_VERSION: u32 = KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_bind_memory2"]
     pub mod bind_memory2 {
@@ -14826,6 +17428,19 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_BIND_MEMORY2_NAME;
+            const SPEC_VERSION: u32 = KHR_BIND_MEMORY2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_portability_subset"]
     pub mod portability_subset {
@@ -14834,6 +17449,16 @@ pub mod khr {
             crate::vk::KHR_PORTABILITY_SUBSET_NAME as NAME,
             crate::vk::KHR_PORTABILITY_SUBSET_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_PORTABILITY_SUBSET_NAME;
+            const SPEC_VERSION: u32 = KHR_PORTABILITY_SUBSET_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_maintenance3"]
     pub mod maintenance3 {
@@ -14901,6 +17526,19 @@ pub mod khr {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_MAINTENANCE3_NAME;
+            const SPEC_VERSION: u32 = KHR_MAINTENANCE3_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_1);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_KHR_draw_indirect_count"]
@@ -14999,6 +17637,19 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_DRAW_INDIRECT_COUNT_NAME;
+            const SPEC_VERSION: u32 = KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_shader_subgroup_extended_types"]
     pub mod shader_subgroup_extended_types {
@@ -15007,6 +17658,17 @@ pub mod khr {
             crate::vk::KHR_SHADER_SUBGROUP_EXTENDED_TYPES_NAME as NAME,
             crate::vk::KHR_SHADER_SUBGROUP_EXTENDED_TYPES_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHADER_SUBGROUP_EXTENDED_TYPES_NAME;
+            const SPEC_VERSION: u32 = KHR_SHADER_SUBGROUP_EXTENDED_TYPES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_8bit_storage"]
     pub mod _8bit_storage {
@@ -15015,6 +17677,17 @@ pub mod khr {
             crate::vk::KHR_8BIT_STORAGE_NAME as NAME,
             crate::vk::KHR_8BIT_STORAGE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_8BIT_STORAGE_NAME;
+            const SPEC_VERSION: u32 = KHR_8BIT_STORAGE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_shader_atomic_int64"]
     pub mod shader_atomic_int64 {
@@ -15023,6 +17696,17 @@ pub mod khr {
             crate::vk::KHR_SHADER_ATOMIC_INT64_NAME as NAME,
             crate::vk::KHR_SHADER_ATOMIC_INT64_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHADER_ATOMIC_INT64_NAME;
+            const SPEC_VERSION: u32 = KHR_SHADER_ATOMIC_INT64_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_shader_clock"]
     pub mod shader_clock {
@@ -15031,6 +17715,16 @@ pub mod khr {
             crate::vk::KHR_SHADER_CLOCK_NAME as NAME,
             crate::vk::KHR_SHADER_CLOCK_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHADER_CLOCK_NAME;
+            const SPEC_VERSION: u32 = KHR_SHADER_CLOCK_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_video_decode_h265"]
     pub mod video_decode_h265 {
@@ -15039,6 +17733,16 @@ pub mod khr {
             crate::vk::KHR_VIDEO_DECODE_H265_NAME as NAME,
             crate::vk::KHR_VIDEO_DECODE_H265_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_VIDEO_DECODE_H265_NAME;
+            const SPEC_VERSION: u32 = KHR_VIDEO_DECODE_H265_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_global_priority"]
     pub mod global_priority {
@@ -15047,6 +17751,16 @@ pub mod khr {
             crate::vk::KHR_GLOBAL_PRIORITY_NAME as NAME,
             crate::vk::KHR_GLOBAL_PRIORITY_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_GLOBAL_PRIORITY_NAME;
+            const SPEC_VERSION: u32 = KHR_GLOBAL_PRIORITY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_driver_properties"]
     pub mod driver_properties {
@@ -15055,6 +17769,17 @@ pub mod khr {
             crate::vk::KHR_DRIVER_PROPERTIES_NAME as NAME,
             crate::vk::KHR_DRIVER_PROPERTIES_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_DRIVER_PROPERTIES_NAME;
+            const SPEC_VERSION: u32 = KHR_DRIVER_PROPERTIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_shader_float_controls"]
     pub mod shader_float_controls {
@@ -15063,6 +17788,17 @@ pub mod khr {
             crate::vk::KHR_SHADER_FLOAT_CONTROLS_NAME as NAME,
             crate::vk::KHR_SHADER_FLOAT_CONTROLS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHADER_FLOAT_CONTROLS_NAME;
+            const SPEC_VERSION: u32 = KHR_SHADER_FLOAT_CONTROLS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_depth_stencil_resolve"]
     pub mod depth_stencil_resolve {
@@ -15071,6 +17807,17 @@ pub mod khr {
             crate::vk::KHR_DEPTH_STENCIL_RESOLVE_NAME as NAME,
             crate::vk::KHR_DEPTH_STENCIL_RESOLVE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_DEPTH_STENCIL_RESOLVE_NAME;
+            const SPEC_VERSION: u32 = KHR_DEPTH_STENCIL_RESOLVE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_swapchain_mutable_format"]
     pub mod swapchain_mutable_format {
@@ -15079,6 +17826,16 @@ pub mod khr {
             crate::vk::KHR_SWAPCHAIN_MUTABLE_FORMAT_NAME as NAME,
             crate::vk::KHR_SWAPCHAIN_MUTABLE_FORMAT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SWAPCHAIN_MUTABLE_FORMAT_NAME;
+            const SPEC_VERSION: u32 = KHR_SWAPCHAIN_MUTABLE_FORMAT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_timeline_semaphore"]
     pub mod timeline_semaphore {
@@ -15179,6 +17936,19 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_TIMELINE_SEMAPHORE_NAME;
+            const SPEC_VERSION: u32 = KHR_TIMELINE_SEMAPHORE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_vulkan_memory_model"]
     pub mod vulkan_memory_model {
@@ -15187,6 +17957,17 @@ pub mod khr {
             crate::vk::KHR_VULKAN_MEMORY_MODEL_NAME as NAME,
             crate::vk::KHR_VULKAN_MEMORY_MODEL_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_VULKAN_MEMORY_MODEL_NAME;
+            const SPEC_VERSION: u32 = KHR_VULKAN_MEMORY_MODEL_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_shader_terminate_invocation"]
     pub mod shader_terminate_invocation {
@@ -15195,6 +17976,17 @@ pub mod khr {
             crate::vk::KHR_SHADER_TERMINATE_INVOCATION_NAME as NAME,
             crate::vk::KHR_SHADER_TERMINATE_INVOCATION_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHADER_TERMINATE_INVOCATION_NAME;
+            const SPEC_VERSION: u32 = KHR_SHADER_TERMINATE_INVOCATION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_fragment_shading_rate"]
     pub mod fragment_shading_rate {
@@ -15326,6 +18118,20 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_FRAGMENT_SHADING_RATE_NAME;
+            const SPEC_VERSION: u32 = KHR_FRAGMENT_SHADING_RATE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_dynamic_rendering_local_read"]
     pub mod dynamic_rendering_local_read {
@@ -15416,6 +18222,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_DYNAMIC_RENDERING_LOCAL_READ_NAME;
+            const SPEC_VERSION: u32 = KHR_DYNAMIC_RENDERING_LOCAL_READ_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_shader_quad_control"]
     pub mod shader_quad_control {
@@ -15424,6 +18242,16 @@ pub mod khr {
             crate::vk::KHR_SHADER_QUAD_CONTROL_NAME as NAME,
             crate::vk::KHR_SHADER_QUAD_CONTROL_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHADER_QUAD_CONTROL_NAME;
+            const SPEC_VERSION: u32 = KHR_SHADER_QUAD_CONTROL_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_spirv_1_4"]
     pub mod spirv_1_4 {
@@ -15432,6 +18260,17 @@ pub mod khr {
             crate::vk::KHR_SPIRV_1_4_NAME as NAME,
             crate::vk::KHR_SPIRV_1_4_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SPIRV_1_4_NAME;
+            const SPEC_VERSION: u32 = KHR_SPIRV_1_4_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_surface_protected_capabilities"]
     pub mod surface_protected_capabilities {
@@ -15440,6 +18279,16 @@ pub mod khr {
             crate::vk::KHR_SURFACE_PROTECTED_CAPABILITIES_NAME as NAME,
             crate::vk::KHR_SURFACE_PROTECTED_CAPABILITIES_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SURFACE_PROTECTED_CAPABILITIES_NAME;
+            const SPEC_VERSION: u32 = KHR_SURFACE_PROTECTED_CAPABILITIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_separate_depth_stencil_layouts"]
     pub mod separate_depth_stencil_layouts {
@@ -15448,6 +18297,17 @@ pub mod khr {
             crate::vk::KHR_SEPARATE_DEPTH_STENCIL_LAYOUTS_NAME as NAME,
             crate::vk::KHR_SEPARATE_DEPTH_STENCIL_LAYOUTS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SEPARATE_DEPTH_STENCIL_LAYOUTS_NAME;
+            const SPEC_VERSION: u32 = KHR_SEPARATE_DEPTH_STENCIL_LAYOUTS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_present_wait"]
     pub mod present_wait {
@@ -15512,6 +18372,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_PRESENT_WAIT_NAME;
+            const SPEC_VERSION: u32 = KHR_PRESENT_WAIT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_uniform_buffer_standard_layout"]
     pub mod uniform_buffer_standard_layout {
@@ -15520,6 +18392,17 @@ pub mod khr {
             crate::vk::KHR_UNIFORM_BUFFER_STANDARD_LAYOUT_NAME as NAME,
             crate::vk::KHR_UNIFORM_BUFFER_STANDARD_LAYOUT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_UNIFORM_BUFFER_STANDARD_LAYOUT_NAME;
+            const SPEC_VERSION: u32 = KHR_UNIFORM_BUFFER_STANDARD_LAYOUT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_buffer_device_address"]
     pub mod buffer_device_address {
@@ -15628,6 +18511,19 @@ pub mod khr {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_BUFFER_DEVICE_ADDRESS_NAME;
+            const SPEC_VERSION: u32 = KHR_BUFFER_DEVICE_ADDRESS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_2);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_KHR_deferred_host_operations"]
@@ -15780,6 +18676,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_DEFERRED_HOST_OPERATIONS_NAME;
+            const SPEC_VERSION: u32 = KHR_DEFERRED_HOST_OPERATIONS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_pipeline_executable_properties"]
     pub mod pipeline_executable_properties {
@@ -15896,6 +18804,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_PIPELINE_EXECUTABLE_PROPERTIES_NAME;
+            const SPEC_VERSION: u32 = KHR_PIPELINE_EXECUTABLE_PROPERTIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_map_memory2"]
     pub mod map_memory2 {
@@ -15975,6 +18895,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_MAP_MEMORY2_NAME;
+            const SPEC_VERSION: u32 = KHR_MAP_MEMORY2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_shader_integer_dot_product"]
     pub mod shader_integer_dot_product {
@@ -15983,6 +18915,17 @@ pub mod khr {
             crate::vk::KHR_SHADER_INTEGER_DOT_PRODUCT_NAME as NAME,
             crate::vk::KHR_SHADER_INTEGER_DOT_PRODUCT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHADER_INTEGER_DOT_PRODUCT_NAME;
+            const SPEC_VERSION: u32 = KHR_SHADER_INTEGER_DOT_PRODUCT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_pipeline_library"]
     pub mod pipeline_library {
@@ -15991,6 +18934,16 @@ pub mod khr {
             crate::vk::KHR_PIPELINE_LIBRARY_NAME as NAME,
             crate::vk::KHR_PIPELINE_LIBRARY_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_PIPELINE_LIBRARY_NAME;
+            const SPEC_VERSION: u32 = KHR_PIPELINE_LIBRARY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_shader_non_semantic_info"]
     pub mod shader_non_semantic_info {
@@ -15999,6 +18952,17 @@ pub mod khr {
             crate::vk::KHR_SHADER_NON_SEMANTIC_INFO_NAME as NAME,
             crate::vk::KHR_SHADER_NON_SEMANTIC_INFO_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHADER_NON_SEMANTIC_INFO_NAME;
+            const SPEC_VERSION: u32 = KHR_SHADER_NON_SEMANTIC_INFO_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_present_id"]
     pub mod present_id {
@@ -16007,6 +18971,16 @@ pub mod khr {
             crate::vk::KHR_PRESENT_ID_NAME as NAME,
             crate::vk::KHR_PRESENT_ID_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_PRESENT_ID_NAME;
+            const SPEC_VERSION: u32 = KHR_PRESENT_ID_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_video_encode_queue"]
     pub mod video_encode_queue {
@@ -16156,6 +19130,20 @@ pub mod khr {
                         }
                     },
                 }
+            }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_VIDEO_ENCODE_QUEUE_NAME;
+            const SPEC_VERSION: u32 = KHR_VIDEO_ENCODE_QUEUE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
             }
         }
     }
@@ -16360,6 +19348,19 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SYNCHRONIZATION2_NAME;
+            const SPEC_VERSION: u32 = KHR_SYNCHRONIZATION2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_fragment_shader_barycentric"]
     pub mod fragment_shader_barycentric {
@@ -16368,6 +19369,16 @@ pub mod khr {
             crate::vk::KHR_FRAGMENT_SHADER_BARYCENTRIC_NAME as NAME,
             crate::vk::KHR_FRAGMENT_SHADER_BARYCENTRIC_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_FRAGMENT_SHADER_BARYCENTRIC_NAME;
+            const SPEC_VERSION: u32 = KHR_FRAGMENT_SHADER_BARYCENTRIC_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_shader_subgroup_uniform_control_flow"]
     pub mod shader_subgroup_uniform_control_flow {
@@ -16376,6 +19387,16 @@ pub mod khr {
             crate::vk::KHR_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_NAME as NAME,
             crate::vk::KHR_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_NAME;
+            const SPEC_VERSION: u32 = KHR_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_zero_initialize_workgroup_memory"]
     pub mod zero_initialize_workgroup_memory {
@@ -16384,6 +19405,17 @@ pub mod khr {
             crate::vk::KHR_ZERO_INITIALIZE_WORKGROUP_MEMORY_NAME as NAME,
             crate::vk::KHR_ZERO_INITIALIZE_WORKGROUP_MEMORY_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_ZERO_INITIALIZE_WORKGROUP_MEMORY_NAME;
+            const SPEC_VERSION: u32 = KHR_ZERO_INITIALIZE_WORKGROUP_MEMORY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_workgroup_memory_explicit_layout"]
     pub mod workgroup_memory_explicit_layout {
@@ -16392,6 +19424,16 @@ pub mod khr {
             crate::vk::KHR_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_NAME as NAME,
             crate::vk::KHR_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_NAME;
+            const SPEC_VERSION: u32 = KHR_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_copy_commands2"]
     pub mod copy_commands2 {
@@ -16545,6 +19587,19 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_COPY_COMMANDS2_NAME;
+            const SPEC_VERSION: u32 = KHR_COPY_COMMANDS2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_format_feature_flags2"]
     pub mod format_feature_flags2 {
@@ -16553,6 +19608,17 @@ pub mod khr {
             crate::vk::KHR_FORMAT_FEATURE_FLAGS2_NAME as NAME,
             crate::vk::KHR_FORMAT_FEATURE_FLAGS2_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_FORMAT_FEATURE_FLAGS2_NAME;
+            const SPEC_VERSION: u32 = KHR_FORMAT_FEATURE_FLAGS2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_ray_tracing_maintenance1"]
     pub mod ray_tracing_maintenance1 {
@@ -16619,6 +19685,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_RAY_TRACING_MAINTENANCE1_NAME;
+            const SPEC_VERSION: u32 = KHR_RAY_TRACING_MAINTENANCE1_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_portability_enumeration"]
     pub mod portability_enumeration {
@@ -16627,6 +19705,16 @@ pub mod khr {
             crate::vk::KHR_PORTABILITY_ENUMERATION_NAME as NAME,
             crate::vk::KHR_PORTABILITY_ENUMERATION_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_PORTABILITY_ENUMERATION_NAME;
+            const SPEC_VERSION: u32 = KHR_PORTABILITY_ENUMERATION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_maintenance4"]
     pub mod maintenance4 {
@@ -16741,6 +19829,19 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_MAINTENANCE4_NAME;
+            const SPEC_VERSION: u32 = KHR_MAINTENANCE4_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(API_VERSION_1_3);
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_shader_subgroup_rotate"]
     pub mod shader_subgroup_rotate {
@@ -16749,6 +19850,16 @@ pub mod khr {
             crate::vk::KHR_SHADER_SUBGROUP_ROTATE_NAME as NAME,
             crate::vk::KHR_SHADER_SUBGROUP_ROTATE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHADER_SUBGROUP_ROTATE_NAME;
+            const SPEC_VERSION: u32 = KHR_SHADER_SUBGROUP_ROTATE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_shader_maximal_reconvergence"]
     pub mod shader_maximal_reconvergence {
@@ -16757,6 +19868,16 @@ pub mod khr {
             crate::vk::KHR_SHADER_MAXIMAL_RECONVERGENCE_NAME as NAME,
             crate::vk::KHR_SHADER_MAXIMAL_RECONVERGENCE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHADER_MAXIMAL_RECONVERGENCE_NAME;
+            const SPEC_VERSION: u32 = KHR_SHADER_MAXIMAL_RECONVERGENCE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_maintenance5"]
     pub mod maintenance5 {
@@ -16893,6 +20014,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_MAINTENANCE5_NAME;
+            const SPEC_VERSION: u32 = KHR_MAINTENANCE5_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_ray_tracing_position_fetch"]
     pub mod ray_tracing_position_fetch {
@@ -16901,6 +20034,16 @@ pub mod khr {
             crate::vk::KHR_RAY_TRACING_POSITION_FETCH_NAME as NAME,
             crate::vk::KHR_RAY_TRACING_POSITION_FETCH_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_RAY_TRACING_POSITION_FETCH_NAME;
+            const SPEC_VERSION: u32 = KHR_RAY_TRACING_POSITION_FETCH_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_pipeline_binary"]
     pub mod pipeline_binary {
@@ -17121,6 +20264,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_COOPERATIVE_MATRIX_NAME;
+            const SPEC_VERSION: u32 = KHR_COOPERATIVE_MATRIX_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_compute_shader_derivatives"]
     pub mod compute_shader_derivatives {
@@ -17137,6 +20292,16 @@ pub mod khr {
             crate::vk::KHR_VIDEO_DECODE_AV1_NAME as NAME,
             crate::vk::KHR_VIDEO_DECODE_AV1_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_VIDEO_DECODE_AV1_NAME;
+            const SPEC_VERSION: u32 = KHR_VIDEO_DECODE_AV1_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_video_maintenance1"]
     pub mod video_maintenance1 {
@@ -17145,6 +20310,16 @@ pub mod khr {
             crate::vk::KHR_VIDEO_MAINTENANCE1_NAME as NAME,
             crate::vk::KHR_VIDEO_MAINTENANCE1_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_VIDEO_MAINTENANCE1_NAME;
+            const SPEC_VERSION: u32 = KHR_VIDEO_MAINTENANCE1_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_vertex_attribute_divisor"]
     pub mod vertex_attribute_divisor {
@@ -17153,6 +20328,16 @@ pub mod khr {
             crate::vk::KHR_VERTEX_ATTRIBUTE_DIVISOR_NAME as NAME,
             crate::vk::KHR_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_VERTEX_ATTRIBUTE_DIVISOR_NAME;
+            const SPEC_VERSION: u32 = KHR_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_load_store_op_none"]
     pub mod load_store_op_none {
@@ -17161,6 +20346,16 @@ pub mod khr {
             crate::vk::KHR_LOAD_STORE_OP_NONE_NAME as NAME,
             crate::vk::KHR_LOAD_STORE_OP_NONE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_LOAD_STORE_OP_NONE_NAME;
+            const SPEC_VERSION: u32 = KHR_LOAD_STORE_OP_NONE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_shader_float_controls2"]
     pub mod shader_float_controls2 {
@@ -17169,6 +20364,16 @@ pub mod khr {
             crate::vk::KHR_SHADER_FLOAT_CONTROLS2_NAME as NAME,
             crate::vk::KHR_SHADER_FLOAT_CONTROLS2_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHADER_FLOAT_CONTROLS2_NAME;
+            const SPEC_VERSION: u32 = KHR_SHADER_FLOAT_CONTROLS2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_index_type_uint8"]
     pub mod index_type_uint8 {
@@ -17177,6 +20382,16 @@ pub mod khr {
             crate::vk::KHR_INDEX_TYPE_UINT8_NAME as NAME,
             crate::vk::KHR_INDEX_TYPE_UINT8_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_INDEX_TYPE_UINT8_NAME;
+            const SPEC_VERSION: u32 = KHR_INDEX_TYPE_UINT8_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_line_rasterization"]
     pub mod line_rasterization {
@@ -17243,6 +20458,18 @@ pub mod khr {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_LINE_RASTERIZATION_NAME;
+            const SPEC_VERSION: u32 = KHR_LINE_RASTERIZATION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_KHR_calibrated_timestamps"]
@@ -17374,6 +20601,20 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_CALIBRATED_TIMESTAMPS_NAME;
+            const SPEC_VERSION: u32 = KHR_CALIBRATED_TIMESTAMPS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_KHR_shader_expect_assume"]
     pub mod shader_expect_assume {
@@ -17382,6 +20623,16 @@ pub mod khr {
             crate::vk::KHR_SHADER_EXPECT_ASSUME_NAME as NAME,
             crate::vk::KHR_SHADER_EXPECT_ASSUME_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_SHADER_EXPECT_ASSUME_NAME;
+            const SPEC_VERSION: u32 = KHR_SHADER_EXPECT_ASSUME_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_maintenance6"]
     pub mod maintenance6 {
@@ -17553,6 +20804,18 @@ pub mod khr {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = KHR_MAINTENANCE6_NAME;
+            const SPEC_VERSION: u32 = KHR_MAINTENANCE6_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_KHR_shader_relaxed_extended_instruction"]
     pub mod shader_relaxed_extended_instruction {
@@ -17580,6 +20843,16 @@ pub mod lunarg {
             crate::vk::LUNARG_DIRECT_DRIVER_LOADING_NAME as NAME,
             crate::vk::LUNARG_DIRECT_DRIVER_LOADING_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = LUNARG_DIRECT_DRIVER_LOADING_NAME;
+            const SPEC_VERSION: u32 = LUNARG_DIRECT_DRIVER_LOADING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged MESA"]
@@ -17602,6 +20875,16 @@ pub mod msft {
             crate::vk::MSFT_LAYERED_DRIVER_NAME as NAME,
             crate::vk::MSFT_LAYERED_DRIVER_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = MSFT_LAYERED_DRIVER_NAME;
+            const SPEC_VERSION: u32 = MSFT_LAYERED_DRIVER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged MVK"]
@@ -17672,6 +20955,18 @@ pub mod mvk {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = MVK_IOS_SURFACE_NAME;
+            const SPEC_VERSION: u32 = MVK_IOS_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_MVK_macos_surface"]
     pub mod macos_surface {
@@ -17738,6 +21033,18 @@ pub mod mvk {
                         }
                     },
                 }
+            }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = MVK_MACOS_SURFACE_NAME;
+            const SPEC_VERSION: u32 = MVK_MACOS_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
             }
         }
     }
@@ -17807,6 +21114,18 @@ pub mod nn {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NN_VI_SURFACE_NAME;
+            const SPEC_VERSION: u32 = NN_VI_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
 }
 #[doc = "Extensions tagged NV"]
@@ -17818,6 +21137,16 @@ pub mod nv {
             crate::vk::NV_GLSL_SHADER_NAME as NAME,
             crate::vk::NV_GLSL_SHADER_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_GLSL_SHADER_NAME;
+            const SPEC_VERSION: u32 = NV_GLSL_SHADER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_dedicated_allocation"]
     pub mod dedicated_allocation {
@@ -17826,6 +21155,16 @@ pub mod nv {
             crate::vk::NV_DEDICATED_ALLOCATION_NAME as NAME,
             crate::vk::NV_DEDICATED_ALLOCATION_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_DEDICATED_ALLOCATION_NAME;
+            const SPEC_VERSION: u32 = NV_DEDICATED_ALLOCATION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_corner_sampled_image"]
     pub mod corner_sampled_image {
@@ -17834,6 +21173,16 @@ pub mod nv {
             crate::vk::NV_CORNER_SAMPLED_IMAGE_NAME as NAME,
             crate::vk::NV_CORNER_SAMPLED_IMAGE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_CORNER_SAMPLED_IMAGE_NAME;
+            const SPEC_VERSION: u32 = NV_CORNER_SAMPLED_IMAGE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_external_memory_capabilities"]
     pub mod external_memory_capabilities {
@@ -17908,6 +21257,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_EXTERNAL_MEMORY_CAPABILITIES_NAME;
+            const SPEC_VERSION: u32 = NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_NV_external_memory"]
     pub mod external_memory {
@@ -17916,6 +21277,16 @@ pub mod nv {
             crate::vk::NV_EXTERNAL_MEMORY_NAME as NAME,
             crate::vk::NV_EXTERNAL_MEMORY_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_EXTERNAL_MEMORY_NAME;
+            const SPEC_VERSION: u32 = NV_EXTERNAL_MEMORY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_external_memory_win32"]
     pub mod external_memory_win32 {
@@ -17984,6 +21355,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_EXTERNAL_MEMORY_WIN32_NAME;
+            const SPEC_VERSION: u32 = NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_win32_keyed_mutex"]
     pub mod win32_keyed_mutex {
@@ -17992,6 +21375,17 @@ pub mod nv {
             crate::vk::NV_WIN32_KEYED_MUTEX_NAME as NAME,
             crate::vk::NV_WIN32_KEYED_MUTEX_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_WIN32_KEYED_MUTEX_NAME;
+            const SPEC_VERSION: u32 = NV_WIN32_KEYED_MUTEX_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(KHR_WIN32_KEYED_MUTEX_NAME);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_clip_space_w_scaling"]
     pub mod clip_space_w_scaling {
@@ -18060,6 +21454,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_CLIP_SPACE_W_SCALING_NAME;
+            const SPEC_VERSION: u32 = NV_CLIP_SPACE_W_SCALING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_sample_mask_override_coverage"]
     pub mod sample_mask_override_coverage {
@@ -18068,6 +21474,16 @@ pub mod nv {
             crate::vk::NV_SAMPLE_MASK_OVERRIDE_COVERAGE_NAME as NAME,
             crate::vk::NV_SAMPLE_MASK_OVERRIDE_COVERAGE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_SAMPLE_MASK_OVERRIDE_COVERAGE_NAME;
+            const SPEC_VERSION: u32 = NV_SAMPLE_MASK_OVERRIDE_COVERAGE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_geometry_shader_passthrough"]
     pub mod geometry_shader_passthrough {
@@ -18076,6 +21492,16 @@ pub mod nv {
             crate::vk::NV_GEOMETRY_SHADER_PASSTHROUGH_NAME as NAME,
             crate::vk::NV_GEOMETRY_SHADER_PASSTHROUGH_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_GEOMETRY_SHADER_PASSTHROUGH_NAME;
+            const SPEC_VERSION: u32 = NV_GEOMETRY_SHADER_PASSTHROUGH_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_viewport_array2"]
     pub mod viewport_array2 {
@@ -18084,6 +21510,16 @@ pub mod nv {
             crate::vk::NV_VIEWPORT_ARRAY2_NAME as NAME,
             crate::vk::NV_VIEWPORT_ARRAY2_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_VIEWPORT_ARRAY2_NAME;
+            const SPEC_VERSION: u32 = NV_VIEWPORT_ARRAY2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_viewport_swizzle"]
     pub mod viewport_swizzle {
@@ -18092,6 +21528,16 @@ pub mod nv {
             crate::vk::NV_VIEWPORT_SWIZZLE_NAME as NAME,
             crate::vk::NV_VIEWPORT_SWIZZLE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_VIEWPORT_SWIZZLE_NAME;
+            const SPEC_VERSION: u32 = NV_VIEWPORT_SWIZZLE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_fragment_coverage_to_color"]
     pub mod fragment_coverage_to_color {
@@ -18100,6 +21546,16 @@ pub mod nv {
             crate::vk::NV_FRAGMENT_COVERAGE_TO_COLOR_NAME as NAME,
             crate::vk::NV_FRAGMENT_COVERAGE_TO_COLOR_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_FRAGMENT_COVERAGE_TO_COLOR_NAME;
+            const SPEC_VERSION: u32 = NV_FRAGMENT_COVERAGE_TO_COLOR_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_framebuffer_mixed_samples"]
     pub mod framebuffer_mixed_samples {
@@ -18108,6 +21564,16 @@ pub mod nv {
             crate::vk::NV_FRAMEBUFFER_MIXED_SAMPLES_NAME as NAME,
             crate::vk::NV_FRAMEBUFFER_MIXED_SAMPLES_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_FRAMEBUFFER_MIXED_SAMPLES_NAME;
+            const SPEC_VERSION: u32 = NV_FRAMEBUFFER_MIXED_SAMPLES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_fill_rectangle"]
     pub mod fill_rectangle {
@@ -18116,6 +21582,16 @@ pub mod nv {
             crate::vk::NV_FILL_RECTANGLE_NAME as NAME,
             crate::vk::NV_FILL_RECTANGLE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_FILL_RECTANGLE_NAME;
+            const SPEC_VERSION: u32 = NV_FILL_RECTANGLE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_shader_sm_builtins"]
     pub mod shader_sm_builtins {
@@ -18124,6 +21600,16 @@ pub mod nv {
             crate::vk::NV_SHADER_SM_BUILTINS_NAME as NAME,
             crate::vk::NV_SHADER_SM_BUILTINS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_SHADER_SM_BUILTINS_NAME;
+            const SPEC_VERSION: u32 = NV_SHADER_SM_BUILTINS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_shading_rate_image"]
     pub mod shading_rate_image {
@@ -18235,6 +21721,18 @@ pub mod nv {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_SHADING_RATE_IMAGE_NAME;
+            const SPEC_VERSION: u32 = NV_SHADING_RATE_IMAGE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_NV_ray_tracing"]
@@ -18567,6 +22065,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_RAY_TRACING_NAME;
+            const SPEC_VERSION: u32 = NV_RAY_TRACING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_representative_fragment_test"]
     pub mod representative_fragment_test {
@@ -18575,6 +22085,16 @@ pub mod nv {
             crate::vk::NV_REPRESENTATIVE_FRAGMENT_TEST_NAME as NAME,
             crate::vk::NV_REPRESENTATIVE_FRAGMENT_TEST_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_REPRESENTATIVE_FRAGMENT_TEST_NAME;
+            const SPEC_VERSION: u32 = NV_REPRESENTATIVE_FRAGMENT_TEST_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_shader_subgroup_partitioned"]
     pub mod shader_subgroup_partitioned {
@@ -18583,6 +22103,16 @@ pub mod nv {
             crate::vk::NV_SHADER_SUBGROUP_PARTITIONED_NAME as NAME,
             crate::vk::NV_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_SHADER_SUBGROUP_PARTITIONED_NAME;
+            const SPEC_VERSION: u32 = NV_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_compute_shader_derivatives"]
     pub mod compute_shader_derivatives {
@@ -18591,6 +22121,16 @@ pub mod nv {
             crate::vk::NV_COMPUTE_SHADER_DERIVATIVES_NAME as NAME,
             crate::vk::NV_COMPUTE_SHADER_DERIVATIVES_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_COMPUTE_SHADER_DERIVATIVES_NAME;
+            const SPEC_VERSION: u32 = NV_COMPUTE_SHADER_DERIVATIVES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_mesh_shader"]
     pub mod mesh_shader {
@@ -18706,6 +22246,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_MESH_SHADER_NAME;
+            const SPEC_VERSION: u32 = NV_MESH_SHADER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_fragment_shader_barycentric"]
     pub mod fragment_shader_barycentric {
@@ -18714,6 +22266,17 @@ pub mod nv {
             crate::vk::NV_FRAGMENT_SHADER_BARYCENTRIC_NAME as NAME,
             crate::vk::NV_FRAGMENT_SHADER_BARYCENTRIC_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_FRAGMENT_SHADER_BARYCENTRIC_NAME;
+            const SPEC_VERSION: u32 = NV_FRAGMENT_SHADER_BARYCENTRIC_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(KHR_FRAGMENT_SHADER_BARYCENTRIC_NAME);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_shader_image_footprint"]
     pub mod shader_image_footprint {
@@ -18722,6 +22285,16 @@ pub mod nv {
             crate::vk::NV_SHADER_IMAGE_FOOTPRINT_NAME as NAME,
             crate::vk::NV_SHADER_IMAGE_FOOTPRINT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_SHADER_IMAGE_FOOTPRINT_NAME;
+            const SPEC_VERSION: u32 = NV_SHADER_IMAGE_FOOTPRINT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_scissor_exclusive"]
     pub mod scissor_exclusive {
@@ -18813,6 +22386,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_SCISSOR_EXCLUSIVE_NAME;
+            const SPEC_VERSION: u32 = NV_SCISSOR_EXCLUSIVE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_device_diagnostic_checkpoints"]
     pub mod device_diagnostic_checkpoints {
@@ -18899,6 +22484,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_DEVICE_DIAGNOSTIC_CHECKPOINTS_NAME;
+            const SPEC_VERSION: u32 = NV_DEVICE_DIAGNOSTIC_CHECKPOINTS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_dedicated_allocation_image_aliasing"]
     pub mod dedicated_allocation_image_aliasing {
@@ -18907,6 +22504,16 @@ pub mod nv {
             crate::vk::NV_DEDICATED_ALLOCATION_IMAGE_ALIASING_NAME as NAME,
             crate::vk::NV_DEDICATED_ALLOCATION_IMAGE_ALIASING_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_DEDICATED_ALLOCATION_IMAGE_ALIASING_NAME;
+            const SPEC_VERSION: u32 = NV_DEDICATED_ALLOCATION_IMAGE_ALIASING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_cooperative_matrix"]
     pub mod cooperative_matrix {
@@ -18976,6 +22583,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_COOPERATIVE_MATRIX_NAME;
+            const SPEC_VERSION: u32 = NV_COOPERATIVE_MATRIX_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_NV_coverage_reduction_mode"]
     pub mod coverage_reduction_mode {
@@ -19040,6 +22659,18 @@ pub mod nv {
                         }
                     },
                 }
+            }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_COVERAGE_REDUCTION_MODE_NAME;
+            const SPEC_VERSION: u32 = NV_COVERAGE_REDUCTION_MODE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
             }
         }
     }
@@ -19222,6 +22853,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_DEVICE_GENERATED_COMMANDS_NAME;
+            const SPEC_VERSION: u32 = NV_DEVICE_GENERATED_COMMANDS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_inherited_viewport_scissor"]
     pub mod inherited_viewport_scissor {
@@ -19230,6 +22873,16 @@ pub mod nv {
             crate::vk::NV_INHERITED_VIEWPORT_SCISSOR_NAME as NAME,
             crate::vk::NV_INHERITED_VIEWPORT_SCISSOR_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_INHERITED_VIEWPORT_SCISSOR_NAME;
+            const SPEC_VERSION: u32 = NV_INHERITED_VIEWPORT_SCISSOR_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_present_barrier"]
     pub mod present_barrier {
@@ -19238,6 +22891,16 @@ pub mod nv {
             crate::vk::NV_PRESENT_BARRIER_NAME as NAME,
             crate::vk::NV_PRESENT_BARRIER_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_PRESENT_BARRIER_NAME;
+            const SPEC_VERSION: u32 = NV_PRESENT_BARRIER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_device_diagnostics_config"]
     pub mod device_diagnostics_config {
@@ -19246,6 +22909,16 @@ pub mod nv {
             crate::vk::NV_DEVICE_DIAGNOSTICS_CONFIG_NAME as NAME,
             crate::vk::NV_DEVICE_DIAGNOSTICS_CONFIG_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_DEVICE_DIAGNOSTICS_CONFIG_NAME;
+            const SPEC_VERSION: u32 = NV_DEVICE_DIAGNOSTICS_CONFIG_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_cuda_kernel_launch"]
     pub mod cuda_kernel_launch {
@@ -19418,6 +23091,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_CUDA_KERNEL_LAUNCH_NAME;
+            const SPEC_VERSION: u32 = NV_CUDA_KERNEL_LAUNCH_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_low_latency"]
     pub mod low_latency {
@@ -19426,6 +23111,16 @@ pub mod nv {
             crate::vk::NV_LOW_LATENCY_NAME as NAME,
             crate::vk::NV_LOW_LATENCY_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_LOW_LATENCY_NAME;
+            const SPEC_VERSION: u32 = NV_LOW_LATENCY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_fragment_shading_rate_enums"]
     pub mod fragment_shading_rate_enums {
@@ -19494,6 +23189,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_FRAGMENT_SHADING_RATE_ENUMS_NAME;
+            const SPEC_VERSION: u32 = NV_FRAGMENT_SHADING_RATE_ENUMS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_ray_tracing_motion_blur"]
     pub mod ray_tracing_motion_blur {
@@ -19502,6 +23209,16 @@ pub mod nv {
             crate::vk::NV_RAY_TRACING_MOTION_BLUR_NAME as NAME,
             crate::vk::NV_RAY_TRACING_MOTION_BLUR_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_RAY_TRACING_MOTION_BLUR_NAME;
+            const SPEC_VERSION: u32 = NV_RAY_TRACING_MOTION_BLUR_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_acquire_winrt_display"]
     pub mod acquire_winrt_display {
@@ -19585,6 +23302,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_ACQUIRE_WINRT_DISPLAY_NAME;
+            const SPEC_VERSION: u32 = NV_ACQUIRE_WINRT_DISPLAY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_NV_external_memory_rdma"]
     pub mod external_memory_rdma {
@@ -19654,6 +23383,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_EXTERNAL_MEMORY_RDMA_NAME;
+            const SPEC_VERSION: u32 = NV_EXTERNAL_MEMORY_RDMA_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_displacement_micromap"]
     pub mod displacement_micromap {
@@ -19662,6 +23403,16 @@ pub mod nv {
             crate::vk::NV_DISPLACEMENT_MICROMAP_NAME as NAME,
             crate::vk::NV_DISPLACEMENT_MICROMAP_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_DISPLACEMENT_MICROMAP_NAME;
+            const SPEC_VERSION: u32 = NV_DISPLACEMENT_MICROMAP_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_copy_memory_indirect"]
     pub mod copy_memory_indirect {
@@ -19756,6 +23507,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_COPY_MEMORY_INDIRECT_NAME;
+            const SPEC_VERSION: u32 = NV_COPY_MEMORY_INDIRECT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_memory_decompression"]
     pub mod memory_decompression {
@@ -19845,6 +23608,18 @@ pub mod nv {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_MEMORY_DECOMPRESSION_NAME;
+            const SPEC_VERSION: u32 = NV_MEMORY_DECOMPRESSION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
     #[doc = "VK_NV_device_generated_commands_compute"]
@@ -19958,6 +23733,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_DEVICE_GENERATED_COMMANDS_COMPUTE_NAME;
+            const SPEC_VERSION: u32 = NV_DEVICE_GENERATED_COMMANDS_COMPUTE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_linear_color_attachment"]
     pub mod linear_color_attachment {
@@ -19966,6 +23753,16 @@ pub mod nv {
             crate::vk::NV_LINEAR_COLOR_ATTACHMENT_NAME as NAME,
             crate::vk::NV_LINEAR_COLOR_ATTACHMENT_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_LINEAR_COLOR_ATTACHMENT_NAME;
+            const SPEC_VERSION: u32 = NV_LINEAR_COLOR_ATTACHMENT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_optical_flow"]
     pub mod optical_flow {
@@ -20164,6 +23961,20 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_OPTICAL_FLOW_NAME;
+            const SPEC_VERSION: u32 = NV_OPTICAL_FLOW_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_NV_ray_tracing_invocation_reorder"]
     pub mod ray_tracing_invocation_reorder {
@@ -20172,6 +23983,16 @@ pub mod nv {
             crate::vk::NV_RAY_TRACING_INVOCATION_REORDER_NAME as NAME,
             crate::vk::NV_RAY_TRACING_INVOCATION_REORDER_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_RAY_TRACING_INVOCATION_REORDER_NAME;
+            const SPEC_VERSION: u32 = NV_RAY_TRACING_INVOCATION_REORDER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_extended_sparse_address_space"]
     pub mod extended_sparse_address_space {
@@ -20180,6 +24001,16 @@ pub mod nv {
             crate::vk::NV_EXTENDED_SPARSE_ADDRESS_SPACE_NAME as NAME,
             crate::vk::NV_EXTENDED_SPARSE_ADDRESS_SPACE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_EXTENDED_SPARSE_ADDRESS_SPACE_NAME;
+            const SPEC_VERSION: u32 = NV_EXTENDED_SPARSE_ADDRESS_SPACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_low_latency2"]
     pub mod low_latency2 {
@@ -20324,6 +24155,18 @@ pub mod nv {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_LOW_LATENCY2_NAME;
+            const SPEC_VERSION: u32 = NV_LOW_LATENCY2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_per_stage_descriptor_set"]
     pub mod per_stage_descriptor_set {
@@ -20332,6 +24175,16 @@ pub mod nv {
             crate::vk::NV_PER_STAGE_DESCRIPTOR_SET_NAME as NAME,
             crate::vk::NV_PER_STAGE_DESCRIPTOR_SET_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_PER_STAGE_DESCRIPTOR_SET_NAME;
+            const SPEC_VERSION: u32 = NV_PER_STAGE_DESCRIPTOR_SET_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_descriptor_pool_overallocation"]
     pub mod descriptor_pool_overallocation {
@@ -20340,6 +24193,16 @@ pub mod nv {
             crate::vk::NV_DESCRIPTOR_POOL_OVERALLOCATION_NAME as NAME,
             crate::vk::NV_DESCRIPTOR_POOL_OVERALLOCATION_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_DESCRIPTOR_POOL_OVERALLOCATION_NAME;
+            const SPEC_VERSION: u32 = NV_DESCRIPTOR_POOL_OVERALLOCATION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_raw_access_chains"]
     pub mod raw_access_chains {
@@ -20348,6 +24211,16 @@ pub mod nv {
             crate::vk::NV_RAW_ACCESS_CHAINS_NAME as NAME,
             crate::vk::NV_RAW_ACCESS_CHAINS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_RAW_ACCESS_CHAINS_NAME;
+            const SPEC_VERSION: u32 = NV_RAW_ACCESS_CHAINS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_command_buffer_inheritance"]
     pub mod command_buffer_inheritance {
@@ -20364,6 +24237,16 @@ pub mod nv {
             crate::vk::NV_SHADER_ATOMIC_FLOAT16_VECTOR_NAME as NAME,
             crate::vk::NV_SHADER_ATOMIC_FLOAT16_VECTOR_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_SHADER_ATOMIC_FLOAT16_VECTOR_NAME;
+            const SPEC_VERSION: u32 = NV_SHADER_ATOMIC_FLOAT16_VECTOR_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NV_ray_tracing_validation"]
     pub mod ray_tracing_validation {
@@ -20372,6 +24255,16 @@ pub mod nv {
             crate::vk::NV_RAY_TRACING_VALIDATION_NAME as NAME,
             crate::vk::NV_RAY_TRACING_VALIDATION_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NV_RAY_TRACING_VALIDATION_NAME;
+            const SPEC_VERSION: u32 = NV_RAY_TRACING_VALIDATION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged NVX"]
@@ -20521,6 +24414,18 @@ pub mod nvx {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NVX_BINARY_IMPORT_NAME;
+            const SPEC_VERSION: u32 = NVX_BINARY_IMPORT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NVX_image_view_handle"]
     pub mod image_view_handle {
@@ -20608,6 +24513,18 @@ pub mod nvx {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NVX_IMAGE_VIEW_HANDLE_NAME;
+            const SPEC_VERSION: u32 = NVX_IMAGE_VIEW_HANDLE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_NVX_multiview_per_view_attributes"]
     pub mod multiview_per_view_attributes {
@@ -20616,6 +24533,16 @@ pub mod nvx {
             crate::vk::NVX_MULTIVIEW_PER_VIEW_ATTRIBUTES_NAME as NAME,
             crate::vk::NVX_MULTIVIEW_PER_VIEW_ATTRIBUTES_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = NVX_MULTIVIEW_PER_VIEW_ATTRIBUTES_NAME;
+            const SPEC_VERSION: u32 = NVX_MULTIVIEW_PER_VIEW_ATTRIBUTES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged QCOM"]
@@ -20627,6 +24554,16 @@ pub mod qcom {
             crate::vk::QCOM_RENDER_PASS_SHADER_RESOLVE_NAME as NAME,
             crate::vk::QCOM_RENDER_PASS_SHADER_RESOLVE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = QCOM_RENDER_PASS_SHADER_RESOLVE_NAME;
+            const SPEC_VERSION: u32 = QCOM_RENDER_PASS_SHADER_RESOLVE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_QCOM_render_pass_transform"]
     pub mod render_pass_transform {
@@ -20635,6 +24572,16 @@ pub mod qcom {
             crate::vk::QCOM_RENDER_PASS_TRANSFORM_NAME as NAME,
             crate::vk::QCOM_RENDER_PASS_TRANSFORM_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = QCOM_RENDER_PASS_TRANSFORM_NAME;
+            const SPEC_VERSION: u32 = QCOM_RENDER_PASS_TRANSFORM_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_QCOM_render_pass_store_ops"]
     pub mod render_pass_store_ops {
@@ -20643,6 +24590,16 @@ pub mod qcom {
             crate::vk::QCOM_RENDER_PASS_STORE_OPS_NAME as NAME,
             crate::vk::QCOM_RENDER_PASS_STORE_OPS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = QCOM_RENDER_PASS_STORE_OPS_NAME;
+            const SPEC_VERSION: u32 = QCOM_RENDER_PASS_STORE_OPS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_QCOM_rotated_copy_commands"]
     pub mod rotated_copy_commands {
@@ -20651,6 +24608,16 @@ pub mod qcom {
             crate::vk::QCOM_ROTATED_COPY_COMMANDS_NAME as NAME,
             crate::vk::QCOM_ROTATED_COPY_COMMANDS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = QCOM_ROTATED_COPY_COMMANDS_NAME;
+            const SPEC_VERSION: u32 = QCOM_ROTATED_COPY_COMMANDS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_QCOM_fragment_density_map_offset"]
     pub mod fragment_density_map_offset {
@@ -20659,6 +24626,16 @@ pub mod qcom {
             crate::vk::QCOM_FRAGMENT_DENSITY_MAP_OFFSET_NAME as NAME,
             crate::vk::QCOM_FRAGMENT_DENSITY_MAP_OFFSET_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = QCOM_FRAGMENT_DENSITY_MAP_OFFSET_NAME;
+            const SPEC_VERSION: u32 = QCOM_FRAGMENT_DENSITY_MAP_OFFSET_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_QCOM_image_processing"]
     pub mod image_processing {
@@ -20667,6 +24644,16 @@ pub mod qcom {
             crate::vk::QCOM_IMAGE_PROCESSING_NAME as NAME,
             crate::vk::QCOM_IMAGE_PROCESSING_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = QCOM_IMAGE_PROCESSING_NAME;
+            const SPEC_VERSION: u32 = QCOM_IMAGE_PROCESSING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_QCOM_tile_properties"]
     pub mod tile_properties {
@@ -20759,6 +24746,18 @@ pub mod qcom {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = QCOM_TILE_PROPERTIES_NAME;
+            const SPEC_VERSION: u32 = QCOM_TILE_PROPERTIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_QCOM_multiview_per_view_viewports"]
     pub mod multiview_per_view_viewports {
@@ -20767,6 +24766,16 @@ pub mod qcom {
             crate::vk::QCOM_MULTIVIEW_PER_VIEW_VIEWPORTS_NAME as NAME,
             crate::vk::QCOM_MULTIVIEW_PER_VIEW_VIEWPORTS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = QCOM_MULTIVIEW_PER_VIEW_VIEWPORTS_NAME;
+            const SPEC_VERSION: u32 = QCOM_MULTIVIEW_PER_VIEW_VIEWPORTS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_QCOM_multiview_per_view_render_areas"]
     pub mod multiview_per_view_render_areas {
@@ -20775,6 +24784,16 @@ pub mod qcom {
             crate::vk::QCOM_MULTIVIEW_PER_VIEW_RENDER_AREAS_NAME as NAME,
             crate::vk::QCOM_MULTIVIEW_PER_VIEW_RENDER_AREAS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = QCOM_MULTIVIEW_PER_VIEW_RENDER_AREAS_NAME;
+            const SPEC_VERSION: u32 = QCOM_MULTIVIEW_PER_VIEW_RENDER_AREAS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_QCOM_image_processing2"]
     pub mod image_processing2 {
@@ -20783,6 +24802,16 @@ pub mod qcom {
             crate::vk::QCOM_IMAGE_PROCESSING2_NAME as NAME,
             crate::vk::QCOM_IMAGE_PROCESSING2_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = QCOM_IMAGE_PROCESSING2_NAME;
+            const SPEC_VERSION: u32 = QCOM_IMAGE_PROCESSING2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_QCOM_filter_cubic_weights"]
     pub mod filter_cubic_weights {
@@ -20791,6 +24820,16 @@ pub mod qcom {
             crate::vk::QCOM_FILTER_CUBIC_WEIGHTS_NAME as NAME,
             crate::vk::QCOM_FILTER_CUBIC_WEIGHTS_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = QCOM_FILTER_CUBIC_WEIGHTS_NAME;
+            const SPEC_VERSION: u32 = QCOM_FILTER_CUBIC_WEIGHTS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_QCOM_ycbcr_degamma"]
     pub mod ycbcr_degamma {
@@ -20799,6 +24838,16 @@ pub mod qcom {
             crate::vk::QCOM_YCBCR_DEGAMMA_NAME as NAME,
             crate::vk::QCOM_YCBCR_DEGAMMA_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = QCOM_YCBCR_DEGAMMA_NAME;
+            const SPEC_VERSION: u32 = QCOM_YCBCR_DEGAMMA_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_QCOM_filter_cubic_clamp"]
     pub mod filter_cubic_clamp {
@@ -20807,6 +24856,16 @@ pub mod qcom {
             crate::vk::QCOM_FILTER_CUBIC_CLAMP_NAME as NAME,
             crate::vk::QCOM_FILTER_CUBIC_CLAMP_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = QCOM_FILTER_CUBIC_CLAMP_NAME;
+            const SPEC_VERSION: u32 = QCOM_FILTER_CUBIC_CLAMP_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged QNX"]
@@ -20901,6 +24960,18 @@ pub mod qnx {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = QNX_SCREEN_SURFACE_NAME;
+            const SPEC_VERSION: u32 = QNX_SCREEN_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = Instance;
+            fn new_instance(entry: &crate::Entry, instance: &crate::Instance) -> Instance {
+                Instance::new(entry, instance)
+            }
+        }
     }
     #[doc = "VK_QNX_external_memory_screen_buffer"]
     pub mod external_memory_screen_buffer {
@@ -20969,6 +25040,18 @@ pub mod qnx {
                 }
             }
         }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = QNX_EXTERNAL_MEMORY_SCREEN_BUFFER_NAME;
+            const SPEC_VERSION: u32 = QNX_EXTERNAL_MEMORY_SCREEN_BUFFER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged SEC"]
@@ -20980,6 +25063,16 @@ pub mod sec {
             crate::vk::SEC_AMIGO_PROFILING_NAME as NAME,
             crate::vk::SEC_AMIGO_PROFILING_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = SEC_AMIGO_PROFILING_NAME;
+            const SPEC_VERSION: u32 = SEC_AMIGO_PROFILING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
 }
 #[doc = "Extensions tagged VALVE"]
@@ -20991,6 +25084,17 @@ pub mod valve {
             crate::vk::VALVE_MUTABLE_DESCRIPTOR_TYPE_NAME as NAME,
             crate::vk::VALVE_MUTABLE_DESCRIPTOR_TYPE_SPEC_VERSION as SPEC_VERSION,
         };
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = VALVE_MUTABLE_DESCRIPTOR_TYPE_NAME;
+            const SPEC_VERSION: u32 = VALVE_MUTABLE_DESCRIPTOR_TYPE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(EXT_MUTABLE_DESCRIPTOR_TYPE_NAME);
+            type Device = ();
+            fn new_device(_instance: &crate::Instance, _device: &crate::Device) {}
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
+        }
     }
     #[doc = "VK_VALVE_descriptor_set_host_mapping"]
     pub mod descriptor_set_host_mapping {
@@ -21081,6 +25185,18 @@ pub mod valve {
                     },
                 }
             }
+        }
+        pub struct Meta;
+        impl ExtensionMeta for Meta {
+            const NAME: &'static CStr = VALVE_DESCRIPTOR_SET_HOST_MAPPING_NAME;
+            const SPEC_VERSION: u32 = VALVE_DESCRIPTOR_SET_HOST_MAPPING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            type Device = Device;
+            fn new_device(instance: &crate::Instance, device: &crate::Device) -> Device {
+                Device::new(instance, device)
+            }
+            type Instance = ();
+            fn new_instance(_entry: &crate::Entry, _instance: &crate::Instance) {}
         }
     }
 }
