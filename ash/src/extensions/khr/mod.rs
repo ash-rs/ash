@@ -19,6 +19,7 @@ pub mod external_memory_fd;
 pub mod external_memory_win32;
 pub mod external_semaphore_fd;
 pub mod external_semaphore_win32;
+pub mod get_display_properties2;
 pub mod get_memory_requirements2;
 pub mod get_physical_device_properties2;
 pub mod get_surface_capabilities2;
