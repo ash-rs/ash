@@ -2792,6 +2792,50 @@ impl DeviceFaultVendorBinaryHeaderVersionEXT {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectExecutionSetInfoTypeEXT.html>"]
+pub struct IndirectExecutionSetInfoTypeEXT(pub(crate) i32);
+impl IndirectExecutionSetInfoTypeEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl IndirectExecutionSetInfoTypeEXT {
+    pub const PIPELINES: Self = Self(0);
+    pub const SHADER_OBJECTS: Self = Self(1);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsTokenTypeEXT.html>"]
+pub struct IndirectCommandsTokenTypeEXT(pub(crate) i32);
+impl IndirectCommandsTokenTypeEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl IndirectCommandsTokenTypeEXT {
+    pub const EXECUTION_SET: Self = Self(0);
+    pub const PUSH_CONSTANT: Self = Self(1);
+    pub const SEQUENCE_INDEX: Self = Self(2);
+    pub const INDEX_BUFFER: Self = Self(3);
+    pub const VERTEX_BUFFER: Self = Self(4);
+    pub const DRAW_INDEXED: Self = Self(5);
+    pub const DRAW: Self = Self(6);
+    pub const DRAW_INDEXED_COUNT: Self = Self(7);
+    pub const DRAW_COUNT: Self = Self(8);
+    pub const DISPATCH: Self = Self(9);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDisplacementMicromapFormatNV.html>"]
 pub struct DisplacementMicromapFormatNV(pub(crate) i32);
 impl DisplacementMicromapFormatNV {
@@ -2997,6 +3041,24 @@ impl OutOfBandQueueTypeNV {
     pub const RENDER: Self = Self(0);
     pub const PRESENT: Self = Self(1);
 }
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDepthClampModeEXT.html>"]
+pub struct DepthClampModeEXT(pub(crate) i32);
+impl DepthClampModeEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl DepthClampModeEXT {
+    pub const VIEWPORT_RANGE: Self = Self(0);
+    pub const USER_DEFINED_RANGE: Self = Self(1);
+}
 impl fmt::Debug for ObjectType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
@@ -3049,6 +3111,8 @@ impl fmt::Debug for ObjectType {
             Self::OPTICAL_FLOW_SESSION_NV => Some("OPTICAL_FLOW_SESSION_NV"),
             Self::SHADER_EXT => Some("SHADER_EXT"),
             Self::PIPELINE_BINARY_KHR => Some("PIPELINE_BINARY_KHR"),
+            Self::INDIRECT_COMMANDS_LAYOUT_EXT => Some("INDIRECT_COMMANDS_LAYOUT_EXT"),
+            Self::INDIRECT_EXECUTION_SET_EXT => Some("INDIRECT_EXECUTION_SET_EXT"),
             Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
             Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
             Self::PRIVATE_DATA_SLOT => Some("PRIVATE_DATA_SLOT"),

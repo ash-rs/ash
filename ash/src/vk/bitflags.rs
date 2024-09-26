@@ -1724,6 +1724,24 @@ impl MicromapCreateFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsLayoutUsageFlagBitsEXT.html>"]
+pub struct IndirectCommandsLayoutUsageFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(IndirectCommandsLayoutUsageFlagsEXT, Flags);
+impl IndirectCommandsLayoutUsageFlagsEXT {
+    pub const EXPLICIT_PREPROCESS: Self = Self(0b1);
+    pub const UNORDERED_SEQUENCES: Self = Self(0b10);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsInputModeFlagBitsEXT.html>"]
+pub struct IndirectCommandsInputModeFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(IndirectCommandsInputModeFlagsEXT, Flags);
+impl IndirectCommandsInputModeFlagsEXT {
+    pub const VULKAN_INDEX_BUFFER: Self = Self(0b1);
+    pub const DXGI_INDEX_BUFFER: Self = Self(0b10);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderCreateFlagBitsEXT.html>"]
 pub struct ShaderCreateFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(ShaderCreateFlagsEXT, Flags);

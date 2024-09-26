@@ -7312,6 +7312,7 @@ pub mod ext {
             pub cmd_set_representative_fragment_test_enable_nv:
                 PFN_vkCmdSetRepresentativeFragmentTestEnableNV,
             pub cmd_set_coverage_reduction_mode_nv: PFN_vkCmdSetCoverageReductionModeNV,
+            pub cmd_set_depth_clamp_range_ext: PFN_vkCmdSetDepthClampRangeEXT,
         }
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
@@ -8364,6 +8365,26 @@ pub mod ext {
                             ::core::mem::transmute(val)
                         }
                     },
+                    cmd_set_depth_clamp_range_ext: unsafe {
+                        unsafe extern "system" fn cmd_set_depth_clamp_range_ext(
+                            _command_buffer: CommandBuffer,
+                            _depth_clamp_mode: DepthClampModeEXT,
+                            _p_depth_clamp_range: *const DepthClampRangeEXT,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_set_depth_clamp_range_ext)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthClampRangeEXT\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_set_depth_clamp_range_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
                 }
             }
         }
@@ -8483,6 +8504,325 @@ pub mod ext {
             crate::vk::EXT_SHADER_REPLICATED_COMPOSITES_NAME as NAME,
             crate::vk::EXT_SHADER_REPLICATED_COMPOSITES_SPEC_VERSION as SPEC_VERSION,
         };
+    }
+    #[doc = "VK_EXT_device_generated_commands"]
+    pub mod device_generated_commands {
+        use super::super::*;
+        pub use {
+            crate::vk::EXT_DEVICE_GENERATED_COMMANDS_NAME as NAME,
+            crate::vk::EXT_DEVICE_GENERATED_COMMANDS_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_EXT_device_generated_commands device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle();
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_EXT_device_generated_commands device-level function pointers"]
+        pub struct DeviceFn {
+            pub get_generated_commands_memory_requirements_ext:
+                PFN_vkGetGeneratedCommandsMemoryRequirementsEXT,
+            pub cmd_preprocess_generated_commands_ext: PFN_vkCmdPreprocessGeneratedCommandsEXT,
+            pub cmd_execute_generated_commands_ext: PFN_vkCmdExecuteGeneratedCommandsEXT,
+            pub create_indirect_commands_layout_ext: PFN_vkCreateIndirectCommandsLayoutEXT,
+            pub destroy_indirect_commands_layout_ext: PFN_vkDestroyIndirectCommandsLayoutEXT,
+            pub create_indirect_execution_set_ext: PFN_vkCreateIndirectExecutionSetEXT,
+            pub destroy_indirect_execution_set_ext: PFN_vkDestroyIndirectExecutionSetEXT,
+            pub update_indirect_execution_set_pipeline_ext:
+                PFN_vkUpdateIndirectExecutionSetPipelineEXT,
+            pub update_indirect_execution_set_shader_ext: PFN_vkUpdateIndirectExecutionSetShaderEXT,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    get_generated_commands_memory_requirements_ext: unsafe {
+                        unsafe extern "system" fn get_generated_commands_memory_requirements_ext(
+                            _device: crate::vk::Device,
+                            _p_info: *const GeneratedCommandsMemoryRequirementsInfoEXT<'_>,
+                            _p_memory_requirements: *mut MemoryRequirements2<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_generated_commands_memory_requirements_ext)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetGeneratedCommandsMemoryRequirementsEXT\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_generated_commands_memory_requirements_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_preprocess_generated_commands_ext: unsafe {
+                        unsafe extern "system" fn cmd_preprocess_generated_commands_ext(
+                            _command_buffer: CommandBuffer,
+                            _p_generated_commands_info: *const GeneratedCommandsInfoEXT<'_>,
+                            _state_command_buffer: CommandBuffer,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_preprocess_generated_commands_ext)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkCmdPreprocessGeneratedCommandsEXT\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_preprocess_generated_commands_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_execute_generated_commands_ext: unsafe {
+                        unsafe extern "system" fn cmd_execute_generated_commands_ext(
+                            _command_buffer: CommandBuffer,
+                            _is_preprocessed: Bool32,
+                            _p_generated_commands_info: *const GeneratedCommandsInfoEXT<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_execute_generated_commands_ext)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkCmdExecuteGeneratedCommandsEXT\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_execute_generated_commands_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    create_indirect_commands_layout_ext: unsafe {
+                        unsafe extern "system" fn create_indirect_commands_layout_ext(
+                            _device: crate::vk::Device,
+                            _p_create_info: *const IndirectCommandsLayoutCreateInfoEXT<'_>,
+                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_indirect_commands_layout: *mut IndirectCommandsLayoutEXT,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(create_indirect_commands_layout_ext)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkCreateIndirectCommandsLayoutEXT\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            create_indirect_commands_layout_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    destroy_indirect_commands_layout_ext: unsafe {
+                        unsafe extern "system" fn destroy_indirect_commands_layout_ext(
+                            _device: crate::vk::Device,
+                            _indirect_commands_layout: IndirectCommandsLayoutEXT,
+                            _p_allocator: *const AllocationCallbacks<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(destroy_indirect_commands_layout_ext)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkDestroyIndirectCommandsLayoutEXT\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            destroy_indirect_commands_layout_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    create_indirect_execution_set_ext: unsafe {
+                        unsafe extern "system" fn create_indirect_execution_set_ext(
+                            _device: crate::vk::Device,
+                            _p_create_info: *const IndirectExecutionSetCreateInfoEXT<'_>,
+                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_indirect_execution_set: *mut IndirectExecutionSetEXT,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(create_indirect_execution_set_ext)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkCreateIndirectExecutionSetEXT\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            create_indirect_execution_set_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    destroy_indirect_execution_set_ext: unsafe {
+                        unsafe extern "system" fn destroy_indirect_execution_set_ext(
+                            _device: crate::vk::Device,
+                            _indirect_execution_set: IndirectExecutionSetEXT,
+                            _p_allocator: *const AllocationCallbacks<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(destroy_indirect_execution_set_ext)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkDestroyIndirectExecutionSetEXT\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            destroy_indirect_execution_set_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    update_indirect_execution_set_pipeline_ext: unsafe {
+                        unsafe extern "system" fn update_indirect_execution_set_pipeline_ext(
+                            _device: crate::vk::Device,
+                            _indirect_execution_set: IndirectExecutionSetEXT,
+                            _execution_set_write_count: u32,
+                            _p_execution_set_writes: *const WriteIndirectExecutionSetPipelineEXT<
+                                '_,
+                            >,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(update_indirect_execution_set_pipeline_ext)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkUpdateIndirectExecutionSetPipelineEXT\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            update_indirect_execution_set_pipeline_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    update_indirect_execution_set_shader_ext: unsafe {
+                        unsafe extern "system" fn update_indirect_execution_set_shader_ext(
+                            _device: crate::vk::Device,
+                            _indirect_execution_set: IndirectExecutionSetEXT,
+                            _execution_set_write_count: u32,
+                            _p_execution_set_writes: *const WriteIndirectExecutionSetShaderEXT<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(update_indirect_execution_set_shader_ext)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkUpdateIndirectExecutionSetShaderEXT\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            update_indirect_execution_set_shader_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
+    #[doc = "VK_EXT_depth_clamp_control"]
+    pub mod depth_clamp_control {
+        use super::super::*;
+        pub use {
+            crate::vk::EXT_DEPTH_CLAMP_CONTROL_NAME as NAME,
+            crate::vk::EXT_DEPTH_CLAMP_CONTROL_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_EXT_depth_clamp_control device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle();
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_EXT_depth_clamp_control device-level function pointers"]
+        pub struct DeviceFn {
+            pub cmd_set_depth_clamp_range_ext: PFN_vkCmdSetDepthClampRangeEXT,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    cmd_set_depth_clamp_range_ext: unsafe {
+                        unsafe extern "system" fn cmd_set_depth_clamp_range_ext(
+                            _command_buffer: CommandBuffer,
+                            _depth_clamp_mode: DepthClampModeEXT,
+                            _p_depth_clamp_range: *const DepthClampRangeEXT,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_set_depth_clamp_range_ext)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthClampRangeEXT\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_set_depth_clamp_range_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
     }
 }
 #[doc = "Extensions tagged FUCHSIA"]
