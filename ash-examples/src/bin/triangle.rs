@@ -383,7 +383,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             record_submit_commandbuffer(
                 &base.device,
                 base.draw_command_buffer,
-                base.draw_commands_reuse_fence,
+                base.submit_complete_fence,
                 base.present_queue,
                 &[vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT],
                 &[base.present_complete_semaphore],
