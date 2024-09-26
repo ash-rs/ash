@@ -7,6 +7,7 @@ pub mod debug_marker;
 pub mod debug_report;
 pub mod debug_utils;
 pub mod descriptor_buffer;
+pub mod device_generated_commands;
 pub mod extended_dynamic_state;
 pub mod extended_dynamic_state2;
 pub mod extended_dynamic_state3;

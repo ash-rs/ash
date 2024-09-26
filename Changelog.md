@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update Vulkan-Headers to 1.3.296 (#910)
 - Added `VK_EXT_metal_objects` device extension (#942)
+- Added `VK_EXT_device_generated_commands` device extension (#946)
 
 ## [0.38.0] - 2024-04-01
 
