@@ -18,8 +18,11 @@ impl crate::khr::dynamic_rendering_local_read::Device {
     pub unsafe fn cmd_set_rendering_input_attachment_indices(
         &self,
         command_buffer: vk::CommandBuffer,
-        location_info: &vk::RenderingInputAttachmentIndexInfoKHR<'_>,
+        input_attachment_index_info: &vk::RenderingInputAttachmentIndexInfoKHR<'_>,
     ) {
-        (self.fp.cmd_set_rendering_input_attachment_indices_khr)(command_buffer, location_info)
+        (self.fp.cmd_set_rendering_input_attachment_indices_khr)(
+            command_buffer,
+            input_attachment_index_info,
+        )
     }
 }
