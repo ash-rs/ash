@@ -14,7 +14,10 @@ impl crate::ext::calibrated_timestamps::Device {
         &self,
         info: &[vk::CalibratedTimestampInfoEXT<'_>],
     ) -> VkResult<(Vec<u64>, u64)> {
-        let mut timestamps = Vec::with_capacity(info.len());
+        let mut timestamps = Vec::new();
+        timestamps
+            .try_reserve(info.len())
+            .map_err(|_| vk::Result::ERROR_OUT_OF_HOST_MEMORY)?;
         let mut max_deviation = mem::MaybeUninit::uninit();
         let max_deviation = (self.fp.get_calibrated_timestamps_ext)(
             self.handle,
