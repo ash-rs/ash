@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+### Changed
+
+- Treat QNX "void" type aliases as "opaque" to make them raw pointers instead of borrows in public structures (#950)
+
 ### Added
 
 - Update Vulkan-Headers to 1.3.296 (#910)
