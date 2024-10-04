@@ -2983,6 +2983,15 @@ impl StructureType {
 impl StructureType {
     pub const FORMAT_PROPERTIES_3_KHR: Self = Self::FORMAT_PROPERTIES_3;
 }
+#[doc = "Generated from 'VK_EXT_present_mode_fifo_latest_ready'"]
+impl PresentModeKHR {
+    pub const FIFO_LATEST_READY_EXT: Self = Self(1_000_361_000);
+}
+#[doc = "Generated from 'VK_EXT_present_mode_fifo_latest_ready'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PRESENT_MODE_FIFO_LATEST_READY_FEATURES_EXT: Self =
+        Self(1_000_361_000);
+}
 #[doc = "Generated from 'VK_FUCHSIA_external_memory'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const ZIRCON_VMO_FUCHSIA: Self = Self(0b1000_0000_0000);
@@ -7117,6 +7126,9 @@ pub const EXT_PRIMITIVE_TOPOLOGY_LIST_RESTART_SPEC_VERSION: u32 = 1u32;
 pub const KHR_FORMAT_FEATURE_FLAGS2_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_format_feature_flags2\0") };
 pub const KHR_FORMAT_FEATURE_FLAGS2_SPEC_VERSION: u32 = 2u32;
+pub const EXT_PRESENT_MODE_FIFO_LATEST_READY_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_present_mode_fifo_latest_ready\0") };
+pub const EXT_PRESENT_MODE_FIFO_LATEST_READY_SPEC_VERSION: u32 = 1u32;
 pub const FUCHSIA_EXTERNAL_MEMORY_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_external_memory\0") };
 pub const FUCHSIA_EXTERNAL_MEMORY_SPEC_VERSION: u32 = 1u32;

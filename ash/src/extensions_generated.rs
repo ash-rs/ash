@@ -5502,6 +5502,14 @@ pub mod ext {
             crate::vk::EXT_PRIMITIVE_TOPOLOGY_LIST_RESTART_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_EXT_present_mode_fifo_latest_ready"]
+    pub mod present_mode_fifo_latest_ready {
+        use super::super::*;
+        pub use {
+            crate::vk::EXT_PRESENT_MODE_FIFO_LATEST_READY_NAME as NAME,
+            crate::vk::EXT_PRESENT_MODE_FIFO_LATEST_READY_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_EXT_pipeline_properties"]
     pub mod pipeline_properties {
         use super::super::*;
