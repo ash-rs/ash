@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Update Vulkan-Headers to 1.3.296 (#910)
+- Update Vulkan-Headers to 1.3.297 (#910, #951)
 - Added `VK_KHR_get_display_properties2` instance extension (#932)
 - Added `VK_EXT_metal_objects` device extension (#942)
 

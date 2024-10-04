@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 296;
+pub const HEADER_VERSION: u32 = 297;
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -59884,6 +59884,46 @@ impl<'a> PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
     #[inline]
     pub fn shader_replicated_composites(mut self, shader_replicated_composites: bool) -> Self {
         self.shader_replicated_composites = shader_replicated_composites.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePresentModeFifoLatestReadyFeaturesEXT.html>"]
+#[must_use]
+pub struct PhysicalDevicePresentModeFifoLatestReadyFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub present_mode_fifo_latest_ready: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDevicePresentModeFifoLatestReadyFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDevicePresentModeFifoLatestReadyFeaturesEXT<'_> {}
+impl ::core::default::Default for PhysicalDevicePresentModeFifoLatestReadyFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            present_mode_fifo_latest_ready: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDevicePresentModeFifoLatestReadyFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_PRESENT_MODE_FIFO_LATEST_READY_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePresentModeFifoLatestReadyFeaturesEXT<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentModeFifoLatestReadyFeaturesEXT<'_> {}
+impl<'a> PhysicalDevicePresentModeFifoLatestReadyFeaturesEXT<'a> {
+    #[inline]
+    pub fn present_mode_fifo_latest_ready(mut self, present_mode_fifo_latest_ready: bool) -> Self {
+        self.present_mode_fifo_latest_ready = present_mode_fifo_latest_ready.into();
         self
     }
 }

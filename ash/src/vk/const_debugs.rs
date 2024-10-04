@@ -4359,6 +4359,7 @@ impl fmt::Debug for PresentModeKHR {
             Self::FIFO_RELAXED => Some("FIFO_RELAXED"),
             Self::SHARED_DEMAND_REFRESH => Some("SHARED_DEMAND_REFRESH"),
             Self::SHARED_CONTINUOUS_REFRESH => Some("SHARED_CONTINUOUS_REFRESH"),
+            Self::FIFO_LATEST_READY_EXT => Some("FIFO_LATEST_READY_EXT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -6244,6 +6245,9 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_PRIMITIVE_TOPOLOGY_LIST_RESTART_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PRIMITIVE_TOPOLOGY_LIST_RESTART_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_PRESENT_MODE_FIFO_LATEST_READY_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_PRESENT_MODE_FIFO_LATEST_READY_FEATURES_EXT")
             }
             Self::IMPORT_MEMORY_ZIRCON_HANDLE_INFO_FUCHSIA => {
                 Some("IMPORT_MEMORY_ZIRCON_HANDLE_INFO_FUCHSIA")
