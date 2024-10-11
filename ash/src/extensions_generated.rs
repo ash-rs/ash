@@ -495,6 +495,7 @@ pub mod amd {
 #[doc = "Extensions tagged AMDX"]
 pub mod amdx {
     #[doc = "VK_AMDX_shader_enqueue"]
+    #[cfg(feature = "provisional")]
     pub mod shader_enqueue {
         use crate::vk::*;
         use core::ffi::*;
@@ -5493,8 +5494,10 @@ pub mod ext {
                 self.handle
             }
         }
-        #[allow(non_camel_case_types)]
         #[doc = "Implemented for all types that can be passed as argument to `pipeline_properties` in [`PFN_vkGetPipelinePropertiesEXT`]"]
+        #[doc = ""]
+        #[doc = "Provided by VK_EXT_pipeline_properties"]
+        #[allow(non_camel_case_types)]
         pub unsafe trait GetPipelinePropertiesEXTParamPipelineProperties {}
         unsafe impl GetPipelinePropertiesEXTParamPipelineProperties
             for PipelinePropertiesIdentifierEXT<'_>
@@ -14792,6 +14795,7 @@ pub mod khr {
         }
     }
     #[doc = "VK_KHR_portability_subset"]
+    #[cfg(feature = "provisional")]
     pub mod portability_subset {
         pub use {
             crate::vk::KHR_PORTABILITY_SUBSET_NAME as NAME,
@@ -19181,6 +19185,7 @@ pub mod nv {
         };
     }
     #[doc = "VK_NV_cuda_kernel_launch"]
+    #[cfg(feature = "provisional")]
     pub mod cuda_kernel_launch {
         use crate::vk::*;
         use core::ffi::*;
@@ -19591,6 +19596,7 @@ pub mod nv {
         }
     }
     #[doc = "VK_NV_displacement_micromap"]
+    #[cfg(feature = "provisional")]
     pub mod displacement_micromap {
         pub use {
             crate::vk::NV_DISPLACEMENT_MICROMAP_NAME as NAME,
