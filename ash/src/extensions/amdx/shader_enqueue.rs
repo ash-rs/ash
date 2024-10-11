@@ -1,3 +1,4 @@
+#![cfg(feature = "provisional")]
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMDX_shader_enqueue.html>
 
 use crate::vk;

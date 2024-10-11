@@ -28304,6 +28304,7 @@ unsafe impl Extends<RayTracingPipelineCreateInfoKHR<'_>>
     for PipelineCreationFeedbackCreateInfo<'_>
 {
 }
+#[cfg(feature = "provisional")]
 unsafe impl Extends<ExecutionGraphPipelineCreateInfoAMDX<'_>>
     for PipelineCreationFeedbackCreateInfo<'_>
 {
@@ -33023,6 +33024,7 @@ unsafe impl<'a> TaggedStructure<'a> for PipelineCompilerControlCreateInfoAMD<'a>
 }
 unsafe impl Extends<GraphicsPipelineCreateInfo<'_>> for PipelineCompilerControlCreateInfoAMD<'_> {}
 unsafe impl Extends<ComputePipelineCreateInfo<'_>> for PipelineCompilerControlCreateInfoAMD<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Extends<ExecutionGraphPipelineCreateInfoAMDX<'_>>
     for PipelineCompilerControlCreateInfoAMD<'_>
 {
@@ -33431,6 +33433,7 @@ impl ::core::default::Default for DeviceOrHostAddressConstKHR {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceOrHostAddressConstAMDX.html>"]
@@ -33438,6 +33441,7 @@ pub union DeviceOrHostAddressConstAMDX {
     pub device_address: DeviceAddress,
     pub host_address: *const c_void,
 }
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for DeviceOrHostAddressConstAMDX {
     #[inline]
     fn default() -> Self {
@@ -35425,6 +35429,7 @@ impl<'a> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
         self
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -35450,8 +35455,11 @@ pub struct PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
     pub vertex_attribute_access_beyond_stride: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+#[cfg(feature = "provisional")]
 unsafe impl Send for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -35477,15 +35485,19 @@ impl ::core::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR<'_>
         }
     }
 }
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PORTABILITY_SUBSET_FEATURES_KHR;
 }
+#[cfg(feature = "provisional")]
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
     for PhysicalDevicePortabilitySubsetFeaturesKHR<'_>
 {
 }
+#[cfg(feature = "provisional")]
 unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {}
+#[cfg(feature = "provisional")]
 impl<'a> PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
     #[inline]
     pub fn constant_alpha_color_blend_factors(
@@ -35576,6 +35588,7 @@ impl<'a> PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
         self
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -35587,8 +35600,11 @@ pub struct PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
     pub min_vertex_input_binding_stride_alignment: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+#[cfg(feature = "provisional")]
 unsafe impl Send for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -35600,14 +35616,17 @@ impl ::core::default::Default for PhysicalDevicePortabilitySubsetPropertiesKHR<'
         }
     }
 }
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PORTABILITY_SUBSET_PROPERTIES_KHR;
 }
+#[cfg(feature = "provisional")]
 unsafe impl Extends<PhysicalDeviceProperties2<'_>>
     for PhysicalDevicePortabilitySubsetPropertiesKHR<'_>
 {
 }
+#[cfg(feature = "provisional")]
 impl<'a> PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
     #[inline]
     pub fn min_vertex_input_binding_stride_alignment(
@@ -46970,7 +46989,7 @@ pub struct AccelerationStructureSRTMotionInstanceNV {
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/AccelerationStructureMatrixMotionInstanceNV.html>"]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureMatrixMotionInstanceNV.html>"]
 pub struct AccelerationStructureMatrixMotionInstanceNV {
     pub transform_t0: TransformMatrixKHR,
     pub transform_t1: TransformMatrixKHR,
@@ -47632,14 +47651,17 @@ impl<'a> BufferCollectionConstraintsInfoFUCHSIA<'a> {
 handle_nondispatchable!(
     CudaModuleNV,
     CUDA_MODULE_NV,
-    doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCudaModuleNV.html>"
+    doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCudaModuleNV.html>",
+    cfg(feature = "provisional")
 );
 handle_nondispatchable!(
     CudaFunctionNV,
     CUDA_FUNCTION_NV,
     doc =
-        "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCudaFunctionNV.html>"
+        "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCudaFunctionNV.html>",
+    cfg(feature = "provisional")
 );
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -47652,8 +47674,11 @@ pub struct CudaModuleCreateInfoNV<'a> {
     pub p_data: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+#[cfg(feature = "provisional")]
 unsafe impl Send for CudaModuleCreateInfoNV<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Sync for CudaModuleCreateInfoNV<'_> {}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for CudaModuleCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -47666,9 +47691,11 @@ impl ::core::default::Default for CudaModuleCreateInfoNV<'_> {
         }
     }
 }
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for CudaModuleCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CUDA_MODULE_CREATE_INFO_NV;
 }
+#[cfg(feature = "provisional")]
 impl<'a> CudaModuleCreateInfoNV<'a> {
     #[inline]
     pub fn data(mut self, data: &'a [u8]) -> Self {
@@ -47677,6 +47704,7 @@ impl<'a> CudaModuleCreateInfoNV<'a> {
         self
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -47689,8 +47717,11 @@ pub struct CudaFunctionCreateInfoNV<'a> {
     pub p_name: *const c_char,
     pub _marker: PhantomData<&'a ()>,
 }
+#[cfg(feature = "provisional")]
 unsafe impl Send for CudaFunctionCreateInfoNV<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Sync for CudaFunctionCreateInfoNV<'_> {}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for CudaFunctionCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -47703,9 +47734,11 @@ impl ::core::default::Default for CudaFunctionCreateInfoNV<'_> {
         }
     }
 }
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for CudaFunctionCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CUDA_FUNCTION_CREATE_INFO_NV;
 }
+#[cfg(feature = "provisional")]
 impl<'a> CudaFunctionCreateInfoNV<'a> {
     #[inline]
     pub fn module(mut self, module: CudaModuleNV) -> Self {
@@ -47726,6 +47759,7 @@ impl<'a> CudaFunctionCreateInfoNV<'a> {
         }
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -47748,8 +47782,11 @@ pub struct CudaLaunchInfoNV<'a> {
     pub p_extras: *const *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+#[cfg(feature = "provisional")]
 unsafe impl Send for CudaLaunchInfoNV<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Sync for CudaLaunchInfoNV<'_> {}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for CudaLaunchInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -47772,9 +47809,11 @@ impl ::core::default::Default for CudaLaunchInfoNV<'_> {
         }
     }
 }
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for CudaLaunchInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CUDA_LAUNCH_INFO_NV;
 }
+#[cfg(feature = "provisional")]
 impl<'a> CudaLaunchInfoNV<'a> {
     #[inline]
     pub fn function(mut self, function: CudaFunctionNV) -> Self {
@@ -50673,6 +50712,7 @@ impl<'a> AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
         self
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -50684,8 +50724,11 @@ pub struct PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
     pub displacement_micromap: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+#[cfg(feature = "provisional")]
 unsafe impl Send for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -50697,15 +50740,19 @@ impl ::core::default::Default for PhysicalDeviceDisplacementMicromapFeaturesNV<'
         }
     }
 }
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV;
 }
+#[cfg(feature = "provisional")]
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
     for PhysicalDeviceDisplacementMicromapFeaturesNV<'_>
 {
 }
+#[cfg(feature = "provisional")]
 unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
+#[cfg(feature = "provisional")]
 impl<'a> PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
     #[inline]
     pub fn displacement_micromap(mut self, displacement_micromap: bool) -> Self {
@@ -50713,6 +50760,7 @@ impl<'a> PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
         self
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -50724,8 +50772,11 @@ pub struct PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
     pub max_displacement_micromap_subdivision_level: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+#[cfg(feature = "provisional")]
 unsafe impl Send for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -50737,14 +50788,17 @@ impl ::core::default::Default for PhysicalDeviceDisplacementMicromapPropertiesNV
         }
     }
 }
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_PROPERTIES_NV;
 }
+#[cfg(feature = "provisional")]
 unsafe impl Extends<PhysicalDeviceProperties2<'_>>
     for PhysicalDeviceDisplacementMicromapPropertiesNV<'_>
 {
 }
+#[cfg(feature = "provisional")]
 impl<'a> PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
     #[inline]
     pub fn max_displacement_micromap_subdivision_level(
@@ -50756,6 +50810,7 @@ impl<'a> PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
         self
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureTrianglesDisplacementMicromapNV.html>"]
@@ -50781,8 +50836,11 @@ pub struct AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
     pub micromap: MicromapEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+#[cfg(feature = "provisional")]
 unsafe impl Send for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Sync for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {}
+#[cfg(feature = "provisional")]
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -50823,6 +50881,7 @@ impl fmt::Debug for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
             .finish()
     }
 }
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -50849,14 +50908,17 @@ impl ::core::default::Default for AccelerationStructureTrianglesDisplacementMicr
         }
     }
 }
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_TRIANGLES_DISPLACEMENT_MICROMAP_NV;
 }
+#[cfg(feature = "provisional")]
 unsafe impl Extends<AccelerationStructureGeometryTrianglesDataKHR<'_>>
     for AccelerationStructureTrianglesDisplacementMicromapNV<'_>
 {
 }
+#[cfg(feature = "provisional")]
 impl<'a> AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
     #[inline]
     pub fn displacement_bias_and_scale_format(
@@ -55394,6 +55456,7 @@ impl<'a> PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
         self
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -55409,8 +55472,11 @@ pub struct PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
     pub execution_graph_dispatch_address_alignment: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+#[cfg(feature = "provisional")]
 unsafe impl Send for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {
     #[inline]
     fn default() -> Self {
@@ -55426,14 +55492,17 @@ impl ::core::default::Default for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> 
         }
     }
 }
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ENQUEUE_PROPERTIES_AMDX;
 }
+#[cfg(feature = "provisional")]
 unsafe impl Extends<PhysicalDeviceProperties2<'_>>
     for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_>
 {
 }
+#[cfg(feature = "provisional")]
 impl<'a> PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
     #[inline]
     pub fn max_execution_graph_depth(mut self, max_execution_graph_depth: u32) -> Self {
@@ -55474,6 +55543,7 @@ impl<'a> PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
         self
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -55485,8 +55555,11 @@ pub struct PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
     pub shader_enqueue: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+#[cfg(feature = "provisional")]
 unsafe impl Send for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {
     #[inline]
     fn default() -> Self {
@@ -55498,12 +55571,16 @@ impl ::core::default::Default for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {
         }
     }
 }
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ENQUEUE_FEATURES_AMDX;
 }
+#[cfg(feature = "provisional")]
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
+#[cfg(feature = "provisional")]
 impl<'a> PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
     #[inline]
     pub fn shader_enqueue(mut self, shader_enqueue: bool) -> Self {
@@ -55511,6 +55588,7 @@ impl<'a> PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
         self
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -55528,8 +55606,11 @@ pub struct ExecutionGraphPipelineCreateInfoAMDX<'a> {
     pub base_pipeline_index: i32,
     pub _marker: PhantomData<&'a ()>,
 }
+#[cfg(feature = "provisional")]
 unsafe impl Send for ExecutionGraphPipelineCreateInfoAMDX<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Sync for ExecutionGraphPipelineCreateInfoAMDX<'_> {}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
     #[inline]
     fn default() -> Self {
@@ -55547,9 +55628,11 @@ impl ::core::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
         }
     }
 }
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for ExecutionGraphPipelineCreateInfoAMDX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXECUTION_GRAPH_PIPELINE_CREATE_INFO_AMDX;
 }
+#[cfg(feature = "provisional")]
 impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
@@ -55583,6 +55666,7 @@ impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
         self
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -55595,8 +55679,11 @@ pub struct PipelineShaderStageNodeCreateInfoAMDX<'a> {
     pub index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+#[cfg(feature = "provisional")]
 unsafe impl Send for PipelineShaderStageNodeCreateInfoAMDX<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Sync for PipelineShaderStageNodeCreateInfoAMDX<'_> {}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PipelineShaderStageNodeCreateInfoAMDX<'_> {
     #[inline]
     fn default() -> Self {
@@ -55609,14 +55696,17 @@ impl ::core::default::Default for PipelineShaderStageNodeCreateInfoAMDX<'_> {
         }
     }
 }
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageNodeCreateInfoAMDX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_SHADER_STAGE_NODE_CREATE_INFO_AMDX;
 }
+#[cfg(feature = "provisional")]
 unsafe impl Extends<PipelineShaderStageCreateInfo<'_>>
     for PipelineShaderStageNodeCreateInfoAMDX<'_>
 {
 }
+#[cfg(feature = "provisional")]
 impl<'a> PipelineShaderStageNodeCreateInfoAMDX<'a> {
     #[inline]
     pub fn name(mut self, name: &'a CStr) -> Self {
@@ -55637,6 +55727,7 @@ impl<'a> PipelineShaderStageNodeCreateInfoAMDX<'a> {
         self
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -55648,8 +55739,11 @@ pub struct ExecutionGraphPipelineScratchSizeAMDX<'a> {
     pub size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+#[cfg(feature = "provisional")]
 unsafe impl Send for ExecutionGraphPipelineScratchSizeAMDX<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Sync for ExecutionGraphPipelineScratchSizeAMDX<'_> {}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for ExecutionGraphPipelineScratchSizeAMDX<'_> {
     #[inline]
     fn default() -> Self {
@@ -55661,9 +55755,11 @@ impl ::core::default::Default for ExecutionGraphPipelineScratchSizeAMDX<'_> {
         }
     }
 }
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for ExecutionGraphPipelineScratchSizeAMDX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXECUTION_GRAPH_PIPELINE_SCRATCH_SIZE_AMDX;
 }
+#[cfg(feature = "provisional")]
 impl<'a> ExecutionGraphPipelineScratchSizeAMDX<'a> {
     #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
@@ -55671,6 +55767,7 @@ impl<'a> ExecutionGraphPipelineScratchSizeAMDX<'a> {
         self
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[derive(Copy, Clone, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDispatchGraphInfoAMDX.html>"]
@@ -55681,6 +55778,7 @@ pub struct DispatchGraphInfoAMDX {
     pub payloads: DeviceOrHostAddressConstAMDX,
     pub payload_stride: u64,
 }
+#[cfg(feature = "provisional")]
 #[cfg(feature = "debug")]
 impl fmt::Debug for DispatchGraphInfoAMDX {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -55692,6 +55790,7 @@ impl fmt::Debug for DispatchGraphInfoAMDX {
             .finish()
     }
 }
+#[cfg(feature = "provisional")]
 impl DispatchGraphInfoAMDX {
     #[inline]
     pub fn node_index(mut self, node_index: u32) -> Self {
@@ -55714,6 +55813,7 @@ impl DispatchGraphInfoAMDX {
         self
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[derive(Copy, Clone, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDispatchGraphCountInfoAMDX.html>"]
@@ -55723,6 +55823,7 @@ pub struct DispatchGraphCountInfoAMDX {
     pub infos: DeviceOrHostAddressConstAMDX,
     pub stride: u64,
 }
+#[cfg(feature = "provisional")]
 #[cfg(feature = "debug")]
 impl fmt::Debug for DispatchGraphCountInfoAMDX {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -55733,6 +55834,7 @@ impl fmt::Debug for DispatchGraphCountInfoAMDX {
             .finish()
     }
 }
+#[cfg(feature = "provisional")]
 impl DispatchGraphCountInfoAMDX {
     #[inline]
     pub fn count(mut self, count: u32) -> Self {
@@ -57331,6 +57433,7 @@ impl<'a> LatencySurfaceCapabilitiesNV<'a> {
         self
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -57342,8 +57445,11 @@ pub struct PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
     pub cuda_kernel_launch_features: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+#[cfg(feature = "provisional")]
 unsafe impl Send for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -57355,12 +57461,16 @@ impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {
         }
     }
 }
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_FEATURES_NV;
 }
+#[cfg(feature = "provisional")]
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {}
+#[cfg(feature = "provisional")]
 impl<'a> PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
     #[inline]
     pub fn cuda_kernel_launch_features(mut self, cuda_kernel_launch_features: bool) -> Self {
@@ -57368,6 +57478,7 @@ impl<'a> PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
         self
     }
 }
+#[cfg(feature = "provisional")]
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -57380,8 +57491,11 @@ pub struct PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
     pub compute_capability_major: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+#[cfg(feature = "provisional")]
 unsafe impl Send for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {}
+#[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -57394,14 +57508,17 @@ impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_>
         }
     }
 }
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_PROPERTIES_NV;
 }
+#[cfg(feature = "provisional")]
 unsafe impl Extends<PhysicalDeviceProperties2<'_>>
     for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_>
 {
 }
+#[cfg(feature = "provisional")]
 impl<'a> PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
     #[inline]
     pub fn compute_capability_minor(mut self, compute_capability_minor: u32) -> Self {

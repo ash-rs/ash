@@ -1,6 +1,6 @@
 use core::fmt;
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageLayout.html>"]
 pub struct ImageLayout(pub(crate) i32);
 impl ImageLayout {
@@ -12,8 +12,6 @@ impl ImageLayout {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ImageLayout {
     #[doc = "Implicit layout an image is when its contents are undefined due to various reasons (e.g. right after creation)"]
     pub const UNDEFINED: Self = Self(0);
     #[doc = "General layout when image can be used for any kind of access"]
@@ -33,8 +31,8 @@ impl ImageLayout {
     #[doc = "Initial layout used when the data is populated by the CPU"]
     pub const PREINITIALIZED: Self = Self(8);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAttachmentLoadOp.html>"]
 pub struct AttachmentLoadOp(pub(crate) i32);
 impl AttachmentLoadOp {
@@ -46,14 +44,12 @@ impl AttachmentLoadOp {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl AttachmentLoadOp {
     pub const LOAD: Self = Self(0);
     pub const CLEAR: Self = Self(1);
     pub const DONT_CARE: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAttachmentStoreOp.html>"]
 pub struct AttachmentStoreOp(pub(crate) i32);
 impl AttachmentStoreOp {
@@ -65,13 +61,11 @@ impl AttachmentStoreOp {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl AttachmentStoreOp {
     pub const STORE: Self = Self(0);
     pub const DONT_CARE: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageType.html>"]
 pub struct ImageType(pub(crate) i32);
 impl ImageType {
@@ -83,14 +77,12 @@ impl ImageType {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ImageType {
     pub const TYPE_1D: Self = Self(0);
     pub const TYPE_2D: Self = Self(1);
     pub const TYPE_3D: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageTiling.html>"]
 pub struct ImageTiling(pub(crate) i32);
 impl ImageTiling {
@@ -102,13 +94,11 @@ impl ImageTiling {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ImageTiling {
     pub const OPTIMAL: Self = Self(0);
     pub const LINEAR: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageViewType.html>"]
 pub struct ImageViewType(pub(crate) i32);
 impl ImageViewType {
@@ -120,8 +110,6 @@ impl ImageViewType {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ImageViewType {
     pub const TYPE_1D: Self = Self(0);
     pub const TYPE_2D: Self = Self(1);
     pub const TYPE_3D: Self = Self(2);
@@ -130,8 +118,8 @@ impl ImageViewType {
     pub const TYPE_2D_ARRAY: Self = Self(5);
     pub const CUBE_ARRAY: Self = Self(6);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandBufferLevel.html>"]
 pub struct CommandBufferLevel(pub(crate) i32);
 impl CommandBufferLevel {
@@ -143,13 +131,11 @@ impl CommandBufferLevel {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl CommandBufferLevel {
     pub const PRIMARY: Self = Self(0);
     pub const SECONDARY: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkComponentSwizzle.html>"]
 pub struct ComponentSwizzle(pub(crate) i32);
 impl ComponentSwizzle {
@@ -161,8 +147,6 @@ impl ComponentSwizzle {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ComponentSwizzle {
     pub const IDENTITY: Self = Self(0);
     pub const ZERO: Self = Self(1);
     pub const ONE: Self = Self(2);
@@ -171,8 +155,8 @@ impl ComponentSwizzle {
     pub const B: Self = Self(5);
     pub const A: Self = Self(6);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorType.html>"]
 pub struct DescriptorType(pub(crate) i32);
 impl DescriptorType {
@@ -184,8 +168,6 @@ impl DescriptorType {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DescriptorType {
     pub const SAMPLER: Self = Self(0);
     pub const COMBINED_IMAGE_SAMPLER: Self = Self(1);
     pub const SAMPLED_IMAGE: Self = Self(2);
@@ -198,8 +180,8 @@ impl DescriptorType {
     pub const STORAGE_BUFFER_DYNAMIC: Self = Self(9);
     pub const INPUT_ATTACHMENT: Self = Self(10);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueryType.html>"]
 pub struct QueryType(pub(crate) i32);
 impl QueryType {
@@ -211,15 +193,13 @@ impl QueryType {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl QueryType {
     pub const OCCLUSION: Self = Self(0);
     #[doc = "Optional"]
     pub const PIPELINE_STATISTICS: Self = Self(1);
     pub const TIMESTAMP: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBorderColor.html>"]
 pub struct BorderColor(pub(crate) i32);
 impl BorderColor {
@@ -231,8 +211,6 @@ impl BorderColor {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl BorderColor {
     pub const FLOAT_TRANSPARENT_BLACK: Self = Self(0);
     pub const INT_TRANSPARENT_BLACK: Self = Self(1);
     pub const FLOAT_OPAQUE_BLACK: Self = Self(2);
@@ -240,8 +218,8 @@ impl BorderColor {
     pub const FLOAT_OPAQUE_WHITE: Self = Self(4);
     pub const INT_OPAQUE_WHITE: Self = Self(5);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineBindPoint.html>"]
 pub struct PipelineBindPoint(pub(crate) i32);
 impl PipelineBindPoint {
@@ -253,13 +231,11 @@ impl PipelineBindPoint {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PipelineBindPoint {
     pub const GRAPHICS: Self = Self(0);
     pub const COMPUTE: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCacheHeaderVersion.html>"]
 pub struct PipelineCacheHeaderVersion(pub(crate) i32);
 impl PipelineCacheHeaderVersion {
@@ -271,12 +247,10 @@ impl PipelineCacheHeaderVersion {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PipelineCacheHeaderVersion {
     pub const ONE: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPrimitiveTopology.html>"]
 pub struct PrimitiveTopology(pub(crate) i32);
 impl PrimitiveTopology {
@@ -288,8 +262,6 @@ impl PrimitiveTopology {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PrimitiveTopology {
     pub const POINT_LIST: Self = Self(0);
     pub const LINE_LIST: Self = Self(1);
     pub const LINE_STRIP: Self = Self(2);
@@ -302,8 +274,8 @@ impl PrimitiveTopology {
     pub const TRIANGLE_STRIP_WITH_ADJACENCY: Self = Self(9);
     pub const PATCH_LIST: Self = Self(10);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSharingMode.html>"]
 pub struct SharingMode(pub(crate) i32);
 impl SharingMode {
@@ -315,13 +287,11 @@ impl SharingMode {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl SharingMode {
     pub const EXCLUSIVE: Self = Self(0);
     pub const CONCURRENT: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndexType.html>"]
 pub struct IndexType(pub(crate) i32);
 impl IndexType {
@@ -333,13 +303,11 @@ impl IndexType {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl IndexType {
     pub const UINT16: Self = Self(0);
     pub const UINT32: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFilter.html>"]
 pub struct Filter(pub(crate) i32);
 impl Filter {
@@ -351,13 +319,11 @@ impl Filter {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl Filter {
     pub const NEAREST: Self = Self(0);
     pub const LINEAR: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerMipmapMode.html>"]
 pub struct SamplerMipmapMode(pub(crate) i32);
 impl SamplerMipmapMode {
@@ -369,15 +335,13 @@ impl SamplerMipmapMode {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl SamplerMipmapMode {
     #[doc = "Choose nearest mip level"]
     pub const NEAREST: Self = Self(0);
     #[doc = "Linear filter between mip levels"]
     pub const LINEAR: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerAddressMode.html>"]
 pub struct SamplerAddressMode(pub(crate) i32);
 impl SamplerAddressMode {
@@ -389,15 +353,13 @@ impl SamplerAddressMode {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl SamplerAddressMode {
     pub const REPEAT: Self = Self(0);
     pub const MIRRORED_REPEAT: Self = Self(1);
     pub const CLAMP_TO_EDGE: Self = Self(2);
     pub const CLAMP_TO_BORDER: Self = Self(3);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCompareOp.html>"]
 pub struct CompareOp(pub(crate) i32);
 impl CompareOp {
@@ -409,8 +371,6 @@ impl CompareOp {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl CompareOp {
     pub const NEVER: Self = Self(0);
     pub const LESS: Self = Self(1);
     pub const EQUAL: Self = Self(2);
@@ -420,8 +380,8 @@ impl CompareOp {
     pub const GREATER_OR_EQUAL: Self = Self(6);
     pub const ALWAYS: Self = Self(7);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPolygonMode.html>"]
 pub struct PolygonMode(pub(crate) i32);
 impl PolygonMode {
@@ -433,14 +393,12 @@ impl PolygonMode {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PolygonMode {
     pub const FILL: Self = Self(0);
     pub const LINE: Self = Self(1);
     pub const POINT: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFrontFace.html>"]
 pub struct FrontFace(pub(crate) i32);
 impl FrontFace {
@@ -452,13 +410,11 @@ impl FrontFace {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl FrontFace {
     pub const COUNTER_CLOCKWISE: Self = Self(0);
     pub const CLOCKWISE: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBlendFactor.html>"]
 pub struct BlendFactor(pub(crate) i32);
 impl BlendFactor {
@@ -470,8 +426,6 @@ impl BlendFactor {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl BlendFactor {
     pub const ZERO: Self = Self(0);
     pub const ONE: Self = Self(1);
     pub const SRC_COLOR: Self = Self(2);
@@ -492,8 +446,8 @@ impl BlendFactor {
     pub const SRC1_ALPHA: Self = Self(17);
     pub const ONE_MINUS_SRC1_ALPHA: Self = Self(18);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBlendOp.html>"]
 pub struct BlendOp(pub(crate) i32);
 impl BlendOp {
@@ -505,16 +459,14 @@ impl BlendOp {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl BlendOp {
     pub const ADD: Self = Self(0);
     pub const SUBTRACT: Self = Self(1);
     pub const REVERSE_SUBTRACT: Self = Self(2);
     pub const MIN: Self = Self(3);
     pub const MAX: Self = Self(4);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkStencilOp.html>"]
 pub struct StencilOp(pub(crate) i32);
 impl StencilOp {
@@ -526,8 +478,6 @@ impl StencilOp {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl StencilOp {
     pub const KEEP: Self = Self(0);
     pub const ZERO: Self = Self(1);
     pub const REPLACE: Self = Self(2);
@@ -537,8 +487,8 @@ impl StencilOp {
     pub const INCREMENT_AND_WRAP: Self = Self(6);
     pub const DECREMENT_AND_WRAP: Self = Self(7);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLogicOp.html>"]
 pub struct LogicOp(pub(crate) i32);
 impl LogicOp {
@@ -550,8 +500,6 @@ impl LogicOp {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl LogicOp {
     pub const CLEAR: Self = Self(0);
     pub const AND: Self = Self(1);
     pub const AND_REVERSE: Self = Self(2);
@@ -569,8 +517,8 @@ impl LogicOp {
     pub const NAND: Self = Self(14);
     pub const SET: Self = Self(15);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkInternalAllocationType.html>"]
 pub struct InternalAllocationType(pub(crate) i32);
 impl InternalAllocationType {
@@ -582,12 +530,10 @@ impl InternalAllocationType {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl InternalAllocationType {
     pub const EXECUTABLE: Self = Self(0);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSystemAllocationScope.html>"]
 pub struct SystemAllocationScope(pub(crate) i32);
 impl SystemAllocationScope {
@@ -599,16 +545,14 @@ impl SystemAllocationScope {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl SystemAllocationScope {
     pub const COMMAND: Self = Self(0);
     pub const OBJECT: Self = Self(1);
     pub const CACHE: Self = Self(2);
     pub const DEVICE: Self = Self(3);
     pub const INSTANCE: Self = Self(4);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceType.html>"]
 pub struct PhysicalDeviceType(pub(crate) i32);
 impl PhysicalDeviceType {
@@ -620,16 +564,14 @@ impl PhysicalDeviceType {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PhysicalDeviceType {
     pub const OTHER: Self = Self(0);
     pub const INTEGRATED_GPU: Self = Self(1);
     pub const DISCRETE_GPU: Self = Self(2);
     pub const VIRTUAL_GPU: Self = Self(3);
     pub const CPU: Self = Self(4);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVertexInputRate.html>"]
 pub struct VertexInputRate(pub(crate) i32);
 impl VertexInputRate {
@@ -641,13 +583,11 @@ impl VertexInputRate {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl VertexInputRate {
     pub const VERTEX: Self = Self(0);
     pub const INSTANCE: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFormat.html>"]
 pub struct Format(pub(crate) i32);
 impl Format {
@@ -659,8 +599,6 @@ impl Format {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl Format {
     pub const UNDEFINED: Self = Self(0);
     pub const R4G4_UNORM_PACK8: Self = Self(1);
     pub const R4G4B4A4_UNORM_PACK16: Self = Self(2);
@@ -847,8 +785,8 @@ impl Format {
     pub const ASTC_12X12_UNORM_BLOCK: Self = Self(183);
     pub const ASTC_12X12_SRGB_BLOCK: Self = Self(184);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkStructureType.html>"]
 pub struct StructureType(pub(crate) i32);
 impl StructureType {
@@ -860,8 +798,6 @@ impl StructureType {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl StructureType {
     pub const APPLICATION_INFO: Self = Self(0);
     pub const INSTANCE_CREATE_INFO: Self = Self(1);
     pub const DEVICE_QUEUE_CREATE_INFO: Self = Self(2);
@@ -914,8 +850,8 @@ impl StructureType {
     #[doc = "Reserved for internal use by the loader, layers, and ICDs"]
     pub const LOADER_DEVICE_CREATE_INFO: Self = Self(48);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassContents.html>"]
 pub struct SubpassContents(pub(crate) i32);
 impl SubpassContents {
@@ -927,15 +863,13 @@ impl SubpassContents {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl SubpassContents {
     pub const INLINE: Self = Self(0);
     pub const SECONDARY_COMMAND_BUFFERS: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkResult.html>"]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[must_use]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkResult.html>"]
 pub struct Result(pub(crate) i32);
 impl Result {
     #[inline]
@@ -946,8 +880,6 @@ impl Result {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl Result {
     #[doc = "Command completed successfully"]
     pub const SUCCESS: Self = Self(0);
     #[doc = "A fence or query has not yet completed"]
@@ -999,8 +931,8 @@ impl fmt::Display for Result {
         }
     }
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDynamicState.html>"]
 pub struct DynamicState(pub(crate) i32);
 impl DynamicState {
@@ -1012,8 +944,6 @@ impl DynamicState {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DynamicState {
     pub const VIEWPORT: Self = Self(0);
     pub const SCISSOR: Self = Self(1);
     pub const LINE_WIDTH: Self = Self(2);
@@ -1024,8 +954,8 @@ impl DynamicState {
     pub const STENCIL_WRITE_MASK: Self = Self(7);
     pub const STENCIL_REFERENCE: Self = Self(8);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorUpdateTemplateType.html>"]
 pub struct DescriptorUpdateTemplateType(pub(crate) i32);
 impl DescriptorUpdateTemplateType {
@@ -1037,13 +967,11 @@ impl DescriptorUpdateTemplateType {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DescriptorUpdateTemplateType {
     #[doc = "Create descriptor update template for descriptor set updates"]
     pub const DESCRIPTOR_SET: Self = Self(0);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkObjectType.html>"]
 pub struct ObjectType(pub(crate) i32);
 impl ObjectType {
@@ -1055,8 +983,6 @@ impl ObjectType {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ObjectType {
     pub const UNKNOWN: Self = Self(0);
     pub const INSTANCE: Self = Self(1);
     pub const PHYSICAL_DEVICE: Self = Self(2);
@@ -1084,8 +1010,8 @@ impl ObjectType {
     pub const FRAMEBUFFER: Self = Self(24);
     pub const COMMAND_POOL: Self = Self(25);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRayTracingInvocationReorderModeNV.html>"]
 pub struct RayTracingInvocationReorderModeNV(pub(crate) i32);
 impl RayTracingInvocationReorderModeNV {
@@ -1097,13 +1023,11 @@ impl RayTracingInvocationReorderModeNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl RayTracingInvocationReorderModeNV {
     pub const NONE: Self = Self(0);
     pub const REORDER: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDirectDriverLoadingModeLUNARG.html>"]
 pub struct DirectDriverLoadingModeLUNARG(pub(crate) i32);
 impl DirectDriverLoadingModeLUNARG {
@@ -1115,13 +1039,11 @@ impl DirectDriverLoadingModeLUNARG {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DirectDriverLoadingModeLUNARG {
     pub const EXCLUSIVE: Self = Self(0);
     pub const INCLUSIVE: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAntiLagModeAMD.html>"]
 pub struct AntiLagModeAMD(pub(crate) i32);
 impl AntiLagModeAMD {
@@ -1133,14 +1055,12 @@ impl AntiLagModeAMD {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl AntiLagModeAMD {
     pub const DRIVER_CONTROL: Self = Self(0);
     pub const ON: Self = Self(1);
     pub const OFF: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAntiLagStageAMD.html>"]
 pub struct AntiLagStageAMD(pub(crate) i32);
 impl AntiLagStageAMD {
@@ -1152,13 +1072,11 @@ impl AntiLagStageAMD {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl AntiLagStageAMD {
     pub const INPUT: Self = Self(0);
     pub const PRESENT: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSemaphoreType.html>"]
 pub struct SemaphoreType(pub(crate) i32);
 impl SemaphoreType {
@@ -1170,13 +1088,11 @@ impl SemaphoreType {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl SemaphoreType {
     pub const BINARY: Self = Self(0);
     pub const TIMELINE: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPresentModeKHR.html>"]
 pub struct PresentModeKHR(pub(crate) i32);
 impl PresentModeKHR {
@@ -1188,15 +1104,13 @@ impl PresentModeKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PresentModeKHR {
     pub const IMMEDIATE: Self = Self(0);
     pub const MAILBOX: Self = Self(1);
     pub const FIFO: Self = Self(2);
     pub const FIFO_RELAXED: Self = Self(3);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkColorSpaceKHR.html>"]
 pub struct ColorSpaceKHR(pub(crate) i32);
 impl ColorSpaceKHR {
@@ -1208,12 +1122,10 @@ impl ColorSpaceKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ColorSpaceKHR {
     pub const SRGB_NONLINEAR: Self = Self(0);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTimeDomainKHR.html>"]
 pub struct TimeDomainKHR(pub(crate) i32);
 impl TimeDomainKHR {
@@ -1225,15 +1137,13 @@ impl TimeDomainKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl TimeDomainKHR {
     pub const DEVICE: Self = Self(0);
     pub const CLOCK_MONOTONIC: Self = Self(1);
     pub const CLOCK_MONOTONIC_RAW: Self = Self(2);
     pub const QUERY_PERFORMANCE_COUNTER: Self = Self(3);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDebugReportObjectTypeEXT.html>"]
 pub struct DebugReportObjectTypeEXT(pub(crate) i32);
 impl DebugReportObjectTypeEXT {
@@ -1245,8 +1155,6 @@ impl DebugReportObjectTypeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DebugReportObjectTypeEXT {
     pub const UNKNOWN: Self = Self(0);
     pub const INSTANCE: Self = Self(1);
     pub const PHYSICAL_DEVICE: Self = Self(2);
@@ -1280,8 +1188,8 @@ impl DebugReportObjectTypeEXT {
     pub const DISPLAY_MODE_KHR: Self = Self(30);
     pub const VALIDATION_CACHE_EXT: Self = Self(33);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceMemoryReportEventTypeEXT.html>"]
 pub struct DeviceMemoryReportEventTypeEXT(pub(crate) i32);
 impl DeviceMemoryReportEventTypeEXT {
@@ -1293,16 +1201,14 @@ impl DeviceMemoryReportEventTypeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DeviceMemoryReportEventTypeEXT {
     pub const ALLOCATE: Self = Self(0);
     pub const FREE: Self = Self(1);
     pub const IMPORT: Self = Self(2);
     pub const UNIMPORT: Self = Self(3);
     pub const ALLOCATION_FAILED: Self = Self(4);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRasterizationOrderAMD.html>"]
 pub struct RasterizationOrderAMD(pub(crate) i32);
 impl RasterizationOrderAMD {
@@ -1314,13 +1220,11 @@ impl RasterizationOrderAMD {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl RasterizationOrderAMD {
     pub const STRICT: Self = Self(0);
     pub const RELAXED: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkValidationCheckEXT.html>"]
 pub struct ValidationCheckEXT(pub(crate) i32);
 impl ValidationCheckEXT {
@@ -1332,13 +1236,11 @@ impl ValidationCheckEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ValidationCheckEXT {
     pub const ALL: Self = Self(0);
     pub const SHADERS: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkValidationFeatureEnableEXT.html>"]
 pub struct ValidationFeatureEnableEXT(pub(crate) i32);
 impl ValidationFeatureEnableEXT {
@@ -1350,16 +1252,14 @@ impl ValidationFeatureEnableEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ValidationFeatureEnableEXT {
     pub const GPU_ASSISTED: Self = Self(0);
     pub const GPU_ASSISTED_RESERVE_BINDING_SLOT: Self = Self(1);
     pub const BEST_PRACTICES: Self = Self(2);
     pub const DEBUG_PRINTF: Self = Self(3);
     pub const SYNCHRONIZATION_VALIDATION: Self = Self(4);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkValidationFeatureDisableEXT.html>"]
 pub struct ValidationFeatureDisableEXT(pub(crate) i32);
 impl ValidationFeatureDisableEXT {
@@ -1371,8 +1271,6 @@ impl ValidationFeatureDisableEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ValidationFeatureDisableEXT {
     pub const ALL: Self = Self(0);
     pub const SHADERS: Self = Self(1);
     pub const THREAD_SAFETY: Self = Self(2);
@@ -1382,8 +1280,8 @@ impl ValidationFeatureDisableEXT {
     pub const UNIQUE_HANDLES: Self = Self(6);
     pub const SHADER_VALIDATION_CACHE: Self = Self(7);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLayerSettingTypeEXT.html>"]
 pub struct LayerSettingTypeEXT(pub(crate) i32);
 impl LayerSettingTypeEXT {
@@ -1395,8 +1293,6 @@ impl LayerSettingTypeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl LayerSettingTypeEXT {
     pub const BOOL32: Self = Self(0);
     pub const INT32: Self = Self(1);
     pub const INT64: Self = Self(2);
@@ -1406,8 +1302,8 @@ impl LayerSettingTypeEXT {
     pub const FLOAT64: Self = Self(6);
     pub const STRING: Self = Self(7);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsTokenTypeNV.html>"]
 pub struct IndirectCommandsTokenTypeNV(pub(crate) i32);
 impl IndirectCommandsTokenTypeNV {
@@ -1419,8 +1315,6 @@ impl IndirectCommandsTokenTypeNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl IndirectCommandsTokenTypeNV {
     pub const SHADER_GROUP: Self = Self(0);
     pub const STATE_FLAGS: Self = Self(1);
     pub const INDEX_BUFFER: Self = Self(2);
@@ -1430,8 +1324,8 @@ impl IndirectCommandsTokenTypeNV {
     pub const DRAW: Self = Self(6);
     pub const DRAW_TASKS: Self = Self(7);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDisplayPowerStateEXT.html>"]
 pub struct DisplayPowerStateEXT(pub(crate) i32);
 impl DisplayPowerStateEXT {
@@ -1443,14 +1337,12 @@ impl DisplayPowerStateEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DisplayPowerStateEXT {
     pub const OFF: Self = Self(0);
     pub const SUSPEND: Self = Self(1);
     pub const ON: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceEventTypeEXT.html>"]
 pub struct DeviceEventTypeEXT(pub(crate) i32);
 impl DeviceEventTypeEXT {
@@ -1462,12 +1354,10 @@ impl DeviceEventTypeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DeviceEventTypeEXT {
     pub const DISPLAY_HOTPLUG: Self = Self(0);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDisplayEventTypeEXT.html>"]
 pub struct DisplayEventTypeEXT(pub(crate) i32);
 impl DisplayEventTypeEXT {
@@ -1479,12 +1369,10 @@ impl DisplayEventTypeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DisplayEventTypeEXT {
     pub const FIRST_PIXEL_OUT: Self = Self(0);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkViewportCoordinateSwizzleNV.html>"]
 pub struct ViewportCoordinateSwizzleNV(pub(crate) i32);
 impl ViewportCoordinateSwizzleNV {
@@ -1496,8 +1384,6 @@ impl ViewportCoordinateSwizzleNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ViewportCoordinateSwizzleNV {
     pub const POSITIVE_X: Self = Self(0);
     pub const NEGATIVE_X: Self = Self(1);
     pub const POSITIVE_Y: Self = Self(2);
@@ -1507,8 +1393,8 @@ impl ViewportCoordinateSwizzleNV {
     pub const POSITIVE_W: Self = Self(6);
     pub const NEGATIVE_W: Self = Self(7);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDiscardRectangleModeEXT.html>"]
 pub struct DiscardRectangleModeEXT(pub(crate) i32);
 impl DiscardRectangleModeEXT {
@@ -1520,13 +1406,11 @@ impl DiscardRectangleModeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DiscardRectangleModeEXT {
     pub const INCLUSIVE: Self = Self(0);
     pub const EXCLUSIVE: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPointClippingBehavior.html>"]
 pub struct PointClippingBehavior(pub(crate) i32);
 impl PointClippingBehavior {
@@ -1538,13 +1422,11 @@ impl PointClippingBehavior {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PointClippingBehavior {
     pub const ALL_CLIP_PLANES: Self = Self(0);
     pub const USER_CLIP_PLANES_ONLY: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerReductionMode.html>"]
 pub struct SamplerReductionMode(pub(crate) i32);
 impl SamplerReductionMode {
@@ -1556,14 +1438,12 @@ impl SamplerReductionMode {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl SamplerReductionMode {
     pub const WEIGHTED_AVERAGE: Self = Self(0);
     pub const MIN: Self = Self(1);
     pub const MAX: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTessellationDomainOrigin.html>"]
 pub struct TessellationDomainOrigin(pub(crate) i32);
 impl TessellationDomainOrigin {
@@ -1575,13 +1455,11 @@ impl TessellationDomainOrigin {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl TessellationDomainOrigin {
     pub const UPPER_LEFT: Self = Self(0);
     pub const LOWER_LEFT: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerYcbcrModelConversion.html>"]
 pub struct SamplerYcbcrModelConversion(pub(crate) i32);
 impl SamplerYcbcrModelConversion {
@@ -1593,8 +1471,6 @@ impl SamplerYcbcrModelConversion {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl SamplerYcbcrModelConversion {
     pub const RGB_IDENTITY: Self = Self(0);
     #[doc = "just range expansion"]
     pub const YCBCR_IDENTITY: Self = Self(1);
@@ -1605,8 +1481,8 @@ impl SamplerYcbcrModelConversion {
     #[doc = "aka UHD YUV"]
     pub const YCBCR_2020: Self = Self(4);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerYcbcrRange.html>"]
 pub struct SamplerYcbcrRange(pub(crate) i32);
 impl SamplerYcbcrRange {
@@ -1618,15 +1494,13 @@ impl SamplerYcbcrRange {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl SamplerYcbcrRange {
     #[doc = "Luma 0..1 maps to 0..255, chroma -0.5..0.5 to 1..255 (clamped)"]
     pub const ITU_FULL: Self = Self(0);
     #[doc = "Luma 0..1 maps to 16..235, chroma -0.5..0.5 to 16..240"]
     pub const ITU_NARROW: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkChromaLocation.html>"]
 pub struct ChromaLocation(pub(crate) i32);
 impl ChromaLocation {
@@ -1638,13 +1512,11 @@ impl ChromaLocation {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ChromaLocation {
     pub const COSITED_EVEN: Self = Self(0);
     pub const MIDPOINT: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBlendOverlapEXT.html>"]
 pub struct BlendOverlapEXT(pub(crate) i32);
 impl BlendOverlapEXT {
@@ -1656,14 +1528,12 @@ impl BlendOverlapEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl BlendOverlapEXT {
     pub const UNCORRELATED: Self = Self(0);
     pub const DISJOINT: Self = Self(1);
     pub const CONJOINT: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCoverageModulationModeNV.html>"]
 pub struct CoverageModulationModeNV(pub(crate) i32);
 impl CoverageModulationModeNV {
@@ -1675,15 +1545,13 @@ impl CoverageModulationModeNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl CoverageModulationModeNV {
     pub const NONE: Self = Self(0);
     pub const RGB: Self = Self(1);
     pub const ALPHA: Self = Self(2);
     pub const RGBA: Self = Self(3);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCoverageReductionModeNV.html>"]
 pub struct CoverageReductionModeNV(pub(crate) i32);
 impl CoverageReductionModeNV {
@@ -1695,13 +1563,11 @@ impl CoverageReductionModeNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl CoverageReductionModeNV {
     pub const MERGE: Self = Self(0);
     pub const TRUNCATE: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkValidationCacheHeaderVersionEXT.html>"]
 pub struct ValidationCacheHeaderVersionEXT(pub(crate) i32);
 impl ValidationCacheHeaderVersionEXT {
@@ -1713,12 +1579,10 @@ impl ValidationCacheHeaderVersionEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ValidationCacheHeaderVersionEXT {
     pub const ONE: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderInfoTypeAMD.html>"]
 pub struct ShaderInfoTypeAMD(pub(crate) i32);
 impl ShaderInfoTypeAMD {
@@ -1730,14 +1594,12 @@ impl ShaderInfoTypeAMD {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ShaderInfoTypeAMD {
     pub const STATISTICS: Self = Self(0);
     pub const BINARY: Self = Self(1);
     pub const DISASSEMBLY: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueueGlobalPriorityKHR.html>"]
 pub struct QueueGlobalPriorityKHR(pub(crate) i32);
 impl QueueGlobalPriorityKHR {
@@ -1749,8 +1611,6 @@ impl QueueGlobalPriorityKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl QueueGlobalPriorityKHR {
     pub const LOW: Self = Self(128);
     pub const MEDIUM: Self = Self(256);
     pub const HIGH: Self = Self(512);
@@ -1760,8 +1620,8 @@ impl QueueGlobalPriorityKHR {
     pub const HIGH_EXT: Self = Self::HIGH;
     pub const REALTIME_EXT: Self = Self::REALTIME;
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkConservativeRasterizationModeEXT.html>"]
 pub struct ConservativeRasterizationModeEXT(pub(crate) i32);
 impl ConservativeRasterizationModeEXT {
@@ -1773,14 +1633,12 @@ impl ConservativeRasterizationModeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ConservativeRasterizationModeEXT {
     pub const DISABLED: Self = Self(0);
     pub const OVERESTIMATE: Self = Self(1);
     pub const UNDERESTIMATE: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVendorId.html>"]
 pub struct VendorId(pub(crate) i32);
 impl VendorId {
@@ -1792,8 +1650,6 @@ impl VendorId {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl VendorId {
     #[doc = "Khronos vendor ID"]
     pub const KHRONOS: Self = Self(0x10000);
     #[doc = "Vivante vendor ID"]
@@ -1811,8 +1667,8 @@ impl VendorId {
     #[doc = "Mobileye vendor ID"]
     pub const MOBILEYE: Self = Self(0x10007);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDriverId.html>"]
 pub struct DriverId(pub(crate) i32);
 impl DriverId {
@@ -1824,8 +1680,6 @@ impl DriverId {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DriverId {
     #[doc = "Advanced Micro Devices, Inc."]
     pub const AMD_PROPRIETARY: Self = Self(1);
     #[doc = "Advanced Micro Devices, Inc."]
@@ -1881,8 +1735,8 @@ impl DriverId {
     #[doc = "Reserved for undisclosed driver project"]
     pub const RESERVED_27: Self = Self(27);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShadingRatePaletteEntryNV.html>"]
 pub struct ShadingRatePaletteEntryNV(pub(crate) i32);
 impl ShadingRatePaletteEntryNV {
@@ -1894,8 +1748,6 @@ impl ShadingRatePaletteEntryNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ShadingRatePaletteEntryNV {
     pub const NO_INVOCATIONS: Self = Self(0);
     pub const TYPE_16_INVOCATIONS_PER_PIXEL: Self = Self(1);
     pub const TYPE_8_INVOCATIONS_PER_PIXEL: Self = Self(2);
@@ -1909,8 +1761,8 @@ impl ShadingRatePaletteEntryNV {
     pub const TYPE_1_INVOCATION_PER_2X4_PIXELS: Self = Self(10);
     pub const TYPE_1_INVOCATION_PER_4X4_PIXELS: Self = Self(11);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCoarseSampleOrderTypeNV.html>"]
 pub struct CoarseSampleOrderTypeNV(pub(crate) i32);
 impl CoarseSampleOrderTypeNV {
@@ -1922,15 +1774,13 @@ impl CoarseSampleOrderTypeNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl CoarseSampleOrderTypeNV {
     pub const DEFAULT: Self = Self(0);
     pub const CUSTOM: Self = Self(1);
     pub const PIXEL_MAJOR: Self = Self(2);
     pub const SAMPLE_MAJOR: Self = Self(3);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCopyAccelerationStructureModeKHR.html>"]
 pub struct CopyAccelerationStructureModeKHR(pub(crate) i32);
 impl CopyAccelerationStructureModeKHR {
@@ -1942,15 +1792,13 @@ impl CopyAccelerationStructureModeKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl CopyAccelerationStructureModeKHR {
     pub const CLONE: Self = Self(0);
     pub const COMPACT: Self = Self(1);
     pub const SERIALIZE: Self = Self(2);
     pub const DESERIALIZE: Self = Self(3);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBuildAccelerationStructureModeKHR.html>"]
 pub struct BuildAccelerationStructureModeKHR(pub(crate) i32);
 impl BuildAccelerationStructureModeKHR {
@@ -1962,13 +1810,11 @@ impl BuildAccelerationStructureModeKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl BuildAccelerationStructureModeKHR {
     pub const BUILD: Self = Self(0);
     pub const UPDATE: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureTypeKHR.html>"]
 pub struct AccelerationStructureTypeKHR(pub(crate) i32);
 impl AccelerationStructureTypeKHR {
@@ -1980,14 +1826,12 @@ impl AccelerationStructureTypeKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl AccelerationStructureTypeKHR {
     pub const TOP_LEVEL: Self = Self(0);
     pub const BOTTOM_LEVEL: Self = Self(1);
     pub const GENERIC: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkGeometryTypeKHR.html>"]
 pub struct GeometryTypeKHR(pub(crate) i32);
 impl GeometryTypeKHR {
@@ -1999,14 +1843,12 @@ impl GeometryTypeKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl GeometryTypeKHR {
     pub const TRIANGLES: Self = Self(0);
     pub const AABBS: Self = Self(1);
     pub const INSTANCES: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureMemoryRequirementsTypeNV.html>"]
 pub struct AccelerationStructureMemoryRequirementsTypeNV(pub(crate) i32);
 impl AccelerationStructureMemoryRequirementsTypeNV {
@@ -2018,14 +1860,12 @@ impl AccelerationStructureMemoryRequirementsTypeNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl AccelerationStructureMemoryRequirementsTypeNV {
     pub const OBJECT: Self = Self(0);
     pub const BUILD_SCRATCH: Self = Self(1);
     pub const UPDATE_SCRATCH: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureBuildTypeKHR.html>"]
 pub struct AccelerationStructureBuildTypeKHR(pub(crate) i32);
 impl AccelerationStructureBuildTypeKHR {
@@ -2037,14 +1877,12 @@ impl AccelerationStructureBuildTypeKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl AccelerationStructureBuildTypeKHR {
     pub const HOST: Self = Self(0);
     pub const DEVICE: Self = Self(1);
     pub const HOST_OR_DEVICE: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRayTracingShaderGroupTypeKHR.html>"]
 pub struct RayTracingShaderGroupTypeKHR(pub(crate) i32);
 impl RayTracingShaderGroupTypeKHR {
@@ -2056,14 +1894,12 @@ impl RayTracingShaderGroupTypeKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl RayTracingShaderGroupTypeKHR {
     pub const GENERAL: Self = Self(0);
     pub const TRIANGLES_HIT_GROUP: Self = Self(1);
     pub const PROCEDURAL_HIT_GROUP: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureCompatibilityKHR.html>"]
 pub struct AccelerationStructureCompatibilityKHR(pub(crate) i32);
 impl AccelerationStructureCompatibilityKHR {
@@ -2075,13 +1911,11 @@ impl AccelerationStructureCompatibilityKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl AccelerationStructureCompatibilityKHR {
     pub const COMPATIBLE: Self = Self(0);
     pub const INCOMPATIBLE: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderGroupShaderKHR.html>"]
 pub struct ShaderGroupShaderKHR(pub(crate) i32);
 impl ShaderGroupShaderKHR {
@@ -2093,15 +1927,13 @@ impl ShaderGroupShaderKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ShaderGroupShaderKHR {
     pub const GENERAL: Self = Self(0);
     pub const CLOSEST_HIT: Self = Self(1);
     pub const ANY_HIT: Self = Self(2);
     pub const INTERSECTION: Self = Self(3);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryOverallocationBehaviorAMD.html>"]
 pub struct MemoryOverallocationBehaviorAMD(pub(crate) i32);
 impl MemoryOverallocationBehaviorAMD {
@@ -2113,14 +1945,12 @@ impl MemoryOverallocationBehaviorAMD {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl MemoryOverallocationBehaviorAMD {
     pub const DEFAULT: Self = Self(0);
     pub const ALLOWED: Self = Self(1);
     pub const DISALLOWED: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFullScreenExclusiveEXT.html>"]
 pub struct FullScreenExclusiveEXT(pub(crate) i32);
 impl FullScreenExclusiveEXT {
@@ -2132,15 +1962,13 @@ impl FullScreenExclusiveEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl FullScreenExclusiveEXT {
     pub const DEFAULT: Self = Self(0);
     pub const ALLOWED: Self = Self(1);
     pub const DISALLOWED: Self = Self(2);
     pub const APPLICATION_CONTROLLED: Self = Self(3);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceCounterScopeKHR.html>"]
 pub struct PerformanceCounterScopeKHR(pub(crate) i32);
 impl PerformanceCounterScopeKHR {
@@ -2152,14 +1980,12 @@ impl PerformanceCounterScopeKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PerformanceCounterScopeKHR {
     pub const COMMAND_BUFFER: Self = Self(0);
     pub const RENDER_PASS: Self = Self(1);
     pub const COMMAND: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceCounterUnitKHR.html>"]
 pub struct PerformanceCounterUnitKHR(pub(crate) i32);
 impl PerformanceCounterUnitKHR {
@@ -2171,8 +1997,6 @@ impl PerformanceCounterUnitKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PerformanceCounterUnitKHR {
     pub const GENERIC: Self = Self(0);
     pub const PERCENTAGE: Self = Self(1);
     pub const NANOSECONDS: Self = Self(2);
@@ -2185,8 +2009,8 @@ impl PerformanceCounterUnitKHR {
     pub const HERTZ: Self = Self(9);
     pub const CYCLES: Self = Self(10);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceCounterStorageKHR.html>"]
 pub struct PerformanceCounterStorageKHR(pub(crate) i32);
 impl PerformanceCounterStorageKHR {
@@ -2198,8 +2022,6 @@ impl PerformanceCounterStorageKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PerformanceCounterStorageKHR {
     pub const INT32: Self = Self(0);
     pub const INT64: Self = Self(1);
     pub const UINT32: Self = Self(2);
@@ -2207,8 +2029,8 @@ impl PerformanceCounterStorageKHR {
     pub const FLOAT32: Self = Self(4);
     pub const FLOAT64: Self = Self(5);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceConfigurationTypeINTEL.html>"]
 pub struct PerformanceConfigurationTypeINTEL(pub(crate) i32);
 impl PerformanceConfigurationTypeINTEL {
@@ -2220,12 +2042,10 @@ impl PerformanceConfigurationTypeINTEL {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PerformanceConfigurationTypeINTEL {
     pub const COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED: Self = Self(0);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueryPoolSamplingModeINTEL.html>"]
 pub struct QueryPoolSamplingModeINTEL(pub(crate) i32);
 impl QueryPoolSamplingModeINTEL {
@@ -2237,12 +2057,10 @@ impl QueryPoolSamplingModeINTEL {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl QueryPoolSamplingModeINTEL {
     pub const MANUAL: Self = Self(0);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceOverrideTypeINTEL.html>"]
 pub struct PerformanceOverrideTypeINTEL(pub(crate) i32);
 impl PerformanceOverrideTypeINTEL {
@@ -2254,13 +2072,11 @@ impl PerformanceOverrideTypeINTEL {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PerformanceOverrideTypeINTEL {
     pub const NULL_HARDWARE: Self = Self(0);
     pub const FLUSH_GPU_CACHES: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceParameterTypeINTEL.html>"]
 pub struct PerformanceParameterTypeINTEL(pub(crate) i32);
 impl PerformanceParameterTypeINTEL {
@@ -2272,13 +2088,11 @@ impl PerformanceParameterTypeINTEL {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PerformanceParameterTypeINTEL {
     pub const HW_COUNTERS_SUPPORTED: Self = Self(0);
     pub const STREAM_MARKER_VALIDS: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceValueTypeINTEL.html>"]
 pub struct PerformanceValueTypeINTEL(pub(crate) i32);
 impl PerformanceValueTypeINTEL {
@@ -2290,16 +2104,14 @@ impl PerformanceValueTypeINTEL {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PerformanceValueTypeINTEL {
     pub const UINT32: Self = Self(0);
     pub const UINT64: Self = Self(1);
     pub const FLOAT: Self = Self(2);
     pub const BOOL: Self = Self(3);
     pub const STRING: Self = Self(4);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderFloatControlsIndependence.html>"]
 pub struct ShaderFloatControlsIndependence(pub(crate) i32);
 impl ShaderFloatControlsIndependence {
@@ -2311,14 +2123,12 @@ impl ShaderFloatControlsIndependence {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ShaderFloatControlsIndependence {
     pub const TYPE_32_ONLY: Self = Self(0);
     pub const ALL: Self = Self(1);
     pub const NONE: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineExecutableStatisticFormatKHR.html>"]
 pub struct PipelineExecutableStatisticFormatKHR(pub(crate) i32);
 impl PipelineExecutableStatisticFormatKHR {
@@ -2330,15 +2140,13 @@ impl PipelineExecutableStatisticFormatKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PipelineExecutableStatisticFormatKHR {
     pub const BOOL32: Self = Self(0);
     pub const INT64: Self = Self(1);
     pub const UINT64: Self = Self(2);
     pub const FLOAT64: Self = Self(3);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLineRasterizationModeKHR.html>"]
 pub struct LineRasterizationModeKHR(pub(crate) i32);
 impl LineRasterizationModeKHR {
@@ -2350,8 +2158,6 @@ impl LineRasterizationModeKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl LineRasterizationModeKHR {
     pub const DEFAULT: Self = Self(0);
     pub const DEFAULT_EXT: Self = Self::DEFAULT;
     pub const RECTANGULAR: Self = Self(1);
@@ -2361,8 +2167,8 @@ impl LineRasterizationModeKHR {
     pub const RECTANGULAR_SMOOTH: Self = Self(3);
     pub const RECTANGULAR_SMOOTH_EXT: Self = Self::RECTANGULAR_SMOOTH;
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFragmentShadingRateCombinerOpKHR.html>"]
 pub struct FragmentShadingRateCombinerOpKHR(pub(crate) i32);
 impl FragmentShadingRateCombinerOpKHR {
@@ -2374,16 +2180,14 @@ impl FragmentShadingRateCombinerOpKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl FragmentShadingRateCombinerOpKHR {
     pub const KEEP: Self = Self(0);
     pub const REPLACE: Self = Self(1);
     pub const MIN: Self = Self(2);
     pub const MAX: Self = Self(3);
     pub const MUL: Self = Self(4);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFragmentShadingRateNV.html>"]
 pub struct FragmentShadingRateNV(pub(crate) i32);
 impl FragmentShadingRateNV {
@@ -2395,8 +2199,6 @@ impl FragmentShadingRateNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl FragmentShadingRateNV {
     pub const TYPE_1_INVOCATION_PER_PIXEL: Self = Self(0);
     pub const TYPE_1_INVOCATION_PER_1X2_PIXELS: Self = Self(1);
     pub const TYPE_1_INVOCATION_PER_2X1_PIXELS: Self = Self(4);
@@ -2410,8 +2212,8 @@ impl FragmentShadingRateNV {
     pub const TYPE_16_INVOCATIONS_PER_PIXEL: Self = Self(14);
     pub const NO_INVOCATIONS: Self = Self(15);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFragmentShadingRateTypeNV.html>"]
 pub struct FragmentShadingRateTypeNV(pub(crate) i32);
 impl FragmentShadingRateTypeNV {
@@ -2423,13 +2225,11 @@ impl FragmentShadingRateTypeNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl FragmentShadingRateTypeNV {
     pub const FRAGMENT_SIZE: Self = Self(0);
     pub const ENUMS: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassMergeStatusEXT.html>"]
 pub struct SubpassMergeStatusEXT(pub(crate) i32);
 impl SubpassMergeStatusEXT {
@@ -2441,8 +2241,6 @@ impl SubpassMergeStatusEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl SubpassMergeStatusEXT {
     pub const MERGED: Self = Self(0);
     pub const DISALLOWED: Self = Self(1);
     pub const NOT_MERGED_SIDE_EFFECTS: Self = Self(2);
@@ -2458,8 +2256,8 @@ impl SubpassMergeStatusEXT {
     pub const NOT_MERGED_SINGLE_SUBPASS: Self = Self(12);
     pub const NOT_MERGED_UNSPECIFIED: Self = Self(13);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkProvokingVertexModeEXT.html>"]
 pub struct ProvokingVertexModeEXT(pub(crate) i32);
 impl ProvokingVertexModeEXT {
@@ -2471,13 +2269,11 @@ impl ProvokingVertexModeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ProvokingVertexModeEXT {
     pub const FIRST_VERTEX: Self = Self(0);
     pub const LAST_VERTEX: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureMotionInstanceTypeNV.html>"]
 pub struct AccelerationStructureMotionInstanceTypeNV(pub(crate) i32);
 impl AccelerationStructureMotionInstanceTypeNV {
@@ -2489,14 +2285,12 @@ impl AccelerationStructureMotionInstanceTypeNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl AccelerationStructureMotionInstanceTypeNV {
     pub const STATIC: Self = Self(0);
     pub const MATRIX_MOTION: Self = Self(1);
     pub const SRT_MOTION: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceAddressBindingTypeEXT.html>"]
 pub struct DeviceAddressBindingTypeEXT(pub(crate) i32);
 impl DeviceAddressBindingTypeEXT {
@@ -2508,13 +2302,11 @@ impl DeviceAddressBindingTypeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DeviceAddressBindingTypeEXT {
     pub const BIND: Self = Self(0);
     pub const UNBIND: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueryResultStatusKHR.html>"]
 pub struct QueryResultStatusKHR(pub(crate) i32);
 impl QueryResultStatusKHR {
@@ -2526,14 +2318,12 @@ impl QueryResultStatusKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl QueryResultStatusKHR {
     pub const ERROR: Self = Self(-1);
     pub const NOT_READY: Self = Self(0);
     pub const COMPLETE: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeTuningModeKHR.html>"]
 pub struct VideoEncodeTuningModeKHR(pub(crate) i32);
 impl VideoEncodeTuningModeKHR {
@@ -2545,16 +2335,14 @@ impl VideoEncodeTuningModeKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl VideoEncodeTuningModeKHR {
     pub const DEFAULT: Self = Self(0);
     pub const HIGH_QUALITY: Self = Self(1);
     pub const LOW_LATENCY: Self = Self(2);
     pub const ULTRA_LOW_LATENCY: Self = Self(3);
     pub const LOSSLESS: Self = Self(4);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineRobustnessBufferBehaviorEXT.html>"]
 pub struct PipelineRobustnessBufferBehaviorEXT(pub(crate) i32);
 impl PipelineRobustnessBufferBehaviorEXT {
@@ -2566,15 +2354,13 @@ impl PipelineRobustnessBufferBehaviorEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PipelineRobustnessBufferBehaviorEXT {
     pub const DEVICE_DEFAULT: Self = Self(0);
     pub const DISABLED: Self = Self(1);
     pub const ROBUST_BUFFER_ACCESS: Self = Self(2);
     pub const ROBUST_BUFFER_ACCESS_2: Self = Self(3);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineRobustnessImageBehaviorEXT.html>"]
 pub struct PipelineRobustnessImageBehaviorEXT(pub(crate) i32);
 impl PipelineRobustnessImageBehaviorEXT {
@@ -2586,15 +2372,13 @@ impl PipelineRobustnessImageBehaviorEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PipelineRobustnessImageBehaviorEXT {
     pub const DEVICE_DEFAULT: Self = Self(0);
     pub const DISABLED: Self = Self(1);
     pub const ROBUST_IMAGE_ACCESS: Self = Self(2);
     pub const ROBUST_IMAGE_ACCESS_2: Self = Self(3);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowPerformanceLevelNV.html>"]
 pub struct OpticalFlowPerformanceLevelNV(pub(crate) i32);
 impl OpticalFlowPerformanceLevelNV {
@@ -2606,15 +2390,13 @@ impl OpticalFlowPerformanceLevelNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl OpticalFlowPerformanceLevelNV {
     pub const UNKNOWN: Self = Self(0);
     pub const SLOW: Self = Self(1);
     pub const MEDIUM: Self = Self(2);
     pub const FAST: Self = Self(3);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowSessionBindingPointNV.html>"]
 pub struct OpticalFlowSessionBindingPointNV(pub(crate) i32);
 impl OpticalFlowSessionBindingPointNV {
@@ -2626,8 +2408,6 @@ impl OpticalFlowSessionBindingPointNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl OpticalFlowSessionBindingPointNV {
     pub const UNKNOWN: Self = Self(0);
     pub const INPUT: Self = Self(1);
     pub const REFERENCE: Self = Self(2);
@@ -2638,8 +2418,8 @@ impl OpticalFlowSessionBindingPointNV {
     pub const BACKWARD_COST: Self = Self(7);
     pub const GLOBAL_FLOW: Self = Self(8);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMicromapTypeEXT.html>"]
 pub struct MicromapTypeEXT(pub(crate) i32);
 impl MicromapTypeEXT {
@@ -2651,12 +2431,10 @@ impl MicromapTypeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl MicromapTypeEXT {
     pub const OPACITY_MICROMAP: Self = Self(0);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCopyMicromapModeEXT.html>"]
 pub struct CopyMicromapModeEXT(pub(crate) i32);
 impl CopyMicromapModeEXT {
@@ -2668,15 +2446,13 @@ impl CopyMicromapModeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl CopyMicromapModeEXT {
     pub const CLONE: Self = Self(0);
     pub const SERIALIZE: Self = Self(1);
     pub const DESERIALIZE: Self = Self(2);
     pub const COMPACT: Self = Self(3);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBuildMicromapModeEXT.html>"]
 pub struct BuildMicromapModeEXT(pub(crate) i32);
 impl BuildMicromapModeEXT {
@@ -2688,12 +2464,10 @@ impl BuildMicromapModeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl BuildMicromapModeEXT {
     pub const BUILD: Self = Self(0);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpacityMicromapFormatEXT.html>"]
 pub struct OpacityMicromapFormatEXT(pub(crate) i32);
 impl OpacityMicromapFormatEXT {
@@ -2705,13 +2479,11 @@ impl OpacityMicromapFormatEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl OpacityMicromapFormatEXT {
     pub const TYPE_2_STATE: Self = Self(1);
     pub const TYPE_4_STATE: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpacityMicromapSpecialIndexEXT.html>"]
 pub struct OpacityMicromapSpecialIndexEXT(pub(crate) i32);
 impl OpacityMicromapSpecialIndexEXT {
@@ -2723,15 +2495,13 @@ impl OpacityMicromapSpecialIndexEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl OpacityMicromapSpecialIndexEXT {
     pub const FULLY_TRANSPARENT: Self = Self(-1);
     pub const FULLY_OPAQUE: Self = Self(-2);
     pub const FULLY_UNKNOWN_TRANSPARENT: Self = Self(-3);
     pub const FULLY_UNKNOWN_OPAQUE: Self = Self(-4);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDepthBiasRepresentationEXT.html>"]
 pub struct DepthBiasRepresentationEXT(pub(crate) i32);
 impl DepthBiasRepresentationEXT {
@@ -2743,14 +2513,12 @@ impl DepthBiasRepresentationEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DepthBiasRepresentationEXT {
     pub const LEAST_REPRESENTABLE_VALUE_FORMAT: Self = Self(0);
     pub const LEAST_REPRESENTABLE_VALUE_FORCE_UNORM: Self = Self(1);
     pub const FLOAT: Self = Self(2);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultAddressTypeEXT.html>"]
 pub struct DeviceFaultAddressTypeEXT(pub(crate) i32);
 impl DeviceFaultAddressTypeEXT {
@@ -2762,8 +2530,6 @@ impl DeviceFaultAddressTypeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DeviceFaultAddressTypeEXT {
     #[doc = "Currently unused"]
     pub const NONE: Self = Self(0);
     pub const READ_INVALID: Self = Self(1);
@@ -2773,8 +2539,8 @@ impl DeviceFaultAddressTypeEXT {
     pub const INSTRUCTION_POINTER_INVALID: Self = Self(5);
     pub const INSTRUCTION_POINTER_FAULT: Self = Self(6);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultVendorBinaryHeaderVersionEXT.html>"]
 pub struct DeviceFaultVendorBinaryHeaderVersionEXT(pub(crate) i32);
 impl DeviceFaultVendorBinaryHeaderVersionEXT {
@@ -2786,12 +2552,10 @@ impl DeviceFaultVendorBinaryHeaderVersionEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DeviceFaultVendorBinaryHeaderVersionEXT {
     pub const ONE: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectExecutionSetInfoTypeEXT.html>"]
 pub struct IndirectExecutionSetInfoTypeEXT(pub(crate) i32);
 impl IndirectExecutionSetInfoTypeEXT {
@@ -2803,13 +2567,11 @@ impl IndirectExecutionSetInfoTypeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl IndirectExecutionSetInfoTypeEXT {
     pub const PIPELINES: Self = Self(0);
     pub const SHADER_OBJECTS: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsTokenTypeEXT.html>"]
 pub struct IndirectCommandsTokenTypeEXT(pub(crate) i32);
 impl IndirectCommandsTokenTypeEXT {
@@ -2821,8 +2583,6 @@ impl IndirectCommandsTokenTypeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl IndirectCommandsTokenTypeEXT {
     pub const EXECUTION_SET: Self = Self(0);
     pub const PUSH_CONSTANT: Self = Self(1);
     pub const SEQUENCE_INDEX: Self = Self(2);
@@ -2834,10 +2594,12 @@ impl IndirectCommandsTokenTypeEXT {
     pub const DRAW_COUNT: Self = Self(8);
     pub const DISPATCH: Self = Self(9);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[cfg(feature = "provisional")]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDisplacementMicromapFormatNV.html>"]
 pub struct DisplacementMicromapFormatNV(pub(crate) i32);
+#[cfg(feature = "provisional")]
 impl DisplacementMicromapFormatNV {
     #[inline]
     pub const fn from_raw(x: i32) -> Self {
@@ -2847,14 +2609,12 @@ impl DisplacementMicromapFormatNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DisplacementMicromapFormatNV {
     pub const TYPE_64_TRIANGLES_64_BYTES: Self = Self(1);
     pub const TYPE_256_TRIANGLES_128_BYTES: Self = Self(2);
     pub const TYPE_1024_TRIANGLES_128_BYTES: Self = Self(3);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderCodeTypeEXT.html>"]
 pub struct ShaderCodeTypeEXT(pub(crate) i32);
 impl ShaderCodeTypeEXT {
@@ -2866,13 +2626,11 @@ impl ShaderCodeTypeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ShaderCodeTypeEXT {
     pub const BINARY: Self = Self(0);
     pub const SPIRV: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkScopeKHR.html>"]
 pub struct ScopeKHR(pub(crate) i32);
 impl ScopeKHR {
@@ -2884,15 +2642,13 @@ impl ScopeKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ScopeKHR {
     pub const DEVICE: Self = Self(1);
     pub const WORKGROUP: Self = Self(2);
     pub const SUBGROUP: Self = Self(3);
     pub const QUEUE_FAMILY: Self = Self(5);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkComponentTypeKHR.html>"]
 pub struct ComponentTypeKHR(pub(crate) i32);
 impl ComponentTypeKHR {
@@ -2904,8 +2660,6 @@ impl ComponentTypeKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl ComponentTypeKHR {
     pub const FLOAT16: Self = Self(0);
     pub const FLOAT32: Self = Self(1);
     pub const FLOAT64: Self = Self(2);
@@ -2918,8 +2672,8 @@ impl ComponentTypeKHR {
     pub const UINT32: Self = Self(9);
     pub const UINT64: Self = Self(10);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCubicFilterWeightsQCOM.html>"]
 pub struct CubicFilterWeightsQCOM(pub(crate) i32);
 impl CubicFilterWeightsQCOM {
@@ -2931,15 +2685,13 @@ impl CubicFilterWeightsQCOM {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl CubicFilterWeightsQCOM {
     pub const CATMULL_ROM: Self = Self(0);
     pub const ZERO_TANGENT_CARDINAL: Self = Self(1);
     pub const B_SPLINE: Self = Self(2);
     pub const MITCHELL_NETRAVALI: Self = Self(3);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBlockMatchWindowCompareModeQCOM.html>"]
 pub struct BlockMatchWindowCompareModeQCOM(pub(crate) i32);
 impl BlockMatchWindowCompareModeQCOM {
@@ -2951,13 +2703,11 @@ impl BlockMatchWindowCompareModeQCOM {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl BlockMatchWindowCompareModeQCOM {
     pub const MIN: Self = Self(0);
     pub const MAX: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceLayeredApiKHR.html>"]
 pub struct PhysicalDeviceLayeredApiKHR(pub(crate) i32);
 impl PhysicalDeviceLayeredApiKHR {
@@ -2969,16 +2719,14 @@ impl PhysicalDeviceLayeredApiKHR {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl PhysicalDeviceLayeredApiKHR {
     pub const VULKAN: Self = Self(0);
     pub const D3D12: Self = Self(1);
     pub const METAL: Self = Self(2);
     pub const OPENGL: Self = Self(3);
     pub const OPENGLES: Self = Self(4);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLayeredDriverUnderlyingApiMSFT.html>"]
 pub struct LayeredDriverUnderlyingApiMSFT(pub(crate) i32);
 impl LayeredDriverUnderlyingApiMSFT {
@@ -2990,13 +2738,11 @@ impl LayeredDriverUnderlyingApiMSFT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl LayeredDriverUnderlyingApiMSFT {
     pub const NONE: Self = Self(0);
     pub const D3D12: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLatencyMarkerNV.html>"]
 pub struct LatencyMarkerNV(pub(crate) i32);
 impl LatencyMarkerNV {
@@ -3008,8 +2754,6 @@ impl LatencyMarkerNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl LatencyMarkerNV {
     pub const SIMULATION_START: Self = Self(0);
     pub const SIMULATION_END: Self = Self(1);
     pub const RENDERSUBMIT_START: Self = Self(2);
@@ -3023,8 +2767,8 @@ impl LatencyMarkerNV {
     pub const OUT_OF_BAND_PRESENT_START: Self = Self(10);
     pub const OUT_OF_BAND_PRESENT_END: Self = Self(11);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOutOfBandQueueTypeNV.html>"]
 pub struct OutOfBandQueueTypeNV(pub(crate) i32);
 impl OutOfBandQueueTypeNV {
@@ -3036,13 +2780,11 @@ impl OutOfBandQueueTypeNV {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl OutOfBandQueueTypeNV {
     pub const RENDER: Self = Self(0);
     pub const PRESENT: Self = Self(1);
 }
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDepthClampModeEXT.html>"]
 pub struct DepthClampModeEXT(pub(crate) i32);
 impl DepthClampModeEXT {
@@ -3054,8 +2796,6 @@ impl DepthClampModeEXT {
     pub const fn as_raw(self) -> i32 {
         self.0
     }
-}
-impl DepthClampModeEXT {
     pub const VIEWPORT_RANGE: Self = Self(0);
     pub const USER_DEFINED_RANGE: Self = Self(1);
 }
@@ -3104,7 +2844,9 @@ impl fmt::Debug for ObjectType {
             Self::PERFORMANCE_CONFIGURATION_INTEL => Some("PERFORMANCE_CONFIGURATION_INTEL"),
             Self::DEFERRED_OPERATION_KHR => Some("DEFERRED_OPERATION_KHR"),
             Self::INDIRECT_COMMANDS_LAYOUT_NV => Some("INDIRECT_COMMANDS_LAYOUT_NV"),
+            #[cfg(feature = "provisional")]
             Self::CUDA_MODULE_NV => Some("CUDA_MODULE_NV"),
+            #[cfg(feature = "provisional")]
             Self::CUDA_FUNCTION_NV => Some("CUDA_FUNCTION_NV"),
             Self::BUFFER_COLLECTION_FUCHSIA => Some("BUFFER_COLLECTION_FUCHSIA"),
             Self::MICROMAP_EXT => Some("MICROMAP_EXT"),

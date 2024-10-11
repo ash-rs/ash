@@ -972,18 +972,22 @@ impl StructureType {
         Self::SAMPLER_REDUCTION_MODE_CREATE_INFO;
 }
 #[doc = "Generated from 'VK_AMDX_shader_enqueue'"]
+#[cfg(feature = "provisional")]
 impl BufferUsageFlags {
     pub const EXECUTION_GRAPH_SCRATCH_AMDX: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_AMDX_shader_enqueue'"]
+#[cfg(feature = "provisional")]
 impl BufferUsageFlags2KHR {
     pub const EXECUTION_GRAPH_SCRATCH_AMDX: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_AMDX_shader_enqueue'"]
+#[cfg(feature = "provisional")]
 impl PipelineBindPoint {
     pub const EXECUTION_GRAPH_AMDX: Self = Self(1_000_134_000);
 }
 #[doc = "Generated from 'VK_AMDX_shader_enqueue'"]
+#[cfg(feature = "provisional")]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_ENQUEUE_FEATURES_AMDX: Self = Self(1_000_134_000);
     pub const PHYSICAL_DEVICE_SHADER_ENQUEUE_PROPERTIES_AMDX: Self = Self(1_000_134_001);
@@ -1415,6 +1419,7 @@ impl StructureType {
         Self::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT;
 }
 #[doc = "Generated from 'VK_KHR_portability_subset'"]
+#[cfg(feature = "provisional")]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PORTABILITY_SUBSET_FEATURES_KHR: Self = Self(1_000_163_000);
     pub const PHYSICAL_DEVICE_PORTABILITY_SUBSET_PROPERTIES_KHR: Self = Self(1_000_163_001);
@@ -2532,16 +2537,19 @@ impl AttachmentStoreOp {
     pub const NONE_QCOM: Self = Self::NONE;
 }
 #[doc = "Generated from 'VK_NV_cuda_kernel_launch'"]
+#[cfg(feature = "provisional")]
 impl DebugReportObjectTypeEXT {
     pub const CUDA_MODULE_NV: Self = Self(1_000_307_000);
     pub const CUDA_FUNCTION_NV: Self = Self(1_000_307_001);
 }
 #[doc = "Generated from 'VK_NV_cuda_kernel_launch'"]
+#[cfg(feature = "provisional")]
 impl ObjectType {
     pub const CUDA_MODULE_NV: Self = Self(1_000_307_000);
     pub const CUDA_FUNCTION_NV: Self = Self(1_000_307_001);
 }
 #[doc = "Generated from 'VK_NV_cuda_kernel_launch'"]
+#[cfg(feature = "provisional")]
 impl StructureType {
     pub const CUDA_MODULE_CREATE_INFO_NV: Self = Self(1_000_307_000);
     pub const CUDA_FUNCTION_CREATE_INFO_NV: Self = Self(1_000_307_001);
@@ -3244,19 +3252,23 @@ impl StructureType {
     pub const ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT: Self = Self(1_000_396_009);
 }
 #[doc = "Generated from 'VK_NV_displacement_micromap'"]
+#[cfg(feature = "provisional")]
 impl BuildAccelerationStructureFlagsKHR {
     pub const ALLOW_DISPLACEMENT_MICROMAP_UPDATE_NV: Self = Self(0b10_0000_0000);
 }
 #[doc = "Generated from 'VK_NV_displacement_micromap'"]
+#[cfg(feature = "provisional")]
 impl MicromapTypeEXT {
     pub const DISPLACEMENT_MICROMAP_NV: Self = Self(1_000_397_000);
 }
 #[doc = "Generated from 'VK_NV_displacement_micromap'"]
+#[cfg(feature = "provisional")]
 impl PipelineCreateFlags {
     pub const RAY_TRACING_DISPLACEMENT_MICROMAP_NV: Self =
         Self(0b1_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_NV_displacement_micromap'"]
+#[cfg(feature = "provisional")]
 impl StructureType {
     pub const PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV: Self = Self(1_000_397_000);
     pub const PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_PROPERTIES_NV: Self = Self(1_000_397_001);
@@ -5429,9 +5441,12 @@ pub const KHR_STORAGE_BUFFER_STORAGE_CLASS_SPEC_VERSION: u32 = 1u32;
 pub const AMD_GPU_SHADER_INT16_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_int16\0") };
 pub const AMD_GPU_SHADER_INT16_SPEC_VERSION: u32 = 2u32;
+#[cfg(feature = "provisional")]
 pub const AMDX_SHADER_ENQUEUE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMDX_shader_enqueue\0") };
+#[cfg(feature = "provisional")]
 pub const AMDX_SHADER_ENQUEUE_SPEC_VERSION: u32 = 1u32;
+#[cfg(feature = "provisional")]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateExecutionGraphPipelinesAMDX = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -5441,12 +5456,14 @@ pub type PFN_vkCreateExecutionGraphPipelinesAMDX = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_pipelines: *mut Pipeline,
 ) -> Result;
+#[cfg(feature = "provisional")]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetExecutionGraphPipelineScratchSizeAMDX = unsafe extern "system" fn(
     device: crate::vk::Device,
     execution_graph: Pipeline,
     p_size_info: *mut ExecutionGraphPipelineScratchSizeAMDX<'_>,
 ) -> Result;
+#[cfg(feature = "provisional")]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetExecutionGraphPipelineNodeIndexAMDX = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -5454,21 +5471,25 @@ pub type PFN_vkGetExecutionGraphPipelineNodeIndexAMDX = unsafe extern "system" f
     p_node_info: *const PipelineShaderStageNodeCreateInfoAMDX<'_>,
     p_node_index: *mut u32,
 ) -> Result;
+#[cfg(feature = "provisional")]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdInitializeGraphScratchMemoryAMDX =
     unsafe extern "system" fn(command_buffer: CommandBuffer, scratch: DeviceAddress);
+#[cfg(feature = "provisional")]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDispatchGraphAMDX = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     scratch: DeviceAddress,
     p_count_info: *const DispatchGraphCountInfoAMDX,
 );
+#[cfg(feature = "provisional")]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDispatchGraphIndirectAMDX = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     scratch: DeviceAddress,
     p_count_info: *const DispatchGraphCountInfoAMDX,
 );
+#[cfg(feature = "provisional")]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDispatchGraphIndirectCountAMDX = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -5800,8 +5821,10 @@ pub const EXT_DESCRIPTOR_INDEXING_SPEC_VERSION: u32 = 2u32;
 pub const EXT_SHADER_VIEWPORT_INDEX_LAYER_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_viewport_index_layer\0") };
 pub const EXT_SHADER_VIEWPORT_INDEX_LAYER_SPEC_VERSION: u32 = 1u32;
+#[cfg(feature = "provisional")]
 pub const KHR_PORTABILITY_SUBSET_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_portability_subset\0") };
+#[cfg(feature = "provisional")]
 pub const KHR_PORTABILITY_SUBSET_SPEC_VERSION: u32 = 1u32;
 pub const NV_SHADING_RATE_IMAGE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_shading_rate_image\0") };
@@ -6745,9 +6768,12 @@ pub const NV_DEVICE_DIAGNOSTICS_CONFIG_SPEC_VERSION: u32 = 2u32;
 pub const QCOM_RENDER_PASS_STORE_OPS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_store_ops\0") };
 pub const QCOM_RENDER_PASS_STORE_OPS_SPEC_VERSION: u32 = 2u32;
+#[cfg(feature = "provisional")]
 pub const NV_CUDA_KERNEL_LAUNCH_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_cuda_kernel_launch\0") };
+#[cfg(feature = "provisional")]
 pub const NV_CUDA_KERNEL_LAUNCH_SPEC_VERSION: u32 = 2u32;
+#[cfg(feature = "provisional")]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateCudaModuleNV = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -6755,6 +6781,7 @@ pub type PFN_vkCreateCudaModuleNV = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_module: *mut CudaModuleNV,
 ) -> Result;
+#[cfg(feature = "provisional")]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetCudaModuleCacheNV = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -6762,6 +6789,7 @@ pub type PFN_vkGetCudaModuleCacheNV = unsafe extern "system" fn(
     p_cache_size: *mut usize,
     p_cache_data: *mut c_void,
 ) -> Result;
+#[cfg(feature = "provisional")]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateCudaFunctionNV = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -6769,18 +6797,21 @@ pub type PFN_vkCreateCudaFunctionNV = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_function: *mut CudaFunctionNV,
 ) -> Result;
+#[cfg(feature = "provisional")]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyCudaModuleNV = unsafe extern "system" fn(
     device: crate::vk::Device,
     module: CudaModuleNV,
     p_allocator: *const AllocationCallbacks,
 );
+#[cfg(feature = "provisional")]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyCudaFunctionNV = unsafe extern "system" fn(
     device: crate::vk::Device,
     function: CudaFunctionNV,
     p_allocator: *const AllocationCallbacks,
 );
+#[cfg(feature = "provisional")]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCudaLaunchKernelNV = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -7411,8 +7442,10 @@ pub type PFN_vkGetMicromapBuildSizesEXT = unsafe extern "system" fn(
     p_build_info: *const MicromapBuildInfoEXT<'_>,
     p_size_info: *mut MicromapBuildSizesInfoEXT<'_>,
 );
+#[cfg(feature = "provisional")]
 pub const NV_DISPLACEMENT_MICROMAP_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_displacement_micromap\0") };
+#[cfg(feature = "provisional")]
 pub const NV_DISPLACEMENT_MICROMAP_SPEC_VERSION: u32 = 2u32;
 pub const EXT_LOAD_STORE_OP_NONE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_load_store_op_none\0") };

@@ -34,4 +34,5 @@ pub const MAX_GLOBAL_PRIORITY_SIZE_EXT: usize = MAX_GLOBAL_PRIORITY_SIZE_KHR;
 pub const MAX_SHADER_MODULE_IDENTIFIER_SIZE_EXT: usize = 32;
 pub const MAX_PIPELINE_BINARY_KEY_SIZE_KHR: usize = 32;
 pub const MAX_VIDEO_AV1_REFERENCES_PER_FRAME_KHR: usize = 7;
+#[cfg(feature = "provisional")]
 pub const SHADER_INDEX_UNUSED_AMDX: u32 = !0;
