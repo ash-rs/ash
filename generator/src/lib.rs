@@ -2311,8 +2311,6 @@ fn derive_getters_and_setters(
         })
     });
 
-    let extends_name = format_ident!("Extends{}", name);
-
     // The `p_next` field should only be considered if this struct is also a root struct
     let root_struct_next_field = next_field.filter(|_| root_structs.contains(&name));
 
@@ -2320,44 +2318,9 @@ fn derive_getters_and_setters(
     let next_function = if let Some(next_member) = root_struct_next_field {
         let next_field = &next_member.vkxml_field;
         assert_eq!(next_field.basetype, "void");
-        let mutability = if next_field.is_const {
-            quote!(const)
-        } else {
-            quote!(mut)
-        };
         quote! {
-            /// Prepends the given extension struct between the root and the first pointer. This
-            /// method only exists on structs that can be passed to a function directly. Only
-            /// valid extension structs can be pushed into the chain.
-            /// If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the
-            /// chain will look like `A -> D -> B -> C`.
-            pub fn push_next<T: #extends_name + ?Sized>(mut self, next: &'a mut T) -> Self {
-                unsafe {
-                    let next_ptr = <*#mutability T>::cast(next);
-                    // `next` here can contain a pointer chain. This means that we must correctly
-                    // attach he head to the root and the tail to the rest of the chain
-                    // For example:
-                    //
-                    // next = A -> B
-                    // Before: `Root -> C -> D -> E`
-                    // After: `Root -> A -> B -> C -> D -> E`
-                    //                 ^^^^^^
-                    //                 next chain
-                    let last_next = ptr_chain_iter(next).last().unwrap();
-                    (*last_next).p_next = self.p_next as _;
-                    self.p_next = next_ptr;
-                }
-                self
-            }
+            unsafe impl<'a> BaseTaggedStructure for #name<'_>{}
         }
-    } else {
-        quote!()
-    };
-
-    // Root structs come with their own trait that structs that extend
-    // this struct will implement
-    let next_trait = if root_struct_next_field.is_some() {
-        quote!(pub unsafe trait #extends_name {})
     } else {
         quote!()
     };
@@ -2369,10 +2332,10 @@ fn derive_getters_and_setters(
         .extends
         .iter()
         .flat_map(|extends| extends.split(','))
-        .map(|extends| format_ident!("Extends{}", name_to_tokens(extends)))
         .map(|extends| {
+            let extends = name_to_tokens(extends);
             // Extension structs always have a pNext, and therefore always have a lifetime.
-            quote!(unsafe impl #extends for #name<'_> {})
+            quote!(unsafe impl<'a> Extends<#extends<'a>> for #name<'a> {})
         });
 
     let impl_structure_type_trait = structure_type_field.map(|member| {
@@ -2395,12 +2358,10 @@ fn derive_getters_and_setters(
     let q = quote! {
         #impl_structure_type_trait
         #(#impl_extend_trait)*
-        #next_trait
+        #next_function
 
         impl #lifetime #name #lifetime {
             #(#setters)*
-
-            #next_function
         }
     };
 
@@ -3390,7 +3351,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use core::marker::PhantomData;
         use core::fmt;
         use core::ffi::*;
-        use crate::vk::{Handle, ptr_chain_iter};
+        use crate::vk::Handle;
         use crate::vk::aliases::*;
         use crate::vk::bitflags::*;
         use crate::vk::constants::*;

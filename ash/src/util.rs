@@ -140,3 +140,69 @@ pub fn read_spv<R: io::Read + io::Seek>(x: &mut R) -> io::Result<Vec<u32>> {
     }
     Ok(result)
 }
+
+/// Iterates through the pointer chain. Includes the item that is passed into the function.
+/// Stops at the last [`BaseOutStructure`] that has a null [`BaseOutStructure::p_next`] field.
+unsafe fn ptr_chain_iter<T: ?Sized>(
+    ptr: &mut T,
+) -> impl Iterator<Item = *mut vk::BaseOutStructure<'_>> {
+    let ptr = <*mut T>::cast::<vk::BaseOutStructure<'_>>(ptr);
+    (0..).scan(ptr, |p_ptr, _| {
+        if p_ptr.is_null() {
+            return None;
+        }
+        let n_ptr = (**p_ptr).p_next;
+        let old = *p_ptr;
+        *p_ptr = n_ptr;
+        Some(old)
+    })
+}
+
+pub trait NextChainExt {
+    fn base_structure(&mut self) -> &mut vk::BaseOutStructure<'_>;
+    fn add_next<T: vk::Extends<Self>>(&mut self, next: &mut T) -> &mut Self {
+        unsafe {
+            let next_ptr = <*mut T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.base_structure().p_next as _;
+            self.base_structure().p_next = next_ptr;
+        }
+        self
+    }
+    fn push_next<T: vk::Extends<Self>>(mut self, next: &mut T) -> Self
+    where
+        Self: Sized,
+    {
+        self.add_next(next);
+        self
+    }
+}
+impl<T> NextChainExt for T
+where
+    T: vk::BaseTaggedStructure,
+{
+    fn base_structure(&mut self) -> &mut vk::BaseOutStructure<'_> {
+        self.as_base_out_structure()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use alloc::vec::Vec;
+    #[test]
+    fn test_ptr_chains() {
+        let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::default();
+        let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::default();
+        let chain = alloc::vec![
+            <*mut _>::cast(&mut variable_pointers),
+            <*mut _>::cast(&mut corner),
+        ];
+        let mut device_create_info = vk::DeviceCreateInfo::default()
+            .push_next(&mut corner)
+            .push_next(&mut variable_pointers);
+        let chain2: Vec<*mut vk::BaseOutStructure<'_>> =
+            unsafe { ptr_chain_iter(&mut device_create_info).skip(1).collect() };
+        assert_eq!(chain, chain2);
+    }
+}
