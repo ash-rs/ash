@@ -189,8 +189,6 @@ pub type PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'a> =
 pub type PhysicalDeviceDepthStencilResolvePropertiesKHR<'a> =
     PhysicalDeviceDepthStencilResolveProperties<'a>;
 pub type SubpassDescriptionDepthStencilResolveKHR<'a> = SubpassDescriptionDepthStencilResolve<'a>;
-pub type PhysicalDeviceComputeShaderDerivativesFeaturesNV<'a> =
-    PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a>;
 pub type PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'a> =
     PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a>;
 pub type ImageStencilUsageCreateInfoEXT<'a> = ImageStencilUsageCreateInfo<'a>;

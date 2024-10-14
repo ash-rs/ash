@@ -141,68 +141,167 @@ pub fn read_spv<R: io::Read + io::Seek>(x: &mut R) -> io::Result<Vec<u32>> {
     Ok(result)
 }
 
-/// Iterates through the pointer chain. Includes the item that is passed into the function.
-/// Stops at the last [`BaseOutStructure`] that has a null [`BaseOutStructure::p_next`] field.
-unsafe fn ptr_chain_iter<T: ?Sized>(
-    ptr: &mut T,
-) -> impl Iterator<Item = *mut vk::BaseOutStructure<'_>> {
-    let ptr = <*mut T>::cast::<vk::BaseOutStructure<'_>>(ptr);
-    (0..).scan(ptr, |p_ptr, _| {
-        if p_ptr.is_null() {
-            return None;
-        }
-        let n_ptr = (**p_ptr).p_next;
-        let old = *p_ptr;
-        *p_ptr = n_ptr;
-        Some(old)
-    })
-}
-
-pub trait NextChainExt {
-    fn base_structure(&mut self) -> &mut vk::BaseOutStructure<'_>;
-    fn add_next<T: vk::Extends<Self>>(&mut self, next: &mut T) -> &mut Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.base_structure().p_next as _;
-            self.base_structure().p_next = next_ptr;
-        }
-        self
+pub trait NextChainExt<'a>: vk::TaggedStructure {
+    /// Prepends the given extension struct between the root and the first pointer. This
+    /// method only exists on structs that can be passed to a function directly. Only
+    /// valid extension structs can be pushed into the chain.
+    /// If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the
+    /// chain will look like `A -> D -> B -> C`.
+    ///
+    /// For inline construction of extension structs using the builder pattern, use `with_next` instead.
+    fn push_next<T: vk::Extends<Self> + 'a>(&mut self, next: &'a mut T) {
+        let next: &mut vk::BaseOutStructure<'a> = unsafe {
+            // Safety: next implements vk::Extends and TaggedStructure
+            &mut *<*mut T>::cast(next)
+        };
+        assert!(next.p_next.is_null());
+        let base: &mut vk::BaseOutStructure<'a>  = unsafe {
+            // Safety: next implements vk::Extends and TaggedStructure
+            &mut *<*mut Self>::cast(self)
+        };
+        next.p_next = base.p_next;
+        base.p_next = next;
     }
-    fn push_next<T: vk::Extends<Self>>(mut self, next: &mut T) -> Self
+
+    /// Builder method to prepends the given extension struct between the root and the first pointer.
+    /// This  method only exists on structs that can be passed to a function directly. Only
+    /// valid extension structs can be pushed into the chain.
+    /// 
+    /// ```rs
+    /// let mut a = vk::PhysicalDeviceRayTracingPipelineFeaturesKHR::default();
+    /// let mut b = vk::PhysicalDeviceAccelerationStructureFeaturesKHR::default();
+    /// let mut c = vk::PhysicalDeviceMultiDrawFeaturesEXT::default();
+    /// let base = vk::PhysicalDeviceFeatures2::default()
+    ///    .with_next(&mut a)
+    ///     .with_next(&mut b)
+    ///     .with_next(&mut c);
+    /// let mut iter = base.iter_next_chain();
+    /// assert_eq!(iter.next().unwrap().tag(), vk::StructureType::PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT); // c.s_type
+    /// assert_eq!(iter.next().unwrap().tag(), vk::StructureType::PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_FEATURES_KHR); // b.s_type
+    /// assert_eq!(iter.next().unwrap().tag(), vk::StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_FEATURES_KHR); // a.s_type
+    /// ```
+    /// For inline construction of extension structs, use `with_next` instead.
+    fn with_next<T: vk::Extends<Self> + 'a>(mut self, next: &'a mut T) -> Self
     where
         Self: Sized,
     {
-        self.add_next(next);
+        self.push_next(next);
         self
     }
-}
-impl<T> NextChainExt for T
-where
-    T: vk::BaseTaggedStructure,
-{
-    fn base_structure(&mut self) -> &mut vk::BaseOutStructure<'_> {
-        self.as_base_out_structure()
+    /// Returns a mutable iterator over the entire extension chain attached to `Self`
+    fn iter_next_chain_mut(&'a mut self) -> impl Iterator<Item = &'a mut TaggedObject<'a>> + 'a {
+        unsafe {
+            let this = TaggedObject::from_mut(self);
+            (0..).scan(this.output.p_next, |p_ptr, _| {
+                if p_ptr.is_null() {
+                    return None;
+                }
+                let n_ptr = (**p_ptr).p_next;
+                let old = *p_ptr;
+                *p_ptr = n_ptr;
+                Some(TaggedObject::from_raw_mut(old))
+            })
+        }
+    }
+    /// Returns an iterator over the entire extension chain attached to `Self`
+    fn iter_next_chain(&'a self) -> impl Iterator<Item = &'a TaggedObject<'a>> + 'a {
+        unsafe {
+            let ptr = <*const Self>::cast::<vk::BaseInStructure<'_>>(self);
+            (0..).scan((&*ptr).p_next, |p_ptr, _| {
+                if p_ptr.is_null() {
+                    return None;
+                }
+                let n_ptr = (**p_ptr).p_next;
+                let old = *p_ptr;
+                *p_ptr = n_ptr;
+                Some(TaggedObject::from_raw(old))
+            })
+        }
+    }
+    /// Extend the next chain of the current object with multiple tagged objects
+    fn extend(
+        &mut self,
+        nexts: impl IntoIterator<Item = &'a mut TaggedObject<'a>>,
+    ) {
+        for next in nexts.into_iter() {
+            self.push_next(next);
+        }
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use alloc::vec::Vec;
-    #[test]
-    fn test_ptr_chains() {
-        let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::default();
-        let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::default();
-        let chain = alloc::vec![
-            <*mut _>::cast(&mut variable_pointers),
-            <*mut _>::cast(&mut corner),
-        ];
-        let mut device_create_info = vk::DeviceCreateInfo::default()
-            .push_next(&mut corner)
-            .push_next(&mut variable_pointers);
-        let chain2: Vec<*mut vk::BaseOutStructure<'_>> =
-            unsafe { ptr_chain_iter(&mut device_create_info).skip(1).collect() };
-        assert_eq!(chain, chain2);
+/// Blanket implementation of next chain utility methods on all base types
+impl<'a, T> NextChainExt<'a> for T
+where
+    T: vk::BaseTaggedStructure<'a>,
+{
+}
+
+
+
+/// Type-erased object representing a tagged Vulkan structure.
+/// It is basically a [`Box<dyn Any>`], but for types implementing [`ash::vk::TaggedStructure`].
+#[repr(C)]
+pub union TaggedObject<'a> {
+    output: vk::BaseOutStructure<'a>,
+    input: vk::BaseInStructure<'a>,
+}
+impl vk::StructureType {
+    const ASH_DYNAMIC: Self = Self(-1);
+}
+/// TaggedObject may extend anything
+unsafe impl<'a> vk::TaggedStructure for TaggedObject<'a>{
+    const STRUCTURE_TYPE: vk::StructureType = vk::StructureType::ASH_DYNAMIC;
+}
+unsafe impl<'a, T: ?Sized> vk::Extends<T> for TaggedObject<'a>{}
+
+impl<'a> TaggedObject<'a> {
+    pub unsafe fn from_raw(obj: *const vk::BaseInStructure<'_>) -> &Self {
+        unsafe { &*(obj as *const Self) }
+    }
+
+    pub unsafe fn from_raw_mut(obj: *mut vk::BaseOutStructure<'_>) -> &mut Self {
+        unsafe { &mut *(obj as *mut Self) }
+    }
+    pub fn base_structure(&self) -> &vk::BaseInStructure<'a> {
+        unsafe {
+            &self.input
+        }
+    }
+    pub fn base_structure_mut(&mut self) -> &mut vk::BaseOutStructure<'a> {
+        unsafe {
+            &mut self.output
+        }
+    }
+
+    pub fn from_ref<T: vk::TaggedStructure + ?Sized>(obj: &T) -> &Self {
+        unsafe { &*(<*const T>::cast(obj)) }
+    }
+
+    pub fn from_mut<T: vk::TaggedStructure + ?Sized>(obj: &mut T) -> &mut Self {
+        unsafe { &mut *(<*mut T>::cast(obj) ) }
+    }
+    pub fn tag(&self) -> vk::StructureType {
+        self.base_structure().s_type
+    }
+    pub fn downcast_ref<T: vk::TaggedStructure>(&self) -> Option<&T> {
+        unsafe {
+            if self.tag() == T::STRUCTURE_TYPE {
+                Some(&*<*const vk::BaseInStructure<'_>>::cast(&self.input))
+            } else {
+                None
+            }
+        }
+    }
+    pub fn downcast_mut<T: vk::TaggedStructure>(&mut self) -> Option<&mut T> {
+        unsafe {
+            if self.tag() == T::STRUCTURE_TYPE {
+                Some(&mut *<*mut vk::BaseOutStructure<'_>>::cast(&mut self.output))
+            } else {
+                None
+            }
+        }
+    }
+    pub fn is<T: vk::TaggedStructure>(&self) -> bool {
+        self.tag() == T::STRUCTURE_TYPE
     }
 }

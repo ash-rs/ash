@@ -62,12 +62,6 @@ impl From<vk::Extent2D> for vk::Rect2D {
 /// must always match the value of [`TaggedStructure::STRUCTURE_TYPE`].
 pub unsafe trait TaggedStructure {
     const STRUCTURE_TYPE: vk::StructureType;
-    fn as_base_out_structure(&mut self) -> &mut vk::BaseOutStructure<'_> {
-        unsafe { &mut *(<*mut Self>::cast(self) as *mut vk::BaseOutStructure<'_>) }
-    }
-    fn as_base_in_structure(&self) -> &vk::BaseInStructure<'_> {
-        unsafe { &*(<*const Self>::cast(self) as *const vk::BaseInStructure<'_>) }
-    }
 }
 
 #[inline]

@@ -2319,7 +2319,7 @@ fn derive_getters_and_setters(
         let next_field = &next_member.vkxml_field;
         assert_eq!(next_field.basetype, "void");
         quote! {
-            unsafe impl<'a> BaseTaggedStructure for #name<'_>{}
+            unsafe impl<'a> BaseTaggedStructure<'a> for #name<'a>{}
         }
     } else {
         quote!()
