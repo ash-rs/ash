@@ -155,7 +155,7 @@ pub trait NextChainExt<'a>: vk::TaggedStructure {
             &mut *<*mut T>::cast(next)
         };
         assert!(next.p_next.is_null());
-        let base: &mut vk::BaseOutStructure<'a>  = unsafe {
+        let base: &mut vk::BaseOutStructure<'a> = unsafe {
             // Safety: next implements vk::Extends and TaggedStructure
             &mut *<*mut Self>::cast(self)
         };
@@ -166,8 +166,10 @@ pub trait NextChainExt<'a>: vk::TaggedStructure {
     /// Builder method to prepends the given extension struct between the root and the first pointer.
     /// This  method only exists on structs that can be passed to a function directly. Only
     /// valid extension structs can be pushed into the chain.
-    /// 
-    /// ```rs
+    ///
+    /// ```rust
+    /// use ash::prelude::*;
+    /// use ash::vk;
     /// let mut a = vk::PhysicalDeviceRayTracingPipelineFeaturesKHR::default();
     /// let mut b = vk::PhysicalDeviceAccelerationStructureFeaturesKHR::default();
     /// let mut c = vk::PhysicalDeviceMultiDrawFeaturesEXT::default();
@@ -219,27 +221,42 @@ pub trait NextChainExt<'a>: vk::TaggedStructure {
         }
     }
     /// Extend the next chain of the current object with multiple tagged objects
-    fn extend(
-        &mut self,
-        nexts: impl IntoIterator<Item = &'a mut TaggedObject<'a>>,
-    ) {
-        for next in nexts.into_iter() {
-            self.push_next(next);
+    /// ```rust
+    /// use ash::prelude::*;
+    /// use ash::vk;
+    /// use ash::util::TaggedObject;
+    /// let mut a = vk::PhysicalDeviceRayTracingPipelineFeaturesKHR::default();
+    /// let mut b = vk::PhysicalDeviceAccelerationStructureFeaturesKHR::default();
+    /// let mut c = vk::PhysicalDeviceMultiDrawFeaturesEXT::default();
+    /// let mut base = vk::PhysicalDeviceFeatures2::default();
+    /// base.extend([
+    ///     TaggedObject::from_mut(&mut a),
+    ///     TaggedObject::from_mut(&mut b),
+    ///     TaggedObject::from_mut(&mut c)
+    /// ]);
+    /// let mut iter = base.iter_next_chain();
+    /// assert_eq!(iter.next().unwrap().tag(), vk::StructureType::PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT); // c.s_type
+    /// assert_eq!(iter.next().unwrap().tag(), vk::StructureType::PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_FEATURES_KHR); // b.s_type
+    /// assert_eq!(iter.next().unwrap().tag(), vk::StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_FEATURES_KHR); // a.s_type
+    /// ```
+    fn extend(&mut self, nexts: impl IntoIterator<Item = &'a mut TaggedObject<'a>>) {
+        unsafe {
+            for next in nexts.into_iter() {
+                assert!(next.output.p_next.is_null());
+                // Safety: self implements TaggedStructure
+                let base: &mut vk::BaseOutStructure<'a> = &mut *<*mut Self>::cast(self);
+                next.output.p_next = base.p_next;
+                base.p_next = <*mut TaggedObject<'a>>::cast(next);
+            }
         }
     }
 }
 
 /// Blanket implementation of next chain utility methods on all base types
-impl<'a, T> NextChainExt<'a> for T
-where
-    T: vk::BaseTaggedStructure<'a>,
-{
-}
-
-
+impl<'a, T> NextChainExt<'a> for T where T: vk::BaseTaggedStructure<'a> {}
 
 /// Type-erased object representing a tagged Vulkan structure.
-/// It is basically a [`Box<dyn Any>`], but for types implementing [`ash::vk::TaggedStructure`].
+/// It is basically a [`Box<dyn Any>`], but for types implementing [`vk::TaggedStructure`].
 #[repr(C)]
 pub union TaggedObject<'a> {
     output: vk::BaseOutStructure<'a>,
@@ -248,11 +265,57 @@ pub union TaggedObject<'a> {
 impl vk::StructureType {
     const ASH_DYNAMIC: Self = Self(-1);
 }
-/// TaggedObject may extend anything
-unsafe impl<'a> vk::TaggedStructure for TaggedObject<'a>{
+
+/// [`TaggedObject`]s are layout-compatible with [`vk::BaseInStructure`] and
+/// [`vk::BaseOutStructure`].
+unsafe impl<'a> vk::TaggedStructure for TaggedObject<'a> {
+    /// Querying the tag of a [`TaggedObject`] statically using [`vk::TaggedStructure::STRUCTURE_TYPE`]
+    /// returns [`vk::StructureType::ASH_DYNAMIC`], since the actual tag is dynamic.
+    /// To query the tag of a [`TaggedObject`] dynamically, use [`TaggedObject::tag`].
     const STRUCTURE_TYPE: vk::StructureType = vk::StructureType::ASH_DYNAMIC;
 }
-unsafe impl<'a, T: ?Sized> vk::Extends<T> for TaggedObject<'a>{}
+
+impl<'a> NextChainExt<'a> for TaggedObject<'a> {}
+
+/// [`TaggedObject`]s can be extended with ANY tagged objects. It is up to the user to ensure that they're
+/// calling it correctly.
+/// ```rust
+/// use ash::prelude::*;
+/// use ash::vk;
+/// use ash::util::TaggedObject;
+/// let mut a = vk::PhysicalDeviceRayTracingPipelineFeaturesKHR::default();
+/// let mut b = vk::PhysicalDeviceAccelerationStructureFeaturesKHR::default();
+/// let mut c = vk::PhysicalDeviceMultiDrawFeaturesEXT::default();
+/// let mut d = vk::ApplicationInfo::default();
+/// let mut base = vk::PhysicalDeviceFeatures2::default();
+/// let base = TaggedObject::from_mut(&mut base);
+/// base.push_next(&mut a);
+/// base.push_next(&mut b);
+/// base.push_next(&mut c);
+/// base.push_next(&mut d);
+///
+///
+/// let mut iter = base.iter_next_chain();
+/// assert_eq!(iter.next().unwrap().tag(), vk::StructureType::APPLICATION_INFO); // d.s_type
+/// assert_eq!(iter.next().unwrap().tag(), vk::StructureType::PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT); // c.s_type
+/// assert_eq!(iter.next().unwrap().tag(), vk::StructureType::PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_FEATURES_KHR); // b.s_type
+/// assert_eq!(iter.next().unwrap().tag(), vk::StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_FEATURES_KHR); // a.s_type
+/// ```
+unsafe impl<'a, T: vk::TaggedStructure + ?Sized> vk::Extends<TaggedObject<'a>> for T {}
+/// [`TaggedObject`]s can extend ANY other tagged objects.
+/// ```rust
+/// use ash::prelude::*;
+/// use ash::vk;
+/// use ash::util::TaggedObject;
+/// let mut a = vk::ApplicationInfo::default();
+/// let mut a = TaggedObject::from_mut(&mut a);
+/// let mut base = vk::PhysicalDeviceFeatures2::default();
+/// base.push_next(a);
+///
+/// let mut iter = base.iter_next_chain();
+/// assert_eq!(iter.next().unwrap().tag(), vk::StructureType::APPLICATION_INFO); // a.s_type
+/// ```
+unsafe impl<'a, T: vk::BaseTaggedStructure<'a> + ?Sized> vk::Extends<T> for TaggedObject<'a> {}
 
 impl<'a> TaggedObject<'a> {
     pub unsafe fn from_raw(obj: *const vk::BaseInStructure<'_>) -> &Self {
@@ -263,14 +326,10 @@ impl<'a> TaggedObject<'a> {
         unsafe { &mut *(obj as *mut Self) }
     }
     pub fn base_structure(&self) -> &vk::BaseInStructure<'a> {
-        unsafe {
-            &self.input
-        }
+        unsafe { &self.input }
     }
     pub fn base_structure_mut(&mut self) -> &mut vk::BaseOutStructure<'a> {
-        unsafe {
-            &mut self.output
-        }
+        unsafe { &mut self.output }
     }
 
     pub fn from_ref<T: vk::TaggedStructure + ?Sized>(obj: &T) -> &Self {
@@ -278,7 +337,7 @@ impl<'a> TaggedObject<'a> {
     }
 
     pub fn from_mut<T: vk::TaggedStructure + ?Sized>(obj: &mut T) -> &mut Self {
-        unsafe { &mut *(<*mut T>::cast(obj) ) }
+        unsafe { &mut *(<*mut T>::cast(obj)) }
     }
     pub fn tag(&self) -> vk::StructureType {
         self.base_structure().s_type
@@ -295,7 +354,9 @@ impl<'a> TaggedObject<'a> {
     pub fn downcast_mut<T: vk::TaggedStructure>(&mut self) -> Option<&mut T> {
         unsafe {
             if self.tag() == T::STRUCTURE_TYPE {
-                Some(&mut *<*mut vk::BaseOutStructure<'_>>::cast(&mut self.output))
+                Some(&mut *<*mut vk::BaseOutStructure<'_>>::cast(
+                    &mut self.output,
+                ))
             } else {
                 None
             }
