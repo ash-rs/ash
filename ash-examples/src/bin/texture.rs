@@ -5,7 +5,7 @@ use std::error::Error;
 use std::ffi;
 use std::io::Cursor;
 use std::mem;
-use std::mem::{size_of, size_of_val}; // TODO: Remove when bumping MSRV to 1.80
+use std::mem::{align_of, size_of, size_of_val}; // TODO: Remove when bumping MSRV to 1.80
 use std::os::raw::c_void;
 
 use ash::util::*;
