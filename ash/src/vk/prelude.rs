@@ -60,8 +60,14 @@ impl From<vk::Extent2D> for vk::Rect2D {
 /// Structures implementing this trait are layout-compatible with [`vk::BaseInStructure`] and
 /// [`vk::BaseOutStructure`]. Such structures have an `s_type` field indicating its type, which
 /// must always match the value of [`TaggedStructure::STRUCTURE_TYPE`].
-pub unsafe trait TaggedStructure {
+pub unsafe trait TaggedStructure<'a> {
     const STRUCTURE_TYPE: vk::StructureType;
+    fn as_base_mut(&mut self) -> &mut vk::BaseOutStructure<'a> {
+        unsafe { &mut *(<*mut Self>::cast(self) as *mut vk::BaseOutStructure<'a>) }
+    }
+    fn as_base(&self) -> &vk::BaseInStructure<'a> {
+        unsafe { &*(<*const Self>::cast(self) as *const vk::BaseInStructure<'a>) }
+    }
 }
 
 #[inline]

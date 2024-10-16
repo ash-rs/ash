@@ -50,5 +50,5 @@ pub trait Handle: Sized {
     }
 }
 
-pub unsafe trait BaseTaggedStructure<'a>: TaggedStructure {}
-pub unsafe trait Extends<T: ?Sized>: TaggedStructure {}
+pub unsafe trait BaseTaggedStructure<'a>: TaggedStructure<'a> {}
+pub unsafe trait Extends<'a, T: ?Sized>: TaggedStructure<'a> {}
