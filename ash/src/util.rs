@@ -311,12 +311,6 @@ impl<'a> TaggedObject<'a> {
     pub unsafe fn from_raw_mut(obj: *mut vk::BaseOutStructure<'a>) -> &'a mut Self {
         &mut *(obj as *mut Self)
     }
-    pub fn base_structure(&self) -> &vk::BaseInStructure<'a> {
-        unsafe { &self.input }
-    }
-    pub fn base_structure_mut(&mut self) -> &mut vk::BaseOutStructure<'a> {
-        unsafe { &mut self.output }
-    }
 
     pub fn from_ref<T: TaggedStructure<'a> + ?Sized>(obj: &T) -> &Self {
         unsafe { &*(<*const T>::cast(obj)) }
@@ -326,7 +320,7 @@ impl<'a> TaggedObject<'a> {
         unsafe { &mut *(<*mut T>::cast(obj)) }
     }
     pub fn tag(&self) -> vk::StructureType {
-        self.base_structure().s_type
+        self.as_base().s_type
     }
     pub fn downcast_ref<T: TaggedStructure<'a>>(&self) -> Option<&T> {
         unsafe {
