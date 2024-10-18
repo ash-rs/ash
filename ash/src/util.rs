@@ -249,7 +249,7 @@ pub union TaggedObject<'a> {
     input: vk::BaseInStructure<'a>,
 }
 impl vk::StructureType {
-    const ASH_DYNAMIC: Self = Self(-1);
+    pub const ASH_DYNAMIC: Self = Self(-1);
 }
 
 /// [`TaggedObject`]s are layout-compatible with [`vk::BaseInStructure`] and
