@@ -185,8 +185,8 @@ pub trait NextChainExt<'a>: TaggedStructure<'a> {
         self
     }
     /// Returns a mutable iterator over the entire extension chain attached to `Self`
-    fn iter_next_chain_mut(&'a mut self) -> impl Iterator<Item = &'a mut TaggedObject<'a>> + 'a {
-        (0..).scan(self.as_base_mut().p_next, |p_ptr, _| unsafe {
+    fn iter_next_chain_mut(&mut self) -> impl Iterator<Item = &'a mut TaggedObject<'a>> {
+        (0..).scan(self.as_base_mut().p_next, move |p_ptr, _| unsafe {
             if p_ptr.is_null() {
                 return None;
             }
@@ -197,7 +197,7 @@ pub trait NextChainExt<'a>: TaggedStructure<'a> {
         })
     }
     /// Returns an iterator over the entire extension chain attached to `Self`
-    fn iter_next_chain(&'a self) -> impl Iterator<Item = &'a TaggedObject<'a>> + 'a {
+    fn iter_next_chain(&self) -> impl Iterator<Item = &'a TaggedObject<'a>> {
         (0..).scan(self.as_base().p_next, |p_ptr, _| unsafe {
             if p_ptr.is_null() {
                 return None;
@@ -318,6 +318,22 @@ impl<'a> TaggedObject<'a> {
 
     pub fn from_mut<T: TaggedStructure<'a> + ?Sized>(obj: &mut T) -> &mut Self {
         unsafe { &mut *(<*mut T>::cast(obj)) }
+    }
+    pub fn next(&self) -> Option<&Self> {
+        unsafe {
+            if self.as_base().p_next.is_null() {
+                return None;
+            }
+            Some(TaggedObject::from_raw(self.as_base().p_next))
+        }
+    }
+    pub fn next_mut(&mut self) -> Option<&mut Self> {
+        unsafe {
+            if self.as_base().p_next.is_null() {
+                return None;
+            }
+            Some(TaggedObject::from_raw_mut(self.as_base_mut().p_next))
+        }
     }
     pub fn tag(&self) -> vk::StructureType {
         self.as_base().s_type
