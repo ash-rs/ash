@@ -48,20 +48,25 @@ pub mod amd {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = AMD_DRAW_INDIRECT_COUNT_NAME;
+            const SPEC_VERSION: u32 = AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(KHR_DRAW_INDIRECT_COUNT_NAME);
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -177,20 +182,24 @@ pub mod amd {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = AMD_SHADER_INFO_NAME;
+            const SPEC_VERSION: u32 = AMD_SHADER_INFO_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -275,20 +284,24 @@ pub mod amd {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = AMD_BUFFER_MARKER_NAME;
+            const SPEC_VERSION: u32 = AMD_BUFFER_MARKER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -368,20 +381,24 @@ pub mod amd {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = AMD_DISPLAY_NATIVE_HDR_NAME;
+            const SPEC_VERSION: u32 = AMD_DISPLAY_NATIVE_HDR_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -523,20 +540,24 @@ pub mod amdx {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = AMDX_SHADER_ENQUEUE_NAME;
+            const SPEC_VERSION: u32 = AMDX_SHADER_ENQUEUE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -730,20 +751,24 @@ pub mod android {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = ANDROID_NATIVE_BUFFER_NAME;
+            const SPEC_VERSION: u32 = ANDROID_NATIVE_BUFFER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -870,20 +895,24 @@ pub mod android {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_NAME;
+            const SPEC_VERSION: u32 = ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -1016,20 +1045,24 @@ pub mod ext {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = EXT_DEBUG_REPORT_NAME;
+            const SPEC_VERSION: u32 = EXT_DEBUG_REPORT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -1141,20 +1174,25 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_DEBUG_MARKER_NAME;
+            const SPEC_VERSION: u32 = EXT_DEBUG_MARKER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(EXT_DEBUG_UTILS_NAME);
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -1286,20 +1324,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_TRANSFORM_FEEDBACK_NAME;
+            const SPEC_VERSION: u32 = EXT_TRANSFORM_FEEDBACK_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -1522,20 +1564,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_CONDITIONAL_RENDERING_NAME;
+            const SPEC_VERSION: u32 = EXT_CONDITIONAL_RENDERING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -1611,20 +1657,24 @@ pub mod ext {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = EXT_DIRECT_MODE_DISPLAY_NAME;
+            const SPEC_VERSION: u32 = EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -1673,20 +1723,24 @@ pub mod ext {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = EXT_ACQUIRE_XLIB_DISPLAY_NAME;
+            const SPEC_VERSION: u32 = EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -1762,20 +1816,24 @@ pub mod ext {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = EXT_DISPLAY_SURFACE_COUNTER_NAME;
+            const SPEC_VERSION: u32 = EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -1831,20 +1889,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_DISPLAY_CONTROL_NAME;
+            const SPEC_VERSION: u32 = EXT_DISPLAY_CONTROL_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -1965,20 +2027,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_DISCARD_RECTANGLES_NAME;
+            const SPEC_VERSION: u32 = EXT_DISCARD_RECTANGLES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -2099,20 +2165,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_HDR_METADATA_NAME;
+            const SPEC_VERSION: u32 = EXT_HDR_METADATA_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -2179,20 +2249,24 @@ pub mod ext {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = EXT_DEBUG_UTILS_NAME;
+            const SPEC_VERSION: u32 = EXT_DEBUG_UTILS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -2284,20 +2358,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_DEBUG_UTILS_NAME;
+            const SPEC_VERSION: u32 = EXT_DEBUG_UTILS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -2512,20 +2590,24 @@ pub mod ext {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = EXT_SAMPLE_LOCATIONS_NAME;
+            const SPEC_VERSION: u32 = EXT_SAMPLE_LOCATIONS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -2573,20 +2655,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_SAMPLE_LOCATIONS_NAME;
+            const SPEC_VERSION: u32 = EXT_SAMPLE_LOCATIONS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -2655,20 +2741,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_IMAGE_DRM_FORMAT_MODIFIER_NAME;
+            const SPEC_VERSION: u32 = EXT_IMAGE_DRM_FORMAT_MODIFIER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -2724,20 +2814,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_VALIDATION_CACHE_NAME;
+            const SPEC_VERSION: u32 = EXT_VALIDATION_CACHE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -2889,20 +2983,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_EXTERNAL_MEMORY_HOST_NAME;
+            const SPEC_VERSION: u32 = EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -2960,20 +3058,25 @@ pub mod ext {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = EXT_CALIBRATED_TIMESTAMPS_NAME;
+            const SPEC_VERSION: u32 = EXT_CALIBRATED_TIMESTAMPS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(KHR_CALIBRATED_TIMESTAMPS_NAME);
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -3021,20 +3124,25 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_CALIBRATED_TIMESTAMPS_NAME;
+            const SPEC_VERSION: u32 = EXT_CALIBRATED_TIMESTAMPS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(KHR_CALIBRATED_TIMESTAMPS_NAME);
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -3114,20 +3222,24 @@ pub mod ext {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = EXT_METAL_SURFACE_NAME;
+            const SPEC_VERSION: u32 = EXT_METAL_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -3230,20 +3342,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_BUFFER_DEVICE_ADDRESS_NAME;
+            const SPEC_VERSION: u32 = EXT_BUFFER_DEVICE_ADDRESS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -3296,20 +3412,25 @@ pub mod ext {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = EXT_TOOLING_INFO_NAME;
+            const SPEC_VERSION: u32 = EXT_TOOLING_INFO_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 3, 0));
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -3404,20 +3525,24 @@ pub mod ext {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = EXT_FULL_SCREEN_EXCLUSIVE_NAME;
+            const SPEC_VERSION: u32 = EXT_FULL_SCREEN_EXCLUSIVE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -3466,20 +3591,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_FULL_SCREEN_EXCLUSIVE_NAME;
+            const SPEC_VERSION: u32 = EXT_FULL_SCREEN_EXCLUSIVE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -3577,20 +3706,24 @@ pub mod ext {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = EXT_HEADLESS_SURFACE_NAME;
+            const SPEC_VERSION: u32 = EXT_HEADLESS_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -3645,20 +3778,25 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_LINE_RASTERIZATION_NAME;
+            const SPEC_VERSION: u32 = EXT_LINE_RASTERIZATION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToExtension(KHR_LINE_RASTERIZATION_NAME);
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -3720,20 +3858,25 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_HOST_QUERY_RESET_NAME;
+            const SPEC_VERSION: u32 = EXT_HOST_QUERY_RESET_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 2, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -3792,20 +3935,25 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_EXTENDED_DYNAMIC_STATE_NAME;
+            const SPEC_VERSION: u32 = EXT_EXTENDED_DYNAMIC_STATE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 3, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -4087,20 +4235,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_HOST_IMAGE_COPY_NAME;
+            const SPEC_VERSION: u32 = EXT_HOST_IMAGE_COPY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -4260,20 +4412,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_SWAPCHAIN_MAINTENANCE1_NAME;
+            const SPEC_VERSION: u32 = EXT_SWAPCHAIN_MAINTENANCE1_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -4342,20 +4498,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_DEPTH_BIAS_CONTROL_NAME;
+            const SPEC_VERSION: u32 = EXT_DEPTH_BIAS_CONTROL_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -4415,20 +4575,24 @@ pub mod ext {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = EXT_ACQUIRE_DRM_DISPLAY_NAME;
+            const SPEC_VERSION: u32 = EXT_ACQUIRE_DRM_DISPLAY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -4516,20 +4680,25 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_PRIVATE_DATA_NAME;
+            const SPEC_VERSION: u32 = EXT_PRIVATE_DATA_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 3, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -4651,20 +4820,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_METAL_OBJECTS_NAME;
+            const SPEC_VERSION: u32 = EXT_METAL_OBJECTS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -4717,20 +4890,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_DESCRIPTOR_BUFFER_NAME;
+            const SPEC_VERSION: u32 = EXT_DESCRIPTOR_BUFFER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -5023,20 +5200,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_MESH_SHADER_NAME;
+            const SPEC_VERSION: u32 = EXT_MESH_SHADER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -5163,20 +5344,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_IMAGE_COMPRESSION_CONTROL_NAME;
+            const SPEC_VERSION: u32 = EXT_IMAGE_COMPRESSION_CONTROL_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -5248,20 +5433,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_DEVICE_FAULT_NAME;
+            const SPEC_VERSION: u32 = EXT_DEVICE_FAULT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -5323,20 +5512,24 @@ pub mod ext {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = EXT_DIRECTFB_SURFACE_NAME;
+            const SPEC_VERSION: u32 = EXT_DIRECTFB_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -5414,20 +5607,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_VERTEX_INPUT_DYNAMIC_STATE_NAME;
+            const SPEC_VERSION: u32 = EXT_VERTEX_INPUT_DYNAMIC_STATE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -5515,20 +5712,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_PIPELINE_PROPERTIES_NAME;
+            const SPEC_VERSION: u32 = EXT_PIPELINE_PROPERTIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -5605,20 +5806,25 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_EXTENDED_DYNAMIC_STATE2_NAME;
+            const SPEC_VERSION: u32 = EXT_EXTENDED_DYNAMIC_STATE2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 3, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -5749,20 +5955,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_COLOR_WRITE_ENABLE_NAME;
+            const SPEC_VERSION: u32 = EXT_COLOR_WRITE_ENABLE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -5840,20 +6050,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_MULTI_DRAW_NAME;
+            const SPEC_VERSION: u32 = EXT_MULTI_DRAW_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -5947,20 +6161,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_OPACITY_MICROMAP_NAME;
+            const SPEC_VERSION: u32 = EXT_OPACITY_MICROMAP_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -6295,20 +6513,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_PAGEABLE_DEVICE_LOCAL_MEMORY_NAME;
+            const SPEC_VERSION: u32 = EXT_PAGEABLE_DEVICE_LOCAL_MEMORY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -6410,20 +6632,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_EXTENDED_DYNAMIC_STATE3_NAME;
+            const SPEC_VERSION: u32 = EXT_EXTENDED_DYNAMIC_STATE3_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -7119,20 +7345,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_SHADER_MODULE_IDENTIFIER_NAME;
+            const SPEC_VERSION: u32 = EXT_SHADER_MODULE_IDENTIFIER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -7234,20 +7464,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_SHADER_OBJECT_NAME;
+            const SPEC_VERSION: u32 = EXT_SHADER_OBJECT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -8442,20 +8676,24 @@ pub mod ext {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = EXT_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_NAME;
+            const SPEC_VERSION: u32 = EXT_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -8840,20 +9078,24 @@ pub mod fuchsia {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = FUCHSIA_IMAGEPIPE_SURFACE_NAME;
+            const SPEC_VERSION: u32 = FUCHSIA_IMAGEPIPE_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -8909,20 +9151,24 @@ pub mod fuchsia {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = FUCHSIA_EXTERNAL_MEMORY_NAME;
+            const SPEC_VERSION: u32 = FUCHSIA_EXTERNAL_MEMORY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -9001,20 +9247,24 @@ pub mod fuchsia {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = FUCHSIA_EXTERNAL_SEMAPHORE_NAME;
+            const SPEC_VERSION: u32 = FUCHSIA_EXTERNAL_SEMAPHORE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -9092,20 +9342,24 @@ pub mod fuchsia {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = FUCHSIA_BUFFER_COLLECTION_NAME;
+            const SPEC_VERSION: u32 = FUCHSIA_BUFFER_COLLECTION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -9255,20 +9509,24 @@ pub mod ggp {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = GGP_STREAM_DESCRIPTOR_SURFACE_NAME;
+            const SPEC_VERSION: u32 = GGP_STREAM_DESCRIPTOR_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -9335,20 +9593,24 @@ pub mod google {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = GOOGLE_DISPLAY_TIMING_NAME;
+            const SPEC_VERSION: u32 = GOOGLE_DISPLAY_TIMING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -9461,20 +9723,24 @@ pub mod huawei {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = HUAWEI_SUBPASS_SHADING_NAME;
+            const SPEC_VERSION: u32 = HUAWEI_SUBPASS_SHADING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -9549,20 +9815,24 @@ pub mod huawei {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = HUAWEI_INVOCATION_MASK_NAME;
+            const SPEC_VERSION: u32 = HUAWEI_INVOCATION_MASK_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -9616,20 +9886,24 @@ pub mod huawei {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = HUAWEI_CLUSTER_CULLING_SHADER_NAME;
+            const SPEC_VERSION: u32 = HUAWEI_CLUSTER_CULLING_SHADER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -9744,20 +10018,24 @@ pub mod intel {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = INTEL_PERFORMANCE_QUERY_NAME;
+            const SPEC_VERSION: u32 = INTEL_PERFORMANCE_QUERY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -9984,20 +10262,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_SURFACE_NAME;
+            const SPEC_VERSION: u32 = KHR_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -10140,20 +10422,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_SWAPCHAIN_NAME;
+            const SPEC_VERSION: u32 = KHR_SWAPCHAIN_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -10202,20 +10488,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_SWAPCHAIN_NAME;
+            const SPEC_VERSION: u32 = KHR_SWAPCHAIN_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -10413,20 +10703,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_DISPLAY_NAME;
+            const SPEC_VERSION: u32 = KHR_DISPLAY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -10619,20 +10913,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_DISPLAY_SWAPCHAIN_NAME;
+            const SPEC_VERSION: u32 = KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -10688,20 +10986,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_XLIB_SURFACE_NAME;
+            const SPEC_VERSION: u32 = KHR_XLIB_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -10780,20 +11082,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_XCB_SURFACE_NAME;
+            const SPEC_VERSION: u32 = KHR_XCB_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -10871,20 +11177,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_WAYLAND_SURFACE_NAME;
+            const SPEC_VERSION: u32 = KHR_WAYLAND_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -10962,20 +11272,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_ANDROID_SURFACE_NAME;
+            const SPEC_VERSION: u32 = KHR_ANDROID_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -11030,20 +11344,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_WIN32_SURFACE_NAME;
+            const SPEC_VERSION: u32 = KHR_WIN32_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -11128,20 +11446,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_VIDEO_QUEUE_NAME;
+            const SPEC_VERSION: u32 = KHR_VIDEO_QUEUE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -11213,20 +11535,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_VIDEO_QUEUE_NAME;
+            const SPEC_VERSION: u32 = KHR_VIDEO_QUEUE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -11475,20 +11801,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_VIDEO_DECODE_QUEUE_NAME;
+            const SPEC_VERSION: u32 = KHR_VIDEO_DECODE_QUEUE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -11561,20 +11891,25 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_DYNAMIC_RENDERING_NAME;
+            const SPEC_VERSION: u32 = KHR_DYNAMIC_RENDERING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 3, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -11653,20 +11988,25 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_GET_PHYSICAL_DEVICE_PROPERTIES2_NAME;
+            const SPEC_VERSION: u32 = KHR_GET_PHYSICAL_DEVICE_PROPERTIES2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 1, 0));
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -11856,20 +12196,25 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_DEVICE_GROUP_NAME;
+            const SPEC_VERSION: u32 = KHR_DEVICE_GROUP_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 1, 0));
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -11918,20 +12263,25 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_DEVICE_GROUP_NAME;
+            const SPEC_VERSION: u32 = KHR_DEVICE_GROUP_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 1, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -12105,20 +12455,25 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_MAINTENANCE1_NAME;
+            const SPEC_VERSION: u32 = KHR_MAINTENANCE1_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 1, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -12171,20 +12526,25 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_DEVICE_GROUP_CREATION_NAME;
+            const SPEC_VERSION: u32 = KHR_DEVICE_GROUP_CREATION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 1, 0));
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -12241,20 +12601,25 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_EXTERNAL_MEMORY_CAPABILITIES_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 1, 0));
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -12318,20 +12683,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_EXTERNAL_MEMORY_WIN32_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_MEMORY_WIN32_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -12410,20 +12779,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_EXTERNAL_MEMORY_FD_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -12503,20 +12876,25 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 1, 0));
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -12582,20 +12960,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_EXTERNAL_SEMAPHORE_WIN32_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_SEMAPHORE_WIN32_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -12670,20 +13052,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_EXTERNAL_SEMAPHORE_FD_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -12753,20 +13139,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_PUSH_DESCRIPTOR_NAME;
+            const SPEC_VERSION: u32 = KHR_PUSH_DESCRIPTOR_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -12872,20 +13262,25 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_DESCRIPTOR_UPDATE_TEMPLATE_NAME;
+            const SPEC_VERSION: u32 = KHR_DESCRIPTOR_UPDATE_TEMPLATE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 1, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -13019,20 +13414,25 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_CREATE_RENDERPASS2_NAME;
+            const SPEC_VERSION: u32 = KHR_CREATE_RENDERPASS2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 2, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -13148,20 +13548,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_SHARED_PRESENTABLE_IMAGE_NAME;
+            const SPEC_VERSION: u32 = KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -13214,20 +13618,25 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_EXTERNAL_FENCE_CAPABILITIES_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 1, 0));
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -13291,20 +13700,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_EXTERNAL_FENCE_WIN32_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_FENCE_WIN32_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -13380,20 +13793,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_EXTERNAL_FENCE_FD_NAME;
+            const SPEC_VERSION: u32 = KHR_EXTERNAL_FENCE_FD_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -13459,20 +13876,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_PERFORMANCE_QUERY_NAME;
+            const SPEC_VERSION: u32 = KHR_PERFORMANCE_QUERY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -13544,20 +13965,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_PERFORMANCE_QUERY_NAME;
+            const SPEC_VERSION: u32 = KHR_PERFORMANCE_QUERY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -13637,20 +14062,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_GET_SURFACE_CAPABILITIES2_NAME;
+            const SPEC_VERSION: u32 = KHR_GET_SURFACE_CAPABILITIES2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -13737,20 +14166,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_GET_DISPLAY_PROPERTIES2_NAME;
+            const SPEC_VERSION: u32 = KHR_GET_DISPLAY_PROPERTIES2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -13898,20 +14331,25 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_GET_MEMORY_REQUIREMENTS2_NAME;
+            const SPEC_VERSION: u32 = KHR_GET_MEMORY_REQUIREMENTS2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 1, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -14019,20 +14457,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_ACCELERATION_STRUCTURE_NAME;
+            const SPEC_VERSION: u32 = KHR_ACCELERATION_STRUCTURE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -14439,20 +14881,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_RAY_TRACING_PIPELINE_NAME;
+            const SPEC_VERSION: u32 = KHR_RAY_TRACING_PIPELINE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -14662,20 +15108,25 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_SAMPLER_YCBCR_CONVERSION_NAME;
+            const SPEC_VERSION: u32 = KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 1, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -14753,20 +15204,25 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_BIND_MEMORY2_NAME;
+            const SPEC_VERSION: u32 = KHR_BIND_MEMORY2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 1, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -14848,20 +15304,25 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_MAINTENANCE3_NAME;
+            const SPEC_VERSION: u32 = KHR_MAINTENANCE3_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 1, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -14916,20 +15377,25 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_DRAW_INDIRECT_COUNT_NAME;
+            const SPEC_VERSION: u32 = KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 2, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -15093,20 +15559,25 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_TIMELINE_SEMAPHORE_NAME;
+            const SPEC_VERSION: u32 = KHR_TIMELINE_SEMAPHORE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 2, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -15209,20 +15680,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_FRAGMENT_SHADING_RATE_NAME;
+            const SPEC_VERSION: u32 = KHR_FRAGMENT_SHADING_RATE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -15272,20 +15747,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_FRAGMENT_SHADING_RATE_NAME;
+            const SPEC_VERSION: u32 = KHR_FRAGMENT_SHADING_RATE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -15340,20 +15819,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_DYNAMIC_RENDERING_LOCAL_READ_NAME;
+            const SPEC_VERSION: u32 = KHR_DYNAMIC_RENDERING_LOCAL_READ_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -15462,20 +15945,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_PRESENT_WAIT_NAME;
+            const SPEC_VERSION: u32 = KHR_PRESENT_WAIT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -15534,20 +16021,25 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_BUFFER_DEVICE_ADDRESS_NAME;
+            const SPEC_VERSION: u32 = KHR_BUFFER_DEVICE_ADDRESS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 2, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -15643,20 +16135,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_DEFERRED_HOST_OPERATIONS_NAME;
+            const SPEC_VERSION: u32 = KHR_DEFERRED_HOST_OPERATIONS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -15794,20 +16290,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_PIPELINE_EXECUTABLE_PROPERTIES_NAME;
+            const SPEC_VERSION: u32 = KHR_PIPELINE_EXECUTABLE_PROPERTIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -15910,20 +16410,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_MAP_MEMORY2_NAME;
+            const SPEC_VERSION: u32 = KHR_MAP_MEMORY2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -16021,20 +16525,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_VIDEO_ENCODE_QUEUE_NAME;
+            const SPEC_VERSION: u32 = KHR_VIDEO_ENCODE_QUEUE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -16086,20 +16594,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_VIDEO_ENCODE_QUEUE_NAME;
+            const SPEC_VERSION: u32 = KHR_VIDEO_ENCODE_QUEUE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -16172,20 +16684,25 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_SYNCHRONIZATION2_NAME;
+            const SPEC_VERSION: u32 = KHR_SYNCHRONIZATION2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 3, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -16406,20 +16923,25 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_COPY_COMMANDS2_NAME;
+            const SPEC_VERSION: u32 = KHR_COPY_COMMANDS2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 3, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -16567,20 +17089,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_RAY_TRACING_MAINTENANCE1_NAME;
+            const SPEC_VERSION: u32 = KHR_RAY_TRACING_MAINTENANCE1_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -16641,20 +17167,25 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_MAINTENANCE4_NAME;
+            const SPEC_VERSION: u32 = KHR_MAINTENANCE4_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus =
+                PromotionStatus::PromotedToCore(make_api_version(0, 1, 3, 0));
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -16771,20 +17302,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_MAINTENANCE5_NAME;
+            const SPEC_VERSION: u32 = KHR_MAINTENANCE5_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -17066,20 +17601,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_COOPERATIVE_MATRIX_NAME;
+            const SPEC_VERSION: u32 = KHR_COOPERATIVE_MATRIX_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -17191,20 +17730,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_LINE_RASTERIZATION_NAME;
+            const SPEC_VERSION: u32 = KHR_LINE_RASTERIZATION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -17258,20 +17801,24 @@ pub mod khr {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = KHR_CALIBRATED_TIMESTAMPS_NAME;
+            const SPEC_VERSION: u32 = KHR_CALIBRATED_TIMESTAMPS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -17319,20 +17866,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_CALIBRATED_TIMESTAMPS_NAME;
+            const SPEC_VERSION: u32 = KHR_CALIBRATED_TIMESTAMPS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -17396,20 +17947,24 @@ pub mod khr {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = KHR_MAINTENANCE6_NAME;
+            const SPEC_VERSION: u32 = KHR_MAINTENANCE6_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -17619,20 +18174,24 @@ pub mod mvk {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = MVK_IOS_SURFACE_NAME;
+            const SPEC_VERSION: u32 = MVK_IOS_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -17686,20 +18245,24 @@ pub mod mvk {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = MVK_MACOS_SURFACE_NAME;
+            const SPEC_VERSION: u32 = MVK_MACOS_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -17757,20 +18320,24 @@ pub mod nn {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = NN_VI_SURFACE_NAME;
+            const SPEC_VERSION: u32 = NN_VI_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -17848,20 +18415,24 @@ pub mod nv {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = NV_EXTERNAL_MEMORY_CAPABILITIES_NAME;
+            const SPEC_VERSION: u32 = NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -17930,20 +18501,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_EXTERNAL_MEMORY_WIN32_NAME;
+            const SPEC_VERSION: u32 = NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -18006,20 +18581,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_CLIP_SPACE_W_SCALING_NAME;
+            const SPEC_VERSION: u32 = NV_CLIP_SPACE_W_SCALING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -18138,20 +18717,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_SHADING_RATE_IMAGE_NAME;
+            const SPEC_VERSION: u32 = NV_SHADING_RATE_IMAGE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -18250,20 +18833,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_RAY_TRACING_NAME;
+            const SPEC_VERSION: u32 = NV_RAY_TRACING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -18605,20 +19192,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_MESH_SHADER_NAME;
+            const SPEC_VERSION: u32 = NV_MESH_SHADER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -18736,20 +19327,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_SCISSOR_EXCLUSIVE_NAME;
+            const SPEC_VERSION: u32 = NV_SCISSOR_EXCLUSIVE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -18827,20 +19422,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_DEVICE_DIAGNOSTIC_CHECKPOINTS_NAME;
+            const SPEC_VERSION: u32 = NV_DEVICE_DIAGNOSTIC_CHECKPOINTS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -18921,20 +19520,24 @@ pub mod nv {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = NV_COOPERATIVE_MATRIX_NAME;
+            const SPEC_VERSION: u32 = NV_COOPERATIVE_MATRIX_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -18990,20 +19593,24 @@ pub mod nv {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = NV_COVERAGE_REDUCTION_MODE_NAME;
+            const SPEC_VERSION: u32 = NV_COVERAGE_REDUCTION_MODE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -19056,20 +19663,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_DEVICE_GENERATED_COMMANDS_NAME;
+            const SPEC_VERSION: u32 = NV_DEVICE_GENERATED_COMMANDS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -19260,20 +19871,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_CUDA_KERNEL_LAUNCH_NAME;
+            const SPEC_VERSION: u32 = NV_CUDA_KERNEL_LAUNCH_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -19440,20 +20055,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_FRAGMENT_SHADING_RATE_ENUMS_NAME;
+            const SPEC_VERSION: u32 = NV_FRAGMENT_SHADING_RATE_ENUMS_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -19516,20 +20135,24 @@ pub mod nv {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = NV_ACQUIRE_WINRT_DISPLAY_NAME;
+            const SPEC_VERSION: u32 = NV_ACQUIRE_WINRT_DISPLAY_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -19599,20 +20222,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_EXTERNAL_MEMORY_RDMA_NAME;
+            const SPEC_VERSION: u32 = NV_EXTERNAL_MEMORY_RDMA_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -19676,20 +20303,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_COPY_MEMORY_INDIRECT_NAME;
+            const SPEC_VERSION: u32 = NV_COPY_MEMORY_INDIRECT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -19770,20 +20401,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_MEMORY_DECOMPRESSION_NAME;
+            const SPEC_VERSION: u32 = NV_MEMORY_DECOMPRESSION_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -19860,20 +20495,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_DEVICE_GENERATED_COMMANDS_COMPUTE_NAME;
+            const SPEC_VERSION: u32 = NV_DEVICE_GENERATED_COMMANDS_COMPUTE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -19980,20 +20619,24 @@ pub mod nv {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = NV_OPTICAL_FLOW_NAME;
+            const SPEC_VERSION: u32 = NV_OPTICAL_FLOW_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -20044,20 +20687,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_OPTICAL_FLOW_NAME;
+            const SPEC_VERSION: u32 = NV_OPTICAL_FLOW_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -20194,20 +20841,24 @@ pub mod nv {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NV_LOW_LATENCY2_NAME;
+            const SPEC_VERSION: u32 = NV_LOW_LATENCY2_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -20389,20 +21040,24 @@ pub mod nvx {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NVX_BINARY_IMPORT_NAME;
+            const SPEC_VERSION: u32 = NVX_BINARY_IMPORT_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -20535,20 +21190,24 @@ pub mod nvx {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = NVX_IMAGE_VIEW_HANDLE_NAME;
+            const SPEC_VERSION: u32 = NVX_IMAGE_VIEW_HANDLE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -20681,20 +21340,24 @@ pub mod qcom {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = QCOM_TILE_PROPERTIES_NAME;
+            const SPEC_VERSION: u32 = QCOM_TILE_PROPERTIES_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -20824,20 +21487,24 @@ pub mod qnx {
             pub(crate) fp: InstanceFn,
             pub(crate) handle: crate::vk::Instance,
         }
-        impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        impl InstanceExtension for Instance {
+            const NAME: &'static CStr = QNX_SCREEN_SURFACE_NAME;
+            const SPEC_VERSION: u32 = QNX_SCREEN_SURFACE_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = InstanceFn;
             #[inline]
-            pub fn fp(&self) -> &InstanceFn {
+            fn fp(&self) -> &InstanceFn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            fn instance(&self) -> crate::vk::Instance {
                 self.handle
             }
         }
@@ -20915,20 +21582,24 @@ pub mod qnx {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = QNX_EXTERNAL_MEMORY_SCREEN_BUFFER_NAME;
+            const SPEC_VERSION: u32 = QNX_EXTERNAL_MEMORY_SCREEN_BUFFER_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
@@ -21005,20 +21676,24 @@ pub mod valve {
             pub(crate) fp: DeviceFn,
             pub(crate) handle: crate::vk::Device,
         }
-        impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        impl DeviceExtension for Device {
+            const NAME: &'static CStr = VALVE_DESCRIPTOR_SET_HOST_MAPPING_NAME;
+            const SPEC_VERSION: u32 = VALVE_DESCRIPTOR_SET_HOST_MAPPING_SPEC_VERSION;
+            const PROMOTION_STATUS: PromotionStatus = PromotionStatus::None;
+            fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
                 Self { handle, fp }
             }
+            type Fp = DeviceFn;
             #[inline]
-            pub fn fp(&self) -> &DeviceFn {
+            fn fp(&self) -> &DeviceFn {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            fn device(&self) -> crate::vk::Device {
                 self.handle
             }
         }
