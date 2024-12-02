@@ -5,6 +5,8 @@ use core::ptr;
 
 use crate::vk;
 pub type VkResult<T> = Result<T, vk::Result>;
+pub use crate::util::NextChainExt;
+pub use vk::TaggedStructure;
 
 impl vk::Result {
     #[inline]
