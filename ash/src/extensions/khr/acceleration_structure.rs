@@ -64,7 +64,7 @@ impl crate::khr::acceleration_structure::Device {
             infos.len() as _,
             infos.as_ptr(),
             build_range_infos.as_ptr(),
-        );
+        )
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBuildAccelerationStructuresIndirectKHR.html>
@@ -97,7 +97,7 @@ impl crate::khr::acceleration_structure::Device {
             indirect_device_addresses.as_ptr(),
             indirect_strides.as_ptr(),
             max_primitive_counts.as_ptr(),
-        );
+        )
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkBuildAccelerationStructuresKHR.html>

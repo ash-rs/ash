@@ -6,6 +6,7 @@ impl crate::khr::maintenance6::Device {
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBindDescriptorSets2KHR.html>
     #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     #[inline]
+    #[doc(alias = "vkCmdBindDescriptorSets2KHR")]
     pub unsafe fn cmd_bind_descriptor_sets2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -18,6 +19,7 @@ impl crate::khr::maintenance6::Device {
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdPushConstants2KHR.html>
     #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     #[inline]
+    #[doc(alias = "vkCmdPushConstants2KHR")]
     pub unsafe fn cmd_push_constants2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -29,6 +31,7 @@ impl crate::khr::maintenance6::Device {
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdPushDescriptorSet2KHR.html>
     #[inline]
+    #[doc(alias = "vkCmdPushDescriptorSet2KHR")]
     pub unsafe fn cmd_push_descriptor_set2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -39,6 +42,7 @@ impl crate::khr::maintenance6::Device {
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdPushDescriptorSetWithTemplate2KHR.html>
     #[inline]
+    #[doc(alias = "vkCmdPushDescriptorSetWithTemplate2KHR")]
     pub unsafe fn cmd_push_descriptor_set_with_template2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -53,6 +57,7 @@ impl crate::khr::maintenance6::Device {
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetDescriptorBufferOffsets2EXT.html>
     #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     #[inline]
+    #[doc(alias = "vkCmdSetDescriptorBufferOffsets2EXT")]
     pub unsafe fn cmd_set_descriptor_buffer_offsets2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -68,6 +73,7 @@ impl crate::khr::maintenance6::Device {
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBindDescriptorBufferEmbeddedSamplers2EXT.html>
     #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     #[inline]
+    #[doc(alias = "vkCmdBindDescriptorBufferEmbeddedSamplers2EXT")]
     pub unsafe fn cmd_bind_descriptor_buffer_embedded_samplers2(
         &self,
         command_buffer: vk::CommandBuffer,

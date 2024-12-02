@@ -18,6 +18,7 @@ pub struct Device {
     pub(crate) device_fn_1_1: crate::DeviceFnV1_1,
     pub(crate) device_fn_1_2: crate::DeviceFnV1_2,
     pub(crate) device_fn_1_3: crate::DeviceFnV1_3,
+    pub(crate) device_fn_1_4: crate::DeviceFnV1_4,
 }
 
 impl Device {
@@ -38,6 +39,7 @@ impl Device {
             crate::DeviceFnV1_1::load(&mut load_fn),
             crate::DeviceFnV1_2::load(&mut load_fn),
             crate::DeviceFnV1_3::load(&mut load_fn),
+            crate::DeviceFnV1_4::load(&mut load_fn),
         )
     }
 
@@ -48,6 +50,7 @@ impl Device {
         device_fn_1_1: crate::DeviceFnV1_1,
         device_fn_1_2: crate::DeviceFnV1_2,
         device_fn_1_3: crate::DeviceFnV1_3,
+        device_fn_1_4: crate::DeviceFnV1_4,
     ) -> Self {
         Self {
             handle,
@@ -56,12 +59,287 @@ impl Device {
             device_fn_1_1,
             device_fn_1_2,
             device_fn_1_3,
+            device_fn_1_4,
         }
     }
 
     #[inline]
     pub fn handle(&self) -> vk::Device {
         self.handle
+    }
+}
+
+/// Vulkan core 1.4
+impl Device {
+    #[inline]
+    pub fn fp_v1_4(&self) -> &crate::DeviceFnV1_4 {
+        &self.device_fn_1_4
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetLineStipple.html>
+    #[inline]
+    #[doc(alias = "vkCmdSetLineStipple")]
+    pub unsafe fn cmd_set_line_stipple(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        line_stipple_factor: u32,
+        line_stipple_pattern: u16,
+    ) {
+        (self.device_fn_1_4.cmd_set_line_stipple)(
+            command_buffer,
+            line_stipple_factor,
+            line_stipple_pattern,
+        )
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkMapMemory2.html>
+    #[inline]
+    #[doc(alias = "vkMapMemory2")]
+    pub unsafe fn map_memory2(
+        &self,
+        memory_map_info: &vk::MemoryMapInfo<'_>,
+    ) -> VkResult<*mut ffi::c_void> {
+        let mut data = mem::MaybeUninit::uninit();
+        (self.device_fn_1_4.map_memory2)(self.handle, memory_map_info, data.as_mut_ptr())
+            .assume_init_on_success(data)
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkUnmapMemory2.html>
+    #[inline]
+    #[doc(alias = "vkUnmapMemory2")]
+    pub unsafe fn unmap_memory2(
+        &self,
+        memory_unmap_info: &vk::MemoryUnmapInfo<'_>,
+    ) -> VkResult<()> {
+        (self.device_fn_1_4.unmap_memory2)(self.handle, memory_unmap_info).result()
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBindIndexBuffer2.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    #[inline]
+    #[doc(alias = "vkCmdBindIndexBuffer2")]
+    pub unsafe fn cmd_bind_index_buffer2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        buffer: vk::Buffer,
+        offset: vk::DeviceSize,
+        size: vk::DeviceSize,
+        index_type: vk::IndexType,
+    ) {
+        #[allow(deprecated)]
+        (self.device_fn_1_4.cmd_bind_index_buffer2)(
+            command_buffer,
+            buffer,
+            offset,
+            size,
+            index_type,
+        )
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetRenderingAreaGranularity.html>
+    #[inline]
+    #[doc(alias = "vkGetRenderingAreaGranularity")]
+    pub unsafe fn get_rendering_area_granularity(
+        &self,
+        rendering_area_info: &vk::RenderingAreaInfo<'_>,
+    ) -> vk::Extent2D {
+        let mut granularity = mem::MaybeUninit::uninit();
+        (self.device_fn_1_4.get_rendering_area_granularity)(
+            self.handle,
+            rendering_area_info,
+            granularity.as_mut_ptr(),
+        );
+        granularity.assume_init()
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetDeviceImageSubresourceLayout.html>
+    #[inline]
+    #[doc(alias = "vkGetDeviceImageSubresourceLayout")]
+    pub unsafe fn get_device_image_subresource_layout(
+        &self,
+        info: &vk::DeviceImageSubresourceInfo<'_>,
+        layout: &mut vk::SubresourceLayout2<'_>,
+    ) {
+        (self.device_fn_1_4.get_device_image_subresource_layout)(self.handle, info, layout)
+    }
+
+    // XXX: Replicate comments from VK_EXT_host_image_copy, VK_EXT_image_compression_control
+    // and VK_KHR_maintenance5 about alternative ways to fetch and use a suffixed vesion of this
+    // function?  And retroactively update those docs?
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetImageSubresourceLayout2.html>
+    #[inline]
+    #[doc(alias = "vkGetImageSubresourceLayout2")]
+    pub unsafe fn get_image_subresource_layout2(
+        &self,
+        image: vk::Image,
+        subresource: &vk::ImageSubresource2<'_>,
+        layout: &mut vk::SubresourceLayout2<'_>,
+    ) {
+        (self.device_fn_1_4.get_image_subresource_layout2)(self.handle, image, subresource, layout)
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdPushDescriptorSet.html>
+    #[inline]
+    #[doc(alias = "vkCmdPushDescriptorSet")]
+    pub unsafe fn cmd_push_descriptor_set(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        pipeline_bind_point: vk::PipelineBindPoint,
+        layout: vk::PipelineLayout,
+        set: u32,
+        descriptor_writes: &[vk::WriteDescriptorSet<'_>],
+    ) {
+        (self.device_fn_1_4.cmd_push_descriptor_set)(
+            command_buffer,
+            pipeline_bind_point,
+            layout,
+            set,
+            descriptor_writes.len() as u32,
+            descriptor_writes.as_ptr(),
+        )
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdPushDescriptorSetWithTemplate.html>
+    #[inline]
+    #[doc(alias = "vkCmdPushDescriptorSetWithTemplate")]
+    pub unsafe fn cmd_push_descriptor_set_with_template(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        descriptor_update_template: vk::DescriptorUpdateTemplate,
+        layout: vk::PipelineLayout,
+        set: u32,
+        p_data: *const ffi::c_void,
+    ) {
+        (self.device_fn_1_4.cmd_push_descriptor_set_with_template)(
+            command_buffer,
+            descriptor_update_template,
+            layout,
+            set,
+            p_data,
+        )
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetRenderingAttachmentLocations.html>
+    #[inline]
+    #[doc(alias = "vkCmdSetRenderingAttachmentLocations")]
+    pub unsafe fn cmd_set_rendering_attachment_locations(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        location_info: &vk::RenderingAttachmentLocationInfo<'_>,
+    ) {
+        (self.device_fn_1_4.cmd_set_rendering_attachment_locations)(command_buffer, location_info)
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetRenderingInputAttachmentIndices.html>
+    #[inline]
+    #[doc(alias = "vkCmdSetRenderingInputAttachmentIndices")]
+    pub unsafe fn cmd_set_rendering_input_attachment_indices(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        input_attachment_index_info: &vk::RenderingInputAttachmentIndexInfo<'_>,
+    ) {
+        (self
+            .device_fn_1_4
+            .cmd_set_rendering_input_attachment_indices)(
+            command_buffer,
+            input_attachment_index_info,
+        )
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBindDescriptorSets2.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[inline]
+    #[doc(alias = "vkCmdBindDescriptorSets2")]
+    pub unsafe fn cmd_bind_descriptor_sets2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        bind_descriptor_sets_info: &vk::BindDescriptorSetsInfo<'_>,
+    ) {
+        #[allow(deprecated)]
+        (self.device_fn_1_4.cmd_bind_descriptor_sets2)(command_buffer, bind_descriptor_sets_info)
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdPushConstants2.html>
+    #[inline]
+    #[doc(alias = "vkCmdPushConstants2")]
+    pub unsafe fn cmd_push_constants2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        push_constants_info: &vk::PushConstantsInfo<'_>,
+    ) {
+        #[allow(deprecated)]
+        (self.device_fn_1_4.cmd_push_constants2)(command_buffer, push_constants_info)
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdPushDescriptorSet2.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[inline]
+    #[doc(alias = "vkCmdPushDescriptorSet2")]
+    pub unsafe fn cmd_push_descriptor_set2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        push_descriptor_set_info: &vk::PushDescriptorSetInfo<'_>,
+    ) {
+        (self.device_fn_1_4.cmd_push_descriptor_set2)(command_buffer, push_descriptor_set_info)
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdPushDescriptorSetWithTemplate2.html>
+    #[inline]
+    #[doc(alias = "vkCmdPushDescriptorSetWithTemplate2")]
+    pub unsafe fn cmd_push_descriptor_set_with_template2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        push_descriptor_set_with_template_info: &vk::PushDescriptorSetWithTemplateInfo<'_>,
+    ) {
+        (self.device_fn_1_4.cmd_push_descriptor_set_with_template2)(
+            command_buffer,
+            push_descriptor_set_with_template_info,
+        )
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCopyMemoryToImage.html>
+    #[inline]
+    #[doc(alias = "vkCopyMemoryToImage")]
+    pub unsafe fn copy_memory_to_image(
+        &self,
+        copy_memory_to_image_info: &vk::CopyMemoryToImageInfo<'_>,
+    ) -> VkResult<()> {
+        (self.device_fn_1_4.copy_memory_to_image)(self.handle, copy_memory_to_image_info).result()
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCopyImageToMemory.html>
+    #[inline]
+    #[doc(alias = "vkCopyImageToMemory")]
+    pub unsafe fn copy_image_to_memory(
+        &self,
+        copy_image_to_memory_info: &vk::CopyImageToMemoryInfo<'_>,
+    ) -> VkResult<()> {
+        (self.device_fn_1_4.copy_image_to_memory)(self.handle, copy_image_to_memory_info).result()
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCopyImageToImage.html>
+    #[inline]
+    #[doc(alias = "vkCopyImageToImage")]
+    pub unsafe fn copy_image_to_image(
+        &self,
+        copy_image_to_image_info: &vk::CopyImageToImageInfo<'_>,
+    ) -> VkResult<()> {
+        (self.device_fn_1_4.copy_image_to_image)(self.handle, copy_image_to_image_info).result()
+    }
+
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkTransitionImageLayout.html>
+    #[inline]
+    #[doc(alias = "vkTransitionImageLayout")]
+    pub unsafe fn transition_image_layout(
+        &self,
+        transitions: &[vk::HostImageLayoutTransitionInfo<'_>],
+    ) -> VkResult<()> {
+        (self.device_fn_1_4.transition_image_layout)(
+            self.handle,
+            transitions.len() as u32,
+            transitions.as_ptr(),
+        )
+        .result()
     }
 }
 

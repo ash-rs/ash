@@ -8,6 +8,7 @@ use crate::{ext, khr};
 impl crate::ext::host_image_copy::Device {
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCopyMemoryToImageEXT.html>
     #[inline]
+    #[doc(alias = "vkCopyMemoryToImageEXT")]
     pub unsafe fn copy_memory_to_image(
         &self,
         copy_memory_to_image_info: &vk::CopyMemoryToImageInfoEXT<'_>,
@@ -17,6 +18,7 @@ impl crate::ext::host_image_copy::Device {
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCopyImageToMemoryEXT.html>
     #[inline]
+    #[doc(alias = "vkCopyImageToMemoryEXT")]
     pub unsafe fn copy_image_to_memory(
         &self,
         copy_image_to_memory_info: &vk::CopyImageToMemoryInfoEXT<'_>,
@@ -26,6 +28,7 @@ impl crate::ext::host_image_copy::Device {
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCopyImageToImageEXT.html>
     #[inline]
+    #[doc(alias = "vkCopyImageToImageEXT")]
     pub unsafe fn copy_image_to_image(
         &self,
         copy_image_to_image_info: &vk::CopyImageToImageInfoEXT<'_>,
@@ -35,6 +38,7 @@ impl crate::ext::host_image_copy::Device {
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkTransitionImageLayoutEXT.html>
     #[inline]
+    #[doc(alias = "vkTransitionImageLayoutEXT")]
     pub unsafe fn transition_image_layout(
         &self,
         transitions: &[vk::HostImageLayoutTransitionInfoEXT<'_>],

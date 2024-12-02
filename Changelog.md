@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_EXT_device_generated_commands` device extension (#946)
 - Added `VK_EXT_depth_clamp_control` device extension (#947)
 - Added `VK_KHR_video_queue`, `VK_KHR_video_encode_queue`, and `VK_KHR_video_decode_queue` device extensions (#965)
+- Added helper wrappers for Vulkan core 1.4 `Device` functions (#1000)
 - Added (typically vendor-suffixed) aliases for global constants (#1018)
 
 ### Changed

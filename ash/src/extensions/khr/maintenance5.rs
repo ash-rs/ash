@@ -9,6 +9,7 @@ impl crate::khr::maintenance5::Device {
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBindIndexBuffer2KHR.html>
     #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
     #[inline]
+    #[doc(alias = "vkCmdBindIndexBuffer2KHR")]
     pub unsafe fn cmd_bind_index_buffer2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -23,6 +24,7 @@ impl crate::khr::maintenance5::Device {
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetRenderingAreaGranularityKHR.html>
     #[inline]
+    #[doc(alias = "vkGetRenderingAreaGranularityKHR")]
     pub unsafe fn get_rendering_area_granularity(
         &self,
         rendering_area_info: &vk::RenderingAreaInfoKHR<'_>,
@@ -38,6 +40,7 @@ impl crate::khr::maintenance5::Device {
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetDeviceImageSubresourceLayoutKHR.html>
     #[inline]
+    #[doc(alias = "vkGetDeviceImageSubresourceLayoutKHR")]
     pub unsafe fn get_device_image_subresource_layout(
         &self,
         info: &vk::DeviceImageSubresourceInfoKHR<'_>,
@@ -57,6 +60,7 @@ impl crate::khr::maintenance5::Device {
     /// [`VK_EXT_host_image_copy`]: https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_host_image_copy.html
     /// [`VK_EXT_image_compression_control`]: https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_image_compression_control.html
     #[inline]
+    #[doc(alias = "vkGetImageSubresourceLayout2KHR")]
     pub unsafe fn get_image_subresource_layout2(
         &self,
         image: vk::Image,
