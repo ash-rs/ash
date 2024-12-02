@@ -1021,7 +1021,7 @@ fn generate_function_pointers<'a>(
         .collect::<Vec<_>>();
 
     struct CommandToParamTraits<'a>(&'a Command<'a>);
-    impl<'a> quote::ToTokens for CommandToParamTraits<'a> {
+    impl quote::ToTokens for CommandToParamTraits<'_> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
             for (param_ident, validstructs) in &self.0.parameter_validstructs {
                 let param_ident = param_ident.to_string();
@@ -1055,7 +1055,7 @@ fn generate_function_pointers<'a>(
     }
 
     struct CommandToType<'a>(&'a Command<'a>);
-    impl<'a> quote::ToTokens for CommandToType<'a> {
+    impl quote::ToTokens for CommandToType<'_> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
             let type_name = &self.0.pfn_type_name;
             let parameters = &self.0.parameters;
@@ -1069,7 +1069,7 @@ fn generate_function_pointers<'a>(
     }
 
     struct CommandToMember<'a>(&'a Command<'a>);
-    impl<'a> quote::ToTokens for CommandToMember<'a> {
+    impl quote::ToTokens for CommandToMember<'_> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
             let type_name = &self.0.pfn_type_name;
             let function_name_rust = &self.0.function_name_rust;
@@ -1078,7 +1078,7 @@ fn generate_function_pointers<'a>(
     }
 
     struct CommandToLoader<'a>(&'a Command<'a>);
-    impl<'a> quote::ToTokens for CommandToLoader<'a> {
+    impl quote::ToTokens for CommandToLoader<'_> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
             let function_name_rust = &self.0.function_name_rust;
             let parameters_unused = &self.0.parameters_unused;
@@ -1164,7 +1164,7 @@ pub struct ExtensionConstant<'a> {
     pub notation: Option<&'a str>,
     pub deprecated: Option<&'a str>,
 }
-impl<'a> ConstantExt for ExtensionConstant<'a> {
+impl ConstantExt for ExtensionConstant<'_> {
     fn constant(&self, _enum_name: &str) -> Constant {
         self.constant.clone()
     }
@@ -3386,6 +3386,8 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let definition_code = quote! {
+        #![allow(clippy::needless_lifetimes)] // Omitting these correctly in the generator is complex
+
         use core::marker::PhantomData;
         use core::fmt;
         use core::ffi::*;

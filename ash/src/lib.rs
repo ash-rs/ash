@@ -82,7 +82,7 @@ pub trait RawPtr<T> {
     fn as_raw_ptr(&self) -> *const T;
 }
 
-impl<'r, T> RawPtr<T> for Option<&'r T> {
+impl<T> RawPtr<T> for Option<&T> {
     fn as_raw_ptr(&self) -> *const T {
         match *self {
             Some(inner) => inner,
