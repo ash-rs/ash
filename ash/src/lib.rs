@@ -91,6 +91,19 @@ impl<'r, T> RawPtr<T> for Option<&'r T> {
     }
 }
 
+pub trait RawMutPtr<T> {
+    unsafe fn as_raw_mut_ptr(self) -> *mut T;
+}
+
+impl<'r, T> RawMutPtr<T> for Option<&'r mut T> {
+    unsafe fn as_raw_mut_ptr(self) -> *mut T {
+        match self {
+            Some(val) => val,
+            None => core::ptr::null_mut(),
+        }
+    }
+}
+
 /// Given a mutable raw pointer to a type with an `s_type` member such as [`vk::BaseOutStructure`],
 /// match on a set of Vulkan structures. The struct will be rebound to the given variable of the
 /// type of the given Vulkan structure.
