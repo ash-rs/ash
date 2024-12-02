@@ -5,6 +5,7 @@ use crate::vk;
 impl crate::khr::dynamic_rendering_local_read::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingAttachmentLocationsKHR.html>
     #[inline]
+    #[doc(alias = "vkCmdSetRenderingAttachmentLocations")]
     pub unsafe fn cmd_set_rendering_attachment_locations(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -15,6 +16,7 @@ impl crate::khr::dynamic_rendering_local_read::Device {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingInputAttachmentIndicesKHR.html>
     #[inline]
+    #[doc(alias = "vkCmdSetRenderingInputAttachmentIndices")]
     pub unsafe fn cmd_set_rendering_input_attachment_indices(
         &self,
         command_buffer: vk::CommandBuffer,
