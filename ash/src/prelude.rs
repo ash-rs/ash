@@ -43,7 +43,7 @@ impl vk::Result {
 ///
 /// [`vkEnumerateInstanceExtensionProperties`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html
 pub(crate) unsafe fn read_into_uninitialized_vector<N: Copy + Default + TryInto<usize>, T>(
-    f: impl Fn(&mut N, *mut T) -> vk::Result,
+    mut f: impl FnMut(&mut N, *mut T) -> vk::Result,
 ) -> VkResult<Vec<T>>
 where
     <N as TryInto<usize>>::Error: core::fmt::Debug,
@@ -81,7 +81,7 @@ pub(crate) unsafe fn read_into_defaulted_vector<
     N: Copy + Default + TryInto<usize>,
     T: Default + Clone,
 >(
-    f: impl Fn(&mut N, *mut T) -> vk::Result,
+    mut f: impl FnMut(&mut N, *mut T) -> vk::Result,
 ) -> VkResult<Vec<T>>
 where
     <N as TryInto<usize>>::Error: core::fmt::Debug,

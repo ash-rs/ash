@@ -30,6 +30,7 @@ pub mod maintenance4;
 pub mod maintenance5;
 pub mod maintenance6;
 pub mod performance_query;
+pub mod pipeline_binary;
 pub mod pipeline_executable_properties;
 pub mod present_wait;
 pub mod push_descriptor;
