@@ -920,7 +920,7 @@ fn generate_function_pointers<'a>(
     commands: &[&'a vk_parse::CommandDefinition],
     rename_commands: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
-    has_lifetimes: &HashSet<Ident>,
+    has_lifetimes: &HashMap<Ident, LifetimeInfo>,
     doc: &str,
 ) -> (TokenStream, TokenStream) {
     // Commands can have duplicates inside them because they are declared per features. But we only
@@ -966,7 +966,7 @@ fn generate_function_pointers<'a>(
                 .map(|param| {
                     let name = param.param_ident();
                     let type_lifetime = has_lifetimes
-                        .contains(&name_to_tokens(
+                        .contains_key(&name_to_tokens(
                             param.definition.type_name.as_ref().unwrap(),
                         ))
                         .then(|| quote!(<'_>));
@@ -1273,7 +1273,7 @@ pub fn generate_extension_commands<'a>(
     cmd_map: &CommandMap<'a>,
     cmd_aliases: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
-    has_lifetimes: &HashSet<Ident>,
+    has_lifetimes: &HashMap<Ident, LifetimeInfo>,
 ) -> ExtensionCommands<'a> {
     let byte_name_ident = Literal::byte_string(format!("{full_extension_name}\0").as_bytes());
 
@@ -1995,7 +1995,7 @@ fn derive_getters_and_setters(
     struct_: &vkxml::Struct,
     members: &[PreprocessedMember<'_>],
     root_structs: &HashSet<Ident>,
-    has_lifetimes: &HashSet<Ident>,
+    has_lifetimes: &HashMap<Ident, LifetimeInfo>,
 ) -> Option<TokenStream> {
     if &struct_.name == "VkBaseInStructure"
         || &struct_.name == "VkBaseOutStructure"
@@ -2073,7 +2073,7 @@ fn derive_getters_and_setters(
         let deprecated = member.deprecated.as_ref().map(|d| quote!(#d #[allow(deprecated)]));
         let param_ident = field.param_ident();
         let mut type_lifetime = has_lifetimes
-            .contains(&name_to_tokens(&field.basetype))
+            .contains_key(&name_to_tokens(&field.basetype))
             .then(|| quote!(<'a>));
         let param_ty_tokens = field.safe_type_tokens(quote!('a), type_lifetime.clone(), None);
 
@@ -2363,7 +2363,19 @@ fn derive_getters_and_setters(
         quote!()
     };
 
-    let lifetime = has_lifetimes.contains(&name).then(|| quote!(<'a>));
+    let (opaque_lifetime, (optional_named_lifetime, decl_named_lifetime)) =
+        if let Some(lifetime) = has_lifetimes.get(&name) {
+            (
+                Some(quote!(<'_>)),
+                if root_struct_next_field.is_none() && lifetime.only_pnext {
+                    (Some(quote!(<'_>)), None)
+                } else {
+                    (Some(quote!(<'a>)), Some(quote!(<'a>)))
+                },
+            )
+        } else {
+            (None, (None, None))
+        };
 
     // If the struct extends something we need to implement the traits.
     let impl_extend_trait = struct_
@@ -2387,7 +2399,7 @@ fn derive_getters_and_setters(
 
         let value = variant_ident("VkStructureType", value);
         quote! {
-            unsafe impl #lifetime TaggedStructure for #name #lifetime {
+            unsafe impl TaggedStructure for #name #opaque_lifetime {
                 const STRUCTURE_TYPE: StructureType = StructureType::#value;
             }
         }
@@ -2398,7 +2410,7 @@ fn derive_getters_and_setters(
         #(#impl_extend_trait)*
         #next_trait
 
-        impl #lifetime #name #lifetime {
+        impl #decl_named_lifetime #name #optional_named_lifetime {
             #(#setters)*
 
             #next_function
@@ -2431,7 +2443,7 @@ pub fn generate_struct(
     vk_parse_types: &HashMap<String, &vk_parse::Type>,
     root_structs: &HashSet<Ident>,
     union_types: &HashSet<&str>,
-    has_lifetimes: &HashSet<Ident>,
+    has_lifetimes: &HashMap<Ident, LifetimeInfo>,
 ) -> TokenStream {
     let name = name_to_tokens(&struct_.name);
     let vk_parse_struct = vk_parse_types[&struct_.name];
@@ -2548,7 +2560,7 @@ pub fn generate_struct(
             quote!(#pointer Self)
         } else {
             let type_lifetime = has_lifetimes
-                .contains(&name_to_tokens(&field.basetype))
+                .contains_key(&name_to_tokens(&field.basetype))
                 .then(|| quote!(<'a>));
             field.type_tokens(false, type_lifetime)
         };
@@ -2556,7 +2568,7 @@ pub fn generate_struct(
         quote!(#deprecated pub #param_ident: #param_ty_tokens)
     });
 
-    let has_lifetime = has_lifetimes.contains(&name);
+    let has_lifetime = has_lifetimes.contains_key(&name);
     let (lifetimes, marker) = match has_lifetime {
         true => (quote!(<'a>), quote!(pub _marker: PhantomData<&'a ()>,)),
         false => (quote!(), quote!()),
@@ -2620,7 +2632,11 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<TokenStream> {
     };
     Some(tokens)
 }
-fn generate_funcptr(fnptr: &vkxml::FunctionPointer, has_lifetimes: &HashSet<Ident>) -> TokenStream {
+fn generate_funcptr(
+    fnptr: &vkxml::FunctionPointer,
+
+    has_lifetimes: &HashMap<Ident, LifetimeInfo>,
+) -> TokenStream {
     let name = format_ident!("{}", fnptr.name);
     let ret_ty_tokens = if fnptr.return_type.is_void() {
         quote!()
@@ -2631,7 +2647,7 @@ fn generate_funcptr(fnptr: &vkxml::FunctionPointer, has_lifetimes: &HashSet<Iden
     let params = fnptr.param.iter().map(|field| {
         let ident = field.param_ident();
         let type_lifetime = has_lifetimes
-            .contains(&name_to_tokens(&field.basetype))
+            .contains_key(&name_to_tokens(&field.basetype))
             .then(|| quote!(<'_>));
         let type_tokens = field.type_tokens(true, type_lifetime);
         quote! {
@@ -2646,12 +2662,15 @@ fn generate_funcptr(fnptr: &vkxml::FunctionPointer, has_lifetimes: &HashSet<Iden
     }
 }
 
-fn generate_union(union: &vkxml::Union, has_lifetimes: &HashSet<Ident>) -> TokenStream {
+fn generate_union(
+    union: &vkxml::Union,
+    has_lifetimes: &HashMap<Ident, LifetimeInfo>,
+) -> TokenStream {
     let name = name_to_tokens(&union.name);
     let fields = union.elements.iter().map(|field| {
         let name = field.param_ident();
         let type_lifetime = has_lifetimes
-            .contains(&name_to_tokens(&field.basetype))
+            .contains_key(&name_to_tokens(&field.basetype))
             .then(|| quote!(<'a>));
         let ty = field.type_tokens(false, type_lifetime);
         quote! {
@@ -2659,15 +2678,16 @@ fn generate_union(union: &vkxml::Union, has_lifetimes: &HashSet<Ident>) -> Token
         }
     });
     let khronos_link = khronos_link(&union.name);
-    let lifetime = has_lifetimes.contains(&name).then(|| quote!(<'a>));
+    let named_lifetime = has_lifetimes.contains_key(&name).then(|| quote!(<'a>));
+    let lifetime = has_lifetimes.contains_key(&name).then(|| quote!(<'_>));
     quote! {
         #[repr(C)]
         #[derive(Copy, Clone)]
         #[doc = #khronos_link]
-        pub union #name #lifetime {
+        pub union #name #named_lifetime {
             #(#fields),*
         }
-        impl #lifetime ::core::default::Default for #name #lifetime {
+        impl ::core::default::Default for #name #lifetime {
             #[inline]
             fn default() -> Self {
                 unsafe { ::core::mem::zeroed() }
@@ -2720,7 +2740,7 @@ pub fn generate_definition(
     allowed_types: &HashSet<&str>,
     union_types: &HashSet<&str>,
     root_structs: &HashSet<Ident>,
-    has_lifetimes: &HashSet<Ident>,
+    has_lifetimes: &HashMap<Ident, LifetimeInfo>,
     vk_parse_types: &HashMap<String, &vk_parse::Type>,
     bitflags_cache: &mut HashSet<Ident>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
@@ -2767,7 +2787,7 @@ pub fn generate_feature<'a>(
     feature: &vkxml::Feature,
     commands: &CommandMap<'a>,
     fn_cache: &mut HashSet<&'a str>,
-    has_lifetimes: &HashSet<Ident>,
+    has_lifetimes: &HashMap<Ident, LifetimeInfo>,
 ) -> (TokenStream, TokenStream) {
     if !contains_desired_api(&feature.api) {
         return (quote!(), quote!());
@@ -2921,6 +2941,11 @@ pub struct ConstDebugs {
     extras: TokenStream,
 }
 
+#[derive(Clone, Copy, Default)]
+pub struct LifetimeInfo {
+    only_pnext: bool,
+}
+
 pub fn generate_const_debugs(const_values: &BTreeMap<Ident, ConstantTypeInfo>) -> ConstDebugs {
     let mut core = Vec::new();
     let mut extras = Vec::new();
@@ -3046,7 +3071,7 @@ pub fn extract_native_types(registry: &vk_parse::Registry) -> (Vec<(String, Stri
 pub fn generate_aliases_of_types(
     types: &vk_parse::Types,
     allowed_types: &HashSet<&str>,
-    has_lifetimes: &HashSet<Ident>,
+    has_lifetimes: &HashMap<Ident, LifetimeInfo>,
     ty_cache: &mut HashSet<Ident>,
 ) -> TokenStream {
     let aliases = types
@@ -3064,7 +3089,7 @@ pub fn generate_aliases_of_types(
                 return None;
             };
             let alias_ident = name_to_tokens(alias);
-            let tokens = if has_lifetimes.contains(&alias_ident) {
+            let tokens = if has_lifetimes.contains_key(&alias_ident) {
                 quote!(pub type #name_ident<'a> = #alias_ident<'a>;)
             } else {
                 quote!(pub type #name_ident = #alias_ident;)
@@ -3219,8 +3244,10 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let mut has_lifetimes = definitions
         .iter()
         .filter_map(get_variant!(vkxml::DefinitionsElement::Struct))
-        .filter(|s| {
-            s.elements
+        .filter_map(|s| {
+            let mut info = None::<LifetimeInfo>;
+            for e in s
+                .elements
                 .iter()
                 .filter_map(get_variant!(vkxml::StructElement::Member))
                 .filter(|x| {
@@ -3228,23 +3255,40 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
                         || x.size.is_some()
                         || !is_opaque_type(&x.basetype)
                 })
-                .any(|x| x.reference.is_some())
+                .filter(|x| x.reference.is_some())
+            {
+                // pNext will always be the first reference field. We start out with true if this
+                // name is seen and keep looking for more fields, and break immediately when the
+                // first non-pNext reference field is seen.
+                if e.name.as_deref() == Some("pNext") {
+                    info = Some(LifetimeInfo { only_pnext: true });
+                } else {
+                    info = Some(LifetimeInfo { only_pnext: false });
+                    break;
+                }
+            }
+            info.map(|info| (name_to_tokens(&s.name), info))
         })
-        .map(|s| name_to_tokens(&s.name))
-        .collect::<HashSet<Ident>>();
+        .collect::<HashMap<_, _>>();
     for def in &definitions {
         match def {
             vkxml::DefinitionsElement::Struct(s) => s
                 .elements
                 .iter()
                 .filter_map(get_variant!(vkxml::StructElement::Member))
-                .any(|field| has_lifetimes.contains(&name_to_tokens(&field.basetype)))
-                .then(|| has_lifetimes.insert(name_to_tokens(&s.name))),
+                .find(|field| has_lifetimes.contains_key(&name_to_tokens(&field.basetype)))
+                .and_then(|_info| {
+                    has_lifetimes
+                        .insert(name_to_tokens(&s.name), LifetimeInfo { only_pnext: false })
+                }),
             vkxml::DefinitionsElement::Union(u) => u
                 .elements
                 .iter()
-                .any(|field| has_lifetimes.contains(&name_to_tokens(&field.basetype)))
-                .then(|| has_lifetimes.insert(name_to_tokens(&u.name))),
+                .find(|field| has_lifetimes.contains_key(&name_to_tokens(&field.basetype)))
+                .and_then(|_info| {
+                    has_lifetimes
+                        .insert(name_to_tokens(&u.name), LifetimeInfo { only_pnext: false })
+                }),
             _ => continue,
         };
     }
@@ -3256,8 +3300,8 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .filter_map(get_variant!(vk_parse::TypesChild::Type))
     {
         if let (Some(name), Some(alias)) = (&type_.name, &type_.alias) {
-            if has_lifetimes.contains(&name_to_tokens(alias)) {
-                has_lifetimes.insert(name_to_tokens(name));
+            if let Some(info) = has_lifetimes.get(&name_to_tokens(alias)).copied() {
+                has_lifetimes.insert(name_to_tokens(name), info);
             }
         }
     }
@@ -3392,8 +3436,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let definition_code = quote! {
-        #![allow(clippy::needless_lifetimes)] // Omitting these correctly in the generator is complex
-
         use core::marker::PhantomData;
         use core::fmt;
         use core::ffi::*;
