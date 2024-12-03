@@ -158,7 +158,10 @@ impl crate::nv::ray_tracing::Device {
         create_infos: &[vk::RayTracingPipelineCreateInfoNV<'_>],
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
-        let mut pipelines = Vec::with_capacity(create_infos.len());
+        let mut pipelines = Vec::new();
+        pipelines
+            .try_reserve(create_infos.len())
+            .map_err(|_| (Vec::new(), vk::Result::ERROR_OUT_OF_HOST_MEMORY))?;
         let err_code = (self.fp.create_ray_tracing_pipelines_nv)(
             self.handle,
             pipeline_cache,

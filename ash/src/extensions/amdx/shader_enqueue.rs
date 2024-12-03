@@ -19,7 +19,10 @@ impl crate::amdx::shader_enqueue::Device {
         create_infos: &[vk::ExecutionGraphPipelineCreateInfoAMDX<'_>],
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
-        let mut pipelines = Vec::with_capacity(create_infos.len());
+        let mut pipelines = Vec::new();
+        pipelines
+            .try_reserve(create_infos.len())
+            .map_err(|_| (Vec::new(), vk::Result::ERROR_OUT_OF_HOST_MEMORY))?;
         let err_code = (self.fp.create_execution_graph_pipelines_amdx)(
             self.handle,
             pipeline_cache,

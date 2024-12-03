@@ -13,7 +13,10 @@ impl crate::khr::display_swapchain::Device {
         create_infos: &[vk::SwapchainCreateInfoKHR<'_>],
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<Vec<vk::SwapchainKHR>> {
-        let mut swapchains = Vec::with_capacity(create_infos.len());
+        let mut swapchains = Vec::new();
+        swapchains
+            .try_reserve(create_infos.len())
+            .map_err(|_| vk::Result::ERROR_OUT_OF_HOST_MEMORY)?;
         (self.fp.create_shared_swapchains_khr)(
             self.handle,
             create_infos.len() as u32,

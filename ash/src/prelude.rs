@@ -51,8 +51,9 @@ where
     loop {
         let mut count = N::default();
         f(&mut count, ptr::null_mut()).result()?;
-        let mut data =
-            Vec::with_capacity(count.try_into().expect("`N` failed to convert to `usize`"));
+        let mut data = Vec::new();
+        data.try_reserve(count.try_into().expect("`N` failed to convert to `usize`"))
+            .map_err(|_| vk::Result::ERROR_OUT_OF_HOST_MEMORY)?;
 
         let err_code = f(&mut count, data.as_mut_ptr());
         if err_code != vk::Result::INCOMPLETE {
@@ -89,7 +90,12 @@ where
     loop {
         let mut count = N::default();
         f(&mut count, ptr::null_mut()).result()?;
-        let mut data = alloc::vec![Default::default(); count.try_into().expect("`N` failed to convert to `usize`")];
+
+        let count_usize: usize = count.try_into().expect("`N` failed to convert to `usize`");
+        let mut data = Vec::<T>::new();
+        data.try_reserve(count_usize)
+            .map_err(|_| vk::Result::ERROR_OUT_OF_HOST_MEMORY)?;
+        data.resize_with(count_usize, Default::default);
 
         let err_code = f(&mut count, data.as_mut_ptr());
         if err_code != vk::Result::INCOMPLETE {
