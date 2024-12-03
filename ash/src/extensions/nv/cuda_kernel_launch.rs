@@ -12,7 +12,7 @@ impl crate::nv::cuda_kernel_launch::Device {
     pub unsafe fn create_cuda_module(
         &self,
         create_info: &vk::CudaModuleCreateInfoNV<'_>,
-        allocator: Option<&vk::AllocationCallbacks<'_>>,
+        allocator: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::CudaModuleNV> {
         let mut module = mem::MaybeUninit::uninit();
         (self.fp.create_cuda_module_nv)(
@@ -37,7 +37,7 @@ impl crate::nv::cuda_kernel_launch::Device {
     pub unsafe fn create_cuda_function(
         &self,
         create_info: &vk::CudaFunctionCreateInfoNV<'_>,
-        allocator: Option<&vk::AllocationCallbacks<'_>>,
+        allocator: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::CudaFunctionNV> {
         let mut function = mem::MaybeUninit::uninit();
         (self.fp.create_cuda_function_nv)(
@@ -54,7 +54,7 @@ impl crate::nv::cuda_kernel_launch::Device {
     pub unsafe fn destroy_cuda_module(
         &self,
         module: vk::CudaModuleNV,
-        allocator: Option<&vk::AllocationCallbacks<'_>>,
+        allocator: Option<&vk::AllocationCallbacks>,
     ) {
         (self.fp.destroy_cuda_module_nv)(self.handle, module, allocator.as_raw_ptr())
     }
@@ -64,7 +64,7 @@ impl crate::nv::cuda_kernel_launch::Device {
     pub unsafe fn destroy_cuda_function(
         &self,
         function: vk::CudaFunctionNV,
-        allocator: Option<&vk::AllocationCallbacks<'_>>,
+        allocator: Option<&vk::AllocationCallbacks>,
     ) {
         (self.fp.destroy_cuda_function_nv)(self.handle, function, allocator.as_raw_ptr())
     }

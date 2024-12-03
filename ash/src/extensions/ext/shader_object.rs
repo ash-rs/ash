@@ -21,7 +21,7 @@ impl crate::ext::shader_object::Device {
     pub unsafe fn create_shaders(
         &self,
         create_infos: &[vk::ShaderCreateInfoEXT<'_>],
-        allocator: Option<&vk::AllocationCallbacks<'_>>,
+        allocator: Option<&vk::AllocationCallbacks>,
     ) -> Result<Vec<vk::ShaderEXT>, (Vec<vk::ShaderEXT>, vk::Result)> {
         let mut shaders = Vec::with_capacity(create_infos.len());
         let err_code = (self.fp.create_shaders_ext)(
@@ -43,7 +43,7 @@ impl crate::ext::shader_object::Device {
     pub unsafe fn destroy_shader(
         &self,
         shader: vk::ShaderEXT,
-        allocator: Option<&vk::AllocationCallbacks<'_>>,
+        allocator: Option<&vk::AllocationCallbacks>,
     ) {
         (self.fp.destroy_shader_ext)(self.handle, shader, allocator.as_raw_ptr())
     }

@@ -76,7 +76,7 @@ impl Device {
     pub unsafe fn create_private_data_slot(
         &self,
         create_info: &vk::PrivateDataSlotCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::PrivateDataSlot> {
         let mut private_data_slot = mem::MaybeUninit::uninit();
         (self.device_fn_1_3.create_private_data_slot)(
@@ -93,7 +93,7 @@ impl Device {
     pub unsafe fn destroy_private_data_slot(
         &self,
         private_data_slot: vk::PrivateDataSlot,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_3.destroy_private_data_slot)(
             self.handle,
@@ -612,7 +612,7 @@ impl Device {
     pub unsafe fn create_render_pass2(
         &self,
         create_info: &vk::RenderPassCreateInfo2<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::RenderPass> {
         let mut renderpass = mem::MaybeUninit::uninit();
         (self.device_fn_1_2.create_render_pass2)(
@@ -896,7 +896,7 @@ impl Device {
     pub unsafe fn create_sampler_ycbcr_conversion(
         &self,
         create_info: &vk::SamplerYcbcrConversionCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SamplerYcbcrConversion> {
         let mut ycbcr_conversion = mem::MaybeUninit::uninit();
         (self.device_fn_1_1.create_sampler_ycbcr_conversion)(
@@ -913,7 +913,7 @@ impl Device {
     pub unsafe fn destroy_sampler_ycbcr_conversion(
         &self,
         ycbcr_conversion: vk::SamplerYcbcrConversion,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_1.destroy_sampler_ycbcr_conversion)(
             self.handle(),
@@ -927,7 +927,7 @@ impl Device {
     pub unsafe fn create_descriptor_update_template(
         &self,
         create_info: &vk::DescriptorUpdateTemplateCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DescriptorUpdateTemplate> {
         let mut descriptor_update_template = mem::MaybeUninit::uninit();
         (self.device_fn_1_1.create_descriptor_update_template)(
@@ -944,7 +944,7 @@ impl Device {
     pub unsafe fn destroy_descriptor_update_template(
         &self,
         descriptor_update_template: vk::DescriptorUpdateTemplate,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_1.destroy_descriptor_update_template)(
             self.handle(),
@@ -989,10 +989,7 @@ impl Device {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDevice.html>
     #[inline]
-    pub unsafe fn destroy_device(
-        &self,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
-    ) {
+    pub unsafe fn destroy_device(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
         (self.device_fn_1_0.destroy_device)(self.handle(), allocation_callbacks.as_raw_ptr());
     }
 
@@ -1001,7 +998,7 @@ impl Device {
     pub unsafe fn destroy_sampler(
         &self,
         sampler: vk::Sampler,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_sampler)(
             self.handle(),
@@ -1015,7 +1012,7 @@ impl Device {
     pub unsafe fn free_memory(
         &self,
         memory: vk::DeviceMemory,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.free_memory)(self.handle(), memory, allocation_callbacks.as_raw_ptr());
     }
@@ -1040,7 +1037,7 @@ impl Device {
     pub unsafe fn create_event(
         &self,
         create_info: &vk::EventCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Event> {
         let mut event = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_event)(
@@ -1131,7 +1128,7 @@ impl Device {
     pub unsafe fn destroy_fence(
         &self,
         fence: vk::Fence,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_fence)(self.handle(), fence, allocation_callbacks.as_raw_ptr());
     }
@@ -1141,7 +1138,7 @@ impl Device {
     pub unsafe fn destroy_event(
         &self,
         event: vk::Event,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_event)(self.handle(), event, allocation_callbacks.as_raw_ptr());
     }
@@ -1151,7 +1148,7 @@ impl Device {
     pub unsafe fn destroy_image(
         &self,
         image: vk::Image,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_image)(self.handle(), image, allocation_callbacks.as_raw_ptr());
     }
@@ -1161,7 +1158,7 @@ impl Device {
     pub unsafe fn destroy_command_pool(
         &self,
         pool: vk::CommandPool,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_command_pool)(
             self.handle(),
@@ -1175,7 +1172,7 @@ impl Device {
     pub unsafe fn destroy_image_view(
         &self,
         image_view: vk::ImageView,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_image_view)(
             self.handle(),
@@ -1189,7 +1186,7 @@ impl Device {
     pub unsafe fn destroy_render_pass(
         &self,
         renderpass: vk::RenderPass,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_render_pass)(
             self.handle(),
@@ -1203,7 +1200,7 @@ impl Device {
     pub unsafe fn destroy_framebuffer(
         &self,
         framebuffer: vk::Framebuffer,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_framebuffer)(
             self.handle(),
@@ -1217,7 +1214,7 @@ impl Device {
     pub unsafe fn destroy_pipeline_layout(
         &self,
         pipeline_layout: vk::PipelineLayout,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_pipeline_layout)(
             self.handle(),
@@ -1231,7 +1228,7 @@ impl Device {
     pub unsafe fn destroy_pipeline_cache(
         &self,
         pipeline_cache: vk::PipelineCache,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_pipeline_cache)(
             self.handle(),
@@ -1245,7 +1242,7 @@ impl Device {
     pub unsafe fn destroy_buffer(
         &self,
         buffer: vk::Buffer,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_buffer)(
             self.handle(),
@@ -1259,7 +1256,7 @@ impl Device {
     pub unsafe fn destroy_shader_module(
         &self,
         shader: vk::ShaderModule,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_shader_module)(
             self.handle(),
@@ -1273,7 +1270,7 @@ impl Device {
     pub unsafe fn destroy_pipeline(
         &self,
         pipeline: vk::Pipeline,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_pipeline)(
             self.handle(),
@@ -1287,7 +1284,7 @@ impl Device {
     pub unsafe fn destroy_semaphore(
         &self,
         semaphore: vk::Semaphore,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_semaphore)(
             self.handle(),
@@ -1301,7 +1298,7 @@ impl Device {
     pub unsafe fn destroy_descriptor_pool(
         &self,
         pool: vk::DescriptorPool,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_descriptor_pool)(
             self.handle(),
@@ -1315,7 +1312,7 @@ impl Device {
     pub unsafe fn destroy_query_pool(
         &self,
         pool: vk::QueryPool,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_query_pool)(
             self.handle(),
@@ -1329,7 +1326,7 @@ impl Device {
     pub unsafe fn destroy_descriptor_set_layout(
         &self,
         layout: vk::DescriptorSetLayout,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_descriptor_set_layout)(
             self.handle(),
@@ -1375,7 +1372,7 @@ impl Device {
     pub unsafe fn create_sampler(
         &self,
         create_info: &vk::SamplerCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Sampler> {
         let mut sampler = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_sampler)(
@@ -1564,7 +1561,7 @@ impl Device {
     pub unsafe fn create_descriptor_set_layout(
         &self,
         create_info: &vk::DescriptorSetLayoutCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DescriptorSetLayout> {
         let mut layout = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_descriptor_set_layout)(
@@ -1587,7 +1584,7 @@ impl Device {
     pub unsafe fn create_descriptor_pool(
         &self,
         create_info: &vk::DescriptorPoolCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DescriptorPool> {
         let mut pool = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_descriptor_pool)(
@@ -2132,7 +2129,7 @@ impl Device {
     pub unsafe fn create_semaphore(
         &self,
         create_info: &vk::SemaphoreCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Semaphore> {
         let mut semaphore = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_semaphore)(
@@ -2154,7 +2151,7 @@ impl Device {
         &self,
         pipeline_cache: vk::PipelineCache,
         create_infos: &[vk::GraphicsPipelineCreateInfo<'_>],
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
         let mut pipelines = Vec::with_capacity(create_infos.len());
         let err_code = (self.device_fn_1_0.create_graphics_pipelines)(
@@ -2182,7 +2179,7 @@ impl Device {
         &self,
         pipeline_cache: vk::PipelineCache,
         create_infos: &[vk::ComputePipelineCreateInfo<'_>],
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
         let mut pipelines = Vec::with_capacity(create_infos.len());
         let err_code = (self.device_fn_1_0.create_compute_pipelines)(
@@ -2205,7 +2202,7 @@ impl Device {
     pub unsafe fn create_buffer(
         &self,
         create_info: &vk::BufferCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Buffer> {
         let mut buffer = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_buffer)(
@@ -2222,7 +2219,7 @@ impl Device {
     pub unsafe fn create_pipeline_layout(
         &self,
         create_info: &vk::PipelineLayoutCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::PipelineLayout> {
         let mut pipeline_layout = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_pipeline_layout)(
@@ -2239,7 +2236,7 @@ impl Device {
     pub unsafe fn create_pipeline_cache(
         &self,
         create_info: &vk::PipelineCacheCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::PipelineCache> {
         let mut pipeline_cache = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_pipeline_cache)(
@@ -2343,7 +2340,7 @@ impl Device {
     pub unsafe fn create_framebuffer(
         &self,
         create_info: &vk::FramebufferCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Framebuffer> {
         let mut framebuffer = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_framebuffer)(
@@ -2399,7 +2396,7 @@ impl Device {
     pub unsafe fn create_render_pass(
         &self,
         create_info: &vk::RenderPassCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::RenderPass> {
         let mut renderpass = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_render_pass)(
@@ -2500,7 +2497,7 @@ impl Device {
     pub unsafe fn create_buffer_view(
         &self,
         create_info: &vk::BufferViewCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::BufferView> {
         let mut buffer_view = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_buffer_view)(
@@ -2517,7 +2514,7 @@ impl Device {
     pub unsafe fn destroy_buffer_view(
         &self,
         buffer_view: vk::BufferView,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_buffer_view)(
             self.handle(),
@@ -2531,7 +2528,7 @@ impl Device {
     pub unsafe fn create_image_view(
         &self,
         create_info: &vk::ImageViewCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::ImageView> {
         let mut image_view = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_image_view)(
@@ -2563,7 +2560,7 @@ impl Device {
     pub unsafe fn create_command_pool(
         &self,
         create_info: &vk::CommandPoolCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::CommandPool> {
         let mut pool = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_command_pool)(
@@ -2580,7 +2577,7 @@ impl Device {
     pub unsafe fn create_query_pool(
         &self,
         create_info: &vk::QueryPoolCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::QueryPool> {
         let mut pool = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_query_pool)(
@@ -2597,7 +2594,7 @@ impl Device {
     pub unsafe fn create_image(
         &self,
         create_info: &vk::ImageCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Image> {
         let mut image = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_image)(
@@ -2658,7 +2655,7 @@ impl Device {
     pub unsafe fn allocate_memory(
         &self,
         allocate_info: &vk::MemoryAllocateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DeviceMemory> {
         let mut memory = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.allocate_memory)(
@@ -2675,7 +2672,7 @@ impl Device {
     pub unsafe fn create_shader_module(
         &self,
         create_info: &vk::ShaderModuleCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::ShaderModule> {
         let mut shader = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_shader_module)(
@@ -2692,7 +2689,7 @@ impl Device {
     pub unsafe fn create_fence(
         &self,
         create_info: &vk::FenceCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Fence> {
         let mut fence = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_fence)(

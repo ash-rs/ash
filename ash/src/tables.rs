@@ -53,7 +53,7 @@ impl EntryFnV1_0 {
             create_instance: unsafe {
                 unsafe extern "system" fn create_instance(
                     _p_create_info: *const InstanceCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_instance: *mut crate::vk::Instance,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_instance)))
@@ -138,7 +138,7 @@ impl InstanceFnV1_0 {
             destroy_instance: unsafe {
                 unsafe extern "system" fn destroy_instance(
                     _instance: crate::vk::Instance,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_instance)))
                 }
@@ -309,7 +309,7 @@ impl InstanceFnV1_0 {
                 unsafe extern "system" fn create_device(
                     _physical_device: PhysicalDevice,
                     _p_create_info: *const DeviceCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_device: *mut crate::vk::Device,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_device)))
@@ -527,7 +527,7 @@ impl DeviceFnV1_0 {
             destroy_device: unsafe {
                 unsafe extern "system" fn destroy_device(
                     _device: crate::vk::Device,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_device)))
                 }
@@ -601,7 +601,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn allocate_memory(
                     _device: crate::vk::Device,
                     _p_allocate_info: *const MemoryAllocateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_memory: *mut DeviceMemory,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(allocate_memory)))
@@ -618,7 +618,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn free_memory(
                     _device: crate::vk::Device,
                     _memory: DeviceMemory,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(free_memory)))
                 }
@@ -836,7 +836,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_fence(
                     _device: crate::vk::Device,
                     _p_create_info: *const FenceCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_fence: *mut Fence,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_fence)))
@@ -853,7 +853,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_fence(
                     _device: crate::vk::Device,
                     _fence: Fence,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_fence)))
                 }
@@ -918,7 +918,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_semaphore(
                     _device: crate::vk::Device,
                     _p_create_info: *const SemaphoreCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_semaphore: *mut Semaphore,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_semaphore)))
@@ -935,7 +935,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_semaphore(
                     _device: crate::vk::Device,
                     _semaphore: Semaphore,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_semaphore)))
                 }
@@ -951,7 +951,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_event(
                     _device: crate::vk::Device,
                     _p_create_info: *const EventCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_event: *mut Event,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_event)))
@@ -968,7 +968,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_event(
                     _device: crate::vk::Device,
                     _event: Event,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_event)))
                 }
@@ -1029,7 +1029,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_query_pool(
                     _device: crate::vk::Device,
                     _p_create_info: *const QueryPoolCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_query_pool: *mut QueryPool,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_query_pool)))
@@ -1046,7 +1046,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_query_pool(
                     _device: crate::vk::Device,
                     _query_pool: QueryPool,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_query_pool)))
                 }
@@ -1086,7 +1086,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_buffer(
                     _device: crate::vk::Device,
                     _p_create_info: *const BufferCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_buffer: *mut Buffer,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_buffer)))
@@ -1103,7 +1103,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_buffer(
                     _device: crate::vk::Device,
                     _buffer: Buffer,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_buffer)))
                 }
@@ -1119,7 +1119,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_buffer_view(
                     _device: crate::vk::Device,
                     _p_create_info: *const BufferViewCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_view: *mut BufferView,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_buffer_view)))
@@ -1136,7 +1136,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_buffer_view(
                     _device: crate::vk::Device,
                     _buffer_view: BufferView,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_buffer_view)))
                 }
@@ -1152,7 +1152,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_image(
                     _device: crate::vk::Device,
                     _p_create_info: *const ImageCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_image: *mut Image,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_image)))
@@ -1169,7 +1169,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_image(
                     _device: crate::vk::Device,
                     _image: Image,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_image)))
                 }
@@ -1205,7 +1205,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_image_view(
                     _device: crate::vk::Device,
                     _p_create_info: *const ImageViewCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_view: *mut ImageView,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_image_view)))
@@ -1222,7 +1222,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_image_view(
                     _device: crate::vk::Device,
                     _image_view: ImageView,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_image_view)))
                 }
@@ -1238,7 +1238,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_shader_module(
                     _device: crate::vk::Device,
                     _p_create_info: *const ShaderModuleCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_shader_module: *mut ShaderModule,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_shader_module)))
@@ -1255,7 +1255,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_shader_module(
                     _device: crate::vk::Device,
                     _shader_module: ShaderModule,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -1274,7 +1274,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_pipeline_cache(
                     _device: crate::vk::Device,
                     _p_create_info: *const PipelineCacheCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_pipeline_cache: *mut PipelineCache,
                 ) -> Result {
                     panic!(concat!(
@@ -1294,7 +1294,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_pipeline_cache(
                     _device: crate::vk::Device,
                     _pipeline_cache: PipelineCache,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -1355,7 +1355,7 @@ impl DeviceFnV1_0 {
                     _pipeline_cache: PipelineCache,
                     _create_info_count: u32,
                     _p_create_infos: *const GraphicsPipelineCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_pipelines: *mut Pipeline,
                 ) -> Result {
                     panic!(concat!(
@@ -1377,7 +1377,7 @@ impl DeviceFnV1_0 {
                     _pipeline_cache: PipelineCache,
                     _create_info_count: u32,
                     _p_create_infos: *const ComputePipelineCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_pipelines: *mut Pipeline,
                 ) -> Result {
                     panic!(concat!(
@@ -1397,7 +1397,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_pipeline(
                     _device: crate::vk::Device,
                     _pipeline: Pipeline,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_pipeline)))
                 }
@@ -1413,7 +1413,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_pipeline_layout(
                     _device: crate::vk::Device,
                     _p_create_info: *const PipelineLayoutCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_pipeline_layout: *mut PipelineLayout,
                 ) -> Result {
                     panic!(concat!(
@@ -1433,7 +1433,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_pipeline_layout(
                     _device: crate::vk::Device,
                     _pipeline_layout: PipelineLayout,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -1452,7 +1452,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_sampler(
                     _device: crate::vk::Device,
                     _p_create_info: *const SamplerCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_sampler: *mut Sampler,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_sampler)))
@@ -1469,7 +1469,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_sampler(
                     _device: crate::vk::Device,
                     _sampler: Sampler,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_sampler)))
                 }
@@ -1485,7 +1485,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_descriptor_set_layout(
                     _device: crate::vk::Device,
                     _p_create_info: *const DescriptorSetLayoutCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_set_layout: *mut DescriptorSetLayout,
                 ) -> Result {
                     panic!(concat!(
@@ -1505,7 +1505,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_descriptor_set_layout(
                     _device: crate::vk::Device,
                     _descriptor_set_layout: DescriptorSetLayout,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -1524,7 +1524,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_descriptor_pool(
                     _device: crate::vk::Device,
                     _p_create_info: *const DescriptorPoolCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_descriptor_pool: *mut DescriptorPool,
                 ) -> Result {
                     panic!(concat!(
@@ -1544,7 +1544,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_descriptor_pool(
                     _device: crate::vk::Device,
                     _descriptor_pool: DescriptorPool,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -1639,7 +1639,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_framebuffer(
                     _device: crate::vk::Device,
                     _p_create_info: *const FramebufferCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_framebuffer: *mut Framebuffer,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_framebuffer)))
@@ -1656,7 +1656,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_framebuffer(
                     _device: crate::vk::Device,
                     _framebuffer: Framebuffer,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_framebuffer)))
                 }
@@ -1672,7 +1672,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_render_pass(
                     _device: crate::vk::Device,
                     _p_create_info: *const RenderPassCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_render_pass: *mut RenderPass,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_render_pass)))
@@ -1689,7 +1689,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_render_pass(
                     _device: crate::vk::Device,
                     _render_pass: RenderPass,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_render_pass)))
                 }
@@ -1724,7 +1724,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn create_command_pool(
                     _device: crate::vk::Device,
                     _p_create_info: *const CommandPoolCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_command_pool: *mut CommandPool,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_command_pool)))
@@ -1741,7 +1741,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_command_pool(
                     _device: crate::vk::Device,
                     _command_pool: CommandPool,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_command_pool)))
                 }
@@ -3176,7 +3176,7 @@ impl DeviceFnV1_1 {
                 unsafe extern "system" fn create_sampler_ycbcr_conversion(
                     _device: crate::vk::Device,
                     _p_create_info: *const SamplerYcbcrConversionCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_ycbcr_conversion: *mut SamplerYcbcrConversion,
                 ) -> Result {
                     panic!(concat!(
@@ -3197,7 +3197,7 @@ impl DeviceFnV1_1 {
                 unsafe extern "system" fn destroy_sampler_ycbcr_conversion(
                     _device: crate::vk::Device,
                     _ycbcr_conversion: SamplerYcbcrConversion,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -3217,7 +3217,7 @@ impl DeviceFnV1_1 {
                 unsafe extern "system" fn create_descriptor_update_template(
                     _device: crate::vk::Device,
                     _p_create_info: *const DescriptorUpdateTemplateCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_descriptor_update_template: *mut DescriptorUpdateTemplate,
                 ) -> Result {
                     panic!(concat!(
@@ -3238,7 +3238,7 @@ impl DeviceFnV1_1 {
                 unsafe extern "system" fn destroy_descriptor_update_template(
                     _device: crate::vk::Device,
                     _descriptor_update_template: DescriptorUpdateTemplate,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -3379,7 +3379,7 @@ impl DeviceFnV1_2 {
                 unsafe extern "system" fn create_render_pass2(
                     _device: crate::vk::Device,
                     _p_create_info: *const RenderPassCreateInfo2<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_render_pass: *mut RenderPass,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_render_pass2)))
@@ -3659,7 +3659,7 @@ impl DeviceFnV1_3 {
                 unsafe extern "system" fn create_private_data_slot(
                     _device: crate::vk::Device,
                     _p_create_info: *const PrivateDataSlotCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                     _p_private_data_slot: *mut PrivateDataSlot,
                 ) -> Result {
                     panic!(concat!(
@@ -3679,7 +3679,7 @@ impl DeviceFnV1_3 {
                 unsafe extern "system" fn destroy_private_data_slot(
                     _device: crate::vk::Device,
                     _private_data_slot: PrivateDataSlot,
-                    _p_allocator: *const AllocationCallbacks<'_>,
+                    _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!(
                         "Unable to load ",

@@ -13,7 +13,7 @@ impl crate::nv::ray_tracing::Device {
     pub unsafe fn create_acceleration_structure(
         &self,
         create_info: &vk::AccelerationStructureCreateInfoNV<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::AccelerationStructureNV> {
         let mut accel_struct = mem::MaybeUninit::uninit();
         (self.fp.create_acceleration_structure_nv)(
@@ -30,7 +30,7 @@ impl crate::nv::ray_tracing::Device {
     pub unsafe fn destroy_acceleration_structure(
         &self,
         accel_struct: vk::AccelerationStructureNV,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.fp.destroy_acceleration_structure_nv)(
             self.handle,
@@ -156,7 +156,7 @@ impl crate::nv::ray_tracing::Device {
         &self,
         pipeline_cache: vk::PipelineCache,
         create_infos: &[vk::RayTracingPipelineCreateInfoNV<'_>],
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
         let mut pipelines = Vec::with_capacity(create_infos.len());
         let err_code = (self.fp.create_ray_tracing_pipelines_nv)(

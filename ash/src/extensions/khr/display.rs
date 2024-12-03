@@ -65,7 +65,7 @@ impl crate::khr::display::Instance {
         physical_device: vk::PhysicalDevice,
         display: vk::DisplayKHR,
         create_info: &vk::DisplayModeCreateInfoKHR<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DisplayModeKHR> {
         let mut display_mode = mem::MaybeUninit::uninit();
         (self.fp.create_display_mode_khr)(
@@ -101,7 +101,7 @@ impl crate::khr::display::Instance {
     pub unsafe fn create_display_plane_surface(
         &self,
         create_info: &vk::DisplaySurfaceCreateInfoKHR<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::MaybeUninit::uninit();
         (self.fp.create_display_plane_surface_khr)(

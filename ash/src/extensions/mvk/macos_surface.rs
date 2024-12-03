@@ -11,7 +11,7 @@ impl crate::mvk::macos_surface::Instance {
     pub unsafe fn create_mac_os_surface(
         &self,
         create_info: &vk::MacOSSurfaceCreateInfoMVK<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::MaybeUninit::uninit();
         (self.fp.create_mac_os_surface_mvk)(

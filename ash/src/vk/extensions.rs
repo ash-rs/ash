@@ -4118,7 +4118,7 @@ pub const KHR_SURFACE_SPEC_VERSION: u32 = 25u32;
 pub type PFN_vkDestroySurfaceKHR = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     surface: SurfaceKHR,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceSurfaceSupportKHR = unsafe extern "system" fn(
@@ -4161,14 +4161,14 @@ pub type PFN_vkGetPhysicalDevicePresentRectanglesKHR = unsafe extern "system" fn
 pub type PFN_vkCreateSwapchainKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const SwapchainCreateInfoKHR<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_swapchain: *mut SwapchainKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroySwapchainKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     swapchain: SwapchainKHR,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetSwapchainImagesKHR = unsafe extern "system" fn(
@@ -4240,7 +4240,7 @@ pub type PFN_vkCreateDisplayModeKHR = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     display: DisplayKHR,
     p_create_info: *const DisplayModeCreateInfoKHR<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_mode: *mut DisplayModeKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -4254,7 +4254,7 @@ pub type PFN_vkGetDisplayPlaneCapabilitiesKHR = unsafe extern "system" fn(
 pub type PFN_vkCreateDisplayPlaneSurfaceKHR = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const DisplaySurfaceCreateInfoKHR<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 pub const KHR_DISPLAY_SWAPCHAIN_NAME: &CStr =
@@ -4265,7 +4265,7 @@ pub type PFN_vkCreateSharedSwapchainsKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     swapchain_count: u32,
     p_create_infos: *const SwapchainCreateInfoKHR<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_swapchains: *mut SwapchainKHR,
 ) -> Result;
 pub const KHR_XLIB_SURFACE_NAME: &CStr =
@@ -4275,7 +4275,7 @@ pub const KHR_XLIB_SURFACE_SPEC_VERSION: u32 = 6u32;
 pub type PFN_vkCreateXlibSurfaceKHR = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const XlibSurfaceCreateInfoKHR<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -4292,7 +4292,7 @@ pub const KHR_XCB_SURFACE_SPEC_VERSION: u32 = 6u32;
 pub type PFN_vkCreateXcbSurfaceKHR = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const XcbSurfaceCreateInfoKHR<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -4309,7 +4309,7 @@ pub const KHR_WAYLAND_SURFACE_SPEC_VERSION: u32 = 6u32;
 pub type PFN_vkCreateWaylandSurfaceKHR = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const WaylandSurfaceCreateInfoKHR<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -4326,7 +4326,7 @@ pub const KHR_ANDROID_SURFACE_SPEC_VERSION: u32 = 6u32;
 pub type PFN_vkCreateAndroidSurfaceKHR = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const AndroidSurfaceCreateInfoKHR<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 pub const KHR_WIN32_SURFACE_NAME: &CStr =
@@ -4336,7 +4336,7 @@ pub const KHR_WIN32_SURFACE_SPEC_VERSION: u32 = 6u32;
 pub type PFN_vkCreateWin32SurfaceKHR = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const Win32SurfaceCreateInfoKHR<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -4384,14 +4384,14 @@ pub const EXT_DEBUG_REPORT_SPEC_VERSION: u32 = 10u32;
 pub type PFN_vkCreateDebugReportCallbackEXT = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const DebugReportCallbackCreateInfoEXT<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_callback: *mut DebugReportCallbackEXT,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDebugReportCallbackEXT = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     callback: DebugReportCallbackEXT,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkDebugReportMessageEXT = unsafe extern "system" fn(
@@ -4470,14 +4470,14 @@ pub type PFN_vkGetPhysicalDeviceVideoFormatPropertiesKHR = unsafe extern "system
 pub type PFN_vkCreateVideoSessionKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const VideoSessionCreateInfoKHR<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_video_session: *mut VideoSessionKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyVideoSessionKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     video_session: VideoSessionKHR,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetVideoSessionMemoryRequirementsKHR = unsafe extern "system" fn(
@@ -4497,7 +4497,7 @@ pub type PFN_vkBindVideoSessionMemoryKHR = unsafe extern "system" fn(
 pub type PFN_vkCreateVideoSessionParametersKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const VideoSessionParametersCreateInfoKHR<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_video_session_parameters: *mut VideoSessionParametersKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -4510,7 +4510,7 @@ pub type PFN_vkUpdateVideoSessionParametersKHR = unsafe extern "system" fn(
 pub type PFN_vkDestroyVideoSessionParametersKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     video_session_parameters: VideoSessionParametersKHR,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginVideoCodingKHR = unsafe extern "system" fn(
@@ -4601,27 +4601,27 @@ pub const NVX_BINARY_IMPORT_SPEC_VERSION: u32 = 1u32;
 pub type PFN_vkCreateCuModuleNVX = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const CuModuleCreateInfoNVX<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_module: *mut CuModuleNVX,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateCuFunctionNVX = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const CuFunctionCreateInfoNVX<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_function: *mut CuFunctionNVX,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyCuModuleNVX = unsafe extern "system" fn(
     device: crate::vk::Device,
     module: CuModuleNVX,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyCuFunctionNVX = unsafe extern "system" fn(
     device: crate::vk::Device,
     function: CuFunctionNVX,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCuLaunchKernelNVX = unsafe extern "system" fn(
@@ -4718,7 +4718,7 @@ pub const GGP_STREAM_DESCRIPTOR_SURFACE_SPEC_VERSION: u32 = 1u32;
 pub type PFN_vkCreateStreamDescriptorSurfaceGGP = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const StreamDescriptorSurfaceCreateInfoGGP<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 pub const NV_CORNER_SAMPLED_IMAGE_NAME: &CStr =
@@ -4838,7 +4838,7 @@ pub const NN_VI_SURFACE_SPEC_VERSION: u32 = 1u32;
 pub type PFN_vkCreateViSurfaceNN = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const ViSurfaceCreateInfoNN<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 pub const KHR_SHADER_DRAW_PARAMETERS_NAME: &CStr =
@@ -5011,14 +5011,14 @@ pub const KHR_DESCRIPTOR_UPDATE_TEMPLATE_SPEC_VERSION: u32 = 1u32;
 pub type PFN_vkCreateDescriptorUpdateTemplate = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const DescriptorUpdateTemplateCreateInfo<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_descriptor_update_template: *mut DescriptorUpdateTemplate,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDescriptorUpdateTemplate = unsafe extern "system" fn(
     device: crate::vk::Device,
     descriptor_update_template: DescriptorUpdateTemplate,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkUpdateDescriptorSetWithTemplate = unsafe extern "system" fn(
@@ -5081,7 +5081,7 @@ pub type PFN_vkDisplayPowerControlEXT = unsafe extern "system" fn(
 pub type PFN_vkRegisterDeviceEventEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_device_event_info: *const DeviceEventInfoEXT<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_fence: *mut Fence,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -5089,7 +5089,7 @@ pub type PFN_vkRegisterDisplayEventEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     display: DisplayKHR,
     p_display_event_info: *const DisplayEventInfoEXT<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_fence: *mut Fence,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -5177,7 +5177,7 @@ pub const KHR_CREATE_RENDERPASS2_SPEC_VERSION: u32 = 1u32;
 pub type PFN_vkCreateRenderPass2 = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const RenderPassCreateInfo2<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_render_pass: *mut RenderPass,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -5329,7 +5329,7 @@ pub const MVK_IOS_SURFACE_SPEC_VERSION: u32 = 3u32;
 pub type PFN_vkCreateIOSSurfaceMVK = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const IOSSurfaceCreateInfoMVK<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 pub const MVK_MACOS_SURFACE_NAME: &CStr =
@@ -5339,7 +5339,7 @@ pub const MVK_MACOS_SURFACE_SPEC_VERSION: u32 = 3u32;
 pub type PFN_vkCreateMacOSSurfaceMVK = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const MacOSSurfaceCreateInfoMVK<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 pub const EXT_EXTERNAL_MEMORY_DMA_BUF_NAME: &CStr =
@@ -5358,14 +5358,14 @@ pub const EXT_DEBUG_UTILS_SPEC_VERSION: u32 = 2u32;
 pub type PFN_vkCreateDebugUtilsMessengerEXT = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const DebugUtilsMessengerCreateInfoEXT<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_messenger: *mut DebugUtilsMessengerEXT,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDebugUtilsMessengerEXT = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     messenger: DebugUtilsMessengerEXT,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkSubmitDebugUtilsMessageEXT = unsafe extern "system" fn(
@@ -5438,7 +5438,7 @@ pub type PFN_vkCreateExecutionGraphPipelinesAMDX = unsafe extern "system" fn(
     pipeline_cache: PipelineCache,
     create_info_count: u32,
     p_create_infos: *const ExecutionGraphPipelineCreateInfoAMDX<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_pipelines: *mut Pipeline,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -5542,14 +5542,14 @@ pub const KHR_ACCELERATION_STRUCTURE_SPEC_VERSION: u32 = 13u32;
 pub type PFN_vkCreateAccelerationStructureKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const AccelerationStructureCreateInfoKHR<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_acceleration_structure: *mut AccelerationStructureKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyAccelerationStructureKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     acceleration_structure: AccelerationStructureKHR,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBuildAccelerationStructuresKHR = unsafe extern "system" fn(
@@ -5668,7 +5668,7 @@ pub type PFN_vkCreateRayTracingPipelinesKHR = unsafe extern "system" fn(
     pipeline_cache: PipelineCache,
     create_info_count: u32,
     p_create_infos: *const RayTracingPipelineCreateInfoKHR<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_pipelines: *mut Pipeline,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -5731,14 +5731,14 @@ pub const KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION: u32 = 14u32;
 pub type PFN_vkCreateSamplerYcbcrConversion = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const SamplerYcbcrConversionCreateInfo<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_ycbcr_conversion: *mut SamplerYcbcrConversion,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroySamplerYcbcrConversion = unsafe extern "system" fn(
     device: crate::vk::Device,
     ycbcr_conversion: SamplerYcbcrConversion,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 pub const KHR_BIND_MEMORY2_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_bind_memory2\0") };
@@ -5771,14 +5771,14 @@ pub const EXT_VALIDATION_CACHE_SPEC_VERSION: u32 = 1u32;
 pub type PFN_vkCreateValidationCacheEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const ValidationCacheCreateInfoEXT<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_validation_cache: *mut ValidationCacheEXT,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyValidationCacheEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     validation_cache: ValidationCacheEXT,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkMergeValidationCachesEXT = unsafe extern "system" fn(
@@ -5833,14 +5833,14 @@ pub const NV_RAY_TRACING_SPEC_VERSION: u32 = 3u32;
 pub type PFN_vkCreateAccelerationStructureNV = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const AccelerationStructureCreateInfoNV<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_acceleration_structure: *mut AccelerationStructureNV,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyAccelerationStructureNV = unsafe extern "system" fn(
     device: crate::vk::Device,
     acceleration_structure: AccelerationStructureNV,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetAccelerationStructureMemoryRequirementsNV = unsafe extern "system" fn(
@@ -5897,7 +5897,7 @@ pub type PFN_vkCreateRayTracingPipelinesNV = unsafe extern "system" fn(
     pipeline_cache: PipelineCache,
     create_info_count: u32,
     p_create_infos: *const RayTracingPipelineCreateInfoNV<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_pipelines: *mut Pipeline,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -6185,7 +6185,7 @@ pub const FUCHSIA_IMAGEPIPE_SURFACE_SPEC_VERSION: u32 = 1u32;
 pub type PFN_vkCreateImagePipeSurfaceFUCHSIA = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const ImagePipeSurfaceCreateInfoFUCHSIA<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 pub const KHR_SHADER_TERMINATE_INVOCATION_NAME: &CStr =
@@ -6198,7 +6198,7 @@ pub const EXT_METAL_SURFACE_SPEC_VERSION: u32 = 1u32;
 pub type PFN_vkCreateMetalSurfaceEXT = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const MetalSurfaceCreateInfoEXT<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 pub const EXT_FRAGMENT_DENSITY_MAP_NAME: &CStr =
@@ -6368,7 +6368,7 @@ pub const EXT_HEADLESS_SURFACE_SPEC_VERSION: u32 = 1u32;
 pub type PFN_vkCreateHeadlessSurfaceEXT = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const HeadlessSurfaceCreateInfoEXT<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 pub const KHR_BUFFER_DEVICE_ADDRESS_NAME: &CStr =
@@ -6473,14 +6473,14 @@ pub const KHR_DEFERRED_HOST_OPERATIONS_SPEC_VERSION: u32 = 4u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDeferredOperationKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_deferred_operation: *mut DeferredOperationKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDeferredOperationKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     operation: DeferredOperationKHR,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeferredOperationMaxConcurrencyKHR =
@@ -6612,14 +6612,14 @@ pub type PFN_vkCmdBindPipelineShaderGroupNV = unsafe extern "system" fn(
 pub type PFN_vkCreateIndirectCommandsLayoutNV = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const IndirectCommandsLayoutCreateInfoNV<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_indirect_commands_layout: *mut IndirectCommandsLayoutNV,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyIndirectCommandsLayoutNV = unsafe extern "system" fn(
     device: crate::vk::Device,
     indirect_commands_layout: IndirectCommandsLayoutNV,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 pub const NV_INHERITED_VIEWPORT_SCISSOR_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_inherited_viewport_scissor\0") };
@@ -6688,14 +6688,14 @@ pub const EXT_PRIVATE_DATA_SPEC_VERSION: u32 = 1u32;
 pub type PFN_vkCreatePrivateDataSlot = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const PrivateDataSlotCreateInfo<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_private_data_slot: *mut PrivateDataSlot,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyPrivateDataSlot = unsafe extern "system" fn(
     device: crate::vk::Device,
     private_data_slot: PrivateDataSlot,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkSetPrivateData = unsafe extern "system" fn(
@@ -6752,7 +6752,7 @@ pub const NV_CUDA_KERNEL_LAUNCH_SPEC_VERSION: u32 = 2u32;
 pub type PFN_vkCreateCudaModuleNV = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const CudaModuleCreateInfoNV<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_module: *mut CudaModuleNV,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -6766,20 +6766,20 @@ pub type PFN_vkGetCudaModuleCacheNV = unsafe extern "system" fn(
 pub type PFN_vkCreateCudaFunctionNV = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const CudaFunctionCreateInfoNV<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_function: *mut CudaFunctionNV,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyCudaModuleNV = unsafe extern "system" fn(
     device: crate::vk::Device,
     module: CudaModuleNV,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyCudaFunctionNV = unsafe extern "system" fn(
     device: crate::vk::Device,
     function: CudaFunctionNV,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCudaLaunchKernelNV = unsafe extern "system" fn(
@@ -7078,7 +7078,7 @@ pub const EXT_DIRECTFB_SURFACE_SPEC_VERSION: u32 = 1u32;
 pub type PFN_vkCreateDirectFBSurfaceEXT = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const DirectFBSurfaceCreateInfoEXT<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -7154,7 +7154,7 @@ pub const FUCHSIA_BUFFER_COLLECTION_SPEC_VERSION: u32 = 2u32;
 pub type PFN_vkCreateBufferCollectionFUCHSIA = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const BufferCollectionCreateInfoFUCHSIA<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_collection: *mut BufferCollectionFUCHSIA,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -7173,7 +7173,7 @@ pub type PFN_vkSetBufferCollectionBufferConstraintsFUCHSIA = unsafe extern "syst
 pub type PFN_vkDestroyBufferCollectionFUCHSIA = unsafe extern "system" fn(
     device: crate::vk::Device,
     collection: BufferCollectionFUCHSIA,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetBufferCollectionPropertiesFUCHSIA = unsafe extern "system" fn(
@@ -7251,7 +7251,7 @@ pub const QNX_SCREEN_SURFACE_SPEC_VERSION: u32 = 1u32;
 pub type PFN_vkCreateScreenSurfaceQNX = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_create_info: *const ScreenSurfaceCreateInfoQNX<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -7324,14 +7324,14 @@ pub const EXT_OPACITY_MICROMAP_SPEC_VERSION: u32 = 2u32;
 pub type PFN_vkCreateMicromapEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const MicromapCreateInfoEXT<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_micromap: *mut MicromapEXT,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyMicromapEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     micromap: MicromapEXT,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBuildMicromapsEXT = unsafe extern "system" fn(
@@ -7758,14 +7758,14 @@ pub type PFN_vkGetPhysicalDeviceOpticalFlowImageFormatsNV = unsafe extern "syste
 pub type PFN_vkCreateOpticalFlowSessionNV = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const OpticalFlowSessionCreateInfoNV<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_session: *mut OpticalFlowSessionNV,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyOpticalFlowSessionNV = unsafe extern "system" fn(
     device: crate::vk::Device,
     session: OpticalFlowSessionNV,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkBindOpticalFlowSessionImageNV = unsafe extern "system" fn(
@@ -7830,14 +7830,14 @@ pub type PFN_vkCreateShadersEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     create_info_count: u32,
     p_create_infos: *const ShaderCreateInfoEXT<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_shaders: *mut ShaderEXT,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyShaderEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     shader: ShaderEXT,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetShaderBinaryDataEXT = unsafe extern "system" fn(
@@ -7866,14 +7866,14 @@ pub const KHR_PIPELINE_BINARY_SPEC_VERSION: u32 = 1u32;
 pub type PFN_vkCreatePipelineBinariesKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const PipelineBinaryCreateInfoKHR<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_binaries: *mut PipelineBinaryHandlesInfoKHR<'_>,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyPipelineBinaryKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     pipeline_binary: PipelineBinaryKHR,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPipelineKeyKHR = unsafe extern "system" fn(
@@ -7893,7 +7893,7 @@ pub type PFN_vkGetPipelineBinaryDataKHR = unsafe extern "system" fn(
 pub type PFN_vkReleaseCapturedPipelineDataKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_info: *const ReleaseCapturedPipelineDataInfoKHR<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 ) -> Result;
 pub const QCOM_TILE_PROPERTIES_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_tile_properties\0") };
@@ -8128,27 +8128,27 @@ pub type PFN_vkCmdExecuteGeneratedCommandsEXT = unsafe extern "system" fn(
 pub type PFN_vkCreateIndirectCommandsLayoutEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const IndirectCommandsLayoutCreateInfoEXT<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_indirect_commands_layout: *mut IndirectCommandsLayoutEXT,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyIndirectCommandsLayoutEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     indirect_commands_layout: IndirectCommandsLayoutEXT,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateIndirectExecutionSetEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const IndirectExecutionSetCreateInfoEXT<'_>,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
     p_indirect_execution_set: *mut IndirectExecutionSetEXT,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyIndirectExecutionSetEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     indirect_execution_set: IndirectExecutionSetEXT,
-    p_allocator: *const AllocationCallbacks<'_>,
+    p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkUpdateIndirectExecutionSetPipelineEXT = unsafe extern "system" fn(

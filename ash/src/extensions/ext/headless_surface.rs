@@ -11,7 +11,7 @@ impl crate::ext::headless_surface::Instance {
     pub unsafe fn create_headless_surface(
         &self,
         create_info: &vk::HeadlessSurfaceCreateInfoEXT<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::MaybeUninit::uninit();
         (self.fp.create_headless_surface_ext)(

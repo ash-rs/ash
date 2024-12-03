@@ -11,7 +11,7 @@ impl crate::nn::vi_surface::Instance {
     pub unsafe fn create_vi_surface(
         &self,
         create_info: &vk::ViSurfaceCreateInfoNN<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::MaybeUninit::uninit();
         (self.fp.create_vi_surface_nn)(

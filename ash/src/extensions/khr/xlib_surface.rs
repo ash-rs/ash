@@ -11,7 +11,7 @@ impl crate::khr::xlib_surface::Instance {
     pub unsafe fn create_xlib_surface(
         &self,
         create_info: &vk::XlibSurfaceCreateInfoKHR<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::MaybeUninit::uninit();
         (self.fp.create_xlib_surface_khr)(

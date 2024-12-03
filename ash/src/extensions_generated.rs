@@ -567,7 +567,7 @@ pub mod amdx {
                             _pipeline_cache: PipelineCache,
                             _create_info_count: u32,
                             _p_create_infos: *const ExecutionGraphPipelineCreateInfoAMDX<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_pipelines: *mut Pipeline,
                         ) -> Result {
                             panic!(concat!(
@@ -1052,7 +1052,7 @@ pub mod ext {
                         unsafe extern "system" fn create_debug_report_callback_ext(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const DebugReportCallbackCreateInfoEXT<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_callback: *mut DebugReportCallbackEXT,
                         ) -> Result {
                             panic!(concat!(
@@ -1074,7 +1074,7 @@ pub mod ext {
                         unsafe extern "system" fn destroy_debug_report_callback_ext(
                             _instance: crate::vk::Instance,
                             _callback: DebugReportCallbackEXT,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -1888,7 +1888,7 @@ pub mod ext {
                         unsafe extern "system" fn register_device_event_ext(
                             _device: crate::vk::Device,
                             _p_device_event_info: *const DeviceEventInfoEXT<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_fence: *mut Fence,
                         ) -> Result {
                             panic!(concat!(
@@ -1910,7 +1910,7 @@ pub mod ext {
                             _device: crate::vk::Device,
                             _display: DisplayKHR,
                             _p_display_event_info: *const DisplayEventInfoEXT<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_fence: *mut Fence,
                         ) -> Result {
                             panic!(concat!(
@@ -2215,7 +2215,7 @@ pub mod ext {
                         unsafe extern "system" fn create_debug_utils_messenger_ext(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const DebugUtilsMessengerCreateInfoEXT<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_messenger: *mut DebugUtilsMessengerEXT,
                         ) -> Result {
                             panic!(concat!(
@@ -2237,7 +2237,7 @@ pub mod ext {
                         unsafe extern "system" fn destroy_debug_utils_messenger_ext(
                             _instance: crate::vk::Instance,
                             _messenger: DebugUtilsMessengerEXT,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -2761,7 +2761,7 @@ pub mod ext {
                         unsafe extern "system" fn create_validation_cache_ext(
                             _device: crate::vk::Device,
                             _p_create_info: *const ValidationCacheCreateInfoEXT<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_validation_cache: *mut ValidationCacheEXT,
                         ) -> Result {
                             panic!(concat!(
@@ -2782,7 +2782,7 @@ pub mod ext {
                         unsafe extern "system" fn destroy_validation_cache_ext(
                             _device: crate::vk::Device,
                             _validation_cache: ValidationCacheEXT,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -3148,7 +3148,7 @@ pub mod ext {
                         unsafe extern "system" fn create_metal_surface_ext(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const MetalSurfaceCreateInfoEXT<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -3611,7 +3611,7 @@ pub mod ext {
                         unsafe extern "system" fn create_headless_surface_ext(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const HeadlessSurfaceCreateInfoEXT<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -4553,7 +4553,7 @@ pub mod ext {
                         unsafe extern "system" fn create_private_data_slot_ext(
                             _device: crate::vk::Device,
                             _p_create_info: *const PrivateDataSlotCreateInfo<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_private_data_slot: *mut PrivateDataSlot,
                         ) -> Result {
                             panic!(concat!(
@@ -4574,7 +4574,7 @@ pub mod ext {
                         unsafe extern "system" fn destroy_private_data_slot_ext(
                             _device: crate::vk::Device,
                             _private_data_slot: PrivateDataSlot,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -5359,7 +5359,7 @@ pub mod ext {
                         unsafe extern "system" fn create_direct_fb_surface_ext(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const DirectFBSurfaceCreateInfoEXT<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -5994,7 +5994,7 @@ pub mod ext {
                         unsafe extern "system" fn create_micromap_ext(
                             _device: crate::vk::Device,
                             _p_create_info: *const MicromapCreateInfoEXT<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_micromap: *mut MicromapEXT,
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(create_micromap_ext)))
@@ -6011,7 +6011,7 @@ pub mod ext {
                         unsafe extern "system" fn destroy_micromap_ext(
                             _device: crate::vk::Device,
                             _micromap: MicromapEXT,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!("Unable to load ", stringify!(destroy_micromap_ext)))
                         }
@@ -7327,7 +7327,7 @@ pub mod ext {
                             _device: crate::vk::Device,
                             _create_info_count: u32,
                             _p_create_infos: *const ShaderCreateInfoEXT<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_shaders: *mut ShaderEXT,
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(create_shaders_ext)))
@@ -7344,7 +7344,7 @@ pub mod ext {
                         unsafe extern "system" fn destroy_shader_ext(
                             _device: crate::vk::Device,
                             _shader: ShaderEXT,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!("Unable to load ", stringify!(destroy_shader_ext)))
                         }
@@ -8625,7 +8625,7 @@ pub mod ext {
                         unsafe extern "system" fn create_indirect_commands_layout_ext(
                             _device: crate::vk::Device,
                             _p_create_info: *const IndirectCommandsLayoutCreateInfoEXT<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_indirect_commands_layout: *mut IndirectCommandsLayoutEXT,
                         ) -> Result {
                             panic!(concat!(
@@ -8647,7 +8647,7 @@ pub mod ext {
                         unsafe extern "system" fn destroy_indirect_commands_layout_ext(
                             _device: crate::vk::Device,
                             _indirect_commands_layout: IndirectCommandsLayoutEXT,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -8668,7 +8668,7 @@ pub mod ext {
                         unsafe extern "system" fn create_indirect_execution_set_ext(
                             _device: crate::vk::Device,
                             _p_create_info: *const IndirectExecutionSetCreateInfoEXT<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_indirect_execution_set: *mut IndirectExecutionSetEXT,
                         ) -> Result {
                             panic!(concat!(
@@ -8690,7 +8690,7 @@ pub mod ext {
                         unsafe extern "system" fn destroy_indirect_execution_set_ext(
                             _device: crate::vk::Device,
                             _indirect_execution_set: IndirectExecutionSetEXT,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -8874,7 +8874,7 @@ pub mod fuchsia {
                         unsafe extern "system" fn create_image_pipe_surface_fuchsia(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const ImagePipeSurfaceCreateInfoFUCHSIA<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -9133,7 +9133,7 @@ pub mod fuchsia {
                         unsafe extern "system" fn create_buffer_collection_fuchsia(
                             _device: crate::vk::Device,
                             _p_create_info: *const BufferCollectionCreateInfoFUCHSIA<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_collection: *mut BufferCollectionFUCHSIA,
                         ) -> Result {
                             panic!(concat!(
@@ -9197,7 +9197,7 @@ pub mod fuchsia {
                         unsafe extern "system" fn destroy_buffer_collection_fuchsia(
                             _device: crate::vk::Device,
                             _collection: BufferCollectionFUCHSIA,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -9289,7 +9289,7 @@ pub mod ggp {
                         unsafe extern "system" fn create_stream_descriptor_surface_ggp(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const StreamDescriptorSurfaceCreateInfoGGP<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -10024,7 +10024,7 @@ pub mod khr {
                         unsafe extern "system" fn destroy_surface_khr(
                             _instance: crate::vk::Instance,
                             _surface: SurfaceKHR,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!("Unable to load ", stringify!(destroy_surface_khr)))
                         }
@@ -10245,7 +10245,7 @@ pub mod khr {
                         unsafe extern "system" fn create_swapchain_khr(
                             _device: crate::vk::Device,
                             _p_create_info: *const SwapchainCreateInfoKHR<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_swapchain: *mut SwapchainKHR,
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(create_swapchain_khr)))
@@ -10262,7 +10262,7 @@ pub mod khr {
                         unsafe extern "system" fn destroy_swapchain_khr(
                             _device: crate::vk::Device,
                             _swapchain: SwapchainKHR,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -10541,7 +10541,7 @@ pub mod khr {
                             _physical_device: PhysicalDevice,
                             _display: DisplayKHR,
                             _p_create_info: *const DisplayModeCreateInfoKHR<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_mode: *mut DisplayModeKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -10584,7 +10584,7 @@ pub mod khr {
                         unsafe extern "system" fn create_display_plane_surface_khr(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const DisplaySurfaceCreateInfoKHR<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -10654,7 +10654,7 @@ pub mod khr {
                             _device: crate::vk::Device,
                             _swapchain_count: u32,
                             _p_create_infos: *const SwapchainCreateInfoKHR<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_swapchains: *mut SwapchainKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -10724,7 +10724,7 @@ pub mod khr {
                         unsafe extern "system" fn create_xlib_surface_khr(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const XlibSurfaceCreateInfoKHR<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -10816,7 +10816,7 @@ pub mod khr {
                         unsafe extern "system" fn create_xcb_surface_khr(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const XcbSurfaceCreateInfoKHR<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -10907,7 +10907,7 @@ pub mod khr {
                         unsafe extern "system" fn create_wayland_surface_khr(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const WaylandSurfaceCreateInfoKHR<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -10996,7 +10996,7 @@ pub mod khr {
                         unsafe extern "system" fn create_android_surface_khr(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const AndroidSurfaceCreateInfoKHR<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -11066,7 +11066,7 @@ pub mod khr {
                         unsafe extern "system" fn create_win32_surface_khr(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const Win32SurfaceCreateInfoKHR<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -11257,7 +11257,7 @@ pub mod khr {
                         unsafe extern "system" fn create_video_session_khr(
                             _device: crate::vk::Device,
                             _p_create_info: *const VideoSessionCreateInfoKHR<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_video_session: *mut VideoSessionKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -11278,7 +11278,7 @@ pub mod khr {
                         unsafe extern "system" fn destroy_video_session_khr(
                             _device: crate::vk::Device,
                             _video_session: VideoSessionKHR,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -11341,7 +11341,7 @@ pub mod khr {
                         unsafe extern "system" fn create_video_session_parameters_khr(
                             _device: crate::vk::Device,
                             _p_create_info: *const VideoSessionParametersCreateInfoKHR<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_video_session_parameters: *mut VideoSessionParametersKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -11384,7 +11384,7 @@ pub mod khr {
                         unsafe extern "system" fn destroy_video_session_parameters_khr(
                             _device: crate::vk::Device,
                             _video_session_parameters: VideoSessionParametersKHR,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -12910,7 +12910,7 @@ pub mod khr {
                         unsafe extern "system" fn create_descriptor_update_template_khr(
                             _device: crate::vk::Device,
                             _p_create_info: *const DescriptorUpdateTemplateCreateInfo<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_descriptor_update_template: *mut DescriptorUpdateTemplate,
                         ) -> Result {
                             panic!(concat!(
@@ -12932,7 +12932,7 @@ pub mod khr {
                         unsafe extern "system" fn destroy_descriptor_update_template_khr(
                             _device: crate::vk::Device,
                             _descriptor_update_template: DescriptorUpdateTemplate,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -13056,7 +13056,7 @@ pub mod khr {
                         unsafe extern "system" fn create_render_pass2_khr(
                             _device: crate::vk::Device,
                             _p_create_info: *const RenderPassCreateInfo2<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_render_pass: *mut RenderPass,
                         ) -> Result {
                             panic!(concat!(
@@ -14078,7 +14078,7 @@ pub mod khr {
                         unsafe extern "system" fn create_acceleration_structure_khr(
                             _device: crate::vk::Device,
                             _p_create_info: *const AccelerationStructureCreateInfoKHR<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_acceleration_structure: *mut AccelerationStructureKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -14100,7 +14100,7 @@ pub mod khr {
                         unsafe extern "system" fn destroy_acceleration_structure_khr(
                             _device: crate::vk::Device,
                             _acceleration_structure: AccelerationStructureKHR,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -14506,7 +14506,7 @@ pub mod khr {
                             _pipeline_cache: PipelineCache,
                             _create_info_count: u32,
                             _p_create_infos: *const RayTracingPipelineCreateInfoKHR<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_pipelines: *mut Pipeline,
                         ) -> Result {
                             panic!(concat!(
@@ -14697,7 +14697,7 @@ pub mod khr {
                         unsafe extern "system" fn create_sampler_ycbcr_conversion_khr(
                             _device: crate::vk::Device,
                             _p_create_info: *const SamplerYcbcrConversionCreateInfo<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_ycbcr_conversion: *mut SamplerYcbcrConversion,
                         ) -> Result {
                             panic!(concat!(
@@ -14719,7 +14719,7 @@ pub mod khr {
                         unsafe extern "system" fn destroy_sampler_ycbcr_conversion_khr(
                             _device: crate::vk::Device,
                             _ycbcr_conversion: SamplerYcbcrConversion,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -15681,7 +15681,7 @@ pub mod khr {
                     create_deferred_operation_khr: unsafe {
                         unsafe extern "system" fn create_deferred_operation_khr(
                             _device: crate::vk::Device,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_deferred_operation: *mut DeferredOperationKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -15702,7 +15702,7 @@ pub mod khr {
                         unsafe extern "system" fn destroy_deferred_operation_khr(
                             _device: crate::vk::Device,
                             _operation: DeferredOperationKHR,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -16953,7 +16953,7 @@ pub mod khr {
                         unsafe extern "system" fn create_pipeline_binaries_khr(
                             _device: crate::vk::Device,
                             _p_create_info: *const PipelineBinaryCreateInfoKHR<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_binaries: *mut PipelineBinaryHandlesInfoKHR<'_>,
                         ) -> Result {
                             panic!(concat!(
@@ -16974,7 +16974,7 @@ pub mod khr {
                         unsafe extern "system" fn destroy_pipeline_binary_khr(
                             _device: crate::vk::Device,
                             _pipeline_binary: PipelineBinaryKHR,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -17032,7 +17032,7 @@ pub mod khr {
                         unsafe extern "system" fn release_captured_pipeline_data_khr(
                             _device: crate::vk::Device,
                             _p_info: *const ReleaseCapturedPipelineDataInfoKHR<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) -> Result {
                             panic!(concat!(
                                 "Unable to load ",
@@ -17653,7 +17653,7 @@ pub mod mvk {
                         unsafe extern "system" fn create_ios_surface_mvk(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const IOSSurfaceCreateInfoMVK<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -17720,7 +17720,7 @@ pub mod mvk {
                         unsafe extern "system" fn create_mac_os_surface_mvk(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const MacOSSurfaceCreateInfoMVK<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -17791,7 +17791,7 @@ pub mod nn {
                         unsafe extern "system" fn create_vi_surface_nn(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const ViSurfaceCreateInfoNN<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(create_vi_surface_nn)))
@@ -18297,7 +18297,7 @@ pub mod nv {
                         unsafe extern "system" fn create_acceleration_structure_nv(
                             _device: crate::vk::Device,
                             _p_create_info: *const AccelerationStructureCreateInfoNV<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_acceleration_structure: *mut AccelerationStructureNV,
                         ) -> Result {
                             panic!(concat!(
@@ -18319,7 +18319,7 @@ pub mod nv {
                         unsafe extern "system" fn destroy_acceleration_structure_nv(
                             _device: crate::vk::Device,
                             _acceleration_structure: AccelerationStructureNV,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -18461,7 +18461,7 @@ pub mod nv {
                             _pipeline_cache: PipelineCache,
                             _create_info_count: u32,
                             _p_create_infos: *const RayTracingPipelineCreateInfoNV<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_pipelines: *mut Pipeline,
                         ) -> Result {
                             panic!(concat!(
@@ -19180,7 +19180,7 @@ pub mod nv {
                         unsafe extern "system" fn create_indirect_commands_layout_nv(
                             _device: crate::vk::Device,
                             _p_create_info: *const IndirectCommandsLayoutCreateInfoNV<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_indirect_commands_layout: *mut IndirectCommandsLayoutNV,
                         ) -> Result {
                             panic!(concat!(
@@ -19202,7 +19202,7 @@ pub mod nv {
                         unsafe extern "system" fn destroy_indirect_commands_layout_nv(
                             _device: crate::vk::Device,
                             _indirect_commands_layout: IndirectCommandsLayoutNV,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -19299,7 +19299,7 @@ pub mod nv {
                         unsafe extern "system" fn create_cuda_module_nv(
                             _device: crate::vk::Device,
                             _p_create_info: *const CudaModuleCreateInfoNV<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_module: *mut CudaModuleNV,
                         ) -> Result {
                             panic!(concat!(
@@ -19340,7 +19340,7 @@ pub mod nv {
                         unsafe extern "system" fn create_cuda_function_nv(
                             _device: crate::vk::Device,
                             _p_create_info: *const CudaFunctionCreateInfoNV<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_function: *mut CudaFunctionNV,
                         ) -> Result {
                             panic!(concat!(
@@ -19361,7 +19361,7 @@ pub mod nv {
                         unsafe extern "system" fn destroy_cuda_module_nv(
                             _device: crate::vk::Device,
                             _module: CudaModuleNV,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -19380,7 +19380,7 @@ pub mod nv {
                         unsafe extern "system" fn destroy_cuda_function_nv(
                             _device: crate::vk::Device,
                             _function: CudaFunctionNV,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -20081,7 +20081,7 @@ pub mod nv {
                         unsafe extern "system" fn create_optical_flow_session_nv(
                             _device: crate::vk::Device,
                             _p_create_info: *const OpticalFlowSessionCreateInfoNV<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_session: *mut OpticalFlowSessionNV,
                         ) -> Result {
                             panic!(concat!(
@@ -20102,7 +20102,7 @@ pub mod nv {
                         unsafe extern "system" fn destroy_optical_flow_session_nv(
                             _device: crate::vk::Device,
                             _session: OpticalFlowSessionNV,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -20427,7 +20427,7 @@ pub mod nvx {
                         unsafe extern "system" fn create_cu_module_nvx(
                             _device: crate::vk::Device,
                             _p_create_info: *const CuModuleCreateInfoNVX<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_module: *mut CuModuleNVX,
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(create_cu_module_nvx)))
@@ -20444,7 +20444,7 @@ pub mod nvx {
                         unsafe extern "system" fn create_cu_function_nvx(
                             _device: crate::vk::Device,
                             _p_create_info: *const CuFunctionCreateInfoNVX<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_function: *mut CuFunctionNVX,
                         ) -> Result {
                             panic!(concat!(
@@ -20464,7 +20464,7 @@ pub mod nvx {
                         unsafe extern "system" fn destroy_cu_module_nvx(
                             _device: crate::vk::Device,
                             _module: CuModuleNVX,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -20483,7 +20483,7 @@ pub mod nvx {
                         unsafe extern "system" fn destroy_cu_function_nvx(
                             _device: crate::vk::Device,
                             _function: CuFunctionNVX,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -20860,7 +20860,7 @@ pub mod qnx {
                         unsafe extern "system" fn create_screen_surface_qnx(
                             _instance: crate::vk::Instance,
                             _p_create_info: *const ScreenSurfaceCreateInfoQNX<'_>,
-                            _p_allocator: *const AllocationCallbacks<'_>,
+                            _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
                         ) -> Result {
                             panic!(concat!(

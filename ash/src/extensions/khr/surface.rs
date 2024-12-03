@@ -76,7 +76,7 @@ impl crate::khr::surface::Instance {
     pub unsafe fn destroy_surface(
         &self,
         surface: vk::SurfaceKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.fp.destroy_surface_khr)(self.handle, surface, allocation_callbacks.as_raw_ptr());
     }

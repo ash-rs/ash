@@ -12,7 +12,7 @@ impl crate::khr::acceleration_structure::Device {
     pub unsafe fn create_acceleration_structure(
         &self,
         create_info: &vk::AccelerationStructureCreateInfoKHR<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::AccelerationStructureKHR> {
         let mut accel_struct = mem::MaybeUninit::uninit();
         (self.fp.create_acceleration_structure_khr)(
@@ -29,7 +29,7 @@ impl crate::khr::acceleration_structure::Device {
     pub unsafe fn destroy_acceleration_structure(
         &self,
         accel_struct: vk::AccelerationStructureKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.fp.destroy_acceleration_structure_khr)(
             self.handle,
