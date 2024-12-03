@@ -83,7 +83,7 @@ impl crate::ext::debug_utils::Instance {
     pub unsafe fn create_debug_utils_messenger(
         &self,
         create_info: &vk::DebugUtilsMessengerCreateInfoEXT<'_>,
-        allocator: Option<&vk::AllocationCallbacks<'_>>,
+        allocator: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DebugUtilsMessengerEXT> {
         let mut messenger = mem::MaybeUninit::uninit();
         (self.fp.create_debug_utils_messenger_ext)(
@@ -100,7 +100,7 @@ impl crate::ext::debug_utils::Instance {
     pub unsafe fn destroy_debug_utils_messenger(
         &self,
         messenger: vk::DebugUtilsMessengerEXT,
-        allocator: Option<&vk::AllocationCallbacks<'_>>,
+        allocator: Option<&vk::AllocationCallbacks>,
     ) {
         (self.fp.destroy_debug_utils_messenger_ext)(self.handle, messenger, allocator.as_raw_ptr());
     }

@@ -252,7 +252,7 @@ impl Entry {
     pub unsafe fn create_instance(
         &self,
         create_info: &vk::InstanceCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<Instance> {
         let mut instance = mem::MaybeUninit::uninit();
         let instance = (self.entry_fn_1_0.create_instance)(

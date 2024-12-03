@@ -11,7 +11,7 @@ impl crate::khr::display_swapchain::Device {
     pub unsafe fn create_shared_swapchains(
         &self,
         create_infos: &[vk::SwapchainCreateInfoKHR<'_>],
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<Vec<vk::SwapchainKHR>> {
         let mut swapchains = Vec::with_capacity(create_infos.len());
         (self.fp.create_shared_swapchains_khr)(

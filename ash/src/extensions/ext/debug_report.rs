@@ -11,7 +11,7 @@ impl crate::ext::debug_report::Instance {
     pub unsafe fn destroy_debug_report_callback(
         &self,
         debug: vk::DebugReportCallbackEXT,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.fp.destroy_debug_report_callback_ext)(
             self.handle,
@@ -25,7 +25,7 @@ impl crate::ext::debug_report::Instance {
     pub unsafe fn create_debug_report_callback(
         &self,
         create_info: &vk::DebugReportCallbackCreateInfoEXT<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DebugReportCallbackEXT> {
         let mut debug_cb = mem::MaybeUninit::uninit();
         (self.fp.create_debug_report_callback_ext)(

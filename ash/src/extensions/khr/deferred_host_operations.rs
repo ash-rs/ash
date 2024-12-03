@@ -10,7 +10,7 @@ impl crate::khr::deferred_host_operations::Device {
     #[inline]
     pub unsafe fn create_deferred_operation(
         &self,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DeferredOperationKHR> {
         let mut operation = mem::MaybeUninit::uninit();
         (self.fp.create_deferred_operation_khr)(
@@ -35,7 +35,7 @@ impl crate::khr::deferred_host_operations::Device {
     pub unsafe fn destroy_deferred_operation(
         &self,
         operation: vk::DeferredOperationKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.fp.destroy_deferred_operation_khr)(
             self.handle,
