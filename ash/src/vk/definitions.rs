@@ -1,3 +1,4 @@
+#![allow(clippy::needless_lifetimes)]
 use crate::vk::aliases::*;
 use crate::vk::bitflags::*;
 use crate::vk::constants::*;
