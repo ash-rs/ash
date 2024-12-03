@@ -1144,19 +1144,18 @@ impl<'a> ApplicationInfo<'a> {
 #[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAllocationCallbacks.html>"]
 #[must_use]
-pub struct AllocationCallbacks<'a> {
+pub struct AllocationCallbacks {
     pub p_user_data: *mut c_void,
     pub pfn_allocation: PFN_vkAllocationFunction,
     pub pfn_reallocation: PFN_vkReallocationFunction,
     pub pfn_free: PFN_vkFreeFunction,
     pub pfn_internal_allocation: PFN_vkInternalAllocationNotification,
     pub pfn_internal_free: PFN_vkInternalFreeNotification,
-    pub _marker: PhantomData<&'a ()>,
 }
-unsafe impl Send for AllocationCallbacks<'_> {}
-unsafe impl Sync for AllocationCallbacks<'_> {}
+unsafe impl Send for AllocationCallbacks {}
+unsafe impl Sync for AllocationCallbacks {}
 #[cfg(feature = "debug")]
-impl fmt::Debug for AllocationCallbacks<'_> {
+impl fmt::Debug for AllocationCallbacks {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("AllocationCallbacks")
             .field("p_user_data", &self.p_user_data)
@@ -1180,7 +1179,7 @@ impl fmt::Debug for AllocationCallbacks<'_> {
             .finish()
     }
 }
-impl ::core::default::Default for AllocationCallbacks<'_> {
+impl ::core::default::Default for AllocationCallbacks {
     #[inline]
     fn default() -> Self {
         Self {
@@ -1190,11 +1189,10 @@ impl ::core::default::Default for AllocationCallbacks<'_> {
             pfn_free: PFN_vkFreeFunction::default(),
             pfn_internal_allocation: PFN_vkInternalAllocationNotification::default(),
             pfn_internal_free: PFN_vkInternalFreeNotification::default(),
-            _marker: PhantomData,
         }
     }
 }
-impl<'a> AllocationCallbacks<'a> {
+impl AllocationCallbacks {
     #[inline]
     pub fn user_data(mut self, user_data: *mut c_void) -> Self {
         self.p_user_data = user_data;

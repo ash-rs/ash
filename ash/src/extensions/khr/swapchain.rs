@@ -14,7 +14,7 @@ impl crate::khr::swapchain::Device {
     pub unsafe fn create_swapchain(
         &self,
         create_info: &vk::SwapchainCreateInfoKHR<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SwapchainKHR> {
         let mut swapchain = mem::MaybeUninit::uninit();
         (self.fp.create_swapchain_khr)(
@@ -31,7 +31,7 @@ impl crate::khr::swapchain::Device {
     pub unsafe fn destroy_swapchain(
         &self,
         swapchain: vk::SwapchainKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.fp.destroy_swapchain_khr)(self.handle, swapchain, allocation_callbacks.as_raw_ptr());
     }

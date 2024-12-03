@@ -17,7 +17,7 @@ impl crate::amdx::shader_enqueue::Device {
         &self,
         pipeline_cache: vk::PipelineCache,
         create_infos: &[vk::ExecutionGraphPipelineCreateInfoAMDX<'_>],
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
         let mut pipelines = Vec::with_capacity(create_infos.len());
         let err_code = (self.fp.create_execution_graph_pipelines_amdx)(

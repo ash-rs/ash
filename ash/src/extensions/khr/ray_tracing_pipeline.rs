@@ -42,7 +42,7 @@ impl crate::khr::ray_tracing_pipeline::Device {
         deferred_operation: vk::DeferredOperationKHR,
         pipeline_cache: vk::PipelineCache,
         create_infos: &[vk::RayTracingPipelineCreateInfoKHR<'_>],
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
         let mut pipelines = Vec::with_capacity(create_infos.len());
         let err_code = (self.fp.create_ray_tracing_pipelines_khr)(

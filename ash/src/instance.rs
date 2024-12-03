@@ -363,7 +363,7 @@ impl Instance {
         &self,
         physical_device: vk::PhysicalDevice,
         create_info: &vk::DeviceCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<Device> {
         let mut device = mem::MaybeUninit::uninit();
         let device = (self.instance_fn_1_0.create_device)(
@@ -388,10 +388,7 @@ impl Instance {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyInstance.html>
     #[inline]
-    pub unsafe fn destroy_instance(
-        &self,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
-    ) {
+    pub unsafe fn destroy_instance(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
         (self.instance_fn_1_0.destroy_instance)(self.handle(), allocation_callbacks.as_raw_ptr());
     }
 
