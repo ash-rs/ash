@@ -6,7 +6,7 @@ use crate::vk::enums::*;
 use crate::vk::native::*;
 use crate::vk::platform_types::*;
 use crate::vk::prelude::*;
-use crate::vk::{ptr_chain_iter, Handle};
+use crate::vk::Handle;
 use core::ffi::*;
 use core::fmt;
 use core::marker::PhantomData;
@@ -1094,7 +1094,7 @@ impl ::core::default::Default for ApplicationInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ApplicationInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ApplicationInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::APPLICATION_INFO;
 }
 impl<'a> ApplicationInfo<'a> {
@@ -1259,10 +1259,10 @@ impl ::core::default::Default for DeviceQueueCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceQueueCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceQueueCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_QUEUE_CREATE_INFO;
 }
-pub unsafe trait ExtendsDeviceQueueCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for DeviceQueueCreateInfo<'a> {}
 impl<'a> DeviceQueueCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: DeviceQueueCreateFlags) -> Self {
@@ -1278,20 +1278,6 @@ impl<'a> DeviceQueueCreateInfo<'a> {
     pub fn queue_priorities(mut self, queue_priorities: &'a [f32]) -> Self {
         self.queue_count = queue_priorities.len() as _;
         self.p_queue_priorities = queue_priorities.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDeviceQueueCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -1336,10 +1322,10 @@ impl ::core::default::Default for DeviceCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_CREATE_INFO;
 }
-pub unsafe trait ExtendsDeviceCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for DeviceCreateInfo<'a> {}
 impl<'a> DeviceCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: DeviceCreateFlags) -> Self {
@@ -1372,20 +1358,6 @@ impl<'a> DeviceCreateInfo<'a> {
     #[inline]
     pub fn enabled_features(mut self, enabled_features: &'a PhysicalDeviceFeatures) -> Self {
         self.p_enabled_features = enabled_features;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDeviceCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -1423,10 +1395,10 @@ impl ::core::default::Default for InstanceCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for InstanceCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for InstanceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INSTANCE_CREATE_INFO;
 }
-pub unsafe trait ExtendsInstanceCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for InstanceCreateInfo<'a> {}
 impl<'a> InstanceCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: InstanceCreateFlags) -> Self {
@@ -1448,20 +1420,6 @@ impl<'a> InstanceCreateInfo<'a> {
     pub fn enabled_extension_names(mut self, enabled_extension_names: &'a [*const c_char]) -> Self {
         self.enabled_extension_count = enabled_extension_names.len() as _;
         self.pp_enabled_extension_names = enabled_extension_names.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsInstanceCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -1581,10 +1539,10 @@ impl ::core::default::Default for MemoryAllocateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryAllocateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_ALLOCATE_INFO;
 }
-pub unsafe trait ExtendsMemoryAllocateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for MemoryAllocateInfo<'a> {}
 impl<'a> MemoryAllocateInfo<'a> {
     #[inline]
     pub fn allocation_size(mut self, allocation_size: DeviceSize) -> Self {
@@ -1594,20 +1552,6 @@ impl<'a> MemoryAllocateInfo<'a> {
     #[inline]
     pub fn memory_type_index(mut self, memory_type_index: u32) -> Self {
         self.memory_type_index = memory_type_index;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryAllocateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -1774,7 +1718,7 @@ impl ::core::default::Default for MappedMemoryRange<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MappedMemoryRange<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MappedMemoryRange<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MAPPED_MEMORY_RANGE;
 }
 impl<'a> MappedMemoryRange<'a> {
@@ -1952,10 +1896,10 @@ impl ::core::default::Default for WriteDescriptorSet<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for WriteDescriptorSet<'a> {
+unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSet<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_DESCRIPTOR_SET;
 }
-pub unsafe trait ExtendsWriteDescriptorSet {}
+unsafe impl<'a> BaseTaggedStructure<'a> for WriteDescriptorSet<'a> {}
 impl<'a> WriteDescriptorSet<'a> {
     #[inline]
     pub fn dst_set(mut self, dst_set: DescriptorSet) -> Self {
@@ -2000,20 +1944,6 @@ impl<'a> WriteDescriptorSet<'a> {
         self.p_texel_buffer_view = texel_buffer_view.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsWriteDescriptorSet + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -2051,7 +1981,7 @@ impl ::core::default::Default for CopyDescriptorSet<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyDescriptorSet<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyDescriptorSet<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_DESCRIPTOR_SET;
 }
 impl<'a> CopyDescriptorSet<'a> {
@@ -2115,13 +2045,19 @@ impl ::core::default::Default for BufferUsageFlags2CreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferUsageFlags2CreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferUsageFlags2CreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_USAGE_FLAGS_2_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsBufferViewCreateInfo for BufferUsageFlags2CreateInfoKHR<'_> {}
-unsafe impl ExtendsBufferCreateInfo for BufferUsageFlags2CreateInfoKHR<'_> {}
-unsafe impl ExtendsPhysicalDeviceExternalBufferInfo for BufferUsageFlags2CreateInfoKHR<'_> {}
-unsafe impl ExtendsDescriptorBufferBindingInfoEXT for BufferUsageFlags2CreateInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, BufferViewCreateInfo<'a>> for BufferUsageFlags2CreateInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, BufferCreateInfo<'a>> for BufferUsageFlags2CreateInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceExternalBufferInfo<'a>>
+    for BufferUsageFlags2CreateInfoKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DescriptorBufferBindingInfoEXT<'a>>
+    for BufferUsageFlags2CreateInfoKHR<'a>
+{
+}
 impl<'a> BufferUsageFlags2CreateInfoKHR<'a> {
     #[inline]
     pub fn usage(mut self, usage: BufferUsageFlags2KHR) -> Self {
@@ -2163,10 +2099,10 @@ impl ::core::default::Default for BufferCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_CREATE_INFO;
 }
-pub unsafe trait ExtendsBufferCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for BufferCreateInfo<'a> {}
 impl<'a> BufferCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: BufferCreateFlags) -> Self {
@@ -2192,20 +2128,6 @@ impl<'a> BufferCreateInfo<'a> {
     pub fn queue_family_indices(mut self, queue_family_indices: &'a [u32]) -> Self {
         self.queue_family_index_count = queue_family_indices.len() as _;
         self.p_queue_family_indices = queue_family_indices.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -2241,10 +2163,10 @@ impl ::core::default::Default for BufferViewCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferViewCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferViewCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_VIEW_CREATE_INFO;
 }
-pub unsafe trait ExtendsBufferViewCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for BufferViewCreateInfo<'a> {}
 impl<'a> BufferViewCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: BufferViewCreateFlags) -> Self {
@@ -2269,20 +2191,6 @@ impl<'a> BufferViewCreateInfo<'a> {
     #[inline]
     pub fn range(mut self, range: DeviceSize) -> Self {
         self.range = range;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferViewCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -2411,7 +2319,7 @@ impl ::core::default::Default for MemoryBarrier<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryBarrier<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryBarrier<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_BARRIER;
 }
 impl<'a> MemoryBarrier<'a> {
@@ -2462,10 +2370,10 @@ impl ::core::default::Default for BufferMemoryBarrier<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferMemoryBarrier<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferMemoryBarrier<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_MEMORY_BARRIER;
 }
-pub unsafe trait ExtendsBufferMemoryBarrier {}
+unsafe impl<'a> BaseTaggedStructure<'a> for BufferMemoryBarrier<'a> {}
 impl<'a> BufferMemoryBarrier<'a> {
     #[inline]
     pub fn src_access_mask(mut self, src_access_mask: AccessFlags) -> Self {
@@ -2500,20 +2408,6 @@ impl<'a> BufferMemoryBarrier<'a> {
     #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferMemoryBarrier + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -2555,10 +2449,10 @@ impl ::core::default::Default for ImageMemoryBarrier<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageMemoryBarrier<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageMemoryBarrier<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_MEMORY_BARRIER;
 }
-pub unsafe trait ExtendsImageMemoryBarrier {}
+unsafe impl<'a> BaseTaggedStructure<'a> for ImageMemoryBarrier<'a> {}
 impl<'a> ImageMemoryBarrier<'a> {
     #[inline]
     pub fn src_access_mask(mut self, src_access_mask: AccessFlags) -> Self {
@@ -2598,20 +2492,6 @@ impl<'a> ImageMemoryBarrier<'a> {
     #[inline]
     pub fn subresource_range(mut self, subresource_range: ImageSubresourceRange) -> Self {
         self.subresource_range = subresource_range;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageMemoryBarrier + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -2663,10 +2543,10 @@ impl ::core::default::Default for ImageCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CREATE_INFO;
 }
-pub unsafe trait ExtendsImageCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for ImageCreateInfo<'a> {}
 impl<'a> ImageCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: ImageCreateFlags) -> Self {
@@ -2727,20 +2607,6 @@ impl<'a> ImageCreateInfo<'a> {
     #[inline]
     pub fn initial_layout(mut self, initial_layout: ImageLayout) -> Self {
         self.initial_layout = initial_layout;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -2817,10 +2683,10 @@ impl ::core::default::Default for ImageViewCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_CREATE_INFO;
 }
-pub unsafe trait ExtendsImageViewCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for ImageViewCreateInfo<'a> {}
 impl<'a> ImageViewCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: ImageViewCreateFlags) -> Self {
@@ -2850,20 +2716,6 @@ impl<'a> ImageViewCreateInfo<'a> {
     #[inline]
     pub fn subresource_range(mut self, subresource_range: ImageSubresourceRange) -> Self {
         self.subresource_range = subresource_range;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageViewCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -3131,10 +2983,10 @@ impl ::core::default::Default for BindSparseInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindSparseInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindSparseInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_SPARSE_INFO;
 }
-pub unsafe trait ExtendsBindSparseInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for BindSparseInfo<'a> {}
 impl<'a> BindSparseInfo<'a> {
     #[inline]
     pub fn wait_semaphores(mut self, wait_semaphores: &'a [Semaphore]) -> Self {
@@ -3167,20 +3019,6 @@ impl<'a> BindSparseInfo<'a> {
     pub fn signal_semaphores(mut self, signal_semaphores: &'a [Semaphore]) -> Self {
         self.signal_semaphore_count = signal_semaphores.len() as _;
         self.p_signal_semaphores = signal_semaphores.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBindSparseInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -3451,11 +3289,11 @@ impl ::core::default::Default for ShaderModuleCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ShaderModuleCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ShaderModuleCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_MODULE_CREATE_INFO;
 }
-unsafe impl ExtendsPipelineShaderStageCreateInfo for ShaderModuleCreateInfo<'_> {}
-pub unsafe trait ExtendsShaderModuleCreateInfo {}
+unsafe impl<'a> Extends<'a, PipelineShaderStageCreateInfo<'a>> for ShaderModuleCreateInfo<'a> {}
+unsafe impl<'a> BaseTaggedStructure<'a> for ShaderModuleCreateInfo<'a> {}
 impl<'a> ShaderModuleCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: ShaderModuleCreateFlags) -> Self {
@@ -3466,20 +3304,6 @@ impl<'a> ShaderModuleCreateInfo<'a> {
     pub fn code(mut self, code: &'a [u32]) -> Self {
         self.code_size = code.len() * 4;
         self.p_code = code.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsShaderModuleCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -3567,10 +3391,10 @@ impl ::core::default::Default for DescriptorSetLayoutCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetLayoutCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
 }
-pub unsafe trait ExtendsDescriptorSetLayoutCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for DescriptorSetLayoutCreateInfo<'a> {}
 impl<'a> DescriptorSetLayoutCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: DescriptorSetLayoutCreateFlags) -> Self {
@@ -3581,23 +3405,6 @@ impl<'a> DescriptorSetLayoutCreateInfo<'a> {
     pub fn bindings(mut self, bindings: &'a [DescriptorSetLayoutBinding<'a>]) -> Self {
         self.binding_count = bindings.len() as _;
         self.p_bindings = bindings.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDescriptorSetLayoutCreateInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -3652,10 +3459,10 @@ impl ::core::default::Default for DescriptorPoolCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorPoolCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorPoolCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_POOL_CREATE_INFO;
 }
-pub unsafe trait ExtendsDescriptorPoolCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for DescriptorPoolCreateInfo<'a> {}
 impl<'a> DescriptorPoolCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: DescriptorPoolCreateFlags) -> Self {
@@ -3671,23 +3478,6 @@ impl<'a> DescriptorPoolCreateInfo<'a> {
     pub fn pool_sizes(mut self, pool_sizes: &'a [DescriptorPoolSize]) -> Self {
         self.pool_size_count = pool_sizes.len() as _;
         self.p_pool_sizes = pool_sizes.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDescriptorPoolCreateInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -3719,10 +3509,10 @@ impl ::core::default::Default for DescriptorSetAllocateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetAllocateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_ALLOCATE_INFO;
 }
-pub unsafe trait ExtendsDescriptorSetAllocateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for DescriptorSetAllocateInfo<'a> {}
 impl<'a> DescriptorSetAllocateInfo<'a> {
     #[inline]
     pub fn descriptor_pool(mut self, descriptor_pool: DescriptorPool) -> Self {
@@ -3733,23 +3523,6 @@ impl<'a> DescriptorSetAllocateInfo<'a> {
     pub fn set_layouts(mut self, set_layouts: &'a [DescriptorSetLayout]) -> Self {
         self.descriptor_set_count = set_layouts.len() as _;
         self.p_set_layouts = set_layouts.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDescriptorSetAllocateInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -3852,10 +3625,10 @@ impl ::core::default::Default for PipelineShaderStageCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineShaderStageCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_SHADER_STAGE_CREATE_INFO;
 }
-pub unsafe trait ExtendsPipelineShaderStageCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PipelineShaderStageCreateInfo<'a> {}
 impl<'a> PipelineShaderStageCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineShaderStageCreateFlags) -> Self {
@@ -3888,23 +3661,6 @@ impl<'a> PipelineShaderStageCreateInfo<'a> {
     #[inline]
     pub fn specialization_info(mut self, specialization_info: &'a SpecializationInfo<'a>) -> Self {
         self.p_specialization_info = specialization_info;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineShaderStageCreateInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -3940,10 +3696,10 @@ impl ::core::default::Default for ComputePipelineCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ComputePipelineCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ComputePipelineCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_PIPELINE_CREATE_INFO;
 }
-pub unsafe trait ExtendsComputePipelineCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for ComputePipelineCreateInfo<'a> {}
 impl<'a> ComputePipelineCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
@@ -3968,23 +3724,6 @@ impl<'a> ComputePipelineCreateInfo<'a> {
     #[inline]
     pub fn base_pipeline_index(mut self, base_pipeline_index: i32) -> Self {
         self.base_pipeline_index = base_pipeline_index;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsComputePipelineCreateInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -4016,10 +3755,13 @@ impl ::core::default::Default for ComputePipelineIndirectBufferInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ComputePipelineIndirectBufferInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ComputePipelineIndirectBufferInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_PIPELINE_INDIRECT_BUFFER_INFO_NV;
 }
-unsafe impl ExtendsComputePipelineCreateInfo for ComputePipelineIndirectBufferInfoNV<'_> {}
+unsafe impl<'a> Extends<'a, ComputePipelineCreateInfo<'a>>
+    for ComputePipelineIndirectBufferInfoNV<'a>
+{
+}
 impl<'a> ComputePipelineIndirectBufferInfoNV<'a> {
     #[inline]
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
@@ -4064,13 +3806,25 @@ impl ::core::default::Default for PipelineCreateFlags2CreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCreateFlags2CreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCreateFlags2CreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CREATE_FLAGS_2_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsComputePipelineCreateInfo for PipelineCreateFlags2CreateInfoKHR<'_> {}
-unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCreateFlags2CreateInfoKHR<'_> {}
-unsafe impl ExtendsRayTracingPipelineCreateInfoNV for PipelineCreateFlags2CreateInfoKHR<'_> {}
-unsafe impl ExtendsRayTracingPipelineCreateInfoKHR for PipelineCreateFlags2CreateInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, ComputePipelineCreateInfo<'a>>
+    for PipelineCreateFlags2CreateInfoKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>>
+    for PipelineCreateFlags2CreateInfoKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, RayTracingPipelineCreateInfoNV<'a>>
+    for PipelineCreateFlags2CreateInfoKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, RayTracingPipelineCreateInfoKHR<'a>>
+    for PipelineCreateFlags2CreateInfoKHR<'a>
+{
+}
 impl<'a> PipelineCreateFlags2CreateInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineCreateFlags2KHR) -> Self {
@@ -4170,10 +3924,10 @@ impl ::core::default::Default for PipelineVertexInputStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineVertexInputStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineVertexInputStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 }
-pub unsafe trait ExtendsPipelineVertexInputStateCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PipelineVertexInputStateCreateInfo<'a> {}
 impl<'a> PipelineVertexInputStateCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineVertexInputStateCreateFlags) -> Self {
@@ -4196,23 +3950,6 @@ impl<'a> PipelineVertexInputStateCreateInfo<'a> {
     ) -> Self {
         self.vertex_attribute_description_count = vertex_attribute_descriptions.len() as _;
         self.p_vertex_attribute_descriptions = vertex_attribute_descriptions.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineVertexInputStateCreateInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -4244,7 +3981,7 @@ impl ::core::default::Default for PipelineInputAssemblyStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineInputAssemblyStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineInputAssemblyStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 }
 impl<'a> PipelineInputAssemblyStateCreateInfo<'a> {
@@ -4290,10 +4027,10 @@ impl ::core::default::Default for PipelineTessellationStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineTessellationStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineTessellationStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_TESSELLATION_STATE_CREATE_INFO;
 }
-pub unsafe trait ExtendsPipelineTessellationStateCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PipelineTessellationStateCreateInfo<'a> {}
 impl<'a> PipelineTessellationStateCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineTessellationStateCreateFlags) -> Self {
@@ -4303,23 +4040,6 @@ impl<'a> PipelineTessellationStateCreateInfo<'a> {
     #[inline]
     pub fn patch_control_points(mut self, patch_control_points: u32) -> Self {
         self.patch_control_points = patch_control_points;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineTessellationStateCreateInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -4355,10 +4075,10 @@ impl ::core::default::Default for PipelineViewportStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_VIEWPORT_STATE_CREATE_INFO;
 }
-pub unsafe trait ExtendsPipelineViewportStateCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PipelineViewportStateCreateInfo<'a> {}
 impl<'a> PipelineViewportStateCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineViewportStateCreateFlags) -> Self {
@@ -4385,23 +4105,6 @@ impl<'a> PipelineViewportStateCreateInfo<'a> {
     pub fn scissors(mut self, scissors: &'a [Rect2D]) -> Self {
         self.scissor_count = scissors.len() as _;
         self.p_scissors = scissors.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineViewportStateCreateInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -4449,10 +4152,10 @@ impl ::core::default::Default for PipelineRasterizationStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRasterizationStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 }
-pub unsafe trait ExtendsPipelineRasterizationStateCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PipelineRasterizationStateCreateInfo<'a> {}
 impl<'a> PipelineRasterizationStateCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineRasterizationStateCreateFlags) -> Self {
@@ -4509,23 +4212,6 @@ impl<'a> PipelineRasterizationStateCreateInfo<'a> {
         self.line_width = line_width;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineRasterizationStateCreateInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -4563,10 +4249,10 @@ impl ::core::default::Default for PipelineMultisampleStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineMultisampleStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineMultisampleStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 }
-pub unsafe trait ExtendsPipelineMultisampleStateCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PipelineMultisampleStateCreateInfo<'a> {}
 impl<'a> PipelineMultisampleStateCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineMultisampleStateCreateFlags) -> Self {
@@ -4610,23 +4296,6 @@ impl<'a> PipelineMultisampleStateCreateInfo<'a> {
     #[inline]
     pub fn alpha_to_one_enable(mut self, alpha_to_one_enable: bool) -> Self {
         self.alpha_to_one_enable = alpha_to_one_enable.into();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineMultisampleStateCreateInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -4721,10 +4390,10 @@ impl ::core::default::Default for PipelineColorBlendStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineColorBlendStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineColorBlendStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
 }
-pub unsafe trait ExtendsPipelineColorBlendStateCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PipelineColorBlendStateCreateInfo<'a> {}
 impl<'a> PipelineColorBlendStateCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineColorBlendStateCreateFlags) -> Self {
@@ -4750,23 +4419,6 @@ impl<'a> PipelineColorBlendStateCreateInfo<'a> {
     #[inline]
     pub fn blend_constants(mut self, blend_constants: [f32; 4]) -> Self {
         self.blend_constants = blend_constants;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineColorBlendStateCreateInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -4798,7 +4450,7 @@ impl ::core::default::Default for PipelineDynamicStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineDynamicStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineDynamicStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 }
 impl<'a> PipelineDynamicStateCreateInfo<'a> {
@@ -4907,7 +4559,7 @@ impl ::core::default::Default for PipelineDepthStencilStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineDepthStencilStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineDepthStencilStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
 }
 impl<'a> PipelineDepthStencilStateCreateInfo<'a> {
@@ -5018,10 +4670,10 @@ impl ::core::default::Default for GraphicsPipelineCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GraphicsPipelineCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GRAPHICS_PIPELINE_CREATE_INFO;
 }
-pub unsafe trait ExtendsGraphicsPipelineCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for GraphicsPipelineCreateInfo<'a> {}
 impl<'a> GraphicsPipelineCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
@@ -5128,23 +4780,6 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
         self.base_pipeline_index = base_pipeline_index;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsGraphicsPipelineCreateInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -5174,7 +4809,7 @@ impl ::core::default::Default for PipelineCacheCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCacheCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCacheCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CACHE_CREATE_INFO;
 }
 impl<'a> PipelineCacheCreateInfo<'a> {
@@ -5296,7 +4931,7 @@ impl ::core::default::Default for PipelineBinaryCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineBinaryCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_CREATE_INFO_KHR;
 }
 impl<'a> PipelineBinaryCreateInfoKHR<'a> {
@@ -5348,7 +4983,7 @@ impl ::core::default::Default for PipelineBinaryHandlesInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineBinaryHandlesInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryHandlesInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_HANDLES_INFO_KHR;
 }
 impl<'a> PipelineBinaryHandlesInfoKHR<'a> {
@@ -5459,7 +5094,7 @@ impl ::core::default::Default for PipelineBinaryKeyKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineBinaryKeyKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryKeyKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_KEY_KHR;
 }
 impl<'a> PipelineBinaryKeyKHR<'a> {
@@ -5500,12 +5135,12 @@ impl ::core::default::Default for PipelineBinaryInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineBinaryInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_INFO_KHR;
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineBinaryInfoKHR<'_> {}
-unsafe impl ExtendsComputePipelineCreateInfo for PipelineBinaryInfoKHR<'_> {}
-unsafe impl ExtendsRayTracingPipelineCreateInfoKHR for PipelineBinaryInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>> for PipelineBinaryInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, ComputePipelineCreateInfo<'a>> for PipelineBinaryInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, RayTracingPipelineCreateInfoKHR<'a>> for PipelineBinaryInfoKHR<'a> {}
 impl<'a> PipelineBinaryInfoKHR<'a> {
     #[inline]
     pub fn pipeline_binaries(mut self, pipeline_binaries: &'a [PipelineBinaryKHR]) -> Self {
@@ -5538,7 +5173,7 @@ impl ::core::default::Default for ReleaseCapturedPipelineDataInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ReleaseCapturedPipelineDataInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ReleaseCapturedPipelineDataInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RELEASE_CAPTURED_PIPELINE_DATA_INFO_KHR;
 }
 impl<'a> ReleaseCapturedPipelineDataInfoKHR<'a> {
@@ -5572,7 +5207,7 @@ impl ::core::default::Default for PipelineBinaryDataInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineBinaryDataInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryDataInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_DATA_INFO_KHR;
 }
 impl<'a> PipelineBinaryDataInfoKHR<'a> {
@@ -5604,7 +5239,7 @@ impl ::core::default::Default for PipelineCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CREATE_INFO_KHR;
 }
 impl<'a> PipelineCreateInfoKHR<'a> {}
@@ -5640,16 +5275,28 @@ impl ::core::default::Default for PipelineLayoutCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineLayoutCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineLayoutCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_LAYOUT_CREATE_INFO;
 }
-unsafe impl ExtendsBindDescriptorSetsInfoKHR for PipelineLayoutCreateInfo<'_> {}
-unsafe impl ExtendsPushConstantsInfoKHR for PipelineLayoutCreateInfo<'_> {}
-unsafe impl ExtendsPushDescriptorSetInfoKHR for PipelineLayoutCreateInfo<'_> {}
-unsafe impl ExtendsPushDescriptorSetWithTemplateInfoKHR for PipelineLayoutCreateInfo<'_> {}
-unsafe impl ExtendsSetDescriptorBufferOffsetsInfoEXT for PipelineLayoutCreateInfo<'_> {}
-unsafe impl ExtendsBindDescriptorBufferEmbeddedSamplersInfoEXT for PipelineLayoutCreateInfo<'_> {}
-unsafe impl ExtendsIndirectCommandsLayoutCreateInfoEXT for PipelineLayoutCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, BindDescriptorSetsInfoKHR<'a>> for PipelineLayoutCreateInfo<'a> {}
+unsafe impl<'a> Extends<'a, PushConstantsInfoKHR<'a>> for PipelineLayoutCreateInfo<'a> {}
+unsafe impl<'a> Extends<'a, PushDescriptorSetInfoKHR<'a>> for PipelineLayoutCreateInfo<'a> {}
+unsafe impl<'a> Extends<'a, PushDescriptorSetWithTemplateInfoKHR<'a>>
+    for PipelineLayoutCreateInfo<'a>
+{
+}
+unsafe impl<'a> Extends<'a, SetDescriptorBufferOffsetsInfoEXT<'a>>
+    for PipelineLayoutCreateInfo<'a>
+{
+}
+unsafe impl<'a> Extends<'a, BindDescriptorBufferEmbeddedSamplersInfoEXT<'a>>
+    for PipelineLayoutCreateInfo<'a>
+{
+}
+unsafe impl<'a> Extends<'a, IndirectCommandsLayoutCreateInfoEXT<'a>>
+    for PipelineLayoutCreateInfo<'a>
+{
+}
 impl<'a> PipelineLayoutCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineLayoutCreateFlags) -> Self {
@@ -5723,10 +5370,10 @@ impl ::core::default::Default for SamplerCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_CREATE_INFO;
 }
-pub unsafe trait ExtendsSamplerCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for SamplerCreateInfo<'a> {}
 impl<'a> SamplerCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: SamplerCreateFlags) -> Self {
@@ -5808,20 +5455,6 @@ impl<'a> SamplerCreateInfo<'a> {
         self.unnormalized_coordinates = unnormalized_coordinates.into();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSamplerCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -5849,7 +5482,7 @@ impl ::core::default::Default for CommandPoolCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandPoolCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandPoolCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_POOL_CREATE_INFO;
 }
 impl<'a> CommandPoolCreateInfo<'a> {
@@ -5892,7 +5525,7 @@ impl ::core::default::Default for CommandBufferAllocateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferAllocateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_ALLOCATE_INFO;
 }
 impl<'a> CommandBufferAllocateInfo<'a> {
@@ -5946,10 +5579,10 @@ impl ::core::default::Default for CommandBufferInheritanceInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferInheritanceInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_INHERITANCE_INFO;
 }
-pub unsafe trait ExtendsCommandBufferInheritanceInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for CommandBufferInheritanceInfo<'a> {}
 impl<'a> CommandBufferInheritanceInfo<'a> {
     #[inline]
     pub fn render_pass(mut self, render_pass: RenderPass) -> Self {
@@ -5981,23 +5614,6 @@ impl<'a> CommandBufferInheritanceInfo<'a> {
         self.pipeline_statistics = pipeline_statistics;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCommandBufferInheritanceInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -6025,10 +5641,10 @@ impl ::core::default::Default for CommandBufferBeginInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferBeginInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_BEGIN_INFO;
 }
-pub unsafe trait ExtendsCommandBufferBeginInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for CommandBufferBeginInfo<'a> {}
 impl<'a> CommandBufferBeginInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: CommandBufferUsageFlags) -> Self {
@@ -6041,20 +5657,6 @@ impl<'a> CommandBufferBeginInfo<'a> {
         inheritance_info: &'a CommandBufferInheritanceInfo<'a>,
     ) -> Self {
         self.p_inheritance_info = inheritance_info;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCommandBufferBeginInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -6103,10 +5705,10 @@ impl ::core::default::Default for RenderPassBeginInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassBeginInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_BEGIN_INFO;
 }
-pub unsafe trait ExtendsRenderPassBeginInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for RenderPassBeginInfo<'a> {}
 impl<'a> RenderPassBeginInfo<'a> {
     #[inline]
     pub fn render_pass(mut self, render_pass: RenderPass) -> Self {
@@ -6127,20 +5729,6 @@ impl<'a> RenderPassBeginInfo<'a> {
     pub fn clear_values(mut self, clear_values: &'a [ClearValue]) -> Self {
         self.clear_value_count = clear_values.len() as _;
         self.p_clear_values = clear_values.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRenderPassBeginInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -6481,10 +6069,10 @@ impl ::core::default::Default for RenderPassCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_CREATE_INFO;
 }
-pub unsafe trait ExtendsRenderPassCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for RenderPassCreateInfo<'a> {}
 impl<'a> RenderPassCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: RenderPassCreateFlags) -> Self {
@@ -6507,20 +6095,6 @@ impl<'a> RenderPassCreateInfo<'a> {
     pub fn dependencies(mut self, dependencies: &'a [SubpassDependency]) -> Self {
         self.dependency_count = dependencies.len() as _;
         self.p_dependencies = dependencies.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRenderPassCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -6548,28 +6122,14 @@ impl ::core::default::Default for EventCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for EventCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for EventCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EVENT_CREATE_INFO;
 }
-pub unsafe trait ExtendsEventCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for EventCreateInfo<'a> {}
 impl<'a> EventCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: EventCreateFlags) -> Self {
         self.flags = flags;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsEventCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -6597,28 +6157,14 @@ impl ::core::default::Default for FenceCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FenceCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FenceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FENCE_CREATE_INFO;
 }
-pub unsafe trait ExtendsFenceCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for FenceCreateInfo<'a> {}
 impl<'a> FenceCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: FenceCreateFlags) -> Self {
         self.flags = flags;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsFenceCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -7961,28 +7507,14 @@ impl ::core::default::Default for SemaphoreCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_CREATE_INFO;
 }
-pub unsafe trait ExtendsSemaphoreCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for SemaphoreCreateInfo<'a> {}
 impl<'a> SemaphoreCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: SemaphoreCreateFlags) -> Self {
         self.flags = flags;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSemaphoreCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -8016,10 +7548,10 @@ impl ::core::default::Default for QueryPoolCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueryPoolCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueryPoolCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUERY_POOL_CREATE_INFO;
 }
-pub unsafe trait ExtendsQueryPoolCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for QueryPoolCreateInfo<'a> {}
 impl<'a> QueryPoolCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: QueryPoolCreateFlags) -> Self {
@@ -8039,20 +7571,6 @@ impl<'a> QueryPoolCreateInfo<'a> {
     #[inline]
     pub fn pipeline_statistics(mut self, pipeline_statistics: QueryPipelineStatisticFlags) -> Self {
         self.pipeline_statistics = pipeline_statistics;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsQueryPoolCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -8092,10 +7610,10 @@ impl ::core::default::Default for FramebufferCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FramebufferCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FramebufferCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_CREATE_INFO;
 }
-pub unsafe trait ExtendsFramebufferCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for FramebufferCreateInfo<'a> {}
 impl<'a> FramebufferCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: FramebufferCreateFlags) -> Self {
@@ -8131,20 +7649,6 @@ impl<'a> FramebufferCreateInfo<'a> {
     #[inline]
     pub fn layers(mut self, layers: u32) -> Self {
         self.layers = layers;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsFramebufferCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -8331,10 +7835,10 @@ impl ::core::default::Default for SubmitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubmitInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBMIT_INFO;
 }
-pub unsafe trait ExtendsSubmitInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for SubmitInfo<'a> {}
 impl<'a> SubmitInfo<'a> {
     #[inline]
     pub fn wait_semaphores(mut self, wait_semaphores: &'a [Semaphore]) -> Self {
@@ -8358,20 +7862,6 @@ impl<'a> SubmitInfo<'a> {
     pub fn signal_semaphores(mut self, signal_semaphores: &'a [Semaphore]) -> Self {
         self.signal_semaphore_count = signal_semaphores.len() as _;
         self.p_signal_semaphores = signal_semaphores.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubmitInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -8541,7 +8031,7 @@ impl ::core::default::Default for DisplayModeCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayModeCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayModeCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_MODE_CREATE_INFO_KHR;
 }
 impl<'a> DisplayModeCreateInfoKHR<'a> {
@@ -8657,7 +8147,7 @@ impl ::core::default::Default for DisplaySurfaceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplaySurfaceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplaySurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_SURFACE_CREATE_INFO_KHR;
 }
 impl<'a> DisplaySurfaceCreateInfoKHR<'a> {
@@ -8730,10 +8220,10 @@ impl ::core::default::Default for DisplayPresentInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayPresentInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayPresentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PRESENT_INFO_KHR;
 }
-unsafe impl ExtendsPresentInfoKHR for DisplayPresentInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, PresentInfoKHR<'a>> for DisplayPresentInfoKHR<'a> {}
 impl<'a> DisplayPresentInfoKHR<'a> {
     #[inline]
     pub fn src_rect(mut self, src_rect: Rect2D) -> Self {
@@ -8849,7 +8339,7 @@ impl ::core::default::Default for AndroidSurfaceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AndroidSurfaceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AndroidSurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANDROID_SURFACE_CREATE_INFO_KHR;
 }
 impl<'a> AndroidSurfaceCreateInfoKHR<'a> {
@@ -8890,7 +8380,7 @@ impl ::core::default::Default for ViSurfaceCreateInfoNN<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ViSurfaceCreateInfoNN<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ViSurfaceCreateInfoNN<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VI_SURFACE_CREATE_INFO_NN;
 }
 impl<'a> ViSurfaceCreateInfoNN<'a> {
@@ -8933,7 +8423,7 @@ impl ::core::default::Default for WaylandSurfaceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for WaylandSurfaceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for WaylandSurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WAYLAND_SURFACE_CREATE_INFO_KHR;
 }
 impl<'a> WaylandSurfaceCreateInfoKHR<'a> {
@@ -8981,7 +8471,7 @@ impl ::core::default::Default for Win32SurfaceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for Win32SurfaceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for Win32SurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WIN32_SURFACE_CREATE_INFO_KHR;
 }
 impl<'a> Win32SurfaceCreateInfoKHR<'a> {
@@ -9029,7 +8519,7 @@ impl ::core::default::Default for XlibSurfaceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for XlibSurfaceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for XlibSurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::XLIB_SURFACE_CREATE_INFO_KHR;
 }
 impl<'a> XlibSurfaceCreateInfoKHR<'a> {
@@ -9077,7 +8567,7 @@ impl ::core::default::Default for XcbSurfaceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for XcbSurfaceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for XcbSurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::XCB_SURFACE_CREATE_INFO_KHR;
 }
 impl<'a> XcbSurfaceCreateInfoKHR<'a> {
@@ -9125,7 +8615,7 @@ impl ::core::default::Default for DirectFBSurfaceCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DirectFBSurfaceCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DirectFBSurfaceCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DIRECTFB_SURFACE_CREATE_INFO_EXT;
 }
 impl<'a> DirectFBSurfaceCreateInfoEXT<'a> {
@@ -9171,7 +8661,7 @@ impl ::core::default::Default for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA;
 }
 impl<'a> ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
@@ -9212,7 +8702,7 @@ impl ::core::default::Default for StreamDescriptorSurfaceCreateInfoGGP<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for StreamDescriptorSurfaceCreateInfoGGP<'a> {
+unsafe impl<'a> TaggedStructure<'a> for StreamDescriptorSurfaceCreateInfoGGP<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::STREAM_DESCRIPTOR_SURFACE_CREATE_INFO_GGP;
 }
 impl<'a> StreamDescriptorSurfaceCreateInfoGGP<'a> {
@@ -9255,7 +8745,7 @@ impl ::core::default::Default for ScreenSurfaceCreateInfoQNX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ScreenSurfaceCreateInfoQNX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ScreenSurfaceCreateInfoQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SCREEN_SURFACE_CREATE_INFO_QNX;
 }
 impl<'a> ScreenSurfaceCreateInfoQNX<'a> {
@@ -9350,10 +8840,10 @@ impl ::core::default::Default for SwapchainCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_CREATE_INFO_KHR;
 }
-pub unsafe trait ExtendsSwapchainCreateInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for SwapchainCreateInfoKHR<'a> {}
 impl<'a> SwapchainCreateInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: SwapchainCreateFlagsKHR) -> Self {
@@ -9431,20 +8921,6 @@ impl<'a> SwapchainCreateInfoKHR<'a> {
         self.old_swapchain = old_swapchain;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSwapchainCreateInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -9480,10 +8956,10 @@ impl ::core::default::Default for PresentInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PresentInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PresentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_INFO_KHR;
 }
-pub unsafe trait ExtendsPresentInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PresentInfoKHR<'a> {}
 impl<'a> PresentInfoKHR<'a> {
     #[inline]
     pub fn wait_semaphores(mut self, wait_semaphores: &'a [Semaphore]) -> Self {
@@ -9507,20 +8983,6 @@ impl<'a> PresentInfoKHR<'a> {
     pub fn results(mut self, results: &'a mut [Result]) -> Self {
         self.swapchain_count = results.len() as _;
         self.p_results = results.as_mut_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPresentInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -9563,10 +9025,10 @@ impl ::core::default::Default for DebugReportCallbackCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugReportCallbackCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugReportCallbackCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsInstanceCreateInfo for DebugReportCallbackCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, InstanceCreateInfo<'a>> for DebugReportCallbackCreateInfoEXT<'a> {}
 impl<'a> DebugReportCallbackCreateInfoEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: DebugReportFlagsEXT) -> Self {
@@ -9610,10 +9072,10 @@ impl ::core::default::Default for ValidationFlagsEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ValidationFlagsEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ValidationFlagsEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VALIDATION_FLAGS_EXT;
 }
-unsafe impl ExtendsInstanceCreateInfo for ValidationFlagsEXT<'_> {}
+unsafe impl<'a> Extends<'a, InstanceCreateInfo<'a>> for ValidationFlagsEXT<'a> {}
 impl<'a> ValidationFlagsEXT<'a> {
     #[inline]
     pub fn disabled_validation_checks(
@@ -9655,12 +9117,12 @@ impl ::core::default::Default for ValidationFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ValidationFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ValidationFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VALIDATION_FEATURES_EXT;
 }
-unsafe impl ExtendsInstanceCreateInfo for ValidationFeaturesEXT<'_> {}
-unsafe impl ExtendsShaderModuleCreateInfo for ValidationFeaturesEXT<'_> {}
-unsafe impl ExtendsShaderCreateInfoEXT for ValidationFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, InstanceCreateInfo<'a>> for ValidationFeaturesEXT<'a> {}
+unsafe impl<'a> Extends<'a, ShaderModuleCreateInfo<'a>> for ValidationFeaturesEXT<'a> {}
+unsafe impl<'a> Extends<'a, ShaderCreateInfoEXT<'a>> for ValidationFeaturesEXT<'a> {}
 impl<'a> ValidationFeaturesEXT<'a> {
     #[inline]
     pub fn enabled_validation_features(
@@ -9707,10 +9169,10 @@ impl ::core::default::Default for LayerSettingsCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for LayerSettingsCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for LayerSettingsCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LAYER_SETTINGS_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsInstanceCreateInfo for LayerSettingsCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, InstanceCreateInfo<'a>> for LayerSettingsCreateInfoEXT<'a> {}
 impl<'a> LayerSettingsCreateInfoEXT<'a> {
     #[inline]
     pub fn settings(mut self, settings: &'a [LayerSettingEXT<'a>]) -> Self {
@@ -9810,12 +9272,12 @@ impl ::core::default::Default for PipelineRasterizationStateRasterizationOrderAM
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRasterizationStateRasterizationOrderAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateRasterizationOrderAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD;
 }
-unsafe impl ExtendsPipelineRasterizationStateCreateInfo
-    for PipelineRasterizationStateRasterizationOrderAMD<'_>
+unsafe impl<'a> Extends<'a, PipelineRasterizationStateCreateInfo<'a>>
+    for PipelineRasterizationStateRasterizationOrderAMD<'a>
 {
 }
 impl<'a> PipelineRasterizationStateRasterizationOrderAMD<'a> {
@@ -9853,7 +9315,7 @@ impl ::core::default::Default for DebugMarkerObjectNameInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugMarkerObjectNameInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugMarkerObjectNameInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_MARKER_OBJECT_NAME_INFO_EXT;
 }
 impl<'a> DebugMarkerObjectNameInfoEXT<'a> {
@@ -9913,7 +9375,7 @@ impl ::core::default::Default for DebugMarkerObjectTagInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugMarkerObjectTagInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugMarkerObjectTagInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_MARKER_OBJECT_TAG_INFO_EXT;
 }
 impl<'a> DebugMarkerObjectTagInfoEXT<'a> {
@@ -9965,7 +9427,7 @@ impl ::core::default::Default for DebugMarkerMarkerInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugMarkerMarkerInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugMarkerMarkerInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_MARKER_MARKER_INFO_EXT;
 }
 impl<'a> DebugMarkerMarkerInfoEXT<'a> {
@@ -10012,10 +9474,10 @@ impl ::core::default::Default for DedicatedAllocationImageCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DedicatedAllocationImageCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationImageCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV;
 }
-unsafe impl ExtendsImageCreateInfo for DedicatedAllocationImageCreateInfoNV<'_> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for DedicatedAllocationImageCreateInfoNV<'a> {}
 impl<'a> DedicatedAllocationImageCreateInfoNV<'a> {
     #[inline]
     pub fn dedicated_allocation(mut self, dedicated_allocation: bool) -> Self {
@@ -10047,10 +9509,10 @@ impl ::core::default::Default for DedicatedAllocationBufferCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DedicatedAllocationBufferCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationBufferCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV;
 }
-unsafe impl ExtendsBufferCreateInfo for DedicatedAllocationBufferCreateInfoNV<'_> {}
+unsafe impl<'a> Extends<'a, BufferCreateInfo<'a>> for DedicatedAllocationBufferCreateInfoNV<'a> {}
 impl<'a> DedicatedAllocationBufferCreateInfoNV<'a> {
     #[inline]
     pub fn dedicated_allocation(mut self, dedicated_allocation: bool) -> Self {
@@ -10084,11 +9546,14 @@ impl ::core::default::Default for DedicatedAllocationMemoryAllocateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DedicatedAllocationMemoryAllocateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationMemoryAllocateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV;
 }
-unsafe impl ExtendsMemoryAllocateInfo for DedicatedAllocationMemoryAllocateInfoNV<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>>
+    for DedicatedAllocationMemoryAllocateInfoNV<'a>
+{
+}
 impl<'a> DedicatedAllocationMemoryAllocateInfoNV<'a> {
     #[inline]
     pub fn image(mut self, image: Image) -> Self {
@@ -10170,10 +9635,10 @@ impl ::core::default::Default for ExternalMemoryImageCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalMemoryImageCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryImageCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV;
 }
-unsafe impl ExtendsImageCreateInfo for ExternalMemoryImageCreateInfoNV<'_> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for ExternalMemoryImageCreateInfoNV<'a> {}
 impl<'a> ExternalMemoryImageCreateInfoNV<'a> {
     #[inline]
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlagsNV) -> Self {
@@ -10205,10 +9670,10 @@ impl ::core::default::Default for ExportMemoryAllocateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMemoryAllocateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMemoryAllocateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_MEMORY_ALLOCATE_INFO_NV;
 }
-unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfoNV<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for ExportMemoryAllocateInfoNV<'a> {}
 impl<'a> ExportMemoryAllocateInfoNV<'a> {
     #[inline]
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlagsNV) -> Self {
@@ -10242,10 +9707,10 @@ impl ::core::default::Default for ImportMemoryWin32HandleInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMemoryWin32HandleInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMemoryWin32HandleInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_NV;
 }
-unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoNV<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for ImportMemoryWin32HandleInfoNV<'a> {}
 impl<'a> ImportMemoryWin32HandleInfoNV<'a> {
     #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlagsNV) -> Self {
@@ -10284,10 +9749,10 @@ impl ::core::default::Default for ExportMemoryWin32HandleInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMemoryWin32HandleInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_NV;
 }
-unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoNV<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for ExportMemoryWin32HandleInfoNV<'a> {}
 impl<'a> ExportMemoryWin32HandleInfoNV<'a> {
     #[inline]
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
@@ -10336,11 +9801,11 @@ impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for Win32KeyedMutexAcquireReleaseInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for Win32KeyedMutexAcquireReleaseInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV;
 }
-unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoNV<'_> {}
-unsafe impl ExtendsSubmitInfo2 for Win32KeyedMutexAcquireReleaseInfoNV<'_> {}
+unsafe impl<'a> Extends<'a, SubmitInfo<'a>> for Win32KeyedMutexAcquireReleaseInfoNV<'a> {}
+unsafe impl<'a> Extends<'a, SubmitInfo2<'a>> for Win32KeyedMutexAcquireReleaseInfoNV<'a> {}
 impl<'a> Win32KeyedMutexAcquireReleaseInfoNV<'a> {
     #[inline]
     pub fn acquire_syncs(mut self, acquire_syncs: &'a [DeviceMemory]) -> Self {
@@ -10397,12 +9862,18 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesN
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
     #[inline]
     pub fn device_generated_commands(mut self, device_generated_commands: bool) -> Self {
@@ -10438,15 +9909,18 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsComputeFe
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_COMPUTE_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
     #[inline]
     pub fn device_generated_compute(mut self, device_generated_compute: bool) -> Self {
@@ -10495,10 +9969,10 @@ impl ::core::default::Default for DevicePrivateDataCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DevicePrivateDataCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DevicePrivateDataCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_PRIVATE_DATA_CREATE_INFO;
 }
-unsafe impl ExtendsDeviceCreateInfo for DevicePrivateDataCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for DevicePrivateDataCreateInfo<'a> {}
 impl<'a> DevicePrivateDataCreateInfo<'a> {
     #[inline]
     pub fn private_data_slot_request_count(mut self, private_data_slot_request_count: u32) -> Self {
@@ -10530,7 +10004,7 @@ impl ::core::default::Default for PrivateDataSlotCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PrivateDataSlotCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PrivateDataSlotCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRIVATE_DATA_SLOT_CREATE_INFO;
 }
 impl<'a> PrivateDataSlotCreateInfo<'a> {
@@ -10564,11 +10038,11 @@ impl ::core::default::Default for PhysicalDevicePrivateDataFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePrivateDataFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrivateDataFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePrivateDataFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrivateDataFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>> for PhysicalDevicePrivateDataFeatures<'a> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDevicePrivateDataFeatures<'a> {}
 impl<'a> PhysicalDevicePrivateDataFeatures<'a> {
     #[inline]
     pub fn private_data(mut self, private_data: bool) -> Self {
@@ -10616,12 +10090,12 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertie
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_PROPERTIES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a>
 {
 }
 impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
@@ -10719,10 +10193,13 @@ impl ::core::default::Default for PhysicalDeviceMultiDrawPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiDrawPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiDrawPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiDrawPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceMultiDrawPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceMultiDrawPropertiesEXT<'a> {
     #[inline]
     pub fn max_multi_draw_count(mut self, max_multi_draw_count: u32) -> Self {
@@ -10760,7 +10237,7 @@ impl ::core::default::Default for GraphicsShaderGroupCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GraphicsShaderGroupCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GraphicsShaderGroupCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GRAPHICS_SHADER_GROUP_CREATE_INFO_NV;
 }
 impl<'a> GraphicsShaderGroupCreateInfoNV<'a> {
@@ -10817,11 +10294,14 @@ impl ::core::default::Default for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::GRAPHICS_PIPELINE_SHADER_GROUPS_CREATE_INFO_NV;
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {}
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>>
+    for GraphicsPipelineShaderGroupsCreateInfoNV<'a>
+{
+}
 impl<'a> GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
     #[inline]
     pub fn groups(mut self, groups: &'a [GraphicsShaderGroupCreateInfoNV<'a>]) -> Self {
@@ -10989,7 +10469,7 @@ impl ::core::default::Default for IndirectCommandsLayoutTokenNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectCommandsLayoutTokenNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutTokenNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_COMMANDS_LAYOUT_TOKEN_NV;
 }
 impl<'a> IndirectCommandsLayoutTokenNV<'a> {
@@ -11096,7 +10576,7 @@ impl ::core::default::Default for IndirectCommandsLayoutCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectCommandsLayoutCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NV;
 }
 impl<'a> IndirectCommandsLayoutCreateInfoNV<'a> {
@@ -11171,7 +10651,7 @@ impl ::core::default::Default for GeneratedCommandsInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeneratedCommandsInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GENERATED_COMMANDS_INFO_NV;
 }
 impl<'a> GeneratedCommandsInfoNV<'a> {
@@ -11270,7 +10750,7 @@ impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoNV<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeneratedCommandsMemoryRequirementsInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsMemoryRequirementsInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::GENERATED_COMMANDS_MEMORY_REQUIREMENTS_INFO_NV;
 }
@@ -11325,7 +10805,7 @@ impl ::core::default::Default for PipelineIndirectDeviceAddressInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineIndirectDeviceAddressInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineIndirectDeviceAddressInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_INDIRECT_DEVICE_ADDRESS_INFO_NV;
 }
 impl<'a> PipelineIndirectDeviceAddressInfoNV<'a> {
@@ -11379,32 +10859,15 @@ impl ::core::default::Default for PhysicalDeviceFeatures2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFeatures2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFeatures2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FEATURES_2;
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFeatures2<'_> {}
-pub unsafe trait ExtendsPhysicalDeviceFeatures2 {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceFeatures2<'a> {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PhysicalDeviceFeatures2<'a> {}
 impl<'a> PhysicalDeviceFeatures2<'a> {
     #[inline]
     pub fn features(mut self, features: PhysicalDeviceFeatures) -> Self {
         self.features = features;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceFeatures2 + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -11432,31 +10895,14 @@ impl ::core::default::Default for PhysicalDeviceProperties2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceProperties2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PROPERTIES_2;
 }
-pub unsafe trait ExtendsPhysicalDeviceProperties2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PhysicalDeviceProperties2<'a> {}
 impl<'a> PhysicalDeviceProperties2<'a> {
     #[inline]
     pub fn properties(mut self, properties: PhysicalDeviceProperties) -> Self {
         self.properties = properties;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceProperties2 + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -11484,28 +10930,14 @@ impl ::core::default::Default for FormatProperties2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FormatProperties2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FormatProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FORMAT_PROPERTIES_2;
 }
-pub unsafe trait ExtendsFormatProperties2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for FormatProperties2<'a> {}
 impl<'a> FormatProperties2<'a> {
     #[inline]
     pub fn format_properties(mut self, format_properties: FormatProperties) -> Self {
         self.format_properties = format_properties;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsFormatProperties2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -11533,10 +10965,10 @@ impl ::core::default::Default for ImageFormatProperties2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageFormatProperties2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageFormatProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_FORMAT_PROPERTIES_2;
 }
-pub unsafe trait ExtendsImageFormatProperties2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for ImageFormatProperties2<'a> {}
 impl<'a> ImageFormatProperties2<'a> {
     #[inline]
     pub fn image_format_properties(
@@ -11544,20 +10976,6 @@ impl<'a> ImageFormatProperties2<'a> {
         image_format_properties: ImageFormatProperties,
     ) -> Self {
         self.image_format_properties = image_format_properties;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageFormatProperties2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -11593,10 +11011,10 @@ impl ::core::default::Default for PhysicalDeviceImageFormatInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageFormatInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageFormatInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2;
 }
-pub unsafe trait ExtendsPhysicalDeviceImageFormatInfo2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PhysicalDeviceImageFormatInfo2<'a> {}
 impl<'a> PhysicalDeviceImageFormatInfo2<'a> {
     #[inline]
     pub fn format(mut self, format: Format) -> Self {
@@ -11621,23 +11039,6 @@ impl<'a> PhysicalDeviceImageFormatInfo2<'a> {
     #[inline]
     pub fn flags(mut self, flags: ImageCreateFlags) -> Self {
         self.flags = flags;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceImageFormatInfo2 + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -11665,10 +11066,10 @@ impl ::core::default::Default for QueueFamilyProperties2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueueFamilyProperties2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueueFamilyProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_PROPERTIES_2;
 }
-pub unsafe trait ExtendsQueueFamilyProperties2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for QueueFamilyProperties2<'a> {}
 impl<'a> QueueFamilyProperties2<'a> {
     #[inline]
     pub fn queue_family_properties(
@@ -11676,20 +11077,6 @@ impl<'a> QueueFamilyProperties2<'a> {
         queue_family_properties: QueueFamilyProperties,
     ) -> Self {
         self.queue_family_properties = queue_family_properties;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsQueueFamilyProperties2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -11717,31 +11104,14 @@ impl ::core::default::Default for PhysicalDeviceMemoryProperties2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryProperties2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MEMORY_PROPERTIES_2;
 }
-pub unsafe trait ExtendsPhysicalDeviceMemoryProperties2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PhysicalDeviceMemoryProperties2<'a> {}
 impl<'a> PhysicalDeviceMemoryProperties2<'a> {
     #[inline]
     pub fn memory_properties(mut self, memory_properties: PhysicalDeviceMemoryProperties) -> Self {
         self.memory_properties = memory_properties;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceMemoryProperties2 + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -11769,7 +11139,7 @@ impl ::core::default::Default for SparseImageFormatProperties2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SparseImageFormatProperties2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SparseImageFormatProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SPARSE_IMAGE_FORMAT_PROPERTIES_2;
 }
 impl<'a> SparseImageFormatProperties2<'a> {
@@ -11811,7 +11181,7 @@ impl ::core::default::Default for PhysicalDeviceSparseImageFormatInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSparseImageFormatInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSparseImageFormatInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2;
 }
 impl<'a> PhysicalDeviceSparseImageFormatInfo2<'a> {
@@ -11865,11 +11235,14 @@ impl ::core::default::Default for PhysicalDevicePushDescriptorPropertiesKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePushDescriptorPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushDescriptorPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePushDescriptorPropertiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDevicePushDescriptorPropertiesKHR<'a>
+{
+}
 impl<'a> PhysicalDevicePushDescriptorPropertiesKHR<'a> {
     #[inline]
     pub fn max_push_descriptors(mut self, max_push_descriptors: u32) -> Self {
@@ -11952,10 +11325,10 @@ impl ::core::default::Default for PhysicalDeviceDriverProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDriverProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDriverProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_DRIVER_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDriverProperties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>> for PhysicalDeviceDriverProperties<'a> {}
 impl<'a> PhysicalDeviceDriverProperties<'a> {
     #[inline]
     pub fn driver_id(mut self, driver_id: DriverId) -> Self {
@@ -12016,10 +11389,10 @@ impl ::core::default::Default for PresentRegionsKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PresentRegionsKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PresentRegionsKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_REGIONS_KHR;
 }
-unsafe impl ExtendsPresentInfoKHR for PresentRegionsKHR<'_> {}
+unsafe impl<'a> Extends<'a, PresentInfoKHR<'a>> for PresentRegionsKHR<'a> {}
 impl<'a> PresentRegionsKHR<'a> {
     #[inline]
     pub fn regions(mut self, regions: &'a [PresentRegionKHR<'a>]) -> Self {
@@ -12111,11 +11484,14 @@ impl ::core::default::Default for PhysicalDeviceVariablePointersFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVariablePointersFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVariablePointersFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVariablePointersFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVariablePointersFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceVariablePointersFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceVariablePointersFeatures<'a> {}
 impl<'a> PhysicalDeviceVariablePointersFeatures<'a> {
     #[inline]
     pub fn variable_pointers_storage_buffer(
@@ -12191,10 +11567,13 @@ impl ::core::default::Default for PhysicalDeviceExternalImageFormatInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalImageFormatInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalImageFormatInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO;
 }
-unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for PhysicalDeviceExternalImageFormatInfo<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceImageFormatInfo2<'a>>
+    for PhysicalDeviceExternalImageFormatInfo<'a>
+{
+}
 impl<'a> PhysicalDeviceExternalImageFormatInfo<'a> {
     #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
@@ -12226,10 +11605,10 @@ impl ::core::default::Default for ExternalImageFormatProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalImageFormatProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalImageFormatProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_IMAGE_FORMAT_PROPERTIES;
 }
-unsafe impl ExtendsImageFormatProperties2 for ExternalImageFormatProperties<'_> {}
+unsafe impl<'a> Extends<'a, ImageFormatProperties2<'a>> for ExternalImageFormatProperties<'a> {}
 impl<'a> ExternalImageFormatProperties<'a> {
     #[inline]
     pub fn external_memory_properties(
@@ -12268,10 +11647,10 @@ impl ::core::default::Default for PhysicalDeviceExternalBufferInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalBufferInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalBufferInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO;
 }
-pub unsafe trait ExtendsPhysicalDeviceExternalBufferInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PhysicalDeviceExternalBufferInfo<'a> {}
 impl<'a> PhysicalDeviceExternalBufferInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: BufferCreateFlags) -> Self {
@@ -12286,23 +11665,6 @@ impl<'a> PhysicalDeviceExternalBufferInfo<'a> {
     #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceExternalBufferInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -12330,7 +11692,7 @@ impl ::core::default::Default for ExternalBufferProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalBufferProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalBufferProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_BUFFER_PROPERTIES;
 }
 impl<'a> ExternalBufferProperties<'a> {
@@ -12375,10 +11737,10 @@ impl ::core::default::Default for PhysicalDeviceIDProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceIDProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceIDProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_ID_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceIDProperties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>> for PhysicalDeviceIDProperties<'a> {}
 impl<'a> PhysicalDeviceIDProperties<'a> {
     #[inline]
     pub fn device_uuid(mut self, device_uuid: [u8; UUID_SIZE]) -> Self {
@@ -12430,10 +11792,10 @@ impl ::core::default::Default for ExternalMemoryImageCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalMemoryImageCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryImageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO;
 }
-unsafe impl ExtendsImageCreateInfo for ExternalMemoryImageCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for ExternalMemoryImageCreateInfo<'a> {}
 impl<'a> ExternalMemoryImageCreateInfo<'a> {
     #[inline]
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlags) -> Self {
@@ -12465,10 +11827,10 @@ impl ::core::default::Default for ExternalMemoryBufferCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalMemoryBufferCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryBufferCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_BUFFER_CREATE_INFO;
 }
-unsafe impl ExtendsBufferCreateInfo for ExternalMemoryBufferCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, BufferCreateInfo<'a>> for ExternalMemoryBufferCreateInfo<'a> {}
 impl<'a> ExternalMemoryBufferCreateInfo<'a> {
     #[inline]
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlags) -> Self {
@@ -12500,10 +11862,10 @@ impl ::core::default::Default for ExportMemoryAllocateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMemoryAllocateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMemoryAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_MEMORY_ALLOCATE_INFO;
 }
-unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfo<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for ExportMemoryAllocateInfo<'a> {}
 impl<'a> ExportMemoryAllocateInfo<'a> {
     #[inline]
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlags) -> Self {
@@ -12539,10 +11901,10 @@ impl ::core::default::Default for ImportMemoryWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMemoryWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMemoryWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR;
 }
-unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for ImportMemoryWin32HandleInfoKHR<'a> {}
 impl<'a> ImportMemoryWin32HandleInfoKHR<'a> {
     #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
@@ -12588,10 +11950,10 @@ impl ::core::default::Default for ExportMemoryWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMemoryWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_KHR;
 }
-unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for ExportMemoryWin32HandleInfoKHR<'a> {}
 impl<'a> ExportMemoryWin32HandleInfoKHR<'a> {
     #[inline]
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
@@ -12635,10 +11997,10 @@ impl ::core::default::Default for ImportMemoryZirconHandleInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMemoryZirconHandleInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMemoryZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_ZIRCON_HANDLE_INFO_FUCHSIA;
 }
-unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryZirconHandleInfoFUCHSIA<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for ImportMemoryZirconHandleInfoFUCHSIA<'a> {}
 impl<'a> ImportMemoryZirconHandleInfoFUCHSIA<'a> {
     #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
@@ -12675,7 +12037,7 @@ impl ::core::default::Default for MemoryZirconHandlePropertiesFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryZirconHandlePropertiesFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryZirconHandlePropertiesFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_ZIRCON_HANDLE_PROPERTIES_FUCHSIA;
 }
 impl<'a> MemoryZirconHandlePropertiesFUCHSIA<'a> {
@@ -12711,7 +12073,7 @@ impl ::core::default::Default for MemoryGetZirconHandleInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryGetZirconHandleInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryGetZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_ZIRCON_HANDLE_INFO_FUCHSIA;
 }
 impl<'a> MemoryGetZirconHandleInfoFUCHSIA<'a> {
@@ -12750,7 +12112,7 @@ impl ::core::default::Default for MemoryWin32HandlePropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryWin32HandlePropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryWin32HandlePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_WIN32_HANDLE_PROPERTIES_KHR;
 }
 impl<'a> MemoryWin32HandlePropertiesKHR<'a> {
@@ -12786,7 +12148,7 @@ impl ::core::default::Default for MemoryGetWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryGetWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryGetWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_WIN32_HANDLE_INFO_KHR;
 }
 impl<'a> MemoryGetWin32HandleInfoKHR<'a> {
@@ -12827,10 +12189,10 @@ impl ::core::default::Default for ImportMemoryFdInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMemoryFdInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMemoryFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_FD_INFO_KHR;
 }
-unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryFdInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for ImportMemoryFdInfoKHR<'a> {}
 impl<'a> ImportMemoryFdInfoKHR<'a> {
     #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
@@ -12867,7 +12229,7 @@ impl ::core::default::Default for MemoryFdPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryFdPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryFdPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_FD_PROPERTIES_KHR;
 }
 impl<'a> MemoryFdPropertiesKHR<'a> {
@@ -12903,7 +12265,7 @@ impl ::core::default::Default for MemoryGetFdInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryGetFdInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryGetFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_FD_INFO_KHR;
 }
 impl<'a> MemoryGetFdInfoKHR<'a> {
@@ -12954,11 +12316,11 @@ impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR;
 }
-unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {}
-unsafe impl ExtendsSubmitInfo2 for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, SubmitInfo<'a>> for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, SubmitInfo2<'a>> for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {}
 impl<'a> Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
     #[inline]
     pub fn acquire_syncs(mut self, acquire_syncs: &'a [DeviceMemory]) -> Self {
@@ -13015,31 +12377,14 @@ impl ::core::default::Default for PhysicalDeviceExternalSemaphoreInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalSemaphoreInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalSemaphoreInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO;
 }
-pub unsafe trait ExtendsPhysicalDeviceExternalSemaphoreInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PhysicalDeviceExternalSemaphoreInfo<'a> {}
 impl<'a> PhysicalDeviceExternalSemaphoreInfo<'a> {
     #[inline]
     pub fn handle_type(mut self, handle_type: ExternalSemaphoreHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceExternalSemaphoreInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -13071,7 +12416,7 @@ impl ::core::default::Default for ExternalSemaphoreProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalSemaphoreProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalSemaphoreProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_SEMAPHORE_PROPERTIES;
 }
 impl<'a> ExternalSemaphoreProperties<'a> {
@@ -13124,10 +12469,10 @@ impl ::core::default::Default for ExportSemaphoreCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportSemaphoreCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportSemaphoreCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_SEMAPHORE_CREATE_INFO;
 }
-unsafe impl ExtendsSemaphoreCreateInfo for ExportSemaphoreCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, SemaphoreCreateInfo<'a>> for ExportSemaphoreCreateInfo<'a> {}
 impl<'a> ExportSemaphoreCreateInfo<'a> {
     #[inline]
     pub fn handle_types(mut self, handle_types: ExternalSemaphoreHandleTypeFlags) -> Self {
@@ -13167,7 +12512,7 @@ impl ::core::default::Default for ImportSemaphoreWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportSemaphoreWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR;
 }
 impl<'a> ImportSemaphoreWin32HandleInfoKHR<'a> {
@@ -13225,10 +12570,10 @@ impl ::core::default::Default for ExportSemaphoreWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportSemaphoreWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportSemaphoreWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR;
 }
-unsafe impl ExtendsSemaphoreCreateInfo for ExportSemaphoreWin32HandleInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, SemaphoreCreateInfo<'a>> for ExportSemaphoreWin32HandleInfoKHR<'a> {}
 impl<'a> ExportSemaphoreWin32HandleInfoKHR<'a> {
     #[inline]
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
@@ -13276,10 +12621,10 @@ impl ::core::default::Default for D3D12FenceSubmitInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for D3D12FenceSubmitInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for D3D12FenceSubmitInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::D3D12_FENCE_SUBMIT_INFO_KHR;
 }
-unsafe impl ExtendsSubmitInfo for D3D12FenceSubmitInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, SubmitInfo<'a>> for D3D12FenceSubmitInfoKHR<'a> {}
 impl<'a> D3D12FenceSubmitInfoKHR<'a> {
     #[inline]
     pub fn wait_semaphore_values(mut self, wait_semaphore_values: &'a [u64]) -> Self {
@@ -13320,7 +12665,7 @@ impl ::core::default::Default for SemaphoreGetWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreGetWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR;
 }
 impl<'a> SemaphoreGetWin32HandleInfoKHR<'a> {
@@ -13365,7 +12710,7 @@ impl ::core::default::Default for ImportSemaphoreFdInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportSemaphoreFdInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_SEMAPHORE_FD_INFO_KHR;
 }
 impl<'a> ImportSemaphoreFdInfoKHR<'a> {
@@ -13416,7 +12761,7 @@ impl ::core::default::Default for SemaphoreGetFdInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreGetFdInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_GET_FD_INFO_KHR;
 }
 impl<'a> SemaphoreGetFdInfoKHR<'a> {
@@ -13461,7 +12806,7 @@ impl ::core::default::Default for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::IMPORT_SEMAPHORE_ZIRCON_HANDLE_INFO_FUCHSIA;
 }
@@ -13513,7 +12858,7 @@ impl ::core::default::Default for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA;
 }
 impl<'a> SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
@@ -13552,7 +12897,7 @@ impl ::core::default::Default for PhysicalDeviceExternalFenceInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalFenceInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFenceInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO;
 }
 impl<'a> PhysicalDeviceExternalFenceInfo<'a> {
@@ -13590,7 +12935,7 @@ impl ::core::default::Default for ExternalFenceProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalFenceProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalFenceProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_FENCE_PROPERTIES;
 }
 impl<'a> ExternalFenceProperties<'a> {
@@ -13643,10 +12988,10 @@ impl ::core::default::Default for ExportFenceCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportFenceCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportFenceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_FENCE_CREATE_INFO;
 }
-unsafe impl ExtendsFenceCreateInfo for ExportFenceCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, FenceCreateInfo<'a>> for ExportFenceCreateInfo<'a> {}
 impl<'a> ExportFenceCreateInfo<'a> {
     #[inline]
     pub fn handle_types(mut self, handle_types: ExternalFenceHandleTypeFlags) -> Self {
@@ -13686,7 +13031,7 @@ impl ::core::default::Default for ImportFenceWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportFenceWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportFenceWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_FENCE_WIN32_HANDLE_INFO_KHR;
 }
 impl<'a> ImportFenceWin32HandleInfoKHR<'a> {
@@ -13744,10 +13089,10 @@ impl ::core::default::Default for ExportFenceWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportFenceWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportFenceWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_FENCE_WIN32_HANDLE_INFO_KHR;
 }
-unsafe impl ExtendsFenceCreateInfo for ExportFenceWin32HandleInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, FenceCreateInfo<'a>> for ExportFenceWin32HandleInfoKHR<'a> {}
 impl<'a> ExportFenceWin32HandleInfoKHR<'a> {
     #[inline]
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
@@ -13791,7 +13136,7 @@ impl ::core::default::Default for FenceGetWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FenceGetWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FenceGetWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FENCE_GET_WIN32_HANDLE_INFO_KHR;
 }
 impl<'a> FenceGetWin32HandleInfoKHR<'a> {
@@ -13836,7 +13181,7 @@ impl ::core::default::Default for ImportFenceFdInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportFenceFdInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportFenceFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_FENCE_FD_INFO_KHR;
 }
 impl<'a> ImportFenceFdInfoKHR<'a> {
@@ -13887,7 +13232,7 @@ impl ::core::default::Default for FenceGetFdInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FenceGetFdInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FenceGetFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FENCE_GET_FD_INFO_KHR;
 }
 impl<'a> FenceGetFdInfoKHR<'a> {
@@ -13930,11 +13275,11 @@ impl ::core::default::Default for PhysicalDeviceMultiviewFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiviewFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTIVIEW_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiviewFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>> for PhysicalDeviceMultiviewFeatures<'a> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceMultiviewFeatures<'a> {}
 impl<'a> PhysicalDeviceMultiviewFeatures<'a> {
     #[inline]
     pub fn multiview(mut self, multiview: bool) -> Self {
@@ -13978,10 +13323,13 @@ impl ::core::default::Default for PhysicalDeviceMultiviewProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiviewProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiviewProperties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceMultiviewProperties<'a>
+{
+}
 impl<'a> PhysicalDeviceMultiviewProperties<'a> {
     #[inline]
     pub fn max_multiview_view_count(mut self, max_multiview_view_count: u32) -> Self {
@@ -14028,10 +13376,10 @@ impl ::core::default::Default for RenderPassMultiviewCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassMultiviewCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassMultiviewCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_MULTIVIEW_CREATE_INFO;
 }
-unsafe impl ExtendsRenderPassCreateInfo for RenderPassMultiviewCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, RenderPassCreateInfo<'a>> for RenderPassMultiviewCreateInfo<'a> {}
 impl<'a> RenderPassMultiviewCreateInfo<'a> {
     #[inline]
     pub fn view_masks(mut self, view_masks: &'a [u32]) -> Self {
@@ -14096,7 +13444,7 @@ impl ::core::default::Default for SurfaceCapabilities2EXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceCapabilities2EXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilities2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_2_EXT;
 }
 impl<'a> SurfaceCapabilities2EXT<'a> {
@@ -14186,7 +13534,7 @@ impl ::core::default::Default for DisplayPowerInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayPowerInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayPowerInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_POWER_INFO_EXT;
 }
 impl<'a> DisplayPowerInfoEXT<'a> {
@@ -14220,7 +13568,7 @@ impl ::core::default::Default for DeviceEventInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceEventInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceEventInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_EVENT_INFO_EXT;
 }
 impl<'a> DeviceEventInfoEXT<'a> {
@@ -14254,7 +13602,7 @@ impl ::core::default::Default for DisplayEventInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayEventInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayEventInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_EVENT_INFO_EXT;
 }
 impl<'a> DisplayEventInfoEXT<'a> {
@@ -14288,10 +13636,10 @@ impl ::core::default::Default for SwapchainCounterCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainCounterCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainCounterCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_COUNTER_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainCounterCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, SwapchainCreateInfoKHR<'a>> for SwapchainCounterCreateInfoEXT<'a> {}
 impl<'a> SwapchainCounterCreateInfoEXT<'a> {
     #[inline]
     pub fn surface_counters(mut self, surface_counters: SurfaceCounterFlagsEXT) -> Self {
@@ -14338,7 +13686,7 @@ impl ::core::default::Default for PhysicalDeviceGroupProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceGroupProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGroupProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_GROUP_PROPERTIES;
 }
 impl<'a> PhysicalDeviceGroupProperties<'a> {
@@ -14384,10 +13732,10 @@ impl ::core::default::Default for MemoryAllocateFlagsInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryAllocateFlagsInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryAllocateFlagsInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_ALLOCATE_FLAGS_INFO;
 }
-unsafe impl ExtendsMemoryAllocateInfo for MemoryAllocateFlagsInfo<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for MemoryAllocateFlagsInfo<'a> {}
 impl<'a> MemoryAllocateFlagsInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: MemoryAllocateFlags) -> Self {
@@ -14428,10 +13776,10 @@ impl ::core::default::Default for BindBufferMemoryInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindBufferMemoryInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindBufferMemoryInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_BUFFER_MEMORY_INFO;
 }
-pub unsafe trait ExtendsBindBufferMemoryInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for BindBufferMemoryInfo<'a> {}
 impl<'a> BindBufferMemoryInfo<'a> {
     #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
@@ -14446,20 +13794,6 @@ impl<'a> BindBufferMemoryInfo<'a> {
     #[inline]
     pub fn memory_offset(mut self, memory_offset: DeviceSize) -> Self {
         self.memory_offset = memory_offset;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBindBufferMemoryInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -14489,10 +13823,10 @@ impl ::core::default::Default for BindBufferMemoryDeviceGroupInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindBufferMemoryDeviceGroupInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindBufferMemoryDeviceGroupInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO;
 }
-unsafe impl ExtendsBindBufferMemoryInfo for BindBufferMemoryDeviceGroupInfo<'_> {}
+unsafe impl<'a> Extends<'a, BindBufferMemoryInfo<'a>> for BindBufferMemoryDeviceGroupInfo<'a> {}
 impl<'a> BindBufferMemoryDeviceGroupInfo<'a> {
     #[inline]
     pub fn device_indices(mut self, device_indices: &'a [u32]) -> Self {
@@ -14529,10 +13863,10 @@ impl ::core::default::Default for BindImageMemoryInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindImageMemoryInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindImageMemoryInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_IMAGE_MEMORY_INFO;
 }
-pub unsafe trait ExtendsBindImageMemoryInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for BindImageMemoryInfo<'a> {}
 impl<'a> BindImageMemoryInfo<'a> {
     #[inline]
     pub fn image(mut self, image: Image) -> Self {
@@ -14547,20 +13881,6 @@ impl<'a> BindImageMemoryInfo<'a> {
     #[inline]
     pub fn memory_offset(mut self, memory_offset: DeviceSize) -> Self {
         self.memory_offset = memory_offset;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBindImageMemoryInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -14594,10 +13914,10 @@ impl ::core::default::Default for BindImageMemoryDeviceGroupInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindImageMemoryDeviceGroupInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindImageMemoryDeviceGroupInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO;
 }
-unsafe impl ExtendsBindImageMemoryInfo for BindImageMemoryDeviceGroupInfo<'_> {}
+unsafe impl<'a> Extends<'a, BindImageMemoryInfo<'a>> for BindImageMemoryDeviceGroupInfo<'a> {}
 impl<'a> BindImageMemoryDeviceGroupInfo<'a> {
     #[inline]
     pub fn device_indices(mut self, device_indices: &'a [u32]) -> Self {
@@ -14643,11 +13963,11 @@ impl ::core::default::Default for DeviceGroupRenderPassBeginInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupRenderPassBeginInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupRenderPassBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_RENDER_PASS_BEGIN_INFO;
 }
-unsafe impl ExtendsRenderPassBeginInfo for DeviceGroupRenderPassBeginInfo<'_> {}
-unsafe impl ExtendsRenderingInfo for DeviceGroupRenderPassBeginInfo<'_> {}
+unsafe impl<'a> Extends<'a, RenderPassBeginInfo<'a>> for DeviceGroupRenderPassBeginInfo<'a> {}
+unsafe impl<'a> Extends<'a, RenderingInfo<'a>> for DeviceGroupRenderPassBeginInfo<'a> {}
 impl<'a> DeviceGroupRenderPassBeginInfo<'a> {
     #[inline]
     pub fn device_mask(mut self, device_mask: u32) -> Self {
@@ -14685,10 +14005,10 @@ impl ::core::default::Default for DeviceGroupCommandBufferBeginInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupCommandBufferBeginInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupCommandBufferBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO;
 }
-unsafe impl ExtendsCommandBufferBeginInfo for DeviceGroupCommandBufferBeginInfo<'_> {}
+unsafe impl<'a> Extends<'a, CommandBufferBeginInfo<'a>> for DeviceGroupCommandBufferBeginInfo<'a> {}
 impl<'a> DeviceGroupCommandBufferBeginInfo<'a> {
     #[inline]
     pub fn device_mask(mut self, device_mask: u32) -> Self {
@@ -14730,10 +14050,10 @@ impl ::core::default::Default for DeviceGroupSubmitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupSubmitInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_SUBMIT_INFO;
 }
-unsafe impl ExtendsSubmitInfo for DeviceGroupSubmitInfo<'_> {}
+unsafe impl<'a> Extends<'a, SubmitInfo<'a>> for DeviceGroupSubmitInfo<'a> {}
 impl<'a> DeviceGroupSubmitInfo<'a> {
     #[inline]
     pub fn wait_semaphore_device_indices(
@@ -14786,10 +14106,10 @@ impl ::core::default::Default for DeviceGroupBindSparseInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupBindSparseInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupBindSparseInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_BIND_SPARSE_INFO;
 }
-unsafe impl ExtendsBindSparseInfo for DeviceGroupBindSparseInfo<'_> {}
+unsafe impl<'a> Extends<'a, BindSparseInfo<'a>> for DeviceGroupBindSparseInfo<'a> {}
 impl<'a> DeviceGroupBindSparseInfo<'a> {
     #[inline]
     pub fn resource_device_index(mut self, resource_device_index: u32) -> Self {
@@ -14828,7 +14148,7 @@ impl ::core::default::Default for DeviceGroupPresentCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupPresentCapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupPresentCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_PRESENT_CAPABILITIES_KHR;
 }
 impl<'a> DeviceGroupPresentCapabilitiesKHR<'a> {
@@ -14867,10 +14187,10 @@ impl ::core::default::Default for ImageSwapchainCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageSwapchainCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageSwapchainCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_SWAPCHAIN_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsImageCreateInfo for ImageSwapchainCreateInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for ImageSwapchainCreateInfoKHR<'a> {}
 impl<'a> ImageSwapchainCreateInfoKHR<'a> {
     #[inline]
     pub fn swapchain(mut self, swapchain: SwapchainKHR) -> Self {
@@ -14904,10 +14224,10 @@ impl ::core::default::Default for BindImageMemorySwapchainInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindImageMemorySwapchainInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindImageMemorySwapchainInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR;
 }
-unsafe impl ExtendsBindImageMemoryInfo for BindImageMemorySwapchainInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, BindImageMemoryInfo<'a>> for BindImageMemorySwapchainInfoKHR<'a> {}
 impl<'a> BindImageMemorySwapchainInfoKHR<'a> {
     #[inline]
     pub fn swapchain(mut self, swapchain: SwapchainKHR) -> Self {
@@ -14952,7 +14272,7 @@ impl ::core::default::Default for AcquireNextImageInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AcquireNextImageInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AcquireNextImageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACQUIRE_NEXT_IMAGE_INFO_KHR;
 }
 impl<'a> AcquireNextImageInfoKHR<'a> {
@@ -15010,10 +14330,10 @@ impl ::core::default::Default for DeviceGroupPresentInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupPresentInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupPresentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_PRESENT_INFO_KHR;
 }
-unsafe impl ExtendsPresentInfoKHR for DeviceGroupPresentInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, PresentInfoKHR<'a>> for DeviceGroupPresentInfoKHR<'a> {}
 impl<'a> DeviceGroupPresentInfoKHR<'a> {
     #[inline]
     pub fn device_masks(mut self, device_masks: &'a [u32]) -> Self {
@@ -15053,10 +14373,10 @@ impl ::core::default::Default for DeviceGroupDeviceCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupDeviceCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupDeviceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_DEVICE_CREATE_INFO;
 }
-unsafe impl ExtendsDeviceCreateInfo for DeviceGroupDeviceCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for DeviceGroupDeviceCreateInfo<'a> {}
 impl<'a> DeviceGroupDeviceCreateInfo<'a> {
     #[inline]
     pub fn physical_devices(mut self, physical_devices: &'a [PhysicalDevice]) -> Self {
@@ -15089,10 +14409,10 @@ impl ::core::default::Default for DeviceGroupSwapchainCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupSwapchainCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupSwapchainCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsSwapchainCreateInfoKHR for DeviceGroupSwapchainCreateInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, SwapchainCreateInfoKHR<'a>> for DeviceGroupSwapchainCreateInfoKHR<'a> {}
 impl<'a> DeviceGroupSwapchainCreateInfoKHR<'a> {
     #[inline]
     pub fn modes(mut self, modes: DeviceGroupPresentModeFlagsKHR) -> Self {
@@ -15183,7 +14503,7 @@ impl ::core::default::Default for DescriptorUpdateTemplateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorUpdateTemplateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorUpdateTemplateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO;
 }
 impl<'a> DescriptorUpdateTemplateCreateInfo<'a> {
@@ -15272,11 +14592,14 @@ impl ::core::default::Default for PhysicalDevicePresentIdFeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePresentIdFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentIdFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PRESENT_ID_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentIdFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentIdFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePresentIdFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDevicePresentIdFeaturesKHR<'a> {}
 impl<'a> PhysicalDevicePresentIdFeaturesKHR<'a> {
     #[inline]
     pub fn present_id(mut self, present_id: bool) -> Self {
@@ -15310,10 +14633,10 @@ impl ::core::default::Default for PresentIdKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PresentIdKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PresentIdKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_ID_KHR;
 }
-unsafe impl ExtendsPresentInfoKHR for PresentIdKHR<'_> {}
+unsafe impl<'a> Extends<'a, PresentInfoKHR<'a>> for PresentIdKHR<'a> {}
 impl<'a> PresentIdKHR<'a> {
     #[inline]
     pub fn present_ids(mut self, present_ids: &'a [u64]) -> Self {
@@ -15346,11 +14669,14 @@ impl ::core::default::Default for PhysicalDevicePresentWaitFeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePresentWaitFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentWaitFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PRESENT_WAIT_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentWaitFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentWaitFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePresentWaitFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDevicePresentWaitFeaturesKHR<'a> {}
 impl<'a> PhysicalDevicePresentWaitFeaturesKHR<'a> {
     #[inline]
     pub fn present_wait(mut self, present_wait: bool) -> Self {
@@ -15396,7 +14722,7 @@ impl ::core::default::Default for HdrMetadataEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for HdrMetadataEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for HdrMetadataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::HDR_METADATA_EXT;
 }
 impl<'a> HdrMetadataEXT<'a> {
@@ -15465,11 +14791,14 @@ impl ::core::default::Default for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DISPLAY_NATIVE_HDR_SURFACE_CAPABILITIES_AMD;
 }
-unsafe impl ExtendsSurfaceCapabilities2KHR for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {}
+unsafe impl<'a> Extends<'a, SurfaceCapabilities2KHR<'a>>
+    for DisplayNativeHdrSurfaceCapabilitiesAMD<'a>
+{
+}
 impl<'a> DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
     #[inline]
     pub fn local_dimming_support(mut self, local_dimming_support: bool) -> Self {
@@ -15501,11 +14830,14 @@ impl ::core::default::Default for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SWAPCHAIN_DISPLAY_NATIVE_HDR_CREATE_INFO_AMD;
 }
-unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {}
+unsafe impl<'a> Extends<'a, SwapchainCreateInfoKHR<'a>>
+    for SwapchainDisplayNativeHdrCreateInfoAMD<'a>
+{
+}
 impl<'a> SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
     #[inline]
     pub fn local_dimming_enable(mut self, local_dimming_enable: bool) -> Self {
@@ -15593,10 +14925,10 @@ impl ::core::default::Default for PresentTimesInfoGOOGLE<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PresentTimesInfoGOOGLE<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PresentTimesInfoGOOGLE<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_TIMES_INFO_GOOGLE;
 }
-unsafe impl ExtendsPresentInfoKHR for PresentTimesInfoGOOGLE<'_> {}
+unsafe impl<'a> Extends<'a, PresentInfoKHR<'a>> for PresentTimesInfoGOOGLE<'a> {}
 impl<'a> PresentTimesInfoGOOGLE<'a> {
     #[inline]
     pub fn times(mut self, times: &'a [PresentTimeGOOGLE]) -> Self {
@@ -15652,7 +14984,7 @@ impl ::core::default::Default for IOSSurfaceCreateInfoMVK<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IOSSurfaceCreateInfoMVK<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IOSSurfaceCreateInfoMVK<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IOS_SURFACE_CREATE_INFO_MVK;
 }
 impl<'a> IOSSurfaceCreateInfoMVK<'a> {
@@ -15693,7 +15025,7 @@ impl ::core::default::Default for MacOSSurfaceCreateInfoMVK<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MacOSSurfaceCreateInfoMVK<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MacOSSurfaceCreateInfoMVK<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MACOS_SURFACE_CREATE_INFO_MVK;
 }
 impl<'a> MacOSSurfaceCreateInfoMVK<'a> {
@@ -15734,7 +15066,7 @@ impl ::core::default::Default for MetalSurfaceCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MetalSurfaceCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MetalSurfaceCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::METAL_SURFACE_CREATE_INFO_EXT;
 }
 impl<'a> MetalSurfaceCreateInfoEXT<'a> {
@@ -15798,12 +15130,12 @@ impl ::core::default::Default for PipelineViewportWScalingStateCreateInfoNV<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportWScalingStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportWScalingStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV;
 }
-unsafe impl ExtendsPipelineViewportStateCreateInfo
-    for PipelineViewportWScalingStateCreateInfoNV<'_>
+unsafe impl<'a> Extends<'a, PipelineViewportStateCreateInfo<'a>>
+    for PipelineViewportWScalingStateCreateInfoNV<'a>
 {
 }
 impl<'a> PipelineViewportWScalingStateCreateInfoNV<'a> {
@@ -15880,12 +15212,12 @@ impl ::core::default::Default for PipelineViewportSwizzleStateCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportSwizzleStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportSwizzleStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV;
 }
-unsafe impl ExtendsPipelineViewportStateCreateInfo
-    for PipelineViewportSwizzleStateCreateInfoNV<'_>
+unsafe impl<'a> Extends<'a, PipelineViewportStateCreateInfo<'a>>
+    for PipelineViewportSwizzleStateCreateInfoNV<'a>
 {
 }
 impl<'a> PipelineViewportSwizzleStateCreateInfoNV<'a> {
@@ -15925,11 +15257,14 @@ impl ::core::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceDiscardRectanglePropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
     #[inline]
     pub fn max_discard_rectangles(mut self, max_discard_rectangles: u32) -> Self {
@@ -15967,11 +15302,14 @@ impl ::core::default::Default for PipelineDiscardRectangleStateCreateInfoEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineDiscardRectangleStateCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineDiscardRectangleStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineDiscardRectangleStateCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>>
+    for PipelineDiscardRectangleStateCreateInfoEXT<'a>
+{
+}
 impl<'a> PipelineDiscardRectangleStateCreateInfoEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineDiscardRectangleStateCreateFlagsEXT) -> Self {
@@ -16017,12 +15355,12 @@ impl ::core::default::Default for PhysicalDeviceMultiviewPerViewAttributesProper
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a>
 {
 }
 impl<'a> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
@@ -16088,11 +15426,14 @@ impl ::core::default::Default for RenderPassInputAttachmentAspectCreateInfo<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassInputAttachmentAspectCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassInputAttachmentAspectCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO;
 }
-unsafe impl ExtendsRenderPassCreateInfo for RenderPassInputAttachmentAspectCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, RenderPassCreateInfo<'a>>
+    for RenderPassInputAttachmentAspectCreateInfo<'a>
+{
+}
 impl<'a> RenderPassInputAttachmentAspectCreateInfo<'a> {
     #[inline]
     pub fn aspect_references(
@@ -16128,31 +15469,14 @@ impl ::core::default::Default for PhysicalDeviceSurfaceInfo2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSurfaceInfo2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSurfaceInfo2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SURFACE_INFO_2_KHR;
 }
-pub unsafe trait ExtendsPhysicalDeviceSurfaceInfo2KHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PhysicalDeviceSurfaceInfo2KHR<'a> {}
 impl<'a> PhysicalDeviceSurfaceInfo2KHR<'a> {
     #[inline]
     pub fn surface(mut self, surface: SurfaceKHR) -> Self {
         self.surface = surface;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceSurfaceInfo2KHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -16180,31 +15504,14 @@ impl ::core::default::Default for SurfaceCapabilities2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceCapabilities2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilities2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_2_KHR;
 }
-pub unsafe trait ExtendsSurfaceCapabilities2KHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for SurfaceCapabilities2KHR<'a> {}
 impl<'a> SurfaceCapabilities2KHR<'a> {
     #[inline]
     pub fn surface_capabilities(mut self, surface_capabilities: SurfaceCapabilitiesKHR) -> Self {
         self.surface_capabilities = surface_capabilities;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSurfaceCapabilities2KHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -16232,28 +15539,14 @@ impl ::core::default::Default for SurfaceFormat2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceFormat2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceFormat2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_FORMAT_2_KHR;
 }
-pub unsafe trait ExtendsSurfaceFormat2KHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for SurfaceFormat2KHR<'a> {}
 impl<'a> SurfaceFormat2KHR<'a> {
     #[inline]
     pub fn surface_format(mut self, surface_format: SurfaceFormatKHR) -> Self {
         self.surface_format = surface_format;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSurfaceFormat2KHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -16281,7 +15574,7 @@ impl ::core::default::Default for DisplayProperties2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayProperties2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayProperties2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PROPERTIES_2_KHR;
 }
 impl<'a> DisplayProperties2KHR<'a> {
@@ -16315,7 +15608,7 @@ impl ::core::default::Default for DisplayPlaneProperties2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayPlaneProperties2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneProperties2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PLANE_PROPERTIES_2_KHR;
 }
 impl<'a> DisplayPlaneProperties2KHR<'a> {
@@ -16352,7 +15645,7 @@ impl ::core::default::Default for DisplayModeProperties2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayModeProperties2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayModeProperties2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_MODE_PROPERTIES_2_KHR;
 }
 impl<'a> DisplayModeProperties2KHR<'a> {
@@ -16391,7 +15684,7 @@ impl ::core::default::Default for DisplayPlaneInfo2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayPlaneInfo2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneInfo2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PLANE_INFO_2_KHR;
 }
 impl<'a> DisplayPlaneInfo2KHR<'a> {
@@ -16430,7 +15723,7 @@ impl ::core::default::Default for DisplayPlaneCapabilities2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayPlaneCapabilities2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneCapabilities2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PLANE_CAPABILITIES_2_KHR;
 }
 impl<'a> DisplayPlaneCapabilities2KHR<'a> {
@@ -16464,10 +15757,13 @@ impl ::core::default::Default for SharedPresentSurfaceCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SharedPresentSurfaceCapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SharedPresentSurfaceCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHARED_PRESENT_SURFACE_CAPABILITIES_KHR;
 }
-unsafe impl ExtendsSurfaceCapabilities2KHR for SharedPresentSurfaceCapabilitiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, SurfaceCapabilities2KHR<'a>>
+    for SharedPresentSurfaceCapabilitiesKHR<'a>
+{
+}
 impl<'a> SharedPresentSurfaceCapabilitiesKHR<'a> {
     #[inline]
     pub fn shared_present_supported_usage_flags(
@@ -16508,11 +15804,14 @@ impl ::core::default::Default for PhysicalDevice16BitStorageFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevice16BitStorageFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice16BitStorageFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice16BitStorageFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice16BitStorageFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevice16BitStorageFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDevice16BitStorageFeatures<'a> {}
 impl<'a> PhysicalDevice16BitStorageFeatures<'a> {
     #[inline]
     pub fn storage_buffer16_bit_access(mut self, storage_buffer16_bit_access: bool) -> Self {
@@ -16569,10 +15868,13 @@ impl ::core::default::Default for PhysicalDeviceSubgroupProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSubgroupProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupProperties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceSubgroupProperties<'a>
+{
+}
 impl<'a> PhysicalDeviceSubgroupProperties<'a> {
     #[inline]
     pub fn subgroup_size(mut self, subgroup_size: u32) -> Self {
@@ -16619,15 +15921,18 @@ impl ::core::default::Default for PhysicalDeviceShaderSubgroupExtendedTypesFeatu
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
     #[inline]
     pub fn shader_subgroup_extended_types(mut self, shader_subgroup_extended_types: bool) -> Self {
@@ -16659,7 +15964,7 @@ impl ::core::default::Default for BufferMemoryRequirementsInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferMemoryRequirementsInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferMemoryRequirementsInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_MEMORY_REQUIREMENTS_INFO_2;
 }
 impl<'a> BufferMemoryRequirementsInfo2<'a> {
@@ -16693,7 +15998,7 @@ impl ::core::default::Default for DeviceBufferMemoryRequirements<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceBufferMemoryRequirements<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceBufferMemoryRequirements<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_BUFFER_MEMORY_REQUIREMENTS;
 }
 impl<'a> DeviceBufferMemoryRequirements<'a> {
@@ -16727,31 +16032,14 @@ impl ::core::default::Default for ImageMemoryRequirementsInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageMemoryRequirementsInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageMemoryRequirementsInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_MEMORY_REQUIREMENTS_INFO_2;
 }
-pub unsafe trait ExtendsImageMemoryRequirementsInfo2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for ImageMemoryRequirementsInfo2<'a> {}
 impl<'a> ImageMemoryRequirementsInfo2<'a> {
     #[inline]
     pub fn image(mut self, image: Image) -> Self {
         self.image = image;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageMemoryRequirementsInfo2 + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -16779,7 +16067,7 @@ impl ::core::default::Default for ImageSparseMemoryRequirementsInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageSparseMemoryRequirementsInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageSparseMemoryRequirementsInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2;
 }
 impl<'a> ImageSparseMemoryRequirementsInfo2<'a> {
@@ -16815,7 +16103,7 @@ impl ::core::default::Default for DeviceImageMemoryRequirements<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceImageMemoryRequirements<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceImageMemoryRequirements<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_IMAGE_MEMORY_REQUIREMENTS;
 }
 impl<'a> DeviceImageMemoryRequirements<'a> {
@@ -16854,28 +16142,14 @@ impl ::core::default::Default for MemoryRequirements2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryRequirements2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryRequirements2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_REQUIREMENTS_2;
 }
-pub unsafe trait ExtendsMemoryRequirements2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for MemoryRequirements2<'a> {}
 impl<'a> MemoryRequirements2<'a> {
     #[inline]
     pub fn memory_requirements(mut self, memory_requirements: MemoryRequirements) -> Self {
         self.memory_requirements = memory_requirements;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryRequirements2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -16903,7 +16177,7 @@ impl ::core::default::Default for SparseImageMemoryRequirements2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SparseImageMemoryRequirements2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SparseImageMemoryRequirements2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SPARSE_IMAGE_MEMORY_REQUIREMENTS_2;
 }
 impl<'a> SparseImageMemoryRequirements2<'a> {
@@ -16940,10 +16214,13 @@ impl ::core::default::Default for PhysicalDevicePointClippingProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePointClippingProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePointClippingProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePointClippingProperties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDevicePointClippingProperties<'a>
+{
+}
 impl<'a> PhysicalDevicePointClippingProperties<'a> {
     #[inline]
     pub fn point_clipping_behavior(
@@ -16980,10 +16257,10 @@ impl ::core::default::Default for MemoryDedicatedRequirements<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryDedicatedRequirements<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedRequirements<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_DEDICATED_REQUIREMENTS;
 }
-unsafe impl ExtendsMemoryRequirements2 for MemoryDedicatedRequirements<'_> {}
+unsafe impl<'a> Extends<'a, MemoryRequirements2<'a>> for MemoryDedicatedRequirements<'a> {}
 impl<'a> MemoryDedicatedRequirements<'a> {
     #[inline]
     pub fn prefers_dedicated_allocation(mut self, prefers_dedicated_allocation: bool) -> Self {
@@ -17022,10 +16299,10 @@ impl ::core::default::Default for MemoryDedicatedAllocateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryDedicatedAllocateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_DEDICATED_ALLOCATE_INFO;
 }
-unsafe impl ExtendsMemoryAllocateInfo for MemoryDedicatedAllocateInfo<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for MemoryDedicatedAllocateInfo<'a> {}
 impl<'a> MemoryDedicatedAllocateInfo<'a> {
     #[inline]
     pub fn image(mut self, image: Image) -> Self {
@@ -17062,10 +16339,10 @@ impl ::core::default::Default for ImageViewUsageCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewUsageCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewUsageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_USAGE_CREATE_INFO;
 }
-unsafe impl ExtendsImageViewCreateInfo for ImageViewUsageCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, ImageViewCreateInfo<'a>> for ImageViewUsageCreateInfo<'a> {}
 impl<'a> ImageViewUsageCreateInfo<'a> {
     #[inline]
     pub fn usage(mut self, usage: ImageUsageFlags) -> Self {
@@ -17099,10 +16376,10 @@ impl ::core::default::Default for ImageViewSlicedCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewSlicedCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewSlicedCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_SLICED_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsImageViewCreateInfo for ImageViewSlicedCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, ImageViewCreateInfo<'a>> for ImageViewSlicedCreateInfoEXT<'a> {}
 impl<'a> ImageViewSlicedCreateInfoEXT<'a> {
     #[inline]
     pub fn slice_offset(mut self, slice_offset: u32) -> Self {
@@ -17139,12 +16416,12 @@ impl ::core::default::Default for PipelineTessellationDomainOriginStateCreateInf
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineTessellationDomainOriginStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineTessellationDomainOriginStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO;
 }
-unsafe impl ExtendsPipelineTessellationStateCreateInfo
-    for PipelineTessellationDomainOriginStateCreateInfo<'_>
+unsafe impl<'a> Extends<'a, PipelineTessellationStateCreateInfo<'a>>
+    for PipelineTessellationDomainOriginStateCreateInfo<'a>
 {
 }
 impl<'a> PipelineTessellationDomainOriginStateCreateInfo<'a> {
@@ -17178,11 +16455,11 @@ impl ::core::default::Default for SamplerYcbcrConversionInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerYcbcrConversionInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_YCBCR_CONVERSION_INFO;
 }
-unsafe impl ExtendsSamplerCreateInfo for SamplerYcbcrConversionInfo<'_> {}
-unsafe impl ExtendsImageViewCreateInfo for SamplerYcbcrConversionInfo<'_> {}
+unsafe impl<'a> Extends<'a, SamplerCreateInfo<'a>> for SamplerYcbcrConversionInfo<'a> {}
+unsafe impl<'a> Extends<'a, ImageViewCreateInfo<'a>> for SamplerYcbcrConversionInfo<'a> {}
 impl<'a> SamplerYcbcrConversionInfo<'a> {
     #[inline]
     pub fn conversion(mut self, conversion: SamplerYcbcrConversion) -> Self {
@@ -17228,10 +16505,10 @@ impl ::core::default::Default for SamplerYcbcrConversionCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerYcbcrConversionCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_YCBCR_CONVERSION_CREATE_INFO;
 }
-pub unsafe trait ExtendsSamplerYcbcrConversionCreateInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for SamplerYcbcrConversionCreateInfo<'a> {}
 impl<'a> SamplerYcbcrConversionCreateInfo<'a> {
     #[inline]
     pub fn format(mut self, format: Format) -> Self {
@@ -17273,23 +16550,6 @@ impl<'a> SamplerYcbcrConversionCreateInfo<'a> {
         self.force_explicit_reconstruction = force_explicit_reconstruction.into();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSamplerYcbcrConversionCreateInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -17315,10 +16575,10 @@ impl ::core::default::Default for BindImagePlaneMemoryInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindImagePlaneMemoryInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindImagePlaneMemoryInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_IMAGE_PLANE_MEMORY_INFO;
 }
-unsafe impl ExtendsBindImageMemoryInfo for BindImagePlaneMemoryInfo<'_> {}
+unsafe impl<'a> Extends<'a, BindImageMemoryInfo<'a>> for BindImagePlaneMemoryInfo<'a> {}
 impl<'a> BindImagePlaneMemoryInfo<'a> {
     #[inline]
     pub fn plane_aspect(mut self, plane_aspect: ImageAspectFlags) -> Self {
@@ -17350,10 +16610,13 @@ impl ::core::default::Default for ImagePlaneMemoryRequirementsInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImagePlaneMemoryRequirementsInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImagePlaneMemoryRequirementsInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO;
 }
-unsafe impl ExtendsImageMemoryRequirementsInfo2 for ImagePlaneMemoryRequirementsInfo<'_> {}
+unsafe impl<'a> Extends<'a, ImageMemoryRequirementsInfo2<'a>>
+    for ImagePlaneMemoryRequirementsInfo<'a>
+{
+}
 impl<'a> ImagePlaneMemoryRequirementsInfo<'a> {
     #[inline]
     pub fn plane_aspect(mut self, plane_aspect: ImageAspectFlags) -> Self {
@@ -17385,12 +16648,18 @@ impl ::core::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceSamplerYcbcrConversionFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceSamplerYcbcrConversionFeatures<'a>
+{
+}
 impl<'a> PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
     #[inline]
     pub fn sampler_ycbcr_conversion(mut self, sampler_ycbcr_conversion: bool) -> Self {
@@ -17422,11 +16691,14 @@ impl ::core::default::Default for SamplerYcbcrConversionImageFormatProperties<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerYcbcrConversionImageFormatProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionImageFormatProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES;
 }
-unsafe impl ExtendsImageFormatProperties2 for SamplerYcbcrConversionImageFormatProperties<'_> {}
+unsafe impl<'a> Extends<'a, ImageFormatProperties2<'a>>
+    for SamplerYcbcrConversionImageFormatProperties<'a>
+{
+}
 impl<'a> SamplerYcbcrConversionImageFormatProperties<'a> {
     #[inline]
     pub fn combined_image_sampler_descriptor_count(
@@ -17461,10 +16733,13 @@ impl ::core::default::Default for TextureLODGatherFormatPropertiesAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for TextureLODGatherFormatPropertiesAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for TextureLODGatherFormatPropertiesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD;
 }
-unsafe impl ExtendsImageFormatProperties2 for TextureLODGatherFormatPropertiesAMD<'_> {}
+unsafe impl<'a> Extends<'a, ImageFormatProperties2<'a>>
+    for TextureLODGatherFormatPropertiesAMD<'a>
+{
+}
 impl<'a> TextureLODGatherFormatPropertiesAMD<'a> {
     #[inline]
     pub fn supports_texture_gather_lod_bias_amd(
@@ -17503,7 +16778,7 @@ impl ::core::default::Default for ConditionalRenderingBeginInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ConditionalRenderingBeginInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ConditionalRenderingBeginInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CONDITIONAL_RENDERING_BEGIN_INFO_EXT;
 }
 impl<'a> ConditionalRenderingBeginInfoEXT<'a> {
@@ -17547,10 +16822,10 @@ impl ::core::default::Default for ProtectedSubmitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ProtectedSubmitInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ProtectedSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PROTECTED_SUBMIT_INFO;
 }
-unsafe impl ExtendsSubmitInfo for ProtectedSubmitInfo<'_> {}
+unsafe impl<'a> Extends<'a, SubmitInfo<'a>> for ProtectedSubmitInfo<'a> {}
 impl<'a> ProtectedSubmitInfo<'a> {
     #[inline]
     pub fn protected_submit(mut self, protected_submit: bool) -> Self {
@@ -17582,11 +16857,14 @@ impl ::core::default::Default for PhysicalDeviceProtectedMemoryFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceProtectedMemoryFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProtectedMemoryFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProtectedMemoryFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceProtectedMemoryFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceProtectedMemoryFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceProtectedMemoryFeatures<'a> {}
 impl<'a> PhysicalDeviceProtectedMemoryFeatures<'a> {
     #[inline]
     pub fn protected_memory(mut self, protected_memory: bool) -> Self {
@@ -17618,11 +16896,14 @@ impl ::core::default::Default for PhysicalDeviceProtectedMemoryProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceProtectedMemoryProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProtectedMemoryProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceProtectedMemoryProperties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceProtectedMemoryProperties<'a>
+{
+}
 impl<'a> PhysicalDeviceProtectedMemoryProperties<'a> {
     #[inline]
     pub fn protected_no_fault(mut self, protected_no_fault: bool) -> Self {
@@ -17658,7 +16939,7 @@ impl ::core::default::Default for DeviceQueueInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceQueueInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceQueueInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_QUEUE_INFO_2;
 }
 impl<'a> DeviceQueueInfo2<'a> {
@@ -17706,12 +16987,12 @@ impl ::core::default::Default for PipelineCoverageToColorStateCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCoverageToColorStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageToColorStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV;
 }
-unsafe impl ExtendsPipelineMultisampleStateCreateInfo
-    for PipelineCoverageToColorStateCreateInfoNV<'_>
+unsafe impl<'a> Extends<'a, PipelineMultisampleStateCreateInfo<'a>>
+    for PipelineCoverageToColorStateCreateInfoNV<'a>
 {
 }
 impl<'a> PipelineCoverageToColorStateCreateInfoNV<'a> {
@@ -17757,11 +17038,14 @@ impl ::core::default::Default for PhysicalDeviceSamplerFilterMinmaxProperties<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceSamplerFilterMinmaxProperties<'a>
+{
+}
 impl<'a> PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
     #[inline]
     pub fn filter_minmax_single_component_formats(
@@ -17831,11 +17115,11 @@ impl ::core::default::Default for SampleLocationsInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SampleLocationsInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SampleLocationsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLE_LOCATIONS_INFO_EXT;
 }
-unsafe impl ExtendsImageMemoryBarrier for SampleLocationsInfoEXT<'_> {}
-unsafe impl ExtendsImageMemoryBarrier2 for SampleLocationsInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, ImageMemoryBarrier<'a>> for SampleLocationsInfoEXT<'a> {}
+unsafe impl<'a> Extends<'a, ImageMemoryBarrier2<'a>> for SampleLocationsInfoEXT<'a> {}
 impl<'a> SampleLocationsInfoEXT<'a> {
     #[inline]
     pub fn sample_locations_per_pixel(
@@ -17937,11 +17221,11 @@ impl ::core::default::Default for RenderPassSampleLocationsBeginInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassSampleLocationsBeginInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassSampleLocationsBeginInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT;
 }
-unsafe impl ExtendsRenderPassBeginInfo for RenderPassSampleLocationsBeginInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, RenderPassBeginInfo<'a>> for RenderPassSampleLocationsBeginInfoEXT<'a> {}
 impl<'a> RenderPassSampleLocationsBeginInfoEXT<'a> {
     #[inline]
     pub fn attachment_initial_sample_locations(
@@ -17989,12 +17273,12 @@ impl ::core::default::Default for PipelineSampleLocationsStateCreateInfoEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineSampleLocationsStateCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineSampleLocationsStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_SAMPLE_LOCATIONS_STATE_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsPipelineMultisampleStateCreateInfo
-    for PipelineSampleLocationsStateCreateInfoEXT<'_>
+unsafe impl<'a> Extends<'a, PipelineMultisampleStateCreateInfo<'a>>
+    for PipelineSampleLocationsStateCreateInfoEXT<'a>
 {
 }
 impl<'a> PipelineSampleLocationsStateCreateInfoEXT<'a> {
@@ -18044,11 +17328,14 @@ impl ::core::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceSampleLocationsPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
     #[inline]
     pub fn sample_location_sample_counts(
@@ -18109,7 +17396,7 @@ impl ::core::default::Default for MultisamplePropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MultisamplePropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MultisamplePropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MULTISAMPLE_PROPERTIES_EXT;
 }
 impl<'a> MultisamplePropertiesEXT<'a> {
@@ -18146,10 +17433,10 @@ impl ::core::default::Default for SamplerReductionModeCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerReductionModeCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerReductionModeCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_REDUCTION_MODE_CREATE_INFO;
 }
-unsafe impl ExtendsSamplerCreateInfo for SamplerReductionModeCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, SamplerCreateInfo<'a>> for SamplerReductionModeCreateInfo<'a> {}
 impl<'a> SamplerReductionModeCreateInfo<'a> {
     #[inline]
     pub fn reduction_mode(mut self, reduction_mode: SamplerReductionMode) -> Self {
@@ -18181,12 +17468,18 @@ impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEX
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
     #[inline]
     pub fn advanced_blend_coherent_operations(
@@ -18221,11 +17514,14 @@ impl ::core::default::Default for PhysicalDeviceMultiDrawFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiDrawFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiDrawFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiDrawFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiDrawFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceMultiDrawFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceMultiDrawFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceMultiDrawFeaturesEXT<'a> {
     #[inline]
     pub fn multi_draw(mut self, multi_draw: bool) -> Self {
@@ -18267,12 +17563,12 @@ impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedProperties
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
@@ -18352,12 +17648,12 @@ impl ::core::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsPipelineColorBlendStateCreateInfo
-    for PipelineColorBlendAdvancedStateCreateInfoEXT<'_>
+unsafe impl<'a> Extends<'a, PipelineColorBlendStateCreateInfo<'a>>
+    for PipelineColorBlendAdvancedStateCreateInfoEXT<'a>
 {
 }
 impl<'a> PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
@@ -18403,12 +17699,15 @@ impl ::core::default::Default for PhysicalDeviceInlineUniformBlockFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceInlineUniformBlockFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInlineUniformBlockFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInlineUniformBlockFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInlineUniformBlockFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceInlineUniformBlockFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceInlineUniformBlockFeatures<'a> {}
 impl<'a> PhysicalDeviceInlineUniformBlockFeatures<'a> {
     #[inline]
     pub fn inline_uniform_block(mut self, inline_uniform_block: bool) -> Self {
@@ -18457,11 +17756,14 @@ impl ::core::default::Default for PhysicalDeviceInlineUniformBlockProperties<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceInlineUniformBlockProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInlineUniformBlockProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceInlineUniformBlockProperties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceInlineUniformBlockProperties<'a>
+{
+}
 impl<'a> PhysicalDeviceInlineUniformBlockProperties<'a> {
     #[inline]
     pub fn max_inline_uniform_block_size(mut self, max_inline_uniform_block_size: u32) -> Self {
@@ -18530,10 +17832,10 @@ impl ::core::default::Default for WriteDescriptorSetInlineUniformBlock<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for WriteDescriptorSetInlineUniformBlock<'a> {
+unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetInlineUniformBlock<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK;
 }
-unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetInlineUniformBlock<'_> {}
+unsafe impl<'a> Extends<'a, WriteDescriptorSet<'a>> for WriteDescriptorSetInlineUniformBlock<'a> {}
 impl<'a> WriteDescriptorSetInlineUniformBlock<'a> {
     #[inline]
     pub fn data(mut self, data: &'a [u8]) -> Self {
@@ -18566,11 +17868,14 @@ impl ::core::default::Default for DescriptorPoolInlineUniformBlockCreateInfo<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorPoolInlineUniformBlockCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorPoolInlineUniformBlockCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO;
 }
-unsafe impl ExtendsDescriptorPoolCreateInfo for DescriptorPoolInlineUniformBlockCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, DescriptorPoolCreateInfo<'a>>
+    for DescriptorPoolInlineUniformBlockCreateInfo<'a>
+{
+}
 impl<'a> DescriptorPoolInlineUniformBlockCreateInfo<'a> {
     #[inline]
     pub fn max_inline_uniform_block_bindings(
@@ -18613,12 +17918,12 @@ impl ::core::default::Default for PipelineCoverageModulationStateCreateInfoNV<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCoverageModulationStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageModulationStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV;
 }
-unsafe impl ExtendsPipelineMultisampleStateCreateInfo
-    for PipelineCoverageModulationStateCreateInfoNV<'_>
+unsafe impl<'a> Extends<'a, PipelineMultisampleStateCreateInfo<'a>>
+    for PipelineCoverageModulationStateCreateInfoNV<'a>
 {
 }
 impl<'a> PipelineCoverageModulationStateCreateInfoNV<'a> {
@@ -18676,12 +17981,12 @@ impl ::core::default::Default for ImageFormatListCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageFormatListCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageFormatListCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_FORMAT_LIST_CREATE_INFO;
 }
-unsafe impl ExtendsImageCreateInfo for ImageFormatListCreateInfo<'_> {}
-unsafe impl ExtendsSwapchainCreateInfoKHR for ImageFormatListCreateInfo<'_> {}
-unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for ImageFormatListCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for ImageFormatListCreateInfo<'a> {}
+unsafe impl<'a> Extends<'a, SwapchainCreateInfoKHR<'a>> for ImageFormatListCreateInfo<'a> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceImageFormatInfo2<'a>> for ImageFormatListCreateInfo<'a> {}
 impl<'a> ImageFormatListCreateInfo<'a> {
     #[inline]
     pub fn view_formats(mut self, view_formats: &'a [Format]) -> Self {
@@ -18718,7 +18023,7 @@ impl ::core::default::Default for ValidationCacheCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ValidationCacheCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ValidationCacheCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VALIDATION_CACHE_CREATE_INFO_EXT;
 }
 impl<'a> ValidationCacheCreateInfoEXT<'a> {
@@ -18758,12 +18063,18 @@ impl ::core::default::Default for ShaderModuleValidationCacheCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ShaderModuleValidationCacheCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ShaderModuleValidationCacheCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsShaderModuleCreateInfo for ShaderModuleValidationCacheCreateInfoEXT<'_> {}
-unsafe impl ExtendsPipelineShaderStageCreateInfo for ShaderModuleValidationCacheCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, ShaderModuleCreateInfo<'a>>
+    for ShaderModuleValidationCacheCreateInfoEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, PipelineShaderStageCreateInfo<'a>>
+    for ShaderModuleValidationCacheCreateInfoEXT<'a>
+{
+}
 impl<'a> ShaderModuleValidationCacheCreateInfoEXT<'a> {
     #[inline]
     pub fn validation_cache(mut self, validation_cache: ValidationCacheEXT) -> Self {
@@ -18797,10 +18108,13 @@ impl ::core::default::Default for PhysicalDeviceMaintenance3Properties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance3Properties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance3Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance3Properties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceMaintenance3Properties<'a>
+{
+}
 impl<'a> PhysicalDeviceMaintenance3Properties<'a> {
     #[inline]
     pub fn max_per_set_descriptors(mut self, max_per_set_descriptors: u32) -> Self {
@@ -18837,11 +18151,14 @@ impl ::core::default::Default for PhysicalDeviceMaintenance4Features<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance4Features<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance4Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMaintenance4Features<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMaintenance4Features<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceMaintenance4Features<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceMaintenance4Features<'a> {}
 impl<'a> PhysicalDeviceMaintenance4Features<'a> {
     #[inline]
     pub fn maintenance4(mut self, maintenance4: bool) -> Self {
@@ -18873,10 +18190,13 @@ impl ::core::default::Default for PhysicalDeviceMaintenance4Properties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance4Properties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance4Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance4Properties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceMaintenance4Properties<'a>
+{
+}
 impl<'a> PhysicalDeviceMaintenance4Properties<'a> {
     #[inline]
     pub fn max_buffer_size(mut self, max_buffer_size: DeviceSize) -> Self {
@@ -18908,11 +18228,14 @@ impl ::core::default::Default for PhysicalDeviceMaintenance5FeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance5FeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance5FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_5_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMaintenance5FeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMaintenance5FeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceMaintenance5FeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceMaintenance5FeaturesKHR<'a> {}
 impl<'a> PhysicalDeviceMaintenance5FeaturesKHR<'a> {
     #[inline]
     pub fn maintenance5(mut self, maintenance5: bool) -> Self {
@@ -18954,11 +18277,14 @@ impl ::core::default::Default for PhysicalDeviceMaintenance5PropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance5PropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance5PropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAINTENANCE_5_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance5PropertiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceMaintenance5PropertiesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceMaintenance5PropertiesKHR<'a> {
     #[inline]
     pub fn early_fragment_multisample_coverage_after_sample_counting(
@@ -19034,11 +18360,14 @@ impl ::core::default::Default for PhysicalDeviceMaintenance6FeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance6FeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance6FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_6_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMaintenance6FeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMaintenance6FeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceMaintenance6FeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceMaintenance6FeaturesKHR<'a> {}
 impl<'a> PhysicalDeviceMaintenance6FeaturesKHR<'a> {
     #[inline]
     pub fn maintenance6(mut self, maintenance6: bool) -> Self {
@@ -19074,11 +18403,14 @@ impl ::core::default::Default for PhysicalDeviceMaintenance6PropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance6PropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance6PropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAINTENANCE_6_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance6PropertiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceMaintenance6PropertiesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceMaintenance6PropertiesKHR<'a> {
     #[inline]
     pub fn block_texel_view_compatible_multiple_layers(
@@ -19132,11 +18464,14 @@ impl ::core::default::Default for PhysicalDeviceMaintenance7FeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance7FeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance7FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_7_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMaintenance7FeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMaintenance7FeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceMaintenance7FeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceMaintenance7FeaturesKHR<'a> {}
 impl<'a> PhysicalDeviceMaintenance7FeaturesKHR<'a> {
     #[inline]
     pub fn maintenance7(mut self, maintenance7: bool) -> Self {
@@ -19182,11 +18517,14 @@ impl ::core::default::Default for PhysicalDeviceMaintenance7PropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance7PropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance7PropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAINTENANCE_7_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance7PropertiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceMaintenance7PropertiesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceMaintenance7PropertiesKHR<'a> {
     #[inline]
     pub fn robust_fragment_shading_rate_attachment_access(
@@ -19286,11 +18624,14 @@ impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesListKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_LIST_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceLayeredApiPropertiesListKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceLayeredApiPropertiesListKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
     #[inline]
     pub fn layered_apis(
@@ -19344,10 +18685,10 @@ impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLayeredApiPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_KHR;
 }
-pub unsafe trait ExtendsPhysicalDeviceLayeredApiPropertiesKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PhysicalDeviceLayeredApiPropertiesKHR<'a> {}
 impl<'a> PhysicalDeviceLayeredApiPropertiesKHR<'a> {
     #[inline]
     pub fn vendor_id(mut self, vendor_id: u32) -> Self {
@@ -19375,23 +18716,6 @@ impl<'a> PhysicalDeviceLayeredApiPropertiesKHR<'a> {
     pub fn device_name_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.device_name)
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceLayeredApiPropertiesKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -19417,12 +18741,12 @@ impl ::core::default::Default for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LAYERED_API_VULKAN_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceLayeredApiPropertiesKHR
-    for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceLayeredApiPropertiesKHR<'a>>
+    for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a>
 {
 }
 impl<'a> PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
@@ -19464,7 +18788,7 @@ impl ::core::default::Default for RenderingAreaInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderingAreaInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderingAreaInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_AREA_INFO_KHR;
 }
 impl<'a> RenderingAreaInfoKHR<'a> {
@@ -19514,31 +18838,14 @@ impl ::core::default::Default for DescriptorSetLayoutSupport<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetLayoutSupport<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutSupport<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_LAYOUT_SUPPORT;
 }
-pub unsafe trait ExtendsDescriptorSetLayoutSupport {}
+unsafe impl<'a> BaseTaggedStructure<'a> for DescriptorSetLayoutSupport<'a> {}
 impl<'a> DescriptorSetLayoutSupport<'a> {
     #[inline]
     pub fn supported(mut self, supported: bool) -> Self {
         self.supported = supported.into();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDescriptorSetLayoutSupport + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -19566,12 +18873,18 @@ impl ::core::default::Default for PhysicalDeviceShaderDrawParametersFeatures<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderDrawParametersFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderDrawParametersFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderDrawParametersFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderDrawParametersFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderDrawParametersFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderDrawParametersFeatures<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderDrawParametersFeatures<'a> {
     #[inline]
     pub fn shader_draw_parameters(mut self, shader_draw_parameters: bool) -> Self {
@@ -19605,12 +18918,15 @@ impl ::core::default::Default for PhysicalDeviceShaderFloat16Int8Features<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderFloat16Int8Features<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloat16Int8Features<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderFloat16Int8Features<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderFloat16Int8Features<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderFloat16Int8Features<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceShaderFloat16Int8Features<'a> {}
 impl<'a> PhysicalDeviceShaderFloat16Int8Features<'a> {
     #[inline]
     pub fn shader_float16(mut self, shader_float16: bool) -> Self {
@@ -19679,10 +18995,13 @@ impl ::core::default::Default for PhysicalDeviceFloatControlsProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFloatControlsProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFloatControlsProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFloatControlsProperties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceFloatControlsProperties<'a>
+{
+}
 impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
     #[inline]
     pub fn denorm_behavior_independence(
@@ -19839,11 +19158,14 @@ impl ::core::default::Default for PhysicalDeviceHostQueryResetFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceHostQueryResetFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostQueryResetFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceHostQueryResetFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceHostQueryResetFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceHostQueryResetFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceHostQueryResetFeatures<'a> {}
 impl<'a> PhysicalDeviceHostQueryResetFeatures<'a> {
     #[inline]
     pub fn host_query_reset(mut self, host_query_reset: bool) -> Self {
@@ -19904,7 +19226,7 @@ impl ::core::default::Default for NativeBufferANDROID<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for NativeBufferANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for NativeBufferANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::NATIVE_BUFFER_ANDROID;
 }
 impl<'a> NativeBufferANDROID<'a> {
@@ -19958,7 +19280,7 @@ impl ::core::default::Default for SwapchainImageCreateInfoANDROID<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainImageCreateInfoANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainImageCreateInfoANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_IMAGE_CREATE_INFO_ANDROID;
 }
 impl<'a> SwapchainImageCreateInfoANDROID<'a> {
@@ -19992,7 +19314,7 @@ impl ::core::default::Default for PhysicalDevicePresentationPropertiesANDROID<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePresentationPropertiesANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentationPropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRESENTATION_PROPERTIES_ANDROID;
 }
@@ -20131,11 +19453,14 @@ impl ::core::default::Default for DeviceQueueGlobalPriorityCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceQueueGlobalPriorityCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceQueueGlobalPriorityCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsDeviceQueueCreateInfo for DeviceQueueGlobalPriorityCreateInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, DeviceQueueCreateInfo<'a>>
+    for DeviceQueueGlobalPriorityCreateInfoKHR<'a>
+{
+}
 impl<'a> DeviceQueueGlobalPriorityCreateInfoKHR<'a> {
     #[inline]
     pub fn global_priority(mut self, global_priority: QueueGlobalPriorityKHR) -> Self {
@@ -20167,12 +19492,18 @@ impl ::core::default::Default for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'a> {
     #[inline]
     pub fn global_priority_query(mut self, global_priority_query: bool) -> Self {
@@ -20216,11 +19547,14 @@ impl ::core::default::Default for QueueFamilyGlobalPriorityPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueueFamilyGlobalPriorityPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueueFamilyGlobalPriorityPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_KHR;
 }
-unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyGlobalPriorityPropertiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, QueueFamilyProperties2<'a>>
+    for QueueFamilyGlobalPriorityPropertiesKHR<'a>
+{
+}
 impl<'a> QueueFamilyGlobalPriorityPropertiesKHR<'a> {
     #[inline]
     pub fn priorities(mut self, priorities: &'_ [QueueGlobalPriorityKHR]) -> Self {
@@ -20261,10 +19595,10 @@ impl ::core::default::Default for DebugUtilsObjectNameInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugUtilsObjectNameInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugUtilsObjectNameInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_OBJECT_NAME_INFO_EXT;
 }
-unsafe impl ExtendsPipelineShaderStageCreateInfo for DebugUtilsObjectNameInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, PipelineShaderStageCreateInfo<'a>> for DebugUtilsObjectNameInfoEXT<'a> {}
 impl<'a> DebugUtilsObjectNameInfoEXT<'a> {
     #[inline]
     pub fn object_handle<T: Handle>(mut self, object_handle: T) -> Self {
@@ -20318,7 +19652,7 @@ impl ::core::default::Default for DebugUtilsObjectTagInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugUtilsObjectTagInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugUtilsObjectTagInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_OBJECT_TAG_INFO_EXT;
 }
 impl<'a> DebugUtilsObjectTagInfoEXT<'a> {
@@ -20366,7 +19700,7 @@ impl ::core::default::Default for DebugUtilsLabelEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugUtilsLabelEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugUtilsLabelEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_LABEL_EXT;
 }
 impl<'a> DebugUtilsLabelEXT<'a> {
@@ -20437,10 +19771,10 @@ impl ::core::default::Default for DebugUtilsMessengerCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugUtilsMessengerCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugUtilsMessengerCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsInstanceCreateInfo for DebugUtilsMessengerCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, InstanceCreateInfo<'a>> for DebugUtilsMessengerCreateInfoEXT<'a> {}
 impl<'a> DebugUtilsMessengerCreateInfoEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: DebugUtilsMessengerCreateFlagsEXT) -> Self {
@@ -20513,10 +19847,10 @@ impl ::core::default::Default for DebugUtilsMessengerCallbackDataEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugUtilsMessengerCallbackDataEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugUtilsMessengerCallbackDataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT;
 }
-pub unsafe trait ExtendsDebugUtilsMessengerCallbackDataEXT {}
+unsafe impl<'a> BaseTaggedStructure<'a> for DebugUtilsMessengerCallbackDataEXT<'a> {}
 impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: DebugUtilsMessengerCallbackDataFlagsEXT) -> Self {
@@ -20572,23 +19906,6 @@ impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
         self.p_objects = objects.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDebugUtilsMessengerCallbackDataEXT + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -20614,12 +19931,18 @@ impl ::core::default::Default for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_MEMORY_REPORT_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
     #[inline]
     pub fn device_memory_report(mut self, device_memory_report: bool) -> Self {
@@ -20669,11 +19992,11 @@ impl ::core::default::Default for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceDeviceMemoryReportCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceDeviceMemoryReportCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEVICE_DEVICE_MEMORY_REPORT_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsDeviceCreateInfo for DeviceDeviceMemoryReportCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for DeviceDeviceMemoryReportCreateInfoEXT<'a> {}
 impl<'a> DeviceDeviceMemoryReportCreateInfoEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: DeviceMemoryReportFlagsEXT) -> Self {
@@ -20730,7 +20053,7 @@ impl ::core::default::Default for DeviceMemoryReportCallbackDataEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceMemoryReportCallbackDataEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryReportCallbackDataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_MEMORY_REPORT_CALLBACK_DATA_EXT;
 }
 impl<'a> DeviceMemoryReportCallbackDataEXT<'a> {
@@ -20792,10 +20115,10 @@ impl ::core::default::Default for ImportMemoryHostPointerInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMemoryHostPointerInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMemoryHostPointerInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_HOST_POINTER_INFO_EXT;
 }
-unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryHostPointerInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for ImportMemoryHostPointerInfoEXT<'a> {}
 impl<'a> ImportMemoryHostPointerInfoEXT<'a> {
     #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
@@ -20832,7 +20155,7 @@ impl ::core::default::Default for MemoryHostPointerPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryHostPointerPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryHostPointerPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_HOST_POINTER_PROPERTIES_EXT;
 }
 impl<'a> MemoryHostPointerPropertiesEXT<'a> {
@@ -20866,11 +20189,14 @@ impl ::core::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceExternalMemoryHostPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
     #[inline]
     pub fn min_imported_host_pointer_alignment(
@@ -20921,12 +20247,12 @@ impl ::core::default::Default for PhysicalDeviceConservativeRasterizationPropert
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceConservativeRasterizationPropertiesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
@@ -21022,7 +20348,7 @@ impl ::core::default::Default for CalibratedTimestampInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CalibratedTimestampInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CalibratedTimestampInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CALIBRATED_TIMESTAMP_INFO_KHR;
 }
 impl<'a> CalibratedTimestampInfoKHR<'a> {
@@ -21082,10 +20408,13 @@ impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCorePropertiesAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCorePropertiesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCorePropertiesAMD<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceShaderCorePropertiesAMD<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderCorePropertiesAMD<'a> {
     #[inline]
     pub fn shader_engine_count(mut self, shader_engine_count: u32) -> Self {
@@ -21184,11 +20513,14 @@ impl ::core::default::Default for PhysicalDeviceShaderCoreProperties2AMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCoreProperties2AMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreProperties2AMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_2_AMD;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCoreProperties2AMD<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceShaderCoreProperties2AMD<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderCoreProperties2AMD<'a> {
     #[inline]
     pub fn shader_core_features(
@@ -21232,12 +20564,12 @@ impl ::core::default::Default for PipelineRasterizationConservativeStateCreateIn
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsPipelineRasterizationStateCreateInfo
-    for PipelineRasterizationConservativeStateCreateInfoEXT<'_>
+unsafe impl<'a> Extends<'a, PipelineRasterizationStateCreateInfo<'a>>
+    for PipelineRasterizationConservativeStateCreateInfoEXT<'a>
 {
 }
 impl<'a> PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
@@ -21325,12 +20657,15 @@ impl ::core::default::Default for PhysicalDeviceDescriptorIndexingFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorIndexingFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorIndexingFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDescriptorIndexingFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorIndexingFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDescriptorIndexingFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceDescriptorIndexingFeatures<'a> {}
 impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
     #[inline]
     pub fn shader_input_attachment_array_dynamic_indexing(
@@ -21576,11 +20911,14 @@ impl ::core::default::Default for PhysicalDeviceDescriptorIndexingProperties<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorIndexingProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorIndexingProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDescriptorIndexingProperties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceDescriptorIndexingProperties<'a>
+{
+}
 impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
     #[inline]
     pub fn max_update_after_bind_descriptors_in_all_pools(
@@ -21810,11 +21148,14 @@ impl ::core::default::Default for DescriptorSetLayoutBindingFlagsCreateInfo<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO;
 }
-unsafe impl ExtendsDescriptorSetLayoutCreateInfo for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, DescriptorSetLayoutCreateInfo<'a>>
+    for DescriptorSetLayoutBindingFlagsCreateInfo<'a>
+{
+}
 impl<'a> DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
     #[inline]
     pub fn binding_flags(mut self, binding_flags: &'a [DescriptorBindingFlags]) -> Self {
@@ -21849,12 +21190,12 @@ impl ::core::default::Default for DescriptorSetVariableDescriptorCountAllocateIn
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO;
 }
-unsafe impl ExtendsDescriptorSetAllocateInfo
-    for DescriptorSetVariableDescriptorCountAllocateInfo<'_>
+unsafe impl<'a> Extends<'a, DescriptorSetAllocateInfo<'a>>
+    for DescriptorSetVariableDescriptorCountAllocateInfo<'a>
 {
 }
 impl<'a> DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
@@ -21889,12 +21230,12 @@ impl ::core::default::Default for DescriptorSetVariableDescriptorCountLayoutSupp
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT;
 }
-unsafe impl ExtendsDescriptorSetLayoutSupport
-    for DescriptorSetVariableDescriptorCountLayoutSupport<'_>
+unsafe impl<'a> Extends<'a, DescriptorSetLayoutSupport<'a>>
+    for DescriptorSetVariableDescriptorCountLayoutSupport<'a>
 {
 }
 impl<'a> DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
@@ -21944,10 +21285,10 @@ impl ::core::default::Default for AttachmentDescription2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AttachmentDescription2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AttachmentDescription2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_DESCRIPTION_2;
 }
-pub unsafe trait ExtendsAttachmentDescription2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for AttachmentDescription2<'a> {}
 impl<'a> AttachmentDescription2<'a> {
     #[inline]
     pub fn flags(mut self, flags: AttachmentDescriptionFlags) -> Self {
@@ -21994,20 +21335,6 @@ impl<'a> AttachmentDescription2<'a> {
         self.final_layout = final_layout;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAttachmentDescription2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -22037,10 +21364,10 @@ impl ::core::default::Default for AttachmentReference2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AttachmentReference2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AttachmentReference2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_REFERENCE_2;
 }
-pub unsafe trait ExtendsAttachmentReference2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for AttachmentReference2<'a> {}
 impl<'a> AttachmentReference2<'a> {
     #[inline]
     pub fn attachment(mut self, attachment: u32) -> Self {
@@ -22055,20 +21382,6 @@ impl<'a> AttachmentReference2<'a> {
     #[inline]
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.aspect_mask = aspect_mask;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAttachmentReference2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -22116,10 +21429,10 @@ impl ::core::default::Default for SubpassDescription2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassDescription2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassDescription2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_DESCRIPTION_2;
 }
-pub unsafe trait ExtendsSubpassDescription2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for SubpassDescription2<'a> {}
 impl<'a> SubpassDescription2<'a> {
     #[inline]
     pub fn flags(mut self, flags: SubpassDescriptionFlags) -> Self {
@@ -22171,20 +21484,6 @@ impl<'a> SubpassDescription2<'a> {
         self.p_preserve_attachments = preserve_attachments.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubpassDescription2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -22224,10 +21523,10 @@ impl ::core::default::Default for SubpassDependency2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassDependency2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassDependency2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_DEPENDENCY_2;
 }
-pub unsafe trait ExtendsSubpassDependency2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for SubpassDependency2<'a> {}
 impl<'a> SubpassDependency2<'a> {
     #[inline]
     pub fn src_subpass(mut self, src_subpass: u32) -> Self {
@@ -22267,20 +21566,6 @@ impl<'a> SubpassDependency2<'a> {
     #[inline]
     pub fn view_offset(mut self, view_offset: i32) -> Self {
         self.view_offset = view_offset;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubpassDependency2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -22324,10 +21609,10 @@ impl ::core::default::Default for RenderPassCreateInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassCreateInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassCreateInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_CREATE_INFO_2;
 }
-pub unsafe trait ExtendsRenderPassCreateInfo2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for RenderPassCreateInfo2<'a> {}
 impl<'a> RenderPassCreateInfo2<'a> {
     #[inline]
     pub fn flags(mut self, flags: RenderPassCreateFlags) -> Self {
@@ -22358,20 +21643,6 @@ impl<'a> RenderPassCreateInfo2<'a> {
         self.p_correlated_view_masks = correlated_view_masks.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRenderPassCreateInfo2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -22397,7 +21668,7 @@ impl ::core::default::Default for SubpassBeginInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassBeginInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_BEGIN_INFO;
 }
 impl<'a> SubpassBeginInfo<'a> {
@@ -22429,26 +21700,11 @@ impl ::core::default::Default for SubpassEndInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassEndInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassEndInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_END_INFO;
 }
-pub unsafe trait ExtendsSubpassEndInfo {}
-impl<'a> SubpassEndInfo<'a> {
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubpassEndInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
-}
+unsafe impl<'a> BaseTaggedStructure<'a> for SubpassEndInfo<'a> {}
+impl<'a> SubpassEndInfo<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -22473,12 +21729,15 @@ impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTimelineSemaphoreFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTimelineSemaphoreFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTimelineSemaphoreFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTimelineSemaphoreFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceTimelineSemaphoreFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceTimelineSemaphoreFeatures<'a> {}
 impl<'a> PhysicalDeviceTimelineSemaphoreFeatures<'a> {
     #[inline]
     pub fn timeline_semaphore(mut self, timeline_semaphore: bool) -> Self {
@@ -22510,11 +21769,14 @@ impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreProperties<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTimelineSemaphoreProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTimelineSemaphoreProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTimelineSemaphoreProperties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceTimelineSemaphoreProperties<'a>
+{
+}
 impl<'a> PhysicalDeviceTimelineSemaphoreProperties<'a> {
     #[inline]
     pub fn max_timeline_semaphore_value_difference(
@@ -22551,11 +21813,14 @@ impl ::core::default::Default for SemaphoreTypeCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreTypeCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreTypeCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_TYPE_CREATE_INFO;
 }
-unsafe impl ExtendsSemaphoreCreateInfo for SemaphoreTypeCreateInfo<'_> {}
-unsafe impl ExtendsPhysicalDeviceExternalSemaphoreInfo for SemaphoreTypeCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, SemaphoreCreateInfo<'a>> for SemaphoreTypeCreateInfo<'a> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceExternalSemaphoreInfo<'a>>
+    for SemaphoreTypeCreateInfo<'a>
+{
+}
 impl<'a> SemaphoreTypeCreateInfo<'a> {
     #[inline]
     pub fn semaphore_type(mut self, semaphore_type: SemaphoreType) -> Self {
@@ -22598,11 +21863,11 @@ impl ::core::default::Default for TimelineSemaphoreSubmitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for TimelineSemaphoreSubmitInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for TimelineSemaphoreSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TIMELINE_SEMAPHORE_SUBMIT_INFO;
 }
-unsafe impl ExtendsSubmitInfo for TimelineSemaphoreSubmitInfo<'_> {}
-unsafe impl ExtendsBindSparseInfo for TimelineSemaphoreSubmitInfo<'_> {}
+unsafe impl<'a> Extends<'a, SubmitInfo<'a>> for TimelineSemaphoreSubmitInfo<'a> {}
+unsafe impl<'a> Extends<'a, BindSparseInfo<'a>> for TimelineSemaphoreSubmitInfo<'a> {}
 impl<'a> TimelineSemaphoreSubmitInfo<'a> {
     #[inline]
     pub fn wait_semaphore_values(mut self, wait_semaphore_values: &'a [u64]) -> Self {
@@ -22647,7 +21912,7 @@ impl ::core::default::Default for SemaphoreWaitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreWaitInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreWaitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_WAIT_INFO;
 }
 impl<'a> SemaphoreWaitInfo<'a> {
@@ -22695,7 +21960,7 @@ impl ::core::default::Default for SemaphoreSignalInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreSignalInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreSignalInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_SIGNAL_INFO;
 }
 impl<'a> SemaphoreSignalInfo<'a> {
@@ -22757,12 +22022,12 @@ impl ::core::default::Default for PipelineVertexInputDivisorStateCreateInfoKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineVertexInputDivisorStateCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineVertexInputDivisorStateCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsPipelineVertexInputStateCreateInfo
-    for PipelineVertexInputDivisorStateCreateInfoKHR<'_>
+unsafe impl<'a> Extends<'a, PipelineVertexInputStateCreateInfo<'a>>
+    for PipelineVertexInputDivisorStateCreateInfoKHR<'a>
 {
 }
 impl<'a> PipelineVertexInputDivisorStateCreateInfoKHR<'a> {
@@ -22800,12 +22065,12 @@ impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorProperties
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
@@ -22841,12 +22106,12 @@ impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorProperties
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'a>
 {
 }
 impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'a> {
@@ -22894,11 +22159,14 @@ impl ::core::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PCI_BUS_INFO_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDevicePCIBusInfoPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
     #[inline]
     pub fn pci_domain(mut self, pci_domain: u32) -> Self {
@@ -22945,11 +22213,11 @@ impl ::core::default::Default for ImportAndroidHardwareBufferInfoANDROID<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportAndroidHardwareBufferInfoANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportAndroidHardwareBufferInfoANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID;
 }
-unsafe impl ExtendsMemoryAllocateInfo for ImportAndroidHardwareBufferInfoANDROID<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for ImportAndroidHardwareBufferInfoANDROID<'a> {}
 impl<'a> ImportAndroidHardwareBufferInfoANDROID<'a> {
     #[inline]
     pub fn buffer(mut self, buffer: *mut AHardwareBuffer) -> Self {
@@ -22981,10 +22249,10 @@ impl ::core::default::Default for AndroidHardwareBufferUsageANDROID<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AndroidHardwareBufferUsageANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferUsageANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANDROID_HARDWARE_BUFFER_USAGE_ANDROID;
 }
-unsafe impl ExtendsImageFormatProperties2 for AndroidHardwareBufferUsageANDROID<'_> {}
+unsafe impl<'a> Extends<'a, ImageFormatProperties2<'a>> for AndroidHardwareBufferUsageANDROID<'a> {}
 impl<'a> AndroidHardwareBufferUsageANDROID<'a> {
     #[inline]
     pub fn android_hardware_buffer_usage(mut self, android_hardware_buffer_usage: u64) -> Self {
@@ -23018,10 +22286,10 @@ impl ::core::default::Default for AndroidHardwareBufferPropertiesANDROID<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AndroidHardwareBufferPropertiesANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferPropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID;
 }
-pub unsafe trait ExtendsAndroidHardwareBufferPropertiesANDROID {}
+unsafe impl<'a> BaseTaggedStructure<'a> for AndroidHardwareBufferPropertiesANDROID<'a> {}
 impl<'a> AndroidHardwareBufferPropertiesANDROID<'a> {
     #[inline]
     pub fn allocation_size(mut self, allocation_size: DeviceSize) -> Self {
@@ -23031,23 +22299,6 @@ impl<'a> AndroidHardwareBufferPropertiesANDROID<'a> {
     #[inline]
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.memory_type_bits = memory_type_bits;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAndroidHardwareBufferPropertiesANDROID + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -23075,7 +22326,7 @@ impl ::core::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID;
 }
@@ -23124,12 +22375,12 @@ impl ::core::default::Default for AndroidHardwareBufferFormatPropertiesANDROID<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AndroidHardwareBufferFormatPropertiesANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatPropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_ANDROID;
 }
-unsafe impl ExtendsAndroidHardwareBufferPropertiesANDROID
-    for AndroidHardwareBufferFormatPropertiesANDROID<'_>
+unsafe impl<'a> Extends<'a, AndroidHardwareBufferPropertiesANDROID<'a>>
+    for AndroidHardwareBufferFormatPropertiesANDROID<'a>
 {
 }
 impl<'a> AndroidHardwareBufferFormatPropertiesANDROID<'a> {
@@ -23204,12 +22455,12 @@ impl ::core::default::Default for CommandBufferInheritanceConditionalRenderingIn
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COMMAND_BUFFER_INHERITANCE_CONDITIONAL_RENDERING_INFO_EXT;
 }
-unsafe impl ExtendsCommandBufferInheritanceInfo
-    for CommandBufferInheritanceConditionalRenderingInfoEXT<'_>
+unsafe impl<'a> Extends<'a, CommandBufferInheritanceInfo<'a>>
+    for CommandBufferInheritanceConditionalRenderingInfoEXT<'a>
 {
 }
 impl<'a> CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
@@ -23243,14 +22494,14 @@ impl ::core::default::Default for ExternalFormatANDROID<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalFormatANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalFormatANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_FORMAT_ANDROID;
 }
-unsafe impl ExtendsImageCreateInfo for ExternalFormatANDROID<'_> {}
-unsafe impl ExtendsSamplerYcbcrConversionCreateInfo for ExternalFormatANDROID<'_> {}
-unsafe impl ExtendsAttachmentDescription2 for ExternalFormatANDROID<'_> {}
-unsafe impl ExtendsGraphicsPipelineCreateInfo for ExternalFormatANDROID<'_> {}
-unsafe impl ExtendsCommandBufferInheritanceInfo for ExternalFormatANDROID<'_> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for ExternalFormatANDROID<'a> {}
+unsafe impl<'a> Extends<'a, SamplerYcbcrConversionCreateInfo<'a>> for ExternalFormatANDROID<'a> {}
+unsafe impl<'a> Extends<'a, AttachmentDescription2<'a>> for ExternalFormatANDROID<'a> {}
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>> for ExternalFormatANDROID<'a> {}
+unsafe impl<'a> Extends<'a, CommandBufferInheritanceInfo<'a>> for ExternalFormatANDROID<'a> {}
 impl<'a> ExternalFormatANDROID<'a> {
     #[inline]
     pub fn external_format(mut self, external_format: u64) -> Self {
@@ -23286,11 +22537,11 @@ impl ::core::default::Default for PhysicalDevice8BitStorageFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevice8BitStorageFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice8BitStorageFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice8BitStorageFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice8BitStorageFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>> for PhysicalDevice8BitStorageFeatures<'a> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDevice8BitStorageFeatures<'a> {}
 impl<'a> PhysicalDevice8BitStorageFeatures<'a> {
     #[inline]
     pub fn storage_buffer8_bit_access(mut self, storage_buffer8_bit_access: bool) -> Self {
@@ -23337,12 +22588,18 @@ impl ::core::default::Default for PhysicalDeviceConditionalRenderingFeaturesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CONDITIONAL_RENDERING_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceConditionalRenderingFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceConditionalRenderingFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
     #[inline]
     pub fn conditional_rendering(mut self, conditional_rendering: bool) -> Self {
@@ -23386,12 +22643,15 @@ impl ::core::default::Default for PhysicalDeviceVulkanMemoryModelFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkanMemoryModelFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkanMemoryModelFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkanMemoryModelFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkanMemoryModelFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceVulkanMemoryModelFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceVulkanMemoryModelFeatures<'a> {}
 impl<'a> PhysicalDeviceVulkanMemoryModelFeatures<'a> {
     #[inline]
     pub fn vulkan_memory_model(mut self, vulkan_memory_model: bool) -> Self {
@@ -23442,12 +22702,15 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicInt64Features<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderAtomicInt64Features<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicInt64Features<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicInt64Features<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicInt64Features<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderAtomicInt64Features<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceShaderAtomicInt64Features<'a> {}
 impl<'a> PhysicalDeviceShaderAtomicInt64Features<'a> {
     #[inline]
     pub fn shader_buffer_int64_atomics(mut self, shader_buffer_int64_atomics: bool) -> Self {
@@ -23506,12 +22769,18 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
     #[inline]
     pub fn shader_buffer_float32_atomics(mut self, shader_buffer_float32_atomics: bool) -> Self {
@@ -23638,12 +22907,18 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
     #[inline]
     pub fn shader_buffer_float16_atomics(mut self, shader_buffer_float16_atomics: bool) -> Self {
@@ -23762,12 +23037,18 @@ impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorFeaturesKH
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'a> {
     #[inline]
     pub fn vertex_attribute_instance_rate_divisor(
@@ -23811,10 +23092,10 @@ impl ::core::default::Default for QueueFamilyCheckpointPropertiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueueFamilyCheckpointPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueueFamilyCheckpointPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV;
 }
-unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointPropertiesNV<'_> {}
+unsafe impl<'a> Extends<'a, QueueFamilyProperties2<'a>> for QueueFamilyCheckpointPropertiesNV<'a> {}
 impl<'a> QueueFamilyCheckpointPropertiesNV<'a> {
     #[inline]
     pub fn checkpoint_execution_stage_mask(
@@ -23851,7 +23132,7 @@ impl ::core::default::Default for CheckpointDataNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CheckpointDataNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CheckpointDataNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CHECKPOINT_DATA_NV;
 }
 impl<'a> CheckpointDataNV<'a> {
@@ -23896,11 +23177,14 @@ impl ::core::default::Default for PhysicalDeviceDepthStencilResolveProperties<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthStencilResolveProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthStencilResolveProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDepthStencilResolveProperties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceDepthStencilResolveProperties<'a>
+{
+}
 impl<'a> PhysicalDeviceDepthStencilResolveProperties<'a> {
     #[inline]
     pub fn supported_depth_resolve_modes(
@@ -23957,10 +23241,10 @@ impl ::core::default::Default for SubpassDescriptionDepthStencilResolve<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassDescriptionDepthStencilResolve<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassDescriptionDepthStencilResolve<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE;
 }
-unsafe impl ExtendsSubpassDescription2 for SubpassDescriptionDepthStencilResolve<'_> {}
+unsafe impl<'a> Extends<'a, SubpassDescription2<'a>> for SubpassDescriptionDepthStencilResolve<'a> {}
 impl<'a> SubpassDescriptionDepthStencilResolve<'a> {
     #[inline]
     pub fn depth_resolve_mode(mut self, depth_resolve_mode: ResolveModeFlags) -> Self {
@@ -24005,10 +23289,10 @@ impl ::core::default::Default for ImageViewASTCDecodeModeEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewASTCDecodeModeEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewASTCDecodeModeEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_ASTC_DECODE_MODE_EXT;
 }
-unsafe impl ExtendsImageViewCreateInfo for ImageViewASTCDecodeModeEXT<'_> {}
+unsafe impl<'a> Extends<'a, ImageViewCreateInfo<'a>> for ImageViewASTCDecodeModeEXT<'a> {}
 impl<'a> ImageViewASTCDecodeModeEXT<'a> {
     #[inline]
     pub fn decode_mode(mut self, decode_mode: Format) -> Self {
@@ -24040,11 +23324,14 @@ impl ::core::default::Default for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_ASTC_DECODE_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceASTCDecodeFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceASTCDecodeFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
     #[inline]
     pub fn decode_mode_shared_exponent(mut self, decode_mode_shared_exponent: bool) -> Self {
@@ -24078,12 +23365,18 @@ impl ::core::default::Default for PhysicalDeviceTransformFeedbackFeaturesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceTransformFeedbackFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceTransformFeedbackFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
     #[inline]
     pub fn transform_feedback(mut self, transform_feedback: bool) -> Self {
@@ -24138,11 +23431,14 @@ impl ::core::default::Default for PhysicalDeviceTransformFeedbackPropertiesEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceTransformFeedbackPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
     #[inline]
     pub fn max_transform_feedback_streams(mut self, max_transform_feedback_streams: u32) -> Self {
@@ -24241,12 +23537,12 @@ impl ::core::default::Default for PipelineRasterizationStateStreamCreateInfoEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRasterizationStateStreamCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateStreamCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_STATE_STREAM_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsPipelineRasterizationStateCreateInfo
-    for PipelineRasterizationStateStreamCreateInfoEXT<'_>
+unsafe impl<'a> Extends<'a, PipelineRasterizationStateCreateInfo<'a>>
+    for PipelineRasterizationStateStreamCreateInfoEXT<'a>
 {
 }
 impl<'a> PipelineRasterizationStateStreamCreateInfoEXT<'a> {
@@ -24285,15 +23581,18 @@ impl ::core::default::Default for PhysicalDeviceRepresentativeFragmentTestFeatur
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_REPRESENTATIVE_FRAGMENT_TEST_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
     #[inline]
     pub fn representative_fragment_test(mut self, representative_fragment_test: bool) -> Self {
@@ -24325,12 +23624,12 @@ impl ::core::default::Default for PipelineRepresentativeFragmentTestStateCreateI
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_REPRESENTATIVE_FRAGMENT_TEST_STATE_CREATE_INFO_NV;
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo
-    for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_>
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>>
+    for PipelineRepresentativeFragmentTestStateCreateInfoNV<'a>
 {
 }
 impl<'a> PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
@@ -24367,12 +23666,15 @@ impl ::core::default::Default for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXCLUSIVE_SCISSOR_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceExclusiveScissorFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceExclusiveScissorFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
     #[inline]
     pub fn exclusive_scissor(mut self, exclusive_scissor: bool) -> Self {
@@ -24406,12 +23708,12 @@ impl ::core::default::Default for PipelineViewportExclusiveScissorStateCreateInf
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_EXCLUSIVE_SCISSOR_STATE_CREATE_INFO_NV;
 }
-unsafe impl ExtendsPipelineViewportStateCreateInfo
-    for PipelineViewportExclusiveScissorStateCreateInfoNV<'_>
+unsafe impl<'a> Extends<'a, PipelineViewportStateCreateInfo<'a>>
+    for PipelineViewportExclusiveScissorStateCreateInfoNV<'a>
 {
 }
 impl<'a> PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
@@ -24446,12 +23748,18 @@ impl ::core::default::Default for PhysicalDeviceCornerSampledImageFeaturesNV<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CORNER_SAMPLED_IMAGE_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceCornerSampledImageFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceCornerSampledImageFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
     #[inline]
     pub fn corner_sampled_image(mut self, corner_sampled_image: bool) -> Self {
@@ -24485,15 +23793,18 @@ impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
     #[inline]
     pub fn compute_derivative_group_quads(mut self, compute_derivative_group_quads: bool) -> Self {
@@ -24533,12 +23844,12 @@ impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesProperti
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a>
 {
 }
 impl<'a> PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
@@ -24575,12 +23886,18 @@ impl ::core::default::Default for PhysicalDeviceShaderImageFootprintFeaturesNV<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_IMAGE_FOOTPRINT_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderImageFootprintFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderImageFootprintFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
     #[inline]
     pub fn image_footprint(mut self, image_footprint: bool) -> Self {
@@ -24612,16 +23929,18 @@ impl ::core::default::Default for PhysicalDeviceDedicatedAllocationImageAliasing
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a>
+{
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEDICATED_ALLOCATION_IMAGE_ALIASING_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_>
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a>
 {
 }
 impl<'a> PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {
@@ -24658,12 +23977,18 @@ impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
     #[inline]
     pub fn indirect_copy(mut self, indirect_copy: bool) -> Self {
@@ -24695,11 +24020,14 @@ impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {
     #[inline]
     pub fn supported_queues(mut self, supported_queues: QueueFlags) -> Self {
@@ -24731,12 +24059,18 @@ impl ::core::default::Default for PhysicalDeviceMemoryDecompressionFeaturesNV<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMemoryDecompressionFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMemoryDecompressionFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceMemoryDecompressionFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceMemoryDecompressionFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
     #[inline]
     pub fn memory_decompression(mut self, memory_decompression: bool) -> Self {
@@ -24770,11 +24104,14 @@ impl ::core::default::Default for PhysicalDeviceMemoryDecompressionPropertiesNV<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMemoryDecompressionPropertiesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceMemoryDecompressionPropertiesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
     #[inline]
     pub fn decompression_methods(
@@ -24854,12 +24191,12 @@ impl ::core::default::Default for PipelineViewportShadingRateImageStateCreateInf
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_SHADING_RATE_IMAGE_STATE_CREATE_INFO_NV;
 }
-unsafe impl ExtendsPipelineViewportStateCreateInfo
-    for PipelineViewportShadingRateImageStateCreateInfoNV<'_>
+unsafe impl<'a> Extends<'a, PipelineViewportStateCreateInfo<'a>>
+    for PipelineViewportShadingRateImageStateCreateInfoNV<'a>
 {
 }
 impl<'a> PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
@@ -24904,12 +24241,15 @@ impl ::core::default::Default for PhysicalDeviceShadingRateImageFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShadingRateImageFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShadingRateImageFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADING_RATE_IMAGE_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShadingRateImageFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShadingRateImageFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShadingRateImageFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceShadingRateImageFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceShadingRateImageFeaturesNV<'a> {
     #[inline]
     pub fn shading_rate_image(mut self, shading_rate_image: bool) -> Self {
@@ -24953,11 +24293,14 @@ impl ::core::default::Default for PhysicalDeviceShadingRateImagePropertiesNV<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShadingRateImagePropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShadingRateImagePropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADING_RATE_IMAGE_PROPERTIES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShadingRateImagePropertiesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceShadingRateImagePropertiesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceShadingRateImagePropertiesNV<'a> {
     #[inline]
     pub fn shading_rate_texel_size(mut self, shading_rate_texel_size: Extent2D) -> Self {
@@ -24999,12 +24342,18 @@ impl ::core::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INVOCATION_MASK_FEATURES_HUAWEI;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a>
+{
+}
 impl<'a> PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
     #[inline]
     pub fn invocation_mask(mut self, invocation_mask: bool) -> Self {
@@ -25111,12 +24460,12 @@ impl ::core::default::Default for PipelineViewportCoarseSampleOrderStateCreateIn
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_COARSE_SAMPLE_ORDER_STATE_CREATE_INFO_NV;
 }
-unsafe impl ExtendsPipelineViewportStateCreateInfo
-    for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_>
+unsafe impl<'a> Extends<'a, PipelineViewportStateCreateInfo<'a>>
+    for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a>
 {
 }
 impl<'a> PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
@@ -25161,11 +24510,14 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMeshShaderFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MESH_SHADER_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMeshShaderFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMeshShaderFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceMeshShaderFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceMeshShaderFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceMeshShaderFeaturesNV<'a> {
     #[inline]
     pub fn task_shader(mut self, task_shader: bool) -> Self {
@@ -25226,10 +24578,13 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMeshShaderPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMeshShaderPropertiesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceMeshShaderPropertiesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceMeshShaderPropertiesNV<'a> {
     #[inline]
     pub fn max_draw_mesh_tasks_count(mut self, max_draw_mesh_tasks_count: u32) -> Self {
@@ -25356,11 +24711,14 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMeshShaderFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MESH_SHADER_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMeshShaderFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMeshShaderFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceMeshShaderFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceMeshShaderFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceMeshShaderFeaturesEXT<'a> {
     #[inline]
     pub fn task_shader(mut self, task_shader: bool) -> Self {
@@ -25470,10 +24828,13 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMeshShaderPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMeshShaderPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceMeshShaderPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceMeshShaderPropertiesEXT<'a> {
     #[inline]
     pub fn max_task_work_group_total_count(mut self, max_task_work_group_total_count: u32) -> Self {
@@ -25706,7 +25067,7 @@ impl ::core::default::Default for RayTracingShaderGroupCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RayTracingShaderGroupCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RayTracingShaderGroupCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_SHADER_GROUP_CREATE_INFO_NV;
 }
 impl<'a> RayTracingShaderGroupCreateInfoNV<'a> {
@@ -25770,7 +25131,7 @@ impl ::core::default::Default for RayTracingShaderGroupCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RayTracingShaderGroupCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RayTracingShaderGroupCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_SHADER_GROUP_CREATE_INFO_KHR;
 }
 impl<'a> RayTracingShaderGroupCreateInfoKHR<'a> {
@@ -25848,10 +25209,10 @@ impl ::core::default::Default for RayTracingPipelineCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RayTracingPipelineCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_NV;
 }
-pub unsafe trait ExtendsRayTracingPipelineCreateInfoNV {}
+unsafe impl<'a> BaseTaggedStructure<'a> for RayTracingPipelineCreateInfoNV<'a> {}
 impl<'a> RayTracingPipelineCreateInfoNV<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
@@ -25888,23 +25249,6 @@ impl<'a> RayTracingPipelineCreateInfoNV<'a> {
     #[inline]
     pub fn base_pipeline_index(mut self, base_pipeline_index: i32) -> Self {
         self.base_pipeline_index = base_pipeline_index;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRayTracingPipelineCreateInfoNV + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -25954,10 +25298,10 @@ impl ::core::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RayTracingPipelineCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_KHR;
 }
-pub unsafe trait ExtendsRayTracingPipelineCreateInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for RayTracingPipelineCreateInfoKHR<'a> {}
 impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
@@ -26017,23 +25361,6 @@ impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
         self.base_pipeline_index = base_pipeline_index;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRayTracingPipelineCreateInfoKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -26079,7 +25406,7 @@ impl ::core::default::Default for GeometryTrianglesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeometryTrianglesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeometryTrianglesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GEOMETRY_TRIANGLES_NV;
 }
 impl<'a> GeometryTrianglesNV<'a> {
@@ -26169,7 +25496,7 @@ impl ::core::default::Default for GeometryAABBNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeometryAABBNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeometryAABBNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GEOMETRY_AABB_NV;
 }
 impl<'a> GeometryAABBNV<'a> {
@@ -26244,7 +25571,7 @@ impl ::core::default::Default for GeometryNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeometryNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeometryNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GEOMETRY_NV;
 }
 impl<'a> GeometryNV<'a> {
@@ -26296,7 +25623,7 @@ impl ::core::default::Default for AccelerationStructureInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_INFO_NV;
 }
 impl<'a> AccelerationStructureInfoNV<'a> {
@@ -26348,10 +25675,10 @@ impl ::core::default::Default for AccelerationStructureCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_NV;
 }
-pub unsafe trait ExtendsAccelerationStructureCreateInfoNV {}
+unsafe impl<'a> BaseTaggedStructure<'a> for AccelerationStructureCreateInfoNV<'a> {}
 impl<'a> AccelerationStructureCreateInfoNV<'a> {
     #[inline]
     pub fn compacted_size(mut self, compacted_size: DeviceSize) -> Self {
@@ -26361,23 +25688,6 @@ impl<'a> AccelerationStructureCreateInfoNV<'a> {
     #[inline]
     pub fn info(mut self, info: AccelerationStructureInfoNV<'a>) -> Self {
         self.info = info;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureCreateInfoNV + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -26413,7 +25723,7 @@ impl ::core::default::Default for BindAccelerationStructureMemoryInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindAccelerationStructureMemoryInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindAccelerationStructureMemoryInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_ACCELERATION_STRUCTURE_MEMORY_INFO_NV;
 }
 impl<'a> BindAccelerationStructureMemoryInfoNV<'a> {
@@ -26468,11 +25778,14 @@ impl ::core::default::Default for WriteDescriptorSetAccelerationStructureKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for WriteDescriptorSetAccelerationStructureKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetAccelerationStructureKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR;
 }
-unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetAccelerationStructureKHR<'_> {}
+unsafe impl<'a> Extends<'a, WriteDescriptorSet<'a>>
+    for WriteDescriptorSetAccelerationStructureKHR<'a>
+{
+}
 impl<'a> WriteDescriptorSetAccelerationStructureKHR<'a> {
     #[inline]
     pub fn acceleration_structures(
@@ -26510,11 +25823,14 @@ impl ::core::default::Default for WriteDescriptorSetAccelerationStructureNV<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for WriteDescriptorSetAccelerationStructureNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetAccelerationStructureNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_NV;
 }
-unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetAccelerationStructureNV<'_> {}
+unsafe impl<'a> Extends<'a, WriteDescriptorSet<'a>>
+    for WriteDescriptorSetAccelerationStructureNV<'a>
+{
+}
 impl<'a> WriteDescriptorSetAccelerationStructureNV<'a> {
     #[inline]
     pub fn acceleration_structures(
@@ -26552,7 +25868,7 @@ impl ::core::default::Default for AccelerationStructureMemoryRequirementsInfoNV<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureMemoryRequirementsInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureMemoryRequirementsInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_INFO_NV;
 }
@@ -26603,12 +25919,18 @@ impl ::core::default::Default for PhysicalDeviceAccelerationStructureFeaturesKHR
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceAccelerationStructureFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceAccelerationStructureFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
     #[inline]
     pub fn acceleration_structure(mut self, acceleration_structure: bool) -> Self {
@@ -26681,12 +26003,18 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
     #[inline]
     pub fn ray_tracing_pipeline(mut self, ray_tracing_pipeline: bool) -> Self {
@@ -26753,11 +26081,11 @@ impl ::core::default::Default for PhysicalDeviceRayQueryFeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayQueryFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayQueryFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_RAY_QUERY_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayQueryFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayQueryFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>> for PhysicalDeviceRayQueryFeaturesKHR<'a> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceRayQueryFeaturesKHR<'a> {}
 impl<'a> PhysicalDeviceRayQueryFeaturesKHR<'a> {
     #[inline]
     pub fn ray_query(mut self, ray_query: bool) -> Self {
@@ -26803,12 +26131,12 @@ impl ::core::default::Default for PhysicalDeviceAccelerationStructurePropertiesK
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceAccelerationStructurePropertiesKHR<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceAccelerationStructurePropertiesKHR<'a>
 {
 }
 impl<'a> PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
@@ -26911,11 +26239,14 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPipelinePropertiesKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceRayTracingPipelinePropertiesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
     #[inline]
     pub fn shader_group_handle_size(mut self, shader_group_handle_size: u32) -> Self {
@@ -27002,10 +26333,13 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPropertiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_RAY_TRACING_PROPERTIES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingPropertiesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceRayTracingPropertiesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceRayTracingPropertiesNV<'a> {
     #[inline]
     pub fn shader_group_handle_size(mut self, shader_group_handle_size: u32) -> Self {
@@ -27255,12 +26589,18 @@ impl ::core::default::Default for PhysicalDeviceRayTracingMaintenance1FeaturesKH
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_MAINTENANCE_1_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
     #[inline]
     pub fn ray_tracing_maintenance1(mut self, ray_tracing_maintenance1: bool) -> Self {
@@ -27303,10 +26643,10 @@ impl ::core::default::Default for DrmFormatModifierPropertiesListEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DrmFormatModifierPropertiesListEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DrmFormatModifierPropertiesListEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_EXT;
 }
-unsafe impl ExtendsFormatProperties2 for DrmFormatModifierPropertiesListEXT<'_> {}
+unsafe impl<'a> Extends<'a, FormatProperties2<'a>> for DrmFormatModifierPropertiesListEXT<'a> {}
 impl<'a> DrmFormatModifierPropertiesListEXT<'a> {
     #[inline]
     pub fn drm_format_modifier_properties(
@@ -27378,12 +26718,12 @@ impl ::core::default::Default for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_DRM_FORMAT_MODIFIER_INFO_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceImageFormatInfo2
-    for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceImageFormatInfo2<'a>>
+    for PhysicalDeviceImageDrmFormatModifierInfoEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
@@ -27430,11 +26770,11 @@ impl ::core::default::Default for ImageDrmFormatModifierListCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageDrmFormatModifierListCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierListCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::IMAGE_DRM_FORMAT_MODIFIER_LIST_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsImageCreateInfo for ImageDrmFormatModifierListCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for ImageDrmFormatModifierListCreateInfoEXT<'a> {}
 impl<'a> ImageDrmFormatModifierListCreateInfoEXT<'a> {
     #[inline]
     pub fn drm_format_modifiers(mut self, drm_format_modifiers: &'a [u64]) -> Self {
@@ -27471,11 +26811,14 @@ impl ::core::default::Default for ImageDrmFormatModifierExplicitCreateInfoEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::IMAGE_DRM_FORMAT_MODIFIER_EXPLICIT_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsImageCreateInfo for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>>
+    for ImageDrmFormatModifierExplicitCreateInfoEXT<'a>
+{
+}
 impl<'a> ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
     #[inline]
     pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
@@ -27513,7 +26856,7 @@ impl ::core::default::Default for ImageDrmFormatModifierPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageDrmFormatModifierPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT;
 }
 impl<'a> ImageDrmFormatModifierPropertiesEXT<'a> {
@@ -27547,11 +26890,14 @@ impl ::core::default::Default for ImageStencilUsageCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageStencilUsageCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageStencilUsageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_STENCIL_USAGE_CREATE_INFO;
 }
-unsafe impl ExtendsImageCreateInfo for ImageStencilUsageCreateInfo<'_> {}
-unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for ImageStencilUsageCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for ImageStencilUsageCreateInfo<'a> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceImageFormatInfo2<'a>>
+    for ImageStencilUsageCreateInfo<'a>
+{
+}
 impl<'a> ImageStencilUsageCreateInfo<'a> {
     #[inline]
     pub fn stencil_usage(mut self, stencil_usage: ImageUsageFlags) -> Self {
@@ -27583,11 +26929,11 @@ impl ::core::default::Default for DeviceMemoryOverallocationCreateInfoAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceMemoryOverallocationCreateInfoAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryOverallocationCreateInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEVICE_MEMORY_OVERALLOCATION_CREATE_INFO_AMD;
 }
-unsafe impl ExtendsDeviceCreateInfo for DeviceMemoryOverallocationCreateInfoAMD<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for DeviceMemoryOverallocationCreateInfoAMD<'a> {}
 impl<'a> DeviceMemoryOverallocationCreateInfoAMD<'a> {
     #[inline]
     pub fn overallocation_behavior(
@@ -27626,12 +26972,18 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
     #[inline]
     pub fn fragment_density_map(mut self, fragment_density_map: bool) -> Self {
@@ -27677,12 +27029,18 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
     #[inline]
     pub fn fragment_density_map_deferred(mut self, fragment_density_map_deferred: bool) -> Self {
@@ -27714,15 +27072,18 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_QCOM;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a>
+{
+}
 impl<'a> PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {
     #[inline]
     pub fn fragment_density_map_offset(mut self, fragment_density_map_offset: bool) -> Self {
@@ -27758,11 +27119,14 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceFragmentDensityMapPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
     #[inline]
     pub fn min_fragment_density_texel_size(
@@ -27816,12 +27180,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2PropertiesEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
@@ -27877,12 +27241,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetProperti
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_PROPERTIES_QCOM;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a>
 {
 }
 impl<'a> PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {
@@ -27919,12 +27283,18 @@ impl ::core::default::Default for RenderPassFragmentDensityMapCreateInfoEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassFragmentDensityMapCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassFragmentDensityMapCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsRenderPassCreateInfo for RenderPassFragmentDensityMapCreateInfoEXT<'_> {}
-unsafe impl ExtendsRenderPassCreateInfo2 for RenderPassFragmentDensityMapCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, RenderPassCreateInfo<'a>>
+    for RenderPassFragmentDensityMapCreateInfoEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, RenderPassCreateInfo2<'a>>
+    for RenderPassFragmentDensityMapCreateInfoEXT<'a>
+{
+}
 impl<'a> RenderPassFragmentDensityMapCreateInfoEXT<'a> {
     #[inline]
     pub fn fragment_density_map_attachment(
@@ -27961,11 +27331,11 @@ impl ::core::default::Default for SubpassFragmentDensityMapOffsetEndInfoQCOM<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SUBPASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_QCOM;
 }
-unsafe impl ExtendsSubpassEndInfo for SubpassFragmentDensityMapOffsetEndInfoQCOM<'_> {}
+unsafe impl<'a> Extends<'a, SubpassEndInfo<'a>> for SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {}
 impl<'a> SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {
     #[inline]
     pub fn fragment_density_offsets(mut self, fragment_density_offsets: &'a [Offset2D]) -> Self {
@@ -27998,12 +27368,15 @@ impl ::core::default::Default for PhysicalDeviceScalarBlockLayoutFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceScalarBlockLayoutFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceScalarBlockLayoutFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceScalarBlockLayoutFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceScalarBlockLayoutFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceScalarBlockLayoutFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceScalarBlockLayoutFeatures<'a> {}
 impl<'a> PhysicalDeviceScalarBlockLayoutFeatures<'a> {
     #[inline]
     pub fn scalar_block_layout(mut self, scalar_block_layout: bool) -> Self {
@@ -28035,10 +27408,10 @@ impl ::core::default::Default for SurfaceProtectedCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceProtectedCapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceProtectedCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PROTECTED_CAPABILITIES_KHR;
 }
-unsafe impl ExtendsSurfaceCapabilities2KHR for SurfaceProtectedCapabilitiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, SurfaceCapabilities2KHR<'a>> for SurfaceProtectedCapabilitiesKHR<'a> {}
 impl<'a> SurfaceProtectedCapabilitiesKHR<'a> {
     #[inline]
     pub fn supports_protected(mut self, supports_protected: bool) -> Self {
@@ -28070,15 +27443,18 @@ impl ::core::default::Default for PhysicalDeviceUniformBufferStandardLayoutFeatu
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a>
+{
+}
 impl<'a> PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
     #[inline]
     pub fn uniform_buffer_standard_layout(mut self, uniform_buffer_standard_layout: bool) -> Self {
@@ -28110,12 +27486,15 @@ impl ::core::default::Default for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_CLIP_ENABLE_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDepthClipEnableFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
     #[inline]
     pub fn depth_clip_enable(mut self, depth_clip_enable: bool) -> Self {
@@ -28149,12 +27528,12 @@ impl ::core::default::Default for PipelineRasterizationDepthClipStateCreateInfoE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_DEPTH_CLIP_STATE_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsPipelineRasterizationStateCreateInfo
-    for PipelineRasterizationDepthClipStateCreateInfoEXT<'_>
+unsafe impl<'a> Extends<'a, PipelineRasterizationStateCreateInfo<'a>>
+    for PipelineRasterizationDepthClipStateCreateInfoEXT<'a>
 {
 }
 impl<'a> PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
@@ -28195,11 +27574,14 @@ impl ::core::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceMemoryProperties2 for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceMemoryProperties2<'a>>
+    for PhysicalDeviceMemoryBudgetPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
     #[inline]
     pub fn heap_budget(mut self, heap_budget: [DeviceSize; MAX_MEMORY_HEAPS]) -> Self {
@@ -28236,12 +27618,15 @@ impl ::core::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceMemoryPriorityFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
     #[inline]
     pub fn memory_priority(mut self, memory_priority: bool) -> Self {
@@ -28273,10 +27658,10 @@ impl ::core::default::Default for MemoryPriorityAllocateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryPriorityAllocateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryPriorityAllocateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_PRIORITY_ALLOCATE_INFO_EXT;
 }
-unsafe impl ExtendsMemoryAllocateInfo for MemoryPriorityAllocateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for MemoryPriorityAllocateInfoEXT<'a> {}
 impl<'a> MemoryPriorityAllocateInfoEXT<'a> {
     #[inline]
     pub fn priority(mut self, priority: f32) -> Self {
@@ -28308,15 +27693,18 @@ impl ::core::default::Default for PhysicalDevicePageableDeviceLocalMemoryFeature
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
     #[inline]
     pub fn pageable_device_local_memory(mut self, pageable_device_local_memory: bool) -> Self {
@@ -28352,12 +27740,18 @@ impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeatures<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceBufferDeviceAddressFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBufferDeviceAddressFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBufferDeviceAddressFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceBufferDeviceAddressFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceBufferDeviceAddressFeatures<'a>
+{
+}
 impl<'a> PhysicalDeviceBufferDeviceAddressFeatures<'a> {
     #[inline]
     pub fn buffer_device_address(mut self, buffer_device_address: bool) -> Self {
@@ -28409,12 +27803,18 @@ impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
     #[inline]
     pub fn buffer_device_address(mut self, buffer_device_address: bool) -> Self {
@@ -28462,7 +27862,7 @@ impl ::core::default::Default for BufferDeviceAddressInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferDeviceAddressInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferDeviceAddressInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_DEVICE_ADDRESS_INFO;
 }
 impl<'a> BufferDeviceAddressInfo<'a> {
@@ -28496,10 +27896,10 @@ impl ::core::default::Default for BufferOpaqueCaptureAddressCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferOpaqueCaptureAddressCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferOpaqueCaptureAddressCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_OPAQUE_CAPTURE_ADDRESS_CREATE_INFO;
 }
-unsafe impl ExtendsBufferCreateInfo for BufferOpaqueCaptureAddressCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, BufferCreateInfo<'a>> for BufferOpaqueCaptureAddressCreateInfo<'a> {}
 impl<'a> BufferOpaqueCaptureAddressCreateInfo<'a> {
     #[inline]
     pub fn opaque_capture_address(mut self, opaque_capture_address: u64) -> Self {
@@ -28531,10 +27931,10 @@ impl ::core::default::Default for BufferDeviceAddressCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferDeviceAddressCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferDeviceAddressCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsBufferCreateInfo for BufferDeviceAddressCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, BufferCreateInfo<'a>> for BufferDeviceAddressCreateInfoEXT<'a> {}
 impl<'a> BufferDeviceAddressCreateInfoEXT<'a> {
     #[inline]
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
@@ -28566,12 +27966,12 @@ impl ::core::default::Default for PhysicalDeviceImageViewImageFormatInfoEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_VIEW_IMAGE_FORMAT_INFO_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceImageFormatInfo2
-    for PhysicalDeviceImageViewImageFormatInfoEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceImageFormatInfo2<'a>>
+    for PhysicalDeviceImageViewImageFormatInfoEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
@@ -28607,11 +28007,14 @@ impl ::core::default::Default for FilterCubicImageViewImageFormatPropertiesEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FilterCubicImageViewImageFormatPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FilterCubicImageViewImageFormatPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::FILTER_CUBIC_IMAGE_VIEW_IMAGE_FORMAT_PROPERTIES_EXT;
 }
-unsafe impl ExtendsImageFormatProperties2 for FilterCubicImageViewImageFormatPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, ImageFormatProperties2<'a>>
+    for FilterCubicImageViewImageFormatPropertiesEXT<'a>
+{
+}
 impl<'a> FilterCubicImageViewImageFormatPropertiesEXT<'a> {
     #[inline]
     pub fn filter_cubic(mut self, filter_cubic: bool) -> Self {
@@ -28648,12 +28051,18 @@ impl ::core::default::Default for PhysicalDeviceImagelessFramebufferFeatures<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImagelessFramebufferFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImagelessFramebufferFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImagelessFramebufferFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImagelessFramebufferFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceImagelessFramebufferFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceImagelessFramebufferFeatures<'a>
+{
+}
 impl<'a> PhysicalDeviceImagelessFramebufferFeatures<'a> {
     #[inline]
     pub fn imageless_framebuffer(mut self, imageless_framebuffer: bool) -> Self {
@@ -28687,10 +28096,10 @@ impl ::core::default::Default for FramebufferAttachmentsCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FramebufferAttachmentsCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FramebufferAttachmentsCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_ATTACHMENTS_CREATE_INFO;
 }
-unsafe impl ExtendsFramebufferCreateInfo for FramebufferAttachmentsCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, FramebufferCreateInfo<'a>> for FramebufferAttachmentsCreateInfo<'a> {}
 impl<'a> FramebufferAttachmentsCreateInfo<'a> {
     #[inline]
     pub fn attachment_image_infos(
@@ -28738,7 +28147,7 @@ impl ::core::default::Default for FramebufferAttachmentImageInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FramebufferAttachmentImageInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FramebufferAttachmentImageInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_ATTACHMENT_IMAGE_INFO;
 }
 impl<'a> FramebufferAttachmentImageInfo<'a> {
@@ -28800,10 +28209,10 @@ impl ::core::default::Default for RenderPassAttachmentBeginInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassAttachmentBeginInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassAttachmentBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_ATTACHMENT_BEGIN_INFO;
 }
-unsafe impl ExtendsRenderPassBeginInfo for RenderPassAttachmentBeginInfo<'_> {}
+unsafe impl<'a> Extends<'a, RenderPassBeginInfo<'a>> for RenderPassAttachmentBeginInfo<'a> {}
 impl<'a> RenderPassAttachmentBeginInfo<'a> {
     #[inline]
     pub fn attachments(mut self, attachments: &'a [ImageView]) -> Self {
@@ -28836,12 +28245,18 @@ impl ::core::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeature
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a>
+{
+}
 impl<'a> PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
     #[inline]
     pub fn texture_compression_astc_hdr(mut self, texture_compression_astc_hdr: bool) -> Self {
@@ -28875,12 +28290,18 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceCooperativeMatrixFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceCooperativeMatrixFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
     #[inline]
     pub fn cooperative_matrix(mut self, cooperative_matrix: bool) -> Self {
@@ -28921,11 +28342,14 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesNV<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceCooperativeMatrixPropertiesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
     #[inline]
     pub fn cooperative_matrix_supported_stages(
@@ -28974,7 +28398,7 @@ impl ::core::default::Default for CooperativeMatrixPropertiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CooperativeMatrixPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COOPERATIVE_MATRIX_PROPERTIES_NV;
 }
 impl<'a> CooperativeMatrixPropertiesNV<'a> {
@@ -29043,12 +28467,18 @@ impl ::core::default::Default for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_YCBCR_IMAGE_ARRAYS_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
     #[inline]
     pub fn ycbcr_image_arrays(mut self, ycbcr_image_arrays: bool) -> Self {
@@ -29084,7 +28514,7 @@ impl ::core::default::Default for ImageViewHandleInfoNVX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewHandleInfoNVX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewHandleInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_HANDLE_INFO_NVX;
 }
 impl<'a> ImageViewHandleInfoNVX<'a> {
@@ -29130,7 +28560,7 @@ impl ::core::default::Default for ImageViewAddressPropertiesNVX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewAddressPropertiesNVX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewAddressPropertiesNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_ADDRESS_PROPERTIES_NVX;
 }
 impl<'a> ImageViewAddressPropertiesNVX<'a> {
@@ -29169,10 +28599,10 @@ impl ::core::default::Default for PresentFrameTokenGGP<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PresentFrameTokenGGP<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PresentFrameTokenGGP<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_FRAME_TOKEN_GGP;
 }
-unsafe impl ExtendsPresentInfoKHR for PresentFrameTokenGGP<'_> {}
+unsafe impl<'a> Extends<'a, PresentInfoKHR<'a>> for PresentFrameTokenGGP<'a> {}
 impl<'a> PresentFrameTokenGGP<'a> {
     #[inline]
     pub fn frame_token(mut self, frame_token: GgpFrameToken) -> Self {
@@ -29229,14 +28659,29 @@ impl ::core::default::Default for PipelineCreationFeedbackCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCreationFeedbackCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCreationFeedbackCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CREATION_FEEDBACK_CREATE_INFO;
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCreationFeedbackCreateInfo<'_> {}
-unsafe impl ExtendsComputePipelineCreateInfo for PipelineCreationFeedbackCreateInfo<'_> {}
-unsafe impl ExtendsRayTracingPipelineCreateInfoNV for PipelineCreationFeedbackCreateInfo<'_> {}
-unsafe impl ExtendsRayTracingPipelineCreateInfoKHR for PipelineCreationFeedbackCreateInfo<'_> {}
-unsafe impl ExtendsExecutionGraphPipelineCreateInfoAMDX for PipelineCreationFeedbackCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>>
+    for PipelineCreationFeedbackCreateInfo<'a>
+{
+}
+unsafe impl<'a> Extends<'a, ComputePipelineCreateInfo<'a>>
+    for PipelineCreationFeedbackCreateInfo<'a>
+{
+}
+unsafe impl<'a> Extends<'a, RayTracingPipelineCreateInfoNV<'a>>
+    for PipelineCreationFeedbackCreateInfo<'a>
+{
+}
+unsafe impl<'a> Extends<'a, RayTracingPipelineCreateInfoKHR<'a>>
+    for PipelineCreationFeedbackCreateInfo<'a>
+{
+}
+unsafe impl<'a> Extends<'a, ExecutionGraphPipelineCreateInfoAMDX<'a>>
+    for PipelineCreationFeedbackCreateInfo<'a>
+{
+}
 impl<'a> PipelineCreationFeedbackCreateInfo<'a> {
     #[inline]
     pub fn pipeline_creation_feedback(
@@ -29280,11 +28725,14 @@ impl ::core::default::Default for SurfaceFullScreenExclusiveInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceFullScreenExclusiveInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceFullScreenExclusiveInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_FULL_SCREEN_EXCLUSIVE_INFO_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceSurfaceInfo2KHR for SurfaceFullScreenExclusiveInfoEXT<'_> {}
-unsafe impl ExtendsSwapchainCreateInfoKHR for SurfaceFullScreenExclusiveInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceSurfaceInfo2KHR<'a>>
+    for SurfaceFullScreenExclusiveInfoEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, SwapchainCreateInfoKHR<'a>> for SurfaceFullScreenExclusiveInfoEXT<'a> {}
 impl<'a> SurfaceFullScreenExclusiveInfoEXT<'a> {
     #[inline]
     pub fn full_screen_exclusive(mut self, full_screen_exclusive: FullScreenExclusiveEXT) -> Self {
@@ -29316,12 +28764,18 @@ impl ::core::default::Default for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SURFACE_FULL_SCREEN_EXCLUSIVE_WIN32_INFO_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceSurfaceInfo2KHR for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {}
-unsafe impl ExtendsSwapchainCreateInfoKHR for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceSurfaceInfo2KHR<'a>>
+    for SurfaceFullScreenExclusiveWin32InfoEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, SwapchainCreateInfoKHR<'a>>
+    for SurfaceFullScreenExclusiveWin32InfoEXT<'a>
+{
+}
 impl<'a> SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
     #[inline]
     pub fn hmonitor(mut self, hmonitor: HMONITOR) -> Self {
@@ -29353,11 +28807,14 @@ impl ::core::default::Default for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SURFACE_CAPABILITIES_FULL_SCREEN_EXCLUSIVE_EXT;
 }
-unsafe impl ExtendsSurfaceCapabilities2KHR for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {}
+unsafe impl<'a> Extends<'a, SurfaceCapabilities2KHR<'a>>
+    for SurfaceCapabilitiesFullScreenExclusiveEXT<'a>
+{
+}
 impl<'a> SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
     #[inline]
     pub fn full_screen_exclusive_supported(
@@ -29392,12 +28849,15 @@ impl ::core::default::Default for PhysicalDevicePresentBarrierFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePresentBarrierFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentBarrierFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRESENT_BARRIER_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentBarrierFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentBarrierFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePresentBarrierFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDevicePresentBarrierFeaturesNV<'a> {}
 impl<'a> PhysicalDevicePresentBarrierFeaturesNV<'a> {
     #[inline]
     pub fn present_barrier(mut self, present_barrier: bool) -> Self {
@@ -29429,10 +28889,13 @@ impl ::core::default::Default for SurfaceCapabilitiesPresentBarrierNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceCapabilitiesPresentBarrierNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentBarrierNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_PRESENT_BARRIER_NV;
 }
-unsafe impl ExtendsSurfaceCapabilities2KHR for SurfaceCapabilitiesPresentBarrierNV<'_> {}
+unsafe impl<'a> Extends<'a, SurfaceCapabilities2KHR<'a>>
+    for SurfaceCapabilitiesPresentBarrierNV<'a>
+{
+}
 impl<'a> SurfaceCapabilitiesPresentBarrierNV<'a> {
     #[inline]
     pub fn present_barrier_supported(mut self, present_barrier_supported: bool) -> Self {
@@ -29464,10 +28927,13 @@ impl ::core::default::Default for SwapchainPresentBarrierCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainPresentBarrierCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentBarrierCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_BARRIER_CREATE_INFO_NV;
 }
-unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainPresentBarrierCreateInfoNV<'_> {}
+unsafe impl<'a> Extends<'a, SwapchainCreateInfoKHR<'a>>
+    for SwapchainPresentBarrierCreateInfoNV<'a>
+{
+}
 impl<'a> SwapchainPresentBarrierCreateInfoNV<'a> {
     #[inline]
     pub fn present_barrier_enable(mut self, present_barrier_enable: bool) -> Self {
@@ -29501,12 +28967,18 @@ impl ::core::default::Default for PhysicalDevicePerformanceQueryFeaturesKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PERFORMANCE_QUERY_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePerformanceQueryFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDevicePerformanceQueryFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
     #[inline]
     pub fn performance_counter_query_pools(
@@ -29550,11 +29022,14 @@ impl ::core::default::Default for PhysicalDevicePerformanceQueryPropertiesKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PERFORMANCE_QUERY_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDevicePerformanceQueryPropertiesKHR<'a>
+{
+}
 impl<'a> PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
     #[inline]
     pub fn allow_command_buffer_query_copies(
@@ -29595,7 +29070,7 @@ impl ::core::default::Default for PerformanceCounterKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PerformanceCounterKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_COUNTER_KHR;
 }
 impl<'a> PerformanceCounterKHR<'a> {
@@ -29662,7 +29137,7 @@ impl ::core::default::Default for PerformanceCounterDescriptionKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PerformanceCounterDescriptionKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterDescriptionKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_COUNTER_DESCRIPTION_KHR;
 }
 impl<'a> PerformanceCounterDescriptionKHR<'a> {
@@ -29730,10 +29205,10 @@ impl ::core::default::Default for QueryPoolPerformanceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueryPoolPerformanceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueryPoolPerformanceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUERY_POOL_PERFORMANCE_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsQueryPoolCreateInfo for QueryPoolPerformanceCreateInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, QueryPoolCreateInfo<'a>> for QueryPoolPerformanceCreateInfoKHR<'a> {}
 impl<'a> QueryPoolPerformanceCreateInfoKHR<'a> {
     #[inline]
     pub fn queue_family_index(mut self, queue_family_index: u32) -> Self {
@@ -29790,7 +29265,7 @@ impl ::core::default::Default for AcquireProfilingLockInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AcquireProfilingLockInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AcquireProfilingLockInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACQUIRE_PROFILING_LOCK_INFO_KHR;
 }
 impl<'a> AcquireProfilingLockInfoKHR<'a> {
@@ -29829,11 +29304,11 @@ impl ::core::default::Default for PerformanceQuerySubmitInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PerformanceQuerySubmitInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PerformanceQuerySubmitInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_QUERY_SUBMIT_INFO_KHR;
 }
-unsafe impl ExtendsSubmitInfo for PerformanceQuerySubmitInfoKHR<'_> {}
-unsafe impl ExtendsSubmitInfo2 for PerformanceQuerySubmitInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, SubmitInfo<'a>> for PerformanceQuerySubmitInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, SubmitInfo2<'a>> for PerformanceQuerySubmitInfoKHR<'a> {}
 impl<'a> PerformanceQuerySubmitInfoKHR<'a> {
     #[inline]
     pub fn counter_pass_index(mut self, counter_pass_index: u32) -> Self {
@@ -29865,7 +29340,7 @@ impl ::core::default::Default for HeadlessSurfaceCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for HeadlessSurfaceCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for HeadlessSurfaceCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::HEADLESS_SURFACE_CREATE_INFO_EXT;
 }
 impl<'a> HeadlessSurfaceCreateInfoEXT<'a> {
@@ -29899,12 +29374,18 @@ impl ::core::default::Default for PhysicalDeviceCoverageReductionModeFeaturesNV<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COVERAGE_REDUCTION_MODE_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceCoverageReductionModeFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceCoverageReductionModeFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
     #[inline]
     pub fn coverage_reduction_mode(mut self, coverage_reduction_mode: bool) -> Self {
@@ -29938,12 +29419,12 @@ impl ::core::default::Default for PipelineCoverageReductionStateCreateInfoNV<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCoverageReductionStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageReductionStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_COVERAGE_REDUCTION_STATE_CREATE_INFO_NV;
 }
-unsafe impl ExtendsPipelineMultisampleStateCreateInfo
-    for PipelineCoverageReductionStateCreateInfoNV<'_>
+unsafe impl<'a> Extends<'a, PipelineMultisampleStateCreateInfo<'a>>
+    for PipelineCoverageReductionStateCreateInfoNV<'a>
 {
 }
 impl<'a> PipelineCoverageReductionStateCreateInfoNV<'a> {
@@ -29991,7 +29472,7 @@ impl ::core::default::Default for FramebufferMixedSamplesCombinationNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FramebufferMixedSamplesCombinationNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FramebufferMixedSamplesCombinationNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_MIXED_SAMPLES_COMBINATION_NV;
 }
 impl<'a> FramebufferMixedSamplesCombinationNV<'a> {
@@ -30043,15 +29524,18 @@ impl ::core::default::Default for PhysicalDeviceShaderIntegerFunctions2FeaturesI
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_INTEGER_FUNCTIONS_2_FEATURES_INTEL;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
     #[inline]
     pub fn shader_integer_functions2(mut self, shader_integer_functions2: bool) -> Self {
@@ -30128,7 +29612,7 @@ impl ::core::default::Default for InitializePerformanceApiInfoINTEL<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for InitializePerformanceApiInfoINTEL<'a> {
+unsafe impl<'a> TaggedStructure<'a> for InitializePerformanceApiInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INITIALIZE_PERFORMANCE_API_INFO_INTEL;
 }
 impl<'a> InitializePerformanceApiInfoINTEL<'a> {
@@ -30162,11 +29646,14 @@ impl ::core::default::Default for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::QUERY_POOL_PERFORMANCE_QUERY_CREATE_INFO_INTEL;
 }
-unsafe impl ExtendsQueryPoolCreateInfo for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {}
+unsafe impl<'a> Extends<'a, QueryPoolCreateInfo<'a>>
+    for QueryPoolPerformanceQueryCreateInfoINTEL<'a>
+{
+}
 impl<'a> QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
     #[inline]
     pub fn performance_counters_sampling(
@@ -30201,7 +29688,7 @@ impl ::core::default::Default for PerformanceMarkerInfoINTEL<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PerformanceMarkerInfoINTEL<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PerformanceMarkerInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_MARKER_INFO_INTEL;
 }
 impl<'a> PerformanceMarkerInfoINTEL<'a> {
@@ -30235,7 +29722,7 @@ impl ::core::default::Default for PerformanceStreamMarkerInfoINTEL<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PerformanceStreamMarkerInfoINTEL<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PerformanceStreamMarkerInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_STREAM_MARKER_INFO_INTEL;
 }
 impl<'a> PerformanceStreamMarkerInfoINTEL<'a> {
@@ -30273,7 +29760,7 @@ impl ::core::default::Default for PerformanceOverrideInfoINTEL<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PerformanceOverrideInfoINTEL<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PerformanceOverrideInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_OVERRIDE_INFO_INTEL;
 }
 impl<'a> PerformanceOverrideInfoINTEL<'a> {
@@ -30317,7 +29804,7 @@ impl ::core::default::Default for PerformanceConfigurationAcquireInfoINTEL<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PerformanceConfigurationAcquireInfoINTEL<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PerformanceConfigurationAcquireInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PERFORMANCE_CONFIGURATION_ACQUIRE_INFO_INTEL;
 }
@@ -30354,11 +29841,14 @@ impl ::core::default::Default for PhysicalDeviceShaderClockFeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderClockFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderClockFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_CLOCK_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderClockFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderClockFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderClockFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceShaderClockFeaturesKHR<'a> {}
 impl<'a> PhysicalDeviceShaderClockFeaturesKHR<'a> {
     #[inline]
     pub fn shader_subgroup_clock(mut self, shader_subgroup_clock: bool) -> Self {
@@ -30395,12 +29885,15 @@ impl ::core::default::Default for PhysicalDeviceIndexTypeUint8FeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceIndexTypeUint8FeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceIndexTypeUint8FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceIndexTypeUint8FeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceIndexTypeUint8FeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceIndexTypeUint8FeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceIndexTypeUint8FeaturesKHR<'a> {}
 impl<'a> PhysicalDeviceIndexTypeUint8FeaturesKHR<'a> {
     #[inline]
     pub fn index_type_uint8(mut self, index_type_uint8: bool) -> Self {
@@ -30434,11 +29927,14 @@ impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SM_BUILTINS_PROPERTIES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
     #[inline]
     pub fn shader_sm_count(mut self, shader_sm_count: u32) -> Self {
@@ -30475,12 +29971,15 @@ impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SM_BUILTINS_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
     #[inline]
     pub fn shader_sm_builtins(mut self, shader_sm_builtins: bool) -> Self {
@@ -30516,15 +30015,18 @@ impl ::core::default::Default for PhysicalDeviceFragmentShaderInterlockFeaturesE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_INTERLOCK_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
     #[inline]
     pub fn fragment_shader_sample_interlock(
@@ -30575,15 +30077,18 @@ impl ::core::default::Default for PhysicalDeviceSeparateDepthStencilLayoutsFeatu
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a>
+{
+}
 impl<'a> PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
     #[inline]
     pub fn separate_depth_stencil_layouts(mut self, separate_depth_stencil_layouts: bool) -> Self {
@@ -30615,10 +30120,10 @@ impl ::core::default::Default for AttachmentReferenceStencilLayout<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AttachmentReferenceStencilLayout<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AttachmentReferenceStencilLayout<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_REFERENCE_STENCIL_LAYOUT;
 }
-unsafe impl ExtendsAttachmentReference2 for AttachmentReferenceStencilLayout<'_> {}
+unsafe impl<'a> Extends<'a, AttachmentReference2<'a>> for AttachmentReferenceStencilLayout<'a> {}
 impl<'a> AttachmentReferenceStencilLayout<'a> {
     #[inline]
     pub fn stencil_layout(mut self, stencil_layout: ImageLayout) -> Self {
@@ -30652,15 +30157,18 @@ impl ::core::default::Default for PhysicalDevicePrimitiveTopologyListRestartFeat
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRIMITIVE_TOPOLOGY_LIST_RESTART_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
     #[inline]
     pub fn primitive_topology_list_restart(
@@ -30705,10 +30213,10 @@ impl ::core::default::Default for AttachmentDescriptionStencilLayout<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AttachmentDescriptionStencilLayout<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AttachmentDescriptionStencilLayout<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT;
 }
-unsafe impl ExtendsAttachmentDescription2 for AttachmentDescriptionStencilLayout<'_> {}
+unsafe impl<'a> Extends<'a, AttachmentDescription2<'a>> for AttachmentDescriptionStencilLayout<'a> {}
 impl<'a> AttachmentDescriptionStencilLayout<'a> {
     #[inline]
     pub fn stencil_initial_layout(mut self, stencil_initial_layout: ImageLayout) -> Self {
@@ -30745,15 +30253,18 @@ impl ::core::default::Default for PhysicalDevicePipelineExecutablePropertiesFeat
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_EXECUTABLE_PROPERTIES_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
     #[inline]
     pub fn pipeline_executable_info(mut self, pipeline_executable_info: bool) -> Self {
@@ -30785,7 +30296,7 @@ impl ::core::default::Default for PipelineInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_INFO_KHR;
 }
 impl<'a> PipelineInfoKHR<'a> {
@@ -30837,7 +30348,7 @@ impl ::core::default::Default for PipelineExecutablePropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineExecutablePropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineExecutablePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_EXECUTABLE_PROPERTIES_KHR;
 }
 impl<'a> PipelineExecutablePropertiesKHR<'a> {
@@ -30897,7 +30408,7 @@ impl ::core::default::Default for PipelineExecutableInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineExecutableInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_EXECUTABLE_INFO_KHR;
 }
 impl<'a> PipelineExecutableInfoKHR<'a> {
@@ -30969,7 +30480,7 @@ impl ::core::default::Default for PipelineExecutableStatisticKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineExecutableStatisticKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableStatisticKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_EXECUTABLE_STATISTIC_KHR;
 }
 impl<'a> PipelineExecutableStatisticKHR<'a> {
@@ -31048,7 +30559,7 @@ impl ::core::default::Default for PipelineExecutableInternalRepresentationKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineExecutableInternalRepresentationKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableInternalRepresentationKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR;
 }
@@ -31108,15 +30619,18 @@ impl ::core::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFe
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
     #[inline]
     pub fn shader_demote_to_helper_invocation(
@@ -31151,12 +30665,18 @@ impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
     #[inline]
     pub fn texel_buffer_alignment(mut self, texel_buffer_alignment: bool) -> Self {
@@ -31194,11 +30714,14 @@ impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentProperties<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTexelBufferAlignmentProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTexelBufferAlignmentProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTexelBufferAlignmentProperties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceTexelBufferAlignmentProperties<'a>
+{
+}
 impl<'a> PhysicalDeviceTexelBufferAlignmentProperties<'a> {
     #[inline]
     pub fn storage_texel_buffer_offset_alignment_bytes(
@@ -31263,12 +30786,18 @@ impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlFeatures<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSubgroupSizeControlFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupSizeControlFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubgroupSizeControlFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubgroupSizeControlFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceSubgroupSizeControlFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceSubgroupSizeControlFeatures<'a>
+{
+}
 impl<'a> PhysicalDeviceSubgroupSizeControlFeatures<'a> {
     #[inline]
     pub fn subgroup_size_control(mut self, subgroup_size_control: bool) -> Self {
@@ -31311,11 +30840,14 @@ impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlProperties<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSubgroupSizeControlProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupSizeControlProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupSizeControlProperties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceSubgroupSizeControlProperties<'a>
+{
+}
 impl<'a> PhysicalDeviceSubgroupSizeControlProperties<'a> {
     #[inline]
     pub fn min_subgroup_size(mut self, min_subgroup_size: u32) -> Self {
@@ -31365,15 +30897,18 @@ impl ::core::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateI
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO;
 }
-unsafe impl ExtendsPipelineShaderStageCreateInfo
-    for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_>
+unsafe impl<'a> Extends<'a, PipelineShaderStageCreateInfo<'a>>
+    for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a>
 {
 }
-unsafe impl ExtendsShaderCreateInfoEXT for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, ShaderCreateInfoEXT<'a>>
+    for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a>
+{
+}
 impl<'a> PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
     #[inline]
     pub fn required_subgroup_size(mut self, required_subgroup_size: u32) -> Self {
@@ -31407,11 +30942,14 @@ impl ::core::default::Default for SubpassShadingPipelineCreateInfoHUAWEI<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassShadingPipelineCreateInfoHUAWEI<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassShadingPipelineCreateInfoHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SUBPASS_SHADING_PIPELINE_CREATE_INFO_HUAWEI;
 }
-unsafe impl ExtendsComputePipelineCreateInfo for SubpassShadingPipelineCreateInfoHUAWEI<'_> {}
+unsafe impl<'a> Extends<'a, ComputePipelineCreateInfo<'a>>
+    for SubpassShadingPipelineCreateInfoHUAWEI<'a>
+{
+}
 impl<'a> SubpassShadingPipelineCreateInfoHUAWEI<'a> {
     #[inline]
     pub fn render_pass(mut self, render_pass: RenderPass) -> Self {
@@ -31448,11 +30986,14 @@ impl ::core::default::Default for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SUBPASS_SHADING_PROPERTIES_HUAWEI;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a>
+{
+}
 impl<'a> PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
     #[inline]
     pub fn max_subpass_shading_workgroup_size_aspect_ratio(
@@ -31494,12 +31035,12 @@ impl ::core::default::Default for PhysicalDeviceClusterCullingShaderPropertiesHU
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_PROPERTIES_HUAWEI;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a>
 {
 }
 impl<'a> PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
@@ -31551,11 +31092,11 @@ impl ::core::default::Default for MemoryOpaqueCaptureAddressAllocateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryOpaqueCaptureAddressAllocateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryOpaqueCaptureAddressAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO;
 }
-unsafe impl ExtendsMemoryAllocateInfo for MemoryOpaqueCaptureAddressAllocateInfo<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for MemoryOpaqueCaptureAddressAllocateInfo<'a> {}
 impl<'a> MemoryOpaqueCaptureAddressAllocateInfo<'a> {
     #[inline]
     pub fn opaque_capture_address(mut self, opaque_capture_address: u64) -> Self {
@@ -31587,7 +31128,7 @@ impl ::core::default::Default for DeviceMemoryOpaqueCaptureAddressInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceMemoryOpaqueCaptureAddressInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryOpaqueCaptureAddressInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO;
 }
 impl<'a> DeviceMemoryOpaqueCaptureAddressInfo<'a> {
@@ -31631,12 +31172,18 @@ impl ::core::default::Default for PhysicalDeviceLineRasterizationFeaturesKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLineRasterizationFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLineRasterizationFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceLineRasterizationFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceLineRasterizationFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceLineRasterizationFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceLineRasterizationFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceLineRasterizationFeaturesKHR<'a> {
     #[inline]
     pub fn rectangular_lines(mut self, rectangular_lines: bool) -> Self {
@@ -31693,11 +31240,14 @@ impl ::core::default::Default for PhysicalDeviceLineRasterizationPropertiesKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLineRasterizationPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLineRasterizationPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceLineRasterizationPropertiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceLineRasterizationPropertiesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceLineRasterizationPropertiesKHR<'a> {
     #[inline]
     pub fn line_sub_pixel_precision_bits(mut self, line_sub_pixel_precision_bits: u32) -> Self {
@@ -31735,12 +31285,12 @@ impl ::core::default::Default for PipelineRasterizationLineStateCreateInfoKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRasterizationLineStateCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationLineStateCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsPipelineRasterizationStateCreateInfo
-    for PipelineRasterizationLineStateCreateInfoKHR<'_>
+unsafe impl<'a> Extends<'a, PipelineRasterizationStateCreateInfo<'a>>
+    for PipelineRasterizationLineStateCreateInfoKHR<'a>
 {
 }
 impl<'a> PipelineRasterizationLineStateCreateInfoKHR<'a> {
@@ -31792,15 +31342,18 @@ impl ::core::default::Default for PhysicalDevicePipelineCreationCacheControlFeat
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDevicePipelineCreationCacheControlFeatures<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePipelineCreationCacheControlFeatures<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDevicePipelineCreationCacheControlFeatures<'a>
+{
+}
 impl<'a> PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
     #[inline]
     pub fn pipeline_creation_cache_control(
@@ -31857,11 +31410,11 @@ impl ::core::default::Default for PhysicalDeviceVulkan11Features<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan11Features<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan11Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_1_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan11Features<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan11Features<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>> for PhysicalDeviceVulkan11Features<'a> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceVulkan11Features<'a> {}
 impl<'a> PhysicalDeviceVulkan11Features<'a> {
     #[inline]
     pub fn storage_buffer16_bit_access(mut self, storage_buffer16_bit_access: bool) -> Self {
@@ -31983,10 +31536,13 @@ impl ::core::default::Default for PhysicalDeviceVulkan11Properties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan11Properties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan11Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_1_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan11Properties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceVulkan11Properties<'a>
+{
+}
 impl<'a> PhysicalDeviceVulkan11Properties<'a> {
     #[inline]
     pub fn device_uuid(mut self, device_uuid: [u8; UUID_SIZE]) -> Self {
@@ -32192,11 +31748,11 @@ impl ::core::default::Default for PhysicalDeviceVulkan12Features<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan12Features<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan12Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_2_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan12Features<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan12Features<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>> for PhysicalDeviceVulkan12Features<'a> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceVulkan12Features<'a> {}
 impl<'a> PhysicalDeviceVulkan12Features<'a> {
     #[inline]
     pub fn sampler_mirror_clamp_to_edge(mut self, sampler_mirror_clamp_to_edge: bool) -> Self {
@@ -32849,10 +32405,13 @@ impl ::core::default::Default for PhysicalDeviceVulkan12Properties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan12Properties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan12Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_2_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan12Properties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceVulkan12Properties<'a>
+{
+}
 impl<'a> PhysicalDeviceVulkan12Properties<'a> {
     #[inline]
     pub fn driver_id(mut self, driver_id: DriverId) -> Self {
@@ -33328,11 +32887,11 @@ impl ::core::default::Default for PhysicalDeviceVulkan13Features<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan13Features<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan13Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_3_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan13Features<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan13Features<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>> for PhysicalDeviceVulkan13Features<'a> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceVulkan13Features<'a> {}
 impl<'a> PhysicalDeviceVulkan13Features<'a> {
     #[inline]
     pub fn robust_image_access(mut self, robust_image_access: bool) -> Self {
@@ -33488,10 +33047,13 @@ impl ::core::default::Default for PhysicalDeviceVulkan13Properties<'_> {
         Self { s_type : Self :: STRUCTURE_TYPE , p_next : :: core :: ptr :: null_mut () , min_subgroup_size : u32 :: default () , max_subgroup_size : u32 :: default () , max_compute_workgroup_subgroups : u32 :: default () , required_subgroup_size_stages : ShaderStageFlags :: default () , max_inline_uniform_block_size : u32 :: default () , max_per_stage_descriptor_inline_uniform_blocks : u32 :: default () , max_per_stage_descriptor_update_after_bind_inline_uniform_blocks : u32 :: default () , max_descriptor_set_inline_uniform_blocks : u32 :: default () , max_descriptor_set_update_after_bind_inline_uniform_blocks : u32 :: default () , max_inline_uniform_total_size : u32 :: default () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , storage_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , storage_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , uniform_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , uniform_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , max_buffer_size : DeviceSize :: default () , _marker : PhantomData , }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan13Properties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan13Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_3_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan13Properties<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceVulkan13Properties<'a>
+{
+}
 impl<'a> PhysicalDeviceVulkan13Properties<'a> {
     #[inline]
     pub fn min_subgroup_size(mut self, min_subgroup_size: u32) -> Self {
@@ -33896,13 +33458,19 @@ impl ::core::default::Default for PipelineCompilerControlCreateInfoAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCompilerControlCreateInfoAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCompilerControlCreateInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_COMPILER_CONTROL_CREATE_INFO_AMD;
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCompilerControlCreateInfoAMD<'_> {}
-unsafe impl ExtendsComputePipelineCreateInfo for PipelineCompilerControlCreateInfoAMD<'_> {}
-unsafe impl ExtendsExecutionGraphPipelineCreateInfoAMDX
-    for PipelineCompilerControlCreateInfoAMD<'_>
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>>
+    for PipelineCompilerControlCreateInfoAMD<'a>
+{
+}
+unsafe impl<'a> Extends<'a, ComputePipelineCreateInfo<'a>>
+    for PipelineCompilerControlCreateInfoAMD<'a>
+{
+}
+unsafe impl<'a> Extends<'a, ExecutionGraphPipelineCreateInfoAMDX<'a>>
+    for PipelineCompilerControlCreateInfoAMD<'a>
 {
 }
 impl<'a> PipelineCompilerControlCreateInfoAMD<'a> {
@@ -33939,12 +33507,15 @@ impl ::core::default::Default for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceCoherentMemoryFeaturesAMD<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {}
 impl<'a> PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
     #[inline]
     pub fn device_coherent_memory(mut self, device_coherent_memory: bool) -> Self {
@@ -33997,7 +33568,7 @@ impl ::core::default::Default for PhysicalDeviceToolProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceToolProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceToolProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_TOOL_PROPERTIES;
 }
 impl<'a> PhysicalDeviceToolProperties<'a> {
@@ -34081,11 +33652,11 @@ impl ::core::default::Default for SamplerCustomBorderColorCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerCustomBorderColorCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerCustomBorderColorCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_CUSTOM_BORDER_COLOR_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsSamplerCreateInfo for SamplerCustomBorderColorCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, SamplerCreateInfo<'a>> for SamplerCustomBorderColorCreateInfoEXT<'a> {}
 impl<'a> SamplerCustomBorderColorCreateInfoEXT<'a> {
     #[inline]
     pub fn custom_border_color(mut self, custom_border_color: ClearColorValue) -> Self {
@@ -34122,11 +33693,14 @@ impl ::core::default::Default for PhysicalDeviceCustomBorderColorPropertiesEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceCustomBorderColorPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
     #[inline]
     pub fn max_custom_border_color_samplers(
@@ -34163,12 +33737,18 @@ impl ::core::default::Default for PhysicalDeviceCustomBorderColorFeaturesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceCustomBorderColorFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceCustomBorderColorFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
     #[inline]
     pub fn custom_border_colors(mut self, custom_border_colors: bool) -> Self {
@@ -34210,11 +33790,14 @@ impl ::core::default::Default for SamplerBorderColorComponentMappingCreateInfoEX
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_BORDER_COLOR_COMPONENT_MAPPING_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsSamplerCreateInfo for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, SamplerCreateInfo<'a>>
+    for SamplerBorderColorComponentMappingCreateInfoEXT<'a>
+{
+}
 impl<'a> SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
     #[inline]
     pub fn components(mut self, components: ComponentMapping) -> Self {
@@ -34253,12 +33836,18 @@ impl ::core::default::Default for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
     #[inline]
     pub fn border_color_swizzle(mut self, border_color_swizzle: bool) -> Self {
@@ -34364,11 +33953,11 @@ impl ::core::default::Default for AccelerationStructureGeometryTrianglesDataKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureGeometryTrianglesDataKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryTrianglesDataKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_TRIANGLES_DATA_KHR;
 }
-pub unsafe trait ExtendsAccelerationStructureGeometryTrianglesDataKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for AccelerationStructureGeometryTrianglesDataKHR<'a> {}
 impl<'a> AccelerationStructureGeometryTrianglesDataKHR<'a> {
     #[inline]
     pub fn vertex_format(mut self, vertex_format: Format) -> Self {
@@ -34403,23 +33992,6 @@ impl<'a> AccelerationStructureGeometryTrianglesDataKHR<'a> {
     #[inline]
     pub fn transform_data(mut self, transform_data: DeviceOrHostAddressConstKHR) -> Self {
         self.transform_data = transform_data;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureGeometryTrianglesDataKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -34459,7 +34031,7 @@ impl ::core::default::Default for AccelerationStructureGeometryAabbsDataKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureGeometryAabbsDataKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryAabbsDataKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_AABBS_DATA_KHR;
 }
@@ -34511,7 +34083,7 @@ impl ::core::default::Default for AccelerationStructureGeometryInstancesDataKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureGeometryInstancesDataKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryInstancesDataKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_INSTANCES_DATA_KHR;
 }
@@ -34580,7 +34152,7 @@ impl ::core::default::Default for AccelerationStructureGeometryKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureGeometryKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_GEOMETRY_KHR;
 }
 impl<'a> AccelerationStructureGeometryKHR<'a> {
@@ -34663,7 +34235,7 @@ impl ::core::default::Default for AccelerationStructureBuildGeometryInfoKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureBuildGeometryInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureBuildGeometryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_BUILD_GEOMETRY_INFO_KHR;
 }
@@ -34787,10 +34359,10 @@ impl ::core::default::Default for AccelerationStructureCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_KHR;
 }
-pub unsafe trait ExtendsAccelerationStructureCreateInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for AccelerationStructureCreateInfoKHR<'a> {}
 impl<'a> AccelerationStructureCreateInfoKHR<'a> {
     #[inline]
     pub fn create_flags(mut self, create_flags: AccelerationStructureCreateFlagsKHR) -> Self {
@@ -34820,23 +34392,6 @@ impl<'a> AccelerationStructureCreateInfoKHR<'a> {
     #[inline]
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
         self.device_address = device_address;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureCreateInfoKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -34931,7 +34486,7 @@ impl ::core::default::Default for AccelerationStructureDeviceAddressInfoKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureDeviceAddressInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureDeviceAddressInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_DEVICE_ADDRESS_INFO_KHR;
 }
@@ -34969,7 +34524,7 @@ impl ::core::default::Default for AccelerationStructureVersionInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureVersionInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureVersionInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_VERSION_INFO_KHR;
 }
 impl<'a> AccelerationStructureVersionInfoKHR<'a> {
@@ -35007,7 +34562,7 @@ impl ::core::default::Default for CopyAccelerationStructureInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyAccelerationStructureInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyAccelerationStructureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_ACCELERATION_STRUCTURE_INFO_KHR;
 }
 impl<'a> CopyAccelerationStructureInfoKHR<'a> {
@@ -35066,7 +34621,7 @@ impl ::core::default::Default for CopyAccelerationStructureToMemoryInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyAccelerationStructureToMemoryInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyAccelerationStructureToMemoryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COPY_ACCELERATION_STRUCTURE_TO_MEMORY_INFO_KHR;
 }
@@ -35126,7 +34681,7 @@ impl ::core::default::Default for CopyMemoryToAccelerationStructureInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyMemoryToAccelerationStructureInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToAccelerationStructureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COPY_MEMORY_TO_ACCELERATION_STRUCTURE_INFO_KHR;
 }
@@ -35173,7 +34728,7 @@ impl ::core::default::Default for RayTracingPipelineInterfaceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RayTracingPipelineInterfaceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineInterfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RAY_TRACING_PIPELINE_INTERFACE_CREATE_INFO_KHR;
 }
@@ -35218,10 +34773,10 @@ impl ::core::default::Default for PipelineLibraryCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineLibraryCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineLibraryCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_LIBRARY_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineLibraryCreateInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>> for PipelineLibraryCreateInfoKHR<'a> {}
 impl<'a> PipelineLibraryCreateInfoKHR<'a> {
     #[inline]
     pub fn libraries(mut self, libraries: &'a [Pipeline]) -> Self {
@@ -35254,12 +34809,18 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicStateFeaturesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
     #[inline]
     pub fn extended_dynamic_state(mut self, extended_dynamic_state: bool) -> Self {
@@ -35295,12 +34856,18 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicState2FeaturesEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
     #[inline]
     pub fn extended_dynamic_state2(mut self, extended_dynamic_state2: bool) -> Self {
@@ -35409,12 +34976,18 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3FeaturesEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
     #[inline]
     pub fn extended_dynamic_state3_tessellation_domain_origin(
@@ -35718,12 +35291,12 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3PropertiesE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
@@ -35845,10 +35418,10 @@ impl ::core::default::Default for RenderPassTransformBeginInfoQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassTransformBeginInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassTransformBeginInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_TRANSFORM_BEGIN_INFO_QCOM;
 }
-unsafe impl ExtendsRenderPassBeginInfo for RenderPassTransformBeginInfoQCOM<'_> {}
+unsafe impl<'a> Extends<'a, RenderPassBeginInfo<'a>> for RenderPassTransformBeginInfoQCOM<'a> {}
 impl<'a> RenderPassTransformBeginInfoQCOM<'a> {
     #[inline]
     pub fn transform(mut self, transform: SurfaceTransformFlagsKHR) -> Self {
@@ -35880,11 +35453,11 @@ impl ::core::default::Default for CopyCommandTransformInfoQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyCommandTransformInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyCommandTransformInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_COMMAND_TRANSFORM_INFO_QCOM;
 }
-unsafe impl ExtendsBufferImageCopy2 for CopyCommandTransformInfoQCOM<'_> {}
-unsafe impl ExtendsImageBlit2 for CopyCommandTransformInfoQCOM<'_> {}
+unsafe impl<'a> Extends<'a, BufferImageCopy2<'a>> for CopyCommandTransformInfoQCOM<'a> {}
+unsafe impl<'a> Extends<'a, ImageBlit2<'a>> for CopyCommandTransformInfoQCOM<'a> {}
 impl<'a> CopyCommandTransformInfoQCOM<'a> {
     #[inline]
     pub fn transform(mut self, transform: SurfaceTransformFlagsKHR) -> Self {
@@ -35918,12 +35491,12 @@ impl ::core::default::Default for CommandBufferInheritanceRenderPassTransformInf
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COMMAND_BUFFER_INHERITANCE_RENDER_PASS_TRANSFORM_INFO_QCOM;
 }
-unsafe impl ExtendsCommandBufferInheritanceInfo
-    for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_>
+unsafe impl<'a> Extends<'a, CommandBufferInheritanceInfo<'a>>
+    for CommandBufferInheritanceRenderPassTransformInfoQCOM<'a>
 {
 }
 impl<'a> CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
@@ -35962,12 +35535,18 @@ impl ::core::default::Default for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DIAGNOSTICS_CONFIG_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
     #[inline]
     pub fn diagnostics_config(mut self, diagnostics_config: bool) -> Self {
@@ -35999,10 +35578,10 @@ impl ::core::default::Default for DeviceDiagnosticsConfigCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceDiagnosticsConfigCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceDiagnosticsConfigCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_DIAGNOSTICS_CONFIG_CREATE_INFO_NV;
 }
-unsafe impl ExtendsDeviceCreateInfo for DeviceDiagnosticsConfigCreateInfoNV<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for DeviceDiagnosticsConfigCreateInfoNV<'a> {}
 impl<'a> DeviceDiagnosticsConfigCreateInfoNV<'a> {
     #[inline]
     pub fn flags(mut self, flags: DeviceDiagnosticsConfigFlagsNV) -> Self {
@@ -36034,15 +35613,18 @@ impl ::core::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFea
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a>
+{
+}
 impl<'a> PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
     #[inline]
     pub fn shader_zero_initialize_workgroup_memory(
@@ -36078,16 +35660,18 @@ impl ::core::default::Default for PhysicalDeviceShaderSubgroupUniformControlFlow
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a>
+{
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_>
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a>
 {
 }
 impl<'a> PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a> {
@@ -36128,11 +35712,14 @@ impl ::core::default::Default for PhysicalDeviceRobustness2FeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRobustness2FeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRobustness2FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRobustness2FeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRobustness2FeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceRobustness2FeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceRobustness2FeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceRobustness2FeaturesEXT<'a> {
     #[inline]
     pub fn robust_buffer_access2(mut self, robust_buffer_access2: bool) -> Self {
@@ -36176,11 +35763,14 @@ impl ::core::default::Default for PhysicalDeviceRobustness2PropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRobustness2PropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRobustness2PropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_ROBUSTNESS_2_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRobustness2PropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceRobustness2PropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceRobustness2PropertiesEXT<'a> {
     #[inline]
     pub fn robust_storage_buffer_access_size_alignment(
@@ -36225,11 +35815,14 @@ impl ::core::default::Default for PhysicalDeviceImageRobustnessFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageRobustnessFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageRobustnessFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageRobustnessFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageRobustnessFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceImageRobustnessFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceImageRobustnessFeatures<'a> {}
 impl<'a> PhysicalDeviceImageRobustnessFeatures<'a> {
     #[inline]
     pub fn robust_image_access(mut self, robust_image_access: bool) -> Self {
@@ -36267,15 +35860,18 @@ impl ::core::default::Default for PhysicalDeviceWorkgroupMemoryExplicitLayoutFea
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
     #[inline]
     pub fn workgroup_memory_explicit_layout(
@@ -36365,12 +35961,18 @@ impl ::core::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PORTABILITY_SUBSET_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePortabilitySubsetFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDevicePortabilitySubsetFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
     #[inline]
     pub fn constant_alpha_color_blend_factors(
@@ -36485,11 +36087,14 @@ impl ::core::default::Default for PhysicalDevicePortabilitySubsetPropertiesKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PORTABILITY_SUBSET_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDevicePortabilitySubsetPropertiesKHR<'a>
+{
+}
 impl<'a> PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
     #[inline]
     pub fn min_vertex_input_binding_stride_alignment(
@@ -36526,11 +36131,14 @@ impl ::core::default::Default for PhysicalDevice4444FormatsFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevice4444FormatsFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice4444FormatsFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice4444FormatsFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice4444FormatsFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevice4444FormatsFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDevice4444FormatsFeaturesEXT<'a> {}
 impl<'a> PhysicalDevice4444FormatsFeaturesEXT<'a> {
     #[inline]
     pub fn format_a4r4g4b4(mut self, format_a4r4g4b4: bool) -> Self {
@@ -36567,12 +36175,18 @@ impl ::core::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SUBPASS_SHADING_FEATURES_HUAWEI;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a>
+{
+}
 impl<'a> PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
     #[inline]
     pub fn subpass_shading(mut self, subpass_shading: bool) -> Self {
@@ -36606,16 +36220,19 @@ impl ::core::default::Default for PhysicalDeviceClusterCullingShaderFeaturesHUAW
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_FEATURES_HUAWEI;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {}
-pub unsafe trait ExtendsPhysicalDeviceClusterCullingShaderFeaturesHUAWEI {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a>
+{
+}
+unsafe impl<'a> BaseTaggedStructure<'a> for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {}
 impl<'a> PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
     #[inline]
     pub fn clusterculling_shader(mut self, clusterculling_shader: bool) -> Self {
@@ -36628,23 +36245,6 @@ impl<'a> PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
         multiview_cluster_culling_shader: bool,
     ) -> Self {
         self.multiview_cluster_culling_shader = multiview_cluster_culling_shader.into();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceClusterCullingShaderFeaturesHUAWEI + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -36672,12 +36272,12 @@ impl ::core::default::Default for PhysicalDeviceClusterCullingShaderVrsFeaturesH
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_VRS_FEATURES_HUAWEI;
 }
-unsafe impl ExtendsPhysicalDeviceClusterCullingShaderFeaturesHUAWEI
-    for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a>>
+    for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a>
 {
 }
 impl<'a> PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
@@ -36715,7 +36315,7 @@ impl ::core::default::Default for BufferCopy2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCopy2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCopy2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_COPY_2;
 }
 impl<'a> BufferCopy2<'a> {
@@ -36767,7 +36367,7 @@ impl ::core::default::Default for ImageCopy2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageCopy2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageCopy2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_COPY_2;
 }
 impl<'a> ImageCopy2<'a> {
@@ -36827,10 +36427,10 @@ impl ::core::default::Default for ImageBlit2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageBlit2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageBlit2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_BLIT_2;
 }
-pub unsafe trait ExtendsImageBlit2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for ImageBlit2<'a> {}
 impl<'a> ImageBlit2<'a> {
     #[inline]
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
@@ -36850,20 +36450,6 @@ impl<'a> ImageBlit2<'a> {
     #[inline]
     pub fn dst_offsets(mut self, dst_offsets: [Offset3D; 2]) -> Self {
         self.dst_offsets = dst_offsets;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageBlit2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -36901,10 +36487,10 @@ impl ::core::default::Default for BufferImageCopy2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferImageCopy2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferImageCopy2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_IMAGE_COPY_2;
 }
-pub unsafe trait ExtendsBufferImageCopy2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for BufferImageCopy2<'a> {}
 impl<'a> BufferImageCopy2<'a> {
     #[inline]
     pub fn buffer_offset(mut self, buffer_offset: DeviceSize) -> Self {
@@ -36934,20 +36520,6 @@ impl<'a> BufferImageCopy2<'a> {
     #[inline]
     pub fn image_extent(mut self, image_extent: Extent3D) -> Self {
         self.image_extent = image_extent;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferImageCopy2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -36983,7 +36555,7 @@ impl ::core::default::Default for ImageResolve2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageResolve2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageResolve2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_RESOLVE_2;
 }
 impl<'a> ImageResolve2<'a> {
@@ -37043,7 +36615,7 @@ impl ::core::default::Default for CopyBufferInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyBufferInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyBufferInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_BUFFER_INFO_2;
 }
 impl<'a> CopyBufferInfo2<'a> {
@@ -37098,7 +36670,7 @@ impl ::core::default::Default for CopyImageInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyImageInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_IMAGE_INFO_2;
 }
 impl<'a> CopyImageInfo2<'a> {
@@ -37165,10 +36737,10 @@ impl ::core::default::Default for BlitImageInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BlitImageInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BlitImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BLIT_IMAGE_INFO_2;
 }
-pub unsafe trait ExtendsBlitImageInfo2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for BlitImageInfo2<'a> {}
 impl<'a> BlitImageInfo2<'a> {
     #[inline]
     pub fn src_image(mut self, src_image: Image) -> Self {
@@ -37199,20 +36771,6 @@ impl<'a> BlitImageInfo2<'a> {
     #[inline]
     pub fn filter(mut self, filter: Filter) -> Self {
         self.filter = filter;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBlitImageInfo2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -37248,7 +36806,7 @@ impl ::core::default::Default for CopyBufferToImageInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyBufferToImageInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyBufferToImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_BUFFER_TO_IMAGE_INFO_2;
 }
 impl<'a> CopyBufferToImageInfo2<'a> {
@@ -37306,7 +36864,7 @@ impl ::core::default::Default for CopyImageToBufferInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyImageToBufferInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyImageToBufferInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_IMAGE_TO_BUFFER_INFO_2;
 }
 impl<'a> CopyImageToBufferInfo2<'a> {
@@ -37366,7 +36924,7 @@ impl ::core::default::Default for ResolveImageInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ResolveImageInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ResolveImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RESOLVE_IMAGE_INFO_2;
 }
 impl<'a> ResolveImageInfo2<'a> {
@@ -37423,12 +36981,18 @@ impl ::core::default::Default for PhysicalDeviceShaderImageAtomicInt64FeaturesEX
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
     #[inline]
     pub fn shader_image_int64_atomics(mut self, shader_image_int64_atomics: bool) -> Self {
@@ -37467,10 +37031,10 @@ impl ::core::default::Default for FragmentShadingRateAttachmentInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FragmentShadingRateAttachmentInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FragmentShadingRateAttachmentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR;
 }
-unsafe impl ExtendsSubpassDescription2 for FragmentShadingRateAttachmentInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, SubpassDescription2<'a>> for FragmentShadingRateAttachmentInfoKHR<'a> {}
 impl<'a> FragmentShadingRateAttachmentInfoKHR<'a> {
     #[inline]
     pub fn fragment_shading_rate_attachment(
@@ -37515,12 +37079,12 @@ impl ::core::default::Default for PipelineFragmentShadingRateStateCreateInfoKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_FRAGMENT_SHADING_RATE_STATE_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo
-    for PipelineFragmentShadingRateStateCreateInfoKHR<'_>
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>>
+    for PipelineFragmentShadingRateStateCreateInfoKHR<'a>
 {
 }
 impl<'a> PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
@@ -37563,12 +37127,18 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateFeaturesKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceFragmentShadingRateFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceFragmentShadingRateFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
     #[inline]
     pub fn pipeline_fragment_shading_rate(mut self, pipeline_fragment_shading_rate: bool) -> Self {
@@ -37648,12 +37218,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRatePropertiesKHR
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceFragmentShadingRatePropertiesKHR<'a>
 {
 }
 impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
@@ -37827,7 +37397,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShadingRateKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_KHR;
 }
 impl<'a> PhysicalDeviceFragmentShadingRateKHR<'a> {
@@ -37866,12 +37436,18 @@ impl ::core::default::Default for PhysicalDeviceShaderTerminateInvocationFeature
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderTerminateInvocationFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderTerminateInvocationFeatures<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
     #[inline]
     pub fn shader_terminate_invocation(mut self, shader_terminate_invocation: bool) -> Self {
@@ -37907,15 +37483,18 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
     #[inline]
     pub fn fragment_shading_rate_enums(mut self, fragment_shading_rate_enums: bool) -> Self {
@@ -37963,12 +37542,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsProperti
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_PROPERTIES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a>
 {
 }
 impl<'a> PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
@@ -38010,12 +37589,12 @@ impl ::core::default::Default for PipelineFragmentShadingRateEnumStateCreateInfo
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_FRAGMENT_SHADING_RATE_ENUM_STATE_CREATE_INFO_NV;
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo
-    for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_>
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>>
+    for PipelineFragmentShadingRateEnumStateCreateInfoNV<'a>
 {
 }
 impl<'a> PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
@@ -38063,7 +37642,7 @@ impl ::core::default::Default for AccelerationStructureBuildSizesInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureBuildSizesInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureBuildSizesInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR;
 }
@@ -38110,12 +37689,15 @@ impl ::core::default::Default for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_2D_VIEW_OF_3D_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
     #[inline]
     pub fn image2_d_view_of3_d(mut self, image2_d_view_of3_d: bool) -> Self {
@@ -38152,12 +37734,18 @@ impl ::core::default::Default for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_SLICED_VIEW_OF_3D_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
     #[inline]
     pub fn image_sliced_view_of3_d(mut self, image_sliced_view_of3_d: bool) -> Self {
@@ -38189,18 +37777,18 @@ impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopDynamicSta
         }
     }
 }
-unsafe impl<'a> TaggedStructure
+unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a>
 {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a> {
@@ -38237,12 +37825,18 @@ impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesFeaturesEX
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
     #[inline]
     pub fn legacy_vertex_attributes(mut self, legacy_vertex_attributes: bool) -> Self {
@@ -38274,12 +37868,12 @@ impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesProperties
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
@@ -38313,12 +37907,18 @@ impl ::core::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
     #[inline]
     pub fn mutable_descriptor_type(mut self, mutable_descriptor_type: bool) -> Self {
@@ -38382,11 +37982,17 @@ impl ::core::default::Default for MutableDescriptorTypeCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MutableDescriptorTypeCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MutableDescriptorTypeCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsDescriptorSetLayoutCreateInfo for MutableDescriptorTypeCreateInfoEXT<'_> {}
-unsafe impl ExtendsDescriptorPoolCreateInfo for MutableDescriptorTypeCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, DescriptorSetLayoutCreateInfo<'a>>
+    for MutableDescriptorTypeCreateInfoEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DescriptorPoolCreateInfo<'a>>
+    for MutableDescriptorTypeCreateInfoEXT<'a>
+{
+}
 impl<'a> MutableDescriptorTypeCreateInfoEXT<'a> {
     #[inline]
     pub fn mutable_descriptor_type_lists(
@@ -38422,12 +38028,18 @@ impl ::core::default::Default for PhysicalDeviceDepthClipControlFeaturesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDepthClipControlFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDepthClipControlFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
     #[inline]
     pub fn depth_clip_control(mut self, depth_clip_control: bool) -> Self {
@@ -38461,15 +38073,18 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
     #[inline]
     pub fn device_generated_commands(mut self, device_generated_commands: bool) -> Self {
@@ -38531,12 +38146,12 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertie
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
@@ -38659,12 +38274,12 @@ impl ::core::default::Default for GeneratedCommandsPipelineInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeneratedCommandsPipelineInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsPipelineInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GENERATED_COMMANDS_PIPELINE_INFO_EXT;
 }
-unsafe impl ExtendsGeneratedCommandsInfoEXT for GeneratedCommandsPipelineInfoEXT<'_> {}
-unsafe impl ExtendsGeneratedCommandsMemoryRequirementsInfoEXT
-    for GeneratedCommandsPipelineInfoEXT<'_>
+unsafe impl<'a> Extends<'a, GeneratedCommandsInfoEXT<'a>> for GeneratedCommandsPipelineInfoEXT<'a> {}
+unsafe impl<'a> Extends<'a, GeneratedCommandsMemoryRequirementsInfoEXT<'a>>
+    for GeneratedCommandsPipelineInfoEXT<'a>
 {
 }
 impl<'a> GeneratedCommandsPipelineInfoEXT<'a> {
@@ -38700,12 +38315,12 @@ impl ::core::default::Default for GeneratedCommandsShaderInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeneratedCommandsShaderInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsShaderInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GENERATED_COMMANDS_SHADER_INFO_EXT;
 }
-unsafe impl ExtendsGeneratedCommandsInfoEXT for GeneratedCommandsShaderInfoEXT<'_> {}
-unsafe impl ExtendsGeneratedCommandsMemoryRequirementsInfoEXT
-    for GeneratedCommandsShaderInfoEXT<'_>
+unsafe impl<'a> Extends<'a, GeneratedCommandsInfoEXT<'a>> for GeneratedCommandsShaderInfoEXT<'a> {}
+unsafe impl<'a> Extends<'a, GeneratedCommandsMemoryRequirementsInfoEXT<'a>>
+    for GeneratedCommandsShaderInfoEXT<'a>
 {
 }
 impl<'a> GeneratedCommandsShaderInfoEXT<'a> {
@@ -38746,11 +38361,11 @@ impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::GENERATED_COMMANDS_MEMORY_REQUIREMENTS_INFO_EXT;
 }
-pub unsafe trait ExtendsGeneratedCommandsMemoryRequirementsInfoEXT {}
+unsafe impl<'a> BaseTaggedStructure<'a> for GeneratedCommandsMemoryRequirementsInfoEXT<'a> {}
 impl<'a> GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
     #[inline]
     pub fn indirect_execution_set(
@@ -38776,23 +38391,6 @@ impl<'a> GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
     #[inline]
     pub fn max_draw_count(mut self, max_draw_count: u32) -> Self {
         self.max_draw_count = max_draw_count;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsGeneratedCommandsMemoryRequirementsInfoEXT + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -38822,7 +38420,7 @@ impl ::core::default::Default for IndirectExecutionSetPipelineInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectExecutionSetPipelineInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetPipelineInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_EXECUTION_SET_PIPELINE_INFO_EXT;
 }
 impl<'a> IndirectExecutionSetPipelineInfoEXT<'a> {
@@ -38863,7 +38461,7 @@ impl ::core::default::Default for IndirectExecutionSetShaderLayoutInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectExecutionSetShaderLayoutInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetShaderLayoutInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::INDIRECT_EXECUTION_SET_SHADER_LAYOUT_INFO_EXT;
 }
@@ -38909,7 +38507,7 @@ impl ::core::default::Default for IndirectExecutionSetShaderInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectExecutionSetShaderInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetShaderInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_EXECUTION_SET_SHADER_INFO_EXT;
 }
 impl<'a> IndirectExecutionSetShaderInfoEXT<'a> {
@@ -38989,7 +38587,7 @@ impl ::core::default::Default for IndirectExecutionSetCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectExecutionSetCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_EXECUTION_SET_CREATE_INFO_EXT;
 }
 impl<'a> IndirectExecutionSetCreateInfoEXT<'a> {
@@ -39046,10 +38644,10 @@ impl ::core::default::Default for GeneratedCommandsInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeneratedCommandsInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GENERATED_COMMANDS_INFO_EXT;
 }
-pub unsafe trait ExtendsGeneratedCommandsInfoEXT {}
+unsafe impl<'a> BaseTaggedStructure<'a> for GeneratedCommandsInfoEXT<'a> {}
 impl<'a> GeneratedCommandsInfoEXT<'a> {
     #[inline]
     pub fn shader_stages(mut self, shader_stages: ShaderStageFlags) -> Self {
@@ -39107,23 +38705,6 @@ impl<'a> GeneratedCommandsInfoEXT<'a> {
         self.max_draw_count = max_draw_count;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsGeneratedCommandsInfoEXT + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -39151,7 +38732,7 @@ impl ::core::default::Default for WriteIndirectExecutionSetPipelineEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for WriteIndirectExecutionSetPipelineEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for WriteIndirectExecutionSetPipelineEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_INDIRECT_EXECUTION_SET_PIPELINE_EXT;
 }
 impl<'a> WriteIndirectExecutionSetPipelineEXT<'a> {
@@ -39192,7 +38773,7 @@ impl ::core::default::Default for WriteIndirectExecutionSetShaderEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for WriteIndirectExecutionSetShaderEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for WriteIndirectExecutionSetShaderEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_INDIRECT_EXECUTION_SET_SHADER_EXT;
 }
 impl<'a> WriteIndirectExecutionSetShaderEXT<'a> {
@@ -39241,10 +38822,10 @@ impl ::core::default::Default for IndirectCommandsLayoutCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectCommandsLayoutCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_EXT;
 }
-pub unsafe trait ExtendsIndirectCommandsLayoutCreateInfoEXT {}
+unsafe impl<'a> BaseTaggedStructure<'a> for IndirectCommandsLayoutCreateInfoEXT<'a> {}
 impl<'a> IndirectCommandsLayoutCreateInfoEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: IndirectCommandsLayoutUsageFlagsEXT) -> Self {
@@ -39270,23 +38851,6 @@ impl<'a> IndirectCommandsLayoutCreateInfoEXT<'a> {
     pub fn tokens(mut self, tokens: &'a [IndirectCommandsLayoutTokenEXT<'a>]) -> Self {
         self.token_count = tokens.len() as _;
         self.p_tokens = tokens.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsIndirectCommandsLayoutCreateInfoEXT + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -39329,7 +38893,7 @@ impl ::core::default::Default for IndirectCommandsLayoutTokenEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectCommandsLayoutTokenEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutTokenEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_COMMANDS_LAYOUT_TOKEN_EXT;
 }
 impl<'a> IndirectCommandsLayoutTokenEXT<'a> {
@@ -39535,12 +39099,12 @@ impl ::core::default::Default for PipelineViewportDepthClipControlCreateInfoEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportDepthClipControlCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportDepthClipControlCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_DEPTH_CLIP_CONTROL_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsPipelineViewportStateCreateInfo
-    for PipelineViewportDepthClipControlCreateInfoEXT<'_>
+unsafe impl<'a> Extends<'a, PipelineViewportStateCreateInfo<'a>>
+    for PipelineViewportDepthClipControlCreateInfoEXT<'a>
 {
 }
 impl<'a> PipelineViewportDepthClipControlCreateInfoEXT<'a> {
@@ -39574,12 +39138,18 @@ impl ::core::default::Default for PhysicalDeviceDepthClampControlFeaturesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_CLAMP_CONTROL_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClampControlFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthClampControlFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDepthClampControlFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDepthClampControlFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
     #[inline]
     pub fn depth_clamp_control(mut self, depth_clamp_control: bool) -> Self {
@@ -39613,12 +39183,12 @@ impl ::core::default::Default for PipelineViewportDepthClampControlCreateInfoEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportDepthClampControlCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportDepthClampControlCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_DEPTH_CLAMP_CONTROL_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsPipelineViewportStateCreateInfo
-    for PipelineViewportDepthClampControlCreateInfoEXT<'_>
+unsafe impl<'a> Extends<'a, PipelineViewportStateCreateInfo<'a>>
+    for PipelineViewportDepthClampControlCreateInfoEXT<'a>
 {
 }
 impl<'a> PipelineViewportDepthClampControlCreateInfoEXT<'a> {
@@ -39657,15 +39227,18 @@ impl ::core::default::Default for PhysicalDeviceVertexInputDynamicStateFeaturesE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VERTEX_INPUT_DYNAMIC_STATE_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
     #[inline]
     pub fn vertex_input_dynamic_state(mut self, vertex_input_dynamic_state: bool) -> Self {
@@ -39697,12 +39270,18 @@ impl ::core::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
     #[inline]
     pub fn external_memory_rdma(mut self, external_memory_rdma: bool) -> Self {
@@ -39734,16 +39313,18 @@ impl ::core::default::Default for PhysicalDeviceShaderRelaxedExtendedInstruction
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a>
+{
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_RELAXED_EXTENDED_INSTRUCTION_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'_>
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a>
 {
 }
 impl<'a> PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a> {
@@ -39786,7 +39367,7 @@ impl ::core::default::Default for VertexInputBindingDescription2EXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VertexInputBindingDescription2EXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VertexInputBindingDescription2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VERTEX_INPUT_BINDING_DESCRIPTION_2_EXT;
 }
 impl<'a> VertexInputBindingDescription2EXT<'a> {
@@ -39841,7 +39422,7 @@ impl ::core::default::Default for VertexInputAttributeDescription2EXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VertexInputAttributeDescription2EXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VertexInputAttributeDescription2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VERTEX_INPUT_ATTRIBUTE_DESCRIPTION_2_EXT;
 }
 impl<'a> VertexInputAttributeDescription2EXT<'a> {
@@ -39890,12 +39471,18 @@ impl ::core::default::Default for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COLOR_WRITE_ENABLE_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceColorWriteEnableFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceColorWriteEnableFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
     #[inline]
     pub fn color_write_enable(mut self, color_write_enable: bool) -> Self {
@@ -39929,10 +39516,13 @@ impl ::core::default::Default for PipelineColorWriteCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineColorWriteCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineColorWriteCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_COLOR_WRITE_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsPipelineColorBlendStateCreateInfo for PipelineColorWriteCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, PipelineColorBlendStateCreateInfo<'a>>
+    for PipelineColorWriteCreateInfoEXT<'a>
+{
+}
 impl<'a> PipelineColorWriteCreateInfoEXT<'a> {
     #[inline]
     pub fn color_write_enables(mut self, color_write_enables: &'a [Bool32]) -> Self {
@@ -39971,10 +39561,10 @@ impl ::core::default::Default for MemoryBarrier2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryBarrier2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryBarrier2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_BARRIER_2;
 }
-unsafe impl ExtendsSubpassDependency2 for MemoryBarrier2<'_> {}
+unsafe impl<'a> Extends<'a, SubpassDependency2<'a>> for MemoryBarrier2<'a> {}
 impl<'a> MemoryBarrier2<'a> {
     #[inline]
     pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2) -> Self {
@@ -40039,10 +39629,10 @@ impl ::core::default::Default for ImageMemoryBarrier2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageMemoryBarrier2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageMemoryBarrier2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_MEMORY_BARRIER_2;
 }
-pub unsafe trait ExtendsImageMemoryBarrier2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for ImageMemoryBarrier2<'a> {}
 impl<'a> ImageMemoryBarrier2<'a> {
     #[inline]
     pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2) -> Self {
@@ -40094,20 +39684,6 @@ impl<'a> ImageMemoryBarrier2<'a> {
         self.subresource_range = subresource_range;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageMemoryBarrier2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -40149,10 +39725,10 @@ impl ::core::default::Default for BufferMemoryBarrier2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferMemoryBarrier2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferMemoryBarrier2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_MEMORY_BARRIER_2;
 }
-pub unsafe trait ExtendsBufferMemoryBarrier2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for BufferMemoryBarrier2<'a> {}
 impl<'a> BufferMemoryBarrier2<'a> {
     #[inline]
     pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2) -> Self {
@@ -40199,20 +39775,6 @@ impl<'a> BufferMemoryBarrier2<'a> {
         self.size = size;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferMemoryBarrier2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -40250,7 +39812,7 @@ impl ::core::default::Default for DependencyInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DependencyInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DependencyInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEPENDENCY_INFO;
 }
 impl<'a> DependencyInfo<'a> {
@@ -40314,7 +39876,7 @@ impl ::core::default::Default for SemaphoreSubmitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreSubmitInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_SUBMIT_INFO;
 }
 impl<'a> SemaphoreSubmitInfo<'a> {
@@ -40365,10 +39927,10 @@ impl ::core::default::Default for CommandBufferSubmitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferSubmitInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_SUBMIT_INFO;
 }
-pub unsafe trait ExtendsCommandBufferSubmitInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for CommandBufferSubmitInfo<'a> {}
 impl<'a> CommandBufferSubmitInfo<'a> {
     #[inline]
     pub fn command_buffer(mut self, command_buffer: CommandBuffer) -> Self {
@@ -40378,23 +39940,6 @@ impl<'a> CommandBufferSubmitInfo<'a> {
     #[inline]
     pub fn device_mask(mut self, device_mask: u32) -> Self {
         self.device_mask = device_mask;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCommandBufferSubmitInfo + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -40434,10 +39979,10 @@ impl ::core::default::Default for SubmitInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubmitInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubmitInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBMIT_INFO_2;
 }
-pub unsafe trait ExtendsSubmitInfo2 {}
+unsafe impl<'a> BaseTaggedStructure<'a> for SubmitInfo2<'a> {}
 impl<'a> SubmitInfo2<'a> {
     #[inline]
     pub fn flags(mut self, flags: SubmitFlags) -> Self {
@@ -40471,20 +40016,6 @@ impl<'a> SubmitInfo2<'a> {
         self.p_signal_semaphore_infos = signal_semaphore_infos.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubmitInfo2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -40510,10 +40041,10 @@ impl ::core::default::Default for QueueFamilyCheckpointProperties2NV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueueFamilyCheckpointProperties2NV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueueFamilyCheckpointProperties2NV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV;
 }
-unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointProperties2NV<'_> {}
+unsafe impl<'a> Extends<'a, QueueFamilyProperties2<'a>> for QueueFamilyCheckpointProperties2NV<'a> {}
 impl<'a> QueueFamilyCheckpointProperties2NV<'a> {
     #[inline]
     pub fn checkpoint_execution_stage_mask(
@@ -40550,7 +40081,7 @@ impl ::core::default::Default for CheckpointData2NV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CheckpointData2NV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CheckpointData2NV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CHECKPOINT_DATA_2_NV;
 }
 impl<'a> CheckpointData2NV<'a> {
@@ -40589,11 +40120,14 @@ impl ::core::default::Default for PhysicalDeviceSynchronization2Features<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSynchronization2Features<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSynchronization2Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSynchronization2Features<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSynchronization2Features<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceSynchronization2Features<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceSynchronization2Features<'a> {}
 impl<'a> PhysicalDeviceSynchronization2Features<'a> {
     #[inline]
     pub fn synchronization2(mut self, synchronization2: bool) -> Self {
@@ -40625,12 +40159,15 @@ impl ::core::default::Default for PhysicalDeviceHostImageCopyFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceHostImageCopyFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostImageCopyFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_HOST_IMAGE_COPY_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceHostImageCopyFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceHostImageCopyFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceHostImageCopyFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceHostImageCopyFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceHostImageCopyFeaturesEXT<'a> {
     #[inline]
     pub fn host_image_copy(mut self, host_image_copy: bool) -> Self {
@@ -40672,11 +40209,14 @@ impl ::core::default::Default for PhysicalDeviceHostImageCopyPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceHostImageCopyPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostImageCopyPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_HOST_IMAGE_COPY_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceHostImageCopyPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceHostImageCopyPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceHostImageCopyPropertiesEXT<'a> {
     #[inline]
     pub fn copy_src_layouts(mut self, copy_src_layouts: &'a mut [ImageLayout]) -> Self {
@@ -40741,7 +40281,7 @@ impl ::core::default::Default for MemoryToImageCopyEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryToImageCopyEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryToImageCopyEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_TO_IMAGE_COPY_EXT;
 }
 impl<'a> MemoryToImageCopyEXT<'a> {
@@ -40810,7 +40350,7 @@ impl ::core::default::Default for ImageToMemoryCopyEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageToMemoryCopyEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageToMemoryCopyEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_TO_MEMORY_COPY_EXT;
 }
 impl<'a> ImageToMemoryCopyEXT<'a> {
@@ -40877,7 +40417,7 @@ impl ::core::default::Default for CopyMemoryToImageInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyMemoryToImageInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToImageInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MEMORY_TO_IMAGE_INFO_EXT;
 }
 impl<'a> CopyMemoryToImageInfoEXT<'a> {
@@ -40935,7 +40475,7 @@ impl ::core::default::Default for CopyImageToMemoryInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyImageToMemoryInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyImageToMemoryInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_IMAGE_TO_MEMORY_INFO_EXT;
 }
 impl<'a> CopyImageToMemoryInfoEXT<'a> {
@@ -40997,7 +40537,7 @@ impl ::core::default::Default for CopyImageToImageInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyImageToImageInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyImageToImageInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_IMAGE_TO_IMAGE_INFO_EXT;
 }
 impl<'a> CopyImageToImageInfoEXT<'a> {
@@ -41063,7 +40603,7 @@ impl ::core::default::Default for HostImageLayoutTransitionInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for HostImageLayoutTransitionInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for HostImageLayoutTransitionInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::HOST_IMAGE_LAYOUT_TRANSITION_INFO_EXT;
 }
 impl<'a> HostImageLayoutTransitionInfoEXT<'a> {
@@ -41112,10 +40652,10 @@ impl ::core::default::Default for SubresourceHostMemcpySizeEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubresourceHostMemcpySizeEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubresourceHostMemcpySizeEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBRESOURCE_HOST_MEMCPY_SIZE_EXT;
 }
-unsafe impl ExtendsSubresourceLayout2KHR for SubresourceHostMemcpySizeEXT<'_> {}
+unsafe impl<'a> Extends<'a, SubresourceLayout2KHR<'a>> for SubresourceHostMemcpySizeEXT<'a> {}
 impl<'a> SubresourceHostMemcpySizeEXT<'a> {
     #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
@@ -41149,11 +40689,14 @@ impl ::core::default::Default for HostImageCopyDevicePerformanceQueryEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for HostImageCopyDevicePerformanceQueryEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for HostImageCopyDevicePerformanceQueryEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::HOST_IMAGE_COPY_DEVICE_PERFORMANCE_QUERY_EXT;
 }
-unsafe impl ExtendsImageFormatProperties2 for HostImageCopyDevicePerformanceQueryEXT<'_> {}
+unsafe impl<'a> Extends<'a, ImageFormatProperties2<'a>>
+    for HostImageCopyDevicePerformanceQueryEXT<'a>
+{
+}
 impl<'a> HostImageCopyDevicePerformanceQueryEXT<'a> {
     #[inline]
     pub fn optimal_device_access(mut self, optimal_device_access: bool) -> Self {
@@ -41194,15 +40737,18 @@ impl ::core::default::Default for PhysicalDevicePrimitivesGeneratedQueryFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRIMITIVES_GENERATED_QUERY_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
     #[inline]
     pub fn primitives_generated_query(mut self, primitives_generated_query: bool) -> Self {
@@ -41252,12 +40798,15 @@ impl ::core::default::Default for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LEGACY_DITHERING_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceLegacyDitheringFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
     #[inline]
     pub fn legacy_dithering(mut self, legacy_dithering: bool) -> Self {
@@ -41289,16 +40838,18 @@ impl ::core::default::Default for PhysicalDeviceMultisampledRenderToSingleSample
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a>
+{
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a> {
@@ -41335,10 +40886,10 @@ impl ::core::default::Default for SubpassResolvePerformanceQueryEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassResolvePerformanceQueryEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassResolvePerformanceQueryEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_RESOLVE_PERFORMANCE_QUERY_EXT;
 }
-unsafe impl ExtendsFormatProperties2 for SubpassResolvePerformanceQueryEXT<'_> {}
+unsafe impl<'a> Extends<'a, FormatProperties2<'a>> for SubpassResolvePerformanceQueryEXT<'a> {}
 impl<'a> SubpassResolvePerformanceQueryEXT<'a> {
     #[inline]
     pub fn optimal(mut self, optimal: bool) -> Self {
@@ -41372,12 +40923,15 @@ impl ::core::default::Default for MultisampledRenderToSingleSampledInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MultisampledRenderToSingleSampledInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MultisampledRenderToSingleSampledInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_INFO_EXT;
 }
-unsafe impl ExtendsSubpassDescription2 for MultisampledRenderToSingleSampledInfoEXT<'_> {}
-unsafe impl ExtendsRenderingInfo for MultisampledRenderToSingleSampledInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, SubpassDescription2<'a>>
+    for MultisampledRenderToSingleSampledInfoEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, RenderingInfo<'a>> for MultisampledRenderToSingleSampledInfoEXT<'a> {}
 impl<'a> MultisampledRenderToSingleSampledInfoEXT<'a> {
     #[inline]
     pub fn multisampled_render_to_single_sampled_enable(
@@ -41418,15 +40972,18 @@ impl ::core::default::Default for PhysicalDevicePipelineProtectedAccessFeaturesE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineProtectedAccessFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineProtectedAccessFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDevicePipelineProtectedAccessFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePipelineProtectedAccessFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineProtectedAccessFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDevicePipelineProtectedAccessFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDevicePipelineProtectedAccessFeaturesEXT<'a> {
     #[inline]
     pub fn pipeline_protected_access(mut self, pipeline_protected_access: bool) -> Self {
@@ -41458,10 +41015,10 @@ impl ::core::default::Default for QueueFamilyVideoPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueueFamilyVideoPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueueFamilyVideoPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_VIDEO_PROPERTIES_KHR;
 }
-unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyVideoPropertiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, QueueFamilyProperties2<'a>> for QueueFamilyVideoPropertiesKHR<'a> {}
 impl<'a> QueueFamilyVideoPropertiesKHR<'a> {
     #[inline]
     pub fn video_codec_operations(
@@ -41496,11 +41053,14 @@ impl ::core::default::Default for QueueFamilyQueryResultStatusPropertiesKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueueFamilyQueryResultStatusPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueueFamilyQueryResultStatusPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_KHR;
 }
-unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyQueryResultStatusPropertiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, QueueFamilyProperties2<'a>>
+    for QueueFamilyQueryResultStatusPropertiesKHR<'a>
+{
+}
 impl<'a> QueueFamilyQueryResultStatusPropertiesKHR<'a> {
     #[inline]
     pub fn query_result_status_support(mut self, query_result_status_support: bool) -> Self {
@@ -41534,13 +41094,13 @@ impl ::core::default::Default for VideoProfileListInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoProfileListInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoProfileListInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_PROFILE_LIST_INFO_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for VideoProfileListInfoKHR<'_> {}
-unsafe impl ExtendsPhysicalDeviceVideoFormatInfoKHR for VideoProfileListInfoKHR<'_> {}
-unsafe impl ExtendsImageCreateInfo for VideoProfileListInfoKHR<'_> {}
-unsafe impl ExtendsBufferCreateInfo for VideoProfileListInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceImageFormatInfo2<'a>> for VideoProfileListInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceVideoFormatInfoKHR<'a>> for VideoProfileListInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for VideoProfileListInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, BufferCreateInfo<'a>> for VideoProfileListInfoKHR<'a> {}
 impl<'a> VideoProfileListInfoKHR<'a> {
     #[inline]
     pub fn profiles(mut self, profiles: &'a [VideoProfileInfoKHR<'a>]) -> Self {
@@ -41573,31 +41133,14 @@ impl ::core::default::Default for PhysicalDeviceVideoFormatInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVideoFormatInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoFormatInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VIDEO_FORMAT_INFO_KHR;
 }
-pub unsafe trait ExtendsPhysicalDeviceVideoFormatInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PhysicalDeviceVideoFormatInfoKHR<'a> {}
 impl<'a> PhysicalDeviceVideoFormatInfoKHR<'a> {
     #[inline]
     pub fn image_usage(mut self, image_usage: ImageUsageFlags) -> Self {
         self.image_usage = image_usage;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceVideoFormatInfoKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -41635,7 +41178,7 @@ impl ::core::default::Default for VideoFormatPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoFormatPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoFormatPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_FORMAT_PROPERTIES_KHR;
 }
 impl<'a> VideoFormatPropertiesKHR<'a> {
@@ -41700,11 +41243,11 @@ impl ::core::default::Default for VideoProfileInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoProfileInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_PROFILE_INFO_KHR;
 }
-unsafe impl ExtendsQueryPoolCreateInfo for VideoProfileInfoKHR<'_> {}
-pub unsafe trait ExtendsVideoProfileInfoKHR {}
+unsafe impl<'a> Extends<'a, QueryPoolCreateInfo<'a>> for VideoProfileInfoKHR<'a> {}
+unsafe impl<'a> BaseTaggedStructure<'a> for VideoProfileInfoKHR<'a> {}
 impl<'a> VideoProfileInfoKHR<'a> {
     #[inline]
     pub fn video_codec_operation(
@@ -41730,20 +41273,6 @@ impl<'a> VideoProfileInfoKHR<'a> {
     #[inline]
     pub fn chroma_bit_depth(mut self, chroma_bit_depth: VideoComponentBitDepthFlagsKHR) -> Self {
         self.chroma_bit_depth = chroma_bit_depth;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoProfileInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -41787,10 +41316,10 @@ impl ::core::default::Default for VideoCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoCapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_CAPABILITIES_KHR;
 }
-pub unsafe trait ExtendsVideoCapabilitiesKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for VideoCapabilitiesKHR<'a> {}
 impl<'a> VideoCapabilitiesKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoCapabilityFlagsKHR) -> Self {
@@ -41843,20 +41372,6 @@ impl<'a> VideoCapabilitiesKHR<'a> {
         self.std_header_version = std_header_version;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoCapabilitiesKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -41884,7 +41399,7 @@ impl ::core::default::Default for VideoSessionMemoryRequirementsKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoSessionMemoryRequirementsKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoSessionMemoryRequirementsKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_MEMORY_REQUIREMENTS_KHR;
 }
 impl<'a> VideoSessionMemoryRequirementsKHR<'a> {
@@ -41929,7 +41444,7 @@ impl ::core::default::Default for BindVideoSessionMemoryInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindVideoSessionMemoryInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindVideoSessionMemoryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_VIDEO_SESSION_MEMORY_INFO_KHR;
 }
 impl<'a> BindVideoSessionMemoryInfoKHR<'a> {
@@ -41984,7 +41499,7 @@ impl ::core::default::Default for VideoPictureResourceInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoPictureResourceInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoPictureResourceInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_PICTURE_RESOURCE_INFO_KHR;
 }
 impl<'a> VideoPictureResourceInfoKHR<'a> {
@@ -42035,10 +41550,10 @@ impl ::core::default::Default for VideoReferenceSlotInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoReferenceSlotInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoReferenceSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_REFERENCE_SLOT_INFO_KHR;
 }
-pub unsafe trait ExtendsVideoReferenceSlotInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for VideoReferenceSlotInfoKHR<'a> {}
 impl<'a> VideoReferenceSlotInfoKHR<'a> {
     #[inline]
     pub fn slot_index(mut self, slot_index: i32) -> Self {
@@ -42051,23 +41566,6 @@ impl<'a> VideoReferenceSlotInfoKHR<'a> {
         picture_resource: &'a VideoPictureResourceInfoKHR<'a>,
     ) -> Self {
         self.p_picture_resource = picture_resource;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoReferenceSlotInfoKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -42095,10 +41593,10 @@ impl ::core::default::Default for VideoDecodeCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeCapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_CAPABILITIES_KHR;
 }
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeCapabilitiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoCapabilitiesKHR<'a>> for VideoDecodeCapabilitiesKHR<'a> {}
 impl<'a> VideoDecodeCapabilitiesKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoDecodeCapabilityFlagsKHR) -> Self {
@@ -42130,11 +41628,11 @@ impl ::core::default::Default for VideoDecodeUsageInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeUsageInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeUsageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_USAGE_INFO_KHR;
 }
-unsafe impl ExtendsVideoProfileInfoKHR for VideoDecodeUsageInfoKHR<'_> {}
-unsafe impl ExtendsQueryPoolCreateInfo for VideoDecodeUsageInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoProfileInfoKHR<'a>> for VideoDecodeUsageInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, QueryPoolCreateInfo<'a>> for VideoDecodeUsageInfoKHR<'a> {}
 impl<'a> VideoDecodeUsageInfoKHR<'a> {
     #[inline]
     pub fn video_usage_hints(mut self, video_usage_hints: VideoDecodeUsageFlagsKHR) -> Self {
@@ -42180,10 +41678,10 @@ impl ::core::default::Default for VideoDecodeInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_INFO_KHR;
 }
-pub unsafe trait ExtendsVideoDecodeInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for VideoDecodeInfoKHR<'a> {}
 impl<'a> VideoDecodeInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoDecodeFlagsKHR) -> Self {
@@ -42227,20 +41725,6 @@ impl<'a> VideoDecodeInfoKHR<'a> {
         self.p_reference_slots = reference_slots.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoDecodeInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -42266,12 +41750,18 @@ impl ::core::default::Default for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVideoMaintenance1FeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoMaintenance1FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VIDEO_MAINTENANCE_1_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceVideoMaintenance1FeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceVideoMaintenance1FeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceVideoMaintenance1FeaturesKHR<'a> {
     #[inline]
     pub fn video_maintenance1(mut self, video_maintenance1: bool) -> Self {
@@ -42307,11 +41797,11 @@ impl ::core::default::Default for VideoInlineQueryInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoInlineQueryInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoInlineQueryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_INLINE_QUERY_INFO_KHR;
 }
-unsafe impl ExtendsVideoDecodeInfoKHR for VideoInlineQueryInfoKHR<'_> {}
-unsafe impl ExtendsVideoEncodeInfoKHR for VideoInlineQueryInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoDecodeInfoKHR<'a>> for VideoInlineQueryInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, VideoEncodeInfoKHR<'a>> for VideoInlineQueryInfoKHR<'a> {}
 impl<'a> VideoInlineQueryInfoKHR<'a> {
     #[inline]
     pub fn query_pool(mut self, query_pool: QueryPool) -> Self {
@@ -42355,11 +41845,11 @@ impl ::core::default::Default for VideoDecodeH264ProfileInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264ProfileInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_PROFILE_INFO_KHR;
 }
-unsafe impl ExtendsVideoProfileInfoKHR for VideoDecodeH264ProfileInfoKHR<'_> {}
-unsafe impl ExtendsQueryPoolCreateInfo for VideoDecodeH264ProfileInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoProfileInfoKHR<'a>> for VideoDecodeH264ProfileInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, QueryPoolCreateInfo<'a>> for VideoDecodeH264ProfileInfoKHR<'a> {}
 impl<'a> VideoDecodeH264ProfileInfoKHR<'a> {
     #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH264ProfileIdc) -> Self {
@@ -42398,10 +41888,10 @@ impl ::core::default::Default for VideoDecodeH264CapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264CapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_CAPABILITIES_KHR;
 }
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH264CapabilitiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoCapabilitiesKHR<'a>> for VideoDecodeH264CapabilitiesKHR<'a> {}
 impl<'a> VideoDecodeH264CapabilitiesKHR<'a> {
     #[inline]
     pub fn max_level_idc(mut self, max_level_idc: StdVideoH264LevelIdc) -> Self {
@@ -42444,12 +41934,12 @@ impl ::core::default::Default for VideoDecodeH264SessionParametersAddInfoKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264SessionParametersAddInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264SessionParametersAddInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_KHR;
 }
-unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
-    for VideoDecodeH264SessionParametersAddInfoKHR<'_>
+unsafe impl<'a> Extends<'a, VideoSessionParametersUpdateInfoKHR<'a>>
+    for VideoDecodeH264SessionParametersAddInfoKHR<'a>
 {
 }
 impl<'a> VideoDecodeH264SessionParametersAddInfoKHR<'a> {
@@ -42494,12 +41984,12 @@ impl ::core::default::Default for VideoDecodeH264SessionParametersCreateInfoKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
-    for VideoDecodeH264SessionParametersCreateInfoKHR<'_>
+unsafe impl<'a> Extends<'a, VideoSessionParametersCreateInfoKHR<'a>>
+    for VideoDecodeH264SessionParametersCreateInfoKHR<'a>
 {
 }
 impl<'a> VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
@@ -42550,10 +42040,10 @@ impl ::core::default::Default for VideoDecodeH264PictureInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264PictureInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_PICTURE_INFO_KHR;
 }
-unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH264PictureInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoDecodeInfoKHR<'a>> for VideoDecodeH264PictureInfoKHR<'a> {}
 impl<'a> VideoDecodeH264PictureInfoKHR<'a> {
     #[inline]
     pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoDecodeH264PictureInfo) -> Self {
@@ -42591,10 +42081,10 @@ impl ::core::default::Default for VideoDecodeH264DpbSlotInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264DpbSlotInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_DPB_SLOT_INFO_KHR;
 }
-unsafe impl ExtendsVideoReferenceSlotInfoKHR for VideoDecodeH264DpbSlotInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoReferenceSlotInfoKHR<'a>> for VideoDecodeH264DpbSlotInfoKHR<'a> {}
 impl<'a> VideoDecodeH264DpbSlotInfoKHR<'a> {
     #[inline]
     pub fn std_reference_info(
@@ -42629,11 +42119,11 @@ impl ::core::default::Default for VideoDecodeH265ProfileInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265ProfileInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_PROFILE_INFO_KHR;
 }
-unsafe impl ExtendsVideoProfileInfoKHR for VideoDecodeH265ProfileInfoKHR<'_> {}
-unsafe impl ExtendsQueryPoolCreateInfo for VideoDecodeH265ProfileInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoProfileInfoKHR<'a>> for VideoDecodeH265ProfileInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, QueryPoolCreateInfo<'a>> for VideoDecodeH265ProfileInfoKHR<'a> {}
 impl<'a> VideoDecodeH265ProfileInfoKHR<'a> {
     #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH265ProfileIdc) -> Self {
@@ -42665,10 +42155,10 @@ impl ::core::default::Default for VideoDecodeH265CapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265CapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_CAPABILITIES_KHR;
 }
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH265CapabilitiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoCapabilitiesKHR<'a>> for VideoDecodeH265CapabilitiesKHR<'a> {}
 impl<'a> VideoDecodeH265CapabilitiesKHR<'a> {
     #[inline]
     pub fn max_level_idc(mut self, max_level_idc: StdVideoH265LevelIdc) -> Self {
@@ -42710,12 +42200,12 @@ impl ::core::default::Default for VideoDecodeH265SessionParametersAddInfoKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265SessionParametersAddInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265SessionParametersAddInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_KHR;
 }
-unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
-    for VideoDecodeH265SessionParametersAddInfoKHR<'_>
+unsafe impl<'a> Extends<'a, VideoSessionParametersUpdateInfoKHR<'a>>
+    for VideoDecodeH265SessionParametersAddInfoKHR<'a>
 {
 }
 impl<'a> VideoDecodeH265SessionParametersAddInfoKHR<'a> {
@@ -42768,12 +42258,12 @@ impl ::core::default::Default for VideoDecodeH265SessionParametersCreateInfoKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
-    for VideoDecodeH265SessionParametersCreateInfoKHR<'_>
+unsafe impl<'a> Extends<'a, VideoSessionParametersCreateInfoKHR<'a>>
+    for VideoDecodeH265SessionParametersCreateInfoKHR<'a>
 {
 }
 impl<'a> VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
@@ -42829,10 +42319,10 @@ impl ::core::default::Default for VideoDecodeH265PictureInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265PictureInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_PICTURE_INFO_KHR;
 }
-unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH265PictureInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoDecodeInfoKHR<'a>> for VideoDecodeH265PictureInfoKHR<'a> {}
 impl<'a> VideoDecodeH265PictureInfoKHR<'a> {
     #[inline]
     pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoDecodeH265PictureInfo) -> Self {
@@ -42870,10 +42360,10 @@ impl ::core::default::Default for VideoDecodeH265DpbSlotInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265DpbSlotInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_DPB_SLOT_INFO_KHR;
 }
-unsafe impl ExtendsVideoReferenceSlotInfoKHR for VideoDecodeH265DpbSlotInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoReferenceSlotInfoKHR<'a>> for VideoDecodeH265DpbSlotInfoKHR<'a> {}
 impl<'a> VideoDecodeH265DpbSlotInfoKHR<'a> {
     #[inline]
     pub fn std_reference_info(
@@ -42910,11 +42400,11 @@ impl ::core::default::Default for VideoDecodeAV1ProfileInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeAV1ProfileInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_PROFILE_INFO_KHR;
 }
-unsafe impl ExtendsVideoProfileInfoKHR for VideoDecodeAV1ProfileInfoKHR<'_> {}
-unsafe impl ExtendsQueryPoolCreateInfo for VideoDecodeAV1ProfileInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoProfileInfoKHR<'a>> for VideoDecodeAV1ProfileInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, QueryPoolCreateInfo<'a>> for VideoDecodeAV1ProfileInfoKHR<'a> {}
 impl<'a> VideoDecodeAV1ProfileInfoKHR<'a> {
     #[inline]
     pub fn std_profile(mut self, std_profile: StdVideoAV1Profile) -> Self {
@@ -42951,10 +42441,10 @@ impl ::core::default::Default for VideoDecodeAV1CapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeAV1CapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_CAPABILITIES_KHR;
 }
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeAV1CapabilitiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoCapabilitiesKHR<'a>> for VideoDecodeAV1CapabilitiesKHR<'a> {}
 impl<'a> VideoDecodeAV1CapabilitiesKHR<'a> {
     #[inline]
     pub fn max_level(mut self, max_level: StdVideoAV1Level) -> Self {
@@ -42986,12 +42476,12 @@ impl ::core::default::Default for VideoDecodeAV1SessionParametersCreateInfoKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_DECODE_AV1_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
-    for VideoDecodeAV1SessionParametersCreateInfoKHR<'_>
+unsafe impl<'a> Extends<'a, VideoSessionParametersCreateInfoKHR<'a>>
+    for VideoDecodeAV1SessionParametersCreateInfoKHR<'a>
 {
 }
 impl<'a> VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
@@ -43038,10 +42528,10 @@ impl ::core::default::Default for VideoDecodeAV1PictureInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeAV1PictureInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_PICTURE_INFO_KHR;
 }
-unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeAV1PictureInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoDecodeInfoKHR<'a>> for VideoDecodeAV1PictureInfoKHR<'a> {}
 impl<'a> VideoDecodeAV1PictureInfoKHR<'a> {
     #[inline]
     pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoDecodeAV1PictureInfo) -> Self {
@@ -43098,10 +42588,10 @@ impl ::core::default::Default for VideoDecodeAV1DpbSlotInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeAV1DpbSlotInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_DPB_SLOT_INFO_KHR;
 }
-unsafe impl ExtendsVideoReferenceSlotInfoKHR for VideoDecodeAV1DpbSlotInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoReferenceSlotInfoKHR<'a>> for VideoDecodeAV1DpbSlotInfoKHR<'a> {}
 impl<'a> VideoDecodeAV1DpbSlotInfoKHR<'a> {
     #[inline]
     pub fn std_reference_info(
@@ -43152,10 +42642,10 @@ impl ::core::default::Default for VideoSessionCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoSessionCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoSessionCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_CREATE_INFO_KHR;
 }
-pub unsafe trait ExtendsVideoSessionCreateInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for VideoSessionCreateInfoKHR<'a> {}
 impl<'a> VideoSessionCreateInfoKHR<'a> {
     #[inline]
     pub fn queue_family_index(mut self, queue_family_index: u32) -> Self {
@@ -43202,23 +42692,6 @@ impl<'a> VideoSessionCreateInfoKHR<'a> {
         self.p_std_header_version = std_header_version;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoSessionCreateInfoKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -43248,10 +42721,10 @@ impl ::core::default::Default for VideoSessionParametersCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoSessionParametersCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoSessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
-pub unsafe trait ExtendsVideoSessionParametersCreateInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for VideoSessionParametersCreateInfoKHR<'a> {}
 impl<'a> VideoSessionParametersCreateInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoSessionParametersCreateFlagsKHR) -> Self {
@@ -43269,23 +42742,6 @@ impl<'a> VideoSessionParametersCreateInfoKHR<'a> {
     #[inline]
     pub fn video_session(mut self, video_session: VideoSessionKHR) -> Self {
         self.video_session = video_session;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoSessionParametersCreateInfoKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -43313,31 +42769,14 @@ impl ::core::default::Default for VideoSessionParametersUpdateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoSessionParametersUpdateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoSessionParametersUpdateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_PARAMETERS_UPDATE_INFO_KHR;
 }
-pub unsafe trait ExtendsVideoSessionParametersUpdateInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for VideoSessionParametersUpdateInfoKHR<'a> {}
 impl<'a> VideoSessionParametersUpdateInfoKHR<'a> {
     #[inline]
     pub fn update_sequence_count(mut self, update_sequence_count: u32) -> Self {
         self.update_sequence_count = update_sequence_count;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoSessionParametersUpdateInfoKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -43365,11 +42804,11 @@ impl ::core::default::Default for VideoEncodeSessionParametersGetInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeSessionParametersGetInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionParametersGetInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_SESSION_PARAMETERS_GET_INFO_KHR;
 }
-pub unsafe trait ExtendsVideoEncodeSessionParametersGetInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for VideoEncodeSessionParametersGetInfoKHR<'a> {}
 impl<'a> VideoEncodeSessionParametersGetInfoKHR<'a> {
     #[inline]
     pub fn video_session_parameters(
@@ -43377,23 +42816,6 @@ impl<'a> VideoEncodeSessionParametersGetInfoKHR<'a> {
         video_session_parameters: VideoSessionParametersKHR,
     ) -> Self {
         self.video_session_parameters = video_session_parameters;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoEncodeSessionParametersGetInfoKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -43421,32 +42843,15 @@ impl ::core::default::Default for VideoEncodeSessionParametersFeedbackInfoKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_SESSION_PARAMETERS_FEEDBACK_INFO_KHR;
 }
-pub unsafe trait ExtendsVideoEncodeSessionParametersFeedbackInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for VideoEncodeSessionParametersFeedbackInfoKHR<'a> {}
 impl<'a> VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
     #[inline]
     pub fn has_overrides(mut self, has_overrides: bool) -> Self {
         self.has_overrides = has_overrides.into();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoEncodeSessionParametersFeedbackInfoKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -43482,10 +42887,10 @@ impl ::core::default::Default for VideoBeginCodingInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoBeginCodingInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoBeginCodingInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_BEGIN_CODING_INFO_KHR;
 }
-pub unsafe trait ExtendsVideoBeginCodingInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for VideoBeginCodingInfoKHR<'a> {}
 impl<'a> VideoBeginCodingInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoBeginCodingFlagsKHR) -> Self {
@@ -43509,23 +42914,6 @@ impl<'a> VideoBeginCodingInfoKHR<'a> {
     pub fn reference_slots(mut self, reference_slots: &'a [VideoReferenceSlotInfoKHR<'a>]) -> Self {
         self.reference_slot_count = reference_slots.len() as _;
         self.p_reference_slots = reference_slots.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoBeginCodingInfoKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -43553,7 +42941,7 @@ impl ::core::default::Default for VideoEndCodingInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEndCodingInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEndCodingInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_END_CODING_INFO_KHR;
 }
 impl<'a> VideoEndCodingInfoKHR<'a> {
@@ -43587,31 +42975,14 @@ impl ::core::default::Default for VideoCodingControlInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoCodingControlInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoCodingControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_CODING_CONTROL_INFO_KHR;
 }
-pub unsafe trait ExtendsVideoCodingControlInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for VideoCodingControlInfoKHR<'a> {}
 impl<'a> VideoCodingControlInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoCodingControlFlagsKHR) -> Self {
         self.flags = flags;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoCodingControlInfoKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -43643,11 +43014,11 @@ impl ::core::default::Default for VideoEncodeUsageInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeUsageInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeUsageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_USAGE_INFO_KHR;
 }
-unsafe impl ExtendsVideoProfileInfoKHR for VideoEncodeUsageInfoKHR<'_> {}
-unsafe impl ExtendsQueryPoolCreateInfo for VideoEncodeUsageInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoProfileInfoKHR<'a>> for VideoEncodeUsageInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, QueryPoolCreateInfo<'a>> for VideoEncodeUsageInfoKHR<'a> {}
 impl<'a> VideoEncodeUsageInfoKHR<'a> {
     #[inline]
     pub fn video_usage_hints(mut self, video_usage_hints: VideoEncodeUsageFlagsKHR) -> Self {
@@ -43705,10 +43076,10 @@ impl ::core::default::Default for VideoEncodeInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_INFO_KHR;
 }
-pub unsafe trait ExtendsVideoEncodeInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for VideoEncodeInfoKHR<'a> {}
 impl<'a> VideoEncodeInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeFlagsKHR) -> Self {
@@ -43760,20 +43131,6 @@ impl<'a> VideoEncodeInfoKHR<'a> {
         self.preceding_externally_encoded_bytes = preceding_externally_encoded_bytes;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoEncodeInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -43799,11 +43156,14 @@ impl ::core::default::Default for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::QUERY_POOL_VIDEO_ENCODE_FEEDBACK_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsQueryPoolCreateInfo for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, QueryPoolCreateInfo<'a>>
+    for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a>
+{
+}
 impl<'a> QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
     #[inline]
     pub fn encode_feedback_flags(
@@ -43838,11 +43198,14 @@ impl ::core::default::Default for VideoEncodeQualityLevelInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeQualityLevelInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQualityLevelInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_QUALITY_LEVEL_INFO_KHR;
 }
-unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeQualityLevelInfoKHR<'_> {}
-unsafe impl ExtendsVideoSessionParametersCreateInfoKHR for VideoEncodeQualityLevelInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoCodingControlInfoKHR<'a>> for VideoEncodeQualityLevelInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, VideoSessionParametersCreateInfoKHR<'a>>
+    for VideoEncodeQualityLevelInfoKHR<'a>
+{
+}
 impl<'a> VideoEncodeQualityLevelInfoKHR<'a> {
     #[inline]
     pub fn quality_level(mut self, quality_level: u32) -> Self {
@@ -43876,7 +43239,7 @@ impl ::core::default::Default for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VIDEO_ENCODE_QUALITY_LEVEL_INFO_KHR;
 }
@@ -43918,10 +43281,10 @@ impl ::core::default::Default for VideoEncodeQualityLevelPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeQualityLevelPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQualityLevelPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_QUALITY_LEVEL_PROPERTIES_KHR;
 }
-pub unsafe trait ExtendsVideoEncodeQualityLevelPropertiesKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for VideoEncodeQualityLevelPropertiesKHR<'a> {}
 impl<'a> VideoEncodeQualityLevelPropertiesKHR<'a> {
     #[inline]
     pub fn preferred_rate_control_mode(
@@ -43937,23 +43300,6 @@ impl<'a> VideoEncodeQualityLevelPropertiesKHR<'a> {
         preferred_rate_control_layer_count: u32,
     ) -> Self {
         self.preferred_rate_control_layer_count = preferred_rate_control_layer_count;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoEncodeQualityLevelPropertiesKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -43991,11 +43337,11 @@ impl ::core::default::Default for VideoEncodeRateControlInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeRateControlInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRateControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_RATE_CONTROL_INFO_KHR;
 }
-unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeRateControlInfoKHR<'_> {}
-unsafe impl ExtendsVideoBeginCodingInfoKHR for VideoEncodeRateControlInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoCodingControlInfoKHR<'a>> for VideoEncodeRateControlInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, VideoBeginCodingInfoKHR<'a>> for VideoEncodeRateControlInfoKHR<'a> {}
 impl<'a> VideoEncodeRateControlInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeRateControlFlagsKHR) -> Self {
@@ -44060,10 +43406,10 @@ impl ::core::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeRateControlLayerInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRateControlLayerInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR;
 }
-pub unsafe trait ExtendsVideoEncodeRateControlLayerInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for VideoEncodeRateControlLayerInfoKHR<'a> {}
 impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
     #[inline]
     pub fn average_bitrate(mut self, average_bitrate: u64) -> Self {
@@ -44083,23 +43429,6 @@ impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
     #[inline]
     pub fn frame_rate_denominator(mut self, frame_rate_denominator: u32) -> Self {
         self.frame_rate_denominator = frame_rate_denominator;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoEncodeRateControlLayerInfoKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -44139,10 +43468,10 @@ impl ::core::default::Default for VideoEncodeCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeCapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_CAPABILITIES_KHR;
 }
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeCapabilitiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoCapabilitiesKHR<'a>> for VideoEncodeCapabilitiesKHR<'a> {}
 impl<'a> VideoEncodeCapabilitiesKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeCapabilityFlagsKHR) -> Self {
@@ -44237,10 +43566,10 @@ impl ::core::default::Default for VideoEncodeH264CapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264CapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_CAPABILITIES_KHR;
 }
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH264CapabilitiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoCapabilitiesKHR<'a>> for VideoEncodeH264CapabilitiesKHR<'a> {}
 impl<'a> VideoEncodeH264CapabilitiesKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeH264CapabilityFlagsKHR) -> Self {
@@ -44357,12 +43686,12 @@ impl ::core::default::Default for VideoEncodeH264QualityLevelPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264QualityLevelPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264QualityLevelPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_QUALITY_LEVEL_PROPERTIES_KHR;
 }
-unsafe impl ExtendsVideoEncodeQualityLevelPropertiesKHR
-    for VideoEncodeH264QualityLevelPropertiesKHR<'_>
+unsafe impl<'a> Extends<'a, VideoEncodeQualityLevelPropertiesKHR<'a>>
+    for VideoEncodeH264QualityLevelPropertiesKHR<'a>
 {
 }
 impl<'a> VideoEncodeH264QualityLevelPropertiesKHR<'a> {
@@ -44453,10 +43782,13 @@ impl ::core::default::Default for VideoEncodeH264SessionCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264SessionCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_SESSION_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoEncodeH264SessionCreateInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoSessionCreateInfoKHR<'a>>
+    for VideoEncodeH264SessionCreateInfoKHR<'a>
+{
+}
 impl<'a> VideoEncodeH264SessionCreateInfoKHR<'a> {
     #[inline]
     pub fn use_max_level_idc(mut self, use_max_level_idc: bool) -> Self {
@@ -44499,12 +43831,12 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersAddInfoKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264SessionParametersAddInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersAddInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_KHR;
 }
-unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
-    for VideoEncodeH264SessionParametersAddInfoKHR<'_>
+unsafe impl<'a> Extends<'a, VideoSessionParametersUpdateInfoKHR<'a>>
+    for VideoEncodeH264SessionParametersAddInfoKHR<'a>
 {
 }
 impl<'a> VideoEncodeH264SessionParametersAddInfoKHR<'a> {
@@ -44549,12 +43881,12 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersCreateInfoKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264SessionParametersCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
-    for VideoEncodeH264SessionParametersCreateInfoKHR<'_>
+unsafe impl<'a> Extends<'a, VideoSessionParametersCreateInfoKHR<'a>>
+    for VideoEncodeH264SessionParametersCreateInfoKHR<'a>
 {
 }
 impl<'a> VideoEncodeH264SessionParametersCreateInfoKHR<'a> {
@@ -44607,12 +43939,12 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersGetInfoKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264SessionParametersGetInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersGetInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_GET_INFO_KHR;
 }
-unsafe impl ExtendsVideoEncodeSessionParametersGetInfoKHR
-    for VideoEncodeH264SessionParametersGetInfoKHR<'_>
+unsafe impl<'a> Extends<'a, VideoEncodeSessionParametersGetInfoKHR<'a>>
+    for VideoEncodeH264SessionParametersGetInfoKHR<'a>
 {
 }
 impl<'a> VideoEncodeH264SessionParametersGetInfoKHR<'a> {
@@ -44663,12 +43995,12 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersFeedbackInfoKH
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_FEEDBACK_INFO_KHR;
 }
-unsafe impl ExtendsVideoEncodeSessionParametersFeedbackInfoKHR
-    for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_>
+unsafe impl<'a> Extends<'a, VideoEncodeSessionParametersFeedbackInfoKHR<'a>>
+    for VideoEncodeH264SessionParametersFeedbackInfoKHR<'a>
 {
 }
 impl<'a> VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {
@@ -44707,10 +44039,10 @@ impl ::core::default::Default for VideoEncodeH264DpbSlotInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264DpbSlotInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_DPB_SLOT_INFO_KHR;
 }
-unsafe impl ExtendsVideoReferenceSlotInfoKHR for VideoEncodeH264DpbSlotInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoReferenceSlotInfoKHR<'a>> for VideoEncodeH264DpbSlotInfoKHR<'a> {}
 impl<'a> VideoEncodeH264DpbSlotInfoKHR<'a> {
     #[inline]
     pub fn std_reference_info(
@@ -44751,10 +44083,10 @@ impl ::core::default::Default for VideoEncodeH264PictureInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264PictureInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_PICTURE_INFO_KHR;
 }
-unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH264PictureInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoEncodeInfoKHR<'a>> for VideoEncodeH264PictureInfoKHR<'a> {}
 impl<'a> VideoEncodeH264PictureInfoKHR<'a> {
     #[inline]
     pub fn nalu_slice_entries(
@@ -44800,11 +44132,11 @@ impl ::core::default::Default for VideoEncodeH264ProfileInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264ProfileInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_PROFILE_INFO_KHR;
 }
-unsafe impl ExtendsVideoProfileInfoKHR for VideoEncodeH264ProfileInfoKHR<'_> {}
-unsafe impl ExtendsQueryPoolCreateInfo for VideoEncodeH264ProfileInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoProfileInfoKHR<'a>> for VideoEncodeH264ProfileInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, QueryPoolCreateInfo<'a>> for VideoEncodeH264ProfileInfoKHR<'a> {}
 impl<'a> VideoEncodeH264ProfileInfoKHR<'a> {
     #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH264ProfileIdc) -> Self {
@@ -44838,7 +44170,7 @@ impl ::core::default::Default for VideoEncodeH264NaluSliceInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264NaluSliceInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264NaluSliceInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_NALU_SLICE_INFO_KHR;
 }
 impl<'a> VideoEncodeH264NaluSliceInfoKHR<'a> {
@@ -44885,11 +44217,14 @@ impl ::core::default::Default for VideoEncodeH264RateControlInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264RateControlInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264RateControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_RATE_CONTROL_INFO_KHR;
 }
-unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeH264RateControlInfoKHR<'_> {}
-unsafe impl ExtendsVideoBeginCodingInfoKHR for VideoEncodeH264RateControlInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoCodingControlInfoKHR<'a>>
+    for VideoEncodeH264RateControlInfoKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, VideoBeginCodingInfoKHR<'a>> for VideoEncodeH264RateControlInfoKHR<'a> {}
 impl<'a> VideoEncodeH264RateControlInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeH264RateControlFlagsKHR) -> Self {
@@ -45001,11 +44336,14 @@ impl ::core::default::Default for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264GopRemainingFrameInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264GopRemainingFrameInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_GOP_REMAINING_FRAME_INFO_KHR;
 }
-unsafe impl ExtendsVideoBeginCodingInfoKHR for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoBeginCodingInfoKHR<'a>>
+    for VideoEncodeH264GopRemainingFrameInfoKHR<'a>
+{
+}
 impl<'a> VideoEncodeH264GopRemainingFrameInfoKHR<'a> {
     #[inline]
     pub fn use_gop_remaining_frames(mut self, use_gop_remaining_frames: bool) -> Self {
@@ -45062,12 +44400,12 @@ impl ::core::default::Default for VideoEncodeH264RateControlLayerInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264RateControlLayerInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264RateControlLayerInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_KHR;
 }
-unsafe impl ExtendsVideoEncodeRateControlLayerInfoKHR
-    for VideoEncodeH264RateControlLayerInfoKHR<'_>
+unsafe impl<'a> Extends<'a, VideoEncodeRateControlLayerInfoKHR<'a>>
+    for VideoEncodeH264RateControlLayerInfoKHR<'a>
 {
 }
 impl<'a> VideoEncodeH264RateControlLayerInfoKHR<'a> {
@@ -45156,10 +44494,10 @@ impl ::core::default::Default for VideoEncodeH265CapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265CapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_CAPABILITIES_KHR;
 }
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH265CapabilitiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoCapabilitiesKHR<'a>> for VideoEncodeH265CapabilitiesKHR<'a> {}
 impl<'a> VideoEncodeH265CapabilitiesKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeH265CapabilityFlagsKHR) -> Self {
@@ -45293,12 +44631,12 @@ impl ::core::default::Default for VideoEncodeH265QualityLevelPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265QualityLevelPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265QualityLevelPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_QUALITY_LEVEL_PROPERTIES_KHR;
 }
-unsafe impl ExtendsVideoEncodeQualityLevelPropertiesKHR
-    for VideoEncodeH265QualityLevelPropertiesKHR<'_>
+unsafe impl<'a> Extends<'a, VideoEncodeQualityLevelPropertiesKHR<'a>>
+    for VideoEncodeH265QualityLevelPropertiesKHR<'a>
 {
 }
 impl<'a> VideoEncodeH265QualityLevelPropertiesKHR<'a> {
@@ -45381,10 +44719,13 @@ impl ::core::default::Default for VideoEncodeH265SessionCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265SessionCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_SESSION_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoEncodeH265SessionCreateInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoSessionCreateInfoKHR<'a>>
+    for VideoEncodeH265SessionCreateInfoKHR<'a>
+{
+}
 impl<'a> VideoEncodeH265SessionCreateInfoKHR<'a> {
     #[inline]
     pub fn use_max_level_idc(mut self, use_max_level_idc: bool) -> Self {
@@ -45431,12 +44772,12 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersAddInfoKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265SessionParametersAddInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersAddInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_KHR;
 }
-unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
-    for VideoEncodeH265SessionParametersAddInfoKHR<'_>
+unsafe impl<'a> Extends<'a, VideoSessionParametersUpdateInfoKHR<'a>>
+    for VideoEncodeH265SessionParametersAddInfoKHR<'a>
 {
 }
 impl<'a> VideoEncodeH265SessionParametersAddInfoKHR<'a> {
@@ -45489,12 +44830,12 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersCreateInfoKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265SessionParametersCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
-unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
-    for VideoEncodeH265SessionParametersCreateInfoKHR<'_>
+unsafe impl<'a> Extends<'a, VideoSessionParametersCreateInfoKHR<'a>>
+    for VideoEncodeH265SessionParametersCreateInfoKHR<'a>
 {
 }
 impl<'a> VideoEncodeH265SessionParametersCreateInfoKHR<'a> {
@@ -45556,12 +44897,12 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersGetInfoKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265SessionParametersGetInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersGetInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_GET_INFO_KHR;
 }
-unsafe impl ExtendsVideoEncodeSessionParametersGetInfoKHR
-    for VideoEncodeH265SessionParametersGetInfoKHR<'_>
+unsafe impl<'a> Extends<'a, VideoEncodeSessionParametersGetInfoKHR<'a>>
+    for VideoEncodeH265SessionParametersGetInfoKHR<'a>
 {
 }
 impl<'a> VideoEncodeH265SessionParametersGetInfoKHR<'a> {
@@ -45624,12 +44965,12 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersFeedbackInfoKH
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_FEEDBACK_INFO_KHR;
 }
-unsafe impl ExtendsVideoEncodeSessionParametersFeedbackInfoKHR
-    for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_>
+unsafe impl<'a> Extends<'a, VideoEncodeSessionParametersFeedbackInfoKHR<'a>>
+    for VideoEncodeH265SessionParametersFeedbackInfoKHR<'a>
 {
 }
 impl<'a> VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {
@@ -45677,10 +45018,10 @@ impl ::core::default::Default for VideoEncodeH265PictureInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265PictureInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_PICTURE_INFO_KHR;
 }
-unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH265PictureInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoEncodeInfoKHR<'a>> for VideoEncodeH265PictureInfoKHR<'a> {}
 impl<'a> VideoEncodeH265PictureInfoKHR<'a> {
     #[inline]
     pub fn nalu_slice_segment_entries(
@@ -45723,7 +45064,7 @@ impl ::core::default::Default for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265NaluSliceSegmentInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265NaluSliceSegmentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_INFO_KHR;
 }
@@ -45774,11 +45115,14 @@ impl ::core::default::Default for VideoEncodeH265RateControlInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265RateControlInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265RateControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_RATE_CONTROL_INFO_KHR;
 }
-unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeH265RateControlInfoKHR<'_> {}
-unsafe impl ExtendsVideoBeginCodingInfoKHR for VideoEncodeH265RateControlInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoCodingControlInfoKHR<'a>>
+    for VideoEncodeH265RateControlInfoKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, VideoBeginCodingInfoKHR<'a>> for VideoEncodeH265RateControlInfoKHR<'a> {}
 impl<'a> VideoEncodeH265RateControlInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeH265RateControlFlagsKHR) -> Self {
@@ -45890,11 +45234,14 @@ impl ::core::default::Default for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265GopRemainingFrameInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265GopRemainingFrameInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_GOP_REMAINING_FRAME_INFO_KHR;
 }
-unsafe impl ExtendsVideoBeginCodingInfoKHR for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoBeginCodingInfoKHR<'a>>
+    for VideoEncodeH265GopRemainingFrameInfoKHR<'a>
+{
+}
 impl<'a> VideoEncodeH265GopRemainingFrameInfoKHR<'a> {
     #[inline]
     pub fn use_gop_remaining_frames(mut self, use_gop_remaining_frames: bool) -> Self {
@@ -45951,12 +45298,12 @@ impl ::core::default::Default for VideoEncodeH265RateControlLayerInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265RateControlLayerInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265RateControlLayerInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_KHR;
 }
-unsafe impl ExtendsVideoEncodeRateControlLayerInfoKHR
-    for VideoEncodeH265RateControlLayerInfoKHR<'_>
+unsafe impl<'a> Extends<'a, VideoEncodeRateControlLayerInfoKHR<'a>>
+    for VideoEncodeH265RateControlLayerInfoKHR<'a>
 {
 }
 impl<'a> VideoEncodeH265RateControlLayerInfoKHR<'a> {
@@ -46015,11 +45362,11 @@ impl ::core::default::Default for VideoEncodeH265ProfileInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265ProfileInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_PROFILE_INFO_KHR;
 }
-unsafe impl ExtendsVideoProfileInfoKHR for VideoEncodeH265ProfileInfoKHR<'_> {}
-unsafe impl ExtendsQueryPoolCreateInfo for VideoEncodeH265ProfileInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoProfileInfoKHR<'a>> for VideoEncodeH265ProfileInfoKHR<'a> {}
+unsafe impl<'a> Extends<'a, QueryPoolCreateInfo<'a>> for VideoEncodeH265ProfileInfoKHR<'a> {}
 impl<'a> VideoEncodeH265ProfileInfoKHR<'a> {
     #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH265ProfileIdc) -> Self {
@@ -46051,10 +45398,10 @@ impl ::core::default::Default for VideoEncodeH265DpbSlotInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265DpbSlotInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_DPB_SLOT_INFO_KHR;
 }
-unsafe impl ExtendsVideoReferenceSlotInfoKHR for VideoEncodeH265DpbSlotInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, VideoReferenceSlotInfoKHR<'a>> for VideoEncodeH265DpbSlotInfoKHR<'a> {}
 impl<'a> VideoEncodeH265DpbSlotInfoKHR<'a> {
     #[inline]
     pub fn std_reference_info(
@@ -46089,15 +45436,18 @@ impl ::core::default::Default for PhysicalDeviceInheritedViewportScissorFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INHERITED_VIEWPORT_SCISSOR_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceInheritedViewportScissorFeaturesNV<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceInheritedViewportScissorFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
     #[inline]
     pub fn inherited_viewport_scissor2_d(mut self, inherited_viewport_scissor2_d: bool) -> Self {
@@ -46133,12 +45483,12 @@ impl ::core::default::Default for CommandBufferInheritanceViewportScissorInfoNV<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferInheritanceViewportScissorInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceViewportScissorInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COMMAND_BUFFER_INHERITANCE_VIEWPORT_SCISSOR_INFO_NV;
 }
-unsafe impl ExtendsCommandBufferInheritanceInfo
-    for CommandBufferInheritanceViewportScissorInfoNV<'_>
+unsafe impl<'a> Extends<'a, CommandBufferInheritanceInfo<'a>>
+    for CommandBufferInheritanceViewportScissorInfoNV<'a>
 {
 }
 impl<'a> CommandBufferInheritanceViewportScissorInfoNV<'a> {
@@ -46182,12 +45532,18 @@ impl ::core::default::Default for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_YCBCR_2_PLANE_444_FORMATS_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
     #[inline]
     pub fn ycbcr2plane444_formats(mut self, ycbcr2plane444_formats: bool) -> Self {
@@ -46221,12 +45577,15 @@ impl ::core::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PROVOKING_VERTEX_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceProvokingVertexFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceProvokingVertexFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
     #[inline]
     pub fn provoking_vertex_last(mut self, provoking_vertex_last: bool) -> Self {
@@ -46269,11 +45628,14 @@ impl ::core::default::Default for PhysicalDeviceProvokingVertexPropertiesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PROVOKING_VERTEX_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceProvokingVertexPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
     #[inline]
     pub fn provoking_vertex_mode_per_pipeline(
@@ -46317,12 +45679,12 @@ impl ::core::default::Default for PipelineRasterizationProvokingVertexStateCreat
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_PROVOKING_VERTEX_STATE_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsPipelineRasterizationStateCreateInfo
-    for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_>
+unsafe impl<'a> Extends<'a, PipelineRasterizationStateCreateInfo<'a>>
+    for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a>
 {
 }
 impl<'a> PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
@@ -46358,7 +45720,7 @@ impl ::core::default::Default for CuModuleCreateInfoNVX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CuModuleCreateInfoNVX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CuModuleCreateInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CU_MODULE_CREATE_INFO_NVX;
 }
 impl<'a> CuModuleCreateInfoNVX<'a> {
@@ -46395,7 +45757,7 @@ impl ::core::default::Default for CuFunctionCreateInfoNVX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CuFunctionCreateInfoNVX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CuFunctionCreateInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CU_FUNCTION_CREATE_INFO_NVX;
 }
 impl<'a> CuFunctionCreateInfoNVX<'a> {
@@ -46464,7 +45826,7 @@ impl ::core::default::Default for CuLaunchInfoNVX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CuLaunchInfoNVX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CuLaunchInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CU_LAUNCH_INFO_NVX;
 }
 impl<'a> CuLaunchInfoNVX<'a> {
@@ -46551,12 +45913,18 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDescriptorBufferFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDescriptorBufferFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
     #[inline]
     pub fn descriptor_buffer(mut self, descriptor_buffer: bool) -> Self {
@@ -46676,11 +46044,14 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferPropertiesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceDescriptorBufferPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
     #[inline]
     pub fn combined_image_sampler_descriptor_single_array(
@@ -46957,12 +46328,12 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferDensityMapProper
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_DENSITY_MAP_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
@@ -47004,7 +46375,7 @@ impl ::core::default::Default for DescriptorAddressInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorAddressInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorAddressInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_ADDRESS_INFO_EXT;
 }
 impl<'a> DescriptorAddressInfoEXT<'a> {
@@ -47050,10 +46421,10 @@ impl ::core::default::Default for DescriptorBufferBindingInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorBufferBindingInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorBufferBindingInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_BUFFER_BINDING_INFO_EXT;
 }
-pub unsafe trait ExtendsDescriptorBufferBindingInfoEXT {}
+unsafe impl<'a> BaseTaggedStructure<'a> for DescriptorBufferBindingInfoEXT<'a> {}
 impl<'a> DescriptorBufferBindingInfoEXT<'a> {
     #[inline]
     pub fn address(mut self, address: DeviceAddress) -> Self {
@@ -47063,23 +46434,6 @@ impl<'a> DescriptorBufferBindingInfoEXT<'a> {
     #[inline]
     pub fn usage(mut self, usage: BufferUsageFlags) -> Self {
         self.usage = usage;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDescriptorBufferBindingInfoEXT + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -47107,12 +46461,12 @@ impl ::core::default::Default for DescriptorBufferBindingPushDescriptorBufferHan
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_BUFFER_BINDING_PUSH_DESCRIPTOR_BUFFER_HANDLE_EXT;
 }
-unsafe impl ExtendsDescriptorBufferBindingInfoEXT
-    for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_>
+unsafe impl<'a> Extends<'a, DescriptorBufferBindingInfoEXT<'a>>
+    for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a>
 {
 }
 impl<'a> DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
@@ -47179,7 +46533,7 @@ impl ::core::default::Default for DescriptorGetInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorGetInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorGetInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_GET_INFO_EXT;
 }
 impl<'a> DescriptorGetInfoEXT<'a> {
@@ -47218,7 +46572,7 @@ impl ::core::default::Default for BufferCaptureDescriptorDataInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCaptureDescriptorDataInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
 impl<'a> BufferCaptureDescriptorDataInfoEXT<'a> {
@@ -47252,7 +46606,7 @@ impl ::core::default::Default for ImageCaptureDescriptorDataInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageCaptureDescriptorDataInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
 impl<'a> ImageCaptureDescriptorDataInfoEXT<'a> {
@@ -47286,7 +46640,7 @@ impl ::core::default::Default for ImageViewCaptureDescriptorDataInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewCaptureDescriptorDataInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::IMAGE_VIEW_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
@@ -47321,7 +46675,7 @@ impl ::core::default::Default for SamplerCaptureDescriptorDataInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerCaptureDescriptorDataInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
 impl<'a> SamplerCaptureDescriptorDataInfoEXT<'a> {
@@ -47357,7 +46711,7 @@ impl ::core::default::Default for AccelerationStructureCaptureDescriptorDataInfo
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
@@ -47403,20 +46757,26 @@ impl ::core::default::Default for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::OPAQUE_CAPTURE_DESCRIPTOR_DATA_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsBufferCreateInfo for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
-unsafe impl ExtendsImageCreateInfo for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
-unsafe impl ExtendsImageViewCreateInfo for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
-unsafe impl ExtendsSamplerCreateInfo for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
-unsafe impl ExtendsAccelerationStructureCreateInfoKHR
-    for OpaqueCaptureDescriptorDataCreateInfoEXT<'_>
+unsafe impl<'a> Extends<'a, BufferCreateInfo<'a>> for OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {}
+unsafe impl<'a> Extends<'a, ImageViewCreateInfo<'a>>
+    for OpaqueCaptureDescriptorDataCreateInfoEXT<'a>
 {
 }
-unsafe impl ExtendsAccelerationStructureCreateInfoNV
-    for OpaqueCaptureDescriptorDataCreateInfoEXT<'_>
+unsafe impl<'a> Extends<'a, SamplerCreateInfo<'a>>
+    for OpaqueCaptureDescriptorDataCreateInfoEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, AccelerationStructureCreateInfoKHR<'a>>
+    for OpaqueCaptureDescriptorDataCreateInfoEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, AccelerationStructureCreateInfoNV<'a>>
+    for OpaqueCaptureDescriptorDataCreateInfoEXT<'a>
 {
 }
 impl<'a> OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
@@ -47453,12 +46813,18 @@ impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductFeatures<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderIntegerDotProductFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderIntegerDotProductFeatures<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
     #[inline]
     pub fn shader_integer_dot_product(mut self, shader_integer_dot_product: bool) -> Self {
@@ -47515,12 +46881,12 @@ impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductPropertie
         Self { s_type : Self :: STRUCTURE_TYPE , p_next : :: core :: ptr :: null_mut () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , _marker : PhantomData , }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderIntegerDotProductProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerDotProductProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_PROPERTIES;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceShaderIntegerDotProductProperties<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceShaderIntegerDotProductProperties<'a>
 {
 }
 impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
@@ -47828,10 +47194,10 @@ impl ::core::default::Default for PhysicalDeviceDrmPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDrmPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDrmPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_DRM_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDrmPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>> for PhysicalDeviceDrmPropertiesEXT<'a> {}
 impl<'a> PhysicalDeviceDrmPropertiesEXT<'a> {
     #[inline]
     pub fn has_primary(mut self, has_primary: bool) -> Self {
@@ -47888,15 +47254,18 @@ impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricFeature
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
     #[inline]
     pub fn fragment_shader_barycentric(mut self, fragment_shader_barycentric: bool) -> Self {
@@ -47928,12 +47297,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricPropert
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a>
 {
 }
 impl<'a> PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
@@ -47973,12 +47342,18 @@ impl ::core::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_MOTION_BLUR_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
     #[inline]
     pub fn ray_tracing_motion_blur(mut self, ray_tracing_motion_blur: bool) -> Self {
@@ -48019,12 +47394,18 @@ impl ::core::default::Default for PhysicalDeviceRayTracingValidationFeaturesNV<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceRayTracingValidationFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceRayTracingValidationFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
     #[inline]
     pub fn ray_tracing_validation(mut self, ray_tracing_validation: bool) -> Self {
@@ -48065,12 +47446,12 @@ impl ::core::default::Default for AccelerationStructureGeometryMotionTrianglesDa
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_MOTION_TRIANGLES_DATA_NV;
 }
-unsafe impl ExtendsAccelerationStructureGeometryTrianglesDataKHR
-    for AccelerationStructureGeometryMotionTrianglesDataNV<'_>
+unsafe impl<'a> Extends<'a, AccelerationStructureGeometryTrianglesDataKHR<'a>>
+    for AccelerationStructureGeometryMotionTrianglesDataNV<'a>
 {
 }
 impl<'a> AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
@@ -48106,10 +47487,13 @@ impl ::core::default::Default for AccelerationStructureMotionInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureMotionInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureMotionInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_MOTION_INFO_NV;
 }
-unsafe impl ExtendsAccelerationStructureCreateInfoKHR for AccelerationStructureMotionInfoNV<'_> {}
+unsafe impl<'a> Extends<'a, AccelerationStructureCreateInfoKHR<'a>>
+    for AccelerationStructureMotionInfoNV<'a>
+{
+}
 impl<'a> AccelerationStructureMotionInfoNV<'a> {
     #[inline]
     pub fn max_instances(mut self, max_instances: u32) -> Self {
@@ -48329,7 +47713,7 @@ impl ::core::default::Default for MemoryGetRemoteAddressInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryGetRemoteAddressInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryGetRemoteAddressInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_REMOTE_ADDRESS_INFO_NV;
 }
 impl<'a> MemoryGetRemoteAddressInfoNV<'a> {
@@ -48370,10 +47754,10 @@ impl ::core::default::Default for ImportMemoryBufferCollectionFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMemoryBufferCollectionFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMemoryBufferCollectionFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_BUFFER_COLLECTION_FUCHSIA;
 }
-unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryBufferCollectionFUCHSIA<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for ImportMemoryBufferCollectionFUCHSIA<'a> {}
 impl<'a> ImportMemoryBufferCollectionFUCHSIA<'a> {
     #[inline]
     pub fn collection(mut self, collection: BufferCollectionFUCHSIA) -> Self {
@@ -48412,11 +47796,11 @@ impl ::core::default::Default for BufferCollectionImageCreateInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCollectionImageCreateInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCollectionImageCreateInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::BUFFER_COLLECTION_IMAGE_CREATE_INFO_FUCHSIA;
 }
-unsafe impl ExtendsImageCreateInfo for BufferCollectionImageCreateInfoFUCHSIA<'_> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for BufferCollectionImageCreateInfoFUCHSIA<'a> {}
 impl<'a> BufferCollectionImageCreateInfoFUCHSIA<'a> {
     #[inline]
     pub fn collection(mut self, collection: BufferCollectionFUCHSIA) -> Self {
@@ -48455,11 +47839,11 @@ impl ::core::default::Default for BufferCollectionBufferCreateInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCollectionBufferCreateInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCollectionBufferCreateInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::BUFFER_COLLECTION_BUFFER_CREATE_INFO_FUCHSIA;
 }
-unsafe impl ExtendsBufferCreateInfo for BufferCollectionBufferCreateInfoFUCHSIA<'_> {}
+unsafe impl<'a> Extends<'a, BufferCreateInfo<'a>> for BufferCollectionBufferCreateInfoFUCHSIA<'a> {}
 impl<'a> BufferCollectionBufferCreateInfoFUCHSIA<'a> {
     #[inline]
     pub fn collection(mut self, collection: BufferCollectionFUCHSIA) -> Self {
@@ -48496,7 +47880,7 @@ impl ::core::default::Default for BufferCollectionCreateInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCollectionCreateInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCollectionCreateInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_COLLECTION_CREATE_INFO_FUCHSIA;
 }
 impl<'a> BufferCollectionCreateInfoFUCHSIA<'a> {
@@ -48550,7 +47934,7 @@ impl ::core::default::Default for BufferCollectionPropertiesFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCollectionPropertiesFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCollectionPropertiesFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_COLLECTION_PROPERTIES_FUCHSIA;
 }
 impl<'a> BufferCollectionPropertiesFUCHSIA<'a> {
@@ -48647,7 +48031,7 @@ impl ::core::default::Default for BufferConstraintsInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferConstraintsInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferConstraintsInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_CONSTRAINTS_INFO_FUCHSIA;
 }
 impl<'a> BufferConstraintsInfoFUCHSIA<'a> {
@@ -48697,7 +48081,7 @@ impl ::core::default::Default for SysmemColorSpaceFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SysmemColorSpaceFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SysmemColorSpaceFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SYSMEM_COLOR_SPACE_FUCHSIA;
 }
 impl<'a> SysmemColorSpaceFUCHSIA<'a> {
@@ -48741,7 +48125,7 @@ impl ::core::default::Default for ImageFormatConstraintsInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageFormatConstraintsInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageFormatConstraintsInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_FORMAT_CONSTRAINTS_INFO_FUCHSIA;
 }
 impl<'a> ImageFormatConstraintsInfoFUCHSIA<'a> {
@@ -48805,7 +48189,7 @@ impl ::core::default::Default for ImageConstraintsInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageConstraintsInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageConstraintsInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CONSTRAINTS_INFO_FUCHSIA;
 }
 impl<'a> ImageConstraintsInfoFUCHSIA<'a> {
@@ -48864,7 +48248,7 @@ impl ::core::default::Default for BufferCollectionConstraintsInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCollectionConstraintsInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCollectionConstraintsInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_COLLECTION_CONSTRAINTS_INFO_FUCHSIA;
 }
 impl<'a> BufferCollectionConstraintsInfoFUCHSIA<'a> {
@@ -48937,7 +48321,7 @@ impl ::core::default::Default for CudaModuleCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CudaModuleCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CudaModuleCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CUDA_MODULE_CREATE_INFO_NV;
 }
 impl<'a> CudaModuleCreateInfoNV<'a> {
@@ -48974,7 +48358,7 @@ impl ::core::default::Default for CudaFunctionCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CudaFunctionCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CudaFunctionCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CUDA_FUNCTION_CREATE_INFO_NV;
 }
 impl<'a> CudaFunctionCreateInfoNV<'a> {
@@ -49043,7 +48427,7 @@ impl ::core::default::Default for CudaLaunchInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CudaLaunchInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CudaLaunchInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CUDA_LAUNCH_INFO_NV;
 }
 impl<'a> CudaLaunchInfoNV<'a> {
@@ -49124,12 +48508,15 @@ impl ::core::default::Default for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
     #[inline]
     pub fn format_rgba10x6_without_y_cb_cr_sampler(
@@ -49169,10 +48556,10 @@ impl ::core::default::Default for FormatProperties3<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FormatProperties3<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FormatProperties3<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FORMAT_PROPERTIES_3;
 }
-unsafe impl ExtendsFormatProperties2 for FormatProperties3<'_> {}
+unsafe impl<'a> Extends<'a, FormatProperties2<'a>> for FormatProperties3<'a> {}
 impl<'a> FormatProperties3<'a> {
     #[inline]
     pub fn linear_tiling_features(mut self, linear_tiling_features: FormatFeatureFlags2) -> Self {
@@ -49216,10 +48603,10 @@ impl ::core::default::Default for DrmFormatModifierPropertiesList2EXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DrmFormatModifierPropertiesList2EXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DrmFormatModifierPropertiesList2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_2_EXT;
 }
-unsafe impl ExtendsFormatProperties2 for DrmFormatModifierPropertiesList2EXT<'_> {}
+unsafe impl<'a> Extends<'a, FormatProperties2<'a>> for DrmFormatModifierPropertiesList2EXT<'a> {}
 impl<'a> DrmFormatModifierPropertiesList2EXT<'a> {
     #[inline]
     pub fn drm_format_modifier_properties(
@@ -49299,12 +48686,12 @@ impl ::core::default::Default for AndroidHardwareBufferFormatProperties2ANDROID<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AndroidHardwareBufferFormatProperties2ANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatProperties2ANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_2_ANDROID;
 }
-unsafe impl ExtendsAndroidHardwareBufferPropertiesANDROID
-    for AndroidHardwareBufferFormatProperties2ANDROID<'_>
+unsafe impl<'a> Extends<'a, AndroidHardwareBufferPropertiesANDROID<'a>>
+    for AndroidHardwareBufferFormatProperties2ANDROID<'a>
 {
 }
 impl<'a> AndroidHardwareBufferFormatProperties2ANDROID<'a> {
@@ -49387,10 +48774,10 @@ impl ::core::default::Default for PipelineRenderingCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRenderingCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRenderingCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_RENDERING_CREATE_INFO;
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineRenderingCreateInfo<'_> {}
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>> for PipelineRenderingCreateInfo<'a> {}
 impl<'a> PipelineRenderingCreateInfo<'a> {
     #[inline]
     pub fn view_mask(mut self, view_mask: u32) -> Self {
@@ -49452,10 +48839,10 @@ impl ::core::default::Default for RenderingInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderingInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderingInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_INFO;
 }
-pub unsafe trait ExtendsRenderingInfo {}
+unsafe impl<'a> BaseTaggedStructure<'a> for RenderingInfo<'a> {}
 impl<'a> RenderingInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: RenderingFlags) -> Self {
@@ -49497,20 +48884,6 @@ impl<'a> RenderingInfo<'a> {
         stencil_attachment: &'a RenderingAttachmentInfo<'a>,
     ) -> Self {
         self.p_stencil_attachment = stencil_attachment;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRenderingInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -49568,7 +48941,7 @@ impl ::core::default::Default for RenderingAttachmentInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderingAttachmentInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_ATTACHMENT_INFO;
 }
 impl<'a> RenderingAttachmentInfo<'a> {
@@ -49641,11 +49014,14 @@ impl ::core::default::Default for RenderingFragmentShadingRateAttachmentInfoKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR;
 }
-unsafe impl ExtendsRenderingInfo for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, RenderingInfo<'a>>
+    for RenderingFragmentShadingRateAttachmentInfoKHR<'a>
+{
+}
 impl<'a> RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
     #[inline]
     pub fn image_view(mut self, image_view: ImageView) -> Self {
@@ -49692,11 +49068,14 @@ impl ::core::default::Default for RenderingFragmentDensityMapAttachmentInfoEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_INFO_EXT;
 }
-unsafe impl ExtendsRenderingInfo for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, RenderingInfo<'a>>
+    for RenderingFragmentDensityMapAttachmentInfoEXT<'a>
+{
+}
 impl<'a> RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
     #[inline]
     pub fn image_view(mut self, image_view: ImageView) -> Self {
@@ -49733,11 +49112,14 @@ impl ::core::default::Default for PhysicalDeviceDynamicRenderingFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDynamicRenderingFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDynamicRenderingFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDynamicRenderingFeatures<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDynamicRenderingFeatures<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDynamicRenderingFeatures<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceDynamicRenderingFeatures<'a> {}
 impl<'a> PhysicalDeviceDynamicRenderingFeatures<'a> {
     #[inline]
     pub fn dynamic_rendering(mut self, dynamic_rendering: bool) -> Self {
@@ -49781,10 +49163,13 @@ impl ::core::default::Default for CommandBufferInheritanceRenderingInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferInheritanceRenderingInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceRenderingInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_INHERITANCE_RENDERING_INFO;
 }
-unsafe impl ExtendsCommandBufferInheritanceInfo for CommandBufferInheritanceRenderingInfo<'_> {}
+unsafe impl<'a> Extends<'a, CommandBufferInheritanceInfo<'a>>
+    for CommandBufferInheritanceRenderingInfo<'a>
+{
+}
 impl<'a> CommandBufferInheritanceRenderingInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: RenderingFlags) -> Self {
@@ -49846,11 +49231,11 @@ impl ::core::default::Default for AttachmentSampleCountInfoAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AttachmentSampleCountInfoAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AttachmentSampleCountInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_SAMPLE_COUNT_INFO_AMD;
 }
-unsafe impl ExtendsCommandBufferInheritanceInfo for AttachmentSampleCountInfoAMD<'_> {}
-unsafe impl ExtendsGraphicsPipelineCreateInfo for AttachmentSampleCountInfoAMD<'_> {}
+unsafe impl<'a> Extends<'a, CommandBufferInheritanceInfo<'a>> for AttachmentSampleCountInfoAMD<'a> {}
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>> for AttachmentSampleCountInfoAMD<'a> {}
 impl<'a> AttachmentSampleCountInfoAMD<'a> {
     #[inline]
     pub fn color_attachment_samples(
@@ -49896,12 +49281,18 @@ impl ::core::default::Default for MultiviewPerViewAttributesInfoNVX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MultiviewPerViewAttributesInfoNVX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MultiviewPerViewAttributesInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MULTIVIEW_PER_VIEW_ATTRIBUTES_INFO_NVX;
 }
-unsafe impl ExtendsCommandBufferInheritanceInfo for MultiviewPerViewAttributesInfoNVX<'_> {}
-unsafe impl ExtendsGraphicsPipelineCreateInfo for MultiviewPerViewAttributesInfoNVX<'_> {}
-unsafe impl ExtendsRenderingInfo for MultiviewPerViewAttributesInfoNVX<'_> {}
+unsafe impl<'a> Extends<'a, CommandBufferInheritanceInfo<'a>>
+    for MultiviewPerViewAttributesInfoNVX<'a>
+{
+}
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>>
+    for MultiviewPerViewAttributesInfoNVX<'a>
+{
+}
+unsafe impl<'a> Extends<'a, RenderingInfo<'a>> for MultiviewPerViewAttributesInfoNVX<'a> {}
 impl<'a> MultiviewPerViewAttributesInfoNVX<'a> {
     #[inline]
     pub fn per_view_attributes(mut self, per_view_attributes: bool) -> Self {
@@ -49941,12 +49332,15 @@ impl ::core::default::Default for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceImageViewMinLodFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
     #[inline]
     pub fn min_lod(mut self, min_lod: bool) -> Self {
@@ -49978,10 +49372,10 @@ impl ::core::default::Default for ImageViewMinLodCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewMinLodCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewMinLodCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_MIN_LOD_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsImageViewCreateInfo for ImageViewMinLodCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, ImageViewCreateInfo<'a>> for ImageViewMinLodCreateInfoEXT<'a> {}
 impl<'a> ImageViewMinLodCreateInfoEXT<'a> {
     #[inline]
     pub fn min_lod(mut self, min_lod: f32) -> Self {
@@ -50017,18 +49411,18 @@ impl ::core::default::Default for PhysicalDeviceRasterizationOrderAttachmentAcce
         }
     }
 }
-unsafe impl<'a> TaggedStructure
+unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a>
 {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a> {
@@ -50084,12 +49478,18 @@ impl ::core::default::Default for PhysicalDeviceLinearColorAttachmentFeaturesNV<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
     #[inline]
     pub fn linear_color_attachment(mut self, linear_color_attachment: bool) -> Self {
@@ -50121,15 +49521,18 @@ impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryFeaturesE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
     #[inline]
     pub fn graphics_pipeline_library(mut self, graphics_pipeline_library: bool) -> Self {
@@ -50161,12 +49564,15 @@ impl ::core::default::Default for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_BINARY_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePipelineBinaryFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDevicePipelineBinaryFeaturesKHR<'a> {}
 impl<'a> PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
     #[inline]
     pub fn pipeline_binaries(mut self, pipeline_binaries: bool) -> Self {
@@ -50198,11 +49604,14 @@ impl ::core::default::Default for DevicePipelineBinaryInternalCacheControlKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DevicePipelineBinaryInternalCacheControlKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DevicePipelineBinaryInternalCacheControlKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEVICE_PIPELINE_BINARY_INTERNAL_CACHE_CONTROL_KHR;
 }
-unsafe impl ExtendsDeviceCreateInfo for DevicePipelineBinaryInternalCacheControlKHR<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for DevicePipelineBinaryInternalCacheControlKHR<'a>
+{
+}
 impl<'a> DevicePipelineBinaryInternalCacheControlKHR<'a> {
     #[inline]
     pub fn disable_internal_cache(mut self, disable_internal_cache: bool) -> Self {
@@ -50242,11 +49651,14 @@ impl ::core::default::Default for PhysicalDevicePipelineBinaryPropertiesKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_BINARY_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDevicePipelineBinaryPropertiesKHR<'a>
+{
+}
 impl<'a> PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
     #[inline]
     pub fn pipeline_binary_internal_cache(mut self, pipeline_binary_internal_cache: bool) -> Self {
@@ -50313,12 +49725,12 @@ impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryPropertie
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
@@ -50364,10 +49776,13 @@ impl ::core::default::Default for GraphicsPipelineLibraryCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GraphicsPipelineLibraryCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineLibraryCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GRAPHICS_PIPELINE_LIBRARY_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo for GraphicsPipelineLibraryCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>>
+    for GraphicsPipelineLibraryCreateInfoEXT<'a>
+{
+}
 impl<'a> GraphicsPipelineLibraryCreateInfoEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: GraphicsPipelineLibraryFlagsEXT) -> Self {
@@ -50399,15 +49814,18 @@ impl ::core::default::Default for PhysicalDeviceDescriptorSetHostMappingFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_SET_HOST_MAPPING_FEATURES_VALVE;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a>
+{
+}
 impl<'a> PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
     #[inline]
     pub fn descriptor_set_host_mapping(mut self, descriptor_set_host_mapping: bool) -> Self {
@@ -50441,7 +49859,7 @@ impl ::core::default::Default for DescriptorSetBindingReferenceVALVE<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetBindingReferenceVALVE<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetBindingReferenceVALVE<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_BINDING_REFERENCE_VALVE;
 }
 impl<'a> DescriptorSetBindingReferenceVALVE<'a> {
@@ -50482,7 +49900,7 @@ impl ::core::default::Default for DescriptorSetLayoutHostMappingInfoVALVE<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetLayoutHostMappingInfoVALVE<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutHostMappingInfoVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE;
 }
@@ -50526,12 +49944,18 @@ impl ::core::default::Default for PhysicalDeviceNestedCommandBufferFeaturesEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
     #[inline]
     pub fn nested_command_buffer(mut self, nested_command_buffer: bool) -> Self {
@@ -50579,12 +50003,12 @@ impl ::core::default::Default for PhysicalDeviceNestedCommandBufferPropertiesEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceNestedCommandBufferPropertiesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
@@ -50621,12 +50045,18 @@ impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierFeaturesEX
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
     #[inline]
     pub fn shader_module_identifier(mut self, shader_module_identifier: bool) -> Self {
@@ -50658,12 +50088,12 @@ impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierProperties
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
@@ -50702,12 +50132,12 @@ impl ::core::default::Default for PipelineShaderStageModuleIdentifierCreateInfoE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_SHADER_STAGE_MODULE_IDENTIFIER_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsPipelineShaderStageCreateInfo
-    for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_>
+unsafe impl<'a> Extends<'a, PipelineShaderStageCreateInfo<'a>>
+    for PipelineShaderStageModuleIdentifierCreateInfoEXT<'a>
 {
 }
 impl<'a> PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
@@ -50754,7 +50184,7 @@ impl ::core::default::Default for ShaderModuleIdentifierEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ShaderModuleIdentifierEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ShaderModuleIdentifierEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_MODULE_IDENTIFIER_EXT;
 }
 impl<'a> ShaderModuleIdentifierEXT<'a> {
@@ -50797,12 +50227,12 @@ impl ::core::default::Default for ImageCompressionControlEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageCompressionControlEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageCompressionControlEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_COMPRESSION_CONTROL_EXT;
 }
-unsafe impl ExtendsImageCreateInfo for ImageCompressionControlEXT<'_> {}
-unsafe impl ExtendsSwapchainCreateInfoKHR for ImageCompressionControlEXT<'_> {}
-unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for ImageCompressionControlEXT<'_> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for ImageCompressionControlEXT<'a> {}
+unsafe impl<'a> Extends<'a, SwapchainCreateInfoKHR<'a>> for ImageCompressionControlEXT<'a> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceImageFormatInfo2<'a>> for ImageCompressionControlEXT<'a> {}
 impl<'a> ImageCompressionControlEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: ImageCompressionFlagsEXT) -> Self {
@@ -50843,15 +50273,18 @@ impl ::core::default::Default for PhysicalDeviceImageCompressionControlFeaturesE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceImageCompressionControlFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceImageCompressionControlFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceImageCompressionControlFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
     #[inline]
     pub fn image_compression_control(mut self, image_compression_control: bool) -> Self {
@@ -50885,12 +50318,12 @@ impl ::core::default::Default for ImageCompressionPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageCompressionPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageCompressionPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_COMPRESSION_PROPERTIES_EXT;
 }
-unsafe impl ExtendsImageFormatProperties2 for ImageCompressionPropertiesEXT<'_> {}
-unsafe impl ExtendsSurfaceFormat2KHR for ImageCompressionPropertiesEXT<'_> {}
-unsafe impl ExtendsSubresourceLayout2KHR for ImageCompressionPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, ImageFormatProperties2<'a>> for ImageCompressionPropertiesEXT<'a> {}
+unsafe impl<'a> Extends<'a, SurfaceFormat2KHR<'a>> for ImageCompressionPropertiesEXT<'a> {}
+unsafe impl<'a> Extends<'a, SubresourceLayout2KHR<'a>> for ImageCompressionPropertiesEXT<'a> {}
 impl<'a> ImageCompressionPropertiesEXT<'a> {
     #[inline]
     pub fn image_compression_flags(
@@ -50933,16 +50366,18 @@ impl ::core::default::Default for PhysicalDeviceImageCompressionControlSwapchain
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a>
+{
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a> {
@@ -50979,7 +50414,7 @@ impl ::core::default::Default for ImageSubresource2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageSubresource2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageSubresource2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_SUBRESOURCE_2_KHR;
 }
 impl<'a> ImageSubresource2KHR<'a> {
@@ -51013,28 +50448,14 @@ impl ::core::default::Default for SubresourceLayout2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubresourceLayout2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubresourceLayout2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBRESOURCE_LAYOUT_2_KHR;
 }
-pub unsafe trait ExtendsSubresourceLayout2KHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for SubresourceLayout2KHR<'a> {}
 impl<'a> SubresourceLayout2KHR<'a> {
     #[inline]
     pub fn subresource_layout(mut self, subresource_layout: SubresourceLayout) -> Self {
         self.subresource_layout = subresource_layout;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubresourceLayout2KHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -51062,11 +50483,11 @@ impl ::core::default::Default for RenderPassCreationControlEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassCreationControlEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassCreationControlEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_CREATION_CONTROL_EXT;
 }
-unsafe impl ExtendsRenderPassCreateInfo2 for RenderPassCreationControlEXT<'_> {}
-unsafe impl ExtendsSubpassDescription2 for RenderPassCreationControlEXT<'_> {}
+unsafe impl<'a> Extends<'a, RenderPassCreateInfo2<'a>> for RenderPassCreationControlEXT<'a> {}
+unsafe impl<'a> Extends<'a, SubpassDescription2<'a>> for RenderPassCreationControlEXT<'a> {}
 impl<'a> RenderPassCreationControlEXT<'a> {
     #[inline]
     pub fn disallow_merging(mut self, disallow_merging: bool) -> Self {
@@ -51113,11 +50534,14 @@ impl ::core::default::Default for RenderPassCreationFeedbackCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassCreationFeedbackCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassCreationFeedbackCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_CREATION_FEEDBACK_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsRenderPassCreateInfo2 for RenderPassCreationFeedbackCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, RenderPassCreateInfo2<'a>>
+    for RenderPassCreationFeedbackCreateInfoEXT<'a>
+{
+}
 impl<'a> RenderPassCreationFeedbackCreateInfoEXT<'a> {
     #[inline]
     pub fn render_pass_feedback(
@@ -51204,11 +50628,14 @@ impl ::core::default::Default for RenderPassSubpassFeedbackCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassSubpassFeedbackCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassSubpassFeedbackCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsSubpassDescription2 for RenderPassSubpassFeedbackCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, SubpassDescription2<'a>>
+    for RenderPassSubpassFeedbackCreateInfoEXT<'a>
+{
+}
 impl<'a> RenderPassSubpassFeedbackCreateInfoEXT<'a> {
     #[inline]
     pub fn subpass_feedback(
@@ -51243,12 +50670,18 @@ impl ::core::default::Default for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SUBPASS_MERGE_FEEDBACK_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
     #[inline]
     pub fn subpass_merge_feedback(mut self, subpass_merge_feedback: bool) -> Self {
@@ -51319,7 +50752,7 @@ impl ::core::default::Default for MicromapBuildInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MicromapBuildInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MicromapBuildInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_BUILD_INFO_EXT;
 }
 impl<'a> MicromapBuildInfoEXT<'a> {
@@ -51410,7 +50843,7 @@ impl ::core::default::Default for MicromapCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MicromapCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MicromapCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_CREATE_INFO_EXT;
 }
 impl<'a> MicromapCreateInfoEXT<'a> {
@@ -51469,7 +50902,7 @@ impl ::core::default::Default for MicromapVersionInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MicromapVersionInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MicromapVersionInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_VERSION_INFO_EXT;
 }
 impl<'a> MicromapVersionInfoEXT<'a> {
@@ -51507,7 +50940,7 @@ impl ::core::default::Default for CopyMicromapInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyMicromapInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyMicromapInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MICROMAP_INFO_EXT;
 }
 impl<'a> CopyMicromapInfoEXT<'a> {
@@ -51566,7 +50999,7 @@ impl ::core::default::Default for CopyMicromapToMemoryInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyMicromapToMemoryInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyMicromapToMemoryInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MICROMAP_TO_MEMORY_INFO_EXT;
 }
 impl<'a> CopyMicromapToMemoryInfoEXT<'a> {
@@ -51625,7 +51058,7 @@ impl ::core::default::Default for CopyMemoryToMicromapInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyMemoryToMicromapInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToMicromapInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MEMORY_TO_MICROMAP_INFO_EXT;
 }
 impl<'a> CopyMemoryToMicromapInfoEXT<'a> {
@@ -51673,7 +51106,7 @@ impl ::core::default::Default for MicromapBuildSizesInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MicromapBuildSizesInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MicromapBuildSizesInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_BUILD_SIZES_INFO_EXT;
 }
 impl<'a> MicromapBuildSizesInfoEXT<'a> {
@@ -51775,12 +51208,15 @@ impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_OPACITY_MICROMAP_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceOpacityMicromapFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
     #[inline]
     pub fn micromap(mut self, micromap: bool) -> Self {
@@ -51824,11 +51260,14 @@ impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_OPACITY_MICROMAP_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceOpacityMicromapPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
     #[inline]
     pub fn max_opacity2_state_subdivision_level(
@@ -51901,12 +51340,12 @@ impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT;
 }
-unsafe impl ExtendsAccelerationStructureGeometryTrianglesDataKHR
-    for AccelerationStructureTrianglesOpacityMicromapEXT<'_>
+unsafe impl<'a> Extends<'a, AccelerationStructureGeometryTrianglesDataKHR<'a>>
+    for AccelerationStructureTrianglesOpacityMicromapEXT<'a>
 {
 }
 impl<'a> AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
@@ -51972,12 +51411,18 @@ impl ::core::default::Default for PhysicalDeviceDisplacementMicromapFeaturesNV<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDisplacementMicromapFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDisplacementMicromapFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
     #[inline]
     pub fn displacement_micromap(mut self, displacement_micromap: bool) -> Self {
@@ -52009,12 +51454,12 @@ impl ::core::default::Default for PhysicalDeviceDisplacementMicromapPropertiesNV
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_PROPERTIES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceDisplacementMicromapPropertiesNV<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceDisplacementMicromapPropertiesNV<'a>
 {
 }
 impl<'a> PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
@@ -52121,12 +51566,12 @@ impl ::core::default::Default for AccelerationStructureTrianglesDisplacementMicr
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_TRIANGLES_DISPLACEMENT_MICROMAP_NV;
 }
-unsafe impl ExtendsAccelerationStructureGeometryTrianglesDataKHR
-    for AccelerationStructureTrianglesDisplacementMicromapNV<'_>
+unsafe impl<'a> Extends<'a, AccelerationStructureGeometryTrianglesDataKHR<'a>>
+    for AccelerationStructureTrianglesDisplacementMicromapNV<'a>
 {
 }
 impl<'a> AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
@@ -52250,7 +51695,7 @@ impl ::core::default::Default for PipelinePropertiesIdentifierEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelinePropertiesIdentifierEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelinePropertiesIdentifierEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_PROPERTIES_IDENTIFIER_EXT;
 }
 impl<'a> PipelinePropertiesIdentifierEXT<'a> {
@@ -52284,12 +51729,18 @@ impl ::core::default::Default for PhysicalDevicePipelinePropertiesFeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_PROPERTIES_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePipelinePropertiesFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDevicePipelinePropertiesFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
     #[inline]
     pub fn pipeline_properties_identifier(mut self, pipeline_properties_identifier: bool) -> Self {
@@ -52321,16 +51772,18 @@ impl ::core::default::Default for PhysicalDeviceShaderEarlyAndLateFragmentTestsF
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a>
+{
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_FEATURES_AMD;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_>
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a>
 {
 }
 impl<'a> PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {
@@ -52367,13 +51820,13 @@ impl ::core::default::Default for ExternalMemoryAcquireUnmodifiedEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalMemoryAcquireUnmodifiedEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryAcquireUnmodifiedEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_EXT;
 }
-unsafe impl ExtendsBufferMemoryBarrier for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
-unsafe impl ExtendsBufferMemoryBarrier2 for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
-unsafe impl ExtendsImageMemoryBarrier for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
-unsafe impl ExtendsImageMemoryBarrier2 for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
+unsafe impl<'a> Extends<'a, BufferMemoryBarrier<'a>> for ExternalMemoryAcquireUnmodifiedEXT<'a> {}
+unsafe impl<'a> Extends<'a, BufferMemoryBarrier2<'a>> for ExternalMemoryAcquireUnmodifiedEXT<'a> {}
+unsafe impl<'a> Extends<'a, ImageMemoryBarrier<'a>> for ExternalMemoryAcquireUnmodifiedEXT<'a> {}
+unsafe impl<'a> Extends<'a, ImageMemoryBarrier2<'a>> for ExternalMemoryAcquireUnmodifiedEXT<'a> {}
 impl<'a> ExternalMemoryAcquireUnmodifiedEXT<'a> {
     #[inline]
     pub fn acquire_unmodified_memory(mut self, acquire_unmodified_memory: bool) -> Self {
@@ -52405,16 +51858,16 @@ impl ::core::default::Default for ExportMetalObjectCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalObjectCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalObjectCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_OBJECT_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsInstanceCreateInfo for ExportMetalObjectCreateInfoEXT<'_> {}
-unsafe impl ExtendsMemoryAllocateInfo for ExportMetalObjectCreateInfoEXT<'_> {}
-unsafe impl ExtendsImageCreateInfo for ExportMetalObjectCreateInfoEXT<'_> {}
-unsafe impl ExtendsImageViewCreateInfo for ExportMetalObjectCreateInfoEXT<'_> {}
-unsafe impl ExtendsBufferViewCreateInfo for ExportMetalObjectCreateInfoEXT<'_> {}
-unsafe impl ExtendsSemaphoreCreateInfo for ExportMetalObjectCreateInfoEXT<'_> {}
-unsafe impl ExtendsEventCreateInfo for ExportMetalObjectCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, InstanceCreateInfo<'a>> for ExportMetalObjectCreateInfoEXT<'a> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for ExportMetalObjectCreateInfoEXT<'a> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for ExportMetalObjectCreateInfoEXT<'a> {}
+unsafe impl<'a> Extends<'a, ImageViewCreateInfo<'a>> for ExportMetalObjectCreateInfoEXT<'a> {}
+unsafe impl<'a> Extends<'a, BufferViewCreateInfo<'a>> for ExportMetalObjectCreateInfoEXT<'a> {}
+unsafe impl<'a> Extends<'a, SemaphoreCreateInfo<'a>> for ExportMetalObjectCreateInfoEXT<'a> {}
+unsafe impl<'a> Extends<'a, EventCreateInfo<'a>> for ExportMetalObjectCreateInfoEXT<'a> {}
 impl<'a> ExportMetalObjectCreateInfoEXT<'a> {
     #[inline]
     pub fn export_object_type(mut self, export_object_type: ExportMetalObjectTypeFlagsEXT) -> Self {
@@ -52444,29 +51897,11 @@ impl ::core::default::Default for ExportMetalObjectsInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalObjectsInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalObjectsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_OBJECTS_INFO_EXT;
 }
-pub unsafe trait ExtendsExportMetalObjectsInfoEXT {}
-impl<'a> ExportMetalObjectsInfoEXT<'a> {
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsExportMetalObjectsInfoEXT + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
-}
+unsafe impl<'a> BaseTaggedStructure<'a> for ExportMetalObjectsInfoEXT<'a> {}
+impl<'a> ExportMetalObjectsInfoEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -52491,10 +51926,10 @@ impl ::core::default::Default for ExportMetalDeviceInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalDeviceInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalDeviceInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_DEVICE_INFO_EXT;
 }
-unsafe impl ExtendsExportMetalObjectsInfoEXT for ExportMetalDeviceInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, ExportMetalObjectsInfoEXT<'a>> for ExportMetalDeviceInfoEXT<'a> {}
 impl<'a> ExportMetalDeviceInfoEXT<'a> {
     #[inline]
     pub fn mtl_device(mut self, mtl_device: MTLDevice_id) -> Self {
@@ -52528,10 +51963,10 @@ impl ::core::default::Default for ExportMetalCommandQueueInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalCommandQueueInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalCommandQueueInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_COMMAND_QUEUE_INFO_EXT;
 }
-unsafe impl ExtendsExportMetalObjectsInfoEXT for ExportMetalCommandQueueInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, ExportMetalObjectsInfoEXT<'a>> for ExportMetalCommandQueueInfoEXT<'a> {}
 impl<'a> ExportMetalCommandQueueInfoEXT<'a> {
     #[inline]
     pub fn queue(mut self, queue: Queue) -> Self {
@@ -52570,10 +52005,10 @@ impl ::core::default::Default for ExportMetalBufferInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalBufferInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalBufferInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_BUFFER_INFO_EXT;
 }
-unsafe impl ExtendsExportMetalObjectsInfoEXT for ExportMetalBufferInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, ExportMetalObjectsInfoEXT<'a>> for ExportMetalBufferInfoEXT<'a> {}
 impl<'a> ExportMetalBufferInfoEXT<'a> {
     #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
@@ -52610,10 +52045,10 @@ impl ::core::default::Default for ImportMetalBufferInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMetalBufferInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMetalBufferInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_METAL_BUFFER_INFO_EXT;
 }
-unsafe impl ExtendsMemoryAllocateInfo for ImportMetalBufferInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for ImportMetalBufferInfoEXT<'a> {}
 impl<'a> ImportMetalBufferInfoEXT<'a> {
     #[inline]
     pub fn mtl_buffer(mut self, mtl_buffer: MTLBuffer_id) -> Self {
@@ -52653,10 +52088,10 @@ impl ::core::default::Default for ExportMetalTextureInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalTextureInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalTextureInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_TEXTURE_INFO_EXT;
 }
-unsafe impl ExtendsExportMetalObjectsInfoEXT for ExportMetalTextureInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, ExportMetalObjectsInfoEXT<'a>> for ExportMetalTextureInfoEXT<'a> {}
 impl<'a> ExportMetalTextureInfoEXT<'a> {
     #[inline]
     pub fn image(mut self, image: Image) -> Self {
@@ -52710,10 +52145,10 @@ impl ::core::default::Default for ImportMetalTextureInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMetalTextureInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMetalTextureInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_METAL_TEXTURE_INFO_EXT;
 }
-unsafe impl ExtendsImageCreateInfo for ImportMetalTextureInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for ImportMetalTextureInfoEXT<'a> {}
 impl<'a> ImportMetalTextureInfoEXT<'a> {
     #[inline]
     pub fn plane(mut self, plane: ImageAspectFlags) -> Self {
@@ -52752,10 +52187,10 @@ impl ::core::default::Default for ExportMetalIOSurfaceInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalIOSurfaceInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalIOSurfaceInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_IO_SURFACE_INFO_EXT;
 }
-unsafe impl ExtendsExportMetalObjectsInfoEXT for ExportMetalIOSurfaceInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, ExportMetalObjectsInfoEXT<'a>> for ExportMetalIOSurfaceInfoEXT<'a> {}
 impl<'a> ExportMetalIOSurfaceInfoEXT<'a> {
     #[inline]
     pub fn image(mut self, image: Image) -> Self {
@@ -52792,10 +52227,10 @@ impl ::core::default::Default for ImportMetalIOSurfaceInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMetalIOSurfaceInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMetalIOSurfaceInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_METAL_IO_SURFACE_INFO_EXT;
 }
-unsafe impl ExtendsImageCreateInfo for ImportMetalIOSurfaceInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for ImportMetalIOSurfaceInfoEXT<'a> {}
 impl<'a> ImportMetalIOSurfaceInfoEXT<'a> {
     #[inline]
     pub fn io_surface(mut self, io_surface: IOSurfaceRef) -> Self {
@@ -52831,10 +52266,10 @@ impl ::core::default::Default for ExportMetalSharedEventInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalSharedEventInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalSharedEventInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_SHARED_EVENT_INFO_EXT;
 }
-unsafe impl ExtendsExportMetalObjectsInfoEXT for ExportMetalSharedEventInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, ExportMetalObjectsInfoEXT<'a>> for ExportMetalSharedEventInfoEXT<'a> {}
 impl<'a> ExportMetalSharedEventInfoEXT<'a> {
     #[inline]
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
@@ -52876,11 +52311,11 @@ impl ::core::default::Default for ImportMetalSharedEventInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMetalSharedEventInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMetalSharedEventInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_METAL_SHARED_EVENT_INFO_EXT;
 }
-unsafe impl ExtendsSemaphoreCreateInfo for ImportMetalSharedEventInfoEXT<'_> {}
-unsafe impl ExtendsEventCreateInfo for ImportMetalSharedEventInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, SemaphoreCreateInfo<'a>> for ImportMetalSharedEventInfoEXT<'a> {}
+unsafe impl<'a> Extends<'a, EventCreateInfo<'a>> for ImportMetalSharedEventInfoEXT<'a> {}
 impl<'a> ImportMetalSharedEventInfoEXT<'a> {
     #[inline]
     pub fn mtl_shared_event(mut self, mtl_shared_event: MTLSharedEvent_id) -> Self {
@@ -52912,12 +52347,18 @@ impl ::core::default::Default for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
     #[inline]
     pub fn non_seamless_cube_map(mut self, non_seamless_cube_map: bool) -> Self {
@@ -52949,12 +52390,18 @@ impl ::core::default::Default for PhysicalDevicePipelineRobustnessFeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineRobustnessFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineRobustnessFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePipelineRobustnessFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineRobustnessFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePipelineRobustnessFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDevicePipelineRobustnessFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDevicePipelineRobustnessFeaturesEXT<'a> {
     #[inline]
     pub fn pipeline_robustness(mut self, pipeline_robustness: bool) -> Self {
@@ -52992,13 +52439,22 @@ impl ::core::default::Default for PipelineRobustnessCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRobustnessCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRobustnessCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_ROBUSTNESS_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineRobustnessCreateInfoEXT<'_> {}
-unsafe impl ExtendsComputePipelineCreateInfo for PipelineRobustnessCreateInfoEXT<'_> {}
-unsafe impl ExtendsPipelineShaderStageCreateInfo for PipelineRobustnessCreateInfoEXT<'_> {}
-unsafe impl ExtendsRayTracingPipelineCreateInfoKHR for PipelineRobustnessCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>>
+    for PipelineRobustnessCreateInfoEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, ComputePipelineCreateInfo<'a>> for PipelineRobustnessCreateInfoEXT<'a> {}
+unsafe impl<'a> Extends<'a, PipelineShaderStageCreateInfo<'a>>
+    for PipelineRobustnessCreateInfoEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, RayTracingPipelineCreateInfoKHR<'a>>
+    for PipelineRobustnessCreateInfoEXT<'a>
+{
+}
 impl<'a> PipelineRobustnessCreateInfoEXT<'a> {
     #[inline]
     pub fn storage_buffers(mut self, storage_buffers: PipelineRobustnessBufferBehaviorEXT) -> Self {
@@ -53051,11 +52507,14 @@ impl ::core::default::Default for PhysicalDevicePipelineRobustnessPropertiesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineRobustnessPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineRobustnessPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePipelineRobustnessPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDevicePipelineRobustnessPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDevicePipelineRobustnessPropertiesEXT<'a> {
     #[inline]
     pub fn default_robustness_storage_buffers(
@@ -53118,10 +52577,10 @@ impl ::core::default::Default for ImageViewSampleWeightCreateInfoQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewSampleWeightCreateInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewSampleWeightCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM;
 }
-unsafe impl ExtendsImageViewCreateInfo for ImageViewSampleWeightCreateInfoQCOM<'_> {}
+unsafe impl<'a> Extends<'a, ImageViewCreateInfo<'a>> for ImageViewSampleWeightCreateInfoQCOM<'a> {}
 impl<'a> ImageViewSampleWeightCreateInfoQCOM<'a> {
     #[inline]
     pub fn filter_center(mut self, filter_center: Offset2D) -> Self {
@@ -53167,12 +52626,18 @@ impl ::core::default::Default for PhysicalDeviceImageProcessingFeaturesQCOM<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_FEATURES_QCOM;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceImageProcessingFeaturesQCOM<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceImageProcessingFeaturesQCOM<'a>
+{
+}
 impl<'a> PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
     #[inline]
     pub fn texture_sample_weighted(mut self, texture_sample_weighted: bool) -> Self {
@@ -53220,11 +52685,14 @@ impl ::core::default::Default for PhysicalDeviceImageProcessingPropertiesQCOM<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_PROPERTIES_QCOM;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceImageProcessingPropertiesQCOM<'a>
+{
+}
 impl<'a> PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
     #[inline]
     pub fn max_weight_filter_phases(mut self, max_weight_filter_phases: u32) -> Self {
@@ -53271,12 +52739,15 @@ impl ::core::default::Default for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceTilePropertiesFeaturesQCOM<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {}
 impl<'a> PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
     #[inline]
     pub fn tile_properties(mut self, tile_properties: bool) -> Self {
@@ -53312,7 +52783,7 @@ impl ::core::default::Default for TilePropertiesQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for TilePropertiesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for TilePropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TILE_PROPERTIES_QCOM;
 }
 impl<'a> TilePropertiesQCOM<'a> {
@@ -53356,12 +52827,15 @@ impl ::core::default::Default for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_AMIGO_PROFILING_FEATURES_SEC;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceAmigoProfilingFeaturesSEC<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {}
 impl<'a> PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
     #[inline]
     pub fn amigo_profiling(mut self, amigo_profiling: bool) -> Self {
@@ -53395,10 +52869,10 @@ impl ::core::default::Default for AmigoProfilingSubmitInfoSEC<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AmigoProfilingSubmitInfoSEC<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AmigoProfilingSubmitInfoSEC<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::AMIGO_PROFILING_SUBMIT_INFO_SEC;
 }
-unsafe impl ExtendsSubmitInfo for AmigoProfilingSubmitInfoSEC<'_> {}
+unsafe impl<'a> Extends<'a, SubmitInfo<'a>> for AmigoProfilingSubmitInfoSEC<'a> {}
 impl<'a> AmigoProfilingSubmitInfoSEC<'a> {
     #[inline]
     pub fn first_draw_timestamp(mut self, first_draw_timestamp: u64) -> Self {
@@ -53435,15 +52909,18 @@ impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopLayoutFeat
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
     #[inline]
     pub fn attachment_feedback_loop_layout(
@@ -53478,12 +52955,18 @@ impl ::core::default::Default for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {
     #[inline]
     pub fn depth_clamp_zero_one(mut self, depth_clamp_zero_one: bool) -> Self {
@@ -53515,12 +52998,18 @@ impl ::core::default::Default for PhysicalDeviceAddressBindingReportFeaturesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_ADDRESS_BINDING_REPORT_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceAddressBindingReportFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceAddressBindingReportFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
     #[inline]
     pub fn report_address_binding(mut self, report_address_binding: bool) -> Self {
@@ -53558,10 +53047,13 @@ impl ::core::default::Default for DeviceAddressBindingCallbackDataEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceAddressBindingCallbackDataEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceAddressBindingCallbackDataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_ADDRESS_BINDING_CALLBACK_DATA_EXT;
 }
-unsafe impl ExtendsDebugUtilsMessengerCallbackDataEXT for DeviceAddressBindingCallbackDataEXT<'_> {}
+unsafe impl<'a> Extends<'a, DebugUtilsMessengerCallbackDataEXT<'a>>
+    for DeviceAddressBindingCallbackDataEXT<'a>
+{
+}
 impl<'a> DeviceAddressBindingCallbackDataEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: DeviceAddressBindingFlagsEXT) -> Self {
@@ -53608,11 +53100,14 @@ impl ::core::default::Default for PhysicalDeviceOpticalFlowFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceOpticalFlowFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpticalFlowFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_OPTICAL_FLOW_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceOpticalFlowFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceOpticalFlowFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceOpticalFlowFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceOpticalFlowFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceOpticalFlowFeaturesNV<'a> {
     #[inline]
     pub fn optical_flow(mut self, optical_flow: bool) -> Self {
@@ -53664,10 +53159,13 @@ impl ::core::default::Default for PhysicalDeviceOpticalFlowPropertiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceOpticalFlowPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpticalFlowPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_OPTICAL_FLOW_PROPERTIES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceOpticalFlowPropertiesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceOpticalFlowPropertiesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceOpticalFlowPropertiesNV<'a> {
     #[inline]
     pub fn supported_output_grid_sizes(
@@ -53755,11 +53253,14 @@ impl ::core::default::Default for OpticalFlowImageFormatInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for OpticalFlowImageFormatInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for OpticalFlowImageFormatInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_IMAGE_FORMAT_INFO_NV;
 }
-unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for OpticalFlowImageFormatInfoNV<'_> {}
-unsafe impl ExtendsImageCreateInfo for OpticalFlowImageFormatInfoNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceImageFormatInfo2<'a>>
+    for OpticalFlowImageFormatInfoNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for OpticalFlowImageFormatInfoNV<'a> {}
 impl<'a> OpticalFlowImageFormatInfoNV<'a> {
     #[inline]
     pub fn usage(mut self, usage: OpticalFlowUsageFlagsNV) -> Self {
@@ -53791,7 +53292,7 @@ impl ::core::default::Default for OpticalFlowImageFormatPropertiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for OpticalFlowImageFormatPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for OpticalFlowImageFormatPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_IMAGE_FORMAT_PROPERTIES_NV;
 }
 impl<'a> OpticalFlowImageFormatPropertiesNV<'a> {
@@ -53841,10 +53342,10 @@ impl ::core::default::Default for OpticalFlowSessionCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for OpticalFlowSessionCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for OpticalFlowSessionCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_SESSION_CREATE_INFO_NV;
 }
-pub unsafe trait ExtendsOpticalFlowSessionCreateInfoNV {}
+unsafe impl<'a> BaseTaggedStructure<'a> for OpticalFlowSessionCreateInfoNV<'a> {}
 impl<'a> OpticalFlowSessionCreateInfoNV<'a> {
     #[inline]
     pub fn width(mut self, width: u32) -> Self {
@@ -53891,23 +53392,6 @@ impl<'a> OpticalFlowSessionCreateInfoNV<'a> {
         self.flags = flags;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsOpticalFlowSessionCreateInfoNV + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -53937,12 +53421,12 @@ impl ::core::default::Default for OpticalFlowSessionCreatePrivateDataInfoNV<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::OPTICAL_FLOW_SESSION_CREATE_PRIVATE_DATA_INFO_NV;
 }
-unsafe impl ExtendsOpticalFlowSessionCreateInfoNV
-    for OpticalFlowSessionCreatePrivateDataInfoNV<'_>
+unsafe impl<'a> Extends<'a, OpticalFlowSessionCreateInfoNV<'a>>
+    for OpticalFlowSessionCreatePrivateDataInfoNV<'a>
 {
 }
 impl<'a> OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
@@ -53990,7 +53474,7 @@ impl ::core::default::Default for OpticalFlowExecuteInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for OpticalFlowExecuteInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for OpticalFlowExecuteInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_EXECUTE_INFO_NV;
 }
 impl<'a> OpticalFlowExecuteInfoNV<'a> {
@@ -54032,11 +53516,11 @@ impl ::core::default::Default for PhysicalDeviceFaultFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFaultFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FAULT_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFaultFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFaultFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>> for PhysicalDeviceFaultFeaturesEXT<'a> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceFaultFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceFaultFeaturesEXT<'a> {
     #[inline]
     pub fn device_fault(mut self, device_fault: bool) -> Self {
@@ -54156,7 +53640,7 @@ impl ::core::default::Default for DeviceFaultCountsEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceFaultCountsEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceFaultCountsEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_FAULT_COUNTS_EXT;
 }
 impl<'a> DeviceFaultCountsEXT<'a> {
@@ -54218,7 +53702,7 @@ impl ::core::default::Default for DeviceFaultInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceFaultInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceFaultInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_FAULT_INFO_EXT;
 }
 impl<'a> DeviceFaultInfoEXT<'a> {
@@ -54369,15 +53853,18 @@ impl ::core::default::Default for PhysicalDevicePipelineLibraryGroupHandlesFeatu
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
     #[inline]
     pub fn pipeline_library_group_handles(mut self, pipeline_library_group_handles: bool) -> Self {
@@ -54413,10 +53900,10 @@ impl ::core::default::Default for DepthBiasInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DepthBiasInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DepthBiasInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEPTH_BIAS_INFO_EXT;
 }
-pub unsafe trait ExtendsDepthBiasInfoEXT {}
+unsafe impl<'a> BaseTaggedStructure<'a> for DepthBiasInfoEXT<'a> {}
 impl<'a> DepthBiasInfoEXT<'a> {
     #[inline]
     pub fn depth_bias_constant_factor(mut self, depth_bias_constant_factor: f32) -> Self {
@@ -54431,20 +53918,6 @@ impl<'a> DepthBiasInfoEXT<'a> {
     #[inline]
     pub fn depth_bias_slope_factor(mut self, depth_bias_slope_factor: f32) -> Self {
         self.depth_bias_slope_factor = depth_bias_slope_factor;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDepthBiasInfoEXT + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -54474,11 +53947,14 @@ impl ::core::default::Default for DepthBiasRepresentationInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DepthBiasRepresentationInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DepthBiasRepresentationInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEPTH_BIAS_REPRESENTATION_INFO_EXT;
 }
-unsafe impl ExtendsDepthBiasInfoEXT for DepthBiasRepresentationInfoEXT<'_> {}
-unsafe impl ExtendsPipelineRasterizationStateCreateInfo for DepthBiasRepresentationInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, DepthBiasInfoEXT<'a>> for DepthBiasRepresentationInfoEXT<'a> {}
+unsafe impl<'a> Extends<'a, PipelineRasterizationStateCreateInfo<'a>>
+    for DepthBiasRepresentationInfoEXT<'a>
+{
+}
 impl<'a> DepthBiasRepresentationInfoEXT<'a> {
     #[inline]
     pub fn depth_bias_representation(
@@ -54564,11 +54040,14 @@ impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_PROPERTIES_ARM;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
     #[inline]
     pub fn shader_core_mask(mut self, shader_core_mask: u64) -> Self {
@@ -54610,12 +54089,18 @@ impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_FEATURES_ARM;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
     #[inline]
     pub fn shader_core_builtins(mut self, shader_core_builtins: bool) -> Self {
@@ -54663,13 +54148,13 @@ impl ::core::default::Default for FrameBoundaryEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FrameBoundaryEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FrameBoundaryEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAME_BOUNDARY_EXT;
 }
-unsafe impl ExtendsSubmitInfo for FrameBoundaryEXT<'_> {}
-unsafe impl ExtendsSubmitInfo2 for FrameBoundaryEXT<'_> {}
-unsafe impl ExtendsPresentInfoKHR for FrameBoundaryEXT<'_> {}
-unsafe impl ExtendsBindSparseInfo for FrameBoundaryEXT<'_> {}
+unsafe impl<'a> Extends<'a, SubmitInfo<'a>> for FrameBoundaryEXT<'a> {}
+unsafe impl<'a> Extends<'a, SubmitInfo2<'a>> for FrameBoundaryEXT<'a> {}
+unsafe impl<'a> Extends<'a, PresentInfoKHR<'a>> for FrameBoundaryEXT<'a> {}
+unsafe impl<'a> Extends<'a, BindSparseInfo<'a>> for FrameBoundaryEXT<'a> {}
 impl<'a> FrameBoundaryEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: FrameBoundaryFlagsEXT) -> Self {
@@ -54729,12 +54214,15 @@ impl ::core::default::Default for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAME_BOUNDARY_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceFrameBoundaryFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
     #[inline]
     pub fn frame_boundary(mut self, frame_boundary: bool) -> Self {
@@ -54766,16 +54254,18 @@ impl ::core::default::Default for PhysicalDeviceDynamicRenderingUnusedAttachment
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a>
+{
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a>
 {
 }
 impl<'a> PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
@@ -54812,10 +54302,10 @@ impl ::core::default::Default for SurfacePresentModeEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfacePresentModeEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfacePresentModeEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PRESENT_MODE_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceSurfaceInfo2KHR for SurfacePresentModeEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceSurfaceInfo2KHR<'a>> for SurfacePresentModeEXT<'a> {}
 impl<'a> SurfacePresentModeEXT<'a> {
     #[inline]
     pub fn present_mode(mut self, present_mode: PresentModeKHR) -> Self {
@@ -54855,10 +54345,13 @@ impl ::core::default::Default for SurfacePresentScalingCapabilitiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfacePresentScalingCapabilitiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfacePresentScalingCapabilitiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PRESENT_SCALING_CAPABILITIES_EXT;
 }
-unsafe impl ExtendsSurfaceCapabilities2KHR for SurfacePresentScalingCapabilitiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, SurfaceCapabilities2KHR<'a>>
+    for SurfacePresentScalingCapabilitiesEXT<'a>
+{
+}
 impl<'a> SurfacePresentScalingCapabilitiesEXT<'a> {
     #[inline]
     pub fn supported_present_scaling(
@@ -54921,10 +54414,13 @@ impl ::core::default::Default for SurfacePresentModeCompatibilityEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfacePresentModeCompatibilityEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfacePresentModeCompatibilityEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PRESENT_MODE_COMPATIBILITY_EXT;
 }
-unsafe impl ExtendsSurfaceCapabilities2KHR for SurfacePresentModeCompatibilityEXT<'_> {}
+unsafe impl<'a> Extends<'a, SurfaceCapabilities2KHR<'a>>
+    for SurfacePresentModeCompatibilityEXT<'a>
+{
+}
 impl<'a> SurfacePresentModeCompatibilityEXT<'a> {
     #[inline]
     pub fn present_modes(mut self, present_modes: &'a mut [PresentModeKHR]) -> Self {
@@ -54957,12 +54453,18 @@ impl ::core::default::Default for PhysicalDeviceSwapchainMaintenance1FeaturesEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SWAPCHAIN_MAINTENANCE_1_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'a> {
     #[inline]
     pub fn swapchain_maintenance1(mut self, swapchain_maintenance1: bool) -> Self {
@@ -54996,10 +54498,10 @@ impl ::core::default::Default for SwapchainPresentFenceInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainPresentFenceInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentFenceInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_FENCE_INFO_EXT;
 }
-unsafe impl ExtendsPresentInfoKHR for SwapchainPresentFenceInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, PresentInfoKHR<'a>> for SwapchainPresentFenceInfoEXT<'a> {}
 impl<'a> SwapchainPresentFenceInfoEXT<'a> {
     #[inline]
     pub fn fences(mut self, fences: &'a [Fence]) -> Self {
@@ -55034,10 +54536,10 @@ impl ::core::default::Default for SwapchainPresentModesCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainPresentModesCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentModesCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_MODES_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainPresentModesCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, SwapchainCreateInfoKHR<'a>> for SwapchainPresentModesCreateInfoEXT<'a> {}
 impl<'a> SwapchainPresentModesCreateInfoEXT<'a> {
     #[inline]
     pub fn present_modes(mut self, present_modes: &'a [PresentModeKHR]) -> Self {
@@ -55072,10 +54574,10 @@ impl ::core::default::Default for SwapchainPresentModeInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainPresentModeInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentModeInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_MODE_INFO_EXT;
 }
-unsafe impl ExtendsPresentInfoKHR for SwapchainPresentModeInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, PresentInfoKHR<'a>> for SwapchainPresentModeInfoEXT<'a> {}
 impl<'a> SwapchainPresentModeInfoEXT<'a> {
     #[inline]
     pub fn present_modes(mut self, present_modes: &'a [PresentModeKHR]) -> Self {
@@ -55112,10 +54614,13 @@ impl ::core::default::Default for SwapchainPresentScalingCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainPresentScalingCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentScalingCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_SCALING_CREATE_INFO_EXT;
 }
-unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainPresentScalingCreateInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, SwapchainCreateInfoKHR<'a>>
+    for SwapchainPresentScalingCreateInfoEXT<'a>
+{
+}
 impl<'a> SwapchainPresentScalingCreateInfoEXT<'a> {
     #[inline]
     pub fn scaling_behavior(mut self, scaling_behavior: PresentScalingFlagsEXT) -> Self {
@@ -55161,7 +54666,7 @@ impl ::core::default::Default for ReleaseSwapchainImagesInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ReleaseSwapchainImagesInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ReleaseSwapchainImagesInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RELEASE_SWAPCHAIN_IMAGES_INFO_EXT;
 }
 impl<'a> ReleaseSwapchainImagesInfoEXT<'a> {
@@ -55207,12 +54712,18 @@ impl ::core::default::Default for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_BIAS_CONTROL_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDepthBiasControlFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDepthBiasControlFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
     #[inline]
     pub fn depth_bias_control(mut self, depth_bias_control: bool) -> Self {
@@ -55263,15 +54774,18 @@ impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeatu
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
     #[inline]
     pub fn ray_tracing_invocation_reorder(mut self, ray_tracing_invocation_reorder: bool) -> Self {
@@ -55304,12 +54818,12 @@ impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPrope
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a>
 {
 }
 impl<'a> PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
@@ -55347,15 +54861,18 @@ impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpaceFeatur
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
     #[inline]
     pub fn extended_sparse_address_space(mut self, extended_sparse_address_space: bool) -> Self {
@@ -55391,12 +54908,12 @@ impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpaceProper
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_PROPERTIES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a>
 {
 }
 impl<'a> PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
@@ -55464,7 +54981,7 @@ impl ::core::default::Default for DirectDriverLoadingInfoLUNARG<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DirectDriverLoadingInfoLUNARG<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DirectDriverLoadingInfoLUNARG<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DIRECT_DRIVER_LOADING_INFO_LUNARG;
 }
 impl<'a> DirectDriverLoadingInfoLUNARG<'a> {
@@ -55510,10 +55027,10 @@ impl ::core::default::Default for DirectDriverLoadingListLUNARG<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DirectDriverLoadingListLUNARG<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DirectDriverLoadingListLUNARG<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DIRECT_DRIVER_LOADING_LIST_LUNARG;
 }
-unsafe impl ExtendsInstanceCreateInfo for DirectDriverLoadingListLUNARG<'_> {}
+unsafe impl<'a> Extends<'a, InstanceCreateInfo<'a>> for DirectDriverLoadingListLUNARG<'a> {}
 impl<'a> DirectDriverLoadingListLUNARG<'a> {
     #[inline]
     pub fn mode(mut self, mode: DirectDriverLoadingModeLUNARG) -> Self {
@@ -55551,15 +55068,18 @@ impl ::core::default::Default for PhysicalDeviceMultiviewPerViewViewportsFeature
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_VIEWPORTS_FEATURES_QCOM;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a>
+{
+}
 impl<'a> PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
     #[inline]
     pub fn multiview_per_view_viewports(mut self, multiview_per_view_viewports: bool) -> Self {
@@ -55591,15 +55111,18 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPositionFetchFeaturesK
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
     #[inline]
     pub fn ray_tracing_position_fetch(mut self, ray_tracing_position_fetch: bool) -> Self {
@@ -55633,7 +55156,7 @@ impl ::core::default::Default for DeviceImageSubresourceInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceImageSubresourceInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceImageSubresourceInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_IMAGE_SUBRESOURCE_INFO_KHR;
 }
 impl<'a> DeviceImageSubresourceInfoKHR<'a> {
@@ -55676,10 +55199,13 @@ impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesARM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCorePropertiesARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCorePropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCorePropertiesARM<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceShaderCorePropertiesARM<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderCorePropertiesARM<'a> {
     #[inline]
     pub fn pixel_rate(mut self, pixel_rate: u32) -> Self {
@@ -55721,15 +55247,18 @@ impl ::core::default::Default for PhysicalDeviceMultiviewPerViewRenderAreasFeatu
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_RENDER_AREAS_FEATURES_QCOM;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a>
+{
+}
 impl<'a> PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
     #[inline]
     pub fn multiview_per_view_render_areas(
@@ -55766,12 +55295,18 @@ impl ::core::default::Default for MultiviewPerViewRenderAreasRenderPassBeginInfo
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM;
 }
-unsafe impl ExtendsRenderPassBeginInfo for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {}
-unsafe impl ExtendsRenderingInfo for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {}
+unsafe impl<'a> Extends<'a, RenderPassBeginInfo<'a>>
+    for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a>
+{
+}
+unsafe impl<'a> Extends<'a, RenderingInfo<'a>>
+    for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a>
+{
+}
 impl<'a> MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
     #[inline]
     pub fn per_view_render_areas(mut self, per_view_render_areas: &'a [Rect2D]) -> Self {
@@ -55804,10 +55339,10 @@ impl ::core::default::Default for QueryLowLatencySupportNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueryLowLatencySupportNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueryLowLatencySupportNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUERY_LOW_LATENCY_SUPPORT_NV;
 }
-unsafe impl ExtendsSemaphoreCreateInfo for QueryLowLatencySupportNV<'_> {}
+unsafe impl<'a> Extends<'a, SemaphoreCreateInfo<'a>> for QueryLowLatencySupportNV<'a> {}
 impl<'a> QueryLowLatencySupportNV<'a> {
     #[inline]
     pub fn queried_low_latency_data(mut self, queried_low_latency_data: *mut c_void) -> Self {
@@ -55845,10 +55380,10 @@ impl ::core::default::Default for MemoryMapInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryMapInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryMapInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_MAP_INFO_KHR;
 }
-pub unsafe trait ExtendsMemoryMapInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for MemoryMapInfoKHR<'a> {}
 impl<'a> MemoryMapInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: MemoryMapFlags) -> Self {
@@ -55868,20 +55403,6 @@ impl<'a> MemoryMapInfoKHR<'a> {
     #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryMapInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -55911,7 +55432,7 @@ impl ::core::default::Default for MemoryUnmapInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryUnmapInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryUnmapInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_UNMAP_INFO_KHR;
 }
 impl<'a> MemoryUnmapInfoKHR<'a> {
@@ -55950,11 +55471,14 @@ impl ::core::default::Default for PhysicalDeviceShaderObjectFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderObjectFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderObjectFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderObjectFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderObjectFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderObjectFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceShaderObjectFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceShaderObjectFeaturesEXT<'a> {
     #[inline]
     pub fn shader_object(mut self, shader_object: bool) -> Self {
@@ -55988,11 +55512,14 @@ impl ::core::default::Default for PhysicalDeviceShaderObjectPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderObjectPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderObjectPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_OBJECT_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderObjectPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceShaderObjectPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderObjectPropertiesEXT<'a> {
     #[inline]
     pub fn shader_binary_uuid(mut self, shader_binary_uuid: [u8; UUID_SIZE]) -> Self {
@@ -56051,10 +55578,10 @@ impl ::core::default::Default for ShaderCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ShaderCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ShaderCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_CREATE_INFO_EXT;
 }
-pub unsafe trait ExtendsShaderCreateInfoEXT {}
+unsafe impl<'a> BaseTaggedStructure<'a> for ShaderCreateInfoEXT<'a> {}
 impl<'a> ShaderCreateInfoEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: ShaderCreateFlagsEXT) -> Self {
@@ -56112,20 +55639,6 @@ impl<'a> ShaderCreateInfoEXT<'a> {
         self.p_specialization_info = specialization_info;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsShaderCreateInfoEXT + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -56155,12 +55668,15 @@ impl ::core::default::Default for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderTileImageFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
     #[inline]
     pub fn shader_tile_image_color_read_access(
@@ -56215,11 +55731,14 @@ impl ::core::default::Default for PhysicalDeviceShaderTileImagePropertiesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceShaderTileImagePropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
     #[inline]
     pub fn shader_tile_image_coherent_read_accelerated(
@@ -56273,10 +55792,10 @@ impl ::core::default::Default for ImportScreenBufferInfoQNX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportScreenBufferInfoQNX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportScreenBufferInfoQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_SCREEN_BUFFER_INFO_QNX;
 }
-unsafe impl ExtendsMemoryAllocateInfo for ImportScreenBufferInfoQNX<'_> {}
+unsafe impl<'a> Extends<'a, MemoryAllocateInfo<'a>> for ImportScreenBufferInfoQNX<'a> {}
 impl<'a> ImportScreenBufferInfoQNX<'a> {
     #[inline]
     pub fn buffer(mut self, buffer: &'a mut _screen_buffer) -> Self {
@@ -56310,10 +55829,10 @@ impl ::core::default::Default for ScreenBufferPropertiesQNX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ScreenBufferPropertiesQNX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ScreenBufferPropertiesQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SCREEN_BUFFER_PROPERTIES_QNX;
 }
-pub unsafe trait ExtendsScreenBufferPropertiesQNX {}
+unsafe impl<'a> BaseTaggedStructure<'a> for ScreenBufferPropertiesQNX<'a> {}
 impl<'a> ScreenBufferPropertiesQNX<'a> {
     #[inline]
     pub fn allocation_size(mut self, allocation_size: DeviceSize) -> Self {
@@ -56323,23 +55842,6 @@ impl<'a> ScreenBufferPropertiesQNX<'a> {
     #[inline]
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.memory_type_bits = memory_type_bits;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsScreenBufferPropertiesQNX + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -56383,10 +55885,10 @@ impl ::core::default::Default for ScreenBufferFormatPropertiesQNX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ScreenBufferFormatPropertiesQNX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ScreenBufferFormatPropertiesQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SCREEN_BUFFER_FORMAT_PROPERTIES_QNX;
 }
-unsafe impl ExtendsScreenBufferPropertiesQNX for ScreenBufferFormatPropertiesQNX<'_> {}
+unsafe impl<'a> Extends<'a, ScreenBufferPropertiesQNX<'a>> for ScreenBufferFormatPropertiesQNX<'a> {}
 impl<'a> ScreenBufferFormatPropertiesQNX<'a> {
     #[inline]
     pub fn format(mut self, format: Format) -> Self {
@@ -56464,11 +55966,11 @@ impl ::core::default::Default for ExternalFormatQNX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalFormatQNX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalFormatQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_FORMAT_QNX;
 }
-unsafe impl ExtendsImageCreateInfo for ExternalFormatQNX<'_> {}
-unsafe impl ExtendsSamplerYcbcrConversionCreateInfo for ExternalFormatQNX<'_> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for ExternalFormatQNX<'a> {}
+unsafe impl<'a> Extends<'a, SamplerYcbcrConversionCreateInfo<'a>> for ExternalFormatQNX<'a> {}
 impl<'a> ExternalFormatQNX<'a> {
     #[inline]
     pub fn external_format(mut self, external_format: u64) -> Self {
@@ -56500,15 +56002,18 @@ impl ::core::default::Default for PhysicalDeviceExternalMemoryScreenBufferFeatur
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_SCREEN_BUFFER_FEATURES_QNX;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a>
+{
+}
 impl<'a> PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
     #[inline]
     pub fn screen_buffer_import(mut self, screen_buffer_import: bool) -> Self {
@@ -56542,12 +56047,18 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceCooperativeMatrixFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceCooperativeMatrixFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
     #[inline]
     pub fn cooperative_matrix(mut self, cooperative_matrix: bool) -> Self {
@@ -56604,7 +56115,7 @@ impl ::core::default::Default for CooperativeMatrixPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CooperativeMatrixPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COOPERATIVE_MATRIX_PROPERTIES_KHR;
 }
 impl<'a> CooperativeMatrixPropertiesKHR<'a> {
@@ -56678,11 +56189,14 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceCooperativeMatrixPropertiesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
     #[inline]
     pub fn cooperative_matrix_supported_stages(
@@ -56725,11 +56239,14 @@ impl ::core::default::Default for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ENQUEUE_PROPERTIES_AMDX;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceShaderEnqueuePropertiesAMDX<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
     #[inline]
     pub fn max_execution_graph_depth(mut self, max_execution_graph_depth: u32) -> Self {
@@ -56794,12 +56311,15 @@ impl ::core::default::Default for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ENQUEUE_FEATURES_AMDX;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderEnqueueFeaturesAMDX<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {}
 impl<'a> PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
     #[inline]
     pub fn shader_enqueue(mut self, shader_enqueue: bool) -> Self {
@@ -56843,10 +56363,10 @@ impl ::core::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExecutionGraphPipelineCreateInfoAMDX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExecutionGraphPipelineCreateInfoAMDX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXECUTION_GRAPH_PIPELINE_CREATE_INFO_AMDX;
 }
-pub unsafe trait ExtendsExecutionGraphPipelineCreateInfoAMDX {}
+unsafe impl<'a> BaseTaggedStructure<'a> for ExecutionGraphPipelineCreateInfoAMDX<'a> {}
 impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
@@ -56879,23 +56399,6 @@ impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
         self.base_pipeline_index = base_pipeline_index;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsExecutionGraphPipelineCreateInfoAMDX + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -56923,11 +56426,14 @@ impl ::core::default::Default for PipelineShaderStageNodeCreateInfoAMDX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineShaderStageNodeCreateInfoAMDX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageNodeCreateInfoAMDX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_SHADER_STAGE_NODE_CREATE_INFO_AMDX;
 }
-unsafe impl ExtendsPipelineShaderStageCreateInfo for PipelineShaderStageNodeCreateInfoAMDX<'_> {}
+unsafe impl<'a> Extends<'a, PipelineShaderStageCreateInfo<'a>>
+    for PipelineShaderStageNodeCreateInfoAMDX<'a>
+{
+}
 impl<'a> PipelineShaderStageNodeCreateInfoAMDX<'a> {
     #[inline]
     pub fn name(mut self, name: &'a CStr) -> Self {
@@ -56972,7 +56478,7 @@ impl ::core::default::Default for ExecutionGraphPipelineScratchSizeAMDX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExecutionGraphPipelineScratchSizeAMDX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExecutionGraphPipelineScratchSizeAMDX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXECUTION_GRAPH_PIPELINE_SCRATCH_SIZE_AMDX;
 }
 impl<'a> ExecutionGraphPipelineScratchSizeAMDX<'a> {
@@ -57085,11 +56591,11 @@ impl ::core::default::Default for PhysicalDeviceAntiLagFeaturesAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceAntiLagFeaturesAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAntiLagFeaturesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_ANTI_LAG_FEATURES_AMD;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceAntiLagFeaturesAMD<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceAntiLagFeaturesAMD<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>> for PhysicalDeviceAntiLagFeaturesAMD<'a> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceAntiLagFeaturesAMD<'a> {}
 impl<'a> PhysicalDeviceAntiLagFeaturesAMD<'a> {
     #[inline]
     pub fn anti_lag(mut self, anti_lag: bool) -> Self {
@@ -57125,7 +56631,7 @@ impl ::core::default::Default for AntiLagDataAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AntiLagDataAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AntiLagDataAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANTI_LAG_DATA_AMD;
 }
 impl<'a> AntiLagDataAMD<'a> {
@@ -57174,7 +56680,7 @@ impl ::core::default::Default for AntiLagPresentationInfoAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AntiLagPresentationInfoAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AntiLagPresentationInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANTI_LAG_PRESENTATION_INFO_AMD;
 }
 impl<'a> AntiLagPresentationInfoAMD<'a> {
@@ -57213,11 +56719,11 @@ impl ::core::default::Default for BindMemoryStatusKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindMemoryStatusKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindMemoryStatusKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_MEMORY_STATUS_KHR;
 }
-unsafe impl ExtendsBindBufferMemoryInfo for BindMemoryStatusKHR<'_> {}
-unsafe impl ExtendsBindImageMemoryInfo for BindMemoryStatusKHR<'_> {}
+unsafe impl<'a> Extends<'a, BindBufferMemoryInfo<'a>> for BindMemoryStatusKHR<'a> {}
+unsafe impl<'a> Extends<'a, BindImageMemoryInfo<'a>> for BindMemoryStatusKHR<'a> {}
 impl<'a> BindMemoryStatusKHR<'a> {
     #[inline]
     pub fn result(mut self, result: &'a mut Result) -> Self {
@@ -57261,10 +56767,10 @@ impl ::core::default::Default for BindDescriptorSetsInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindDescriptorSetsInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindDescriptorSetsInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_DESCRIPTOR_SETS_INFO_KHR;
 }
-pub unsafe trait ExtendsBindDescriptorSetsInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for BindDescriptorSetsInfoKHR<'a> {}
 impl<'a> BindDescriptorSetsInfoKHR<'a> {
     #[inline]
     pub fn stage_flags(mut self, stage_flags: ShaderStageFlags) -> Self {
@@ -57291,23 +56797,6 @@ impl<'a> BindDescriptorSetsInfoKHR<'a> {
     pub fn dynamic_offsets(mut self, dynamic_offsets: &'a [u32]) -> Self {
         self.dynamic_offset_count = dynamic_offsets.len() as _;
         self.p_dynamic_offsets = dynamic_offsets.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBindDescriptorSetsInfoKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -57343,10 +56832,10 @@ impl ::core::default::Default for PushConstantsInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PushConstantsInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PushConstantsInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_CONSTANTS_INFO_KHR;
 }
-pub unsafe trait ExtendsPushConstantsInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PushConstantsInfoKHR<'a> {}
 impl<'a> PushConstantsInfoKHR<'a> {
     #[inline]
     pub fn layout(mut self, layout: PipelineLayout) -> Self {
@@ -57367,20 +56856,6 @@ impl<'a> PushConstantsInfoKHR<'a> {
     pub fn values(mut self, values: &'a [u8]) -> Self {
         self.size = values.len() as _;
         self.p_values = values.as_ptr().cast();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPushConstantsInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -57416,10 +56891,10 @@ impl ::core::default::Default for PushDescriptorSetInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PushDescriptorSetInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PushDescriptorSetInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_DESCRIPTOR_SET_INFO_KHR;
 }
-pub unsafe trait ExtendsPushDescriptorSetInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PushDescriptorSetInfoKHR<'a> {}
 impl<'a> PushDescriptorSetInfoKHR<'a> {
     #[inline]
     pub fn stage_flags(mut self, stage_flags: ShaderStageFlags) -> Self {
@@ -57440,23 +56915,6 @@ impl<'a> PushDescriptorSetInfoKHR<'a> {
     pub fn descriptor_writes(mut self, descriptor_writes: &'a [WriteDescriptorSet<'a>]) -> Self {
         self.descriptor_write_count = descriptor_writes.len() as _;
         self.p_descriptor_writes = descriptor_writes.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPushDescriptorSetInfoKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -57490,10 +56948,10 @@ impl ::core::default::Default for PushDescriptorSetWithTemplateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PushDescriptorSetWithTemplateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PushDescriptorSetWithTemplateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_DESCRIPTOR_SET_WITH_TEMPLATE_INFO_KHR;
 }
-pub unsafe trait ExtendsPushDescriptorSetWithTemplateInfoKHR {}
+unsafe impl<'a> BaseTaggedStructure<'a> for PushDescriptorSetWithTemplateInfoKHR<'a> {}
 impl<'a> PushDescriptorSetWithTemplateInfoKHR<'a> {
     #[inline]
     pub fn descriptor_update_template(
@@ -57516,23 +56974,6 @@ impl<'a> PushDescriptorSetWithTemplateInfoKHR<'a> {
     #[inline]
     pub fn data(mut self, data: *const c_void) -> Self {
         self.p_data = data;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPushDescriptorSetWithTemplateInfoKHR + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -57570,10 +57011,10 @@ impl ::core::default::Default for SetDescriptorBufferOffsetsInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SetDescriptorBufferOffsetsInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SetDescriptorBufferOffsetsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SET_DESCRIPTOR_BUFFER_OFFSETS_INFO_EXT;
 }
-pub unsafe trait ExtendsSetDescriptorBufferOffsetsInfoEXT {}
+unsafe impl<'a> BaseTaggedStructure<'a> for SetDescriptorBufferOffsetsInfoEXT<'a> {}
 impl<'a> SetDescriptorBufferOffsetsInfoEXT<'a> {
     #[inline]
     pub fn stage_flags(mut self, stage_flags: ShaderStageFlags) -> Self {
@@ -57600,23 +57041,6 @@ impl<'a> SetDescriptorBufferOffsetsInfoEXT<'a> {
     pub fn offsets(mut self, offsets: &'a [DeviceSize]) -> Self {
         self.set_count = offsets.len() as _;
         self.p_offsets = offsets.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSetDescriptorBufferOffsetsInfoEXT + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -57648,11 +57072,11 @@ impl ::core::default::Default for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::BIND_DESCRIPTOR_BUFFER_EMBEDDED_SAMPLERS_INFO_EXT;
 }
-pub unsafe trait ExtendsBindDescriptorBufferEmbeddedSamplersInfoEXT {}
+unsafe impl<'a> BaseTaggedStructure<'a> for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {}
 impl<'a> BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     #[inline]
     pub fn stage_flags(mut self, stage_flags: ShaderStageFlags) -> Self {
@@ -57667,23 +57091,6 @@ impl<'a> BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     #[inline]
     pub fn set(mut self, set: u32) -> Self {
         self.set = set;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBindDescriptorBufferEmbeddedSamplersInfoEXT + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -57711,11 +57118,14 @@ impl ::core::default::Default for PhysicalDeviceCubicClampFeaturesQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCubicClampFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCubicClampFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_CUBIC_CLAMP_FEATURES_QCOM;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCubicClampFeaturesQCOM<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCubicClampFeaturesQCOM<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceCubicClampFeaturesQCOM<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceCubicClampFeaturesQCOM<'a> {}
 impl<'a> PhysicalDeviceCubicClampFeaturesQCOM<'a> {
     #[inline]
     pub fn cubic_range_clamp(mut self, cubic_range_clamp: bool) -> Self {
@@ -57747,12 +57157,15 @@ impl ::core::default::Default for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_YCBCR_DEGAMMA_FEATURES_QCOM;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {}
 impl<'a> PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
     #[inline]
     pub fn ycbcr_degamma(mut self, ycbcr_degamma: bool) -> Self {
@@ -57786,12 +57199,12 @@ impl ::core::default::Default for SamplerYcbcrConversionYcbcrDegammaCreateInfoQC
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_YCBCR_CONVERSION_YCBCR_DEGAMMA_CREATE_INFO_QCOM;
 }
-unsafe impl ExtendsSamplerYcbcrConversionCreateInfo
-    for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_>
+unsafe impl<'a> Extends<'a, SamplerYcbcrConversionCreateInfo<'a>>
+    for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a>
 {
 }
 impl<'a> SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
@@ -57830,12 +57243,15 @@ impl ::core::default::Default for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUBIC_WEIGHTS_FEATURES_QCOM;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceCubicWeightsFeaturesQCOM<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {}
 impl<'a> PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
     #[inline]
     pub fn selectable_cubic_weights(mut self, selectable_cubic_weights: bool) -> Self {
@@ -57867,10 +57283,10 @@ impl ::core::default::Default for SamplerCubicWeightsCreateInfoQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerCubicWeightsCreateInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerCubicWeightsCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_CUBIC_WEIGHTS_CREATE_INFO_QCOM;
 }
-unsafe impl ExtendsSamplerCreateInfo for SamplerCubicWeightsCreateInfoQCOM<'_> {}
+unsafe impl<'a> Extends<'a, SamplerCreateInfo<'a>> for SamplerCubicWeightsCreateInfoQCOM<'a> {}
 impl<'a> SamplerCubicWeightsCreateInfoQCOM<'a> {
     #[inline]
     pub fn cubic_weights(mut self, cubic_weights: CubicFilterWeightsQCOM) -> Self {
@@ -57902,10 +57318,10 @@ impl ::core::default::Default for BlitImageCubicWeightsInfoQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BlitImageCubicWeightsInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BlitImageCubicWeightsInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BLIT_IMAGE_CUBIC_WEIGHTS_INFO_QCOM;
 }
-unsafe impl ExtendsBlitImageInfo2 for BlitImageCubicWeightsInfoQCOM<'_> {}
+unsafe impl<'a> Extends<'a, BlitImageInfo2<'a>> for BlitImageCubicWeightsInfoQCOM<'a> {}
 impl<'a> BlitImageCubicWeightsInfoQCOM<'a> {
     #[inline]
     pub fn cubic_weights(mut self, cubic_weights: CubicFilterWeightsQCOM) -> Self {
@@ -57937,12 +57353,18 @@ impl ::core::default::Default for PhysicalDeviceImageProcessing2FeaturesQCOM<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_2_FEATURES_QCOM;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceImageProcessing2FeaturesQCOM<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceImageProcessing2FeaturesQCOM<'a>
+{
+}
 impl<'a> PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
     #[inline]
     pub fn texture_block_match2(mut self, texture_block_match2: bool) -> Self {
@@ -57974,11 +57396,14 @@ impl ::core::default::Default for PhysicalDeviceImageProcessing2PropertiesQCOM<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_2_PROPERTIES_QCOM;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceImageProcessing2PropertiesQCOM<'a>
+{
+}
 impl<'a> PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
     #[inline]
     pub fn max_block_match_window(mut self, max_block_match_window: Extent2D) -> Self {
@@ -58012,11 +57437,11 @@ impl ::core::default::Default for SamplerBlockMatchWindowCreateInfoQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerBlockMatchWindowCreateInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerBlockMatchWindowCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_BLOCK_MATCH_WINDOW_CREATE_INFO_QCOM;
 }
-unsafe impl ExtendsSamplerCreateInfo for SamplerBlockMatchWindowCreateInfoQCOM<'_> {}
+unsafe impl<'a> Extends<'a, SamplerCreateInfo<'a>> for SamplerBlockMatchWindowCreateInfoQCOM<'a> {}
 impl<'a> SamplerBlockMatchWindowCreateInfoQCOM<'a> {
     #[inline]
     pub fn window_extent(mut self, window_extent: Extent2D) -> Self {
@@ -58056,15 +57481,18 @@ impl ::core::default::Default for PhysicalDeviceDescriptorPoolOverallocationFeat
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
     #[inline]
     pub fn descriptor_pool_overallocation(mut self, descriptor_pool_overallocation: bool) -> Self {
@@ -58096,11 +57524,14 @@ impl ::core::default::Default for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceLayeredDriverPropertiesMSFT<'a>
+{
+}
 impl<'a> PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
     #[inline]
     pub fn underlying_api(mut self, underlying_api: LayeredDriverUnderlyingApiMSFT) -> Self {
@@ -58134,12 +57565,18 @@ impl ::core::default::Default for PhysicalDevicePerStageDescriptorSetFeaturesNV<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PER_STAGE_DESCRIPTOR_SET_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
     #[inline]
     pub fn per_stage_descriptor_set(mut self, per_stage_descriptor_set: bool) -> Self {
@@ -58176,15 +57613,18 @@ impl ::core::default::Default for PhysicalDeviceExternalFormatResolveFeaturesAND
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_FORMAT_RESOLVE_FEATURES_ANDROID;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a>
+{
+}
 impl<'a> PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
     #[inline]
     pub fn external_format_resolve(mut self, external_format_resolve: bool) -> Self {
@@ -58220,12 +57660,12 @@ impl ::core::default::Default for PhysicalDeviceExternalFormatResolvePropertiesA
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_FORMAT_RESOLVE_PROPERTIES_ANDROID;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a>
 {
 }
 impl<'a> PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
@@ -58279,12 +57719,12 @@ impl ::core::default::Default for AndroidHardwareBufferFormatResolvePropertiesAN
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_RESOLVE_PROPERTIES_ANDROID;
 }
-unsafe impl ExtendsAndroidHardwareBufferPropertiesANDROID
-    for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_>
+unsafe impl<'a> Extends<'a, AndroidHardwareBufferPropertiesANDROID<'a>>
+    for AndroidHardwareBufferFormatResolvePropertiesANDROID<'a>
 {
 }
 impl<'a> AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
@@ -58322,7 +57762,7 @@ impl ::core::default::Default for LatencySleepModeInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for LatencySleepModeInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for LatencySleepModeInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_SLEEP_MODE_INFO_NV;
 }
 impl<'a> LatencySleepModeInfoNV<'a> {
@@ -58368,7 +57808,7 @@ impl ::core::default::Default for LatencySleepInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for LatencySleepInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for LatencySleepInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_SLEEP_INFO_NV;
 }
 impl<'a> LatencySleepInfoNV<'a> {
@@ -58409,7 +57849,7 @@ impl ::core::default::Default for SetLatencyMarkerInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SetLatencyMarkerInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SetLatencyMarkerInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SET_LATENCY_MARKER_INFO_NV;
 }
 impl<'a> SetLatencyMarkerInfoNV<'a> {
@@ -58450,7 +57890,7 @@ impl ::core::default::Default for GetLatencyMarkerInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GetLatencyMarkerInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GetLatencyMarkerInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GET_LATENCY_MARKER_INFO_NV;
 }
 impl<'a> GetLatencyMarkerInfoNV<'a> {
@@ -58511,7 +57951,7 @@ impl ::core::default::Default for LatencyTimingsFrameReportNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for LatencyTimingsFrameReportNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for LatencyTimingsFrameReportNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_TIMINGS_FRAME_REPORT_NV;
 }
 impl<'a> LatencyTimingsFrameReportNV<'a> {
@@ -58610,7 +58050,7 @@ impl ::core::default::Default for OutOfBandQueueTypeInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for OutOfBandQueueTypeInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for OutOfBandQueueTypeInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OUT_OF_BAND_QUEUE_TYPE_INFO_NV;
 }
 impl<'a> OutOfBandQueueTypeInfoNV<'a> {
@@ -58644,11 +58084,11 @@ impl ::core::default::Default for LatencySubmissionPresentIdNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for LatencySubmissionPresentIdNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for LatencySubmissionPresentIdNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_SUBMISSION_PRESENT_ID_NV;
 }
-unsafe impl ExtendsSubmitInfo for LatencySubmissionPresentIdNV<'_> {}
-unsafe impl ExtendsSubmitInfo2 for LatencySubmissionPresentIdNV<'_> {}
+unsafe impl<'a> Extends<'a, SubmitInfo<'a>> for LatencySubmissionPresentIdNV<'a> {}
+unsafe impl<'a> Extends<'a, SubmitInfo2<'a>> for LatencySubmissionPresentIdNV<'a> {}
 impl<'a> LatencySubmissionPresentIdNV<'a> {
     #[inline]
     pub fn present_id(mut self, present_id: u64) -> Self {
@@ -58680,10 +58120,10 @@ impl ::core::default::Default for SwapchainLatencyCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainLatencyCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainLatencyCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_LATENCY_CREATE_INFO_NV;
 }
-unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainLatencyCreateInfoNV<'_> {}
+unsafe impl<'a> Extends<'a, SwapchainCreateInfoKHR<'a>> for SwapchainLatencyCreateInfoNV<'a> {}
 impl<'a> SwapchainLatencyCreateInfoNV<'a> {
     #[inline]
     pub fn latency_mode_enable(mut self, latency_mode_enable: bool) -> Self {
@@ -58717,10 +58157,10 @@ impl ::core::default::Default for LatencySurfaceCapabilitiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for LatencySurfaceCapabilitiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for LatencySurfaceCapabilitiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_SURFACE_CAPABILITIES_NV;
 }
-unsafe impl ExtendsSurfaceCapabilities2KHR for LatencySurfaceCapabilitiesNV<'_> {}
+unsafe impl<'a> Extends<'a, SurfaceCapabilities2KHR<'a>> for LatencySurfaceCapabilitiesNV<'a> {}
 impl<'a> LatencySurfaceCapabilitiesNV<'a> {
     #[inline]
     pub fn present_modes(mut self, present_modes: &'a mut [PresentModeKHR]) -> Self {
@@ -58753,12 +58193,15 @@ impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceCudaKernelLaunchFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
     #[inline]
     pub fn cuda_kernel_launch_features(mut self, cuda_kernel_launch_features: bool) -> Self {
@@ -58792,11 +58235,14 @@ impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_PROPERTIES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceCudaKernelLaunchPropertiesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
     #[inline]
     pub fn compute_capability_minor(mut self, compute_capability_minor: u32) -> Self {
@@ -58833,12 +58279,18 @@ impl ::core::default::Default for DeviceQueueShaderCoreControlCreateInfoARM<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceQueueShaderCoreControlCreateInfoARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceQueueShaderCoreControlCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEVICE_QUEUE_SHADER_CORE_CONTROL_CREATE_INFO_ARM;
 }
-unsafe impl ExtendsDeviceQueueCreateInfo for DeviceQueueShaderCoreControlCreateInfoARM<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for DeviceQueueShaderCoreControlCreateInfoARM<'_> {}
+unsafe impl<'a> Extends<'a, DeviceQueueCreateInfo<'a>>
+    for DeviceQueueShaderCoreControlCreateInfoARM<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for DeviceQueueShaderCoreControlCreateInfoARM<'a>
+{
+}
 impl<'a> DeviceQueueShaderCoreControlCreateInfoARM<'a> {
     #[inline]
     pub fn shader_core_count(mut self, shader_core_count: u32) -> Self {
@@ -58870,12 +58322,18 @@ impl ::core::default::Default for PhysicalDeviceSchedulingControlsFeaturesARM<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SCHEDULING_CONTROLS_FEATURES_ARM;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceSchedulingControlsFeaturesARM<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceSchedulingControlsFeaturesARM<'a>
+{
+}
 impl<'a> PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
     #[inline]
     pub fn scheduling_controls(mut self, scheduling_controls: bool) -> Self {
@@ -58907,11 +58365,14 @@ impl ::core::default::Default for PhysicalDeviceSchedulingControlsPropertiesARM<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SCHEDULING_CONTROLS_PROPERTIES_ARM;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSchedulingControlsPropertiesARM<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceSchedulingControlsPropertiesARM<'a>
+{
+}
 impl<'a> PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
     #[inline]
     pub fn scheduling_controls_flags(
@@ -58946,15 +58407,18 @@ impl ::core::default::Default for PhysicalDeviceRelaxedLineRasterizationFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RELAXED_LINE_RASTERIZATION_FEATURES_IMG;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a>
+{
+}
 impl<'a> PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
     #[inline]
     pub fn relaxed_line_rasterization(mut self, relaxed_line_rasterization: bool) -> Self {
@@ -58986,12 +58450,18 @@ impl ::core::default::Default for PhysicalDeviceRenderPassStripedFeaturesARM<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RENDER_PASS_STRIPED_FEATURES_ARM;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceRenderPassStripedFeaturesARM<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceRenderPassStripedFeaturesARM<'a>
+{
+}
 impl<'a> PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
     #[inline]
     pub fn render_pass_striped(mut self, render_pass_striped: bool) -> Self {
@@ -59025,11 +58495,14 @@ impl ::core::default::Default for PhysicalDeviceRenderPassStripedPropertiesARM<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RENDER_PASS_STRIPED_PROPERTIES_ARM;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceRenderPassStripedPropertiesARM<'a>
+{
+}
 impl<'a> PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
     #[inline]
     pub fn render_pass_stripe_granularity(
@@ -59069,7 +58542,7 @@ impl ::core::default::Default for RenderPassStripeInfoARM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassStripeInfoARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_STRIPE_INFO_ARM;
 }
 impl<'a> RenderPassStripeInfoARM<'a> {
@@ -59105,11 +58578,11 @@ impl ::core::default::Default for RenderPassStripeBeginInfoARM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassStripeBeginInfoARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeBeginInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_STRIPE_BEGIN_INFO_ARM;
 }
-unsafe impl ExtendsRenderingInfo for RenderPassStripeBeginInfoARM<'_> {}
-unsafe impl ExtendsRenderPassBeginInfo for RenderPassStripeBeginInfoARM<'_> {}
+unsafe impl<'a> Extends<'a, RenderingInfo<'a>> for RenderPassStripeBeginInfoARM<'a> {}
+unsafe impl<'a> Extends<'a, RenderPassBeginInfo<'a>> for RenderPassStripeBeginInfoARM<'a> {}
 impl<'a> RenderPassStripeBeginInfoARM<'a> {
     #[inline]
     pub fn stripe_infos(mut self, stripe_infos: &'a [RenderPassStripeInfoARM<'a>]) -> Self {
@@ -59144,10 +58617,10 @@ impl ::core::default::Default for RenderPassStripeSubmitInfoARM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassStripeSubmitInfoARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeSubmitInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_STRIPE_SUBMIT_INFO_ARM;
 }
-unsafe impl ExtendsCommandBufferSubmitInfo for RenderPassStripeSubmitInfoARM<'_> {}
+unsafe impl<'a> Extends<'a, CommandBufferSubmitInfo<'a>> for RenderPassStripeSubmitInfoARM<'a> {}
 impl<'a> RenderPassStripeSubmitInfoARM<'a> {
     #[inline]
     pub fn stripe_semaphore_infos(
@@ -59183,15 +58656,18 @@ impl ::core::default::Default for PhysicalDeviceShaderMaximalReconvergenceFeatur
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_MAXIMAL_RECONVERGENCE_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
     #[inline]
     pub fn shader_maximal_reconvergence(mut self, shader_maximal_reconvergence: bool) -> Self {
@@ -59225,12 +58701,18 @@ impl ::core::default::Default for PhysicalDeviceShaderSubgroupRotateFeaturesKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderSubgroupRotateFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupRotateFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SUBGROUP_ROTATE_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderSubgroupRotateFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderSubgroupRotateFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderSubgroupRotateFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderSubgroupRotateFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderSubgroupRotateFeaturesKHR<'a> {
     #[inline]
     pub fn shader_subgroup_rotate(mut self, shader_subgroup_rotate: bool) -> Self {
@@ -59270,12 +58752,18 @@ impl ::core::default::Default for PhysicalDeviceShaderExpectAssumeFeaturesKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderExpectAssumeFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderExpectAssumeFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_EXPECT_ASSUME_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderExpectAssumeFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderExpectAssumeFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderExpectAssumeFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderExpectAssumeFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderExpectAssumeFeaturesKHR<'a> {
     #[inline]
     pub fn shader_expect_assume(mut self, shader_expect_assume: bool) -> Self {
@@ -59307,12 +58795,18 @@ impl ::core::default::Default for PhysicalDeviceShaderFloatControls2FeaturesKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderFloatControls2FeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloatControls2FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_FLOAT_CONTROLS_2_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderFloatControls2FeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderFloatControls2FeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderFloatControls2FeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderFloatControls2FeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderFloatControls2FeaturesKHR<'a> {
     #[inline]
     pub fn shader_float_controls2(mut self, shader_float_controls2: bool) -> Self {
@@ -59344,15 +58838,18 @@ impl ::core::default::Default for PhysicalDeviceDynamicRenderingLocalReadFeature
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DYNAMIC_RENDERING_LOCAL_READ_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR<'a> {
     #[inline]
     pub fn dynamic_rendering_local_read(mut self, dynamic_rendering_local_read: bool) -> Self {
@@ -59386,11 +58883,17 @@ impl ::core::default::Default for RenderingAttachmentLocationInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderingAttachmentLocationInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentLocationInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_ATTACHMENT_LOCATION_INFO_KHR;
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo for RenderingAttachmentLocationInfoKHR<'_> {}
-unsafe impl ExtendsCommandBufferInheritanceInfo for RenderingAttachmentLocationInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>>
+    for RenderingAttachmentLocationInfoKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, CommandBufferInheritanceInfo<'a>>
+    for RenderingAttachmentLocationInfoKHR<'a>
+{
+}
 impl<'a> RenderingAttachmentLocationInfoKHR<'a> {
     #[inline]
     pub fn color_attachment_locations(mut self, color_attachment_locations: &'a [u32]) -> Self {
@@ -59429,11 +58932,17 @@ impl ::core::default::Default for RenderingInputAttachmentIndexInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderingInputAttachmentIndexInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderingInputAttachmentIndexInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_INPUT_ATTACHMENT_INDEX_INFO_KHR;
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo for RenderingInputAttachmentIndexInfoKHR<'_> {}
-unsafe impl ExtendsCommandBufferInheritanceInfo for RenderingInputAttachmentIndexInfoKHR<'_> {}
+unsafe impl<'a> Extends<'a, GraphicsPipelineCreateInfo<'a>>
+    for RenderingInputAttachmentIndexInfoKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, CommandBufferInheritanceInfo<'a>>
+    for RenderingInputAttachmentIndexInfoKHR<'a>
+{
+}
 impl<'a> RenderingInputAttachmentIndexInfoKHR<'a> {
     #[inline]
     pub fn color_attachment_input_indices(
@@ -59482,12 +58991,18 @@ impl ::core::default::Default for PhysicalDeviceShaderQuadControlFeaturesKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_QUAD_CONTROL_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderQuadControlFeaturesKHR<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderQuadControlFeaturesKHR<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
     #[inline]
     pub fn shader_quad_control(mut self, shader_quad_control: bool) -> Self {
@@ -59519,15 +59034,18 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat16VectorFeature
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
     #[inline]
     pub fn shader_float16_vector_atomics(mut self, shader_float16_vector_atomics: bool) -> Self {
@@ -59563,12 +59081,15 @@ impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAP_MEMORY_PLACED_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
     #[inline]
     pub fn memory_map_placed(mut self, memory_map_placed: bool) -> Self {
@@ -59610,11 +59131,14 @@ impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAP_MEMORY_PLACED_PROPERTIES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
     #[inline]
     pub fn min_placed_memory_map_alignment(
@@ -59649,10 +59173,10 @@ impl ::core::default::Default for MemoryMapPlacedInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryMapPlacedInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryMapPlacedInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_MAP_PLACED_INFO_EXT;
 }
-unsafe impl ExtendsMemoryMapInfoKHR for MemoryMapPlacedInfoEXT<'_> {}
+unsafe impl<'a> Extends<'a, MemoryMapInfoKHR<'a>> for MemoryMapPlacedInfoEXT<'a> {}
 impl<'a> MemoryMapPlacedInfoEXT<'a> {
     #[inline]
     pub fn placed_address(mut self, placed_address: *mut c_void) -> Self {
@@ -59684,12 +59208,15 @@ impl ::core::default::Default for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAW_ACCESS_CHAINS_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceRawAccessChainsFeaturesNV<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>> for PhysicalDeviceRawAccessChainsFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
     #[inline]
     pub fn shader_raw_access_chains(mut self, shader_raw_access_chains: bool) -> Self {
@@ -59721,15 +59248,18 @@ impl ::core::default::Default for PhysicalDeviceCommandBufferInheritanceFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COMMAND_BUFFER_INHERITANCE_FEATURES_NV;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a>
+{
+}
 impl<'a> PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
     #[inline]
     pub fn command_buffer_inheritance(mut self, command_buffer_inheritance: bool) -> Self {
@@ -59761,12 +59291,18 @@ impl ::core::default::Default for PhysicalDeviceImageAlignmentControlFeaturesMES
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_FEATURES_MESA;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {}
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceImageAlignmentControlFeaturesMESA<'a>
+{
+}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceImageAlignmentControlFeaturesMESA<'a>
+{
+}
 impl<'a> PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
     #[inline]
     pub fn image_alignment_control(mut self, image_alignment_control: bool) -> Self {
@@ -59798,12 +59334,12 @@ impl ::core::default::Default for PhysicalDeviceImageAlignmentControlPropertiesM
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_PROPERTIES_MESA;
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceProperties2<'a>>
+    for PhysicalDeviceImageAlignmentControlPropertiesMESA<'a>
 {
 }
 impl<'a> PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
@@ -59837,10 +59373,10 @@ impl ::core::default::Default for ImageAlignmentControlCreateInfoMESA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageAlignmentControlCreateInfoMESA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageAlignmentControlCreateInfoMESA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_ALIGNMENT_CONTROL_CREATE_INFO_MESA;
 }
-unsafe impl ExtendsImageCreateInfo for ImageAlignmentControlCreateInfoMESA<'_> {}
+unsafe impl<'a> Extends<'a, ImageCreateInfo<'a>> for ImageAlignmentControlCreateInfoMESA<'a> {}
 impl<'a> ImageAlignmentControlCreateInfoMESA<'a> {
     #[inline]
     pub fn maximum_requested_alignment(mut self, maximum_requested_alignment: u32) -> Self {
@@ -59872,15 +59408,18 @@ impl ::core::default::Default for PhysicalDeviceShaderReplicatedCompositesFeatur
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_REPLICATED_COMPOSITES_FEATURES_EXT;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'_>
+unsafe impl<'a> Extends<'a, PhysicalDeviceFeatures2<'a>>
+    for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'_> {}
+unsafe impl<'a> Extends<'a, DeviceCreateInfo<'a>>
+    for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a>
+{
+}
 impl<'a> PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
     #[inline]
     pub fn shader_replicated_composites(mut self, shader_replicated_composites: bool) -> Self {

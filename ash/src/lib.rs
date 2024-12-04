@@ -191,27 +191,3 @@ macro_rules! match_in_struct {
         }
     };
 }
-
-#[cfg(test)]
-mod tests {
-    use super::vk;
-    use alloc::vec::Vec;
-    #[test]
-    fn test_ptr_chains() {
-        let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::default();
-        let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::default();
-        let chain = alloc::vec![
-            <*mut _>::cast(&mut variable_pointers),
-            <*mut _>::cast(&mut corner),
-        ];
-        let mut device_create_info = vk::DeviceCreateInfo::default()
-            .push_next(&mut corner)
-            .push_next(&mut variable_pointers);
-        let chain2: Vec<*mut vk::BaseOutStructure<'_>> = unsafe {
-            vk::ptr_chain_iter(&mut device_create_info)
-                .skip(1)
-                .collect()
-        };
-        assert_eq!(chain, chain2);
-    }
-}

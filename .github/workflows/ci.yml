@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@1.69.0
+      - uses: dtolnay/rust-toolchain@1.75.0
       - name: Check ash, ash-window and ash-rewrite
         run: cargo check -p ash -p ash-rewrite -p ash-window --all-features
       - name: Check ash with no_std
