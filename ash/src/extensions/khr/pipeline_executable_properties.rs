@@ -2,54 +2,127 @@
 
 use crate::prelude::*;
 use crate::vk;
-use alloc::vec::Vec;
+use core::mem;
+use core::ptr;
 
 impl crate::khr::pipeline_executable_properties::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutableInternalRepresentationsKHR.html>
+    /// Retrieve the number of elements to pass to [`get_pipeline_executable_internal_representations()`][Self::get_pipeline_executable_internal_representations()]
     #[inline]
+    pub unsafe fn get_pipeline_executable_internal_representations_len(
+        &self,
+        executable_info: &vk::PipelineExecutableInfoKHR<'_>,
+    ) -> VkResult<usize> {
+        let mut count = mem::MaybeUninit::uninit();
+        (self.fp.get_pipeline_executable_internal_representations_khr)(
+            self.handle,
+            executable_info,
+            count.as_mut_ptr(),
+            ptr::null_mut(),
+        )
+        .assume_init_on_success(count)
+        .map(|c| c as usize)
+    }
+
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutableInternalRepresentationsKHR.html>
+    ///
+    /// Call [`get_pipeline_executable_internal_representations_len()`][Self::get_pipeline_executable_internal_representations_len()] to query the number of elements to pass to `out`.
+    /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
+    #[inline]
+    #[doc(alias = "vkGetPipelineExecutableInternalRepresentationsKHR")]
     pub unsafe fn get_pipeline_executable_internal_representations(
         &self,
         executable_info: &vk::PipelineExecutableInfoKHR<'_>,
-    ) -> VkResult<Vec<vk::PipelineExecutableInternalRepresentationKHR<'_>>> {
-        read_into_defaulted_vector(|count, data| {
-            (self.fp.get_pipeline_executable_internal_representations_khr)(
-                self.handle,
-                executable_info,
-                count,
-                data,
-            )
-        })
+        out: &mut [vk::PipelineExecutableInternalRepresentationKHR<'_>],
+    ) -> VkResult<()> {
+        let mut count = out.len() as u32;
+        (self.fp.get_pipeline_executable_internal_representations_khr)(
+            self.handle,
+            executable_info,
+            &mut count,
+            out.as_mut_ptr(),
+        )
+        .result()?;
+        assert_eq!(count as usize, out.len());
+        Ok(())
+    }
+
+    /// Retrieve the number of elements to pass to [`get_pipeline_executable_properties()`][Self::get_pipeline_executable_properties()]
+    #[inline]
+    pub unsafe fn get_pipeline_executable_properties_len(
+        &self,
+        pipeline_info: &vk::PipelineInfoKHR<'_>,
+    ) -> VkResult<usize> {
+        let mut count = mem::MaybeUninit::uninit();
+        (self.fp.get_pipeline_executable_properties_khr)(
+            self.handle,
+            pipeline_info,
+            count.as_mut_ptr(),
+            ptr::null_mut(),
+        )
+        .assume_init_on_success(count)
+        .map(|c| c as usize)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutablePropertiesKHR.html>
+    ///
+    /// Call [`get_pipeline_executable_properties_len()`][Self::get_pipeline_executable_properties_len()] to query the number of elements to pass to `out`.
+    /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
     #[inline]
+    #[doc(alias = "vkGetPipelineExecutablePropertiesKHR")]
     pub unsafe fn get_pipeline_executable_properties(
         &self,
         pipeline_info: &vk::PipelineInfoKHR<'_>,
-    ) -> VkResult<Vec<vk::PipelineExecutablePropertiesKHR<'_>>> {
-        read_into_defaulted_vector(|count, data| {
-            (self.fp.get_pipeline_executable_properties_khr)(
-                self.handle,
-                pipeline_info,
-                count,
-                data,
-            )
-        })
+        out: &mut [vk::PipelineExecutablePropertiesKHR<'_>],
+    ) -> VkResult<()> {
+        let mut count = out.len() as u32;
+        (self.fp.get_pipeline_executable_properties_khr)(
+            self.handle,
+            pipeline_info,
+            &mut count,
+            out.as_mut_ptr(),
+        )
+        .result()?;
+        assert_eq!(count as usize, out.len());
+        Ok(())
+    }
+
+    /// Retrieve the number of elements to pass to [`get_pipeline_executable_statistics()`][Self::get_pipeline_executable_statistics()]
+    #[inline]
+    pub unsafe fn get_pipeline_executable_statistics_len(
+        &self,
+        executable_info: &vk::PipelineExecutableInfoKHR<'_>,
+    ) -> VkResult<usize> {
+        let mut count = mem::MaybeUninit::uninit();
+        (self.fp.get_pipeline_executable_statistics_khr)(
+            self.handle,
+            executable_info,
+            count.as_mut_ptr(),
+            ptr::null_mut(),
+        )
+        .assume_init_on_success(count)
+        .map(|c| c as usize)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutableStatisticsKHR.html>
+    ///
+    /// Call [`get_pipeline_executable_statistics_len()`][Self::get_pipeline_executable_statistics_len()] to query the number of elements to pass to `out`.
+    /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
     #[inline]
+    #[doc(alias = "vkGetPipelineExecutableStatisticsKHR")]
     pub unsafe fn get_pipeline_executable_statistics(
         &self,
         executable_info: &vk::PipelineExecutableInfoKHR<'_>,
-    ) -> VkResult<Vec<vk::PipelineExecutableStatisticKHR<'_>>> {
-        read_into_defaulted_vector(|count, data| {
-            (self.fp.get_pipeline_executable_statistics_khr)(
-                self.handle,
-                executable_info,
-                count,
-                data,
-            )
-        })
+        out: &mut [vk::PipelineExecutableStatisticKHR<'_>],
+    ) -> VkResult<()> {
+        let mut count = out.len() as u32;
+        (self.fp.get_pipeline_executable_statistics_khr)(
+            self.handle,
+            executable_info,
+            &mut count,
+            out.as_mut_ptr(),
+        )
+        .result()?;
+        assert_eq!(count as usize, out.len());
+        Ok(())
     }
 }

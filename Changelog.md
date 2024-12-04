@@ -14,6 +14,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_EXT_metal_objects` device extension (#942)
 - Added `VK_AMD_anti_lag` device extension (#943)
 
+### Changed
+
+- Enable passing mutable arrays of `pNext`-initialized structs for these remaining extension functions: (#966)
+  - `VK_EXT_tooling_info`: `get_physical_device_tool_properties()`;
+  - `VK_KHR_cooperative_matrix`: `get_physical_device_cooperative_matrix_properties()`;
+  - `VK_KHR_pipeline_executable_properties`:
+    - `get_pipeline_executable_internal_representations()`;
+    - `get_pipeline_executable_properties()`;
+    - `get_pipeline_executable_statistics()`.
+  The expected length of this array can be queried with the respective `*_len()` variant of these functions.
+
 ## [0.38.0] - 2024-04-01
 
 With over two years of collecting breaking changes (since the `0.37.0` release in March 2022), April 2024 marks the next breaking release of `ash`.  This release introduces an overhaul of all Vulkan structures, restructures modules around extensions, and separates extension wrappers between `Instance` and `Device` functions.  The crate contains all bindings defined by the latest `1.3.281` Vulkan specification, and many old and new extensions have received a hand-written extension wrapper.  For a full overview of all individual changes, see the list at the end of this post.
