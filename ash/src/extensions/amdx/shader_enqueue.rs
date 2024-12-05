@@ -72,9 +72,16 @@ impl crate::amdx::shader_enqueue::Device {
     pub unsafe fn cmd_initialize_graph_scratch_memory(
         &self,
         command_buffer: vk::CommandBuffer,
+        execution_graph: vk::Pipeline,
         scratch: vk::DeviceAddress,
+        scratch_size: vk::DeviceSize,
     ) {
-        (self.fp.cmd_initialize_graph_scratch_memory_amdx)(command_buffer, scratch)
+        (self.fp.cmd_initialize_graph_scratch_memory_amdx)(
+            command_buffer,
+            execution_graph,
+            scratch,
+            scratch_size,
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchGraphAMDX.html>
@@ -83,9 +90,10 @@ impl crate::amdx::shader_enqueue::Device {
         &self,
         command_buffer: vk::CommandBuffer,
         scratch: vk::DeviceAddress,
+        scratch_size: vk::DeviceSize,
         count_info: &vk::DispatchGraphCountInfoAMDX,
     ) {
-        (self.fp.cmd_dispatch_graph_amdx)(command_buffer, scratch, count_info)
+        (self.fp.cmd_dispatch_graph_amdx)(command_buffer, scratch, scratch_size, count_info)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchGraphIndirectAMDX.html>
@@ -94,9 +102,15 @@ impl crate::amdx::shader_enqueue::Device {
         &self,
         command_buffer: vk::CommandBuffer,
         scratch: vk::DeviceAddress,
+        scratch_size: vk::DeviceSize,
         count_info: &vk::DispatchGraphCountInfoAMDX,
     ) {
-        (self.fp.cmd_dispatch_graph_indirect_amdx)(command_buffer, scratch, count_info)
+        (self.fp.cmd_dispatch_graph_indirect_amdx)(
+            command_buffer,
+            scratch,
+            scratch_size,
+            count_info,
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchGraphIndirectCountAMDX.html>
@@ -105,8 +119,14 @@ impl crate::amdx::shader_enqueue::Device {
         &self,
         command_buffer: vk::CommandBuffer,
         scratch: vk::DeviceAddress,
+        scratch_size: vk::DeviceSize,
         count_info: vk::DeviceAddress,
     ) {
-        (self.fp.cmd_dispatch_graph_indirect_count_amdx)(command_buffer, scratch, count_info)
+        (self.fp.cmd_dispatch_graph_indirect_count_amdx)(
+            command_buffer,
+            scratch,
+            scratch_size,
+            count_info,
+        )
     }
 }

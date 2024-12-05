@@ -118,7 +118,7 @@ impl Instance {
     pub unsafe fn enumerate_physical_device_groups_len(&self) -> VkResult<usize> {
         let mut group_count = mem::MaybeUninit::uninit();
         (self.instance_fn_1_1.enumerate_physical_device_groups)(
-            self.handle(),
+            self.handle,
             group_count.as_mut_ptr(),
             ptr::null_mut(),
         )
@@ -137,7 +137,7 @@ impl Instance {
     ) -> VkResult<()> {
         let mut count = out.len() as u32;
         (self.instance_fn_1_1.enumerate_physical_device_groups)(
-            self.handle(),
+            self.handle,
             &mut count,
             out.as_mut_ptr(),
         )
@@ -392,7 +392,7 @@ impl Instance {
         &self,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
-        (self.instance_fn_1_0.destroy_instance)(self.handle(), allocation_callbacks.as_raw_ptr());
+        (self.instance_fn_1_0.destroy_instance)(self.handle, allocation_callbacks.as_raw_ptr());
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFormatProperties.html>
@@ -495,7 +495,7 @@ impl Instance {
     #[inline]
     pub unsafe fn enumerate_physical_devices(&self) -> VkResult<Vec<vk::PhysicalDevice>> {
         read_into_uninitialized_vector(|count, data| {
-            (self.instance_fn_1_0.enumerate_physical_devices)(self.handle(), count, data)
+            (self.instance_fn_1_0.enumerate_physical_devices)(self.handle, count, data)
         })
     }
 
