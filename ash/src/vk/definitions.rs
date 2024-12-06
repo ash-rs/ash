@@ -1283,16 +1283,52 @@ impl<'a> DeviceQueueCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDeviceQueueCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsDeviceQueueCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsDeviceQueueCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsDeviceQueueCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -1377,16 +1413,46 @@ impl<'a> DeviceCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDeviceCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsDeviceCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsDeviceCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsDeviceCreateInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -1453,16 +1519,46 @@ impl<'a> InstanceCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsInstanceCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsInstanceCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsInstanceCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsInstanceCreateInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -1599,16 +1695,46 @@ impl<'a> MemoryAllocateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryAllocateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsMemoryAllocateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsMemoryAllocateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsMemoryAllocateInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -2003,16 +2129,46 @@ impl<'a> WriteDescriptorSet<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsWriteDescriptorSet + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsWriteDescriptorSet + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsWriteDescriptorSet + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsWriteDescriptorSet + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -2197,16 +2353,46 @@ impl<'a> BufferCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsBufferCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsBufferCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsBufferCreateInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -2274,16 +2460,52 @@ impl<'a> BufferViewCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferViewCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsBufferViewCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsBufferViewCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsBufferViewCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -2505,16 +2727,49 @@ impl<'a> BufferMemoryBarrier<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferMemoryBarrier + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsBufferMemoryBarrier + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsBufferMemoryBarrier + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsBufferMemoryBarrier + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -2603,16 +2858,46 @@ impl<'a> ImageMemoryBarrier<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageMemoryBarrier + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsImageMemoryBarrier + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsImageMemoryBarrier + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsImageMemoryBarrier + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -2732,16 +3017,46 @@ impl<'a> ImageCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsImageCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsImageCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsImageCreateInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -2855,16 +3170,49 @@ impl<'a> ImageViewCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageViewCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsImageViewCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsImageViewCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsImageViewCreateInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -3172,16 +3520,46 @@ impl<'a> BindSparseInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBindSparseInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsBindSparseInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsBindSparseInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsBindSparseInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -3471,16 +3849,52 @@ impl<'a> ShaderModuleCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsShaderModuleCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsShaderModuleCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsShaderModuleCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsShaderModuleCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -3586,19 +4000,55 @@ impl<'a> DescriptorSetLayoutCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDescriptorSetLayoutCreateInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsDescriptorSetLayoutCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsDescriptorSetLayoutCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsDescriptorSetLayoutCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -3676,19 +4126,52 @@ impl<'a> DescriptorPoolCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDescriptorPoolCreateInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsDescriptorPoolCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsDescriptorPoolCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsDescriptorPoolCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -3738,19 +4221,52 @@ impl<'a> DescriptorSetAllocateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDescriptorSetAllocateInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsDescriptorSetAllocateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsDescriptorSetAllocateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsDescriptorSetAllocateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -3893,19 +4409,55 @@ impl<'a> PipelineShaderStageCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineShaderStageCreateInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPipelineShaderStageCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPipelineShaderStageCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPipelineShaderStageCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -3973,19 +4525,52 @@ impl<'a> ComputePipelineCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsComputePipelineCreateInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsComputePipelineCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsComputePipelineCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsComputePipelineCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -4201,19 +4786,55 @@ impl<'a> PipelineVertexInputStateCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineVertexInputStateCreateInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPipelineVertexInputStateCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPipelineVertexInputStateCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPipelineVertexInputStateCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -4308,19 +4929,55 @@ impl<'a> PipelineTessellationStateCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineTessellationStateCreateInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPipelineTessellationStateCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPipelineTessellationStateCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPipelineTessellationStateCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -4390,19 +5047,55 @@ impl<'a> PipelineViewportStateCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineViewportStateCreateInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPipelineViewportStateCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPipelineViewportStateCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPipelineViewportStateCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -4512,19 +5205,55 @@ impl<'a> PipelineRasterizationStateCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineRasterizationStateCreateInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPipelineRasterizationStateCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPipelineRasterizationStateCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPipelineRasterizationStateCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -4615,19 +5344,55 @@ impl<'a> PipelineMultisampleStateCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineMultisampleStateCreateInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPipelineMultisampleStateCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPipelineMultisampleStateCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPipelineMultisampleStateCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -4755,19 +5520,55 @@ impl<'a> PipelineColorBlendStateCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineColorBlendStateCreateInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPipelineColorBlendStateCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPipelineColorBlendStateCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPipelineColorBlendStateCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -5131,19 +5932,52 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsGraphicsPipelineCreateInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsGraphicsPipelineCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsGraphicsPipelineCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsGraphicsPipelineCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -5811,16 +6645,46 @@ impl<'a> SamplerCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSamplerCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsSamplerCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsSamplerCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsSamplerCreateInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -5984,19 +6848,55 @@ impl<'a> CommandBufferInheritanceInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCommandBufferInheritanceInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsCommandBufferInheritanceInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsCommandBufferInheritanceInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsCommandBufferInheritanceInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -6046,16 +6946,52 @@ impl<'a> CommandBufferBeginInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCommandBufferBeginInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsCommandBufferBeginInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsCommandBufferBeginInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsCommandBufferBeginInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -6132,16 +7068,49 @@ impl<'a> RenderPassBeginInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRenderPassBeginInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsRenderPassBeginInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsRenderPassBeginInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsRenderPassBeginInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -6512,16 +7481,52 @@ impl<'a> RenderPassCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRenderPassCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsRenderPassCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsRenderPassCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsRenderPassCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -6561,16 +7566,46 @@ impl<'a> EventCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsEventCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsEventCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsEventCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsEventCreateInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -6610,16 +7645,46 @@ impl<'a> FenceCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsFenceCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsFenceCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsFenceCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsFenceCreateInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -7974,16 +9039,49 @@ impl<'a> SemaphoreCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSemaphoreCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsSemaphoreCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsSemaphoreCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsSemaphoreCreateInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -8044,16 +9142,49 @@ impl<'a> QueryPoolCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsQueryPoolCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsQueryPoolCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsQueryPoolCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsQueryPoolCreateInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -8136,16 +9267,52 @@ impl<'a> FramebufferCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsFramebufferCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsFramebufferCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsFramebufferCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsFramebufferCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -8363,16 +9530,46 @@ impl<'a> SubmitInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubmitInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsSubmitInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsSubmitInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsSubmitInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -9434,16 +10631,52 @@ impl<'a> SwapchainCreateInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSwapchainCreateInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsSwapchainCreateInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsSwapchainCreateInfoKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsSwapchainCreateInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -9512,16 +10745,46 @@ impl<'a> PresentInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPresentInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPresentInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPresentInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPresentInfoKHR + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -11393,19 +12656,52 @@ impl<'a> PhysicalDeviceFeatures2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceFeatures2 + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPhysicalDeviceFeatures2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPhysicalDeviceFeatures2 + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPhysicalDeviceFeatures2 + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -11445,19 +12741,52 @@ impl<'a> PhysicalDeviceProperties2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceProperties2 + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPhysicalDeviceProperties2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPhysicalDeviceProperties2 + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPhysicalDeviceProperties2 + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -11497,16 +12826,46 @@ impl<'a> FormatProperties2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsFormatProperties2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsFormatProperties2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsFormatProperties2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsFormatProperties2 + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -11549,16 +12908,52 @@ impl<'a> ImageFormatProperties2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageFormatProperties2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsImageFormatProperties2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsImageFormatProperties2 + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsImageFormatProperties2 + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -11626,19 +13021,55 @@ impl<'a> PhysicalDeviceImageFormatInfo2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceImageFormatInfo2 + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPhysicalDeviceImageFormatInfo2 + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPhysicalDeviceImageFormatInfo2 + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPhysicalDeviceImageFormatInfo2 + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -11681,16 +13112,52 @@ impl<'a> QueueFamilyProperties2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsQueueFamilyProperties2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsQueueFamilyProperties2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsQueueFamilyProperties2 + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsQueueFamilyProperties2 + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -11730,19 +13197,55 @@ impl<'a> PhysicalDeviceMemoryProperties2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceMemoryProperties2 + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPhysicalDeviceMemoryProperties2 + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPhysicalDeviceMemoryProperties2 + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPhysicalDeviceMemoryProperties2 + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -12291,19 +13794,55 @@ impl<'a> PhysicalDeviceExternalBufferInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceExternalBufferInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPhysicalDeviceExternalBufferInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPhysicalDeviceExternalBufferInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPhysicalDeviceExternalBufferInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -13028,19 +14567,55 @@ impl<'a> PhysicalDeviceExternalSemaphoreInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceExternalSemaphoreInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPhysicalDeviceExternalSemaphoreInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPhysicalDeviceExternalSemaphoreInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPhysicalDeviceExternalSemaphoreInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -14451,16 +16026,52 @@ impl<'a> BindBufferMemoryInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBindBufferMemoryInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsBindBufferMemoryInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsBindBufferMemoryInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsBindBufferMemoryInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -14552,16 +16163,49 @@ impl<'a> BindImageMemoryInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBindImageMemoryInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsBindImageMemoryInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsBindImageMemoryInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsBindImageMemoryInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -16141,19 +17785,55 @@ impl<'a> PhysicalDeviceSurfaceInfo2KHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceSurfaceInfo2KHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPhysicalDeviceSurfaceInfo2KHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPhysicalDeviceSurfaceInfo2KHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPhysicalDeviceSurfaceInfo2KHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -16193,19 +17873,52 @@ impl<'a> SurfaceCapabilities2KHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSurfaceCapabilities2KHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsSurfaceCapabilities2KHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsSurfaceCapabilities2KHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsSurfaceCapabilities2KHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -16245,16 +17958,46 @@ impl<'a> SurfaceFormat2KHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSurfaceFormat2KHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsSurfaceFormat2KHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsSurfaceFormat2KHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsSurfaceFormat2KHR + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -16740,19 +18483,55 @@ impl<'a> ImageMemoryRequirementsInfo2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageMemoryRequirementsInfo2 + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsImageMemoryRequirementsInfo2 + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsImageMemoryRequirementsInfo2 + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsImageMemoryRequirementsInfo2 + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -16867,16 +18646,49 @@ impl<'a> MemoryRequirements2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryRequirements2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsMemoryRequirements2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsMemoryRequirements2 + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsMemoryRequirements2 + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -17276,19 +19088,55 @@ impl<'a> SamplerYcbcrConversionCreateInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSamplerYcbcrConversionCreateInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsSamplerYcbcrConversionCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsSamplerYcbcrConversionCreateInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsSamplerYcbcrConversionCreateInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -19378,19 +21226,55 @@ impl<'a> PhysicalDeviceLayeredApiPropertiesKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceLayeredApiPropertiesKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPhysicalDeviceLayeredApiPropertiesKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPhysicalDeviceLayeredApiPropertiesKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPhysicalDeviceLayeredApiPropertiesKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -19527,19 +21411,52 @@ impl<'a> DescriptorSetLayoutSupport<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDescriptorSetLayoutSupport + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsDescriptorSetLayoutSupport + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsDescriptorSetLayoutSupport + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsDescriptorSetLayoutSupport + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -20575,19 +22492,55 @@ impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDebugUtilsMessengerCallbackDataEXT + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsDebugUtilsMessengerCallbackDataEXT + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsDebugUtilsMessengerCallbackDataEXT + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsDebugUtilsMessengerCallbackDataEXT + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -21997,16 +23950,52 @@ impl<'a> AttachmentDescription2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAttachmentDescription2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsAttachmentDescription2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsAttachmentDescription2 + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsAttachmentDescription2 + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -22060,16 +24049,52 @@ impl<'a> AttachmentReference2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAttachmentReference2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsAttachmentReference2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsAttachmentReference2 + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsAttachmentReference2 + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -22174,16 +24199,49 @@ impl<'a> SubpassDescription2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubpassDescription2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsSubpassDescription2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsSubpassDescription2 + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsSubpassDescription2 + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -22272,16 +24330,46 @@ impl<'a> SubpassDependency2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubpassDependency2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsSubpassDependency2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsSubpassDependency2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsSubpassDependency2 + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -22361,16 +24449,52 @@ impl<'a> RenderPassCreateInfo2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRenderPassCreateInfo2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsRenderPassCreateInfo2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsRenderPassCreateInfo2 + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsRenderPassCreateInfo2 + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -22437,16 +24561,46 @@ impl<'a> SubpassEndInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubpassEndInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsSubpassEndInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsSubpassEndInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsSubpassEndInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -23036,19 +25190,55 @@ impl<'a> AndroidHardwareBufferPropertiesANDROID<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAndroidHardwareBufferPropertiesANDROID + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsAndroidHardwareBufferPropertiesANDROID + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsAndroidHardwareBufferPropertiesANDROID + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsAndroidHardwareBufferPropertiesANDROID + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -25893,19 +28083,55 @@ impl<'a> RayTracingPipelineCreateInfoNV<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRayTracingPipelineCreateInfoNV + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsRayTracingPipelineCreateInfoNV + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsRayTracingPipelineCreateInfoNV + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsRayTracingPipelineCreateInfoNV + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -26020,19 +28246,55 @@ impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRayTracingPipelineCreateInfoKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsRayTracingPipelineCreateInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsRayTracingPipelineCreateInfoKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsRayTracingPipelineCreateInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -26366,19 +28628,55 @@ impl<'a> AccelerationStructureCreateInfoNV<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureCreateInfoNV + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsAccelerationStructureCreateInfoNV + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsAccelerationStructureCreateInfoNV + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsAccelerationStructureCreateInfoNV + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -34408,19 +36706,55 @@ impl<'a> AccelerationStructureGeometryTrianglesDataKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureGeometryTrianglesDataKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsAccelerationStructureGeometryTrianglesDataKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsAccelerationStructureGeometryTrianglesDataKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsAccelerationStructureGeometryTrianglesDataKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -34825,19 +37159,55 @@ impl<'a> AccelerationStructureCreateInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureCreateInfoKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsAccelerationStructureCreateInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsAccelerationStructureCreateInfoKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsAccelerationStructureCreateInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -36633,19 +39003,55 @@ impl<'a> PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceClusterCullingShaderFeaturesHUAWEI + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPhysicalDeviceClusterCullingShaderFeaturesHUAWEI + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPhysicalDeviceClusterCullingShaderFeaturesHUAWEI + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPhysicalDeviceClusterCullingShaderFeaturesHUAWEI + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -36855,16 +39261,46 @@ impl<'a> ImageBlit2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageBlit2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsImageBlit2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsImageBlit2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsImageBlit2 + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -36939,16 +39375,46 @@ impl<'a> BufferImageCopy2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferImageCopy2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsBufferImageCopy2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsBufferImageCopy2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsBufferImageCopy2 + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -37204,16 +39670,46 @@ impl<'a> BlitImageInfo2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBlitImageInfo2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsBlitImageInfo2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsBlitImageInfo2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsBlitImageInfo2 + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -38781,19 +41277,55 @@ impl<'a> GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsGeneratedCommandsMemoryRequirementsInfoEXT + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsGeneratedCommandsMemoryRequirementsInfoEXT + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsGeneratedCommandsMemoryRequirementsInfoEXT + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsGeneratedCommandsMemoryRequirementsInfoEXT + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -39110,19 +41642,52 @@ impl<'a> GeneratedCommandsInfoEXT<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsGeneratedCommandsInfoEXT + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsGeneratedCommandsInfoEXT + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsGeneratedCommandsInfoEXT + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsGeneratedCommandsInfoEXT + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -39275,19 +41840,55 @@ impl<'a> IndirectCommandsLayoutCreateInfoEXT<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsIndirectCommandsLayoutCreateInfoEXT + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsIndirectCommandsLayoutCreateInfoEXT + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsIndirectCommandsLayoutCreateInfoEXT + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsIndirectCommandsLayoutCreateInfoEXT + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -40097,16 +42698,49 @@ impl<'a> ImageMemoryBarrier2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageMemoryBarrier2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsImageMemoryBarrier2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsImageMemoryBarrier2 + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsImageMemoryBarrier2 + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -40202,16 +42836,52 @@ impl<'a> BufferMemoryBarrier2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferMemoryBarrier2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsBufferMemoryBarrier2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsBufferMemoryBarrier2 + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsBufferMemoryBarrier2 + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -40383,19 +43053,52 @@ impl<'a> CommandBufferSubmitInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCommandBufferSubmitInfo + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsCommandBufferSubmitInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsCommandBufferSubmitInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsCommandBufferSubmitInfo + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -40474,16 +43177,46 @@ impl<'a> SubmitInfo2<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubmitInfo2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsSubmitInfo2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsSubmitInfo2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsSubmitInfo2 + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -41586,19 +44319,55 @@ impl<'a> PhysicalDeviceVideoFormatInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceVideoFormatInfoKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPhysicalDeviceVideoFormatInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPhysicalDeviceVideoFormatInfoKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPhysicalDeviceVideoFormatInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -41735,16 +44504,49 @@ impl<'a> VideoProfileInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoProfileInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsVideoProfileInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsVideoProfileInfoKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsVideoProfileInfoKHR + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -41846,16 +44648,52 @@ impl<'a> VideoCapabilitiesKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoCapabilitiesKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsVideoCapabilitiesKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsVideoCapabilitiesKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsVideoCapabilitiesKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -42056,19 +44894,52 @@ impl<'a> VideoReferenceSlotInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoReferenceSlotInfoKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsVideoReferenceSlotInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsVideoReferenceSlotInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsVideoReferenceSlotInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -42230,16 +45101,46 @@ impl<'a> VideoDecodeInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoDecodeInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsVideoDecodeInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsVideoDecodeInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsVideoDecodeInfoKHR + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -43205,19 +46106,52 @@ impl<'a> VideoSessionCreateInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoSessionCreateInfoKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsVideoSessionCreateInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsVideoSessionCreateInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsVideoSessionCreateInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -43274,19 +46208,55 @@ impl<'a> VideoSessionParametersCreateInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoSessionParametersCreateInfoKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsVideoSessionParametersCreateInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsVideoSessionParametersCreateInfoKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsVideoSessionParametersCreateInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -43326,19 +46296,55 @@ impl<'a> VideoSessionParametersUpdateInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoSessionParametersUpdateInfoKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsVideoSessionParametersUpdateInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsVideoSessionParametersUpdateInfoKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsVideoSessionParametersUpdateInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -43382,19 +46388,55 @@ impl<'a> VideoEncodeSessionParametersGetInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoEncodeSessionParametersGetInfoKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsVideoEncodeSessionParametersGetInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsVideoEncodeSessionParametersGetInfoKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsVideoEncodeSessionParametersGetInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -43435,19 +46477,55 @@ impl<'a> VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoEncodeSessionParametersFeedbackInfoKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsVideoEncodeSessionParametersFeedbackInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsVideoEncodeSessionParametersFeedbackInfoKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsVideoEncodeSessionParametersFeedbackInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -43514,19 +46592,52 @@ impl<'a> VideoBeginCodingInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoBeginCodingInfoKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsVideoBeginCodingInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsVideoBeginCodingInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsVideoBeginCodingInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -43600,19 +46711,52 @@ impl<'a> VideoCodingControlInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoCodingControlInfoKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsVideoCodingControlInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsVideoCodingControlInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsVideoCodingControlInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -43763,16 +46907,46 @@ impl<'a> VideoEncodeInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoEncodeInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsVideoEncodeInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsVideoEncodeInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsVideoEncodeInfoKHR + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -43942,19 +47116,55 @@ impl<'a> VideoEncodeQualityLevelPropertiesKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoEncodeQualityLevelPropertiesKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsVideoEncodeQualityLevelPropertiesKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsVideoEncodeQualityLevelPropertiesKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsVideoEncodeQualityLevelPropertiesKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -44088,19 +47298,55 @@ impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoEncodeRateControlLayerInfoKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsVideoEncodeRateControlLayerInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsVideoEncodeRateControlLayerInfoKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsVideoEncodeRateControlLayerInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -47068,19 +50314,55 @@ impl<'a> DescriptorBufferBindingInfoEXT<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDescriptorBufferBindingInfoEXT + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsDescriptorBufferBindingInfoEXT + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsDescriptorBufferBindingInfoEXT + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsDescriptorBufferBindingInfoEXT + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -49502,16 +52784,46 @@ impl<'a> RenderingInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRenderingInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsRenderingInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsRenderingInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsRenderingInfo + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -51026,16 +54338,52 @@ impl<'a> SubresourceLayout2KHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubresourceLayout2KHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsSubresourceLayout2KHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsSubresourceLayout2KHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsSubresourceLayout2KHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -52452,19 +55800,52 @@ impl<'a> ExportMetalObjectsInfoEXT<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsExportMetalObjectsInfoEXT + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsExportMetalObjectsInfoEXT + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsExportMetalObjectsInfoEXT + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsExportMetalObjectsInfoEXT + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -53894,19 +57275,55 @@ impl<'a> OpticalFlowSessionCreateInfoNV<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsOpticalFlowSessionCreateInfoNV + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsOpticalFlowSessionCreateInfoNV + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsOpticalFlowSessionCreateInfoNV + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsOpticalFlowSessionCreateInfoNV + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -54436,16 +57853,46 @@ impl<'a> DepthBiasInfoEXT<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDepthBiasInfoEXT + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsDepthBiasInfoEXT + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsDepthBiasInfoEXT + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsDepthBiasInfoEXT + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -55873,16 +59320,46 @@ impl<'a> MemoryMapInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryMapInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsMemoryMapInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsMemoryMapInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsMemoryMapInfoKHR + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -56115,16 +59592,49 @@ impl<'a> ShaderCreateInfoEXT<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsShaderCreateInfoEXT + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsShaderCreateInfoEXT + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsShaderCreateInfoEXT + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsShaderCreateInfoEXT + ?Sized>(self, next: &'a mut T) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -56328,19 +59838,52 @@ impl<'a> ScreenBufferPropertiesQNX<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsScreenBufferPropertiesQNX + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsScreenBufferPropertiesQNX + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsScreenBufferPropertiesQNX + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsScreenBufferPropertiesQNX + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -56882,19 +60425,55 @@ impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsExecutionGraphPipelineCreateInfoAMDX + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsExecutionGraphPipelineCreateInfoAMDX + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsExecutionGraphPipelineCreateInfoAMDX + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsExecutionGraphPipelineCreateInfoAMDX + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -57296,19 +60875,52 @@ impl<'a> BindDescriptorSetsInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBindDescriptorSetsInfoKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsBindDescriptorSetsInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsBindDescriptorSetsInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsBindDescriptorSetsInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -57372,16 +60984,52 @@ impl<'a> PushConstantsInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPushConstantsInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPushConstantsInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPushConstantsInfoKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPushConstantsInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -57445,19 +61093,52 @@ impl<'a> PushDescriptorSetInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPushDescriptorSetInfoKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPushDescriptorSetInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPushDescriptorSetInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPushDescriptorSetInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -57521,19 +61202,55 @@ impl<'a> PushDescriptorSetWithTemplateInfoKHR<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPushDescriptorSetWithTemplateInfoKHR + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsPushDescriptorSetWithTemplateInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsPushDescriptorSetWithTemplateInfoKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsPushDescriptorSetWithTemplateInfoKHR + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -57605,19 +61322,55 @@ impl<'a> SetDescriptorBufferOffsetsInfoEXT<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSetDescriptorBufferOffsetsInfoEXT + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsSetDescriptorBufferOffsetsInfoEXT + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsSetDescriptorBufferOffsetsInfoEXT + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsSetDescriptorBufferOffsetsInfoEXT + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]
@@ -57672,19 +61425,55 @@ impl<'a> BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
     #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
     #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBindDescriptorBufferEmbeddedSamplersInfoEXT + ?Sized>(
+    #[doc = r""]
+    #[doc = r" # Panics"]
+    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
+    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
+    pub fn push<T: ExtendsBindDescriptorBufferEmbeddedSamplersInfoEXT + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
         self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
+    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
+    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
+    #[doc = r" [`BaseOutStructure`] layout."]
+    #[doc = r""]
+    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
+    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
+    #[doc = r" `self.p_next`."]
+    pub unsafe fn extend<T: ExtendsBindDescriptorBufferEmbeddedSamplersInfoEXT + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = self.p_next as _;
+        self.p_next = <*mut T>::cast(next);
+        self
+    }
+    #[doc(hidden)]
+    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+    pub unsafe fn push_next<T: ExtendsBindDescriptorBufferEmbeddedSamplersInfoEXT + ?Sized>(
+        self,
+        next: &'a mut T,
+    ) -> Self {
+        self.extend(next)
     }
 }
 #[repr(C)]

@@ -2320,34 +2320,61 @@ fn derive_getters_and_setters(
     let next_function = if let Some(next_member) = root_struct_next_field {
         let next_field = &next_member.vkxml_field;
         assert_eq!(next_field.basetype, "void");
-        let mutability = if next_field.is_const {
-            quote!(const)
-        } else {
-            quote!(mut)
-        };
         quote! {
             /// Prepends the given extension struct between the root and the first pointer. This
             /// method only exists on structs that can be passed to a function directly. Only
             /// valid extension structs can be pushed into the chain.
-            /// If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the
+            /// If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the
             /// chain will look like `A -> D -> B -> C`.
-            pub fn push_next<T: #extends_name + ?Sized>(mut self, next: &'a mut T) -> Self {
-                unsafe {
-                    let next_ptr = <*#mutability T>::cast(next);
-                    // `next` here can contain a pointer chain. This means that we must correctly
-                    // attach he head to the root and the tail to the rest of the chain
-                    // For example:
-                    //
-                    // next = A -> B
-                    // Before: `Root -> C -> D -> E`
-                    // After: `Root -> A -> B -> C -> D -> E`
-                    //                 ^^^^^^
-                    //                 next chain
-                    let last_next = ptr_chain_iter(next).last().unwrap();
-                    (*last_next).p_next = self.p_next as _;
-                    self.p_next = next_ptr;
-                }
+            ///
+            /// # Panics
+            /// If `next` contains a pointer chain of its own, this function will panic.  Call
+            /// `unsafe` [`Self::extend()`] to insert this chain instead.
+            pub fn push<T: #extends_name + ?Sized>(mut self, next: &'a mut T) -> Self {
+                // SAFETY: All implementors of T are required to have the `BaseOutStructure` layout
+                let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
+                // `next` here can contain a pointer chain.  This function refuses to insert the struct,
+                // in favour of calling unsafe extend().
+                assert!(next_base.p_next.is_null(), "push() expects a struct without an existing p_next pointer chain (equal to NULL)");
+                next_base.p_next = self.p_next as _;
+                self.p_next = <*mut T>::cast(next);
                 self
+            }
+
+            /// Prepends the given extension struct between the root and the first pointer. This
+            /// method only exists on structs that can be passed to a function directly. Only
+            /// valid extension structs can be pushed into the chain.
+            /// If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,
+            /// then the chain will look like `A -> D -> E -> B -> C`.
+            ///
+            /// # Safety
+            /// This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring
+            /// all non-`NULL` pointers to point to a valid Vulkan structure starting with the
+            /// [`BaseOutStructure`] layout.
+            ///
+            /// The last struct in this chain (i.e. the one where `p_next` is `NULL`) must
+            /// be writable memory, as its `p_next` field will be updated with the value of
+            /// `self.p_next`.
+            pub unsafe fn extend<T: #extends_name + ?Sized>(mut self, next: &'a mut T) -> Self {
+                // `next` here can contain a pointer chain. This means that we must correctly
+                // attach he head to the root and the tail to the rest of the chain
+                // For example:
+                //
+                // next = A -> B
+                // Before: `Root -> C -> D -> E`
+                // After: `Root -> A -> B -> C -> D -> E`
+                //                 ^^^^^^
+                //                 next chain
+                let last_next = ptr_chain_iter(next).last().unwrap();
+                (*last_next).p_next = self.p_next as _;
+                self.p_next = <*mut T>::cast(next);
+                self
+            }
+
+            #[doc(hidden)]
+            #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
+            pub unsafe fn push_next<T: #extends_name + ?Sized>(self, next: &'a mut T) -> Self {
+                self.extend(next)
             }
         }
     } else {

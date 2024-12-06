@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added `push()` method to all root structs to insert a single extension-struct in the pointer chain. (#909)
 - Update Vulkan-Headers to 1.3.296 (#910)
 - Added `VK_KHR_get_display_properties2` instance extension (#932)
 - Added `VK_EXT_metal_objects` device extension (#942)
@@ -24,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `get_pipeline_executable_properties()`;
     - `get_pipeline_executable_statistics()`.
   The expected length of this array can be queried with the respective `*_len()` variant of these functions.
+- `push_next()` has been renamed to `extend()` and marked as `unsafe`. Users are encouraged to call `push()` for singular structs instead. (#909)
 
 ## [0.38.0] - 2024-04-01
 
