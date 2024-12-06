@@ -214,4 +214,18 @@ mod tests {
         };
         assert_eq!(chain, chain2);
     }
+    #[test]
+    fn test_dynamic_add_to_ptr_chain() {
+        let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::default();
+        let variable_pointers: &mut dyn vk::Extends<vk::DeviceCreateInfo<'_>> =
+            &mut variable_pointers;
+        let chain = alloc::vec![<*mut _>::cast(variable_pointers)];
+        let mut device_create_info = vk::DeviceCreateInfo::default().push(variable_pointers);
+        let chain2: Vec<*mut vk::BaseOutStructure<'_>> = unsafe {
+            vk::ptr_chain_iter(&mut device_create_info)
+                .skip(1)
+                .collect()
+        };
+        assert_eq!(chain, chain2);
+    }
 }
