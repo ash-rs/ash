@@ -1,12 +1,14 @@
 #![allow(clippy::needless_lifetimes)]
-use crate::vk::aliases::*;
-use crate::vk::bitflags::*;
-use crate::vk::constants::*;
-use crate::vk::enums::*;
-use crate::vk::native::*;
-use crate::vk::platform_types::*;
-use crate::vk::prelude::*;
-use crate::vk::{ptr_chain_iter, Handle};
+use super::aliases::*;
+use super::bitflags::*;
+use super::constants::*;
+use super::enums::*;
+use super::native::*;
+use super::platform_types::*;
+use super::{
+    ptr_chain_iter, wrap_c_str_slice_until_nul, write_c_str_slice_with_nul,
+    CStrTooLargeForStaticArray, Handle, Packed24_8, TaggedStructure,
+};
 use core::ffi::*;
 use core::fmt;
 use core::marker::PhantomData;

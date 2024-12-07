@@ -1,7 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMD_shader_info.html>
 
-use crate::prelude::*;
+use crate::read_into_uninitialized_vector;
 use crate::vk;
+use crate::VkResult;
 use alloc::vec::Vec;
 use core::mem;
 use core::mem::size_of_val; // TODO: Remove when bumping MSRV to 1.80

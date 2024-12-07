@@ -1,9 +1,10 @@
-use crate::instance::Instance;
+use super::Instance;
 #[cfg(doc)]
 use crate::khr;
-use crate::prelude::*;
+use crate::read_into_uninitialized_vector;
 use crate::vk;
 use crate::RawPtr;
+use crate::VkResult;
 use alloc::vec::Vec;
 use core::ffi;
 use core::fmt;

@@ -1,8 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_win32_surface.html>
 
-use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
+use crate::VkResult;
 use core::mem;
 
 impl crate::khr::win32_surface::Instance {

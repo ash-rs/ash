@@ -1,8 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_deferred_host_operations.html>
 
-use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
+use crate::VkResult;
 use core::mem;
 
 impl crate::khr::deferred_host_operations::Device {

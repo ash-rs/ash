@@ -1,5 +1,5 @@
-use crate::vk::bitflags::*;
-use crate::vk::enums::*;
+use super::bitflags::*;
+use super::enums::*;
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl BufferCreateFlags {
     #[doc = "Buffer requires protected memory"]
