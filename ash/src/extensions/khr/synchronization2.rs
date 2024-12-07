@@ -1,7 +1,7 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_synchronization2.html>
 
-use crate::prelude::*;
 use crate::vk;
+use crate::VkResult;
 
 impl crate::khr::synchronization2::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPipelineBarrier2KHR.html>

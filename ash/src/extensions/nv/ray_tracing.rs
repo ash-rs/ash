@@ -1,8 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_ray_tracing.html>
 
-use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
+use crate::VkResult;
 use alloc::vec::Vec;
 use core::mem;
 use core::mem::size_of_val; // TODO: Remove when bumping MSRV to 1.80

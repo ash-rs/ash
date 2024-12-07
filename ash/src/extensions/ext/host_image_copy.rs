@@ -1,7 +1,7 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_host_image_copy.html>
 
-use crate::prelude::*;
 use crate::vk;
+use crate::VkResult;
 #[cfg(doc)]
 use crate::{ext, khr};
 

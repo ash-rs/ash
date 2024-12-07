@@ -1,6 +1,6 @@
-use crate::vk::bitflags::*;
-use crate::vk::definitions::*;
-use crate::vk::enums::*;
+use super::bitflags::*;
+use super::definitions::*;
+use super::enums::*;
 pub type GeometryFlagsNV = GeometryFlagsKHR;
 pub type GeometryInstanceFlagsNV = GeometryInstanceFlagsKHR;
 pub type BuildAccelerationStructureFlagsNV = BuildAccelerationStructureFlagsKHR;
