@@ -1179,8 +1179,9 @@ impl ConstantExt for ExtensionConstant<'_> {
     }
 }
 
+/// Generates constants for `<extension>` or `<feature>` children
 pub fn generate_extension_constants<'a>(
-    extension_name: &str,
+    extension_name: &'a str,
     extension_number: i64,
     extension_items: &'a [vk_parse::ExtensionChild],
     const_cache: &mut HashSet<&'a str>,
@@ -1268,13 +1269,13 @@ pub struct ExtensionCommands<'a> {
 }
 
 pub fn generate_extension_commands<'a>(
-    full_extension_name: &'a str,
-    items: &'a [vk_parse::ExtensionChild],
+    extension: &'a vk_parse::Extension,
     cmd_map: &CommandMap<'a>,
     cmd_aliases: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
     has_lifetimes: &HashSet<Ident>,
 ) -> ExtensionCommands<'a> {
+    let full_extension_name = &extension.name;
     let byte_name_ident = Literal::byte_string(format!("{full_extension_name}\0").as_bytes());
 
     let extension_name = full_extension_name.strip_prefix("VK_").unwrap();
@@ -1287,7 +1288,8 @@ pub fn generate_extension_commands<'a>(
 
     let name_ident = format_ident!("{}_NAME", extension_name.to_uppercase());
     let spec_version_ident = format_ident!("{}_SPEC_VERSION", extension_name.to_uppercase());
-    let spec_version = items
+    let spec_version = extension
+        .children
         .iter()
         .filter_map(get_variant!(vk_parse::ExtensionChild::Require { items }))
         .flatten()
@@ -1306,7 +1308,8 @@ pub fn generate_extension_commands<'a>(
     let mut device_commands = Vec::new();
 
     let mut rename_commands = HashMap::new();
-    let names = items
+    let names = extension
+        .children
         .iter()
         .filter_map(get_variant!(vk_parse::ExtensionChild::Require {
             api,
@@ -1431,6 +1434,10 @@ pub fn generate_extension_commands<'a>(
     let (raw_instance_fp, hl_instance_fp) =
         instance_fp.map_or((None, None), |(a, b)| (Some(a), Some(b)));
 
+    let provisional = extension
+        .provisional
+        .then(|| quote!(#[cfg(feature = "provisional")]));
+
     ExtensionCommands {
         vendor,
         raw: quote! {
@@ -1443,6 +1450,7 @@ pub fn generate_extension_commands<'a>(
         },
         high_level: quote! {
             #[doc = #full_extension_name]
+            #provisional
             pub mod #extension_ident {
                 use super::super::*; // Use global imports (i.e. Vulkan structs and enums) from the root module defined by this file
 
@@ -3297,7 +3305,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .map(|ext| {
             generate_extension_constants(
                 &ext.name,
-                ext.number.unwrap_or(0),
+                ext.number.unwrap(),
                 &ext.children,
                 &mut const_cache,
                 &mut const_values,
@@ -3309,8 +3317,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let mut extension_cmds = Vec::<TokenStream>::new();
     for ext in extensions.iter() {
         let cmds = generate_extension_commands(
-            &ext.name,
-            &ext.children,
+            ext,
             &commands,
             &cmd_aliases,
             &mut fn_cache,
