@@ -2011,7 +2011,6 @@ fn derive_debug(
 fn derive_getters_and_setters(
     struct_: &vkxml::Struct,
     members: &[PreprocessedMember<'_>],
-    root_structs: &HashSet<Ident>,
     has_lifetimes: &HashSet<Ident>,
 ) -> Option<TokenStream> {
     if &struct_.name == "VkBaseInStructure"
@@ -2329,74 +2328,6 @@ fn derive_getters_and_setters(
         })
     });
 
-    // The `p_next` field should only be considered if this struct is also a root struct
-    let root_struct_next_field = next_field.filter(|_| root_structs.contains(&name));
-
-    // We only implement a next method for root structs with a `pnext` field.
-    let next_function = if let Some(next_member) = root_struct_next_field {
-        let next_field = &next_member.vkxml_field;
-        assert_eq!(next_field.basetype, "void");
-        quote! {
-            /// Prepends the given extension struct between the root and the first pointer. This
-            /// method only exists on structs that can be passed to a function directly. Only
-            /// valid extension structs can be pushed into the chain.
-            /// If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the
-            /// chain will look like `A -> D -> B -> C`.
-            ///
-            /// # Panics
-            /// If `next` contains a pointer chain of its own, this function will panic.  Call
-            /// `unsafe` [`Self::extend()`] to insert this chain instead.
-            pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-                // SAFETY: All implementors of T are required to have the `BaseOutStructure` layout
-                let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-                // `next` here can contain a pointer chain.  This function refuses to insert the struct,
-                // in favour of calling unsafe extend().
-                assert!(next_base.p_next.is_null(), "push() expects a struct without an existing p_next pointer chain (equal to NULL)");
-                next_base.p_next = self.p_next as _;
-                self.p_next = <*mut T>::cast(next);
-                self
-            }
-
-            /// Prepends the given extension struct between the root and the first pointer. This
-            /// method only exists on structs that can be passed to a function directly. Only
-            /// valid extension structs can be pushed into the chain.
-            /// If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,
-            /// then the chain will look like `A -> D -> E -> B -> C`.
-            ///
-            /// # Safety
-            /// This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring
-            /// all non-`NULL` pointers to point to a valid Vulkan structure starting with the
-            /// [`BaseOutStructure`] layout.
-            ///
-            /// The last struct in this chain (i.e. the one where `p_next` is `NULL`) must
-            /// be writable memory, as its `p_next` field will be updated with the value of
-            /// `self.p_next`.
-            pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-                // `next` here can contain a pointer chain. This means that we must correctly
-                // attach he head to the root and the tail to the rest of the chain
-                // For example:
-                //
-                // next = A -> B
-                // Before: `Root -> C -> D -> E`
-                // After: `Root -> A -> B -> C -> D -> E`
-                //                 ^^^^^^
-                //                 next chain
-                let last_next = ptr_chain_iter(next).last().unwrap();
-                (*last_next).p_next = self.p_next as _;
-                self.p_next = <*mut T>::cast(next);
-                self
-            }
-
-            #[doc(hidden)]
-            #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-            pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-                self.extend(next)
-            }
-        }
-    } else {
-        quote!()
-    };
-
     let lifetime = has_lifetimes.contains(&name).then(|| quote!(<'a>));
 
     // If the struct extends something we need to implement the traits.
@@ -2407,7 +2338,7 @@ fn derive_getters_and_setters(
         .map(|extends| {
             let base = name_to_tokens(extends);
             // Extension structs always have a pNext, and therefore always have a lifetime.
-            quote!(unsafe impl Extends<#base<'_>> for #name<'_> {})
+            quote!(unsafe impl<'a> Extends<'a, #base<'a>> for #name<'a> {})
         });
 
     let impl_structure_type_trait = structure_type_field.map(|member| {
@@ -2418,10 +2349,11 @@ fn derive_getters_and_setters(
             .expect("s_type field must have a value in `vk.xml`");
 
         assert!(!value.contains(','));
+        assert!(lifetime.is_some());
 
         let value = variant_ident("VkStructureType", value);
         quote! {
-            unsafe impl #lifetime TaggedStructure for #name #lifetime {
+            unsafe impl<'a> TaggedStructure<'a> for #name<'a> {
                 const STRUCTURE_TYPE: StructureType = StructureType::#value;
             }
         }
@@ -2433,8 +2365,6 @@ fn derive_getters_and_setters(
 
         impl #lifetime #name #lifetime {
             #(#setters)*
-
-            #next_function
         }
     };
 
@@ -2462,7 +2392,6 @@ struct PreprocessedMember<'a> {
 pub fn generate_struct(
     struct_: &vkxml::Struct,
     vk_parse_types: &HashMap<String, &vk_parse::Type>,
-    root_structs: &HashSet<Ident>,
     union_types: &HashSet<&str>,
     has_lifetimes: &HashSet<Ident>,
 ) -> TokenStream {
@@ -2598,7 +2527,7 @@ pub fn generate_struct(
     let debug_tokens = derive_debug(struct_, &members, union_types, has_lifetime);
     let default_tokens = derive_default(struct_, &members, has_lifetime);
     let send_sync_tokens = derive_send_sync(struct_, has_lifetime);
-    let setter_tokens = derive_getters_and_setters(struct_, &members, root_structs, has_lifetimes);
+    let setter_tokens = derive_getters_and_setters(struct_, &members, has_lifetimes);
     let manual_derive_tokens = manual_derives(struct_);
     let dbg_str = if debug_tokens.is_none() {
         quote!(#[cfg_attr(feature = "debug", derive(Debug))])
@@ -2708,25 +2637,6 @@ fn generate_union(union: &vkxml::Union, has_lifetimes: &HashSet<Ident>) -> Token
         }
     }
 }
-/// Root structs are all structs that are extended by other structs.
-pub fn root_structs(
-    definitions: &[&vk_parse::Type],
-    allowed_types: &HashSet<&str>,
-) -> HashSet<Ident> {
-    // Loop over all structs and collect their extends
-    definitions
-        .iter()
-        .filter(|type_| {
-            type_
-                .name
-                .as_ref()
-                .is_some_and(|name| allowed_types.contains(name.as_str()))
-        })
-        .filter_map(|type_| type_.structextends.as_ref())
-        .flat_map(|e| e.split(','))
-        .map(name_to_tokens)
-        .collect()
-}
 pub fn generate_definition_vk_parse(
     definition: &vk_parse::Type,
     allowed_types: &HashSet<&str>,
@@ -2752,7 +2662,6 @@ pub fn generate_definition(
     definition: &vkxml::DefinitionsElement,
     allowed_types: &HashSet<&str>,
     union_types: &HashSet<&str>,
-    root_structs: &HashSet<Ident>,
     has_lifetimes: &HashSet<Ident>,
     vk_parse_types: &HashMap<String, &vk_parse::Type>,
     bitflags_cache: &mut HashSet<Ident>,
@@ -2770,7 +2679,6 @@ pub fn generate_definition(
             Some(generate_struct(
                 struct_,
                 vk_parse_types,
-                root_structs,
                 union_types,
                 has_lifetimes,
             ))
@@ -3357,8 +3265,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         })
         .collect();
 
-    let root_structs = root_structs(&vk_parse_types, &required_types);
-
     let vk_parse_types = vk_parse_types
         .into_iter()
         .filter_map(|t| t.name.clone().map(|n| (n, t)))
@@ -3370,7 +3276,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
                 def,
                 &required_types,
                 &union_types,
-                &root_structs,
                 &has_lifetimes,
                 &vk_parse_types,
                 &mut bitflags_cache,
@@ -3438,8 +3343,8 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use super::native::*;
         use super::platform_types::*;
         use super::{
-            ptr_chain_iter, wrap_c_str_slice_until_nul, write_c_str_slice_with_nul,
-            CStrTooLargeForStaticArray, Extends, Handle, Packed24_8, TaggedStructure,
+            wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
+            Handle, Packed24_8, TaggedStructure,
         };
         use core::ffi::*;
         use core::fmt;
