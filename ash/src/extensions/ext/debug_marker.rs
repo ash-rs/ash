@@ -1,7 +1,7 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_debug_marker.html>
 
-use crate::prelude::*;
 use crate::vk;
+use crate::VkResult;
 
 impl crate::ext::debug_marker::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html>

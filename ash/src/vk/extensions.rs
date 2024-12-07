@@ -1,9 +1,9 @@
 #![allow(unused_qualifications)]
-use crate::vk::aliases::*;
-use crate::vk::bitflags::*;
-use crate::vk::definitions::*;
-use crate::vk::enums::*;
-use crate::vk::platform_types::*;
+use super::aliases::*;
+use super::bitflags::*;
+use super::definitions::*;
+use super::enums::*;
+use super::platform_types::*;
 use core::ffi::*;
 #[doc = "Generated from 'VK_KHR_surface'"]
 impl ObjectType {

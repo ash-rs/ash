@@ -1,8 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_sampler_ycbcr_conversion.html>
 
-use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
+use crate::VkResult;
 use core::mem;
 
 impl crate::khr::sampler_ycbcr_conversion::Device {

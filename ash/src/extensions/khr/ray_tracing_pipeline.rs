@@ -1,8 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_ray_tracing_pipeline.html>
 
-use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
+use crate::VkResult;
 use alloc::vec::Vec;
 
 impl crate::khr::ray_tracing_pipeline::Device {

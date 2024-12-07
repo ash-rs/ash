@@ -1,7 +1,7 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_present_wait.html>
 
-use crate::prelude::*;
 use crate::vk;
+use crate::VkResult;
 
 impl crate::khr::present_wait::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWaitForPresentKHR.html>

@@ -1,7 +1,7 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_fence_fd.html>
 
-use crate::prelude::*;
 use crate::vk;
+use crate::VkResult;
 use core::mem;
 
 impl crate::khr::external_fence_fd::Device {

@@ -1,7 +1,7 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_coverage_reduction_mode.html>
 
-use crate::prelude::*;
 use crate::vk;
+use crate::VkResult;
 use core::mem;
 use core::ptr;
 

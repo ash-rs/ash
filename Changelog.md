@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - Removed unused lifetime from `vk::AllocationCallbacks` structure (#968)
+- Removed `ash::prelude` and `ash::vk::prelude` in favour of capturing all contents directly in their parent module. (#972)
 
 ## [0.38.0] - 2024-04-01
 

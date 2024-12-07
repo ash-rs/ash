@@ -55,6 +55,11 @@
 
 extern crate alloc;
 
+use alloc::vec::Vec;
+use core::convert::TryInto;
+use core::mem;
+use core::ptr;
+
 pub use crate::device::Device;
 pub use crate::entry::Entry;
 #[cfg(feature = "loaded")]
@@ -67,7 +72,6 @@ mod device;
 mod entry;
 mod extensions_generated;
 mod instance;
-pub mod prelude;
 mod tables;
 pub mod util;
 /// Raw Vulkan bindings and types, generated from `vk.xml`
@@ -192,26 +196,62 @@ macro_rules! match_in_struct {
     };
 }
 
-#[cfg(test)]
-mod tests {
-    use super::vk;
-    use alloc::vec::Vec;
-    #[test]
-    fn test_ptr_chains() {
-        let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::default();
-        let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::default();
-        let chain = alloc::vec![
-            <*mut _>::cast(&mut variable_pointers),
-            <*mut _>::cast(&mut corner),
-        ];
-        let mut device_create_info = vk::DeviceCreateInfo::default()
-            .push(&mut corner)
-            .push(&mut variable_pointers);
-        let chain2: Vec<*mut vk::BaseOutStructure<'_>> = unsafe {
-            vk::ptr_chain_iter(&mut device_create_info)
-                .skip(1)
-                .collect()
-        };
-        assert_eq!(chain, chain2);
+pub type VkResult<T> = Result<T, vk::Result>;
+
+impl vk::Result {
+    #[inline]
+    pub fn result(self) -> VkResult<()> {
+        self.result_with_success(())
+    }
+
+    #[inline]
+    pub fn result_with_success<T>(self, v: T) -> VkResult<T> {
+        match self {
+            Self::SUCCESS => Ok(v),
+            _ => Err(self),
+        }
+    }
+
+    #[inline]
+    pub unsafe fn assume_init_on_success<T>(self, v: mem::MaybeUninit<T>) -> VkResult<T> {
+        self.result().map(move |()| v.assume_init())
+    }
+
+    #[inline]
+    pub unsafe fn set_vec_len_on_success<T>(self, mut v: Vec<T>, len: usize) -> VkResult<Vec<T>> {
+        self.result().map(move |()| {
+            v.set_len(len);
+            v
+        })
+    }
+}
+
+/// Repeatedly calls `f` until it does not return [`vk::Result::INCOMPLETE`] anymore, ensuring all
+/// available data has been read into the vector.
+///
+/// See for example [`vkEnumerateInstanceExtensionProperties`]: the number of available items may
+/// change between calls; [`vk::Result::INCOMPLETE`] is returned when the count increased (and the
+/// vector is not large enough after querying the initial size), requiring Ash to try again.
+///
+/// [`vkEnumerateInstanceExtensionProperties`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html
+pub(crate) unsafe fn read_into_uninitialized_vector<N: Copy + Default + TryInto<usize>, T>(
+    f: impl Fn(&mut N, *mut T) -> vk::Result,
+) -> VkResult<Vec<T>>
+where
+    <N as TryInto<usize>>::Error: core::fmt::Debug,
+{
+    loop {
+        let mut count = N::default();
+        f(&mut count, ptr::null_mut()).result()?;
+        let mut data =
+            Vec::with_capacity(count.try_into().expect("`N` failed to convert to `usize`"));
+
+        let err_code = f(&mut count, data.as_mut_ptr());
+        if err_code != vk::Result::INCOMPLETE {
+            break err_code.set_vec_len_on_success(
+                data,
+                count.try_into().expect("`N` failed to convert to `usize`"),
+            );
+        }
     }
 }
