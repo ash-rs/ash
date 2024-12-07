@@ -11,7 +11,7 @@ impl crate::khr::sampler_ycbcr_conversion::Device {
     pub unsafe fn create_sampler_ycbcr_conversion(
         &self,
         create_info: &vk::SamplerYcbcrConversionCreateInfo<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SamplerYcbcrConversion> {
         let mut ycbcr_conversion = mem::MaybeUninit::uninit();
         (self.fp.create_sampler_ycbcr_conversion_khr)(
@@ -28,7 +28,7 @@ impl crate::khr::sampler_ycbcr_conversion::Device {
     pub unsafe fn destroy_sampler_ycbcr_conversion(
         &self,
         ycbcr_conversion: vk::SamplerYcbcrConversion,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.fp.destroy_sampler_ycbcr_conversion_khr)(
             self.handle,

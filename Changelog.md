@@ -27,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   The expected length of this array can be queried with the respective `*_len()` variant of these functions.
 - `push_next()` has been renamed to `extend()` and marked as `unsafe`. Users are encouraged to call `push()` for singular structs instead. (#909)
 
+### Removed
+
+- Removed unused lifetime from `vk::AllocationCallbacks` structure (#968)
+
 ## [0.38.0] - 2024-04-01
 
 With over two years of collecting breaking changes (since the `0.37.0` release in March 2022), April 2024 marks the next breaking release of `ash`.  This release introduces an overhaul of all Vulkan structures, restructures modules around extensions, and separates extension wrappers between `Instance` and `Device` functions.  The crate contains all bindings defined by the latest `1.3.281` Vulkan specification, and many old and new extensions have received a hand-written extension wrapper.  For a full overview of all individual changes, see the list at the end of this post.

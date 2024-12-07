@@ -11,7 +11,7 @@ impl crate::ext::private_data::Device {
     pub unsafe fn create_private_data_slot(
         &self,
         create_info: &vk::PrivateDataSlotCreateInfoEXT<'_>,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::PrivateDataSlotEXT> {
         let mut private_data_slot = mem::MaybeUninit::uninit();
         (self.fp.create_private_data_slot_ext)(
@@ -28,7 +28,7 @@ impl crate::ext::private_data::Device {
     pub unsafe fn destroy_private_data_slot(
         &self,
         private_data_slot: vk::PrivateDataSlotEXT,
-        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.fp.destroy_private_data_slot_ext)(
             self.handle,
