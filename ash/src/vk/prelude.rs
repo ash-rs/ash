@@ -63,6 +63,15 @@ pub unsafe trait TaggedStructure {
     const STRUCTURE_TYPE: vk::StructureType;
 }
 
+/// Implemented for every structure that extends base structure `B`. Concretely that means struct
+/// `B` is listed in its array of [`structextends` in the Vulkan registry][1].
+///
+/// Similar to [`TaggedStructure`] , all `unsafe` implementers of this trait must guarantee that
+/// their structure is layout-compatible [`vk::BaseInStructure`] and [`vk::BaseOutStructure`].
+///
+/// [1]: https://registry.khronos.org/vulkan/specs/latest/styleguide.html#extensions-interactions
+pub unsafe trait Extends<B> {}
+
 #[inline]
 pub(crate) fn wrap_c_str_slice_until_nul(
     str: &[c_char],
