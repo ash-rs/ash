@@ -5,6 +5,7 @@
 //!
 //! On instance extensions platform specific extensions need to be enabled.
 
+use ash::prelude::*;
 use ash::vk;
 use std::error::Error;
 use winit::{
