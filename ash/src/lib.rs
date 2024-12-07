@@ -86,7 +86,20 @@ impl<T> RawPtr<T> for Option<&T> {
     fn as_raw_ptr(&self) -> *const T {
         match *self {
             Some(inner) => inner,
-            _ => ::core::ptr::null(),
+            None => core::ptr::null(),
+        }
+    }
+}
+
+pub trait RawMutPtr<T> {
+    unsafe fn as_raw_mut_ptr(self) -> *mut T;
+}
+
+impl<'r, T> RawMutPtr<T> for Option<&'r mut T> {
+    unsafe fn as_raw_mut_ptr(self) -> *mut T {
+        match self {
+            Some(inner) => inner,
+            None => core::ptr::null_mut(),
         }
     }
 }
