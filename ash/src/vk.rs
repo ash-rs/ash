@@ -49,25 +49,9 @@ pub trait Handle: Sized {
     }
 }
 
-/// Structures implementing this trait are layout-compatible with [`BaseInStructure`] and
-/// [`BaseOutStructure`]. Such structures have an `s_type` field indicating its type, which must
-/// always match the value of [`TaggedStructure::STRUCTURE_TYPE`].
-pub unsafe trait TaggedStructure {
-    const STRUCTURE_TYPE: StructureType;
-}
-
-/// Implemented for every structure that extends base structure `B`. Concretely that means struct
-/// `B` is listed in its array of [`structextends` in the Vulkan registry][1].
-///
-/// Similar to [`TaggedStructure`], all `unsafe` implementers of this trait must guarantee that
-/// their structure is layout-compatible [`BaseInStructure`] and [`BaseOutStructure`].
-///
-/// [1]: https://registry.khronos.org/vulkan/specs/latest/styleguide.html#extensions-interactions
-pub unsafe trait Extends<B> {}
-
-/// Iterates through the pointer chain. Includes the item that is passed into the function.
-/// Stops at the last [`BaseOutStructure`] that has a null [`BaseOutStructure::p_next`] field.
-pub(crate) unsafe fn ptr_chain_iter<T: ?Sized>(
+/// Iterates through the pointer chain. Includes the item that is passed into the function. Stops at
+/// the last [`BaseOutStructure`] that has a null [`BaseOutStructure::p_next`] field.
+pub(crate) unsafe fn ptr_chain_iter<'a, T: AnyTaggedStructure<'a> + ?Sized>(
     ptr: &mut T,
 ) -> impl Iterator<Item = *mut BaseOutStructure<'_>> {
     let ptr = <*mut T>::cast::<BaseOutStructure<'_>>(ptr);
@@ -81,6 +65,92 @@ pub(crate) unsafe fn ptr_chain_iter<T: ?Sized>(
         Some(old)
     })
 }
+
+/// Structures implementing this trait are layout-compatible with [`BaseInStructure`] and
+/// [`BaseOutStructure`]. Such structures have an `s_type` field indicating its type, which must
+/// always match the value of [`TaggedStructure::STRUCTURE_TYPE`].
+pub unsafe trait AnyTaggedStructure<'a> {
+    /// Prepends the given extension struct between the root and the first pointer. This method is
+    /// only available on structs that can be passed to a function directly. Only valid extension
+    /// structs can be pushed into the chain.
+    /// If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the
+    /// chain will look like `A -> D -> B -> C`.
+    ///
+    /// # Panics
+    /// If `next` contains a pointer chain of its own, this function will panic.  Call `unsafe`
+    /// [`Self::extend()`] to insert this chain instead.
+    fn push<T: Extends<'a, Self> + ?Sized>(mut self, next: &'a mut T) -> Self
+    where
+        Self: Sized,
+    {
+        // SAFETY: All implementors of `AnyTaggedStructure` are required to have the `BaseOutStructure` layout
+        let slf_base = unsafe { &mut *<*mut _>::cast::<BaseOutStructure<'_>>(&mut self) };
+        // SAFETY: All implementors of `T: Extends<'a, >: AnyTaggedStructure` are required to have the `BaseOutStructure` layout
+        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'_>>(next) };
+        // `next` here can contain a pointer chain.  This function refuses to insert the struct,
+        // in favour of calling unsafe extend().
+        assert!(
+            next_base.p_next.is_null(),
+            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
+        );
+        next_base.p_next = slf_base.p_next;
+        slf_base.p_next = next_base;
+        self
+    }
+
+    /// Prepends the given extension struct between the root and the first pointer. This method is
+    /// only available on structs that can be passed to a function directly. Only valid extension
+    /// structs can be pushed into the chain.
+    /// If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,
+    /// then the chain will look like `A -> D -> E -> B -> C`.
+    ///
+    /// # Safety
+    /// This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring
+    /// all non-`NULL` pointers to point to a valid Vulkan structure starting with the
+    /// [`BaseOutStructure`] layout.
+    ///
+    /// The last struct in this chain (i.e. the one where `p_next` is `NULL`) must be writable
+    /// memory, as its `p_next` field will be updated with the value of `self.p_next`.
+    unsafe fn extend<T: Extends<'a, Self> + ?Sized>(mut self, next: &'a mut T) -> Self
+    where
+        Self: Sized,
+    {
+        // `next` here can contain a pointer chain. This means that we must correctly attach he head
+        // to the root and the tail to the rest of the chain For example:
+        //
+        // next = A -> B
+        // Before: `Root -> C -> D -> E`
+        // After: `Root -> A -> B -> C -> D -> E`
+        //                 ^^^^^^
+        //                 next chain
+        let slf_base = unsafe { &mut *<*mut _>::cast::<BaseOutStructure<'_>>(&mut self) };
+        let next_base = <*mut T>::cast::<BaseOutStructure<'_>>(next);
+        let last_next = ptr_chain_iter(next).last().unwrap();
+        (*last_next).p_next = slf_base.p_next;
+        slf_base.p_next = next_base;
+        self
+    }
+}
+
+/// Non-object-safe variant of [`AnyTaggedStructure`], meaning that a `dyn TaggedStructure` cannot
+/// exist but as a consequence the [`TaggedStructure::STRUCTURE_TYPE`] associated constant is
+/// available.
+///
+/// [`AnyTaggedStructure`]s have a [`BaseInStructure::s_type`] field indicating its type, which must
+/// always match the value of [`TaggedStructure::STRUCTURE_TYPE`].
+pub unsafe trait TaggedStructure<'a>: AnyTaggedStructure<'a> {
+    const STRUCTURE_TYPE: StructureType;
+}
+unsafe impl<'a, T: TaggedStructure<'a>> AnyTaggedStructure<'a> for T {}
+
+/// Implemented for every structure that extends base structure `B`. Concretely that means struct
+/// `B` is listed in its array of [`structextends` in the Vulkan registry][1].
+///
+/// Similar to [`TaggedStructure`], all `unsafe` implementers of this trait must guarantee that
+/// their structure is layout-compatible [`BaseInStructure`] and [`BaseOutStructure`].
+///
+/// [1]: https://registry.khronos.org/vulkan/specs/latest/styleguide.html#extensions-interactions
+pub unsafe trait Extends<'a, B: AnyTaggedStructure<'a>>: AnyTaggedStructure<'a> {}
 
 /// Holds 24 bits in the least significant bits of memory,
 /// and 8 bytes in the most significant bits of that memory,
@@ -211,6 +281,7 @@ pub(crate) fn debug_flags<Value: Into<u64> + Copy>(
 #[cfg(test)]
 mod tests {
     use crate::vk;
+    use crate::vk::AnyTaggedStructure as _;
     use alloc::vec::Vec;
     #[test]
     fn test_ptr_chains() {
@@ -275,7 +346,7 @@ mod tests {
     #[test]
     fn test_dynamic_add_to_ptr_chain() {
         let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::default();
-        let variable_pointers: &mut dyn vk::Extends<vk::DeviceCreateInfo<'_>> =
+        let variable_pointers: &mut dyn vk::Extends<'_, vk::DeviceCreateInfo<'_>> =
             &mut variable_pointers;
         let chain = alloc::vec![<*mut _>::cast(variable_pointers)];
         let mut device_create_info = vk::DeviceCreateInfo::default().push(variable_pointers);
