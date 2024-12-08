@@ -1,7 +1,7 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_pipeline_properties.html>
 
-use crate::prelude::*;
 use crate::vk;
+use crate::VkResult;
 
 impl crate::ext::pipeline_properties::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelinePropertiesEXT.html>

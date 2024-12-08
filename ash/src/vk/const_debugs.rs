@@ -1,7 +1,7 @@
-use crate::prelude::debug_flags;
-use crate::vk::bitflags::*;
-use crate::vk::definitions::*;
-use crate::vk::enums::*;
+use super::bitflags::*;
+use super::debug_flags;
+use super::definitions::*;
+use super::enums::*;
 use core::fmt;
 impl fmt::Debug for AccelerationStructureBuildTypeKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {

@@ -1,7 +1,8 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_GOOGLE_display_timing.html>
 
-use crate::prelude::*;
+use crate::read_into_uninitialized_vector;
 use crate::vk;
+use crate::VkResult;
 use alloc::vec::Vec;
 use core::mem;
 

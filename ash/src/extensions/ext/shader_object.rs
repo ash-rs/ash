@@ -1,8 +1,9 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_shader_object.html>
 
-use crate::prelude::*;
+use crate::read_into_uninitialized_vector;
 use crate::vk;
 use crate::RawPtr;
+use crate::VkResult;
 use alloc::vec::Vec;
 use core::ptr;
 

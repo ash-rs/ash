@@ -3415,26 +3415,28 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let feature_code = quote! {
         use core::ffi::*;
-        use crate::vk::bitflags::*;
-        use crate::vk::definitions::*;
-        use crate::vk::enums::*;
+        use super::bitflags::*;
+        use super::definitions::*;
+        use super::enums::*;
         #(#feature_fp_code)*
     };
 
     let definition_code = quote! {
         #![allow(clippy::needless_lifetimes)] // Omitting these correctly in the generator is complex
 
-        use core::marker::PhantomData;
-        use core::fmt;
+        use super::aliases::*;
+        use super::bitflags::*;
+        use super::constants::*;
+        use super::enums::*;
+        use super::native::*;
+        use super::platform_types::*;
+        use super::{
+            ptr_chain_iter, wrap_c_str_slice_until_nul, write_c_str_slice_with_nul,
+            CStrTooLargeForStaticArray, Handle, Packed24_8, TaggedStructure,
+        };
         use core::ffi::*;
-        use crate::vk::{Handle, ptr_chain_iter};
-        use crate::vk::aliases::*;
-        use crate::vk::bitflags::*;
-        use crate::vk::constants::*;
-        use crate::vk::enums::*;
-        use crate::vk::native::*;
-        use crate::vk::platform_types::*;
-        use crate::vk::prelude::*;
+        use core::fmt;
+        use core::marker::PhantomData;
         #(#definition_code)*
     };
 
@@ -3445,47 +3447,47 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let bitflags_code = quote! {
-        use crate::vk::definitions::*;
+        use super::definitions::*;
         #(#bitflags_code)*
     };
 
     let constants_code = quote! {
-        use crate::vk::definitions::*;
+        use super::definitions::*;
         #(#constants_code)*
     };
 
     let extension_code = quote! {
         #![allow(unused_qualifications)] // For simplicity, we always generate absolute paths for `Device`/`Instance`
 
+        use super::platform_types::*;
+        use super::aliases::*;
+        use super::bitflags::*;
+        use super::definitions::*;
+        use super::enums::*;
         use core::ffi::*;
-        use crate::vk::platform_types::*;
-        use crate::vk::aliases::*;
-        use crate::vk::bitflags::*;
-        use crate::vk::definitions::*;
-        use crate::vk::enums::*;
         #(#extension_constants)*
         #(#extension_cmds)*
     };
 
     let feature_extensions_code = quote! {
-        use crate::vk::bitflags::*;
-        use crate::vk::enums::*;
+        use super::bitflags::*;
+        use super::enums::*;
        #feature_extensions_code
     };
 
     let const_debugs = quote! {
+        use super::debug_flags;
+        use super::bitflags::*;
+        use super::definitions::*;
+        use super::enums::*;
         use core::fmt;
-        use crate::vk::bitflags::*;
-        use crate::vk::definitions::*;
-        use crate::vk::enums::*;
-        use crate::prelude::debug_flags;
         #const_debugs
     };
 
     let aliases = quote! {
-        use crate::vk::bitflags::*;
-        use crate::vk::definitions::*;
-        use crate::vk::enums::*;
+        use super::bitflags::*;
+        use super::definitions::*;
+        use super::enums::*;
         #(#aliases)*
     };
 
