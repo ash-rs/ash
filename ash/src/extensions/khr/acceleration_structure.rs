@@ -263,7 +263,10 @@ impl crate::khr::acceleration_structure::Device {
         max_primitive_counts: &[u32],
         size_info: &mut vk::AccelerationStructureBuildSizesInfoKHR<'_>,
     ) {
-        assert_eq!(max_primitive_counts.len(), build_info.geometry_count as _);
+        assert_eq!(
+            max_primitive_counts.len(),
+            build_info.geometry_count as usize
+        );
 
         (self.fp.get_acceleration_structure_build_sizes_khr)(
             self.handle,
