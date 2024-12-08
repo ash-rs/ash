@@ -1,5 +1,7 @@
 use analysis::Analysis;
 
 fn main() {
-    let _analysis = Analysis::new("generator/Vulkan-Headers");
+    tracing_subscriber::fmt::init();
+    let analysis = Analysis::new("generator/Vulkan-Headers");
+    generator_rewrite::generate(&analysis, "ash-rewrite/src/generated").unwrap();
 }
