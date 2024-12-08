@@ -24,6 +24,9 @@ rust-version = "1.69.0"
 [dependencies]
 libloading = { version = "0.8", optional = true }
 
+[dev-dependencies]
+trybuild = "1.0"
+
 [features]
 default = ["loaded", "debug", "std"]
 # Link the Vulkan loader at compile time.
