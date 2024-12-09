@@ -83,13 +83,13 @@ macro_rules! vk_bitflags_wrapped {
 }
 #[macro_export]
 macro_rules! handle_nondispatchable {
-    ($ name : ident , $ ty : ident) => {
-        handle_nondispatchable!($name, $ty, doc = "");
-    };
-    ($ name : ident , $ ty : ident , $ doc_link : meta) => {
+    ($ name : ident , $ ty : ident , $ feature_names : expr , $ doc_link : expr, $( $ cfgs : meta )?) => {
+        #[doc = $feature_names]
+        #[doc = ""]
+        #[doc = $doc_link]
+        $(#[$cfgs])?
         #[repr(transparent)]
         #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
-        #[$doc_link]
         pub struct $name(u64);
         impl Handle for $name {
             const TYPE: ObjectType = ObjectType::$ty;
@@ -119,13 +119,13 @@ macro_rules! handle_nondispatchable {
 }
 #[macro_export]
 macro_rules! define_handle {
-    ($ name : ident , $ ty : ident) => {
-        define_handle!($name, $ty, doc = "");
-    };
-    ($ name : ident , $ ty : ident , $ doc_link : meta) => {
+    ($ name : ident , $ ty : ident , $ feature_names : expr , $ doc_link : expr, $( $ cfgs : meta )?) => {
+        #[doc = $feature_names]
+        #[doc = ""]
+        #[doc = $doc_link]
+        $(#[$cfgs])?
         #[repr(transparent)]
         #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash)]
-        #[$doc_link]
         pub struct $name(*mut u8);
         impl Default for $name {
             fn default() -> Self {

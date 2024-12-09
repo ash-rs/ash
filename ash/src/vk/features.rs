@@ -2,50 +2,59 @@ use super::bitflags::*;
 use super::definitions::*;
 use super::enums::*;
 use core::ffi::*;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetInstanceProcAddr = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_name: *const c_char,
 ) -> PFN_vkVoidFunction;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateInstance = unsafe extern "system" fn(
     p_create_info: *const InstanceCreateInfo<'_>,
     p_allocator: *const AllocationCallbacks,
     p_instance: *mut crate::vk::Instance,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumerateInstanceExtensionProperties = unsafe extern "system" fn(
     p_layer_name: *const c_char,
     p_property_count: *mut u32,
     p_properties: *mut ExtensionProperties,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumerateInstanceLayerProperties = unsafe extern "system" fn(
     p_property_count: *mut u32,
     p_properties: *mut LayerProperties,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyInstance = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumeratePhysicalDevices = unsafe extern "system" fn(
     instance: crate::vk::Instance,
     p_physical_device_count: *mut u32,
     p_physical_devices: *mut PhysicalDevice,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceFeatures = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_features: *mut PhysicalDeviceFeatures,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceFormatProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     format: Format,
     p_format_properties: *mut FormatProperties,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceImageFormatProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
@@ -56,27 +65,32 @@ pub type PFN_vkGetPhysicalDeviceImageFormatProperties = unsafe extern "system" f
     flags: ImageCreateFlags,
     p_image_format_properties: *mut ImageFormatProperties,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_properties: *mut PhysicalDeviceProperties,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceQueueFamilyProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_queue_family_property_count: *mut u32,
     p_queue_family_properties: *mut QueueFamilyProperties,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceMemoryProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_memory_properties: *mut PhysicalDeviceMemoryProperties,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceProcAddr = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_name: *const c_char,
 ) -> PFN_vkVoidFunction;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDevice = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
@@ -84,6 +98,7 @@ pub type PFN_vkCreateDevice = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_device: *mut crate::vk::Device,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumerateDeviceExtensionProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
@@ -91,12 +106,14 @@ pub type PFN_vkEnumerateDeviceExtensionProperties = unsafe extern "system" fn(
     p_property_count: *mut u32,
     p_properties: *mut ExtensionProperties,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumerateDeviceLayerProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_property_count: *mut u32,
     p_properties: *mut LayerProperties,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
@@ -108,9 +125,11 @@ pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties = unsafe extern "sys
     p_property_count: *mut u32,
     p_properties: *mut SparseImageFormatProperties,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDevice =
     unsafe extern "system" fn(device: crate::vk::Device, p_allocator: *const AllocationCallbacks);
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceQueue = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -118,6 +137,7 @@ pub type PFN_vkGetDeviceQueue = unsafe extern "system" fn(
     queue_index: u32,
     p_queue: *mut Queue,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkQueueSubmit = unsafe extern "system" fn(
     queue: Queue,
@@ -125,10 +145,13 @@ pub type PFN_vkQueueSubmit = unsafe extern "system" fn(
     p_submits: *const SubmitInfo<'_>,
     fence: Fence,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkQueueWaitIdle = unsafe extern "system" fn(queue: Queue) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDeviceWaitIdle = unsafe extern "system" fn(device: crate::vk::Device) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkAllocateMemory = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -136,12 +159,14 @@ pub type PFN_vkAllocateMemory = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_memory: *mut DeviceMemory,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkFreeMemory = unsafe extern "system" fn(
     device: crate::vk::Device,
     memory: DeviceMemory,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkMapMemory = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -151,27 +176,32 @@ pub type PFN_vkMapMemory = unsafe extern "system" fn(
     flags: MemoryMapFlags,
     pp_data: *mut *mut c_void,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkUnmapMemory =
     unsafe extern "system" fn(device: crate::vk::Device, memory: DeviceMemory);
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkFlushMappedMemoryRanges = unsafe extern "system" fn(
     device: crate::vk::Device,
     memory_range_count: u32,
     p_memory_ranges: *const MappedMemoryRange<'_>,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkInvalidateMappedMemoryRanges = unsafe extern "system" fn(
     device: crate::vk::Device,
     memory_range_count: u32,
     p_memory_ranges: *const MappedMemoryRange<'_>,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceMemoryCommitment = unsafe extern "system" fn(
     device: crate::vk::Device,
     memory: DeviceMemory,
     p_committed_memory_in_bytes: *mut DeviceSize,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkBindBufferMemory = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -179,6 +209,7 @@ pub type PFN_vkBindBufferMemory = unsafe extern "system" fn(
     memory: DeviceMemory,
     memory_offset: DeviceSize,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkBindImageMemory = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -186,18 +217,21 @@ pub type PFN_vkBindImageMemory = unsafe extern "system" fn(
     memory: DeviceMemory,
     memory_offset: DeviceSize,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetBufferMemoryRequirements = unsafe extern "system" fn(
     device: crate::vk::Device,
     buffer: Buffer,
     p_memory_requirements: *mut MemoryRequirements,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageMemoryRequirements = unsafe extern "system" fn(
     device: crate::vk::Device,
     image: Image,
     p_memory_requirements: *mut MemoryRequirements,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageSparseMemoryRequirements = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -205,6 +239,7 @@ pub type PFN_vkGetImageSparseMemoryRequirements = unsafe extern "system" fn(
     p_sparse_memory_requirement_count: *mut u32,
     p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkQueueBindSparse = unsafe extern "system" fn(
     queue: Queue,
@@ -212,6 +247,7 @@ pub type PFN_vkQueueBindSparse = unsafe extern "system" fn(
     p_bind_info: *const BindSparseInfo<'_>,
     fence: Fence,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateFence = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -219,21 +255,25 @@ pub type PFN_vkCreateFence = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_fence: *mut Fence,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyFence = unsafe extern "system" fn(
     device: crate::vk::Device,
     fence: Fence,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetFences = unsafe extern "system" fn(
     device: crate::vk::Device,
     fence_count: u32,
     p_fences: *const Fence,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetFenceStatus =
     unsafe extern "system" fn(device: crate::vk::Device, fence: Fence) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkWaitForFences = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -242,6 +282,7 @@ pub type PFN_vkWaitForFences = unsafe extern "system" fn(
     wait_all: Bool32,
     timeout: u64,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateSemaphore = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -249,12 +290,14 @@ pub type PFN_vkCreateSemaphore = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_semaphore: *mut Semaphore,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroySemaphore = unsafe extern "system" fn(
     device: crate::vk::Device,
     semaphore: Semaphore,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateEvent = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -262,21 +305,26 @@ pub type PFN_vkCreateEvent = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_event: *mut Event,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyEvent = unsafe extern "system" fn(
     device: crate::vk::Device,
     event: Event,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetEventStatus =
     unsafe extern "system" fn(device: crate::vk::Device, event: Event) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkSetEvent =
     unsafe extern "system" fn(device: crate::vk::Device, event: Event) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetEvent =
     unsafe extern "system" fn(device: crate::vk::Device, event: Event) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateQueryPool = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -284,12 +332,14 @@ pub type PFN_vkCreateQueryPool = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_query_pool: *mut QueryPool,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyQueryPool = unsafe extern "system" fn(
     device: crate::vk::Device,
     query_pool: QueryPool,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetQueryPoolResults = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -301,6 +351,7 @@ pub type PFN_vkGetQueryPoolResults = unsafe extern "system" fn(
     stride: DeviceSize,
     flags: QueryResultFlags,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateBuffer = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -308,12 +359,14 @@ pub type PFN_vkCreateBuffer = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_buffer: *mut Buffer,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyBuffer = unsafe extern "system" fn(
     device: crate::vk::Device,
     buffer: Buffer,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateBufferView = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -321,12 +374,14 @@ pub type PFN_vkCreateBufferView = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_view: *mut BufferView,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyBufferView = unsafe extern "system" fn(
     device: crate::vk::Device,
     buffer_view: BufferView,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateImage = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -334,12 +389,14 @@ pub type PFN_vkCreateImage = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_image: *mut Image,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyImage = unsafe extern "system" fn(
     device: crate::vk::Device,
     image: Image,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageSubresourceLayout = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -347,6 +404,7 @@ pub type PFN_vkGetImageSubresourceLayout = unsafe extern "system" fn(
     p_subresource: *const ImageSubresource,
     p_layout: *mut SubresourceLayout,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateImageView = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -354,12 +412,14 @@ pub type PFN_vkCreateImageView = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_view: *mut ImageView,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyImageView = unsafe extern "system" fn(
     device: crate::vk::Device,
     image_view: ImageView,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateShaderModule = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -367,12 +427,14 @@ pub type PFN_vkCreateShaderModule = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_shader_module: *mut ShaderModule,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyShaderModule = unsafe extern "system" fn(
     device: crate::vk::Device,
     shader_module: ShaderModule,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreatePipelineCache = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -380,12 +442,14 @@ pub type PFN_vkCreatePipelineCache = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_pipeline_cache: *mut PipelineCache,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyPipelineCache = unsafe extern "system" fn(
     device: crate::vk::Device,
     pipeline_cache: PipelineCache,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPipelineCacheData = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -393,6 +457,7 @@ pub type PFN_vkGetPipelineCacheData = unsafe extern "system" fn(
     p_data_size: *mut usize,
     p_data: *mut c_void,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkMergePipelineCaches = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -400,6 +465,7 @@ pub type PFN_vkMergePipelineCaches = unsafe extern "system" fn(
     src_cache_count: u32,
     p_src_caches: *const PipelineCache,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateGraphicsPipelines = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -409,6 +475,7 @@ pub type PFN_vkCreateGraphicsPipelines = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_pipelines: *mut Pipeline,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateComputePipelines = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -418,12 +485,14 @@ pub type PFN_vkCreateComputePipelines = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_pipelines: *mut Pipeline,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyPipeline = unsafe extern "system" fn(
     device: crate::vk::Device,
     pipeline: Pipeline,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreatePipelineLayout = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -431,12 +500,14 @@ pub type PFN_vkCreatePipelineLayout = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_pipeline_layout: *mut PipelineLayout,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyPipelineLayout = unsafe extern "system" fn(
     device: crate::vk::Device,
     pipeline_layout: PipelineLayout,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateSampler = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -444,12 +515,14 @@ pub type PFN_vkCreateSampler = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_sampler: *mut Sampler,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroySampler = unsafe extern "system" fn(
     device: crate::vk::Device,
     sampler: Sampler,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDescriptorSetLayout = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -457,12 +530,14 @@ pub type PFN_vkCreateDescriptorSetLayout = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_set_layout: *mut DescriptorSetLayout,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDescriptorSetLayout = unsafe extern "system" fn(
     device: crate::vk::Device,
     descriptor_set_layout: DescriptorSetLayout,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDescriptorPool = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -470,24 +545,28 @@ pub type PFN_vkCreateDescriptorPool = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_descriptor_pool: *mut DescriptorPool,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDescriptorPool = unsafe extern "system" fn(
     device: crate::vk::Device,
     descriptor_pool: DescriptorPool,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetDescriptorPool = unsafe extern "system" fn(
     device: crate::vk::Device,
     descriptor_pool: DescriptorPool,
     flags: DescriptorPoolResetFlags,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkAllocateDescriptorSets = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_allocate_info: *const DescriptorSetAllocateInfo<'_>,
     p_descriptor_sets: *mut DescriptorSet,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkFreeDescriptorSets = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -495,6 +574,7 @@ pub type PFN_vkFreeDescriptorSets = unsafe extern "system" fn(
     descriptor_set_count: u32,
     p_descriptor_sets: *const DescriptorSet,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkUpdateDescriptorSets = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -503,6 +583,7 @@ pub type PFN_vkUpdateDescriptorSets = unsafe extern "system" fn(
     descriptor_copy_count: u32,
     p_descriptor_copies: *const CopyDescriptorSet<'_>,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateFramebuffer = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -510,12 +591,14 @@ pub type PFN_vkCreateFramebuffer = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_framebuffer: *mut Framebuffer,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyFramebuffer = unsafe extern "system" fn(
     device: crate::vk::Device,
     framebuffer: Framebuffer,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateRenderPass = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -523,18 +606,21 @@ pub type PFN_vkCreateRenderPass = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_render_pass: *mut RenderPass,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyRenderPass = unsafe extern "system" fn(
     device: crate::vk::Device,
     render_pass: RenderPass,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetRenderAreaGranularity = unsafe extern "system" fn(
     device: crate::vk::Device,
     render_pass: RenderPass,
     p_granularity: *mut Extent2D,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateCommandPool = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -542,24 +628,28 @@ pub type PFN_vkCreateCommandPool = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_command_pool: *mut CommandPool,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyCommandPool = unsafe extern "system" fn(
     device: crate::vk::Device,
     command_pool: CommandPool,
     p_allocator: *const AllocationCallbacks,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetCommandPool = unsafe extern "system" fn(
     device: crate::vk::Device,
     command_pool: CommandPool,
     flags: CommandPoolResetFlags,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkAllocateCommandBuffers = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_allocate_info: *const CommandBufferAllocateInfo<'_>,
     p_command_buffers: *mut CommandBuffer,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkFreeCommandBuffers = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -567,25 +657,30 @@ pub type PFN_vkFreeCommandBuffers = unsafe extern "system" fn(
     command_buffer_count: u32,
     p_command_buffers: *const CommandBuffer,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkBeginCommandBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_begin_info: *const CommandBufferBeginInfo<'_>,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkEndCommandBuffer =
     unsafe extern "system" fn(command_buffer: CommandBuffer) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetCommandBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     flags: CommandBufferResetFlags,
 ) -> Result;
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindPipeline = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     pipeline_bind_point: PipelineBindPoint,
     pipeline: Pipeline,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetViewport = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -593,6 +688,7 @@ pub type PFN_vkCmdSetViewport = unsafe extern "system" fn(
     viewport_count: u32,
     p_viewports: *const Viewport,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetScissor = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -600,9 +696,11 @@ pub type PFN_vkCmdSetScissor = unsafe extern "system" fn(
     scissor_count: u32,
     p_scissors: *const Rect2D,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetLineWidth =
     unsafe extern "system" fn(command_buffer: CommandBuffer, line_width: f32);
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDepthBias = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -610,33 +708,39 @@ pub type PFN_vkCmdSetDepthBias = unsafe extern "system" fn(
     depth_bias_clamp: f32,
     depth_bias_slope_factor: f32,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetBlendConstants =
     unsafe extern "system" fn(command_buffer: CommandBuffer, blend_constants: *const [f32; 4usize]);
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDepthBounds = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     min_depth_bounds: f32,
     max_depth_bounds: f32,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetStencilCompareMask = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     face_mask: StencilFaceFlags,
     compare_mask: u32,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetStencilWriteMask = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     face_mask: StencilFaceFlags,
     write_mask: u32,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetStencilReference = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     face_mask: StencilFaceFlags,
     reference: u32,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindDescriptorSets = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -648,6 +752,7 @@ pub type PFN_vkCmdBindDescriptorSets = unsafe extern "system" fn(
     dynamic_offset_count: u32,
     p_dynamic_offsets: *const u32,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindIndexBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -655,6 +760,7 @@ pub type PFN_vkCmdBindIndexBuffer = unsafe extern "system" fn(
     offset: DeviceSize,
     index_type: IndexType,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindVertexBuffers = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -663,6 +769,7 @@ pub type PFN_vkCmdBindVertexBuffers = unsafe extern "system" fn(
     p_buffers: *const Buffer,
     p_offsets: *const DeviceSize,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDraw = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -671,6 +778,7 @@ pub type PFN_vkCmdDraw = unsafe extern "system" fn(
     first_vertex: u32,
     first_instance: u32,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawIndexed = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -680,6 +788,7 @@ pub type PFN_vkCmdDrawIndexed = unsafe extern "system" fn(
     vertex_offset: i32,
     first_instance: u32,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawIndirect = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -688,6 +797,7 @@ pub type PFN_vkCmdDrawIndirect = unsafe extern "system" fn(
     draw_count: u32,
     stride: u32,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawIndexedIndirect = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -696,6 +806,7 @@ pub type PFN_vkCmdDrawIndexedIndirect = unsafe extern "system" fn(
     draw_count: u32,
     stride: u32,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDispatch = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -703,9 +814,11 @@ pub type PFN_vkCmdDispatch = unsafe extern "system" fn(
     group_count_y: u32,
     group_count_z: u32,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDispatchIndirect =
     unsafe extern "system" fn(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize);
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -714,6 +827,7 @@ pub type PFN_vkCmdCopyBuffer = unsafe extern "system" fn(
     region_count: u32,
     p_regions: *const BufferCopy,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyImage = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -724,6 +838,7 @@ pub type PFN_vkCmdCopyImage = unsafe extern "system" fn(
     region_count: u32,
     p_regions: *const ImageCopy,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBlitImage = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -735,6 +850,7 @@ pub type PFN_vkCmdBlitImage = unsafe extern "system" fn(
     p_regions: *const ImageBlit,
     filter: Filter,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyBufferToImage = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -744,6 +860,7 @@ pub type PFN_vkCmdCopyBufferToImage = unsafe extern "system" fn(
     region_count: u32,
     p_regions: *const BufferImageCopy,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyImageToBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -753,6 +870,7 @@ pub type PFN_vkCmdCopyImageToBuffer = unsafe extern "system" fn(
     region_count: u32,
     p_regions: *const BufferImageCopy,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdUpdateBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -761,6 +879,7 @@ pub type PFN_vkCmdUpdateBuffer = unsafe extern "system" fn(
     data_size: DeviceSize,
     p_data: *const c_void,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdFillBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -769,6 +888,7 @@ pub type PFN_vkCmdFillBuffer = unsafe extern "system" fn(
     size: DeviceSize,
     data: u32,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdClearColorImage = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -778,6 +898,7 @@ pub type PFN_vkCmdClearColorImage = unsafe extern "system" fn(
     range_count: u32,
     p_ranges: *const ImageSubresourceRange,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdClearDepthStencilImage = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -787,6 +908,7 @@ pub type PFN_vkCmdClearDepthStencilImage = unsafe extern "system" fn(
     range_count: u32,
     p_ranges: *const ImageSubresourceRange,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdClearAttachments = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -795,6 +917,7 @@ pub type PFN_vkCmdClearAttachments = unsafe extern "system" fn(
     rect_count: u32,
     p_rects: *const ClearRect,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdResolveImage = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -805,18 +928,21 @@ pub type PFN_vkCmdResolveImage = unsafe extern "system" fn(
     region_count: u32,
     p_regions: *const ImageResolve,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetEvent = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     event: Event,
     stage_mask: PipelineStageFlags,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdResetEvent = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     event: Event,
     stage_mask: PipelineStageFlags,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdWaitEvents = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -831,6 +957,7 @@ pub type PFN_vkCmdWaitEvents = unsafe extern "system" fn(
     image_memory_barrier_count: u32,
     p_image_memory_barriers: *const ImageMemoryBarrier<'_>,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdPipelineBarrier = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -844,6 +971,7 @@ pub type PFN_vkCmdPipelineBarrier = unsafe extern "system" fn(
     image_memory_barrier_count: u32,
     p_image_memory_barriers: *const ImageMemoryBarrier<'_>,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginQuery = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -851,9 +979,11 @@ pub type PFN_vkCmdBeginQuery = unsafe extern "system" fn(
     query: u32,
     flags: QueryControlFlags,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEndQuery =
     unsafe extern "system" fn(command_buffer: CommandBuffer, query_pool: QueryPool, query: u32);
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdResetQueryPool = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -861,6 +991,7 @@ pub type PFN_vkCmdResetQueryPool = unsafe extern "system" fn(
     first_query: u32,
     query_count: u32,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdWriteTimestamp = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -868,6 +999,7 @@ pub type PFN_vkCmdWriteTimestamp = unsafe extern "system" fn(
     query_pool: QueryPool,
     query: u32,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyQueryPoolResults = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -879,6 +1011,7 @@ pub type PFN_vkCmdCopyQueryPoolResults = unsafe extern "system" fn(
     stride: DeviceSize,
     flags: QueryResultFlags,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdPushConstants = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -888,26 +1021,32 @@ pub type PFN_vkCmdPushConstants = unsafe extern "system" fn(
     size: u32,
     p_values: *const c_void,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginRenderPass = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_render_pass_begin: *const RenderPassBeginInfo<'_>,
     contents: SubpassContents,
 );
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdNextSubpass =
     unsafe extern "system" fn(command_buffer: CommandBuffer, contents: SubpassContents);
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEndRenderPass = unsafe extern "system" fn(command_buffer: CommandBuffer);
+#[doc = "Provided by VK_VERSION_1_0"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdExecuteCommands = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     command_buffer_count: u32,
     p_command_buffers: *const CommandBuffer,
 );
+#[doc = "Provided by VK_VERSION_1_1"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumerateInstanceVersion =
     unsafe extern "system" fn(p_api_version: *mut u32) -> Result;
+#[doc = "Provided by VK_VERSION_1_1"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceQueue2 = unsafe extern "system" fn(
     device: crate::vk::Device,
