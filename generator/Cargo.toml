@@ -1,7 +1,11 @@
 [package]
 name = "generator"
 version = "0.1.0"
-authors = ["Maik Klein <maikklein@googlemail.com>"]
+authors = [
+    "Maik Klein <maikklein@googlemail.com>",
+    "Benjamin Saunders <ben.e.saunders@gmail.com>",
+    "Marijn Suijten <marijn@traverseresearch.nl>",
+]
 edition = "2021"
 publish = false
 

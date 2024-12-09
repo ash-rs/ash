@@ -84,15 +84,20 @@ impl quote::ToTokens for CType {
 }
 
 fn parse_ctype(i: &str) -> IResult<&str, CType> {
-    (alt((value(CType::U64, tag("ULL")), value(CType::U32, tag("U"))))).parse(i)
+    (alt((
+        value(CType::U64, tag("ULL")),
+        value(CType::U32, tag("U")),
+        // success(CType::U32), // Only for `0x1234` hexadecimals without type-suffix
+    )))
+    .parse(i)
 }
 
 fn parse_cexpr(i: &str) -> IResult<&str, (CType, String)> {
     (alt((
         map(parse_cfloat, |f| (CType::Float, format!("{f:.2}"))),
+        parse_hexadecimal_number,
         parse_inverse_number,
         parse_decimal_number,
-        parse_hexadecimal_number,
     )))
     .parse(i)
 }
@@ -156,10 +161,7 @@ fn parse_hexadecimal_number(i: &str) -> IResult<&str, (CType, String)> {
     (preceded(
         alt((tag("0x"), tag("0X"))),
         map(pair(hex_digit1, parse_ctype), |(num, typ)| {
-            (
-                typ,
-                format!("0x{}{}", num.to_ascii_lowercase(), typ.to_string()),
-            )
+            (typ, format!("0x{}", num.to_ascii_lowercase()))
         }),
     ))
     .parse(i)
@@ -398,7 +400,10 @@ pub enum Constant {
     Number(i32),
     Hex(String),
     BitPos(u32),
-    CExpr(vkxml::CExpression),
+    /// A C expression, also used for floating point (`1000.0F`) and some integer representations (`(~0ULL)`).
+    ///
+    /// Hexadecimals could use this path, but are currently handled separately.
+    CExpr(String),
     Text(String),
     Alias(Ident),
 }
@@ -417,7 +422,7 @@ impl quote::ToTokens for Constant {
             Self::Text(ref text) => text.to_tokens(tokens),
             Self::CExpr(ref expr) => {
                 let (rem, (_, rexpr)) = parse_cexpr(expr).expect("Unable to parse cexpr");
-                assert!(rem.is_empty());
+                assert!(rem.is_empty(), "{rem}");
                 tokens.extend(rexpr.parse::<TokenStream>());
             }
             Self::BitPos(pos) => {
@@ -426,7 +431,7 @@ impl quote::ToTokens for Constant {
                 let bit_string = interleave_number('_', 4, &bit_string);
                 syn::LitInt::new(&format!("0b{bit_string}"), Span::call_site()).to_tokens(tokens);
             }
-            Self::Alias(ref value) => tokens.extend(quote!(Self::#value)),
+            Self::Alias(ref value) => tokens.extend(quote!(#value)),
         }
     }
 }
@@ -471,10 +476,10 @@ impl Constant {
             Self::Number(_) | Self::Hex(_) => CType::USize,
             Self::CExpr(expr) => {
                 let (rem, (ty, _)) = parse_cexpr(expr).expect("Unable to parse cexpr");
-                assert!(rem.is_empty());
+                assert!(rem.is_empty(), "{rem}");
                 ty
             }
-            _ => unimplemented!(),
+            x => unimplemented!("{x:?}"),
         }
     }
 
@@ -528,19 +533,26 @@ impl Constant {
                 Some((Self::Number(value as i32), Some(extends.clone()), false))
             }
             EnumSpec::Value { value, extends } => {
-                let value = value
-                    .strip_prefix("0x")
-                    .map(|hex| Self::Hex(hex.to_owned()))
-                    .or_else(|| value.parse::<i32>().ok().map(Self::Number))?;
+                let value = if let Ok(value) = value.parse::<i32>() {
+                    Self::Number(value)
+                } else if let Some(hex) = value.strip_prefix("0x") {
+                    Self::Hex(hex.to_owned())
+                } else {
+                    Self::CExpr(value.to_owned())
+                };
+
                 Some((value, extends.clone(), false))
             }
             EnumSpec::Alias { alias, extends } => {
-                let base_type = extends.as_deref().or(enum_name)?;
-                let key = variant_ident(base_type, alias);
+                let base_type = extends.as_deref().or(enum_name);
+                let key = base_type
+                    .map_or(format_ident!("{}", constant_name(alias)), |base_type| {
+                        variant_ident(base_type, alias)
+                    });
                 if key == "DISPATCH_BASE" {
                     None
                 } else {
-                    Some((Self::Alias(key), Some(base_type.to_owned()), true))
+                    Some((Self::Alias(key), base_type.map(str::to_owned), true))
                 }
             }
             _ => None,
@@ -1685,7 +1697,7 @@ pub fn bitflags_impl_block(
         let notation = constant.doc_attribute();
         let constant = constant.constant(enum_name);
         let value = if let Constant::Alias(_) = &constant {
-            quote!(#constant)
+            quote!(Self::#constant)
         } else {
             quote!(Self(#constant))
         };
@@ -2805,20 +2817,25 @@ pub fn constant_name(name: &str) -> &str {
 }
 
 pub fn generate_constant<'a>(
-    constant: &'a vkxml::Constant,
-    cache: &mut HashSet<&'a str>,
+    constant: &'a vk_parse::Enum,
+    global_const_cache: &mut HashMap<&'a str, CType>,
 ) -> TokenStream {
-    cache.insert(constant.name.as_str());
-    let c = Constant::from_constant(constant);
+    let (c, _, is_alias) = Constant::from_vk_parse_enum(constant, None, None).unwrap();
+    // This requires knowing the type of the alias, that is unavailable here.  Besides
+    // backwards-compatibility, stabilization aliases serve no purpose.
     let name = constant_name(&constant.name);
     let ident = format_ident!("{}", name);
     let notation = constant.doc_attribute();
-
-    let ty = if name == "TRUE" || name == "FALSE" {
+    let ty = if let Constant::Alias(a) = &c {
+        // TODO: Drop is_alias over Constant::Alias match
+        assert!(is_alias);
+        global_const_cache[a.to_string().as_str()]
+    } else if name == "TRUE" || name == "FALSE" {
         CType::Bool32
     } else {
         c.ty()
     };
+    global_const_cache.insert(name, ty);
     quote! {
         #notation
         pub const #ident: #ty = #c;
@@ -3064,11 +3081,13 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .flat_map(|definitions| &definitions.elements)
         .collect();
 
-    let constants: Vec<&vkxml::Constant> = spec
-        .elements
+    let constants: Vec<_> = spec2
+        .0
         .iter()
-        .filter_map(get_variant!(vkxml::RegistryElement::Constants))
-        .flat_map(|constants| &constants.elements)
+        .filter_map(get_variant!(vk_parse::RegistryChild::Enums))
+        .filter(|enums| enums.kind.as_deref() == Some("constants"))
+        .flat_map(|enums| &enums.children)
+        .filter_map(get_variant!(vk_parse::EnumsChild::Enum))
         .collect();
 
     let features_children = spec2
@@ -3144,12 +3163,11 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
             acc
         });
 
-    let mut constants_code: Vec<_> = constants
+    let mut global_const_cache = HashMap::new();
+    let constants_code: Vec<_> = constants
         .iter()
-        .map(|constant| generate_constant(constant, &mut const_cache))
+        .map(|constant| generate_constant(constant, &mut global_const_cache))
         .collect();
-
-    constants_code.push(quote! { pub const SHADER_UNUSED_NV : u32 = SHADER_UNUSED_KHR;});
 
     let union_types = definitions
         .iter()
