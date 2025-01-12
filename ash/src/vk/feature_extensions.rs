@@ -1,27 +1,27 @@
 use super::bitflags::*;
 use super::enums::*;
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl BufferCreateFlags {
     #[doc = "Buffer requires protected memory"]
     pub const PROTECTED: Self = Self(0b1000);
 }
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl CommandPoolCreateFlags {
     #[doc = "Command buffers allocated from pool are protected command buffers"]
     pub const PROTECTED: Self = Self(0b100);
 }
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl DependencyFlags {
     #[doc = "Dependency is across devices"]
     pub const DEVICE_GROUP: Self = Self(0b100);
     pub const VIEW_LOCAL: Self = Self(0b10);
 }
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl DeviceQueueCreateFlags {
     #[doc = "Queue is a protected-capable device queue"]
     pub const PROTECTED: Self = Self(0b1);
 }
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl Format {
     pub const G8B8G8R8_422_UNORM: Self = Self(1_000_156_000);
     pub const B8G8R8G8_422_UNORM: Self = Self(1_000_156_001);
@@ -58,7 +58,7 @@ impl Format {
     pub const G16_B16R16_2PLANE_422_UNORM: Self = Self(1_000_156_032);
     pub const G16_B16_R16_3PLANE_444_UNORM: Self = Self(1_000_156_033);
 }
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl FormatFeatureFlags {
     #[doc = "Format can be used as the source image of image transfer commands"]
     pub const TRANSFER_SRC: Self = Self(0b100_0000_0000_0000);
@@ -80,13 +80,13 @@ impl FormatFeatureFlags {
     #[doc = "Format can have cosited rather than midpoint chroma samples"]
     pub const COSITED_CHROMA_SAMPLES: Self = Self(0b1000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl ImageAspectFlags {
     pub const PLANE_0: Self = Self(0b1_0000);
     pub const PLANE_1: Self = Self(0b10_0000);
     pub const PLANE_2: Self = Self(0b100_0000);
 }
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl ImageCreateFlags {
     pub const ALIAS: Self = Self(0b100_0000_0000);
     #[doc = "Allows using VkBindImageMemoryDeviceGroupInfo::pSplitInstanceBindRegions when binding memory to the image"]
@@ -99,42 +99,42 @@ impl ImageCreateFlags {
     pub const PROTECTED: Self = Self(0b1000_0000_0000);
     pub const DISJOINT: Self = Self(0b10_0000_0000);
 }
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl ImageLayout {
     pub const DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL: Self = Self(1_000_117_000);
     pub const DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL: Self = Self(1_000_117_001);
 }
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl MemoryHeapFlags {
     #[doc = "If set, heap allocations allocate multiple instances by default"]
     pub const MULTI_INSTANCE: Self = Self(0b10);
 }
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl MemoryPropertyFlags {
     #[doc = "Memory is protected"]
     pub const PROTECTED: Self = Self(0b10_0000);
 }
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl ObjectType {
     pub const SAMPLER_YCBCR_CONVERSION: Self = Self(1_000_156_000);
     pub const DESCRIPTOR_UPDATE_TEMPLATE: Self = Self(1_000_085_000);
 }
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl PipelineCreateFlags {
     pub const VIEW_INDEX_FROM_DEVICE_INDEX: Self = Self(0b1000);
     pub const DISPATCH_BASE: Self = Self(0b1_0000);
 }
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl QueueFlags {
     #[doc = "Queues may support protected operations"]
     pub const PROTECTED: Self = Self(0b1_0000);
 }
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl Result {
     pub const ERROR_OUT_OF_POOL_MEMORY: Self = Self(-1_000_069_000);
     pub const ERROR_INVALID_EXTERNAL_HANDLE: Self = Self(-1_000_072_003);
 }
-#[doc = "Generated from 'VK_VERSION_1_1'"]
+#[doc = "Provided by VK_VERSION_1_1"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SUBGROUP_PROPERTIES: Self = Self(1_000_094_000);
     pub const BIND_BUFFER_MEMORY_INFO: Self = Self(1_000_157_000);
@@ -206,49 +206,49 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES: Self =
         Self::PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES;
 }
-#[doc = "Generated from 'VK_VERSION_1_2'"]
+#[doc = "Provided by VK_VERSION_1_2"]
 impl BufferCreateFlags {
     pub const DEVICE_ADDRESS_CAPTURE_REPLAY: Self = Self(0b1_0000);
 }
-#[doc = "Generated from 'VK_VERSION_1_2'"]
+#[doc = "Provided by VK_VERSION_1_2"]
 impl BufferUsageFlags {
     pub const SHADER_DEVICE_ADDRESS: Self = Self(0b10_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_VERSION_1_2'"]
+#[doc = "Provided by VK_VERSION_1_2"]
 impl DescriptorPoolCreateFlags {
     pub const UPDATE_AFTER_BIND: Self = Self(0b10);
 }
-#[doc = "Generated from 'VK_VERSION_1_2'"]
+#[doc = "Provided by VK_VERSION_1_2"]
 impl DescriptorSetLayoutCreateFlags {
     pub const UPDATE_AFTER_BIND_POOL: Self = Self(0b10);
 }
-#[doc = "Generated from 'VK_VERSION_1_2'"]
+#[doc = "Provided by VK_VERSION_1_2"]
 impl FormatFeatureFlags {
     #[doc = "Format can be used with min/max reduction filtering"]
     pub const SAMPLED_IMAGE_FILTER_MINMAX: Self = Self(0b1_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_VERSION_1_2'"]
+#[doc = "Provided by VK_VERSION_1_2"]
 impl FramebufferCreateFlags {
     pub const IMAGELESS: Self = Self(0b1);
 }
-#[doc = "Generated from 'VK_VERSION_1_2'"]
+#[doc = "Provided by VK_VERSION_1_2"]
 impl ImageLayout {
     pub const DEPTH_ATTACHMENT_OPTIMAL: Self = Self(1_000_241_000);
     pub const DEPTH_READ_ONLY_OPTIMAL: Self = Self(1_000_241_001);
     pub const STENCIL_ATTACHMENT_OPTIMAL: Self = Self(1_000_241_002);
     pub const STENCIL_READ_ONLY_OPTIMAL: Self = Self(1_000_241_003);
 }
-#[doc = "Generated from 'VK_VERSION_1_2'"]
+#[doc = "Provided by VK_VERSION_1_2"]
 impl MemoryAllocateFlags {
     pub const DEVICE_ADDRESS: Self = Self(0b10);
     pub const DEVICE_ADDRESS_CAPTURE_REPLAY: Self = Self(0b100);
 }
-#[doc = "Generated from 'VK_VERSION_1_2'"]
+#[doc = "Provided by VK_VERSION_1_2"]
 impl Result {
     pub const ERROR_FRAGMENTATION: Self = Self(-1_000_161_000);
     pub const ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS: Self = Self(-1_000_257_000);
 }
-#[doc = "Generated from 'VK_VERSION_1_2'"]
+#[doc = "Provided by VK_VERSION_1_2"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_VULKAN_1_1_FEATURES: Self = Self(49);
     pub const PHYSICAL_DEVICE_VULKAN_1_1_PROPERTIES: Self = Self(50);
@@ -301,19 +301,19 @@ impl StructureType {
     pub const MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO: Self = Self(1_000_257_003);
     pub const DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO: Self = Self(1_000_257_004);
 }
-#[doc = "Generated from 'VK_VERSION_1_3'"]
+#[doc = "Provided by VK_VERSION_1_3"]
 impl AccessFlags {
     pub const NONE: Self = Self(0);
 }
-#[doc = "Generated from 'VK_VERSION_1_3'"]
+#[doc = "Provided by VK_VERSION_1_3"]
 impl AttachmentStoreOp {
     pub const NONE: Self = Self(1_000_301_000);
 }
-#[doc = "Generated from 'VK_VERSION_1_3'"]
+#[doc = "Provided by VK_VERSION_1_3"]
 impl DescriptorType {
     pub const INLINE_UNIFORM_BLOCK: Self = Self(1_000_138_000);
 }
-#[doc = "Generated from 'VK_VERSION_1_3'"]
+#[doc = "Provided by VK_VERSION_1_3"]
 impl DynamicState {
     pub const CULL_MODE: Self = Self(1_000_267_000);
     pub const FRONT_FACE: Self = Self(1_000_267_001);
@@ -331,11 +331,11 @@ impl DynamicState {
     pub const DEPTH_BIAS_ENABLE: Self = Self(1_000_377_002);
     pub const PRIMITIVE_RESTART_ENABLE: Self = Self(1_000_377_004);
 }
-#[doc = "Generated from 'VK_VERSION_1_3'"]
+#[doc = "Provided by VK_VERSION_1_3"]
 impl EventCreateFlags {
     pub const DEVICE_ONLY: Self = Self(0b1);
 }
-#[doc = "Generated from 'VK_VERSION_1_3'"]
+#[doc = "Provided by VK_VERSION_1_3"]
 impl Format {
     pub const G8_B8R8_2PLANE_444_UNORM: Self = Self(1_000_330_000);
     pub const G10X6_B10X6R10X6_2PLANE_444_UNORM_3PACK16: Self = Self(1_000_330_001);
@@ -358,42 +358,42 @@ impl Format {
     pub const ASTC_12X10_SFLOAT_BLOCK: Self = Self(1_000_066_012);
     pub const ASTC_12X12_SFLOAT_BLOCK: Self = Self(1_000_066_013);
 }
-#[doc = "Generated from 'VK_VERSION_1_3'"]
+#[doc = "Provided by VK_VERSION_1_3"]
 impl ImageAspectFlags {
     pub const NONE: Self = Self(0);
 }
-#[doc = "Generated from 'VK_VERSION_1_3'"]
+#[doc = "Provided by VK_VERSION_1_3"]
 impl ImageLayout {
     pub const READ_ONLY_OPTIMAL: Self = Self(1_000_314_000);
     pub const ATTACHMENT_OPTIMAL: Self = Self(1_000_314_001);
 }
-#[doc = "Generated from 'VK_VERSION_1_3'"]
+#[doc = "Provided by VK_VERSION_1_3"]
 impl ObjectType {
     pub const PRIVATE_DATA_SLOT: Self = Self(1_000_295_000);
 }
-#[doc = "Generated from 'VK_VERSION_1_3'"]
+#[doc = "Provided by VK_VERSION_1_3"]
 impl PipelineCacheCreateFlags {
     pub const EXTERNALLY_SYNCHRONIZED: Self = Self(0b1);
 }
-#[doc = "Generated from 'VK_VERSION_1_3'"]
+#[doc = "Provided by VK_VERSION_1_3"]
 impl PipelineCreateFlags {
     pub const FAIL_ON_PIPELINE_COMPILE_REQUIRED: Self = Self(0b1_0000_0000);
     pub const EARLY_RETURN_ON_FAILURE: Self = Self(0b10_0000_0000);
 }
-#[doc = "Generated from 'VK_VERSION_1_3'"]
+#[doc = "Provided by VK_VERSION_1_3"]
 impl PipelineShaderStageCreateFlags {
     pub const ALLOW_VARYING_SUBGROUP_SIZE: Self = Self(0b1);
     pub const REQUIRE_FULL_SUBGROUPS: Self = Self(0b10);
 }
-#[doc = "Generated from 'VK_VERSION_1_3'"]
+#[doc = "Provided by VK_VERSION_1_3"]
 impl PipelineStageFlags {
     pub const NONE: Self = Self(0);
 }
-#[doc = "Generated from 'VK_VERSION_1_3'"]
+#[doc = "Provided by VK_VERSION_1_3"]
 impl Result {
     pub const PIPELINE_COMPILE_REQUIRED: Self = Self(1_000_297_000);
 }
-#[doc = "Generated from 'VK_VERSION_1_3'"]
+#[doc = "Provided by VK_VERSION_1_3"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_VULKAN_1_3_FEATURES: Self = Self(53);
     pub const PHYSICAL_DEVICE_VULKAN_1_3_PROPERTIES: Self = Self(54);
