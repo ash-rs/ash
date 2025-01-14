@@ -350,6 +350,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         let graphic_pipeline = graphics_pipelines[0];
 
         let _ = base.render_loop(|| {
+            base.device.wait_for_fences(&[base.draw_commands_reuse_fence], true, u64::MAX).unwrap();
+
             let (present_index, _) = base
                 .swapchain_loader
                 .acquire_next_image(
