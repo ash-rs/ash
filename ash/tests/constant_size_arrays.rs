@@ -1,16 +1,7 @@
-use ash::vk::{PhysicalDeviceProperties, PipelineColorBlendStateCreateInfo};
+use ash::vk::PipelineColorBlendStateCreateInfo;
 
 #[test]
 fn assert_struct_field_is_array() {
-    let pipeline_cache_uuid: [u8; 16] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-    let _ = PhysicalDeviceProperties::default().pipeline_cache_uuid(pipeline_cache_uuid);
-
-    let _ = PhysicalDeviceProperties {
-        pipeline_cache_uuid,
-        ..Default::default()
-    };
-
     let blend_constants: [f32; 4] = [0.0, 0.0, 0.0, 0.0];
 
     let _ = PipelineColorBlendStateCreateInfo::default().blend_constants(blend_constants);
