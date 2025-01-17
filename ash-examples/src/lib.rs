@@ -226,7 +226,7 @@ impl ExampleBase {
                     .to_vec();
             extension_names.push(debug_utils::NAME.as_ptr());
 
-            #[cfg(any(target_os = "macos", target_os = "ios"))]
+            #[cfg(target_vendor = "apple")]
             {
                 extension_names.push(ash::khr::portability_enumeration::NAME.as_ptr());
                 // Enabling this extension is a requirement when using `VK_KHR_portability_subset`
@@ -240,7 +240,7 @@ impl ExampleBase {
                 .engine_version(0)
                 .api_version(vk::make_api_version(0, 1, 0, 0));
 
-            let create_flags = if cfg!(any(target_os = "macos", target_os = "ios")) {
+            let create_flags = if cfg!(target_vendor = "apple") {
                 vk::InstanceCreateFlags::ENUMERATE_PORTABILITY_KHR
             } else {
                 vk::InstanceCreateFlags::default()
@@ -313,7 +313,7 @@ impl ExampleBase {
             let queue_family_index = queue_family_index as u32;
             let device_extension_names_raw = [
                 swapchain::NAME.as_ptr(),
-                #[cfg(any(target_os = "macos", target_os = "ios"))]
+                #[cfg(target_vendor = "apple")]
                 ash::khr::portability_subset::NAME.as_ptr(),
             ];
             let features = vk::PhysicalDeviceFeatures {
