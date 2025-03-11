@@ -18,7 +18,7 @@ use nom::{
     },
     combinator::{map, map_res, opt, value},
     multi::{many1, separated_list1},
-    sequence::{delimited, pair, preceded, separated_pair, terminated, tuple},
+    sequence::{delimited, pair, preceded, separated_pair, terminated},
     IResult, Parser,
 };
 use once_cell::sync::Lazy;
@@ -84,7 +84,7 @@ impl quote::ToTokens for CType {
 }
 
 fn parse_ctype(i: &str) -> IResult<&str, CType> {
-    (alt((value(CType::U64, tag("ULL")), value(CType::U32, tag("U")))))(i)
+    (alt((value(CType::U64, tag("ULL")), value(CType::U32, tag("U"))))).parse(i)
 }
 
 fn parse_cexpr(i: &str) -> IResult<&str, (CType, String)> {
@@ -93,11 +93,12 @@ fn parse_cexpr(i: &str) -> IResult<&str, (CType, String)> {
         parse_inverse_number,
         parse_decimal_number,
         parse_hexadecimal_number,
-    )))(i)
+    )))
+    .parse(i)
 }
 
 fn parse_cfloat(i: &str) -> IResult<&str, f32> {
-    (terminated(nom::number::complete::float, one_of("fF")))(i)
+    (terminated(nom::number::complete::float, one_of("fF"))).parse(i)
 }
 
 fn parse_inverse_number(i: &str) -> IResult<&str, (CType, String)> {
@@ -118,7 +119,8 @@ fn parse_inverse_number(i: &str) -> IResult<&str, (CType, String)> {
             };
             (ctyp, expr)
         },
-    ))(i)
+    ))
+    .parse(i)
 }
 
 // Like a C string, but does not support quote escaping and expects at least one character.
@@ -130,21 +132,24 @@ fn parse_c_include_string(i: &str) -> IResult<&str, String> {
             c.iter().map(char::to_string).join("")
         }),
         char('"'),
-    ))(i)
+    ))
+    .parse(i)
 }
 
 fn parse_c_include(i: &str) -> IResult<&str, String> {
     (preceded(
         tag("#include"),
         preceded(multispace1, parse_c_include_string),
-    ))(i)
+    ))
+    .parse(i)
 }
 
 fn parse_decimal_number(i: &str) -> IResult<&str, (CType, String)> {
     (map(
         pair(digit1.map(str::to_string), parse_ctype),
         |(dig, ctype)| (ctype, dig),
-    ))(i)
+    ))
+    .parse(i)
 }
 
 fn parse_hexadecimal_number(i: &str) -> IResult<&str, (CType, String)> {
@@ -156,15 +161,16 @@ fn parse_hexadecimal_number(i: &str) -> IResult<&str, (CType, String)> {
                 format!("0x{}{}", num.to_ascii_lowercase(), typ.to_string()),
             )
         }),
-    ))(i)
+    ))
+    .parse(i)
 }
 
 fn parse_c_identifier(i: &str) -> IResult<&str, &str> {
-    take_while1(|c: char| c == '_' || c.is_alphanumeric())(i)
+    take_while1(|c: char| c == '_' || c.is_alphanumeric()).parse(i)
 }
 
 fn parse_comment_suffix(i: &str) -> IResult<&str, Option<&str>> {
-    opt(delimited(tag("//"), take_until("\n"), newline))(i)
+    opt(delimited(tag("//"), take_until("\n"), newline)).parse(i)
 }
 
 fn parse_parameter_names(i: &str) -> IResult<&str, Vec<&str>> {
@@ -172,7 +178,8 @@ fn parse_parameter_names(i: &str) -> IResult<&str, Vec<&str>> {
         char('('),
         separated_list1(tag(", "), parse_c_identifier),
         char(')'),
-    )(i)
+    )
+    .parse(i)
 }
 
 /// Parses a C macro define optionally prefixed by a comment and optionally
@@ -185,7 +192,8 @@ fn parse_c_define_header(i: &str) -> IResult<&str, (Option<&str>, (&str, Option<
             tag("#define "),
             pair(parse_c_identifier, opt(parse_parameter_names)),
         ),
-    ))(i)
+    ))
+    .parse(i)
 }
 
 #[derive(Debug)]
@@ -208,11 +216,11 @@ struct CParameterType<'a> {
 fn parse_c_type(i: &str) -> IResult<&str, CParameterType<'_>> {
     (map(
         separated_pair(
-            tuple((
+            (
                 opt(tag("const ")),
                 preceded(opt(tag("struct ")), parse_c_identifier),
                 opt(char('*')),
-            )),
+            ),
             multispace0,
             opt(pair(opt(tag("const")), char('*'))),
         ),
@@ -236,7 +244,8 @@ fn parse_c_type(i: &str) -> IResult<&str, CParameterType<'_>> {
                 (None, Some(_)) => unreachable!(),
             },
         },
-    ))(i)
+    ))
+    .parse(i)
 }
 
 #[derive(Debug)]
@@ -268,7 +277,8 @@ fn parse_c_parameter(i: &str) -> IResult<&str, CParameter<'_>> {
             _name: name,
             static_array,
         },
-    ))(i)
+    ))
+    .parse(i)
 }
 
 fn khronos_link<S: Display + ?Sized>(name: &S) -> Literal {
