@@ -36,11 +36,15 @@ macro_rules! offset_of {
         }
     }};
 }
-/// Helper function for submitting command buffers. Immediately waits for the fence before the command buffer
-/// is executed. That way we can delay the waiting for the fences by 1 frame which is good for performance.
-/// Make sure to create the fence in a signaled state on the first use.
+/// Helper function for submitting command buffers.
+///
+/// # Safety
+///
+/// The caller must ensure that the command buffer and the fence is
+/// not currently used. The wait_mask must specify capabilities that
+/// are supported by the queue.
 #[allow(clippy::too_many_arguments)]
-pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(
+pub unsafe fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(
     device: &Device,
     command_buffer: vk::CommandBuffer,
     command_buffer_reuse_fence: vk::Fence,
@@ -50,45 +54,39 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(
     signal_semaphores: &[vk::Semaphore],
     f: F,
 ) {
-    unsafe {
-        device
-            .wait_for_fences(&[command_buffer_reuse_fence], true, u64::MAX)
-            .expect("Wait for fence failed.");
+    device
+        .reset_fences(&[command_buffer_reuse_fence])
+        .expect("Reset fences failed.");
 
-        device
-            .reset_fences(&[command_buffer_reuse_fence])
-            .expect("Reset fences failed.");
+    device
+        .reset_command_buffer(
+            command_buffer,
+            vk::CommandBufferResetFlags::RELEASE_RESOURCES,
+        )
+        .expect("Reset command buffer failed.");
 
-        device
-            .reset_command_buffer(
-                command_buffer,
-                vk::CommandBufferResetFlags::RELEASE_RESOURCES,
-            )
-            .expect("Reset command buffer failed.");
+    let command_buffer_begin_info =
+        vk::CommandBufferBeginInfo::default().flags(vk::CommandBufferUsageFlags::ONE_TIME_SUBMIT);
 
-        let command_buffer_begin_info = vk::CommandBufferBeginInfo::default()
-            .flags(vk::CommandBufferUsageFlags::ONE_TIME_SUBMIT);
+    device
+        .begin_command_buffer(command_buffer, &command_buffer_begin_info)
+        .expect("Begin commandbuffer");
+    f(device, command_buffer);
+    device
+        .end_command_buffer(command_buffer)
+        .expect("End commandbuffer");
 
-        device
-            .begin_command_buffer(command_buffer, &command_buffer_begin_info)
-            .expect("Begin commandbuffer");
-        f(device, command_buffer);
-        device
-            .end_command_buffer(command_buffer)
-            .expect("End commandbuffer");
+    let command_buffers = vec![command_buffer];
 
-        let command_buffers = vec![command_buffer];
+    let submit_info = vk::SubmitInfo::default()
+        .wait_semaphores(wait_semaphores)
+        .wait_dst_stage_mask(wait_mask)
+        .command_buffers(&command_buffers)
+        .signal_semaphores(signal_semaphores);
 
-        let submit_info = vk::SubmitInfo::default()
-            .wait_semaphores(wait_semaphores)
-            .wait_dst_stage_mask(wait_mask)
-            .command_buffers(&command_buffers)
-            .signal_semaphores(signal_semaphores);
-
-        device
-            .queue_submit(submit_queue, &[submit_info], command_buffer_reuse_fence)
-            .expect("queue submit failed.");
-    }
+    device
+        .queue_submit(submit_queue, &[submit_info], command_buffer_reuse_fence)
+        .expect("queue submit failed.");
 }
 
 unsafe extern "system" fn vulkan_debug_callback(
@@ -169,8 +167,7 @@ pub struct ExampleBase {
     pub present_complete_semaphore: vk::Semaphore,
     pub rendering_complete_semaphore: vk::Semaphore,
 
-    pub draw_commands_reuse_fence: vk::Fence,
-    pub setup_commands_reuse_fence: vk::Fence,
+    pub submit_complete_fence: vk::Fence,
 }
 
 impl ExampleBase {
@@ -194,7 +191,14 @@ impl ExampleBase {
                 } => {
                     elwp.exit();
                 }
-                Event::AboutToWait => f(),
+                Event::AboutToWait => {
+                    unsafe {
+                        self.device
+                            .wait_for_fences(&[self.submit_complete_fence], true, u64::MAX)
+                            .expect("Wait for fence failed.");
+                    }
+                    f()
+                }
                 _ => (),
             }
         })
@@ -470,17 +474,14 @@ impl ExampleBase {
             let fence_create_info =
                 vk::FenceCreateInfo::default().flags(vk::FenceCreateFlags::SIGNALED);
 
-            let draw_commands_reuse_fence = device
-                .create_fence(&fence_create_info, None)
-                .expect("Create fence failed.");
-            let setup_commands_reuse_fence = device
+            let submit_complete_fence = device
                 .create_fence(&fence_create_info, None)
                 .expect("Create fence failed.");
 
             record_submit_commandbuffer(
                 &device,
                 setup_command_buffer,
-                setup_commands_reuse_fence,
+                submit_complete_fence,
                 present_queue,
                 &[],
                 &[],
@@ -512,6 +513,9 @@ impl ExampleBase {
                     );
                 },
             );
+            device
+                .wait_for_fences(&[submit_complete_fence], true, u64::MAX)
+                .expect("Wait for fence failed.");
 
             let depth_image_view_info = vk::ImageViewCreateInfo::default()
                 .subresource_range(
@@ -561,8 +565,7 @@ impl ExampleBase {
                 depth_image_view,
                 present_complete_semaphore,
                 rendering_complete_semaphore,
-                draw_commands_reuse_fence,
-                setup_commands_reuse_fence,
+                submit_complete_fence,
                 surface,
                 debug_call_back,
                 debug_utils_loader,
@@ -580,10 +583,7 @@ impl Drop for ExampleBase {
                 .destroy_semaphore(self.present_complete_semaphore, None);
             self.device
                 .destroy_semaphore(self.rendering_complete_semaphore, None);
-            self.device
-                .destroy_fence(self.draw_commands_reuse_fence, None);
-            self.device
-                .destroy_fence(self.setup_commands_reuse_fence, None);
+            self.device.destroy_fence(self.submit_complete_fence, None);
             self.device.free_memory(self.depth_image_memory, None);
             self.device.destroy_image_view(self.depth_image_view, None);
             self.device.destroy_image(self.depth_image, None);
