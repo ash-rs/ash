@@ -1434,7 +1434,7 @@ pub fn generate_extension_commands<'a>(
     let hl_imports = (hl_instance_fp.is_some() || hl_device_fp.is_some()).then(|| {
         quote!(
             use core::ffi::*;
-            
+
             use crate::vk::*;
         )
     });
