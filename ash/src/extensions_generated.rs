@@ -1,11 +1,7 @@
-#![allow(unused_imports)]
-use crate::vk::*;
-use core::ffi::*;
 #[doc = "Extensions tagged AMD"]
 pub mod amd {
     #[doc = "VK_AMD_rasterization_order"]
     pub mod rasterization_order {
-        use super::super::*;
         pub use {
             crate::vk::AMD_RASTERIZATION_ORDER_NAME as NAME,
             crate::vk::AMD_RASTERIZATION_ORDER_SPEC_VERSION as SPEC_VERSION,
@@ -13,7 +9,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_shader_trinary_minmax"]
     pub mod shader_trinary_minmax {
-        use super::super::*;
         pub use {
             crate::vk::AMD_SHADER_TRINARY_MINMAX_NAME as NAME,
             crate::vk::AMD_SHADER_TRINARY_MINMAX_SPEC_VERSION as SPEC_VERSION,
@@ -21,7 +16,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_shader_explicit_vertex_parameter"]
     pub mod shader_explicit_vertex_parameter {
-        use super::super::*;
         pub use {
             crate::vk::AMD_SHADER_EXPLICIT_VERTEX_PARAMETER_NAME as NAME,
             crate::vk::AMD_SHADER_EXPLICIT_VERTEX_PARAMETER_SPEC_VERSION as SPEC_VERSION,
@@ -29,7 +23,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_gcn_shader"]
     pub mod gcn_shader {
-        use super::super::*;
         pub use {
             crate::vk::AMD_GCN_SHADER_NAME as NAME,
             crate::vk::AMD_GCN_SHADER_SPEC_VERSION as SPEC_VERSION,
@@ -37,7 +30,8 @@ pub mod amd {
     }
     #[doc = "VK_AMD_draw_indirect_count"]
     pub mod draw_indirect_count {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::AMD_DRAW_INDIRECT_COUNT_NAME as NAME,
             crate::vk::AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION as SPEC_VERSION,
@@ -134,7 +128,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_negative_viewport_height"]
     pub mod negative_viewport_height {
-        use super::super::*;
         pub use {
             crate::vk::AMD_NEGATIVE_VIEWPORT_HEIGHT_NAME as NAME,
             crate::vk::AMD_NEGATIVE_VIEWPORT_HEIGHT_SPEC_VERSION as SPEC_VERSION,
@@ -142,7 +135,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_gpu_shader_half_float"]
     pub mod gpu_shader_half_float {
-        use super::super::*;
         pub use {
             crate::vk::AMD_GPU_SHADER_HALF_FLOAT_NAME as NAME,
             crate::vk::AMD_GPU_SHADER_HALF_FLOAT_SPEC_VERSION as SPEC_VERSION,
@@ -150,7 +142,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_shader_ballot"]
     pub mod shader_ballot {
-        use super::super::*;
         pub use {
             crate::vk::AMD_SHADER_BALLOT_NAME as NAME,
             crate::vk::AMD_SHADER_BALLOT_SPEC_VERSION as SPEC_VERSION,
@@ -158,7 +149,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_texture_gather_bias_lod"]
     pub mod texture_gather_bias_lod {
-        use super::super::*;
         pub use {
             crate::vk::AMD_TEXTURE_GATHER_BIAS_LOD_NAME as NAME,
             crate::vk::AMD_TEXTURE_GATHER_BIAS_LOD_SPEC_VERSION as SPEC_VERSION,
@@ -166,7 +156,8 @@ pub mod amd {
     }
     #[doc = "VK_AMD_shader_info"]
     pub mod shader_info {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::AMD_SHADER_INFO_NAME as NAME,
             crate::vk::AMD_SHADER_INFO_SPEC_VERSION as SPEC_VERSION,
@@ -232,7 +223,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_shader_image_load_store_lod"]
     pub mod shader_image_load_store_lod {
-        use super::super::*;
         pub use {
             crate::vk::AMD_SHADER_IMAGE_LOAD_STORE_LOD_NAME as NAME,
             crate::vk::AMD_SHADER_IMAGE_LOAD_STORE_LOD_SPEC_VERSION as SPEC_VERSION,
@@ -240,7 +230,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_gpu_shader_int16"]
     pub mod gpu_shader_int16 {
-        use super::super::*;
         pub use {
             crate::vk::AMD_GPU_SHADER_INT16_NAME as NAME,
             crate::vk::AMD_GPU_SHADER_INT16_SPEC_VERSION as SPEC_VERSION,
@@ -248,7 +237,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_mixed_attachment_samples"]
     pub mod mixed_attachment_samples {
-        use super::super::*;
         pub use {
             crate::vk::AMD_MIXED_ATTACHMENT_SAMPLES_NAME as NAME,
             crate::vk::AMD_MIXED_ATTACHMENT_SAMPLES_SPEC_VERSION as SPEC_VERSION,
@@ -256,7 +244,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_shader_fragment_mask"]
     pub mod shader_fragment_mask {
-        use super::super::*;
         pub use {
             crate::vk::AMD_SHADER_FRAGMENT_MASK_NAME as NAME,
             crate::vk::AMD_SHADER_FRAGMENT_MASK_SPEC_VERSION as SPEC_VERSION,
@@ -264,7 +251,8 @@ pub mod amd {
     }
     #[doc = "VK_AMD_buffer_marker"]
     pub mod buffer_marker {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::AMD_BUFFER_MARKER_NAME as NAME,
             crate::vk::AMD_BUFFER_MARKER_SPEC_VERSION as SPEC_VERSION,
@@ -333,7 +321,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_pipeline_compiler_control"]
     pub mod pipeline_compiler_control {
-        use super::super::*;
         pub use {
             crate::vk::AMD_PIPELINE_COMPILER_CONTROL_NAME as NAME,
             crate::vk::AMD_PIPELINE_COMPILER_CONTROL_SPEC_VERSION as SPEC_VERSION,
@@ -341,7 +328,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_shader_core_properties"]
     pub mod shader_core_properties {
-        use super::super::*;
         pub use {
             crate::vk::AMD_SHADER_CORE_PROPERTIES_NAME as NAME,
             crate::vk::AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION as SPEC_VERSION,
@@ -349,7 +335,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_memory_overallocation_behavior"]
     pub mod memory_overallocation_behavior {
-        use super::super::*;
         pub use {
             crate::vk::AMD_MEMORY_OVERALLOCATION_BEHAVIOR_NAME as NAME,
             crate::vk::AMD_MEMORY_OVERALLOCATION_BEHAVIOR_SPEC_VERSION as SPEC_VERSION,
@@ -357,7 +342,8 @@ pub mod amd {
     }
     #[doc = "VK_AMD_display_native_hdr"]
     pub mod display_native_hdr {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::AMD_DISPLAY_NATIVE_HDR_NAME as NAME,
             crate::vk::AMD_DISPLAY_NATIVE_HDR_SPEC_VERSION as SPEC_VERSION,
@@ -423,7 +409,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_shader_core_properties2"]
     pub mod shader_core_properties2 {
-        use super::super::*;
         pub use {
             crate::vk::AMD_SHADER_CORE_PROPERTIES2_NAME as NAME,
             crate::vk::AMD_SHADER_CORE_PROPERTIES2_SPEC_VERSION as SPEC_VERSION,
@@ -431,7 +416,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_device_coherent_memory"]
     pub mod device_coherent_memory {
-        use super::super::*;
         pub use {
             crate::vk::AMD_DEVICE_COHERENT_MEMORY_NAME as NAME,
             crate::vk::AMD_DEVICE_COHERENT_MEMORY_SPEC_VERSION as SPEC_VERSION,
@@ -439,7 +423,6 @@ pub mod amd {
     }
     #[doc = "VK_AMD_shader_early_and_late_fragment_tests"]
     pub mod shader_early_and_late_fragment_tests {
-        use super::super::*;
         pub use {
             crate::vk::AMD_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_NAME as NAME,
             crate::vk::AMD_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_SPEC_VERSION as SPEC_VERSION,
@@ -447,7 +430,8 @@ pub mod amd {
     }
     #[doc = "VK_AMD_anti_lag"]
     pub mod anti_lag {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::AMD_ANTI_LAG_NAME as NAME,
             crate::vk::AMD_ANTI_LAG_SPEC_VERSION as SPEC_VERSION,
@@ -512,7 +496,8 @@ pub mod amd {
 pub mod amdx {
     #[doc = "VK_AMDX_shader_enqueue"]
     pub mod shader_enqueue {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::AMDX_SHADER_ENQUEUE_NAME as NAME,
             crate::vk::AMDX_SHADER_ENQUEUE_SPEC_VERSION as SPEC_VERSION,
@@ -719,7 +704,8 @@ pub mod amdx {
 pub mod android {
     #[doc = "VK_ANDROID_native_buffer"]
     pub mod native_buffer {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::ANDROID_NATIVE_BUFFER_NAME as NAME,
             crate::vk::ANDROID_NATIVE_BUFFER_SPEC_VERSION as SPEC_VERSION,
@@ -859,7 +845,8 @@ pub mod android {
     }
     #[doc = "VK_ANDROID_external_memory_android_hardware_buffer"]
     pub mod external_memory_android_hardware_buffer {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_NAME as NAME,
             crate::vk::ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_SPEC_VERSION as SPEC_VERSION,
@@ -951,7 +938,6 @@ pub mod android {
     }
     #[doc = "VK_ANDROID_external_format_resolve"]
     pub mod external_format_resolve {
-        use super::super::*;
         pub use {
             crate::vk::ANDROID_EXTERNAL_FORMAT_RESOLVE_NAME as NAME,
             crate::vk::ANDROID_EXTERNAL_FORMAT_RESOLVE_SPEC_VERSION as SPEC_VERSION,
@@ -962,7 +948,6 @@ pub mod android {
 pub mod arm {
     #[doc = "VK_ARM_rasterization_order_attachment_access"]
     pub mod rasterization_order_attachment_access {
-        use super::super::*;
         pub use {
             crate::vk::ARM_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_NAME as NAME,
             crate::vk::ARM_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_SPEC_VERSION as SPEC_VERSION,
@@ -970,7 +955,6 @@ pub mod arm {
     }
     #[doc = "VK_ARM_shader_core_properties"]
     pub mod shader_core_properties {
-        use super::super::*;
         pub use {
             crate::vk::ARM_SHADER_CORE_PROPERTIES_NAME as NAME,
             crate::vk::ARM_SHADER_CORE_PROPERTIES_SPEC_VERSION as SPEC_VERSION,
@@ -978,7 +962,6 @@ pub mod arm {
     }
     #[doc = "VK_ARM_scheduling_controls"]
     pub mod scheduling_controls {
-        use super::super::*;
         pub use {
             crate::vk::ARM_SCHEDULING_CONTROLS_NAME as NAME,
             crate::vk::ARM_SCHEDULING_CONTROLS_SPEC_VERSION as SPEC_VERSION,
@@ -986,7 +969,6 @@ pub mod arm {
     }
     #[doc = "VK_ARM_render_pass_striped"]
     pub mod render_pass_striped {
-        use super::super::*;
         pub use {
             crate::vk::ARM_RENDER_PASS_STRIPED_NAME as NAME,
             crate::vk::ARM_RENDER_PASS_STRIPED_SPEC_VERSION as SPEC_VERSION,
@@ -994,7 +976,6 @@ pub mod arm {
     }
     #[doc = "VK_ARM_shader_core_builtins"]
     pub mod shader_core_builtins {
-        use super::super::*;
         pub use {
             crate::vk::ARM_SHADER_CORE_BUILTINS_NAME as NAME,
             crate::vk::ARM_SHADER_CORE_BUILTINS_SPEC_VERSION as SPEC_VERSION,
@@ -1005,7 +986,8 @@ pub mod arm {
 pub mod ext {
     #[doc = "VK_EXT_debug_report"]
     pub mod debug_report {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_DEBUG_REPORT_NAME as NAME,
             crate::vk::EXT_DEBUG_REPORT_SPEC_VERSION as SPEC_VERSION,
@@ -1122,7 +1104,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_depth_range_unrestricted"]
     pub mod depth_range_unrestricted {
-        use super::super::*;
         pub use {
             crate::vk::EXT_DEPTH_RANGE_UNRESTRICTED_NAME as NAME,
             crate::vk::EXT_DEPTH_RANGE_UNRESTRICTED_SPEC_VERSION as SPEC_VERSION,
@@ -1130,7 +1111,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_debug_marker"]
     pub mod debug_marker {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_DEBUG_MARKER_NAME as NAME,
             crate::vk::EXT_DEBUG_MARKER_SPEC_VERSION as SPEC_VERSION,
@@ -1275,7 +1257,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_transform_feedback"]
     pub mod transform_feedback {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_TRANSFORM_FEEDBACK_NAME as NAME,
             crate::vk::EXT_TRANSFORM_FEEDBACK_SPEC_VERSION as SPEC_VERSION,
@@ -1463,7 +1446,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_validation_flags"]
     pub mod validation_flags {
-        use super::super::*;
         pub use {
             crate::vk::EXT_VALIDATION_FLAGS_NAME as NAME,
             crate::vk::EXT_VALIDATION_FLAGS_SPEC_VERSION as SPEC_VERSION,
@@ -1471,7 +1453,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_shader_subgroup_ballot"]
     pub mod shader_subgroup_ballot {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SHADER_SUBGROUP_BALLOT_NAME as NAME,
             crate::vk::EXT_SHADER_SUBGROUP_BALLOT_SPEC_VERSION as SPEC_VERSION,
@@ -1479,7 +1460,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_shader_subgroup_vote"]
     pub mod shader_subgroup_vote {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SHADER_SUBGROUP_VOTE_NAME as NAME,
             crate::vk::EXT_SHADER_SUBGROUP_VOTE_SPEC_VERSION as SPEC_VERSION,
@@ -1487,7 +1467,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_texture_compression_astc_hdr"]
     pub mod texture_compression_astc_hdr {
-        use super::super::*;
         pub use {
             crate::vk::EXT_TEXTURE_COMPRESSION_ASTC_HDR_NAME as NAME,
             crate::vk::EXT_TEXTURE_COMPRESSION_ASTC_HDR_SPEC_VERSION as SPEC_VERSION,
@@ -1495,7 +1474,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_astc_decode_mode"]
     pub mod astc_decode_mode {
-        use super::super::*;
         pub use {
             crate::vk::EXT_ASTC_DECODE_MODE_NAME as NAME,
             crate::vk::EXT_ASTC_DECODE_MODE_SPEC_VERSION as SPEC_VERSION,
@@ -1503,7 +1481,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_pipeline_robustness"]
     pub mod pipeline_robustness {
-        use super::super::*;
         pub use {
             crate::vk::EXT_PIPELINE_ROBUSTNESS_NAME as NAME,
             crate::vk::EXT_PIPELINE_ROBUSTNESS_SPEC_VERSION as SPEC_VERSION,
@@ -1511,7 +1488,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_conditional_rendering"]
     pub mod conditional_rendering {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_CONDITIONAL_RENDERING_NAME as NAME,
             crate::vk::EXT_CONDITIONAL_RENDERING_SPEC_VERSION as SPEC_VERSION,
@@ -1600,7 +1578,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_direct_mode_display"]
     pub mod direct_mode_display {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_DIRECT_MODE_DISPLAY_NAME as NAME,
             crate::vk::EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION as SPEC_VERSION,
@@ -1662,7 +1641,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_acquire_xlib_display"]
     pub mod acquire_xlib_display {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_ACQUIRE_XLIB_DISPLAY_NAME as NAME,
             crate::vk::EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION as SPEC_VERSION,
@@ -1751,7 +1731,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_display_surface_counter"]
     pub mod display_surface_counter {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_DISPLAY_SURFACE_COUNTER_NAME as NAME,
             crate::vk::EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION as SPEC_VERSION,
@@ -1820,7 +1801,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_display_control"]
     pub mod display_control {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_DISPLAY_CONTROL_NAME as NAME,
             crate::vk::EXT_DISPLAY_CONTROL_SPEC_VERSION as SPEC_VERSION,
@@ -1954,7 +1936,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_discard_rectangles"]
     pub mod discard_rectangles {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_DISCARD_RECTANGLES_NAME as NAME,
             crate::vk::EXT_DISCARD_RECTANGLES_SPEC_VERSION as SPEC_VERSION,
@@ -2064,7 +2047,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_conservative_rasterization"]
     pub mod conservative_rasterization {
-        use super::super::*;
         pub use {
             crate::vk::EXT_CONSERVATIVE_RASTERIZATION_NAME as NAME,
             crate::vk::EXT_CONSERVATIVE_RASTERIZATION_SPEC_VERSION as SPEC_VERSION,
@@ -2072,7 +2054,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_depth_clip_enable"]
     pub mod depth_clip_enable {
-        use super::super::*;
         pub use {
             crate::vk::EXT_DEPTH_CLIP_ENABLE_NAME as NAME,
             crate::vk::EXT_DEPTH_CLIP_ENABLE_SPEC_VERSION as SPEC_VERSION,
@@ -2080,7 +2061,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_swapchain_colorspace"]
     pub mod swapchain_colorspace {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SWAPCHAIN_COLORSPACE_NAME as NAME,
             crate::vk::EXT_SWAPCHAIN_COLORSPACE_SPEC_VERSION as SPEC_VERSION,
@@ -2088,7 +2068,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_hdr_metadata"]
     pub mod hdr_metadata {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_HDR_METADATA_NAME as NAME,
             crate::vk::EXT_HDR_METADATA_SPEC_VERSION as SPEC_VERSION,
@@ -2152,7 +2133,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_external_memory_dma_buf"]
     pub mod external_memory_dma_buf {
-        use super::super::*;
         pub use {
             crate::vk::EXT_EXTERNAL_MEMORY_DMA_BUF_NAME as NAME,
             crate::vk::EXT_EXTERNAL_MEMORY_DMA_BUF_SPEC_VERSION as SPEC_VERSION,
@@ -2160,7 +2140,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_queue_family_foreign"]
     pub mod queue_family_foreign {
-        use super::super::*;
         pub use {
             crate::vk::EXT_QUEUE_FAMILY_FOREIGN_NAME as NAME,
             crate::vk::EXT_QUEUE_FAMILY_FOREIGN_SPEC_VERSION as SPEC_VERSION,
@@ -2168,7 +2147,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_debug_utils"]
     pub mod debug_utils {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_DEBUG_UTILS_NAME as NAME,
             crate::vk::EXT_DEBUG_UTILS_SPEC_VERSION as SPEC_VERSION,
@@ -2477,7 +2457,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_sampler_filter_minmax"]
     pub mod sampler_filter_minmax {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SAMPLER_FILTER_MINMAX_NAME as NAME,
             crate::vk::EXT_SAMPLER_FILTER_MINMAX_SPEC_VERSION as SPEC_VERSION,
@@ -2485,7 +2464,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_inline_uniform_block"]
     pub mod inline_uniform_block {
-        use super::super::*;
         pub use {
             crate::vk::EXT_INLINE_UNIFORM_BLOCK_NAME as NAME,
             crate::vk::EXT_INLINE_UNIFORM_BLOCK_SPEC_VERSION as SPEC_VERSION,
@@ -2493,7 +2471,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_shader_stencil_export"]
     pub mod shader_stencil_export {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SHADER_STENCIL_EXPORT_NAME as NAME,
             crate::vk::EXT_SHADER_STENCIL_EXPORT_SPEC_VERSION as SPEC_VERSION,
@@ -2501,7 +2478,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_sample_locations"]
     pub mod sample_locations {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_SAMPLE_LOCATIONS_NAME as NAME,
             crate::vk::EXT_SAMPLE_LOCATIONS_SPEC_VERSION as SPEC_VERSION,
@@ -2628,7 +2606,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_blend_operation_advanced"]
     pub mod blend_operation_advanced {
-        use super::super::*;
         pub use {
             crate::vk::EXT_BLEND_OPERATION_ADVANCED_NAME as NAME,
             crate::vk::EXT_BLEND_OPERATION_ADVANCED_SPEC_VERSION as SPEC_VERSION,
@@ -2636,7 +2613,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_post_depth_coverage"]
     pub mod post_depth_coverage {
-        use super::super::*;
         pub use {
             crate::vk::EXT_POST_DEPTH_COVERAGE_NAME as NAME,
             crate::vk::EXT_POST_DEPTH_COVERAGE_SPEC_VERSION as SPEC_VERSION,
@@ -2644,7 +2620,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_image_drm_format_modifier"]
     pub mod image_drm_format_modifier {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_IMAGE_DRM_FORMAT_MODIFIER_NAME as NAME,
             crate::vk::EXT_IMAGE_DRM_FORMAT_MODIFIER_SPEC_VERSION as SPEC_VERSION,
@@ -2713,7 +2690,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_validation_cache"]
     pub mod validation_cache {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_VALIDATION_CACHE_NAME as NAME,
             crate::vk::EXT_VALIDATION_CACHE_SPEC_VERSION as SPEC_VERSION,
@@ -2846,7 +2824,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_descriptor_indexing"]
     pub mod descriptor_indexing {
-        use super::super::*;
         pub use {
             crate::vk::EXT_DESCRIPTOR_INDEXING_NAME as NAME,
             crate::vk::EXT_DESCRIPTOR_INDEXING_SPEC_VERSION as SPEC_VERSION,
@@ -2854,7 +2831,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_shader_viewport_index_layer"]
     pub mod shader_viewport_index_layer {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SHADER_VIEWPORT_INDEX_LAYER_NAME as NAME,
             crate::vk::EXT_SHADER_VIEWPORT_INDEX_LAYER_SPEC_VERSION as SPEC_VERSION,
@@ -2862,7 +2838,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_filter_cubic"]
     pub mod filter_cubic {
-        use super::super::*;
         pub use {
             crate::vk::EXT_FILTER_CUBIC_NAME as NAME,
             crate::vk::EXT_FILTER_CUBIC_SPEC_VERSION as SPEC_VERSION,
@@ -2870,7 +2845,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_global_priority"]
     pub mod global_priority {
-        use super::super::*;
         pub use {
             crate::vk::EXT_GLOBAL_PRIORITY_NAME as NAME,
             crate::vk::EXT_GLOBAL_PRIORITY_SPEC_VERSION as SPEC_VERSION,
@@ -2878,7 +2852,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_external_memory_host"]
     pub mod external_memory_host {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_EXTERNAL_MEMORY_HOST_NAME as NAME,
             crate::vk::EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION as SPEC_VERSION,
@@ -2949,7 +2924,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_calibrated_timestamps"]
     pub mod calibrated_timestamps {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_CALIBRATED_TIMESTAMPS_NAME as NAME,
             crate::vk::EXT_CALIBRATED_TIMESTAMPS_SPEC_VERSION as SPEC_VERSION,
@@ -3079,7 +3055,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_vertex_attribute_divisor"]
     pub mod vertex_attribute_divisor {
-        use super::super::*;
         pub use {
             crate::vk::EXT_VERTEX_ATTRIBUTE_DIVISOR_NAME as NAME,
             crate::vk::EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION as SPEC_VERSION,
@@ -3087,7 +3062,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_pipeline_creation_feedback"]
     pub mod pipeline_creation_feedback {
-        use super::super::*;
         pub use {
             crate::vk::EXT_PIPELINE_CREATION_FEEDBACK_NAME as NAME,
             crate::vk::EXT_PIPELINE_CREATION_FEEDBACK_SPEC_VERSION as SPEC_VERSION,
@@ -3095,7 +3069,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_pci_bus_info"]
     pub mod pci_bus_info {
-        use super::super::*;
         pub use {
             crate::vk::EXT_PCI_BUS_INFO_NAME as NAME,
             crate::vk::EXT_PCI_BUS_INFO_SPEC_VERSION as SPEC_VERSION,
@@ -3103,7 +3076,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_metal_surface"]
     pub mod metal_surface {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_METAL_SURFACE_NAME as NAME,
             crate::vk::EXT_METAL_SURFACE_SPEC_VERSION as SPEC_VERSION,
@@ -3171,7 +3145,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_fragment_density_map"]
     pub mod fragment_density_map {
-        use super::super::*;
         pub use {
             crate::vk::EXT_FRAGMENT_DENSITY_MAP_NAME as NAME,
             crate::vk::EXT_FRAGMENT_DENSITY_MAP_SPEC_VERSION as SPEC_VERSION,
@@ -3179,7 +3152,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_scalar_block_layout"]
     pub mod scalar_block_layout {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SCALAR_BLOCK_LAYOUT_NAME as NAME,
             crate::vk::EXT_SCALAR_BLOCK_LAYOUT_SPEC_VERSION as SPEC_VERSION,
@@ -3187,7 +3159,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_subgroup_size_control"]
     pub mod subgroup_size_control {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SUBGROUP_SIZE_CONTROL_NAME as NAME,
             crate::vk::EXT_SUBGROUP_SIZE_CONTROL_SPEC_VERSION as SPEC_VERSION,
@@ -3195,7 +3166,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_shader_image_atomic_int64"]
     pub mod shader_image_atomic_int64 {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SHADER_IMAGE_ATOMIC_INT64_NAME as NAME,
             crate::vk::EXT_SHADER_IMAGE_ATOMIC_INT64_SPEC_VERSION as SPEC_VERSION,
@@ -3203,7 +3173,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_memory_budget"]
     pub mod memory_budget {
-        use super::super::*;
         pub use {
             crate::vk::EXT_MEMORY_BUDGET_NAME as NAME,
             crate::vk::EXT_MEMORY_BUDGET_SPEC_VERSION as SPEC_VERSION,
@@ -3211,7 +3180,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_memory_priority"]
     pub mod memory_priority {
-        use super::super::*;
         pub use {
             crate::vk::EXT_MEMORY_PRIORITY_NAME as NAME,
             crate::vk::EXT_MEMORY_PRIORITY_SPEC_VERSION as SPEC_VERSION,
@@ -3219,7 +3187,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_buffer_device_address"]
     pub mod buffer_device_address {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_BUFFER_DEVICE_ADDRESS_NAME as NAME,
             crate::vk::EXT_BUFFER_DEVICE_ADDRESS_SPEC_VERSION as SPEC_VERSION,
@@ -3285,7 +3254,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_tooling_info"]
     pub mod tooling_info {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_TOOLING_INFO_NAME as NAME,
             crate::vk::EXT_TOOLING_INFO_SPEC_VERSION as SPEC_VERSION,
@@ -3353,7 +3323,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_separate_stencil_usage"]
     pub mod separate_stencil_usage {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SEPARATE_STENCIL_USAGE_NAME as NAME,
             crate::vk::EXT_SEPARATE_STENCIL_USAGE_SPEC_VERSION as SPEC_VERSION,
@@ -3361,7 +3330,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_validation_features"]
     pub mod validation_features {
-        use super::super::*;
         pub use {
             crate::vk::EXT_VALIDATION_FEATURES_NAME as NAME,
             crate::vk::EXT_VALIDATION_FEATURES_SPEC_VERSION as SPEC_VERSION,
@@ -3369,7 +3337,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_fragment_shader_interlock"]
     pub mod fragment_shader_interlock {
-        use super::super::*;
         pub use {
             crate::vk::EXT_FRAGMENT_SHADER_INTERLOCK_NAME as NAME,
             crate::vk::EXT_FRAGMENT_SHADER_INTERLOCK_SPEC_VERSION as SPEC_VERSION,
@@ -3377,7 +3344,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_ycbcr_image_arrays"]
     pub mod ycbcr_image_arrays {
-        use super::super::*;
         pub use {
             crate::vk::EXT_YCBCR_IMAGE_ARRAYS_NAME as NAME,
             crate::vk::EXT_YCBCR_IMAGE_ARRAYS_SPEC_VERSION as SPEC_VERSION,
@@ -3385,7 +3351,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_provoking_vertex"]
     pub mod provoking_vertex {
-        use super::super::*;
         pub use {
             crate::vk::EXT_PROVOKING_VERTEX_NAME as NAME,
             crate::vk::EXT_PROVOKING_VERTEX_SPEC_VERSION as SPEC_VERSION,
@@ -3393,7 +3358,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_full_screen_exclusive"]
     pub mod full_screen_exclusive {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_FULL_SCREEN_EXCLUSIVE_NAME as NAME,
             crate::vk::EXT_FULL_SCREEN_EXCLUSIVE_SPEC_VERSION as SPEC_VERSION,
@@ -3566,7 +3532,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_headless_surface"]
     pub mod headless_surface {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_HEADLESS_SURFACE_NAME as NAME,
             crate::vk::EXT_HEADLESS_SURFACE_SPEC_VERSION as SPEC_VERSION,
@@ -3634,7 +3601,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_line_rasterization"]
     pub mod line_rasterization {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_LINE_RASTERIZATION_NAME as NAME,
             crate::vk::EXT_LINE_RASTERIZATION_SPEC_VERSION as SPEC_VERSION,
@@ -3701,7 +3669,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_shader_atomic_float"]
     pub mod shader_atomic_float {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SHADER_ATOMIC_FLOAT_NAME as NAME,
             crate::vk::EXT_SHADER_ATOMIC_FLOAT_SPEC_VERSION as SPEC_VERSION,
@@ -3709,7 +3676,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_host_query_reset"]
     pub mod host_query_reset {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_HOST_QUERY_RESET_NAME as NAME,
             crate::vk::EXT_HOST_QUERY_RESET_SPEC_VERSION as SPEC_VERSION,
@@ -3773,7 +3741,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_index_type_uint8"]
     pub mod index_type_uint8 {
-        use super::super::*;
         pub use {
             crate::vk::EXT_INDEX_TYPE_UINT8_NAME as NAME,
             crate::vk::EXT_INDEX_TYPE_UINT8_SPEC_VERSION as SPEC_VERSION,
@@ -3781,7 +3748,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_extended_dynamic_state"]
     pub mod extended_dynamic_state {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_EXTENDED_DYNAMIC_STATE_NAME as NAME,
             crate::vk::EXT_EXTENDED_DYNAMIC_STATE_SPEC_VERSION as SPEC_VERSION,
@@ -4076,7 +4044,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_host_image_copy"]
     pub mod host_image_copy {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_HOST_IMAGE_COPY_NAME as NAME,
             crate::vk::EXT_HOST_IMAGE_COPY_SPEC_VERSION as SPEC_VERSION,
@@ -4225,7 +4194,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_map_memory_placed"]
     pub mod map_memory_placed {
-        use super::super::*;
         pub use {
             crate::vk::EXT_MAP_MEMORY_PLACED_NAME as NAME,
             crate::vk::EXT_MAP_MEMORY_PLACED_SPEC_VERSION as SPEC_VERSION,
@@ -4233,7 +4201,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_shader_atomic_float2"]
     pub mod shader_atomic_float2 {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SHADER_ATOMIC_FLOAT2_NAME as NAME,
             crate::vk::EXT_SHADER_ATOMIC_FLOAT2_SPEC_VERSION as SPEC_VERSION,
@@ -4241,7 +4208,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_surface_maintenance1"]
     pub mod surface_maintenance1 {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SURFACE_MAINTENANCE1_NAME as NAME,
             crate::vk::EXT_SURFACE_MAINTENANCE1_SPEC_VERSION as SPEC_VERSION,
@@ -4249,7 +4215,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_swapchain_maintenance1"]
     pub mod swapchain_maintenance1 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_SWAPCHAIN_MAINTENANCE1_NAME as NAME,
             crate::vk::EXT_SWAPCHAIN_MAINTENANCE1_SPEC_VERSION as SPEC_VERSION,
@@ -4315,7 +4282,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_shader_demote_to_helper_invocation"]
     pub mod shader_demote_to_helper_invocation {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SHADER_DEMOTE_TO_HELPER_INVOCATION_NAME as NAME,
             crate::vk::EXT_SHADER_DEMOTE_TO_HELPER_INVOCATION_SPEC_VERSION as SPEC_VERSION,
@@ -4323,7 +4289,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_texel_buffer_alignment"]
     pub mod texel_buffer_alignment {
-        use super::super::*;
         pub use {
             crate::vk::EXT_TEXEL_BUFFER_ALIGNMENT_NAME as NAME,
             crate::vk::EXT_TEXEL_BUFFER_ALIGNMENT_SPEC_VERSION as SPEC_VERSION,
@@ -4331,7 +4296,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_depth_bias_control"]
     pub mod depth_bias_control {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_DEPTH_BIAS_CONTROL_NAME as NAME,
             crate::vk::EXT_DEPTH_BIAS_CONTROL_SPEC_VERSION as SPEC_VERSION,
@@ -4396,7 +4362,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_device_memory_report"]
     pub mod device_memory_report {
-        use super::super::*;
         pub use {
             crate::vk::EXT_DEVICE_MEMORY_REPORT_NAME as NAME,
             crate::vk::EXT_DEVICE_MEMORY_REPORT_SPEC_VERSION as SPEC_VERSION,
@@ -4404,7 +4369,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_acquire_drm_display"]
     pub mod acquire_drm_display {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_ACQUIRE_DRM_DISPLAY_NAME as NAME,
             crate::vk::EXT_ACQUIRE_DRM_DISPLAY_SPEC_VERSION as SPEC_VERSION,
@@ -4489,7 +4455,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_robustness2"]
     pub mod robustness2 {
-        use super::super::*;
         pub use {
             crate::vk::EXT_ROBUSTNESS2_NAME as NAME,
             crate::vk::EXT_ROBUSTNESS2_SPEC_VERSION as SPEC_VERSION,
@@ -4497,7 +4462,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_custom_border_color"]
     pub mod custom_border_color {
-        use super::super::*;
         pub use {
             crate::vk::EXT_CUSTOM_BORDER_COLOR_NAME as NAME,
             crate::vk::EXT_CUSTOM_BORDER_COLOR_SPEC_VERSION as SPEC_VERSION,
@@ -4505,7 +4469,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_private_data"]
     pub mod private_data {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_PRIVATE_DATA_NAME as NAME,
             crate::vk::EXT_PRIVATE_DATA_SPEC_VERSION as SPEC_VERSION,
@@ -4632,7 +4597,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_pipeline_creation_cache_control"]
     pub mod pipeline_creation_cache_control {
-        use super::super::*;
         pub use {
             crate::vk::EXT_PIPELINE_CREATION_CACHE_CONTROL_NAME as NAME,
             crate::vk::EXT_PIPELINE_CREATION_CACHE_CONTROL_SPEC_VERSION as SPEC_VERSION,
@@ -4640,7 +4604,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_metal_objects"]
     pub mod metal_objects {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_METAL_OBJECTS_NAME as NAME,
             crate::vk::EXT_METAL_OBJECTS_SPEC_VERSION as SPEC_VERSION,
@@ -4706,7 +4671,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_descriptor_buffer"]
     pub mod descriptor_buffer {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_DESCRIPTOR_BUFFER_NAME as NAME,
             crate::vk::EXT_DESCRIPTOR_BUFFER_SPEC_VERSION as SPEC_VERSION,
@@ -5004,7 +4970,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_graphics_pipeline_library"]
     pub mod graphics_pipeline_library {
-        use super::super::*;
         pub use {
             crate::vk::EXT_GRAPHICS_PIPELINE_LIBRARY_NAME as NAME,
             crate::vk::EXT_GRAPHICS_PIPELINE_LIBRARY_SPEC_VERSION as SPEC_VERSION,
@@ -5012,7 +4977,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_mesh_shader"]
     pub mod mesh_shader {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_MESH_SHADER_NAME as NAME,
             crate::vk::EXT_MESH_SHADER_SPEC_VERSION as SPEC_VERSION,
@@ -5128,7 +5094,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_ycbcr_2plane_444_formats"]
     pub mod ycbcr_2plane_444_formats {
-        use super::super::*;
         pub use {
             crate::vk::EXT_YCBCR_2PLANE_444_FORMATS_NAME as NAME,
             crate::vk::EXT_YCBCR_2PLANE_444_FORMATS_SPEC_VERSION as SPEC_VERSION,
@@ -5136,7 +5101,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_fragment_density_map2"]
     pub mod fragment_density_map2 {
-        use super::super::*;
         pub use {
             crate::vk::EXT_FRAGMENT_DENSITY_MAP2_NAME as NAME,
             crate::vk::EXT_FRAGMENT_DENSITY_MAP2_SPEC_VERSION as SPEC_VERSION,
@@ -5144,7 +5108,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_image_robustness"]
     pub mod image_robustness {
-        use super::super::*;
         pub use {
             crate::vk::EXT_IMAGE_ROBUSTNESS_NAME as NAME,
             crate::vk::EXT_IMAGE_ROBUSTNESS_SPEC_VERSION as SPEC_VERSION,
@@ -5152,7 +5115,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_image_compression_control"]
     pub mod image_compression_control {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_IMAGE_COMPRESSION_CONTROL_NAME as NAME,
             crate::vk::EXT_IMAGE_COMPRESSION_CONTROL_SPEC_VERSION as SPEC_VERSION,
@@ -5221,7 +5185,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_attachment_feedback_loop_layout"]
     pub mod attachment_feedback_loop_layout {
-        use super::super::*;
         pub use {
             crate::vk::EXT_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_NAME as NAME,
             crate::vk::EXT_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_SPEC_VERSION as SPEC_VERSION,
@@ -5229,7 +5192,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_4444_formats"]
     pub mod _4444_formats {
-        use super::super::*;
         pub use {
             crate::vk::EXT_4444_FORMATS_NAME as NAME,
             crate::vk::EXT_4444_FORMATS_SPEC_VERSION as SPEC_VERSION,
@@ -5237,7 +5199,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_device_fault"]
     pub mod device_fault {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_DEVICE_FAULT_NAME as NAME,
             crate::vk::EXT_DEVICE_FAULT_SPEC_VERSION as SPEC_VERSION,
@@ -5304,7 +5267,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_rgba10x6_formats"]
     pub mod rgba10x6_formats {
-        use super::super::*;
         pub use {
             crate::vk::EXT_RGBA10X6_FORMATS_NAME as NAME,
             crate::vk::EXT_RGBA10X6_FORMATS_SPEC_VERSION as SPEC_VERSION,
@@ -5312,7 +5274,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_directfb_surface"]
     pub mod directfb_surface {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_DIRECTFB_SURFACE_NAME as NAME,
             crate::vk::EXT_DIRECTFB_SURFACE_SPEC_VERSION as SPEC_VERSION,
@@ -5403,7 +5366,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_vertex_input_dynamic_state"]
     pub mod vertex_input_dynamic_state {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_VERTEX_INPUT_DYNAMIC_STATE_NAME as NAME,
             crate::vk::EXT_VERTEX_INPUT_DYNAMIC_STATE_SPEC_VERSION as SPEC_VERSION,
@@ -5472,7 +5436,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_physical_device_drm"]
     pub mod physical_device_drm {
-        use super::super::*;
         pub use {
             crate::vk::EXT_PHYSICAL_DEVICE_DRM_NAME as NAME,
             crate::vk::EXT_PHYSICAL_DEVICE_DRM_SPEC_VERSION as SPEC_VERSION,
@@ -5480,7 +5443,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_device_address_binding_report"]
     pub mod device_address_binding_report {
-        use super::super::*;
         pub use {
             crate::vk::EXT_DEVICE_ADDRESS_BINDING_REPORT_NAME as NAME,
             crate::vk::EXT_DEVICE_ADDRESS_BINDING_REPORT_SPEC_VERSION as SPEC_VERSION,
@@ -5488,7 +5450,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_depth_clip_control"]
     pub mod depth_clip_control {
-        use super::super::*;
         pub use {
             crate::vk::EXT_DEPTH_CLIP_CONTROL_NAME as NAME,
             crate::vk::EXT_DEPTH_CLIP_CONTROL_SPEC_VERSION as SPEC_VERSION,
@@ -5496,7 +5457,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_primitive_topology_list_restart"]
     pub mod primitive_topology_list_restart {
-        use super::super::*;
         pub use {
             crate::vk::EXT_PRIMITIVE_TOPOLOGY_LIST_RESTART_NAME as NAME,
             crate::vk::EXT_PRIMITIVE_TOPOLOGY_LIST_RESTART_SPEC_VERSION as SPEC_VERSION,
@@ -5504,7 +5464,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_pipeline_properties"]
     pub mod pipeline_properties {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_PIPELINE_PROPERTIES_NAME as NAME,
             crate::vk::EXT_PIPELINE_PROPERTIES_SPEC_VERSION as SPEC_VERSION,
@@ -5578,7 +5539,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_frame_boundary"]
     pub mod frame_boundary {
-        use super::super::*;
         pub use {
             crate::vk::EXT_FRAME_BOUNDARY_NAME as NAME,
             crate::vk::EXT_FRAME_BOUNDARY_SPEC_VERSION as SPEC_VERSION,
@@ -5586,7 +5546,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_multisampled_render_to_single_sampled"]
     pub mod multisampled_render_to_single_sampled {
-        use super::super::*;
         pub use {
             crate::vk::EXT_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_NAME as NAME,
             crate::vk::EXT_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_SPEC_VERSION as SPEC_VERSION,
@@ -5594,7 +5553,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_extended_dynamic_state2"]
     pub mod extended_dynamic_state2 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_EXTENDED_DYNAMIC_STATE2_NAME as NAME,
             crate::vk::EXT_EXTENDED_DYNAMIC_STATE2_SPEC_VERSION as SPEC_VERSION,
@@ -5738,7 +5698,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_color_write_enable"]
     pub mod color_write_enable {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_COLOR_WRITE_ENABLE_NAME as NAME,
             crate::vk::EXT_COLOR_WRITE_ENABLE_SPEC_VERSION as SPEC_VERSION,
@@ -5805,7 +5766,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_primitives_generated_query"]
     pub mod primitives_generated_query {
-        use super::super::*;
         pub use {
             crate::vk::EXT_PRIMITIVES_GENERATED_QUERY_NAME as NAME,
             crate::vk::EXT_PRIMITIVES_GENERATED_QUERY_SPEC_VERSION as SPEC_VERSION,
@@ -5813,7 +5773,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_global_priority_query"]
     pub mod global_priority_query {
-        use super::super::*;
         pub use {
             crate::vk::EXT_GLOBAL_PRIORITY_QUERY_NAME as NAME,
             crate::vk::EXT_GLOBAL_PRIORITY_QUERY_SPEC_VERSION as SPEC_VERSION,
@@ -5821,7 +5780,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_image_view_min_lod"]
     pub mod image_view_min_lod {
-        use super::super::*;
         pub use {
             crate::vk::EXT_IMAGE_VIEW_MIN_LOD_NAME as NAME,
             crate::vk::EXT_IMAGE_VIEW_MIN_LOD_SPEC_VERSION as SPEC_VERSION,
@@ -5829,7 +5787,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_multi_draw"]
     pub mod multi_draw {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_MULTI_DRAW_NAME as NAME,
             crate::vk::EXT_MULTI_DRAW_SPEC_VERSION as SPEC_VERSION,
@@ -5920,7 +5879,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_image_2d_view_of_3d"]
     pub mod image_2d_view_of_3d {
-        use super::super::*;
         pub use {
             crate::vk::EXT_IMAGE_2D_VIEW_OF_3D_NAME as NAME,
             crate::vk::EXT_IMAGE_2D_VIEW_OF_3D_SPEC_VERSION as SPEC_VERSION,
@@ -5928,7 +5886,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_shader_tile_image"]
     pub mod shader_tile_image {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SHADER_TILE_IMAGE_NAME as NAME,
             crate::vk::EXT_SHADER_TILE_IMAGE_SPEC_VERSION as SPEC_VERSION,
@@ -5936,7 +5893,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_opacity_micromap"]
     pub mod opacity_micromap {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_OPACITY_MICROMAP_NAME as NAME,
             crate::vk::EXT_OPACITY_MICROMAP_SPEC_VERSION as SPEC_VERSION,
@@ -6268,7 +6226,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_load_store_op_none"]
     pub mod load_store_op_none {
-        use super::super::*;
         pub use {
             crate::vk::EXT_LOAD_STORE_OP_NONE_NAME as NAME,
             crate::vk::EXT_LOAD_STORE_OP_NONE_SPEC_VERSION as SPEC_VERSION,
@@ -6276,7 +6233,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_border_color_swizzle"]
     pub mod border_color_swizzle {
-        use super::super::*;
         pub use {
             crate::vk::EXT_BORDER_COLOR_SWIZZLE_NAME as NAME,
             crate::vk::EXT_BORDER_COLOR_SWIZZLE_SPEC_VERSION as SPEC_VERSION,
@@ -6284,7 +6240,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_pageable_device_local_memory"]
     pub mod pageable_device_local_memory {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_PAGEABLE_DEVICE_LOCAL_MEMORY_NAME as NAME,
             crate::vk::EXT_PAGEABLE_DEVICE_LOCAL_MEMORY_SPEC_VERSION as SPEC_VERSION,
@@ -6351,7 +6308,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_image_sliced_view_of_3d"]
     pub mod image_sliced_view_of_3d {
-        use super::super::*;
         pub use {
             crate::vk::EXT_IMAGE_SLICED_VIEW_OF_3D_NAME as NAME,
             crate::vk::EXT_IMAGE_SLICED_VIEW_OF_3D_SPEC_VERSION as SPEC_VERSION,
@@ -6359,7 +6315,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_depth_clamp_zero_one"]
     pub mod depth_clamp_zero_one {
-        use super::super::*;
         pub use {
             crate::vk::EXT_DEPTH_CLAMP_ZERO_ONE_NAME as NAME,
             crate::vk::EXT_DEPTH_CLAMP_ZERO_ONE_SPEC_VERSION as SPEC_VERSION,
@@ -6367,7 +6322,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_non_seamless_cube_map"]
     pub mod non_seamless_cube_map {
-        use super::super::*;
         pub use {
             crate::vk::EXT_NON_SEAMLESS_CUBE_MAP_NAME as NAME,
             crate::vk::EXT_NON_SEAMLESS_CUBE_MAP_SPEC_VERSION as SPEC_VERSION,
@@ -6375,7 +6329,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_image_compression_control_swapchain"]
     pub mod image_compression_control_swapchain {
-        use super::super::*;
         pub use {
             crate::vk::EXT_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_NAME as NAME,
             crate::vk::EXT_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_SPEC_VERSION as SPEC_VERSION,
@@ -6383,7 +6336,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_nested_command_buffer"]
     pub mod nested_command_buffer {
-        use super::super::*;
         pub use {
             crate::vk::EXT_NESTED_COMMAND_BUFFER_NAME as NAME,
             crate::vk::EXT_NESTED_COMMAND_BUFFER_SPEC_VERSION as SPEC_VERSION,
@@ -6391,7 +6343,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_external_memory_acquire_unmodified"]
     pub mod external_memory_acquire_unmodified {
-        use super::super::*;
         pub use {
             crate::vk::EXT_EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_NAME as NAME,
             crate::vk::EXT_EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_SPEC_VERSION as SPEC_VERSION,
@@ -6399,7 +6350,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_extended_dynamic_state3"]
     pub mod extended_dynamic_state3 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_EXTENDED_DYNAMIC_STATE3_NAME as NAME,
             crate::vk::EXT_EXTENDED_DYNAMIC_STATE3_SPEC_VERSION as SPEC_VERSION,
@@ -7100,7 +7052,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_subpass_merge_feedback"]
     pub mod subpass_merge_feedback {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SUBPASS_MERGE_FEEDBACK_NAME as NAME,
             crate::vk::EXT_SUBPASS_MERGE_FEEDBACK_SPEC_VERSION as SPEC_VERSION,
@@ -7108,7 +7059,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_shader_module_identifier"]
     pub mod shader_module_identifier {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_SHADER_MODULE_IDENTIFIER_NAME as NAME,
             crate::vk::EXT_SHADER_MODULE_IDENTIFIER_SPEC_VERSION as SPEC_VERSION,
@@ -7199,7 +7151,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_rasterization_order_attachment_access"]
     pub mod rasterization_order_attachment_access {
-        use super::super::*;
         pub use {
             crate::vk::EXT_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_NAME as NAME,
             crate::vk::EXT_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_SPEC_VERSION as SPEC_VERSION,
@@ -7207,7 +7158,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_legacy_dithering"]
     pub mod legacy_dithering {
-        use super::super::*;
         pub use {
             crate::vk::EXT_LEGACY_DITHERING_NAME as NAME,
             crate::vk::EXT_LEGACY_DITHERING_SPEC_VERSION as SPEC_VERSION,
@@ -7215,7 +7165,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_pipeline_protected_access"]
     pub mod pipeline_protected_access {
-        use super::super::*;
         pub use {
             crate::vk::EXT_PIPELINE_PROTECTED_ACCESS_NAME as NAME,
             crate::vk::EXT_PIPELINE_PROTECTED_ACCESS_SPEC_VERSION as SPEC_VERSION,
@@ -7223,7 +7172,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_shader_object"]
     pub mod shader_object {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_SHADER_OBJECT_NAME as NAME,
             crate::vk::EXT_SHADER_OBJECT_SPEC_VERSION as SPEC_VERSION,
@@ -8391,7 +8341,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_mutable_descriptor_type"]
     pub mod mutable_descriptor_type {
-        use super::super::*;
         pub use {
             crate::vk::EXT_MUTABLE_DESCRIPTOR_TYPE_NAME as NAME,
             crate::vk::EXT_MUTABLE_DESCRIPTOR_TYPE_SPEC_VERSION as SPEC_VERSION,
@@ -8399,7 +8348,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_legacy_vertex_attributes"]
     pub mod legacy_vertex_attributes {
-        use super::super::*;
         pub use {
             crate::vk::EXT_LEGACY_VERTEX_ATTRIBUTES_NAME as NAME,
             crate::vk::EXT_LEGACY_VERTEX_ATTRIBUTES_SPEC_VERSION as SPEC_VERSION,
@@ -8407,7 +8355,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_layer_settings"]
     pub mod layer_settings {
-        use super::super::*;
         pub use {
             crate::vk::EXT_LAYER_SETTINGS_NAME as NAME,
             crate::vk::EXT_LAYER_SETTINGS_SPEC_VERSION as SPEC_VERSION,
@@ -8415,7 +8362,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_pipeline_library_group_handles"]
     pub mod pipeline_library_group_handles {
-        use super::super::*;
         pub use {
             crate::vk::EXT_PIPELINE_LIBRARY_GROUP_HANDLES_NAME as NAME,
             crate::vk::EXT_PIPELINE_LIBRARY_GROUP_HANDLES_SPEC_VERSION as SPEC_VERSION,
@@ -8423,7 +8369,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_dynamic_rendering_unused_attachments"]
     pub mod dynamic_rendering_unused_attachments {
-        use super::super::*;
         pub use {
             crate::vk::EXT_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_NAME as NAME,
             crate::vk::EXT_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_SPEC_VERSION as SPEC_VERSION,
@@ -8431,7 +8376,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_attachment_feedback_loop_dynamic_state"]
     pub mod attachment_feedback_loop_dynamic_state {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_NAME as NAME,
             crate::vk::EXT_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_SPEC_VERSION as SPEC_VERSION,
@@ -8499,7 +8445,6 @@ pub mod ext {
     }
     #[doc = "VK_EXT_shader_replicated_composites"]
     pub mod shader_replicated_composites {
-        use super::super::*;
         pub use {
             crate::vk::EXT_SHADER_REPLICATED_COMPOSITES_NAME as NAME,
             crate::vk::EXT_SHADER_REPLICATED_COMPOSITES_SPEC_VERSION as SPEC_VERSION,
@@ -8507,7 +8452,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_device_generated_commands"]
     pub mod device_generated_commands {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_DEVICE_GENERATED_COMMANDS_NAME as NAME,
             crate::vk::EXT_DEVICE_GENERATED_COMMANDS_SPEC_VERSION as SPEC_VERSION,
@@ -8759,7 +8705,8 @@ pub mod ext {
     }
     #[doc = "VK_EXT_depth_clamp_control"]
     pub mod depth_clamp_control {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::EXT_DEPTH_CLAMP_CONTROL_NAME as NAME,
             crate::vk::EXT_DEPTH_CLAMP_CONTROL_SPEC_VERSION as SPEC_VERSION,
@@ -8829,7 +8776,8 @@ pub mod ext {
 pub mod fuchsia {
     #[doc = "VK_FUCHSIA_imagepipe_surface"]
     pub mod imagepipe_surface {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::FUCHSIA_IMAGEPIPE_SURFACE_NAME as NAME,
             crate::vk::FUCHSIA_IMAGEPIPE_SURFACE_SPEC_VERSION as SPEC_VERSION,
@@ -8898,7 +8846,8 @@ pub mod fuchsia {
     }
     #[doc = "VK_FUCHSIA_external_memory"]
     pub mod external_memory {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::FUCHSIA_EXTERNAL_MEMORY_NAME as NAME,
             crate::vk::FUCHSIA_EXTERNAL_MEMORY_SPEC_VERSION as SPEC_VERSION,
@@ -8990,7 +8939,8 @@ pub mod fuchsia {
     }
     #[doc = "VK_FUCHSIA_external_semaphore"]
     pub mod external_semaphore {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::FUCHSIA_EXTERNAL_SEMAPHORE_NAME as NAME,
             crate::vk::FUCHSIA_EXTERNAL_SEMAPHORE_SPEC_VERSION as SPEC_VERSION,
@@ -9081,7 +9031,8 @@ pub mod fuchsia {
     }
     #[doc = "VK_FUCHSIA_buffer_collection"]
     pub mod buffer_collection {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::FUCHSIA_BUFFER_COLLECTION_NAME as NAME,
             crate::vk::FUCHSIA_BUFFER_COLLECTION_SPEC_VERSION as SPEC_VERSION,
@@ -9244,7 +9195,8 @@ pub mod fuchsia {
 pub mod ggp {
     #[doc = "VK_GGP_stream_descriptor_surface"]
     pub mod stream_descriptor_surface {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::GGP_STREAM_DESCRIPTOR_SURFACE_NAME as NAME,
             crate::vk::GGP_STREAM_DESCRIPTOR_SURFACE_SPEC_VERSION as SPEC_VERSION,
@@ -9313,7 +9265,6 @@ pub mod ggp {
     }
     #[doc = "VK_GGP_frame_token"]
     pub mod frame_token {
-        use super::super::*;
         pub use {
             crate::vk::GGP_FRAME_TOKEN_NAME as NAME,
             crate::vk::GGP_FRAME_TOKEN_SPEC_VERSION as SPEC_VERSION,
@@ -9324,7 +9275,8 @@ pub mod ggp {
 pub mod google {
     #[doc = "VK_GOOGLE_display_timing"]
     pub mod display_timing {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::GOOGLE_DISPLAY_TIMING_NAME as NAME,
             crate::vk::GOOGLE_DISPLAY_TIMING_SPEC_VERSION as SPEC_VERSION,
@@ -9415,7 +9367,6 @@ pub mod google {
     }
     #[doc = "VK_GOOGLE_hlsl_functionality1"]
     pub mod hlsl_functionality1 {
-        use super::super::*;
         pub use {
             crate::vk::GOOGLE_HLSL_FUNCTIONALITY1_NAME as NAME,
             crate::vk::GOOGLE_HLSL_FUNCTIONALITY1_SPEC_VERSION as SPEC_VERSION,
@@ -9423,7 +9374,6 @@ pub mod google {
     }
     #[doc = "VK_GOOGLE_decorate_string"]
     pub mod decorate_string {
-        use super::super::*;
         pub use {
             crate::vk::GOOGLE_DECORATE_STRING_NAME as NAME,
             crate::vk::GOOGLE_DECORATE_STRING_SPEC_VERSION as SPEC_VERSION,
@@ -9431,7 +9381,6 @@ pub mod google {
     }
     #[doc = "VK_GOOGLE_user_type"]
     pub mod user_type {
-        use super::super::*;
         pub use {
             crate::vk::GOOGLE_USER_TYPE_NAME as NAME,
             crate::vk::GOOGLE_USER_TYPE_SPEC_VERSION as SPEC_VERSION,
@@ -9439,7 +9388,6 @@ pub mod google {
     }
     #[doc = "VK_GOOGLE_surfaceless_query"]
     pub mod surfaceless_query {
-        use super::super::*;
         pub use {
             crate::vk::GOOGLE_SURFACELESS_QUERY_NAME as NAME,
             crate::vk::GOOGLE_SURFACELESS_QUERY_SPEC_VERSION as SPEC_VERSION,
@@ -9450,7 +9398,8 @@ pub mod google {
 pub mod huawei {
     #[doc = "VK_HUAWEI_subpass_shading"]
     pub mod subpass_shading {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::HUAWEI_SUBPASS_SHADING_NAME as NAME,
             crate::vk::HUAWEI_SUBPASS_SHADING_SPEC_VERSION as SPEC_VERSION,
@@ -9538,7 +9487,8 @@ pub mod huawei {
     }
     #[doc = "VK_HUAWEI_invocation_mask"]
     pub mod invocation_mask {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::HUAWEI_INVOCATION_MASK_NAME as NAME,
             crate::vk::HUAWEI_INVOCATION_MASK_SPEC_VERSION as SPEC_VERSION,
@@ -9605,7 +9555,8 @@ pub mod huawei {
     }
     #[doc = "VK_HUAWEI_cluster_culling_shader"]
     pub mod cluster_culling_shader {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::HUAWEI_CLUSTER_CULLING_SHADER_NAME as NAME,
             crate::vk::HUAWEI_CLUSTER_CULLING_SHADER_SPEC_VERSION as SPEC_VERSION,
@@ -9698,7 +9649,6 @@ pub mod huawei {
 pub mod img {
     #[doc = "VK_IMG_filter_cubic"]
     pub mod filter_cubic {
-        use super::super::*;
         pub use {
             crate::vk::IMG_FILTER_CUBIC_NAME as NAME,
             crate::vk::IMG_FILTER_CUBIC_SPEC_VERSION as SPEC_VERSION,
@@ -9706,7 +9656,6 @@ pub mod img {
     }
     #[doc = "VK_IMG_format_pvrtc"]
     pub mod format_pvrtc {
-        use super::super::*;
         pub use {
             crate::vk::IMG_FORMAT_PVRTC_NAME as NAME,
             crate::vk::IMG_FORMAT_PVRTC_SPEC_VERSION as SPEC_VERSION,
@@ -9714,7 +9663,6 @@ pub mod img {
     }
     #[doc = "VK_IMG_relaxed_line_rasterization"]
     pub mod relaxed_line_rasterization {
-        use super::super::*;
         pub use {
             crate::vk::IMG_RELAXED_LINE_RASTERIZATION_NAME as NAME,
             crate::vk::IMG_RELAXED_LINE_RASTERIZATION_SPEC_VERSION as SPEC_VERSION,
@@ -9725,7 +9673,6 @@ pub mod img {
 pub mod intel {
     #[doc = "VK_INTEL_shader_integer_functions2"]
     pub mod shader_integer_functions2 {
-        use super::super::*;
         pub use {
             crate::vk::INTEL_SHADER_INTEGER_FUNCTIONS2_NAME as NAME,
             crate::vk::INTEL_SHADER_INTEGER_FUNCTIONS2_SPEC_VERSION as SPEC_VERSION,
@@ -9733,7 +9680,8 @@ pub mod intel {
     }
     #[doc = "VK_INTEL_performance_query"]
     pub mod performance_query {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::INTEL_PERFORMANCE_QUERY_NAME as NAME,
             crate::vk::INTEL_PERFORMANCE_QUERY_SPEC_VERSION as SPEC_VERSION,
@@ -9973,7 +9921,8 @@ pub mod intel {
 pub mod khr {
     #[doc = "VK_KHR_surface"]
     pub mod surface {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_SURFACE_NAME as NAME,
             crate::vk::KHR_SURFACE_SPEC_VERSION as SPEC_VERSION,
@@ -10129,7 +10078,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_swapchain"]
     pub mod swapchain {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_SWAPCHAIN_NAME as NAME,
             crate::vk::KHR_SWAPCHAIN_SPEC_VERSION as SPEC_VERSION,
@@ -10402,7 +10352,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_display"]
     pub mod display {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_DISPLAY_NAME as NAME,
             crate::vk::KHR_DISPLAY_SPEC_VERSION as SPEC_VERSION,
@@ -10608,7 +10559,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_display_swapchain"]
     pub mod display_swapchain {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_DISPLAY_SWAPCHAIN_NAME as NAME,
             crate::vk::KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION as SPEC_VERSION,
@@ -10677,7 +10629,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_xlib_surface"]
     pub mod xlib_surface {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_XLIB_SURFACE_NAME as NAME,
             crate::vk::KHR_XLIB_SURFACE_SPEC_VERSION as SPEC_VERSION,
@@ -10769,7 +10722,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_xcb_surface"]
     pub mod xcb_surface {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_XCB_SURFACE_NAME as NAME,
             crate::vk::KHR_XCB_SURFACE_SPEC_VERSION as SPEC_VERSION,
@@ -10860,7 +10814,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_wayland_surface"]
     pub mod wayland_surface {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_WAYLAND_SURFACE_NAME as NAME,
             crate::vk::KHR_WAYLAND_SURFACE_SPEC_VERSION as SPEC_VERSION,
@@ -10951,7 +10906,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_android_surface"]
     pub mod android_surface {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_ANDROID_SURFACE_NAME as NAME,
             crate::vk::KHR_ANDROID_SURFACE_SPEC_VERSION as SPEC_VERSION,
@@ -11019,7 +10975,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_win32_surface"]
     pub mod win32_surface {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_WIN32_SURFACE_NAME as NAME,
             crate::vk::KHR_WIN32_SURFACE_SPEC_VERSION as SPEC_VERSION,
@@ -11109,7 +11066,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_sampler_mirror_clamp_to_edge"]
     pub mod sampler_mirror_clamp_to_edge {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_NAME as NAME,
             crate::vk::KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_SPEC_VERSION as SPEC_VERSION,
@@ -11117,7 +11073,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_video_queue"]
     pub mod video_queue {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_VIDEO_QUEUE_NAME as NAME,
             crate::vk::KHR_VIDEO_QUEUE_SPEC_VERSION as SPEC_VERSION,
@@ -11464,7 +11421,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_video_decode_queue"]
     pub mod video_decode_queue {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_VIDEO_DECODE_QUEUE_NAME as NAME,
             crate::vk::KHR_VIDEO_DECODE_QUEUE_SPEC_VERSION as SPEC_VERSION,
@@ -11526,7 +11484,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_video_encode_h264"]
     pub mod video_encode_h264 {
-        use super::super::*;
         pub use {
             crate::vk::KHR_VIDEO_ENCODE_H264_NAME as NAME,
             crate::vk::KHR_VIDEO_ENCODE_H264_SPEC_VERSION as SPEC_VERSION,
@@ -11534,7 +11491,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_video_encode_h265"]
     pub mod video_encode_h265 {
-        use super::super::*;
         pub use {
             crate::vk::KHR_VIDEO_ENCODE_H265_NAME as NAME,
             crate::vk::KHR_VIDEO_ENCODE_H265_SPEC_VERSION as SPEC_VERSION,
@@ -11542,7 +11498,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_video_decode_h264"]
     pub mod video_decode_h264 {
-        use super::super::*;
         pub use {
             crate::vk::KHR_VIDEO_DECODE_H264_NAME as NAME,
             crate::vk::KHR_VIDEO_DECODE_H264_SPEC_VERSION as SPEC_VERSION,
@@ -11550,7 +11505,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_dynamic_rendering"]
     pub mod dynamic_rendering {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_DYNAMIC_RENDERING_NAME as NAME,
             crate::vk::KHR_DYNAMIC_RENDERING_SPEC_VERSION as SPEC_VERSION,
@@ -11634,7 +11590,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_multiview"]
     pub mod multiview {
-        use super::super::*;
         pub use {
             crate::vk::KHR_MULTIVIEW_NAME as NAME,
             crate::vk::KHR_MULTIVIEW_SPEC_VERSION as SPEC_VERSION,
@@ -11642,7 +11597,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_get_physical_device_properties2"]
     pub mod get_physical_device_properties2 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_GET_PHYSICAL_DEVICE_PROPERTIES2_NAME as NAME,
             crate::vk::KHR_GET_PHYSICAL_DEVICE_PROPERTIES2_SPEC_VERSION as SPEC_VERSION,
@@ -11845,7 +11801,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_device_group"]
     pub mod device_group {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_DEVICE_GROUP_NAME as NAME,
             crate::vk::KHR_DEVICE_GROUP_SPEC_VERSION as SPEC_VERSION,
@@ -12086,7 +12043,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_draw_parameters"]
     pub mod shader_draw_parameters {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_DRAW_PARAMETERS_NAME as NAME,
             crate::vk::KHR_SHADER_DRAW_PARAMETERS_SPEC_VERSION as SPEC_VERSION,
@@ -12094,7 +12050,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_maintenance1"]
     pub mod maintenance1 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_MAINTENANCE1_NAME as NAME,
             crate::vk::KHR_MAINTENANCE1_SPEC_VERSION as SPEC_VERSION,
@@ -12160,7 +12117,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_device_group_creation"]
     pub mod device_group_creation {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_DEVICE_GROUP_CREATION_NAME as NAME,
             crate::vk::KHR_DEVICE_GROUP_CREATION_SPEC_VERSION as SPEC_VERSION,
@@ -12230,7 +12188,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_external_memory_capabilities"]
     pub mod external_memory_capabilities {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_EXTERNAL_MEMORY_CAPABILITIES_NAME as NAME,
             crate::vk::KHR_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION as SPEC_VERSION,
@@ -12299,7 +12258,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_external_memory"]
     pub mod external_memory {
-        use super::super::*;
         pub use {
             crate::vk::KHR_EXTERNAL_MEMORY_NAME as NAME,
             crate::vk::KHR_EXTERNAL_MEMORY_SPEC_VERSION as SPEC_VERSION,
@@ -12307,7 +12265,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_external_memory_win32"]
     pub mod external_memory_win32 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_EXTERNAL_MEMORY_WIN32_NAME as NAME,
             crate::vk::KHR_EXTERNAL_MEMORY_WIN32_SPEC_VERSION as SPEC_VERSION,
@@ -12399,7 +12358,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_external_memory_fd"]
     pub mod external_memory_fd {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_EXTERNAL_MEMORY_FD_NAME as NAME,
             crate::vk::KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION as SPEC_VERSION,
@@ -12484,7 +12444,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_win32_keyed_mutex"]
     pub mod win32_keyed_mutex {
-        use super::super::*;
         pub use {
             crate::vk::KHR_WIN32_KEYED_MUTEX_NAME as NAME,
             crate::vk::KHR_WIN32_KEYED_MUTEX_SPEC_VERSION as SPEC_VERSION,
@@ -12492,7 +12451,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_external_semaphore_capabilities"]
     pub mod external_semaphore_capabilities {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_NAME as NAME,
             crate::vk::KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_SPEC_VERSION as SPEC_VERSION,
@@ -12563,7 +12523,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_external_semaphore"]
     pub mod external_semaphore {
-        use super::super::*;
         pub use {
             crate::vk::KHR_EXTERNAL_SEMAPHORE_NAME as NAME,
             crate::vk::KHR_EXTERNAL_SEMAPHORE_SPEC_VERSION as SPEC_VERSION,
@@ -12571,7 +12530,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_external_semaphore_win32"]
     pub mod external_semaphore_win32 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_EXTERNAL_SEMAPHORE_WIN32_NAME as NAME,
             crate::vk::KHR_EXTERNAL_SEMAPHORE_WIN32_SPEC_VERSION as SPEC_VERSION,
@@ -12659,7 +12619,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_external_semaphore_fd"]
     pub mod external_semaphore_fd {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_EXTERNAL_SEMAPHORE_FD_NAME as NAME,
             crate::vk::KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION as SPEC_VERSION,
@@ -12742,7 +12703,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_push_descriptor"]
     pub mod push_descriptor {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_PUSH_DESCRIPTOR_NAME as NAME,
             crate::vk::KHR_PUSH_DESCRIPTOR_SPEC_VERSION as SPEC_VERSION,
@@ -12837,7 +12799,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_float16_int8"]
     pub mod shader_float16_int8 {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_FLOAT16_INT8_NAME as NAME,
             crate::vk::KHR_SHADER_FLOAT16_INT8_SPEC_VERSION as SPEC_VERSION,
@@ -12845,7 +12806,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_16bit_storage"]
     pub mod _16bit_storage {
-        use super::super::*;
         pub use {
             crate::vk::KHR_16BIT_STORAGE_NAME as NAME,
             crate::vk::KHR_16BIT_STORAGE_SPEC_VERSION as SPEC_VERSION,
@@ -12853,7 +12813,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_incremental_present"]
     pub mod incremental_present {
-        use super::super::*;
         pub use {
             crate::vk::KHR_INCREMENTAL_PRESENT_NAME as NAME,
             crate::vk::KHR_INCREMENTAL_PRESENT_SPEC_VERSION as SPEC_VERSION,
@@ -12861,7 +12820,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_descriptor_update_template"]
     pub mod descriptor_update_template {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_DESCRIPTOR_UPDATE_TEMPLATE_NAME as NAME,
             crate::vk::KHR_DESCRIPTOR_UPDATE_TEMPLATE_SPEC_VERSION as SPEC_VERSION,
@@ -13000,7 +12960,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_imageless_framebuffer"]
     pub mod imageless_framebuffer {
-        use super::super::*;
         pub use {
             crate::vk::KHR_IMAGELESS_FRAMEBUFFER_NAME as NAME,
             crate::vk::KHR_IMAGELESS_FRAMEBUFFER_SPEC_VERSION as SPEC_VERSION,
@@ -13008,7 +12967,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_create_renderpass2"]
     pub mod create_renderpass2 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_CREATE_RENDERPASS2_NAME as NAME,
             crate::vk::KHR_CREATE_RENDERPASS2_SPEC_VERSION as SPEC_VERSION,
@@ -13137,7 +13097,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shared_presentable_image"]
     pub mod shared_presentable_image {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_SHARED_PRESENTABLE_IMAGE_NAME as NAME,
             crate::vk::KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION as SPEC_VERSION,
@@ -13203,7 +13164,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_external_fence_capabilities"]
     pub mod external_fence_capabilities {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_EXTERNAL_FENCE_CAPABILITIES_NAME as NAME,
             crate::vk::KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION as SPEC_VERSION,
@@ -13272,7 +13234,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_external_fence"]
     pub mod external_fence {
-        use super::super::*;
         pub use {
             crate::vk::KHR_EXTERNAL_FENCE_NAME as NAME,
             crate::vk::KHR_EXTERNAL_FENCE_SPEC_VERSION as SPEC_VERSION,
@@ -13280,7 +13241,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_external_fence_win32"]
     pub mod external_fence_win32 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_EXTERNAL_FENCE_WIN32_NAME as NAME,
             crate::vk::KHR_EXTERNAL_FENCE_WIN32_SPEC_VERSION as SPEC_VERSION,
@@ -13369,7 +13331,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_external_fence_fd"]
     pub mod external_fence_fd {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_EXTERNAL_FENCE_FD_NAME as NAME,
             crate::vk::KHR_EXTERNAL_FENCE_FD_SPEC_VERSION as SPEC_VERSION,
@@ -13448,7 +13411,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_performance_query"]
     pub mod performance_query {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_PERFORMANCE_QUERY_NAME as NAME,
             crate::vk::KHR_PERFORMANCE_QUERY_SPEC_VERSION as SPEC_VERSION,
@@ -13618,7 +13582,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_maintenance2"]
     pub mod maintenance2 {
-        use super::super::*;
         pub use {
             crate::vk::KHR_MAINTENANCE2_NAME as NAME,
             crate::vk::KHR_MAINTENANCE2_SPEC_VERSION as SPEC_VERSION,
@@ -13626,7 +13589,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_get_surface_capabilities2"]
     pub mod get_surface_capabilities2 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_GET_SURFACE_CAPABILITIES2_NAME as NAME,
             crate::vk::KHR_GET_SURFACE_CAPABILITIES2_SPEC_VERSION as SPEC_VERSION,
@@ -13718,7 +13682,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_variable_pointers"]
     pub mod variable_pointers {
-        use super::super::*;
         pub use {
             crate::vk::KHR_VARIABLE_POINTERS_NAME as NAME,
             crate::vk::KHR_VARIABLE_POINTERS_SPEC_VERSION as SPEC_VERSION,
@@ -13726,7 +13689,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_get_display_properties2"]
     pub mod get_display_properties2 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_GET_DISPLAY_PROPERTIES2_NAME as NAME,
             crate::vk::KHR_GET_DISPLAY_PROPERTIES2_SPEC_VERSION as SPEC_VERSION,
@@ -13863,7 +13827,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_dedicated_allocation"]
     pub mod dedicated_allocation {
-        use super::super::*;
         pub use {
             crate::vk::KHR_DEDICATED_ALLOCATION_NAME as NAME,
             crate::vk::KHR_DEDICATED_ALLOCATION_SPEC_VERSION as SPEC_VERSION,
@@ -13871,7 +13834,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_storage_buffer_storage_class"]
     pub mod storage_buffer_storage_class {
-        use super::super::*;
         pub use {
             crate::vk::KHR_STORAGE_BUFFER_STORAGE_CLASS_NAME as NAME,
             crate::vk::KHR_STORAGE_BUFFER_STORAGE_CLASS_SPEC_VERSION as SPEC_VERSION,
@@ -13879,7 +13841,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_relaxed_block_layout"]
     pub mod relaxed_block_layout {
-        use super::super::*;
         pub use {
             crate::vk::KHR_RELAXED_BLOCK_LAYOUT_NAME as NAME,
             crate::vk::KHR_RELAXED_BLOCK_LAYOUT_SPEC_VERSION as SPEC_VERSION,
@@ -13887,7 +13848,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_get_memory_requirements2"]
     pub mod get_memory_requirements2 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_GET_MEMORY_REQUIREMENTS2_NAME as NAME,
             crate::vk::KHR_GET_MEMORY_REQUIREMENTS2_SPEC_VERSION as SPEC_VERSION,
@@ -14000,7 +13962,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_image_format_list"]
     pub mod image_format_list {
-        use super::super::*;
         pub use {
             crate::vk::KHR_IMAGE_FORMAT_LIST_NAME as NAME,
             crate::vk::KHR_IMAGE_FORMAT_LIST_SPEC_VERSION as SPEC_VERSION,
@@ -14008,7 +13969,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_acceleration_structure"]
     pub mod acceleration_structure {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_ACCELERATION_STRUCTURE_NAME as NAME,
             crate::vk::KHR_ACCELERATION_STRUCTURE_SPEC_VERSION as SPEC_VERSION,
@@ -14428,7 +14390,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_ray_tracing_pipeline"]
     pub mod ray_tracing_pipeline {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_RAY_TRACING_PIPELINE_NAME as NAME,
             crate::vk::KHR_RAY_TRACING_PIPELINE_SPEC_VERSION as SPEC_VERSION,
@@ -14643,7 +14606,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_ray_query"]
     pub mod ray_query {
-        use super::super::*;
         pub use {
             crate::vk::KHR_RAY_QUERY_NAME as NAME,
             crate::vk::KHR_RAY_QUERY_SPEC_VERSION as SPEC_VERSION,
@@ -14651,7 +14613,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_sampler_ycbcr_conversion"]
     pub mod sampler_ycbcr_conversion {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_SAMPLER_YCBCR_CONVERSION_NAME as NAME,
             crate::vk::KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION as SPEC_VERSION,
@@ -14742,7 +14705,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_bind_memory2"]
     pub mod bind_memory2 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_BIND_MEMORY2_NAME as NAME,
             crate::vk::KHR_BIND_MEMORY2_SPEC_VERSION as SPEC_VERSION,
@@ -14829,7 +14793,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_portability_subset"]
     pub mod portability_subset {
-        use super::super::*;
         pub use {
             crate::vk::KHR_PORTABILITY_SUBSET_NAME as NAME,
             crate::vk::KHR_PORTABILITY_SUBSET_SPEC_VERSION as SPEC_VERSION,
@@ -14837,7 +14800,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_maintenance3"]
     pub mod maintenance3 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_MAINTENANCE3_NAME as NAME,
             crate::vk::KHR_MAINTENANCE3_SPEC_VERSION as SPEC_VERSION,
@@ -14905,7 +14869,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_draw_indirect_count"]
     pub mod draw_indirect_count {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_DRAW_INDIRECT_COUNT_NAME as NAME,
             crate::vk::KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION as SPEC_VERSION,
@@ -15002,7 +14967,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_subgroup_extended_types"]
     pub mod shader_subgroup_extended_types {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_SUBGROUP_EXTENDED_TYPES_NAME as NAME,
             crate::vk::KHR_SHADER_SUBGROUP_EXTENDED_TYPES_SPEC_VERSION as SPEC_VERSION,
@@ -15010,7 +14974,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_8bit_storage"]
     pub mod _8bit_storage {
-        use super::super::*;
         pub use {
             crate::vk::KHR_8BIT_STORAGE_NAME as NAME,
             crate::vk::KHR_8BIT_STORAGE_SPEC_VERSION as SPEC_VERSION,
@@ -15018,7 +14981,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_atomic_int64"]
     pub mod shader_atomic_int64 {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_ATOMIC_INT64_NAME as NAME,
             crate::vk::KHR_SHADER_ATOMIC_INT64_SPEC_VERSION as SPEC_VERSION,
@@ -15026,7 +14988,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_clock"]
     pub mod shader_clock {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_CLOCK_NAME as NAME,
             crate::vk::KHR_SHADER_CLOCK_SPEC_VERSION as SPEC_VERSION,
@@ -15034,7 +14995,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_video_decode_h265"]
     pub mod video_decode_h265 {
-        use super::super::*;
         pub use {
             crate::vk::KHR_VIDEO_DECODE_H265_NAME as NAME,
             crate::vk::KHR_VIDEO_DECODE_H265_SPEC_VERSION as SPEC_VERSION,
@@ -15042,7 +15002,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_global_priority"]
     pub mod global_priority {
-        use super::super::*;
         pub use {
             crate::vk::KHR_GLOBAL_PRIORITY_NAME as NAME,
             crate::vk::KHR_GLOBAL_PRIORITY_SPEC_VERSION as SPEC_VERSION,
@@ -15050,7 +15009,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_driver_properties"]
     pub mod driver_properties {
-        use super::super::*;
         pub use {
             crate::vk::KHR_DRIVER_PROPERTIES_NAME as NAME,
             crate::vk::KHR_DRIVER_PROPERTIES_SPEC_VERSION as SPEC_VERSION,
@@ -15058,7 +15016,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_float_controls"]
     pub mod shader_float_controls {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_FLOAT_CONTROLS_NAME as NAME,
             crate::vk::KHR_SHADER_FLOAT_CONTROLS_SPEC_VERSION as SPEC_VERSION,
@@ -15066,7 +15023,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_depth_stencil_resolve"]
     pub mod depth_stencil_resolve {
-        use super::super::*;
         pub use {
             crate::vk::KHR_DEPTH_STENCIL_RESOLVE_NAME as NAME,
             crate::vk::KHR_DEPTH_STENCIL_RESOLVE_SPEC_VERSION as SPEC_VERSION,
@@ -15074,7 +15030,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_swapchain_mutable_format"]
     pub mod swapchain_mutable_format {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SWAPCHAIN_MUTABLE_FORMAT_NAME as NAME,
             crate::vk::KHR_SWAPCHAIN_MUTABLE_FORMAT_SPEC_VERSION as SPEC_VERSION,
@@ -15082,7 +15037,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_timeline_semaphore"]
     pub mod timeline_semaphore {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_TIMELINE_SEMAPHORE_NAME as NAME,
             crate::vk::KHR_TIMELINE_SEMAPHORE_SPEC_VERSION as SPEC_VERSION,
@@ -15182,7 +15138,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_vulkan_memory_model"]
     pub mod vulkan_memory_model {
-        use super::super::*;
         pub use {
             crate::vk::KHR_VULKAN_MEMORY_MODEL_NAME as NAME,
             crate::vk::KHR_VULKAN_MEMORY_MODEL_SPEC_VERSION as SPEC_VERSION,
@@ -15190,7 +15145,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_terminate_invocation"]
     pub mod shader_terminate_invocation {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_TERMINATE_INVOCATION_NAME as NAME,
             crate::vk::KHR_SHADER_TERMINATE_INVOCATION_SPEC_VERSION as SPEC_VERSION,
@@ -15198,7 +15152,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_fragment_shading_rate"]
     pub mod fragment_shading_rate {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_FRAGMENT_SHADING_RATE_NAME as NAME,
             crate::vk::KHR_FRAGMENT_SHADING_RATE_SPEC_VERSION as SPEC_VERSION,
@@ -15329,7 +15284,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_dynamic_rendering_local_read"]
     pub mod dynamic_rendering_local_read {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_DYNAMIC_RENDERING_LOCAL_READ_NAME as NAME,
             crate::vk::KHR_DYNAMIC_RENDERING_LOCAL_READ_SPEC_VERSION as SPEC_VERSION,
@@ -15419,7 +15375,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_quad_control"]
     pub mod shader_quad_control {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_QUAD_CONTROL_NAME as NAME,
             crate::vk::KHR_SHADER_QUAD_CONTROL_SPEC_VERSION as SPEC_VERSION,
@@ -15427,7 +15382,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_spirv_1_4"]
     pub mod spirv_1_4 {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SPIRV_1_4_NAME as NAME,
             crate::vk::KHR_SPIRV_1_4_SPEC_VERSION as SPEC_VERSION,
@@ -15435,7 +15389,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_surface_protected_capabilities"]
     pub mod surface_protected_capabilities {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SURFACE_PROTECTED_CAPABILITIES_NAME as NAME,
             crate::vk::KHR_SURFACE_PROTECTED_CAPABILITIES_SPEC_VERSION as SPEC_VERSION,
@@ -15443,7 +15396,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_separate_depth_stencil_layouts"]
     pub mod separate_depth_stencil_layouts {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SEPARATE_DEPTH_STENCIL_LAYOUTS_NAME as NAME,
             crate::vk::KHR_SEPARATE_DEPTH_STENCIL_LAYOUTS_SPEC_VERSION as SPEC_VERSION,
@@ -15451,7 +15403,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_present_wait"]
     pub mod present_wait {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_PRESENT_WAIT_NAME as NAME,
             crate::vk::KHR_PRESENT_WAIT_SPEC_VERSION as SPEC_VERSION,
@@ -15515,7 +15468,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_uniform_buffer_standard_layout"]
     pub mod uniform_buffer_standard_layout {
-        use super::super::*;
         pub use {
             crate::vk::KHR_UNIFORM_BUFFER_STANDARD_LAYOUT_NAME as NAME,
             crate::vk::KHR_UNIFORM_BUFFER_STANDARD_LAYOUT_SPEC_VERSION as SPEC_VERSION,
@@ -15523,7 +15475,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_buffer_device_address"]
     pub mod buffer_device_address {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_BUFFER_DEVICE_ADDRESS_NAME as NAME,
             crate::vk::KHR_BUFFER_DEVICE_ADDRESS_SPEC_VERSION as SPEC_VERSION,
@@ -15632,7 +15585,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_deferred_host_operations"]
     pub mod deferred_host_operations {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_DEFERRED_HOST_OPERATIONS_NAME as NAME,
             crate::vk::KHR_DEFERRED_HOST_OPERATIONS_SPEC_VERSION as SPEC_VERSION,
@@ -15783,7 +15737,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_pipeline_executable_properties"]
     pub mod pipeline_executable_properties {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_PIPELINE_EXECUTABLE_PROPERTIES_NAME as NAME,
             crate::vk::KHR_PIPELINE_EXECUTABLE_PROPERTIES_SPEC_VERSION as SPEC_VERSION,
@@ -15899,7 +15854,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_map_memory2"]
     pub mod map_memory2 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_MAP_MEMORY2_NAME as NAME,
             crate::vk::KHR_MAP_MEMORY2_SPEC_VERSION as SPEC_VERSION,
@@ -15978,7 +15934,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_integer_dot_product"]
     pub mod shader_integer_dot_product {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_INTEGER_DOT_PRODUCT_NAME as NAME,
             crate::vk::KHR_SHADER_INTEGER_DOT_PRODUCT_SPEC_VERSION as SPEC_VERSION,
@@ -15986,7 +15941,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_pipeline_library"]
     pub mod pipeline_library {
-        use super::super::*;
         pub use {
             crate::vk::KHR_PIPELINE_LIBRARY_NAME as NAME,
             crate::vk::KHR_PIPELINE_LIBRARY_SPEC_VERSION as SPEC_VERSION,
@@ -15994,7 +15948,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_non_semantic_info"]
     pub mod shader_non_semantic_info {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_NON_SEMANTIC_INFO_NAME as NAME,
             crate::vk::KHR_SHADER_NON_SEMANTIC_INFO_SPEC_VERSION as SPEC_VERSION,
@@ -16002,7 +15955,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_present_id"]
     pub mod present_id {
-        use super::super::*;
         pub use {
             crate::vk::KHR_PRESENT_ID_NAME as NAME,
             crate::vk::KHR_PRESENT_ID_SPEC_VERSION as SPEC_VERSION,
@@ -16010,7 +15962,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_video_encode_queue"]
     pub mod video_encode_queue {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_VIDEO_ENCODE_QUEUE_NAME as NAME,
             crate::vk::KHR_VIDEO_ENCODE_QUEUE_SPEC_VERSION as SPEC_VERSION,
@@ -16161,7 +16114,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_synchronization2"]
     pub mod synchronization2 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_SYNCHRONIZATION2_NAME as NAME,
             crate::vk::KHR_SYNCHRONIZATION2_SPEC_VERSION as SPEC_VERSION,
@@ -16363,7 +16317,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_fragment_shader_barycentric"]
     pub mod fragment_shader_barycentric {
-        use super::super::*;
         pub use {
             crate::vk::KHR_FRAGMENT_SHADER_BARYCENTRIC_NAME as NAME,
             crate::vk::KHR_FRAGMENT_SHADER_BARYCENTRIC_SPEC_VERSION as SPEC_VERSION,
@@ -16371,7 +16324,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_subgroup_uniform_control_flow"]
     pub mod shader_subgroup_uniform_control_flow {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_NAME as NAME,
             crate::vk::KHR_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_SPEC_VERSION as SPEC_VERSION,
@@ -16379,7 +16331,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_zero_initialize_workgroup_memory"]
     pub mod zero_initialize_workgroup_memory {
-        use super::super::*;
         pub use {
             crate::vk::KHR_ZERO_INITIALIZE_WORKGROUP_MEMORY_NAME as NAME,
             crate::vk::KHR_ZERO_INITIALIZE_WORKGROUP_MEMORY_SPEC_VERSION as SPEC_VERSION,
@@ -16387,7 +16338,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_workgroup_memory_explicit_layout"]
     pub mod workgroup_memory_explicit_layout {
-        use super::super::*;
         pub use {
             crate::vk::KHR_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_NAME as NAME,
             crate::vk::KHR_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_SPEC_VERSION as SPEC_VERSION,
@@ -16395,7 +16345,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_copy_commands2"]
     pub mod copy_commands2 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_COPY_COMMANDS2_NAME as NAME,
             crate::vk::KHR_COPY_COMMANDS2_SPEC_VERSION as SPEC_VERSION,
@@ -16548,7 +16499,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_format_feature_flags2"]
     pub mod format_feature_flags2 {
-        use super::super::*;
         pub use {
             crate::vk::KHR_FORMAT_FEATURE_FLAGS2_NAME as NAME,
             crate::vk::KHR_FORMAT_FEATURE_FLAGS2_SPEC_VERSION as SPEC_VERSION,
@@ -16556,7 +16506,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_ray_tracing_maintenance1"]
     pub mod ray_tracing_maintenance1 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_RAY_TRACING_MAINTENANCE1_NAME as NAME,
             crate::vk::KHR_RAY_TRACING_MAINTENANCE1_SPEC_VERSION as SPEC_VERSION,
@@ -16622,7 +16573,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_portability_enumeration"]
     pub mod portability_enumeration {
-        use super::super::*;
         pub use {
             crate::vk::KHR_PORTABILITY_ENUMERATION_NAME as NAME,
             crate::vk::KHR_PORTABILITY_ENUMERATION_SPEC_VERSION as SPEC_VERSION,
@@ -16630,7 +16580,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_maintenance4"]
     pub mod maintenance4 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_MAINTENANCE4_NAME as NAME,
             crate::vk::KHR_MAINTENANCE4_SPEC_VERSION as SPEC_VERSION,
@@ -16744,7 +16695,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_subgroup_rotate"]
     pub mod shader_subgroup_rotate {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_SUBGROUP_ROTATE_NAME as NAME,
             crate::vk::KHR_SHADER_SUBGROUP_ROTATE_SPEC_VERSION as SPEC_VERSION,
@@ -16752,7 +16702,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_maximal_reconvergence"]
     pub mod shader_maximal_reconvergence {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_MAXIMAL_RECONVERGENCE_NAME as NAME,
             crate::vk::KHR_SHADER_MAXIMAL_RECONVERGENCE_SPEC_VERSION as SPEC_VERSION,
@@ -16760,7 +16709,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_maintenance5"]
     pub mod maintenance5 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_MAINTENANCE5_NAME as NAME,
             crate::vk::KHR_MAINTENANCE5_SPEC_VERSION as SPEC_VERSION,
@@ -16896,7 +16846,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_ray_tracing_position_fetch"]
     pub mod ray_tracing_position_fetch {
-        use super::super::*;
         pub use {
             crate::vk::KHR_RAY_TRACING_POSITION_FETCH_NAME as NAME,
             crate::vk::KHR_RAY_TRACING_POSITION_FETCH_SPEC_VERSION as SPEC_VERSION,
@@ -16904,7 +16853,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_pipeline_binary"]
     pub mod pipeline_binary {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_PIPELINE_BINARY_NAME as NAME,
             crate::vk::KHR_PIPELINE_BINARY_SPEC_VERSION as SPEC_VERSION,
@@ -17055,7 +17005,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_cooperative_matrix"]
     pub mod cooperative_matrix {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_COOPERATIVE_MATRIX_NAME as NAME,
             crate::vk::KHR_COOPERATIVE_MATRIX_SPEC_VERSION as SPEC_VERSION,
@@ -17124,7 +17075,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_compute_shader_derivatives"]
     pub mod compute_shader_derivatives {
-        use super::super::*;
         pub use {
             crate::vk::KHR_COMPUTE_SHADER_DERIVATIVES_NAME as NAME,
             crate::vk::KHR_COMPUTE_SHADER_DERIVATIVES_SPEC_VERSION as SPEC_VERSION,
@@ -17132,7 +17082,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_video_decode_av1"]
     pub mod video_decode_av1 {
-        use super::super::*;
         pub use {
             crate::vk::KHR_VIDEO_DECODE_AV1_NAME as NAME,
             crate::vk::KHR_VIDEO_DECODE_AV1_SPEC_VERSION as SPEC_VERSION,
@@ -17140,7 +17089,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_video_maintenance1"]
     pub mod video_maintenance1 {
-        use super::super::*;
         pub use {
             crate::vk::KHR_VIDEO_MAINTENANCE1_NAME as NAME,
             crate::vk::KHR_VIDEO_MAINTENANCE1_SPEC_VERSION as SPEC_VERSION,
@@ -17148,7 +17096,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_vertex_attribute_divisor"]
     pub mod vertex_attribute_divisor {
-        use super::super::*;
         pub use {
             crate::vk::KHR_VERTEX_ATTRIBUTE_DIVISOR_NAME as NAME,
             crate::vk::KHR_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION as SPEC_VERSION,
@@ -17156,7 +17103,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_load_store_op_none"]
     pub mod load_store_op_none {
-        use super::super::*;
         pub use {
             crate::vk::KHR_LOAD_STORE_OP_NONE_NAME as NAME,
             crate::vk::KHR_LOAD_STORE_OP_NONE_SPEC_VERSION as SPEC_VERSION,
@@ -17164,7 +17110,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_float_controls2"]
     pub mod shader_float_controls2 {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_FLOAT_CONTROLS2_NAME as NAME,
             crate::vk::KHR_SHADER_FLOAT_CONTROLS2_SPEC_VERSION as SPEC_VERSION,
@@ -17172,7 +17117,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_index_type_uint8"]
     pub mod index_type_uint8 {
-        use super::super::*;
         pub use {
             crate::vk::KHR_INDEX_TYPE_UINT8_NAME as NAME,
             crate::vk::KHR_INDEX_TYPE_UINT8_SPEC_VERSION as SPEC_VERSION,
@@ -17180,7 +17124,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_line_rasterization"]
     pub mod line_rasterization {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_LINE_RASTERIZATION_NAME as NAME,
             crate::vk::KHR_LINE_RASTERIZATION_SPEC_VERSION as SPEC_VERSION,
@@ -17247,7 +17192,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_calibrated_timestamps"]
     pub mod calibrated_timestamps {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_CALIBRATED_TIMESTAMPS_NAME as NAME,
             crate::vk::KHR_CALIBRATED_TIMESTAMPS_SPEC_VERSION as SPEC_VERSION,
@@ -17377,7 +17323,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_expect_assume"]
     pub mod shader_expect_assume {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_EXPECT_ASSUME_NAME as NAME,
             crate::vk::KHR_SHADER_EXPECT_ASSUME_SPEC_VERSION as SPEC_VERSION,
@@ -17385,7 +17330,8 @@ pub mod khr {
     }
     #[doc = "VK_KHR_maintenance6"]
     pub mod maintenance6 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::KHR_MAINTENANCE6_NAME as NAME,
             crate::vk::KHR_MAINTENANCE6_SPEC_VERSION as SPEC_VERSION,
@@ -17556,7 +17502,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_shader_relaxed_extended_instruction"]
     pub mod shader_relaxed_extended_instruction {
-        use super::super::*;
         pub use {
             crate::vk::KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_NAME as NAME,
             crate::vk::KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_SPEC_VERSION as SPEC_VERSION,
@@ -17564,7 +17509,6 @@ pub mod khr {
     }
     #[doc = "VK_KHR_maintenance7"]
     pub mod maintenance7 {
-        use super::super::*;
         pub use {
             crate::vk::KHR_MAINTENANCE7_NAME as NAME,
             crate::vk::KHR_MAINTENANCE7_SPEC_VERSION as SPEC_VERSION,
@@ -17575,7 +17519,6 @@ pub mod khr {
 pub mod lunarg {
     #[doc = "VK_LUNARG_direct_driver_loading"]
     pub mod direct_driver_loading {
-        use super::super::*;
         pub use {
             crate::vk::LUNARG_DIRECT_DRIVER_LOADING_NAME as NAME,
             crate::vk::LUNARG_DIRECT_DRIVER_LOADING_SPEC_VERSION as SPEC_VERSION,
@@ -17586,7 +17529,6 @@ pub mod lunarg {
 pub mod mesa {
     #[doc = "VK_MESA_image_alignment_control"]
     pub mod image_alignment_control {
-        use super::super::*;
         pub use {
             crate::vk::MESA_IMAGE_ALIGNMENT_CONTROL_NAME as NAME,
             crate::vk::MESA_IMAGE_ALIGNMENT_CONTROL_SPEC_VERSION as SPEC_VERSION,
@@ -17597,7 +17539,6 @@ pub mod mesa {
 pub mod msft {
     #[doc = "VK_MSFT_layered_driver"]
     pub mod layered_driver {
-        use super::super::*;
         pub use {
             crate::vk::MSFT_LAYERED_DRIVER_NAME as NAME,
             crate::vk::MSFT_LAYERED_DRIVER_SPEC_VERSION as SPEC_VERSION,
@@ -17608,7 +17549,8 @@ pub mod msft {
 pub mod mvk {
     #[doc = "VK_MVK_ios_surface"]
     pub mod ios_surface {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::MVK_IOS_SURFACE_NAME as NAME,
             crate::vk::MVK_IOS_SURFACE_SPEC_VERSION as SPEC_VERSION,
@@ -17675,7 +17617,8 @@ pub mod mvk {
     }
     #[doc = "VK_MVK_macos_surface"]
     pub mod macos_surface {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::MVK_MACOS_SURFACE_NAME as NAME,
             crate::vk::MVK_MACOS_SURFACE_SPEC_VERSION as SPEC_VERSION,
@@ -17746,7 +17689,8 @@ pub mod mvk {
 pub mod nn {
     #[doc = "VK_NN_vi_surface"]
     pub mod vi_surface {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NN_VI_SURFACE_NAME as NAME,
             crate::vk::NN_VI_SURFACE_SPEC_VERSION as SPEC_VERSION,
@@ -17813,7 +17757,6 @@ pub mod nn {
 pub mod nv {
     #[doc = "VK_NV_glsl_shader"]
     pub mod glsl_shader {
-        use super::super::*;
         pub use {
             crate::vk::NV_GLSL_SHADER_NAME as NAME,
             crate::vk::NV_GLSL_SHADER_SPEC_VERSION as SPEC_VERSION,
@@ -17821,7 +17764,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_dedicated_allocation"]
     pub mod dedicated_allocation {
-        use super::super::*;
         pub use {
             crate::vk::NV_DEDICATED_ALLOCATION_NAME as NAME,
             crate::vk::NV_DEDICATED_ALLOCATION_SPEC_VERSION as SPEC_VERSION,
@@ -17829,7 +17771,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_corner_sampled_image"]
     pub mod corner_sampled_image {
-        use super::super::*;
         pub use {
             crate::vk::NV_CORNER_SAMPLED_IMAGE_NAME as NAME,
             crate::vk::NV_CORNER_SAMPLED_IMAGE_SPEC_VERSION as SPEC_VERSION,
@@ -17837,7 +17778,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_external_memory_capabilities"]
     pub mod external_memory_capabilities {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_EXTERNAL_MEMORY_CAPABILITIES_NAME as NAME,
             crate::vk::NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION as SPEC_VERSION,
@@ -17911,7 +17853,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_external_memory"]
     pub mod external_memory {
-        use super::super::*;
         pub use {
             crate::vk::NV_EXTERNAL_MEMORY_NAME as NAME,
             crate::vk::NV_EXTERNAL_MEMORY_SPEC_VERSION as SPEC_VERSION,
@@ -17919,7 +17860,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_external_memory_win32"]
     pub mod external_memory_win32 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_EXTERNAL_MEMORY_WIN32_NAME as NAME,
             crate::vk::NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION as SPEC_VERSION,
@@ -17987,7 +17929,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_win32_keyed_mutex"]
     pub mod win32_keyed_mutex {
-        use super::super::*;
         pub use {
             crate::vk::NV_WIN32_KEYED_MUTEX_NAME as NAME,
             crate::vk::NV_WIN32_KEYED_MUTEX_SPEC_VERSION as SPEC_VERSION,
@@ -17995,7 +17936,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_clip_space_w_scaling"]
     pub mod clip_space_w_scaling {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_CLIP_SPACE_W_SCALING_NAME as NAME,
             crate::vk::NV_CLIP_SPACE_W_SCALING_SPEC_VERSION as SPEC_VERSION,
@@ -18063,7 +18005,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_sample_mask_override_coverage"]
     pub mod sample_mask_override_coverage {
-        use super::super::*;
         pub use {
             crate::vk::NV_SAMPLE_MASK_OVERRIDE_COVERAGE_NAME as NAME,
             crate::vk::NV_SAMPLE_MASK_OVERRIDE_COVERAGE_SPEC_VERSION as SPEC_VERSION,
@@ -18071,7 +18012,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_geometry_shader_passthrough"]
     pub mod geometry_shader_passthrough {
-        use super::super::*;
         pub use {
             crate::vk::NV_GEOMETRY_SHADER_PASSTHROUGH_NAME as NAME,
             crate::vk::NV_GEOMETRY_SHADER_PASSTHROUGH_SPEC_VERSION as SPEC_VERSION,
@@ -18079,7 +18019,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_viewport_array2"]
     pub mod viewport_array2 {
-        use super::super::*;
         pub use {
             crate::vk::NV_VIEWPORT_ARRAY2_NAME as NAME,
             crate::vk::NV_VIEWPORT_ARRAY2_SPEC_VERSION as SPEC_VERSION,
@@ -18087,7 +18026,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_viewport_swizzle"]
     pub mod viewport_swizzle {
-        use super::super::*;
         pub use {
             crate::vk::NV_VIEWPORT_SWIZZLE_NAME as NAME,
             crate::vk::NV_VIEWPORT_SWIZZLE_SPEC_VERSION as SPEC_VERSION,
@@ -18095,7 +18033,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_fragment_coverage_to_color"]
     pub mod fragment_coverage_to_color {
-        use super::super::*;
         pub use {
             crate::vk::NV_FRAGMENT_COVERAGE_TO_COLOR_NAME as NAME,
             crate::vk::NV_FRAGMENT_COVERAGE_TO_COLOR_SPEC_VERSION as SPEC_VERSION,
@@ -18103,7 +18040,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_framebuffer_mixed_samples"]
     pub mod framebuffer_mixed_samples {
-        use super::super::*;
         pub use {
             crate::vk::NV_FRAMEBUFFER_MIXED_SAMPLES_NAME as NAME,
             crate::vk::NV_FRAMEBUFFER_MIXED_SAMPLES_SPEC_VERSION as SPEC_VERSION,
@@ -18111,7 +18047,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_fill_rectangle"]
     pub mod fill_rectangle {
-        use super::super::*;
         pub use {
             crate::vk::NV_FILL_RECTANGLE_NAME as NAME,
             crate::vk::NV_FILL_RECTANGLE_SPEC_VERSION as SPEC_VERSION,
@@ -18119,7 +18054,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_shader_sm_builtins"]
     pub mod shader_sm_builtins {
-        use super::super::*;
         pub use {
             crate::vk::NV_SHADER_SM_BUILTINS_NAME as NAME,
             crate::vk::NV_SHADER_SM_BUILTINS_SPEC_VERSION as SPEC_VERSION,
@@ -18127,7 +18061,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_shading_rate_image"]
     pub mod shading_rate_image {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_SHADING_RATE_IMAGE_NAME as NAME,
             crate::vk::NV_SHADING_RATE_IMAGE_SPEC_VERSION as SPEC_VERSION,
@@ -18239,7 +18174,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_ray_tracing"]
     pub mod ray_tracing {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_RAY_TRACING_NAME as NAME,
             crate::vk::NV_RAY_TRACING_SPEC_VERSION as SPEC_VERSION,
@@ -18570,7 +18506,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_representative_fragment_test"]
     pub mod representative_fragment_test {
-        use super::super::*;
         pub use {
             crate::vk::NV_REPRESENTATIVE_FRAGMENT_TEST_NAME as NAME,
             crate::vk::NV_REPRESENTATIVE_FRAGMENT_TEST_SPEC_VERSION as SPEC_VERSION,
@@ -18578,7 +18513,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_shader_subgroup_partitioned"]
     pub mod shader_subgroup_partitioned {
-        use super::super::*;
         pub use {
             crate::vk::NV_SHADER_SUBGROUP_PARTITIONED_NAME as NAME,
             crate::vk::NV_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION as SPEC_VERSION,
@@ -18586,7 +18520,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_compute_shader_derivatives"]
     pub mod compute_shader_derivatives {
-        use super::super::*;
         pub use {
             crate::vk::NV_COMPUTE_SHADER_DERIVATIVES_NAME as NAME,
             crate::vk::NV_COMPUTE_SHADER_DERIVATIVES_SPEC_VERSION as SPEC_VERSION,
@@ -18594,7 +18527,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_mesh_shader"]
     pub mod mesh_shader {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_MESH_SHADER_NAME as NAME,
             crate::vk::NV_MESH_SHADER_SPEC_VERSION as SPEC_VERSION,
@@ -18709,7 +18643,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_fragment_shader_barycentric"]
     pub mod fragment_shader_barycentric {
-        use super::super::*;
         pub use {
             crate::vk::NV_FRAGMENT_SHADER_BARYCENTRIC_NAME as NAME,
             crate::vk::NV_FRAGMENT_SHADER_BARYCENTRIC_SPEC_VERSION as SPEC_VERSION,
@@ -18717,7 +18650,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_shader_image_footprint"]
     pub mod shader_image_footprint {
-        use super::super::*;
         pub use {
             crate::vk::NV_SHADER_IMAGE_FOOTPRINT_NAME as NAME,
             crate::vk::NV_SHADER_IMAGE_FOOTPRINT_SPEC_VERSION as SPEC_VERSION,
@@ -18725,7 +18657,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_scissor_exclusive"]
     pub mod scissor_exclusive {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_SCISSOR_EXCLUSIVE_NAME as NAME,
             crate::vk::NV_SCISSOR_EXCLUSIVE_SPEC_VERSION as SPEC_VERSION,
@@ -18816,7 +18749,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_device_diagnostic_checkpoints"]
     pub mod device_diagnostic_checkpoints {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_DEVICE_DIAGNOSTIC_CHECKPOINTS_NAME as NAME,
             crate::vk::NV_DEVICE_DIAGNOSTIC_CHECKPOINTS_SPEC_VERSION as SPEC_VERSION,
@@ -18902,7 +18836,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_dedicated_allocation_image_aliasing"]
     pub mod dedicated_allocation_image_aliasing {
-        use super::super::*;
         pub use {
             crate::vk::NV_DEDICATED_ALLOCATION_IMAGE_ALIASING_NAME as NAME,
             crate::vk::NV_DEDICATED_ALLOCATION_IMAGE_ALIASING_SPEC_VERSION as SPEC_VERSION,
@@ -18910,7 +18843,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_cooperative_matrix"]
     pub mod cooperative_matrix {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_COOPERATIVE_MATRIX_NAME as NAME,
             crate::vk::NV_COOPERATIVE_MATRIX_SPEC_VERSION as SPEC_VERSION,
@@ -18979,7 +18913,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_coverage_reduction_mode"]
     pub mod coverage_reduction_mode {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_COVERAGE_REDUCTION_MODE_NAME as NAME,
             crate::vk::NV_COVERAGE_REDUCTION_MODE_SPEC_VERSION as SPEC_VERSION,
@@ -19045,7 +18980,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_device_generated_commands"]
     pub mod device_generated_commands {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_DEVICE_GENERATED_COMMANDS_NAME as NAME,
             crate::vk::NV_DEVICE_GENERATED_COMMANDS_SPEC_VERSION as SPEC_VERSION,
@@ -19225,7 +19161,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_inherited_viewport_scissor"]
     pub mod inherited_viewport_scissor {
-        use super::super::*;
         pub use {
             crate::vk::NV_INHERITED_VIEWPORT_SCISSOR_NAME as NAME,
             crate::vk::NV_INHERITED_VIEWPORT_SCISSOR_SPEC_VERSION as SPEC_VERSION,
@@ -19233,7 +19168,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_present_barrier"]
     pub mod present_barrier {
-        use super::super::*;
         pub use {
             crate::vk::NV_PRESENT_BARRIER_NAME as NAME,
             crate::vk::NV_PRESENT_BARRIER_SPEC_VERSION as SPEC_VERSION,
@@ -19241,7 +19175,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_device_diagnostics_config"]
     pub mod device_diagnostics_config {
-        use super::super::*;
         pub use {
             crate::vk::NV_DEVICE_DIAGNOSTICS_CONFIG_NAME as NAME,
             crate::vk::NV_DEVICE_DIAGNOSTICS_CONFIG_SPEC_VERSION as SPEC_VERSION,
@@ -19249,7 +19182,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_cuda_kernel_launch"]
     pub mod cuda_kernel_launch {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_CUDA_KERNEL_LAUNCH_NAME as NAME,
             crate::vk::NV_CUDA_KERNEL_LAUNCH_SPEC_VERSION as SPEC_VERSION,
@@ -19421,7 +19355,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_low_latency"]
     pub mod low_latency {
-        use super::super::*;
         pub use {
             crate::vk::NV_LOW_LATENCY_NAME as NAME,
             crate::vk::NV_LOW_LATENCY_SPEC_VERSION as SPEC_VERSION,
@@ -19429,7 +19362,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_fragment_shading_rate_enums"]
     pub mod fragment_shading_rate_enums {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_FRAGMENT_SHADING_RATE_ENUMS_NAME as NAME,
             crate::vk::NV_FRAGMENT_SHADING_RATE_ENUMS_SPEC_VERSION as SPEC_VERSION,
@@ -19497,7 +19431,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_ray_tracing_motion_blur"]
     pub mod ray_tracing_motion_blur {
-        use super::super::*;
         pub use {
             crate::vk::NV_RAY_TRACING_MOTION_BLUR_NAME as NAME,
             crate::vk::NV_RAY_TRACING_MOTION_BLUR_SPEC_VERSION as SPEC_VERSION,
@@ -19505,7 +19438,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_acquire_winrt_display"]
     pub mod acquire_winrt_display {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_ACQUIRE_WINRT_DISPLAY_NAME as NAME,
             crate::vk::NV_ACQUIRE_WINRT_DISPLAY_SPEC_VERSION as SPEC_VERSION,
@@ -19588,7 +19522,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_external_memory_rdma"]
     pub mod external_memory_rdma {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_EXTERNAL_MEMORY_RDMA_NAME as NAME,
             crate::vk::NV_EXTERNAL_MEMORY_RDMA_SPEC_VERSION as SPEC_VERSION,
@@ -19657,7 +19592,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_displacement_micromap"]
     pub mod displacement_micromap {
-        use super::super::*;
         pub use {
             crate::vk::NV_DISPLACEMENT_MICROMAP_NAME as NAME,
             crate::vk::NV_DISPLACEMENT_MICROMAP_SPEC_VERSION as SPEC_VERSION,
@@ -19665,7 +19599,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_copy_memory_indirect"]
     pub mod copy_memory_indirect {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_COPY_MEMORY_INDIRECT_NAME as NAME,
             crate::vk::NV_COPY_MEMORY_INDIRECT_SPEC_VERSION as SPEC_VERSION,
@@ -19759,7 +19694,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_memory_decompression"]
     pub mod memory_decompression {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_MEMORY_DECOMPRESSION_NAME as NAME,
             crate::vk::NV_MEMORY_DECOMPRESSION_SPEC_VERSION as SPEC_VERSION,
@@ -19849,7 +19785,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_device_generated_commands_compute"]
     pub mod device_generated_commands_compute {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_DEVICE_GENERATED_COMMANDS_COMPUTE_NAME as NAME,
             crate::vk::NV_DEVICE_GENERATED_COMMANDS_COMPUTE_SPEC_VERSION as SPEC_VERSION,
@@ -19961,7 +19898,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_linear_color_attachment"]
     pub mod linear_color_attachment {
-        use super::super::*;
         pub use {
             crate::vk::NV_LINEAR_COLOR_ATTACHMENT_NAME as NAME,
             crate::vk::NV_LINEAR_COLOR_ATTACHMENT_SPEC_VERSION as SPEC_VERSION,
@@ -19969,7 +19905,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_optical_flow"]
     pub mod optical_flow {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_OPTICAL_FLOW_NAME as NAME,
             crate::vk::NV_OPTICAL_FLOW_SPEC_VERSION as SPEC_VERSION,
@@ -20167,7 +20104,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_ray_tracing_invocation_reorder"]
     pub mod ray_tracing_invocation_reorder {
-        use super::super::*;
         pub use {
             crate::vk::NV_RAY_TRACING_INVOCATION_REORDER_NAME as NAME,
             crate::vk::NV_RAY_TRACING_INVOCATION_REORDER_SPEC_VERSION as SPEC_VERSION,
@@ -20175,7 +20111,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_extended_sparse_address_space"]
     pub mod extended_sparse_address_space {
-        use super::super::*;
         pub use {
             crate::vk::NV_EXTENDED_SPARSE_ADDRESS_SPACE_NAME as NAME,
             crate::vk::NV_EXTENDED_SPARSE_ADDRESS_SPACE_SPEC_VERSION as SPEC_VERSION,
@@ -20183,7 +20118,8 @@ pub mod nv {
     }
     #[doc = "VK_NV_low_latency2"]
     pub mod low_latency2 {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_LOW_LATENCY2_NAME as NAME,
             crate::vk::NV_LOW_LATENCY2_SPEC_VERSION as SPEC_VERSION,
@@ -20327,7 +20263,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_per_stage_descriptor_set"]
     pub mod per_stage_descriptor_set {
-        use super::super::*;
         pub use {
             crate::vk::NV_PER_STAGE_DESCRIPTOR_SET_NAME as NAME,
             crate::vk::NV_PER_STAGE_DESCRIPTOR_SET_SPEC_VERSION as SPEC_VERSION,
@@ -20335,7 +20270,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_descriptor_pool_overallocation"]
     pub mod descriptor_pool_overallocation {
-        use super::super::*;
         pub use {
             crate::vk::NV_DESCRIPTOR_POOL_OVERALLOCATION_NAME as NAME,
             crate::vk::NV_DESCRIPTOR_POOL_OVERALLOCATION_SPEC_VERSION as SPEC_VERSION,
@@ -20343,7 +20277,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_raw_access_chains"]
     pub mod raw_access_chains {
-        use super::super::*;
         pub use {
             crate::vk::NV_RAW_ACCESS_CHAINS_NAME as NAME,
             crate::vk::NV_RAW_ACCESS_CHAINS_SPEC_VERSION as SPEC_VERSION,
@@ -20351,7 +20284,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_command_buffer_inheritance"]
     pub mod command_buffer_inheritance {
-        use super::super::*;
         pub use {
             crate::vk::NV_COMMAND_BUFFER_INHERITANCE_NAME as NAME,
             crate::vk::NV_COMMAND_BUFFER_INHERITANCE_SPEC_VERSION as SPEC_VERSION,
@@ -20359,7 +20291,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_shader_atomic_float16_vector"]
     pub mod shader_atomic_float16_vector {
-        use super::super::*;
         pub use {
             crate::vk::NV_SHADER_ATOMIC_FLOAT16_VECTOR_NAME as NAME,
             crate::vk::NV_SHADER_ATOMIC_FLOAT16_VECTOR_SPEC_VERSION as SPEC_VERSION,
@@ -20367,7 +20298,6 @@ pub mod nv {
     }
     #[doc = "VK_NV_ray_tracing_validation"]
     pub mod ray_tracing_validation {
-        use super::super::*;
         pub use {
             crate::vk::NV_RAY_TRACING_VALIDATION_NAME as NAME,
             crate::vk::NV_RAY_TRACING_VALIDATION_SPEC_VERSION as SPEC_VERSION,
@@ -20378,7 +20308,8 @@ pub mod nv {
 pub mod nvx {
     #[doc = "VK_NVX_binary_import"]
     pub mod binary_import {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NVX_BINARY_IMPORT_NAME as NAME,
             crate::vk::NVX_BINARY_IMPORT_SPEC_VERSION as SPEC_VERSION,
@@ -20524,7 +20455,8 @@ pub mod nvx {
     }
     #[doc = "VK_NVX_image_view_handle"]
     pub mod image_view_handle {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NVX_IMAGE_VIEW_HANDLE_NAME as NAME,
             crate::vk::NVX_IMAGE_VIEW_HANDLE_SPEC_VERSION as SPEC_VERSION,
@@ -20611,7 +20543,6 @@ pub mod nvx {
     }
     #[doc = "VK_NVX_multiview_per_view_attributes"]
     pub mod multiview_per_view_attributes {
-        use super::super::*;
         pub use {
             crate::vk::NVX_MULTIVIEW_PER_VIEW_ATTRIBUTES_NAME as NAME,
             crate::vk::NVX_MULTIVIEW_PER_VIEW_ATTRIBUTES_SPEC_VERSION as SPEC_VERSION,
@@ -20622,7 +20553,6 @@ pub mod nvx {
 pub mod qcom {
     #[doc = "VK_QCOM_render_pass_shader_resolve"]
     pub mod render_pass_shader_resolve {
-        use super::super::*;
         pub use {
             crate::vk::QCOM_RENDER_PASS_SHADER_RESOLVE_NAME as NAME,
             crate::vk::QCOM_RENDER_PASS_SHADER_RESOLVE_SPEC_VERSION as SPEC_VERSION,
@@ -20630,7 +20560,6 @@ pub mod qcom {
     }
     #[doc = "VK_QCOM_render_pass_transform"]
     pub mod render_pass_transform {
-        use super::super::*;
         pub use {
             crate::vk::QCOM_RENDER_PASS_TRANSFORM_NAME as NAME,
             crate::vk::QCOM_RENDER_PASS_TRANSFORM_SPEC_VERSION as SPEC_VERSION,
@@ -20638,7 +20567,6 @@ pub mod qcom {
     }
     #[doc = "VK_QCOM_render_pass_store_ops"]
     pub mod render_pass_store_ops {
-        use super::super::*;
         pub use {
             crate::vk::QCOM_RENDER_PASS_STORE_OPS_NAME as NAME,
             crate::vk::QCOM_RENDER_PASS_STORE_OPS_SPEC_VERSION as SPEC_VERSION,
@@ -20646,7 +20574,6 @@ pub mod qcom {
     }
     #[doc = "VK_QCOM_rotated_copy_commands"]
     pub mod rotated_copy_commands {
-        use super::super::*;
         pub use {
             crate::vk::QCOM_ROTATED_COPY_COMMANDS_NAME as NAME,
             crate::vk::QCOM_ROTATED_COPY_COMMANDS_SPEC_VERSION as SPEC_VERSION,
@@ -20654,7 +20581,6 @@ pub mod qcom {
     }
     #[doc = "VK_QCOM_fragment_density_map_offset"]
     pub mod fragment_density_map_offset {
-        use super::super::*;
         pub use {
             crate::vk::QCOM_FRAGMENT_DENSITY_MAP_OFFSET_NAME as NAME,
             crate::vk::QCOM_FRAGMENT_DENSITY_MAP_OFFSET_SPEC_VERSION as SPEC_VERSION,
@@ -20662,7 +20588,6 @@ pub mod qcom {
     }
     #[doc = "VK_QCOM_image_processing"]
     pub mod image_processing {
-        use super::super::*;
         pub use {
             crate::vk::QCOM_IMAGE_PROCESSING_NAME as NAME,
             crate::vk::QCOM_IMAGE_PROCESSING_SPEC_VERSION as SPEC_VERSION,
@@ -20670,7 +20595,8 @@ pub mod qcom {
     }
     #[doc = "VK_QCOM_tile_properties"]
     pub mod tile_properties {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::QCOM_TILE_PROPERTIES_NAME as NAME,
             crate::vk::QCOM_TILE_PROPERTIES_SPEC_VERSION as SPEC_VERSION,
@@ -20762,7 +20688,6 @@ pub mod qcom {
     }
     #[doc = "VK_QCOM_multiview_per_view_viewports"]
     pub mod multiview_per_view_viewports {
-        use super::super::*;
         pub use {
             crate::vk::QCOM_MULTIVIEW_PER_VIEW_VIEWPORTS_NAME as NAME,
             crate::vk::QCOM_MULTIVIEW_PER_VIEW_VIEWPORTS_SPEC_VERSION as SPEC_VERSION,
@@ -20770,7 +20695,6 @@ pub mod qcom {
     }
     #[doc = "VK_QCOM_multiview_per_view_render_areas"]
     pub mod multiview_per_view_render_areas {
-        use super::super::*;
         pub use {
             crate::vk::QCOM_MULTIVIEW_PER_VIEW_RENDER_AREAS_NAME as NAME,
             crate::vk::QCOM_MULTIVIEW_PER_VIEW_RENDER_AREAS_SPEC_VERSION as SPEC_VERSION,
@@ -20778,7 +20702,6 @@ pub mod qcom {
     }
     #[doc = "VK_QCOM_image_processing2"]
     pub mod image_processing2 {
-        use super::super::*;
         pub use {
             crate::vk::QCOM_IMAGE_PROCESSING2_NAME as NAME,
             crate::vk::QCOM_IMAGE_PROCESSING2_SPEC_VERSION as SPEC_VERSION,
@@ -20786,7 +20709,6 @@ pub mod qcom {
     }
     #[doc = "VK_QCOM_filter_cubic_weights"]
     pub mod filter_cubic_weights {
-        use super::super::*;
         pub use {
             crate::vk::QCOM_FILTER_CUBIC_WEIGHTS_NAME as NAME,
             crate::vk::QCOM_FILTER_CUBIC_WEIGHTS_SPEC_VERSION as SPEC_VERSION,
@@ -20794,7 +20716,6 @@ pub mod qcom {
     }
     #[doc = "VK_QCOM_ycbcr_degamma"]
     pub mod ycbcr_degamma {
-        use super::super::*;
         pub use {
             crate::vk::QCOM_YCBCR_DEGAMMA_NAME as NAME,
             crate::vk::QCOM_YCBCR_DEGAMMA_SPEC_VERSION as SPEC_VERSION,
@@ -20802,7 +20723,6 @@ pub mod qcom {
     }
     #[doc = "VK_QCOM_filter_cubic_clamp"]
     pub mod filter_cubic_clamp {
-        use super::super::*;
         pub use {
             crate::vk::QCOM_FILTER_CUBIC_CLAMP_NAME as NAME,
             crate::vk::QCOM_FILTER_CUBIC_CLAMP_SPEC_VERSION as SPEC_VERSION,
@@ -20813,7 +20733,8 @@ pub mod qcom {
 pub mod qnx {
     #[doc = "VK_QNX_screen_surface"]
     pub mod screen_surface {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::QNX_SCREEN_SURFACE_NAME as NAME,
             crate::vk::QNX_SCREEN_SURFACE_SPEC_VERSION as SPEC_VERSION,
@@ -20904,7 +20825,8 @@ pub mod qnx {
     }
     #[doc = "VK_QNX_external_memory_screen_buffer"]
     pub mod external_memory_screen_buffer {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::QNX_EXTERNAL_MEMORY_SCREEN_BUFFER_NAME as NAME,
             crate::vk::QNX_EXTERNAL_MEMORY_SCREEN_BUFFER_SPEC_VERSION as SPEC_VERSION,
@@ -20975,7 +20897,6 @@ pub mod qnx {
 pub mod sec {
     #[doc = "VK_SEC_amigo_profiling"]
     pub mod amigo_profiling {
-        use super::super::*;
         pub use {
             crate::vk::SEC_AMIGO_PROFILING_NAME as NAME,
             crate::vk::SEC_AMIGO_PROFILING_SPEC_VERSION as SPEC_VERSION,
@@ -20986,7 +20907,6 @@ pub mod sec {
 pub mod valve {
     #[doc = "VK_VALVE_mutable_descriptor_type"]
     pub mod mutable_descriptor_type {
-        use super::super::*;
         pub use {
             crate::vk::VALVE_MUTABLE_DESCRIPTOR_TYPE_NAME as NAME,
             crate::vk::VALVE_MUTABLE_DESCRIPTOR_TYPE_SPEC_VERSION as SPEC_VERSION,
@@ -20994,7 +20914,8 @@ pub mod valve {
     }
     #[doc = "VK_VALVE_descriptor_set_host_mapping"]
     pub mod descriptor_set_host_mapping {
-        use super::super::*;
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::VALVE_DESCRIPTOR_SET_HOST_MAPPING_NAME as NAME,
             crate::vk::VALVE_DESCRIPTOR_SET_HOST_MAPPING_SPEC_VERSION as SPEC_VERSION,

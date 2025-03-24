@@ -1431,6 +1431,14 @@ pub fn generate_extension_commands<'a>(
     let (raw_instance_fp, hl_instance_fp) =
         instance_fp.map_or((None, None), |(a, b)| (Some(a), Some(b)));
 
+    let hl_imports = (hl_instance_fp.is_some() || hl_device_fp.is_some()).then(|| {
+        quote!(
+            use core::ffi::*;
+            
+            use crate::vk::*;
+        )
+    });
+
     ExtensionCommands {
         vendor,
         raw: quote! {
@@ -1444,7 +1452,7 @@ pub fn generate_extension_commands<'a>(
         high_level: quote! {
             #[doc = #full_extension_name]
             pub mod #extension_ident {
-                use super::super::*; // Use global imports (i.e. Vulkan structs and enums) from the root module defined by this file
+                #hl_imports
 
                 pub use {crate::vk::#spec_version_ident as SPEC_VERSION, crate::vk::#name_ident as NAME};
 
@@ -3492,11 +3500,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let high_level_extensions = quote! {
-        #![allow(unused_imports)]        // for sometimes-dead `use` in extension modules
 
-        use core::ffi::*;
-
-        use crate::vk::*;
         #(#high_level_extension_cmds)*
     };
 
