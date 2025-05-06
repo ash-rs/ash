@@ -17,7 +17,7 @@ impl crate::ext::private_data::Device {
         (self.fp.create_private_data_slot_ext)(
             self.handle,
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             private_data_slot.as_mut_ptr(),
         )
         .assume_init_on_success(private_data_slot)
@@ -33,7 +33,7 @@ impl crate::ext::private_data::Device {
         (self.fp.destroy_private_data_slot_ext)(
             self.handle,
             private_data_slot,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         )
     }
 

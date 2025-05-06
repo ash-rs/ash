@@ -19,7 +19,7 @@ impl crate::nv::ray_tracing::Device {
         (self.fp.create_acceleration_structure_nv)(
             self.handle,
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             accel_struct.as_mut_ptr(),
         )
         .assume_init_on_success(accel_struct)
@@ -35,7 +35,7 @@ impl crate::nv::ray_tracing::Device {
         (self.fp.destroy_acceleration_structure_nv)(
             self.handle,
             accel_struct,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -164,7 +164,7 @@ impl crate::nv::ray_tracing::Device {
             pipeline_cache,
             create_infos.len() as u32,
             create_infos.as_ptr(),
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             pipelines.as_mut_ptr(),
         );
         pipelines.set_len(create_infos.len());

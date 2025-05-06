@@ -69,7 +69,7 @@ impl crate::khr::video_queue::Device {
         (self.fp.create_video_session_khr)(
             self.handle,
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             video_session.as_mut_ptr(),
         )
         .assume_init_on_success(video_session)
@@ -87,7 +87,7 @@ impl crate::khr::video_queue::Device {
         (self.fp.create_video_session_parameters_khr)(
             self.handle,
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             video_session_parameters.as_mut_ptr(),
         )
         .assume_init_on_success(video_session_parameters)
@@ -104,7 +104,7 @@ impl crate::khr::video_queue::Device {
         (self.fp.destroy_video_session_khr)(
             self.handle,
             video_session,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         )
     }
 
@@ -119,7 +119,7 @@ impl crate::khr::video_queue::Device {
         (self.fp.destroy_video_session_parameters_khr)(
             self.handle,
             video_session_parameters,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         )
     }
 

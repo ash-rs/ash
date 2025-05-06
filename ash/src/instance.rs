@@ -370,7 +370,7 @@ impl Instance {
         let device = (self.instance_fn_1_0.create_device)(
             physical_device,
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             device.as_mut_ptr(),
         )
         .assume_init_on_success(device)?;
@@ -390,7 +390,7 @@ impl Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyInstance.html>
     #[inline]
     pub unsafe fn destroy_instance(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
-        (self.instance_fn_1_0.destroy_instance)(self.handle(), allocation_callbacks.as_raw_ptr());
+        (self.instance_fn_1_0.destroy_instance)(self.handle(), allocation_callbacks.to_raw_ptr());
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFormatProperties.html>

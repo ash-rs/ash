@@ -83,7 +83,7 @@ impl Device {
         (self.device_fn_1_3.create_private_data_slot)(
             self.handle,
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             private_data_slot.as_mut_ptr(),
         )
         .assume_init_on_success(private_data_slot)
@@ -99,7 +99,7 @@ impl Device {
         (self.device_fn_1_3.destroy_private_data_slot)(
             self.handle,
             private_data_slot,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         )
     }
 
@@ -619,7 +619,7 @@ impl Device {
         (self.device_fn_1_2.create_render_pass2)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             renderpass.as_mut_ptr(),
         )
         .assume_init_on_success(renderpass)
@@ -903,7 +903,7 @@ impl Device {
         (self.device_fn_1_1.create_sampler_ycbcr_conversion)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             ycbcr_conversion.as_mut_ptr(),
         )
         .assume_init_on_success(ycbcr_conversion)
@@ -919,7 +919,7 @@ impl Device {
         (self.device_fn_1_1.destroy_sampler_ycbcr_conversion)(
             self.handle(),
             ycbcr_conversion,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -934,7 +934,7 @@ impl Device {
         (self.device_fn_1_1.create_descriptor_update_template)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             descriptor_update_template.as_mut_ptr(),
         )
         .assume_init_on_success(descriptor_update_template)
@@ -950,7 +950,7 @@ impl Device {
         (self.device_fn_1_1.destroy_descriptor_update_template)(
             self.handle(),
             descriptor_update_template,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -991,7 +991,7 @@ impl Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDevice.html>
     #[inline]
     pub unsafe fn destroy_device(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
-        (self.device_fn_1_0.destroy_device)(self.handle(), allocation_callbacks.as_raw_ptr());
+        (self.device_fn_1_0.destroy_device)(self.handle(), allocation_callbacks.to_raw_ptr());
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroySampler.html>
@@ -1004,7 +1004,7 @@ impl Device {
         (self.device_fn_1_0.destroy_sampler)(
             self.handle(),
             sampler,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -1015,7 +1015,7 @@ impl Device {
         memory: vk::DeviceMemory,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.device_fn_1_0.free_memory)(self.handle(), memory, allocation_callbacks.as_raw_ptr());
+        (self.device_fn_1_0.free_memory)(self.handle(), memory, allocation_callbacks.to_raw_ptr());
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkFreeCommandBuffers.html>
@@ -1044,7 +1044,7 @@ impl Device {
         (self.device_fn_1_0.create_event)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             event.as_mut_ptr(),
         )
         .assume_init_on_success(event)
@@ -1131,7 +1131,7 @@ impl Device {
         fence: vk::Fence,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.device_fn_1_0.destroy_fence)(self.handle(), fence, allocation_callbacks.as_raw_ptr());
+        (self.device_fn_1_0.destroy_fence)(self.handle(), fence, allocation_callbacks.to_raw_ptr());
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyEvent.html>
@@ -1141,7 +1141,7 @@ impl Device {
         event: vk::Event,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.device_fn_1_0.destroy_event)(self.handle(), event, allocation_callbacks.as_raw_ptr());
+        (self.device_fn_1_0.destroy_event)(self.handle(), event, allocation_callbacks.to_raw_ptr());
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyImage.html>
@@ -1151,7 +1151,7 @@ impl Device {
         image: vk::Image,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.device_fn_1_0.destroy_image)(self.handle(), image, allocation_callbacks.as_raw_ptr());
+        (self.device_fn_1_0.destroy_image)(self.handle(), image, allocation_callbacks.to_raw_ptr());
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyCommandPool.html>
@@ -1164,7 +1164,7 @@ impl Device {
         (self.device_fn_1_0.destroy_command_pool)(
             self.handle(),
             pool,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -1178,7 +1178,7 @@ impl Device {
         (self.device_fn_1_0.destroy_image_view)(
             self.handle(),
             image_view,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -1192,7 +1192,7 @@ impl Device {
         (self.device_fn_1_0.destroy_render_pass)(
             self.handle(),
             renderpass,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -1206,7 +1206,7 @@ impl Device {
         (self.device_fn_1_0.destroy_framebuffer)(
             self.handle(),
             framebuffer,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -1220,7 +1220,7 @@ impl Device {
         (self.device_fn_1_0.destroy_pipeline_layout)(
             self.handle(),
             pipeline_layout,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -1234,7 +1234,7 @@ impl Device {
         (self.device_fn_1_0.destroy_pipeline_cache)(
             self.handle(),
             pipeline_cache,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -1248,7 +1248,7 @@ impl Device {
         (self.device_fn_1_0.destroy_buffer)(
             self.handle(),
             buffer,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -1262,7 +1262,7 @@ impl Device {
         (self.device_fn_1_0.destroy_shader_module)(
             self.handle(),
             shader,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -1276,7 +1276,7 @@ impl Device {
         (self.device_fn_1_0.destroy_pipeline)(
             self.handle(),
             pipeline,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -1290,7 +1290,7 @@ impl Device {
         (self.device_fn_1_0.destroy_semaphore)(
             self.handle(),
             semaphore,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -1304,7 +1304,7 @@ impl Device {
         (self.device_fn_1_0.destroy_descriptor_pool)(
             self.handle(),
             pool,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -1318,7 +1318,7 @@ impl Device {
         (self.device_fn_1_0.destroy_query_pool)(
             self.handle(),
             pool,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -1332,7 +1332,7 @@ impl Device {
         (self.device_fn_1_0.destroy_descriptor_set_layout)(
             self.handle(),
             layout,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -1379,7 +1379,7 @@ impl Device {
         (self.device_fn_1_0.create_sampler)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             sampler.as_mut_ptr(),
         )
         .assume_init_on_success(sampler)
@@ -1568,7 +1568,7 @@ impl Device {
         (self.device_fn_1_0.create_descriptor_set_layout)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             layout.as_mut_ptr(),
         )
         .assume_init_on_success(layout)
@@ -1591,7 +1591,7 @@ impl Device {
         (self.device_fn_1_0.create_descriptor_pool)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             pool.as_mut_ptr(),
         )
         .assume_init_on_success(pool)
@@ -2136,7 +2136,7 @@ impl Device {
         (self.device_fn_1_0.create_semaphore)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             semaphore.as_mut_ptr(),
         )
         .assume_init_on_success(semaphore)
@@ -2160,7 +2160,7 @@ impl Device {
             pipeline_cache,
             create_infos.len() as u32,
             create_infos.as_ptr(),
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             pipelines.as_mut_ptr(),
         );
         pipelines.set_len(create_infos.len());
@@ -2188,7 +2188,7 @@ impl Device {
             pipeline_cache,
             create_infos.len() as u32,
             create_infos.as_ptr(),
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             pipelines.as_mut_ptr(),
         );
         pipelines.set_len(create_infos.len());
@@ -2209,7 +2209,7 @@ impl Device {
         (self.device_fn_1_0.create_buffer)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             buffer.as_mut_ptr(),
         )
         .assume_init_on_success(buffer)
@@ -2226,7 +2226,7 @@ impl Device {
         (self.device_fn_1_0.create_pipeline_layout)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             pipeline_layout.as_mut_ptr(),
         )
         .assume_init_on_success(pipeline_layout)
@@ -2243,7 +2243,7 @@ impl Device {
         (self.device_fn_1_0.create_pipeline_cache)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             pipeline_cache.as_mut_ptr(),
         )
         .assume_init_on_success(pipeline_cache)
@@ -2347,7 +2347,7 @@ impl Device {
         (self.device_fn_1_0.create_framebuffer)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             framebuffer.as_mut_ptr(),
         )
         .assume_init_on_success(framebuffer)
@@ -2403,7 +2403,7 @@ impl Device {
         (self.device_fn_1_0.create_render_pass)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             renderpass.as_mut_ptr(),
         )
         .assume_init_on_success(renderpass)
@@ -2504,7 +2504,7 @@ impl Device {
         (self.device_fn_1_0.create_buffer_view)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             buffer_view.as_mut_ptr(),
         )
         .assume_init_on_success(buffer_view)
@@ -2520,7 +2520,7 @@ impl Device {
         (self.device_fn_1_0.destroy_buffer_view)(
             self.handle(),
             buffer_view,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 
@@ -2535,7 +2535,7 @@ impl Device {
         (self.device_fn_1_0.create_image_view)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             image_view.as_mut_ptr(),
         )
         .assume_init_on_success(image_view)
@@ -2567,7 +2567,7 @@ impl Device {
         (self.device_fn_1_0.create_command_pool)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             pool.as_mut_ptr(),
         )
         .assume_init_on_success(pool)
@@ -2584,7 +2584,7 @@ impl Device {
         (self.device_fn_1_0.create_query_pool)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             pool.as_mut_ptr(),
         )
         .assume_init_on_success(pool)
@@ -2601,7 +2601,7 @@ impl Device {
         (self.device_fn_1_0.create_image)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             image.as_mut_ptr(),
         )
         .assume_init_on_success(image)
@@ -2662,7 +2662,7 @@ impl Device {
         (self.device_fn_1_0.allocate_memory)(
             self.handle(),
             allocate_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             memory.as_mut_ptr(),
         )
         .assume_init_on_success(memory)
@@ -2679,7 +2679,7 @@ impl Device {
         (self.device_fn_1_0.create_shader_module)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             shader.as_mut_ptr(),
         )
         .assume_init_on_success(shader)
@@ -2696,7 +2696,7 @@ impl Device {
         (self.device_fn_1_0.create_fence)(
             self.handle(),
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             fence.as_mut_ptr(),
         )
         .assume_init_on_success(fence)

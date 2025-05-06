@@ -259,7 +259,7 @@ impl Entry {
         let mut instance = mem::MaybeUninit::uninit();
         let instance = (self.entry_fn_1_0.create_instance)(
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             instance.as_mut_ptr(),
         )
         .assume_init_on_success(instance)?;

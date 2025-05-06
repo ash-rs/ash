@@ -15,7 +15,7 @@ impl crate::khr::deferred_host_operations::Device {
         let mut operation = mem::MaybeUninit::uninit();
         (self.fp.create_deferred_operation_khr)(
             self.handle,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             operation.as_mut_ptr(),
         )
         .assume_init_on_success(operation)
@@ -40,7 +40,7 @@ impl crate::khr::deferred_host_operations::Device {
         (self.fp.destroy_deferred_operation_khr)(
             self.handle,
             operation,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 

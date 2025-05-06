@@ -51,7 +51,7 @@ impl crate::khr::ray_tracing_pipeline::Device {
             pipeline_cache,
             create_infos.len() as u32,
             create_infos.as_ptr(),
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             pipelines.as_mut_ptr(),
         );
         pipelines.set_len(create_infos.len());

@@ -17,7 +17,7 @@ impl crate::ext::metal_surface::Instance {
         (self.fp.create_metal_surface_ext)(
             self.handle,
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             surface.as_mut_ptr(),
         )
         .assume_init_on_success(surface)

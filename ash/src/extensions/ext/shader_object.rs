@@ -29,7 +29,7 @@ impl crate::ext::shader_object::Device {
             self.handle,
             create_infos.len() as u32,
             create_infos.as_ptr(),
-            allocator.as_raw_ptr(),
+            allocator.to_raw_ptr(),
             shaders.as_mut_ptr(),
         );
         shaders.set_len(create_infos.len());
@@ -46,7 +46,7 @@ impl crate::ext::shader_object::Device {
         shader: vk::ShaderEXT,
         allocator: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.fp.destroy_shader_ext)(self.handle, shader, allocator.as_raw_ptr())
+        (self.fp.destroy_shader_ext)(self.handle, shader, allocator.to_raw_ptr())
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetShaderBinaryDataEXT.html>

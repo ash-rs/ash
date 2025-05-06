@@ -29,7 +29,7 @@ impl crate::khr::video_encode_queue::Device {
         (self.fp.get_encoded_video_session_parameters_khr)(
             self.handle,
             session_parameters_info,
-            feedback_info.as_raw_mut_ptr(),
+            feedback_info.to_raw_mut_ptr(),
             size.as_mut_ptr(),
             ptr::null_mut(),
         )
@@ -51,7 +51,7 @@ impl crate::khr::video_encode_queue::Device {
         (self.fp.get_encoded_video_session_parameters_khr)(
             self.handle,
             session_parameters_info,
-            feedback_info.as_raw_mut_ptr(),
+            feedback_info.to_raw_mut_ptr(),
             &mut size,
             out.as_mut_ptr() as _,
         )

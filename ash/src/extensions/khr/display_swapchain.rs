@@ -18,7 +18,7 @@ impl crate::khr::display_swapchain::Device {
             self.handle,
             create_infos.len() as u32,
             create_infos.as_ptr(),
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             swapchains.as_mut_ptr(),
         )
         .set_vec_len_on_success(swapchains, create_infos.len())

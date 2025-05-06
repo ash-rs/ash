@@ -17,7 +17,7 @@ impl crate::nn::vi_surface::Instance {
         (self.fp.create_vi_surface_nn)(
             self.handle,
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             surface.as_mut_ptr(),
         )
         .assume_init_on_success(surface)

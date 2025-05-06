@@ -12,7 +12,7 @@ impl crate::nv::low_latency2::Device {
         swapchain: vk::SwapchainKHR,
         sleep_mode_info: Option<&vk::LatencySleepModeInfoNV<'_>>,
     ) -> VkResult<()> {
-        (self.fp.set_latency_sleep_mode_nv)(self.handle, swapchain, sleep_mode_info.as_raw_ptr())
+        (self.fp.set_latency_sleep_mode_nv)(self.handle, swapchain, sleep_mode_info.to_raw_ptr())
             .result()
     }
 

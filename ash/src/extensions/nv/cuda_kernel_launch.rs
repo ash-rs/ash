@@ -19,7 +19,7 @@ impl crate::nv::cuda_kernel_launch::Device {
         (self.fp.create_cuda_module_nv)(
             self.handle,
             create_info,
-            allocator.as_raw_ptr(),
+            allocator.to_raw_ptr(),
             module.as_mut_ptr(),
         )
         .assume_init_on_success(module)
@@ -44,7 +44,7 @@ impl crate::nv::cuda_kernel_launch::Device {
         (self.fp.create_cuda_function_nv)(
             self.handle,
             create_info,
-            allocator.as_raw_ptr(),
+            allocator.to_raw_ptr(),
             function.as_mut_ptr(),
         )
         .assume_init_on_success(function)
@@ -57,7 +57,7 @@ impl crate::nv::cuda_kernel_launch::Device {
         module: vk::CudaModuleNV,
         allocator: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.fp.destroy_cuda_module_nv)(self.handle, module, allocator.as_raw_ptr())
+        (self.fp.destroy_cuda_module_nv)(self.handle, module, allocator.to_raw_ptr())
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyCudaFunctionNV.html>
@@ -67,7 +67,7 @@ impl crate::nv::cuda_kernel_launch::Device {
         function: vk::CudaFunctionNV,
         allocator: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.fp.destroy_cuda_function_nv)(self.handle, function, allocator.as_raw_ptr())
+        (self.fp.destroy_cuda_function_nv)(self.handle, function, allocator.to_raw_ptr())
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCudaLaunchKernelNV.html>
