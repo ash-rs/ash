@@ -566,7 +566,7 @@ pub trait CommandExt {
 
 impl CommandExt for vk_parse::CommandDefinition {
     fn function_type(&self) -> FunctionType {
-        let is_first_param_device = self.params.first().map_or(false, |field| {
+        let is_first_param_device = self.params.first().is_some_and(|field| {
             matches!(
                 field.definition.type_name.as_deref(),
                 Some("VkDevice" | "VkCommandBuffer" | "VkQueue")
@@ -2722,7 +2722,7 @@ pub fn root_structs(
             type_
                 .name
                 .as_ref()
-                .map_or(false, |name| allowed_types.contains(name.as_str()))
+                .is_some_and(|name| allowed_types.contains(name.as_str()))
         })
         .filter_map(|type_| type_.structextends.as_ref())
         .flat_map(|e| e.split(','))
@@ -3220,9 +3220,10 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .filter_map(get_variant!(vk_parse::RegistryChild::Enums))
         .filter(|enums| enums.kind.is_some())
         .filter(|enums| {
-            enums.name.as_ref().map_or(true, |n| {
-                required_types.contains(n.replace("FlagBits", "Flags").as_str())
-            })
+            enums
+                .name
+                .as_ref()
+                .is_none_or(|n| required_types.contains(n.replace("FlagBits", "Flags").as_str()))
         })
         .map(|e| generate_enum(e, &mut const_cache, &mut const_values, &mut bitflags_cache))
         .fold((Vec::new(), Vec::new()), |mut acc, elem| {
