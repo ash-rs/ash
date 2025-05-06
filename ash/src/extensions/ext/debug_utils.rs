@@ -89,7 +89,7 @@ impl crate::ext::debug_utils::Instance {
         (self.fp.create_debug_utils_messenger_ext)(
             self.handle,
             create_info,
-            allocator.as_raw_ptr(),
+            allocator.to_raw_ptr(),
             messenger.as_mut_ptr(),
         )
         .assume_init_on_success(messenger)
@@ -102,7 +102,7 @@ impl crate::ext::debug_utils::Instance {
         messenger: vk::DebugUtilsMessengerEXT,
         allocator: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.fp.destroy_debug_utils_messenger_ext)(self.handle, messenger, allocator.as_raw_ptr());
+        (self.fp.destroy_debug_utils_messenger_ext)(self.handle, messenger, allocator.to_raw_ptr());
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSubmitDebugUtilsMessageEXT.html>

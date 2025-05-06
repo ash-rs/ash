@@ -18,7 +18,7 @@ impl crate::khr::acceleration_structure::Device {
         (self.fp.create_acceleration_structure_khr)(
             self.handle,
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             accel_struct.as_mut_ptr(),
         )
         .assume_init_on_success(accel_struct)
@@ -34,7 +34,7 @@ impl crate::khr::acceleration_structure::Device {
         (self.fp.destroy_acceleration_structure_khr)(
             self.handle,
             accel_struct,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         );
     }
 

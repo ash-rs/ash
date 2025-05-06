@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_KHR_get_display_properties2` instance extension (#932)
 - Added `VK_EXT_metal_objects` device extension (#942)
 - Added `VK_AMD_anti_lag` device extension (#943)
+- Added `VK_KHR_video_queue`, `VK_KHR_video_encode_queue`, and `VK_KHR_video_decode_queue` device extensions (#965)
 
 ### Changed
 
@@ -26,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `get_pipeline_executable_statistics()`.
   The expected length of this array can be queried with the respective `*_len()` variant of these functions.
 - `push_next()` has been renamed to `extend()` and marked as `unsafe`. Users are encouraged to call `push()` for singular structs instead. (#909)
+- Changed and renamed `RawPtr::as_raw_ptr(&self)` trait function to a by-value `RawPtr::to_raw_ptr(self)` function. (#965)
 
 ### Removed
 

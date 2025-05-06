@@ -17,7 +17,7 @@ impl crate::khr::create_renderpass2::Device {
         (self.fp.create_render_pass2_khr)(
             self.handle,
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             renderpass.as_mut_ptr(),
         )
         .assume_init_on_success(renderpass)

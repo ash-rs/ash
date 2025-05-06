@@ -17,7 +17,7 @@ impl crate::khr::sampler_ycbcr_conversion::Device {
         (self.fp.create_sampler_ycbcr_conversion_khr)(
             self.handle,
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             ycbcr_conversion.as_mut_ptr(),
         )
         .assume_init_on_success(ycbcr_conversion)
@@ -33,7 +33,7 @@ impl crate::khr::sampler_ycbcr_conversion::Device {
         (self.fp.destroy_sampler_ycbcr_conversion_khr)(
             self.handle,
             ycbcr_conversion,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
         )
     }
 }

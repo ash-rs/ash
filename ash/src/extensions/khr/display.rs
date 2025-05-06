@@ -73,7 +73,7 @@ impl crate::khr::display::Instance {
             physical_device,
             display,
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             display_mode.as_mut_ptr(),
         )
         .assume_init_on_success(display_mode)
@@ -108,7 +108,7 @@ impl crate::khr::display::Instance {
         (self.fp.create_display_plane_surface_khr)(
             self.handle,
             create_info,
-            allocation_callbacks.as_raw_ptr(),
+            allocation_callbacks.to_raw_ptr(),
             surface.as_mut_ptr(),
         )
         .assume_init_on_success(surface)

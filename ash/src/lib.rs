@@ -83,14 +83,27 @@ pub mod vk;
 mod extensions;
 
 pub trait RawPtr<T> {
-    fn as_raw_ptr(&self) -> *const T;
+    fn to_raw_ptr(self) -> *const T;
 }
 
 impl<T> RawPtr<T> for Option<&T> {
-    fn as_raw_ptr(&self) -> *const T {
-        match *self {
+    fn to_raw_ptr(self) -> *const T {
+        match self {
             Some(inner) => inner,
-            _ => ::core::ptr::null(),
+            None => ptr::null(),
+        }
+    }
+}
+
+pub trait RawMutPtr<T> {
+    unsafe fn to_raw_mut_ptr(self) -> *mut T;
+}
+
+impl<T> RawMutPtr<T> for Option<&mut T> {
+    unsafe fn to_raw_mut_ptr(self) -> *mut T {
+        match self {
+            Some(inner) => inner,
+            None => ptr::null_mut(),
         }
     }
 }
