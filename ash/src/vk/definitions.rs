@@ -1262,6 +1262,11 @@ impl ::core::default::Default for DeviceQueueCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for DeviceQueueCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_QUEUE_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::DeviceQueueCreateInfo`",
+    label = "`{Self}` does not extend `vk::DeviceQueueCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceQueueCreateInfo.html#VUID-VkDeviceQueueCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsDeviceQueueCreateInfo {}
 impl<'a> DeviceQueueCreateInfo<'a> {
     #[inline]
@@ -1375,6 +1380,11 @@ impl ::core::default::Default for DeviceCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for DeviceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::DeviceCreateInfo`",
+    label = "`{Self}` does not extend `vk::DeviceCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceCreateInfo.html#VUID-VkDeviceCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsDeviceCreateInfo {}
 impl<'a> DeviceCreateInfo<'a> {
     #[inline]
@@ -1492,6 +1502,11 @@ impl ::core::default::Default for InstanceCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for InstanceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INSTANCE_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::InstanceCreateInfo`",
+    label = "`{Self}` does not extend `vk::InstanceCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkInstanceCreateInfo.html#VUID-VkInstanceCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsInstanceCreateInfo {}
 impl<'a> InstanceCreateInfo<'a> {
     #[inline]
@@ -1680,6 +1695,11 @@ impl ::core::default::Default for MemoryAllocateInfo<'_> {
 unsafe impl<'a> TaggedStructure for MemoryAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_ALLOCATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::MemoryAllocateInfo`",
+    label = "`{Self}` does not extend `vk::MemoryAllocateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryAllocateInfo.html#VUID-VkMemoryAllocateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsMemoryAllocateInfo {}
 impl<'a> MemoryAllocateInfo<'a> {
     #[inline]
@@ -2081,6 +2101,11 @@ impl ::core::default::Default for WriteDescriptorSet<'_> {
 unsafe impl<'a> TaggedStructure for WriteDescriptorSet<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_DESCRIPTOR_SET;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::WriteDescriptorSet`",
+    label = "`{Self}` does not extend `vk::WriteDescriptorSet`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkWriteDescriptorSet.html#VUID-VkWriteDescriptorSet-pNext-pNext>"
+)]
 pub unsafe trait ExtendsWriteDescriptorSet {}
 impl<'a> WriteDescriptorSet<'a> {
     #[inline]
@@ -2322,6 +2347,11 @@ impl ::core::default::Default for BufferCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for BufferCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::BufferCreateInfo`",
+    label = "`{Self}` does not extend `vk::BufferCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferCreateInfo.html#VUID-VkBufferCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsBufferCreateInfo {}
 impl<'a> BufferCreateInfo<'a> {
     #[inline]
@@ -2430,6 +2460,11 @@ impl ::core::default::Default for BufferViewCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for BufferViewCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_VIEW_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::BufferViewCreateInfo`",
+    label = "`{Self}` does not extend `vk::BufferViewCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferViewCreateInfo.html#VUID-VkBufferViewCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsBufferViewCreateInfo {}
 impl<'a> BufferViewCreateInfo<'a> {
     #[inline]
@@ -2687,6 +2722,11 @@ impl ::core::default::Default for BufferMemoryBarrier<'_> {
 unsafe impl<'a> TaggedStructure for BufferMemoryBarrier<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_MEMORY_BARRIER;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::BufferMemoryBarrier`",
+    label = "`{Self}` does not extend `vk::BufferMemoryBarrier`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferMemoryBarrier.html#VUID-VkBufferMemoryBarrier-pNext-pNext>"
+)]
 pub unsafe trait ExtendsBufferMemoryBarrier {}
 impl<'a> BufferMemoryBarrier<'a> {
     #[inline]
@@ -2813,6 +2853,11 @@ impl ::core::default::Default for ImageMemoryBarrier<'_> {
 unsafe impl<'a> TaggedStructure for ImageMemoryBarrier<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_MEMORY_BARRIER;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::ImageMemoryBarrier`",
+    label = "`{Self}` does not extend `vk::ImageMemoryBarrier`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageMemoryBarrier.html#VUID-VkImageMemoryBarrier-pNext-pNext>"
+)]
 pub unsafe trait ExtendsImageMemoryBarrier {}
 impl<'a> ImageMemoryBarrier<'a> {
     #[inline]
@@ -2951,6 +2996,11 @@ impl ::core::default::Default for ImageCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for ImageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::ImageCreateInfo`",
+    label = "`{Self}` does not extend `vk::ImageCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageCreateInfo.html#VUID-VkImageCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsImageCreateInfo {}
 impl<'a> ImageCreateInfo<'a> {
     #[inline]
@@ -3135,6 +3185,11 @@ impl ::core::default::Default for ImageViewCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for ImageViewCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::ImageViewCreateInfo`",
+    label = "`{Self}` does not extend `vk::ImageViewCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageViewCreateInfo.html#VUID-VkImageViewCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsImageViewCreateInfo {}
 impl<'a> ImageViewCreateInfo<'a> {
     #[inline]
@@ -3482,6 +3537,11 @@ impl ::core::default::Default for BindSparseInfo<'_> {
 unsafe impl<'a> TaggedStructure for BindSparseInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_SPARSE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::BindSparseInfo`",
+    label = "`{Self}` does not extend `vk::BindSparseInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBindSparseInfo.html#VUID-VkBindSparseInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsBindSparseInfo {}
 impl<'a> BindSparseInfo<'a> {
     #[inline]
@@ -3833,6 +3893,11 @@ unsafe impl<'a> TaggedStructure for ShaderModuleCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_MODULE_CREATE_INFO;
 }
 unsafe impl ExtendsPipelineShaderStageCreateInfo for ShaderModuleCreateInfo<'_> {}
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::ShaderModuleCreateInfo`",
+    label = "`{Self}` does not extend `vk::ShaderModuleCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderModuleCreateInfo.html#VUID-VkShaderModuleCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsShaderModuleCreateInfo {}
 impl<'a> ShaderModuleCreateInfo<'a> {
     #[inline]
@@ -3984,6 +4049,11 @@ impl ::core::default::Default for DescriptorSetLayoutCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for DescriptorSetLayoutCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::DescriptorSetLayoutCreateInfo`",
+    label = "`{Self}` does not extend `vk::DescriptorSetLayoutCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSetLayoutCreateInfo.html#VUID-VkDescriptorSetLayoutCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsDescriptorSetLayoutCreateInfo {}
 impl<'a> DescriptorSetLayoutCreateInfo<'a> {
     #[inline]
@@ -4105,6 +4175,11 @@ impl ::core::default::Default for DescriptorPoolCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for DescriptorPoolCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_POOL_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::DescriptorPoolCreateInfo`",
+    label = "`{Self}` does not extend `vk::DescriptorPoolCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorPoolCreateInfo.html#VUID-VkDescriptorPoolCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsDescriptorPoolCreateInfo {}
 impl<'a> DescriptorPoolCreateInfo<'a> {
     #[inline]
@@ -4205,6 +4280,11 @@ impl ::core::default::Default for DescriptorSetAllocateInfo<'_> {
 unsafe impl<'a> TaggedStructure for DescriptorSetAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_ALLOCATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::DescriptorSetAllocateInfo`",
+    label = "`{Self}` does not extend `vk::DescriptorSetAllocateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSetAllocateInfo.html#VUID-VkDescriptorSetAllocateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsDescriptorSetAllocateInfo {}
 impl<'a> DescriptorSetAllocateInfo<'a> {
     #[inline]
@@ -4371,6 +4451,11 @@ impl ::core::default::Default for PipelineShaderStageCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for PipelineShaderStageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_SHADER_STAGE_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PipelineShaderStageCreateInfo`",
+    label = "`{Self}` does not extend `vk::PipelineShaderStageCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineShaderStageCreateInfo.html#VUID-VkPipelineShaderStageCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPipelineShaderStageCreateInfo {}
 impl<'a> PipelineShaderStageCreateInfo<'a> {
     #[inline]
@@ -4495,6 +4580,11 @@ impl ::core::default::Default for ComputePipelineCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for ComputePipelineCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_PIPELINE_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::ComputePipelineCreateInfo`",
+    label = "`{Self}` does not extend `vk::ComputePipelineCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkComputePipelineCreateInfo.html#VUID-VkComputePipelineCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsComputePipelineCreateInfo {}
 impl<'a> ComputePipelineCreateInfo<'a> {
     #[inline]
@@ -4758,6 +4848,11 @@ impl ::core::default::Default for PipelineVertexInputStateCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for PipelineVertexInputStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PipelineVertexInputStateCreateInfo`",
+    label = "`{Self}` does not extend `vk::PipelineVertexInputStateCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineVertexInputStateCreateInfo.html#VUID-VkPipelineVertexInputStateCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPipelineVertexInputStateCreateInfo {}
 impl<'a> PipelineVertexInputStateCreateInfo<'a> {
     #[inline]
@@ -4914,6 +5009,11 @@ impl ::core::default::Default for PipelineTessellationStateCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for PipelineTessellationStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_TESSELLATION_STATE_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PipelineTessellationStateCreateInfo`",
+    label = "`{Self}` does not extend `vk::PipelineTessellationStateCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineTessellationStateCreateInfo.html#VUID-VkPipelineTessellationStateCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPipelineTessellationStateCreateInfo {}
 impl<'a> PipelineTessellationStateCreateInfo<'a> {
     #[inline]
@@ -5015,6 +5115,11 @@ impl ::core::default::Default for PipelineViewportStateCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for PipelineViewportStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_VIEWPORT_STATE_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PipelineViewportStateCreateInfo`",
+    label = "`{Self}` does not extend `vk::PipelineViewportStateCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineViewportStateCreateInfo.html#VUID-VkPipelineViewportStateCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPipelineViewportStateCreateInfo {}
 impl<'a> PipelineViewportStateCreateInfo<'a> {
     #[inline]
@@ -5145,6 +5250,11 @@ impl ::core::default::Default for PipelineRasterizationStateCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for PipelineRasterizationStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PipelineRasterizationStateCreateInfo`",
+    label = "`{Self}` does not extend `vk::PipelineRasterizationStateCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineRasterizationStateCreateInfo.html#VUID-VkPipelineRasterizationStateCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPipelineRasterizationStateCreateInfo {}
 impl<'a> PipelineRasterizationStateCreateInfo<'a> {
     #[inline]
@@ -5295,6 +5405,11 @@ impl ::core::default::Default for PipelineMultisampleStateCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for PipelineMultisampleStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PipelineMultisampleStateCreateInfo`",
+    label = "`{Self}` does not extend `vk::PipelineMultisampleStateCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineMultisampleStateCreateInfo.html#VUID-VkPipelineMultisampleStateCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPipelineMultisampleStateCreateInfo {}
 impl<'a> PipelineMultisampleStateCreateInfo<'a> {
     #[inline]
@@ -5489,6 +5604,11 @@ impl ::core::default::Default for PipelineColorBlendStateCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for PipelineColorBlendStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PipelineColorBlendStateCreateInfo`",
+    label = "`{Self}` does not extend `vk::PipelineColorBlendStateCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineColorBlendStateCreateInfo.html#VUID-VkPipelineColorBlendStateCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPipelineColorBlendStateCreateInfo {}
 impl<'a> PipelineColorBlendStateCreateInfo<'a> {
     #[inline]
@@ -5822,6 +5942,11 @@ impl ::core::default::Default for GraphicsPipelineCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for GraphicsPipelineCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GRAPHICS_PIPELINE_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::GraphicsPipelineCreateInfo`",
+    label = "`{Self}` does not extend `vk::GraphicsPipelineCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkGraphicsPipelineCreateInfo.html#VUID-VkGraphicsPipelineCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsGraphicsPipelineCreateInfo {}
 impl<'a> GraphicsPipelineCreateInfo<'a> {
     #[inline]
@@ -6560,6 +6685,11 @@ impl ::core::default::Default for SamplerCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for SamplerCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::SamplerCreateInfo`",
+    label = "`{Self}` does not extend `vk::SamplerCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerCreateInfo.html#VUID-VkSamplerCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsSamplerCreateInfo {}
 impl<'a> SamplerCreateInfo<'a> {
     #[inline]
@@ -6813,6 +6943,11 @@ impl ::core::default::Default for CommandBufferInheritanceInfo<'_> {
 unsafe impl<'a> TaggedStructure for CommandBufferInheritanceInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_INHERITANCE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::CommandBufferInheritanceInfo`",
+    label = "`{Self}` does not extend `vk::CommandBufferInheritanceInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandBufferInheritanceInfo.html#VUID-VkCommandBufferInheritanceInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsCommandBufferInheritanceInfo {}
 impl<'a> CommandBufferInheritanceInfo<'a> {
     #[inline]
@@ -6928,6 +7063,11 @@ impl ::core::default::Default for CommandBufferBeginInfo<'_> {
 unsafe impl<'a> TaggedStructure for CommandBufferBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_BEGIN_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::CommandBufferBeginInfo`",
+    label = "`{Self}` does not extend `vk::CommandBufferBeginInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandBufferBeginInfo.html#VUID-VkCommandBufferBeginInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsCommandBufferBeginInfo {}
 impl<'a> CommandBufferBeginInfo<'a> {
     #[inline]
@@ -7042,6 +7182,11 @@ impl ::core::default::Default for RenderPassBeginInfo<'_> {
 unsafe impl<'a> TaggedStructure for RenderPassBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_BEGIN_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::RenderPassBeginInfo`",
+    label = "`{Self}` does not extend `vk::RenderPassBeginInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassBeginInfo.html#VUID-VkRenderPassBeginInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsRenderPassBeginInfo {}
 impl<'a> RenderPassBeginInfo<'a> {
     #[inline]
@@ -7453,6 +7598,11 @@ impl ::core::default::Default for RenderPassCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for RenderPassCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::RenderPassCreateInfo`",
+    label = "`{Self}` does not extend `vk::RenderPassCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassCreateInfo.html#VUID-VkRenderPassCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsRenderPassCreateInfo {}
 impl<'a> RenderPassCreateInfo<'a> {
     #[inline]
@@ -7556,6 +7706,11 @@ impl ::core::default::Default for EventCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for EventCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EVENT_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::EventCreateInfo`",
+    label = "`{Self}` does not extend `vk::EventCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkEventCreateInfo.html#VUID-VkEventCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsEventCreateInfo {}
 impl<'a> EventCreateInfo<'a> {
     #[inline]
@@ -7635,6 +7790,11 @@ impl ::core::default::Default for FenceCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for FenceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FENCE_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::FenceCreateInfo`",
+    label = "`{Self}` does not extend `vk::FenceCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFenceCreateInfo.html#VUID-VkFenceCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsFenceCreateInfo {}
 impl<'a> FenceCreateInfo<'a> {
     #[inline]
@@ -9029,6 +9189,11 @@ impl ::core::default::Default for SemaphoreCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for SemaphoreCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::SemaphoreCreateInfo`",
+    label = "`{Self}` does not extend `vk::SemaphoreCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSemaphoreCreateInfo.html#VUID-VkSemaphoreCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsSemaphoreCreateInfo {}
 impl<'a> SemaphoreCreateInfo<'a> {
     #[inline]
@@ -9117,6 +9282,11 @@ impl ::core::default::Default for QueryPoolCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for QueryPoolCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUERY_POOL_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::QueryPoolCreateInfo`",
+    label = "`{Self}` does not extend `vk::QueryPoolCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueryPoolCreateInfo.html#VUID-VkQueryPoolCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsQueryPoolCreateInfo {}
 impl<'a> QueryPoolCreateInfo<'a> {
     #[inline]
@@ -9226,6 +9396,11 @@ impl ::core::default::Default for FramebufferCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for FramebufferCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::FramebufferCreateInfo`",
+    label = "`{Self}` does not extend `vk::FramebufferCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFramebufferCreateInfo.html#VUID-VkFramebufferCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsFramebufferCreateInfo {}
 impl<'a> FramebufferCreateInfo<'a> {
     #[inline]
@@ -9501,6 +9676,11 @@ impl ::core::default::Default for SubmitInfo<'_> {
 unsafe impl<'a> TaggedStructure for SubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBMIT_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::SubmitInfo`",
+    label = "`{Self}` does not extend `vk::SubmitInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubmitInfo.html#VUID-VkSubmitInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsSubmitInfo {}
 impl<'a> SubmitInfo<'a> {
     #[inline]
@@ -10550,6 +10730,11 @@ impl ::core::default::Default for SwapchainCreateInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for SwapchainCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_CREATE_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::SwapchainCreateInfoKHR`",
+    label = "`{Self}` does not extend `vk::SwapchainCreateInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSwapchainCreateInfoKHR.html#VUID-VkSwapchainCreateInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsSwapchainCreateInfoKHR {}
 impl<'a> SwapchainCreateInfoKHR<'a> {
     #[inline]
@@ -10716,6 +10901,11 @@ impl ::core::default::Default for PresentInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for PresentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PresentInfoKHR`",
+    label = "`{Self}` does not extend `vk::PresentInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPresentInfoKHR.html#VUID-VkPresentInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPresentInfoKHR {}
 impl<'a> PresentInfoKHR<'a> {
     #[inline]
@@ -12646,6 +12836,11 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceFeatures2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FEATURES_2;
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFeatures2<'_> {}
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PhysicalDeviceFeatures2`",
+    label = "`{Self}` does not extend `vk::PhysicalDeviceFeatures2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceFeatures2.html#VUID-VkPhysicalDeviceFeatures2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPhysicalDeviceFeatures2 {}
 impl<'a> PhysicalDeviceFeatures2<'a> {
     #[inline]
@@ -12731,6 +12926,11 @@ impl ::core::default::Default for PhysicalDeviceProperties2<'_> {
 unsafe impl<'a> TaggedStructure for PhysicalDeviceProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PROPERTIES_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PhysicalDeviceProperties2`",
+    label = "`{Self}` does not extend `vk::PhysicalDeviceProperties2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceProperties2.html#VUID-VkPhysicalDeviceProperties2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPhysicalDeviceProperties2 {}
 impl<'a> PhysicalDeviceProperties2<'a> {
     #[inline]
@@ -12816,6 +13016,11 @@ impl ::core::default::Default for FormatProperties2<'_> {
 unsafe impl<'a> TaggedStructure for FormatProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FORMAT_PROPERTIES_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::FormatProperties2`",
+    label = "`{Self}` does not extend `vk::FormatProperties2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFormatProperties2.html#VUID-VkFormatProperties2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsFormatProperties2 {}
 impl<'a> FormatProperties2<'a> {
     #[inline]
@@ -12895,6 +13100,11 @@ impl ::core::default::Default for ImageFormatProperties2<'_> {
 unsafe impl<'a> TaggedStructure for ImageFormatProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_FORMAT_PROPERTIES_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::ImageFormatProperties2`",
+    label = "`{Self}` does not extend `vk::ImageFormatProperties2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageFormatProperties2.html#VUID-VkImageFormatProperties2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsImageFormatProperties2 {}
 impl<'a> ImageFormatProperties2<'a> {
     #[inline]
@@ -12991,6 +13201,11 @@ impl ::core::default::Default for PhysicalDeviceImageFormatInfo2<'_> {
 unsafe impl<'a> TaggedStructure for PhysicalDeviceImageFormatInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PhysicalDeviceImageFormatInfo2`",
+    label = "`{Self}` does not extend `vk::PhysicalDeviceImageFormatInfo2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImageFormatInfo2.html#VUID-VkPhysicalDeviceImageFormatInfo2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPhysicalDeviceImageFormatInfo2 {}
 impl<'a> PhysicalDeviceImageFormatInfo2<'a> {
     #[inline]
@@ -13099,6 +13314,11 @@ impl ::core::default::Default for QueueFamilyProperties2<'_> {
 unsafe impl<'a> TaggedStructure for QueueFamilyProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_PROPERTIES_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::QueueFamilyProperties2`",
+    label = "`{Self}` does not extend `vk::QueueFamilyProperties2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueueFamilyProperties2.html#VUID-VkQueueFamilyProperties2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsQueueFamilyProperties2 {}
 impl<'a> QueueFamilyProperties2<'a> {
     #[inline]
@@ -13187,6 +13407,11 @@ impl ::core::default::Default for PhysicalDeviceMemoryProperties2<'_> {
 unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MEMORY_PROPERTIES_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PhysicalDeviceMemoryProperties2`",
+    label = "`{Self}` does not extend `vk::PhysicalDeviceMemoryProperties2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMemoryProperties2.html#VUID-VkPhysicalDeviceMemoryProperties2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPhysicalDeviceMemoryProperties2 {}
 impl<'a> PhysicalDeviceMemoryProperties2<'a> {
     #[inline]
@@ -13774,6 +13999,11 @@ impl ::core::default::Default for PhysicalDeviceExternalBufferInfo<'_> {
 unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalBufferInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PhysicalDeviceExternalBufferInfo`",
+    label = "`{Self}` does not extend `vk::PhysicalDeviceExternalBufferInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceExternalBufferInfo.html#VUID-VkPhysicalDeviceExternalBufferInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPhysicalDeviceExternalBufferInfo {}
 impl<'a> PhysicalDeviceExternalBufferInfo<'a> {
     #[inline]
@@ -14557,6 +14787,11 @@ impl ::core::default::Default for PhysicalDeviceExternalSemaphoreInfo<'_> {
 unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalSemaphoreInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PhysicalDeviceExternalSemaphoreInfo`",
+    label = "`{Self}` does not extend `vk::PhysicalDeviceExternalSemaphoreInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceExternalSemaphoreInfo.html#VUID-VkPhysicalDeviceExternalSemaphoreInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPhysicalDeviceExternalSemaphoreInfo {}
 impl<'a> PhysicalDeviceExternalSemaphoreInfo<'a> {
     #[inline]
@@ -16006,6 +16241,11 @@ impl ::core::default::Default for BindBufferMemoryInfo<'_> {
 unsafe impl<'a> TaggedStructure for BindBufferMemoryInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_BUFFER_MEMORY_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::BindBufferMemoryInfo`",
+    label = "`{Self}` does not extend `vk::BindBufferMemoryInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBindBufferMemoryInfo.html#VUID-VkBindBufferMemoryInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsBindBufferMemoryInfo {}
 impl<'a> BindBufferMemoryInfo<'a> {
     #[inline]
@@ -16143,6 +16383,11 @@ impl ::core::default::Default for BindImageMemoryInfo<'_> {
 unsafe impl<'a> TaggedStructure for BindImageMemoryInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_IMAGE_MEMORY_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::BindImageMemoryInfo`",
+    label = "`{Self}` does not extend `vk::BindImageMemoryInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBindImageMemoryInfo.html#VUID-VkBindImageMemoryInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsBindImageMemoryInfo {}
 impl<'a> BindImageMemoryInfo<'a> {
     #[inline]
@@ -17775,6 +18020,11 @@ impl ::core::default::Default for PhysicalDeviceSurfaceInfo2KHR<'_> {
 unsafe impl<'a> TaggedStructure for PhysicalDeviceSurfaceInfo2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SURFACE_INFO_2_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PhysicalDeviceSurfaceInfo2KHR`",
+    label = "`{Self}` does not extend `vk::PhysicalDeviceSurfaceInfo2KHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceSurfaceInfo2KHR.html#VUID-VkPhysicalDeviceSurfaceInfo2KHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPhysicalDeviceSurfaceInfo2KHR {}
 impl<'a> PhysicalDeviceSurfaceInfo2KHR<'a> {
     #[inline]
@@ -17863,6 +18113,11 @@ impl ::core::default::Default for SurfaceCapabilities2KHR<'_> {
 unsafe impl<'a> TaggedStructure for SurfaceCapabilities2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_2_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::SurfaceCapabilities2KHR`",
+    label = "`{Self}` does not extend `vk::SurfaceCapabilities2KHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSurfaceCapabilities2KHR.html#VUID-VkSurfaceCapabilities2KHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsSurfaceCapabilities2KHR {}
 impl<'a> SurfaceCapabilities2KHR<'a> {
     #[inline]
@@ -17948,6 +18203,11 @@ impl ::core::default::Default for SurfaceFormat2KHR<'_> {
 unsafe impl<'a> TaggedStructure for SurfaceFormat2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_FORMAT_2_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::SurfaceFormat2KHR`",
+    label = "`{Self}` does not extend `vk::SurfaceFormat2KHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSurfaceFormat2KHR.html#VUID-VkSurfaceFormat2KHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsSurfaceFormat2KHR {}
 impl<'a> SurfaceFormat2KHR<'a> {
     #[inline]
@@ -18473,6 +18733,11 @@ impl ::core::default::Default for ImageMemoryRequirementsInfo2<'_> {
 unsafe impl<'a> TaggedStructure for ImageMemoryRequirementsInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_MEMORY_REQUIREMENTS_INFO_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::ImageMemoryRequirementsInfo2`",
+    label = "`{Self}` does not extend `vk::ImageMemoryRequirementsInfo2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageMemoryRequirementsInfo2.html#VUID-VkImageMemoryRequirementsInfo2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsImageMemoryRequirementsInfo2 {}
 impl<'a> ImageMemoryRequirementsInfo2<'a> {
     #[inline]
@@ -18636,6 +18901,11 @@ impl ::core::default::Default for MemoryRequirements2<'_> {
 unsafe impl<'a> TaggedStructure for MemoryRequirements2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_REQUIREMENTS_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::MemoryRequirements2`",
+    label = "`{Self}` does not extend `vk::MemoryRequirements2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryRequirements2.html#VUID-VkMemoryRequirements2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsMemoryRequirements2 {}
 impl<'a> MemoryRequirements2<'a> {
     #[inline]
@@ -19043,6 +19313,11 @@ impl ::core::default::Default for SamplerYcbcrConversionCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure for SamplerYcbcrConversionCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_YCBCR_CONVERSION_CREATE_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::SamplerYcbcrConversionCreateInfo`",
+    label = "`{Self}` does not extend `vk::SamplerYcbcrConversionCreateInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerYcbcrConversionCreateInfo.html#VUID-VkSamplerYcbcrConversionCreateInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsSamplerYcbcrConversionCreateInfo {}
 impl<'a> SamplerYcbcrConversionCreateInfo<'a> {
     #[inline]
@@ -21401,6 +21676,11 @@ impl ::core::default::Default for DescriptorSetLayoutSupport<'_> {
 unsafe impl<'a> TaggedStructure for DescriptorSetLayoutSupport<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_LAYOUT_SUPPORT;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::DescriptorSetLayoutSupport`",
+    label = "`{Self}` does not extend `vk::DescriptorSetLayoutSupport`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSetLayoutSupport.html#VUID-VkDescriptorSetLayoutSupport-pNext-pNext>"
+)]
 pub unsafe trait ExtendsDescriptorSetLayoutSupport {}
 impl<'a> DescriptorSetLayoutSupport<'a> {
     #[inline]
@@ -22433,6 +22713,11 @@ impl ::core::default::Default for DebugUtilsMessengerCallbackDataEXT<'_> {
 unsafe impl<'a> TaggedStructure for DebugUtilsMessengerCallbackDataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::DebugUtilsMessengerCallbackDataEXT`",
+    label = "`{Self}` does not extend `vk::DebugUtilsMessengerCallbackDataEXT`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDebugUtilsMessengerCallbackDataEXT.html#VUID-VkDebugUtilsMessengerCallbackDataEXT-pNext-pNext>"
+)]
 pub unsafe trait ExtendsDebugUtilsMessengerCallbackDataEXT {}
 impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
     #[inline]
@@ -23900,6 +24185,11 @@ impl ::core::default::Default for AttachmentDescription2<'_> {
 unsafe impl<'a> TaggedStructure for AttachmentDescription2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_DESCRIPTION_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::AttachmentDescription2`",
+    label = "`{Self}` does not extend `vk::AttachmentDescription2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAttachmentDescription2.html#VUID-VkAttachmentDescription2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsAttachmentDescription2 {}
 impl<'a> AttachmentDescription2<'a> {
     #[inline]
@@ -24029,6 +24319,11 @@ impl ::core::default::Default for AttachmentReference2<'_> {
 unsafe impl<'a> TaggedStructure for AttachmentReference2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_REFERENCE_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::AttachmentReference2`",
+    label = "`{Self}` does not extend `vk::AttachmentReference2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAttachmentReference2.html#VUID-VkAttachmentReference2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsAttachmentReference2 {}
 impl<'a> AttachmentReference2<'a> {
     #[inline]
@@ -24144,6 +24439,11 @@ impl ::core::default::Default for SubpassDescription2<'_> {
 unsafe impl<'a> TaggedStructure for SubpassDescription2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_DESCRIPTION_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::SubpassDescription2`",
+    label = "`{Self}` does not extend `vk::SubpassDescription2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassDescription2.html#VUID-VkSubpassDescription2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsSubpassDescription2 {}
 impl<'a> SubpassDescription2<'a> {
     #[inline]
@@ -24285,6 +24585,11 @@ impl ::core::default::Default for SubpassDependency2<'_> {
 unsafe impl<'a> TaggedStructure for SubpassDependency2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_DEPENDENCY_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::SubpassDependency2`",
+    label = "`{Self}` does not extend `vk::SubpassDependency2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassDependency2.html#VUID-VkSubpassDependency2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsSubpassDependency2 {}
 impl<'a> SubpassDependency2<'a> {
     #[inline]
@@ -24415,6 +24720,11 @@ impl ::core::default::Default for RenderPassCreateInfo2<'_> {
 unsafe impl<'a> TaggedStructure for RenderPassCreateInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_CREATE_INFO_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::RenderPassCreateInfo2`",
+    label = "`{Self}` does not extend `vk::RenderPassCreateInfo2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassCreateInfo2.html#VUID-VkRenderPassCreateInfo2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsRenderPassCreateInfo2 {}
 impl<'a> RenderPassCreateInfo2<'a> {
     #[inline]
@@ -24556,6 +24866,11 @@ impl ::core::default::Default for SubpassEndInfo<'_> {
 unsafe impl<'a> TaggedStructure for SubpassEndInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_END_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::SubpassEndInfo`",
+    label = "`{Self}` does not extend `vk::SubpassEndInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassEndInfo.html#VUID-VkSubpassEndInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsSubpassEndInfo {}
 impl<'a> SubpassEndInfo<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -25175,6 +25490,11 @@ impl ::core::default::Default for AndroidHardwareBufferPropertiesANDROID<'_> {
 unsafe impl<'a> TaggedStructure for AndroidHardwareBufferPropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::AndroidHardwareBufferPropertiesANDROID`",
+    label = "`{Self}` does not extend `vk::AndroidHardwareBufferPropertiesANDROID`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAndroidHardwareBufferPropertiesANDROID.html#VUID-VkAndroidHardwareBufferPropertiesANDROID-pNext-pNext>"
+)]
 pub unsafe trait ExtendsAndroidHardwareBufferPropertiesANDROID {}
 impl<'a> AndroidHardwareBufferPropertiesANDROID<'a> {
     #[inline]
@@ -28041,6 +28361,11 @@ impl ::core::default::Default for RayTracingPipelineCreateInfoNV<'_> {
 unsafe impl<'a> TaggedStructure for RayTracingPipelineCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_NV;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::RayTracingPipelineCreateInfoNV`",
+    label = "`{Self}` does not extend `vk::RayTracingPipelineCreateInfoNV`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRayTracingPipelineCreateInfoNV.html#VUID-VkRayTracingPipelineCreateInfoNV-pNext-pNext>"
+)]
 pub unsafe trait ExtendsRayTracingPipelineCreateInfoNV {}
 impl<'a> RayTracingPipelineCreateInfoNV<'a> {
     #[inline]
@@ -28183,6 +28508,11 @@ impl ::core::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for RayTracingPipelineCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::RayTracingPipelineCreateInfoKHR`",
+    label = "`{Self}` does not extend `vk::RayTracingPipelineCreateInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRayTracingPipelineCreateInfoKHR.html#VUID-VkRayTracingPipelineCreateInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsRayTracingPipelineCreateInfoKHR {}
 impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
     #[inline]
@@ -28613,6 +28943,11 @@ impl ::core::default::Default for AccelerationStructureCreateInfoNV<'_> {
 unsafe impl<'a> TaggedStructure for AccelerationStructureCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_NV;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::AccelerationStructureCreateInfoNV`",
+    label = "`{Self}` does not extend `vk::AccelerationStructureCreateInfoNV`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureCreateInfoNV.html#VUID-VkAccelerationStructureCreateInfoNV-pNext-pNext>"
+)]
 pub unsafe trait ExtendsAccelerationStructureCreateInfoNV {}
 impl<'a> AccelerationStructureCreateInfoNV<'a> {
     #[inline]
@@ -36666,6 +37001,11 @@ unsafe impl<'a> TaggedStructure for AccelerationStructureGeometryTrianglesDataKH
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_TRIANGLES_DATA_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::AccelerationStructureGeometryTrianglesDataKHR`",
+    label = "`{Self}` does not extend `vk::AccelerationStructureGeometryTrianglesDataKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureGeometryTrianglesDataKHR.html#VUID-VkAccelerationStructureGeometryTrianglesDataKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsAccelerationStructureGeometryTrianglesDataKHR {}
 impl<'a> AccelerationStructureGeometryTrianglesDataKHR<'a> {
     #[inline]
@@ -37124,6 +37464,11 @@ impl ::core::default::Default for AccelerationStructureCreateInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for AccelerationStructureCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::AccelerationStructureCreateInfoKHR`",
+    label = "`{Self}` does not extend `vk::AccelerationStructureCreateInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureCreateInfoKHR.html#VUID-VkAccelerationStructureCreateInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsAccelerationStructureCreateInfoKHR {}
 impl<'a> AccelerationStructureCreateInfoKHR<'a> {
     #[inline]
@@ -38985,6 +39330,11 @@ unsafe impl ExtendsPhysicalDeviceFeatures2
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {}
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PhysicalDeviceClusterCullingShaderFeaturesHUAWEI`",
+    label = "`{Self}` does not extend `vk::PhysicalDeviceClusterCullingShaderFeaturesHUAWEI`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceClusterCullingShaderFeaturesHUAWEI.html#VUID-VkPhysicalDeviceClusterCullingShaderFeaturesHUAWEI-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPhysicalDeviceClusterCullingShaderFeaturesHUAWEI {}
 impl<'a> PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
     #[inline]
@@ -39236,6 +39586,11 @@ impl ::core::default::Default for ImageBlit2<'_> {
 unsafe impl<'a> TaggedStructure for ImageBlit2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_BLIT_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::ImageBlit2`",
+    label = "`{Self}` does not extend `vk::ImageBlit2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageBlit2.html#VUID-VkImageBlit2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsImageBlit2 {}
 impl<'a> ImageBlit2<'a> {
     #[inline]
@@ -39340,6 +39695,11 @@ impl ::core::default::Default for BufferImageCopy2<'_> {
 unsafe impl<'a> TaggedStructure for BufferImageCopy2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_IMAGE_COPY_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::BufferImageCopy2`",
+    label = "`{Self}` does not extend `vk::BufferImageCopy2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferImageCopy2.html#VUID-VkBufferImageCopy2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsBufferImageCopy2 {}
 impl<'a> BufferImageCopy2<'a> {
     #[inline]
@@ -39634,6 +39994,11 @@ impl ::core::default::Default for BlitImageInfo2<'_> {
 unsafe impl<'a> TaggedStructure for BlitImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BLIT_IMAGE_INFO_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::BlitImageInfo2`",
+    label = "`{Self}` does not extend `vk::BlitImageInfo2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBlitImageInfo2.html#VUID-VkBlitImageInfo2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsBlitImageInfo2 {}
 impl<'a> BlitImageInfo2<'a> {
     #[inline]
@@ -42643,6 +43008,11 @@ impl ::core::default::Default for ImageMemoryBarrier2<'_> {
 unsafe impl<'a> TaggedStructure for ImageMemoryBarrier2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_MEMORY_BARRIER_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::ImageMemoryBarrier2`",
+    label = "`{Self}` does not extend `vk::ImageMemoryBarrier2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageMemoryBarrier2.html#VUID-VkImageMemoryBarrier2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsImageMemoryBarrier2 {}
 impl<'a> ImageMemoryBarrier2<'a> {
     #[inline]
@@ -42786,6 +43156,11 @@ impl ::core::default::Default for BufferMemoryBarrier2<'_> {
 unsafe impl<'a> TaggedStructure for BufferMemoryBarrier2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_MEMORY_BARRIER_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::BufferMemoryBarrier2`",
+    label = "`{Self}` does not extend `vk::BufferMemoryBarrier2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferMemoryBarrier2.html#VUID-VkBufferMemoryBarrier2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsBufferMemoryBarrier2 {}
 impl<'a> BufferMemoryBarrier2<'a> {
     #[inline]
@@ -43038,6 +43413,11 @@ impl ::core::default::Default for CommandBufferSubmitInfo<'_> {
 unsafe impl<'a> TaggedStructure for CommandBufferSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_SUBMIT_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::CommandBufferSubmitInfo`",
+    label = "`{Self}` does not extend `vk::CommandBufferSubmitInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandBufferSubmitInfo.html#VUID-VkCommandBufferSubmitInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsCommandBufferSubmitInfo {}
 impl<'a> CommandBufferSubmitInfo<'a> {
     #[inline]
@@ -43140,6 +43520,11 @@ impl ::core::default::Default for SubmitInfo2<'_> {
 unsafe impl<'a> TaggedStructure for SubmitInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBMIT_INFO_2;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::SubmitInfo2`",
+    label = "`{Self}` does not extend `vk::SubmitInfo2`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubmitInfo2.html#VUID-VkSubmitInfo2-pNext-pNext>"
+)]
 pub unsafe trait ExtendsSubmitInfo2 {}
 impl<'a> SubmitInfo2<'a> {
     #[inline]
@@ -44309,6 +44694,11 @@ impl ::core::default::Default for PhysicalDeviceVideoFormatInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for PhysicalDeviceVideoFormatInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VIDEO_FORMAT_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PhysicalDeviceVideoFormatInfoKHR`",
+    label = "`{Self}` does not extend `vk::PhysicalDeviceVideoFormatInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceVideoFormatInfoKHR.html#VUID-VkPhysicalDeviceVideoFormatInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPhysicalDeviceVideoFormatInfoKHR {}
 impl<'a> PhysicalDeviceVideoFormatInfoKHR<'a> {
     #[inline]
@@ -44473,6 +44863,11 @@ unsafe impl<'a> TaggedStructure for VideoProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_PROFILE_INFO_KHR;
 }
 unsafe impl ExtendsQueryPoolCreateInfo for VideoProfileInfoKHR<'_> {}
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::VideoProfileInfoKHR`",
+    label = "`{Self}` does not extend `vk::VideoProfileInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoProfileInfoKHR.html#VUID-VkVideoProfileInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsVideoProfileInfoKHR {}
 impl<'a> VideoProfileInfoKHR<'a> {
     #[inline]
@@ -44592,6 +44987,11 @@ impl ::core::default::Default for VideoCapabilitiesKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_CAPABILITIES_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::VideoCapabilitiesKHR`",
+    label = "`{Self}` does not extend `vk::VideoCapabilitiesKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoCapabilitiesKHR.html#VUID-VkVideoCapabilitiesKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsVideoCapabilitiesKHR {}
 impl<'a> VideoCapabilitiesKHR<'a> {
     #[inline]
@@ -44876,6 +45276,11 @@ impl ::core::default::Default for VideoReferenceSlotInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoReferenceSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_REFERENCE_SLOT_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::VideoReferenceSlotInfoKHR`",
+    label = "`{Self}` does not extend `vk::VideoReferenceSlotInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoReferenceSlotInfoKHR.html#VUID-VkVideoReferenceSlotInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsVideoReferenceSlotInfoKHR {}
 impl<'a> VideoReferenceSlotInfoKHR<'a> {
     #[inline]
@@ -45054,6 +45459,11 @@ impl ::core::default::Default for VideoDecodeInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoDecodeInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::VideoDecodeInfoKHR`",
+    label = "`{Self}` does not extend `vk::VideoDecodeInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeInfoKHR.html#VUID-VkVideoDecodeInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsVideoDecodeInfoKHR {}
 impl<'a> VideoDecodeInfoKHR<'a> {
     #[inline]
@@ -46056,6 +46466,11 @@ impl ::core::default::Default for VideoSessionCreateInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoSessionCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_CREATE_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::VideoSessionCreateInfoKHR`",
+    label = "`{Self}` does not extend `vk::VideoSessionCreateInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoSessionCreateInfoKHR.html#VUID-VkVideoSessionCreateInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsVideoSessionCreateInfoKHR {}
 impl<'a> VideoSessionCreateInfoKHR<'a> {
     #[inline]
@@ -46185,6 +46600,11 @@ impl ::core::default::Default for VideoSessionParametersCreateInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoSessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::VideoSessionParametersCreateInfoKHR`",
+    label = "`{Self}` does not extend `vk::VideoSessionParametersCreateInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoSessionParametersCreateInfoKHR.html#VUID-VkVideoSessionParametersCreateInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsVideoSessionParametersCreateInfoKHR {}
 impl<'a> VideoSessionParametersCreateInfoKHR<'a> {
     #[inline]
@@ -46286,6 +46706,11 @@ impl ::core::default::Default for VideoSessionParametersUpdateInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoSessionParametersUpdateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_PARAMETERS_UPDATE_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::VideoSessionParametersUpdateInfoKHR`",
+    label = "`{Self}` does not extend `vk::VideoSessionParametersUpdateInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoSessionParametersUpdateInfoKHR.html#VUID-VkVideoSessionParametersUpdateInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsVideoSessionParametersUpdateInfoKHR {}
 impl<'a> VideoSessionParametersUpdateInfoKHR<'a> {
     #[inline]
@@ -46375,6 +46800,11 @@ unsafe impl<'a> TaggedStructure for VideoEncodeSessionParametersGetInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_SESSION_PARAMETERS_GET_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::VideoEncodeSessionParametersGetInfoKHR`",
+    label = "`{Self}` does not extend `vk::VideoEncodeSessionParametersGetInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeSessionParametersGetInfoKHR.html#VUID-VkVideoEncodeSessionParametersGetInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsVideoEncodeSessionParametersGetInfoKHR {}
 impl<'a> VideoEncodeSessionParametersGetInfoKHR<'a> {
     #[inline]
@@ -46467,6 +46897,11 @@ unsafe impl<'a> TaggedStructure for VideoEncodeSessionParametersFeedbackInfoKHR<
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_SESSION_PARAMETERS_FEEDBACK_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::VideoEncodeSessionParametersFeedbackInfoKHR`",
+    label = "`{Self}` does not extend `vk::VideoEncodeSessionParametersFeedbackInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeSessionParametersFeedbackInfoKHR.html#VUID-VkVideoEncodeSessionParametersFeedbackInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsVideoEncodeSessionParametersFeedbackInfoKHR {}
 impl<'a> VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
     #[inline]
@@ -46563,6 +46998,11 @@ impl ::core::default::Default for VideoBeginCodingInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoBeginCodingInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_BEGIN_CODING_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::VideoBeginCodingInfoKHR`",
+    label = "`{Self}` does not extend `vk::VideoBeginCodingInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoBeginCodingInfoKHR.html#VUID-VkVideoBeginCodingInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsVideoBeginCodingInfoKHR {}
 impl<'a> VideoBeginCodingInfoKHR<'a> {
     #[inline]
@@ -46701,6 +47141,11 @@ impl ::core::default::Default for VideoCodingControlInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoCodingControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_CODING_CONTROL_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::VideoCodingControlInfoKHR`",
+    label = "`{Self}` does not extend `vk::VideoCodingControlInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoCodingControlInfoKHR.html#VUID-VkVideoCodingControlInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsVideoCodingControlInfoKHR {}
 impl<'a> VideoCodingControlInfoKHR<'a> {
     #[inline]
@@ -46852,6 +47297,11 @@ impl ::core::default::Default for VideoEncodeInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoEncodeInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::VideoEncodeInfoKHR`",
+    label = "`{Self}` does not extend `vk::VideoEncodeInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeInfoKHR.html#VUID-VkVideoEncodeInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsVideoEncodeInfoKHR {}
 impl<'a> VideoEncodeInfoKHR<'a> {
     #[inline]
@@ -47095,6 +47545,11 @@ impl ::core::default::Default for VideoEncodeQualityLevelPropertiesKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoEncodeQualityLevelPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_QUALITY_LEVEL_PROPERTIES_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::VideoEncodeQualityLevelPropertiesKHR`",
+    label = "`{Self}` does not extend `vk::VideoEncodeQualityLevelPropertiesKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeQualityLevelPropertiesKHR.html#VUID-VkVideoEncodeQualityLevelPropertiesKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsVideoEncodeQualityLevelPropertiesKHR {}
 impl<'a> VideoEncodeQualityLevelPropertiesKHR<'a> {
     #[inline]
@@ -47273,6 +47728,11 @@ impl ::core::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoEncodeRateControlLayerInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::VideoEncodeRateControlLayerInfoKHR`",
+    label = "`{Self}` does not extend `vk::VideoEncodeRateControlLayerInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeRateControlLayerInfoKHR.html#VUID-VkVideoEncodeRateControlLayerInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsVideoEncodeRateControlLayerInfoKHR {}
 impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
     #[inline]
@@ -50299,6 +50759,11 @@ impl ::core::default::Default for DescriptorBufferBindingInfoEXT<'_> {
 unsafe impl<'a> TaggedStructure for DescriptorBufferBindingInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_BUFFER_BINDING_INFO_EXT;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::DescriptorBufferBindingInfoEXT`",
+    label = "`{Self}` does not extend `vk::DescriptorBufferBindingInfoEXT`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorBufferBindingInfoEXT.html#VUID-VkDescriptorBufferBindingInfoEXT-pNext-pNext>"
+)]
 pub unsafe trait ExtendsDescriptorBufferBindingInfoEXT {}
 impl<'a> DescriptorBufferBindingInfoEXT<'a> {
     #[inline]
@@ -52737,6 +53202,11 @@ impl ::core::default::Default for RenderingInfo<'_> {
 unsafe impl<'a> TaggedStructure for RenderingInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_INFO;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::RenderingInfo`",
+    label = "`{Self}` does not extend `vk::RenderingInfo`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderingInfo.html#VUID-VkRenderingInfo-pNext-pNext>"
+)]
 pub unsafe trait ExtendsRenderingInfo {}
 impl<'a> RenderingInfo<'a> {
     #[inline]
@@ -54328,6 +54798,11 @@ impl ::core::default::Default for SubresourceLayout2KHR<'_> {
 unsafe impl<'a> TaggedStructure for SubresourceLayout2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBRESOURCE_LAYOUT_2_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::SubresourceLayout2KHR`",
+    label = "`{Self}` does not extend `vk::SubresourceLayout2KHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubresourceLayout2KHR.html#VUID-VkSubresourceLayout2KHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsSubresourceLayout2KHR {}
 impl<'a> SubresourceLayout2KHR<'a> {
     #[inline]
@@ -55795,6 +56270,11 @@ impl ::core::default::Default for ExportMetalObjectsInfoEXT<'_> {
 unsafe impl<'a> TaggedStructure for ExportMetalObjectsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_OBJECTS_INFO_EXT;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::ExportMetalObjectsInfoEXT`",
+    label = "`{Self}` does not extend `vk::ExportMetalObjectsInfoEXT`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExportMetalObjectsInfoEXT.html#VUID-VkExportMetalObjectsInfoEXT-pNext-pNext>"
+)]
 pub unsafe trait ExtendsExportMetalObjectsInfoEXT {}
 impl<'a> ExportMetalObjectsInfoEXT<'a> {
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -57225,6 +57705,11 @@ impl ::core::default::Default for OpticalFlowSessionCreateInfoNV<'_> {
 unsafe impl<'a> TaggedStructure for OpticalFlowSessionCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_SESSION_CREATE_INFO_NV;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::OpticalFlowSessionCreateInfoNV`",
+    label = "`{Self}` does not extend `vk::OpticalFlowSessionCreateInfoNV`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowSessionCreateInfoNV.html#VUID-VkOpticalFlowSessionCreateInfoNV-pNext-pNext>"
+)]
 pub unsafe trait ExtendsOpticalFlowSessionCreateInfoNV {}
 impl<'a> OpticalFlowSessionCreateInfoNV<'a> {
     #[inline]
@@ -57833,6 +58318,11 @@ impl ::core::default::Default for DepthBiasInfoEXT<'_> {
 unsafe impl<'a> TaggedStructure for DepthBiasInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEPTH_BIAS_INFO_EXT;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::DepthBiasInfoEXT`",
+    label = "`{Self}` does not extend `vk::DepthBiasInfoEXT`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDepthBiasInfoEXT.html#VUID-VkDepthBiasInfoEXT-pNext-pNext>"
+)]
 pub unsafe trait ExtendsDepthBiasInfoEXT {}
 impl<'a> DepthBiasInfoEXT<'a> {
     #[inline]
@@ -59295,6 +59785,11 @@ impl ::core::default::Default for MemoryMapInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for MemoryMapInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_MAP_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::MemoryMapInfoKHR`",
+    label = "`{Self}` does not extend `vk::MemoryMapInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryMapInfoKHR.html#VUID-VkMemoryMapInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsMemoryMapInfoKHR {}
 impl<'a> MemoryMapInfoKHR<'a> {
     #[inline]
@@ -59531,6 +60026,11 @@ impl ::core::default::Default for ShaderCreateInfoEXT<'_> {
 unsafe impl<'a> TaggedStructure for ShaderCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_CREATE_INFO_EXT;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::ShaderCreateInfoEXT`",
+    label = "`{Self}` does not extend `vk::ShaderCreateInfoEXT`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderCreateInfoEXT.html#VUID-VkShaderCreateInfoEXT-pNext-pNext>"
+)]
 pub unsafe trait ExtendsShaderCreateInfoEXT {}
 impl<'a> ShaderCreateInfoEXT<'a> {
     #[inline]
@@ -59823,6 +60323,11 @@ impl ::core::default::Default for ScreenBufferPropertiesQNX<'_> {
 unsafe impl<'a> TaggedStructure for ScreenBufferPropertiesQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SCREEN_BUFFER_PROPERTIES_QNX;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::ScreenBufferPropertiesQNX`",
+    label = "`{Self}` does not extend `vk::ScreenBufferPropertiesQNX`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkScreenBufferPropertiesQNX.html#VUID-VkScreenBufferPropertiesQNX-pNext-pNext>"
+)]
 pub unsafe trait ExtendsScreenBufferPropertiesQNX {}
 impl<'a> ScreenBufferPropertiesQNX<'a> {
     #[inline]
@@ -60389,6 +60894,11 @@ impl ::core::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
 unsafe impl<'a> TaggedStructure for ExecutionGraphPipelineCreateInfoAMDX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXECUTION_GRAPH_PIPELINE_CREATE_INFO_AMDX;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::ExecutionGraphPipelineCreateInfoAMDX`",
+    label = "`{Self}` does not extend `vk::ExecutionGraphPipelineCreateInfoAMDX`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExecutionGraphPipelineCreateInfoAMDX.html#VUID-VkExecutionGraphPipelineCreateInfoAMDX-pNext-pNext>"
+)]
 pub unsafe trait ExtendsExecutionGraphPipelineCreateInfoAMDX {}
 impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
     #[inline]
@@ -60843,6 +61353,11 @@ impl ::core::default::Default for BindDescriptorSetsInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for BindDescriptorSetsInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_DESCRIPTOR_SETS_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::BindDescriptorSetsInfoKHR`",
+    label = "`{Self}` does not extend `vk::BindDescriptorSetsInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBindDescriptorSetsInfoKHR.html#VUID-VkBindDescriptorSetsInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsBindDescriptorSetsInfoKHR {}
 impl<'a> BindDescriptorSetsInfoKHR<'a> {
     #[inline]
@@ -60958,6 +61473,11 @@ impl ::core::default::Default for PushConstantsInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for PushConstantsInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_CONSTANTS_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PushConstantsInfoKHR`",
+    label = "`{Self}` does not extend `vk::PushConstantsInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPushConstantsInfoKHR.html#VUID-VkPushConstantsInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPushConstantsInfoKHR {}
 impl<'a> PushConstantsInfoKHR<'a> {
     #[inline]
@@ -61067,6 +61587,11 @@ impl ::core::default::Default for PushDescriptorSetInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for PushDescriptorSetInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_DESCRIPTOR_SET_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PushDescriptorSetInfoKHR`",
+    label = "`{Self}` does not extend `vk::PushDescriptorSetInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPushDescriptorSetInfoKHR.html#VUID-VkPushDescriptorSetInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPushDescriptorSetInfoKHR {}
 impl<'a> PushDescriptorSetInfoKHR<'a> {
     #[inline]
@@ -61174,6 +61699,11 @@ impl ::core::default::Default for PushDescriptorSetWithTemplateInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for PushDescriptorSetWithTemplateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_DESCRIPTOR_SET_WITH_TEMPLATE_INFO_KHR;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::PushDescriptorSetWithTemplateInfoKHR`",
+    label = "`{Self}` does not extend `vk::PushDescriptorSetWithTemplateInfoKHR`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPushDescriptorSetWithTemplateInfoKHR.html#VUID-VkPushDescriptorSetWithTemplateInfoKHR-pNext-pNext>"
+)]
 pub unsafe trait ExtendsPushDescriptorSetWithTemplateInfoKHR {}
 impl<'a> PushDescriptorSetWithTemplateInfoKHR<'a> {
     #[inline]
@@ -61290,6 +61820,11 @@ impl ::core::default::Default for SetDescriptorBufferOffsetsInfoEXT<'_> {
 unsafe impl<'a> TaggedStructure for SetDescriptorBufferOffsetsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SET_DESCRIPTOR_BUFFER_OFFSETS_INFO_EXT;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::SetDescriptorBufferOffsetsInfoEXT`",
+    label = "`{Self}` does not extend `vk::SetDescriptorBufferOffsetsInfoEXT`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSetDescriptorBufferOffsetsInfoEXT.html#VUID-VkSetDescriptorBufferOffsetsInfoEXT-pNext-pNext>"
+)]
 pub unsafe trait ExtendsSetDescriptorBufferOffsetsInfoEXT {}
 impl<'a> SetDescriptorBufferOffsetsInfoEXT<'a> {
     #[inline]
@@ -61405,6 +61940,11 @@ unsafe impl<'a> TaggedStructure for BindDescriptorBufferEmbeddedSamplersInfoEXT<
     const STRUCTURE_TYPE: StructureType =
         StructureType::BIND_DESCRIPTOR_BUFFER_EMBEDDED_SAMPLERS_INFO_EXT;
 }
+#[diagnostic::on_unimplemented(
+    message = "`{Self}` is not allowed in the `pNext` chain of `vk::BindDescriptorBufferEmbeddedSamplersInfoEXT`",
+    label = "`{Self}` does not extend `vk::BindDescriptorBufferEmbeddedSamplersInfoEXT`",
+    note = "See the list of allowed extension structs at <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBindDescriptorBufferEmbeddedSamplersInfoEXT.html#VUID-VkBindDescriptorBufferEmbeddedSamplersInfoEXT-pNext-pNext>"
+)]
 pub unsafe trait ExtendsBindDescriptorBufferEmbeddedSamplersInfoEXT {}
 impl<'a> BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     #[inline]
