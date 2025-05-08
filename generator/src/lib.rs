@@ -2330,8 +2330,6 @@ fn derive_getters_and_setters(
         })
     });
 
-    let extends_name = format_ident!("Extends{}", name);
-
     // The `p_next` field should only be considered if this struct is also a root struct
     let root_struct_next_field = next_field.filter(|_| root_structs.contains(&name));
 
@@ -2349,7 +2347,7 @@ fn derive_getters_and_setters(
             /// # Panics
             /// If `next` contains a pointer chain of its own, this function will panic.  Call
             /// `unsafe` [`Self::extend()`] to insert this chain instead.
-            pub fn push<T: #extends_name + ?Sized>(mut self, next: &'a mut T) -> Self {
+            pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
                 // SAFETY: All implementors of T are required to have the `BaseOutStructure` layout
                 let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
                 // `next` here can contain a pointer chain.  This function refuses to insert the struct,
@@ -2374,7 +2372,7 @@ fn derive_getters_and_setters(
             /// The last struct in this chain (i.e. the one where `p_next` is `NULL`) must
             /// be writable memory, as its `p_next` field will be updated with the value of
             /// `self.p_next`.
-            pub unsafe fn extend<T: #extends_name + ?Sized>(mut self, next: &'a mut T) -> Self {
+            pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
                 // `next` here can contain a pointer chain. This means that we must correctly
                 // attach he head to the root and the tail to the rest of the chain
                 // For example:
@@ -2392,18 +2390,10 @@ fn derive_getters_and_setters(
 
             #[doc(hidden)]
             #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-            pub unsafe fn push_next<T: #extends_name + ?Sized>(self, next: &'a mut T) -> Self {
+            pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
                 self.extend(next)
             }
         }
-    } else {
-        quote!()
-    };
-
-    // Root structs come with their own trait that structs that extend
-    // this struct will implement
-    let next_trait = if root_struct_next_field.is_some() {
-        quote!(pub unsafe trait #extends_name {})
     } else {
         quote!()
     };
@@ -2415,10 +2405,10 @@ fn derive_getters_and_setters(
         .extends
         .iter()
         .flat_map(|extends| extends.split(','))
-        .map(|extends| format_ident!("Extends{}", name_to_tokens(extends)))
         .map(|extends| {
+            let base = name_to_tokens(extends);
             // Extension structs always have a pNext, and therefore always have a lifetime.
-            quote!(unsafe impl #extends for #name<'_> {})
+            quote!(unsafe impl Extends<#base<'_>> for #name<'_> {})
         });
 
     let impl_structure_type_trait = structure_type_field.map(|member| {
@@ -2441,7 +2431,6 @@ fn derive_getters_and_setters(
     let q = quote! {
         #impl_structure_type_trait
         #(#impl_extend_trait)*
-        #next_trait
 
         impl #lifetime #name #lifetime {
             #(#setters)*
@@ -3451,7 +3440,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use super::platform_types::*;
         use super::{
             ptr_chain_iter, wrap_c_str_slice_until_nul, write_c_str_slice_with_nul,
-            CStrTooLargeForStaticArray, Handle, Packed24_8, TaggedStructure,
+            CStrTooLargeForStaticArray, Extends, Handle, Packed24_8, TaggedStructure,
         };
         use core::ffi::*;
         use core::fmt;

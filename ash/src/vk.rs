@@ -50,11 +50,20 @@ pub trait Handle: Sized {
 }
 
 /// Structures implementing this trait are layout-compatible with [`BaseInStructure`] and
-/// [`BaseOutStructure`]. Such structures have an `s_type` field indicating its type, which
-/// must always match the value of [`TaggedStructure::STRUCTURE_TYPE`].
+/// [`BaseOutStructure`]. Such structures have an `s_type` field indicating its type, which must
+/// always match the value of [`TaggedStructure::STRUCTURE_TYPE`].
 pub unsafe trait TaggedStructure {
     const STRUCTURE_TYPE: StructureType;
 }
+
+/// Implemented for every structure that extends base structure `B`. Concretely that means struct
+/// `B` is listed in its array of [`structextends` in the Vulkan registry][1].
+///
+/// Similar to [`TaggedStructure`], all `unsafe` implementers of this trait must guarantee that
+/// their structure is layout-compatible [`BaseInStructure`] and [`BaseOutStructure`].
+///
+/// [1]: https://registry.khronos.org/vulkan/specs/latest/styleguide.html#extensions-interactions
+pub unsafe trait Extends<B> {}
 
 /// Iterates through the pointer chain. Includes the item that is passed into the function.
 /// Stops at the last [`BaseOutStructure`] that has a null [`BaseOutStructure::p_next`] field.
@@ -214,6 +223,62 @@ mod tests {
         let mut device_create_info = vk::DeviceCreateInfo::default()
             .push(&mut corner)
             .push(&mut variable_pointers);
+        let chain2: Vec<*mut vk::BaseOutStructure<'_>> = unsafe {
+            vk::ptr_chain_iter(&mut device_create_info)
+                .skip(1)
+                .collect()
+        };
+        assert_eq!(chain, chain2);
+    }
+
+    #[test]
+    #[should_panic]
+    fn disallow_nested_ptr_chains() {
+        let mut generated_commands =
+            vk::PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT::default();
+        let mut private_data = vk::PhysicalDevicePrivateDataFeatures {
+            p_next: <*mut _>::cast(&mut generated_commands),
+            ..Default::default()
+        };
+        let _device_create_info = vk::DeviceCreateInfo::default().push(&mut private_data);
+    }
+
+    #[test]
+    fn test_nested_ptr_chains() {
+        let mut generated_commands =
+            vk::PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT::default();
+        let mut private_data = vk::PhysicalDevicePrivateDataFeatures {
+            p_next: <*mut _>::cast(&mut generated_commands),
+            ..Default::default()
+        };
+        let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::default();
+        let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::default();
+        let chain = alloc::vec![
+            <*mut _>::cast(&mut private_data),
+            <*mut _>::cast(&mut generated_commands),
+            <*mut _>::cast(&mut variable_pointers),
+            <*mut _>::cast(&mut corner),
+        ];
+        let mut device_create_info = vk::DeviceCreateInfo::default()
+            .push(&mut corner)
+            .push(&mut variable_pointers);
+        // Insert private_data->generated_commands into the chain, such that generate_commands->variable_pointers->corner:
+        device_create_info = unsafe { device_create_info.extend(&mut private_data) };
+        let chain2: Vec<*mut vk::BaseOutStructure<'_>> = unsafe {
+            vk::ptr_chain_iter(&mut device_create_info)
+                .skip(1)
+                .collect()
+        };
+        assert_eq!(chain, chain2);
+    }
+
+    #[test]
+    fn test_dynamic_add_to_ptr_chain() {
+        let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::default();
+        let variable_pointers: &mut dyn vk::Extends<vk::DeviceCreateInfo<'_>> =
+            &mut variable_pointers;
+        let chain = alloc::vec![<*mut _>::cast(variable_pointers)];
+        let mut device_create_info = vk::DeviceCreateInfo::default().push(variable_pointers);
         let chain2: Vec<*mut vk::BaseOutStructure<'_>> = unsafe {
             vk::ptr_chain_iter(&mut device_create_info)
                 .skip(1)

@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   The expected length of this array can be queried with the respective `*_len()` variant of these functions.
 - `push_next()` has been renamed to `extend()` and marked as `unsafe`. Users are encouraged to call `push()` for singular structs instead. (#909)
 - Changed and renamed `RawPtr::as_raw_ptr(&self)` trait function to a by-value `RawPtr::to_raw_ptr(self)` function. (#965)
+- All `Extends{Root}` traits have been replaced with a single `Extends<Root>` trait using generics. (#971)
 
 ### Removed
 
