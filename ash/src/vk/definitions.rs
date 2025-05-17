@@ -10273,12 +10273,12 @@ impl<'a> ScreenSurfaceCreateInfoQNX<'a> {
         self
     }
     #[inline]
-    pub fn context(mut self, context: &'a mut _screen_context) -> Self {
+    pub fn context(mut self, context: *mut _screen_context) -> Self {
         self.context = context;
         self
     }
     #[inline]
-    pub fn window(mut self, window: &'a mut _screen_window) -> Self {
+    pub fn window(mut self, window: *mut _screen_window) -> Self {
         self.window = window;
         self
     }
@@ -59553,7 +59553,7 @@ unsafe impl<'a> TaggedStructure for ImportScreenBufferInfoQNX<'a> {
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ImportScreenBufferInfoQNX<'_> {}
 impl<'a> ImportScreenBufferInfoQNX<'a> {
     #[inline]
-    pub fn buffer(mut self, buffer: &'a mut _screen_buffer) -> Self {
+    pub fn buffer(mut self, buffer: *mut _screen_buffer) -> Self {
         self.buffer = buffer;
         self
     }
