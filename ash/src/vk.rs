@@ -30,6 +30,12 @@ pub mod native;
 mod platform_types;
 pub use platform_types::*;
 
+pub trait DispatchableHandle: Handle {
+    // We choose to use a pointer type for the parameter to avoid possible integer-to-pointer cast,
+    // to keep the pointer provenance. See details at https://github.com/ash-rs/ash/issues/996.
+    fn from_raw_ptr(_: *mut u8) -> Self;
+}
+
 pub trait Handle: Sized {
     const TYPE: ObjectType;
     fn as_raw(self) -> u64;

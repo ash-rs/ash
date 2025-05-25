@@ -141,6 +141,11 @@ macro_rules! define_handle {
                 Self(x as _)
             }
         }
+        impl $crate::vk::DispatchableHandle for $name {
+            fn from_raw_ptr(x: *mut u8) -> Self {
+                Self(x)
+            }
+        }
         unsafe impl Send for $name {}
         unsafe impl Sync for $name {}
         impl $name {
