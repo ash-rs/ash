@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+### Changed
+
+- Treat QNX "void" type aliases and `SECURITY_ATTRIBUTES` as "opaque" to make them raw pointers instead of borrows in public structures. (#950)
+
 ### Added
 
 - Added `push()` method to all root structs to insert a single extension-struct in the pointer chain. (#909)
