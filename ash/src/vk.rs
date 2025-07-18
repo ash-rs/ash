@@ -51,7 +51,7 @@ pub trait Handle: Sized {
 
 /// Iterates through the pointer chain. Includes the item that is passed into the function. Stops at
 /// the last [`BaseOutStructure`] that has a null [`BaseOutStructure::p_next`] field.
-pub(crate) unsafe fn ptr_chain_iter<'a, T: TaggedStructure<'a> + ?Sized>(
+pub(crate) unsafe fn ptr_chain_iter<'a, T: TaggedStructure<'a>>(
     ptr: &mut T,
 ) -> impl Iterator<Item = *mut BaseOutStructure<'_>> {
     let ptr = <*mut T>::cast::<BaseOutStructure<'_>>(ptr);
@@ -69,7 +69,7 @@ pub(crate) unsafe fn ptr_chain_iter<'a, T: TaggedStructure<'a> + ?Sized>(
 /// Structures implementing this trait are layout-compatible with [`BaseInStructure`] and
 /// [`BaseOutStructure`]. Such structures have an `s_type` field indicating its type, which must
 /// always match the value of [`TaggedStructure::STRUCTURE_TYPE`].
-pub unsafe trait TaggedStructure<'a> {
+pub unsafe trait TaggedStructure<'a>: Sized {
     const STRUCTURE_TYPE: StructureType;
 
     /// Prepends the given extension struct between the root and the first pointer. This method is
@@ -81,13 +81,10 @@ pub unsafe trait TaggedStructure<'a> {
     /// # Panics
     /// If `next` contains a pointer chain of its own, this function will panic.  Call `unsafe`
     /// [`Self::extend()`] to insert this chain instead.
-    fn push<T: Extends<Self> + TaggedStructure<'a> + ?Sized>(mut self, next: &'a mut T) -> Self
-    where
-        Self: Sized,
-    {
-        // SAFETY: All implementors of `TaggedStructure` are required to have the `BaseOutStructure` layout
+    fn push<T: Extends<Self> + TaggedStructure<'a>>(mut self, next: &'a mut T) -> Self {
+        // SAFETY: All implementers of `TaggedStructure` are required to have the `BaseOutStructure` layout
         let slf_base = unsafe { &mut *<*mut _>::cast::<BaseOutStructure<'_>>(&mut self) };
-        // SAFETY: All implementors of `TaggedStructure` are required to have the `BaseOutStructure` layout
+        // SAFETY: All implementers of `T: TaggedStructure` are required to have the `BaseOutStructure` layout
         let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'_>>(next) };
         // `next` here can contain a pointer chain.  This function refuses to insert the struct,
         // in favour of calling unsafe extend().
@@ -113,13 +110,7 @@ pub unsafe trait TaggedStructure<'a> {
     ///
     /// The last struct in this chain (i.e. the one where `p_next` is `NULL`) must be writable
     /// memory, as its `p_next` field will be updated with the value of `self.p_next`.
-    unsafe fn extend<T: Extends<Self> + TaggedStructure<'a> + ?Sized>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self
-    where
-        Self: Sized,
-    {
+    unsafe fn extend<T: Extends<Self> + TaggedStructure<'a>>(mut self, next: &'a mut T) -> Self {
         // `next` here can contain a pointer chain. This means that we must correctly attach he head
         // to the root and the tail to the rest of the chain For example:
         //
