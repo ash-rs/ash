@@ -1,4 +1,4 @@
-use ash::vk::{self, AnyTaggedStructure as _};
+use ash::vk::{self, TaggedStructure as _};
 
 fn main() {
     let mut layers = vec![];
