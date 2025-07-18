@@ -2338,7 +2338,7 @@ fn derive_getters_and_setters(
         .map(|extends| {
             let base = name_to_tokens(extends);
             // Extension structs always have a pNext, and therefore always have a lifetime.
-            quote!(unsafe impl<'a> Extends<'a, #base<'a>> for #name<'a> {})
+            quote!(unsafe impl Extends<#base<'_>> for #name<'_> {})
         });
 
     let impl_structure_type_trait = structure_type_field.map(|member| {
