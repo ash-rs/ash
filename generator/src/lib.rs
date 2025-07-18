@@ -882,7 +882,7 @@ impl FieldExt for vk_parse::CommandParam {
     }
 
     fn type_tokens(&self, is_ffi_param: bool, type_lifetime: Option<TokenStream>) -> TokenStream {
-        assert!(!self.is_void(), "{:?}", self);
+        assert!(!self.is_void(), "{self:?}");
         let (rem, ty) = parse_c_parameter(&self.definition.code).unwrap();
         assert!(rem.is_empty());
         // Disambiguate overloaded names
@@ -1354,11 +1354,10 @@ pub fn generate_extension_commands<'a>(
             fn_cache,
             has_lifetimes,
             &format!(
-                "Raw {} instance-level function pointers",
-                full_extension_name
+                "Raw {full_extension_name} instance-level function pointers"
             ),
         );
-        let doc = format!("{} instance-level functions", full_extension_name);
+        let doc = format!("{full_extension_name} instance-level functions");
 
         (fp, quote! {
             #[doc = #doc]
@@ -1401,9 +1400,9 @@ pub fn generate_extension_commands<'a>(
             &rename_commands,
             fn_cache,
             has_lifetimes,
-            &format!("Raw {} device-level function pointers", full_extension_name),
+            &format!("Raw {full_extension_name} device-level function pointers"),
         );
-        let doc = format!("{} device-level functions", full_extension_name);
+        let doc = format!("{full_extension_name} device-level functions");
 
         (fp, quote! {
             #[doc = #doc]
@@ -1505,7 +1504,7 @@ pub fn generate_define(
             .map(|comment| quote!(#[deprecated = #comment]))
             .or_else(|| match define.deprecated.as_ref()?.as_str() {
                 "true" => Some(quote!(#[deprecated])),
-                x => panic!("Unknown deprecation reason {}", x),
+                x => panic!("Unknown deprecation reason {x}"),
             });
 
         let (code, ident) = if let Some(parameters) = parameters {
@@ -1676,7 +1675,7 @@ pub fn bitflags_impl_block(
     let variants = constants.iter().map(|constant| {
         let deprecated = constant.deprecated().map(|deprecated| match deprecated {
             "true" => quote!(#[deprecated]),
-            x => panic!("Unknown deprecation reason {}", x),
+            x => panic!("Unknown deprecation reason {x}"),
         });
         let variant_ident = constant.variant_ident(enum_name);
         let notation = constant.doc_attribute();
@@ -2560,7 +2559,7 @@ pub fn generate_struct(
                     "ignored" => {
                         quote!(#[deprecated = "functionality described by this member no longer operates"])
                     }
-                    x => panic!("Unknown deprecation reason {}", x),
+                    x => panic!("Unknown deprecation reason {x}"),
                 });
                 PreprocessedMember {
                     vkxml_field: field,
@@ -3332,7 +3331,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     }
     let high_level_extension_cmds = high_level_extension_cmds.into_iter().map(|(vendor, code)| {
         let vendor_ident = format_ident!("{}", vendor.to_lowercase());
-        let doc = format!("Extensions tagged {}", vendor);
+        let doc = format!("Extensions tagged {vendor}");
         quote! {
             #[doc = #doc]
             pub mod #vendor_ident {
