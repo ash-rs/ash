@@ -36,7 +36,7 @@ impl crate::nv::ray_tracing::Device {
             self.handle,
             accel_struct,
             allocation_callbacks.to_raw_ptr(),
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureMemoryRequirementsNV.html>
@@ -92,7 +92,7 @@ impl crate::nv::ray_tracing::Device {
             src,
             scratch,
             scratch_offset,
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureNV.html>
@@ -104,7 +104,7 @@ impl crate::nv::ray_tracing::Device {
         src: vk::AccelerationStructureNV,
         mode: vk::CopyAccelerationStructureModeNV,
     ) {
-        (self.fp.cmd_copy_acceleration_structure_nv)(command_buffer, dst, src, mode);
+        (self.fp.cmd_copy_acceleration_structure_nv)(command_buffer, dst, src, mode)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysNV.html>
@@ -143,7 +143,7 @@ impl crate::nv::ray_tracing::Device {
             width,
             height,
             depth,
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateRayTracingPipelinesNV.html>
@@ -227,7 +227,7 @@ impl crate::nv::ray_tracing::Device {
             query_type,
             query_pool,
             first_query,
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCompileDeferredNV.html>

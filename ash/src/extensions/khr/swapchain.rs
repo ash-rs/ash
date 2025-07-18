@@ -34,7 +34,7 @@ impl crate::khr::swapchain::Device {
         swapchain: vk::SwapchainKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.fp.destroy_swapchain_khr)(self.handle, swapchain, allocation_callbacks.to_raw_ptr());
+        (self.fp.destroy_swapchain_khr)(self.handle, swapchain, allocation_callbacks.to_raw_ptr())
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainImagesKHR.html>
