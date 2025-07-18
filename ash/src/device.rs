@@ -617,7 +617,7 @@ impl Device {
     ) -> VkResult<vk::RenderPass> {
         let mut renderpass = mem::MaybeUninit::uninit();
         (self.device_fn_1_2.create_render_pass2)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             renderpass.as_mut_ptr(),
@@ -669,19 +669,15 @@ impl Device {
         first_query: u32,
         query_count: u32,
     ) {
-        (self.device_fn_1_2.reset_query_pool)(self.handle(), query_pool, first_query, query_count)
+        (self.device_fn_1_2.reset_query_pool)(self.handle, query_pool, first_query, query_count)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreCounterValue.html>
     #[inline]
     pub unsafe fn get_semaphore_counter_value(&self, semaphore: vk::Semaphore) -> VkResult<u64> {
         let mut value = mem::MaybeUninit::uninit();
-        (self.device_fn_1_2.get_semaphore_counter_value)(
-            self.handle(),
-            semaphore,
-            value.as_mut_ptr(),
-        )
-        .assume_init_on_success(value)
+        (self.device_fn_1_2.get_semaphore_counter_value)(self.handle, semaphore, value.as_mut_ptr())
+            .assume_init_on_success(value)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWaitSemaphores.html>
@@ -691,7 +687,7 @@ impl Device {
         wait_info: &vk::SemaphoreWaitInfo<'_>,
         timeout: u64,
     ) -> VkResult<()> {
-        (self.device_fn_1_2.wait_semaphores)(self.handle(), wait_info, timeout).result()
+        (self.device_fn_1_2.wait_semaphores)(self.handle, wait_info, timeout).result()
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSignalSemaphore.html>
@@ -700,7 +696,7 @@ impl Device {
         &self,
         signal_info: &vk::SemaphoreSignalInfo<'_>,
     ) -> VkResult<()> {
-        (self.device_fn_1_2.signal_semaphore)(self.handle(), signal_info).result()
+        (self.device_fn_1_2.signal_semaphore)(self.handle, signal_info).result()
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferDeviceAddress.html>
@@ -709,7 +705,7 @@ impl Device {
         &self,
         info: &vk::BufferDeviceAddressInfo<'_>,
     ) -> vk::DeviceAddress {
-        (self.device_fn_1_2.get_buffer_device_address)(self.handle(), info)
+        (self.device_fn_1_2.get_buffer_device_address)(self.handle, info)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferOpaqueCaptureAddress.html>
@@ -718,7 +714,7 @@ impl Device {
         &self,
         info: &vk::BufferDeviceAddressInfo<'_>,
     ) -> u64 {
-        (self.device_fn_1_2.get_buffer_opaque_capture_address)(self.handle(), info)
+        (self.device_fn_1_2.get_buffer_opaque_capture_address)(self.handle, info)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceMemoryOpaqueCaptureAddress.html>
@@ -727,7 +723,7 @@ impl Device {
         &self,
         info: &vk::DeviceMemoryOpaqueCaptureAddressInfo<'_>,
     ) -> u64 {
-        (self.device_fn_1_2.get_device_memory_opaque_capture_address)(self.handle(), info)
+        (self.device_fn_1_2.get_device_memory_opaque_capture_address)(self.handle, info)
     }
 }
 
@@ -745,7 +741,7 @@ impl Device {
         bind_infos: &[vk::BindBufferMemoryInfo<'_>],
     ) -> VkResult<()> {
         (self.device_fn_1_1.bind_buffer_memory2)(
-            self.handle(),
+            self.handle,
             bind_infos.len() as _,
             bind_infos.as_ptr(),
         )
@@ -759,7 +755,7 @@ impl Device {
         bind_infos: &[vk::BindImageMemoryInfo<'_>],
     ) -> VkResult<()> {
         (self.device_fn_1_1.bind_image_memory2)(
-            self.handle(),
+            self.handle,
             bind_infos.len() as _,
             bind_infos.as_ptr(),
         )
@@ -776,7 +772,7 @@ impl Device {
     ) -> vk::PeerMemoryFeatureFlags {
         let mut peer_memory_features = mem::MaybeUninit::uninit();
         (self.device_fn_1_1.get_device_group_peer_memory_features)(
-            self.handle(),
+            self.handle,
             heap_index,
             local_device_index,
             remote_device_index,
@@ -821,7 +817,7 @@ impl Device {
         info: &vk::ImageMemoryRequirementsInfo2<'_>,
         out: &mut vk::MemoryRequirements2<'_>,
     ) {
-        (self.device_fn_1_1.get_image_memory_requirements2)(self.handle(), info, out)
+        (self.device_fn_1_1.get_image_memory_requirements2)(self.handle, info, out)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferMemoryRequirements2.html>
@@ -831,7 +827,7 @@ impl Device {
         info: &vk::BufferMemoryRequirementsInfo2<'_>,
         out: &mut vk::MemoryRequirements2<'_>,
     ) {
-        (self.device_fn_1_1.get_buffer_memory_requirements2)(self.handle(), info, out)
+        (self.device_fn_1_1.get_buffer_memory_requirements2)(self.handle, info, out)
     }
 
     /// Retrieve the number of elements to pass to [`get_image_sparse_memory_requirements2()`][Self::get_image_sparse_memory_requirements2()]
@@ -842,7 +838,7 @@ impl Device {
     ) -> usize {
         let mut count = mem::MaybeUninit::uninit();
         (self.device_fn_1_1.get_image_sparse_memory_requirements2)(
-            self.handle(),
+            self.handle,
             info,
             count.as_mut_ptr(),
             ptr::null_mut(),
@@ -862,7 +858,7 @@ impl Device {
     ) {
         let mut count = out.len() as u32;
         (self.device_fn_1_1.get_image_sparse_memory_requirements2)(
-            self.handle(),
+            self.handle,
             info,
             &mut count,
             out.as_mut_ptr(),
@@ -877,14 +873,14 @@ impl Device {
         command_pool: vk::CommandPool,
         flags: vk::CommandPoolTrimFlags,
     ) {
-        (self.device_fn_1_1.trim_command_pool)(self.handle(), command_pool, flags)
+        (self.device_fn_1_1.trim_command_pool)(self.handle, command_pool, flags)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceQueue2.html>
     #[inline]
     pub unsafe fn get_device_queue2(&self, queue_info: &vk::DeviceQueueInfo2<'_>) -> vk::Queue {
         let mut queue = mem::MaybeUninit::uninit();
-        (self.device_fn_1_1.get_device_queue2)(self.handle(), queue_info, queue.as_mut_ptr());
+        (self.device_fn_1_1.get_device_queue2)(self.handle, queue_info, queue.as_mut_ptr());
         queue.assume_init()
     }
 
@@ -897,7 +893,7 @@ impl Device {
     ) -> VkResult<vk::SamplerYcbcrConversion> {
         let mut ycbcr_conversion = mem::MaybeUninit::uninit();
         (self.device_fn_1_1.create_sampler_ycbcr_conversion)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             ycbcr_conversion.as_mut_ptr(),
@@ -913,7 +909,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_1.destroy_sampler_ycbcr_conversion)(
-            self.handle(),
+            self.handle,
             ycbcr_conversion,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -928,7 +924,7 @@ impl Device {
     ) -> VkResult<vk::DescriptorUpdateTemplate> {
         let mut descriptor_update_template = mem::MaybeUninit::uninit();
         (self.device_fn_1_1.create_descriptor_update_template)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             descriptor_update_template.as_mut_ptr(),
@@ -944,7 +940,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_1.destroy_descriptor_update_template)(
-            self.handle(),
+            self.handle,
             descriptor_update_template,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -959,7 +955,7 @@ impl Device {
         data: *const ffi::c_void,
     ) {
         (self.device_fn_1_1.update_descriptor_set_with_template)(
-            self.handle(),
+            self.handle,
             descriptor_set,
             descriptor_update_template,
             data,
@@ -973,7 +969,7 @@ impl Device {
         create_info: &vk::DescriptorSetLayoutCreateInfo<'_>,
         out: &mut vk::DescriptorSetLayoutSupport<'_>,
     ) {
-        (self.device_fn_1_1.get_descriptor_set_layout_support)(self.handle(), create_info, out)
+        (self.device_fn_1_1.get_descriptor_set_layout_support)(self.handle, create_info, out)
     }
 }
 
@@ -987,7 +983,7 @@ impl Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDevice.html>
     #[inline]
     pub unsafe fn destroy_device(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
-        (self.device_fn_1_0.destroy_device)(self.handle(), allocation_callbacks.to_raw_ptr())
+        (self.device_fn_1_0.destroy_device)(self.handle, allocation_callbacks.to_raw_ptr())
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroySampler.html>
@@ -998,7 +994,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_sampler)(
-            self.handle(),
+            self.handle,
             sampler,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -1011,7 +1007,7 @@ impl Device {
         memory: vk::DeviceMemory,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.device_fn_1_0.free_memory)(self.handle(), memory, allocation_callbacks.to_raw_ptr())
+        (self.device_fn_1_0.free_memory)(self.handle, memory, allocation_callbacks.to_raw_ptr())
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkFreeCommandBuffers.html>
@@ -1022,7 +1018,7 @@ impl Device {
         command_buffers: &[vk::CommandBuffer],
     ) {
         (self.device_fn_1_0.free_command_buffers)(
-            self.handle(),
+            self.handle,
             command_pool,
             command_buffers.len() as u32,
             command_buffers.as_ptr(),
@@ -1038,7 +1034,7 @@ impl Device {
     ) -> VkResult<vk::Event> {
         let mut event = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_event)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             event.as_mut_ptr(),
@@ -1053,7 +1049,7 @@ impl Device {
     /// event is _unsignaled_ ([`vk::Result::EVENT_RESET`]), or [`Err`] on failure.
     #[inline]
     pub unsafe fn get_event_status(&self, event: vk::Event) -> VkResult<bool> {
-        let err_code = (self.device_fn_1_0.get_event_status)(self.handle(), event);
+        let err_code = (self.device_fn_1_0.get_event_status)(self.handle, event);
         match err_code {
             vk::Result::EVENT_SET => Ok(true),
             vk::Result::EVENT_RESET => Ok(false),
@@ -1064,13 +1060,13 @@ impl Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetEvent.html>
     #[inline]
     pub unsafe fn set_event(&self, event: vk::Event) -> VkResult<()> {
-        (self.device_fn_1_0.set_event)(self.handle(), event).result()
+        (self.device_fn_1_0.set_event)(self.handle, event).result()
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkResetEvent.html>
     #[inline]
     pub unsafe fn reset_event(&self, event: vk::Event) -> VkResult<()> {
-        (self.device_fn_1_0.reset_event)(self.handle(), event).result()
+        (self.device_fn_1_0.reset_event)(self.handle, event).result()
     }
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetEvent.html>
     #[inline]
@@ -1127,7 +1123,7 @@ impl Device {
         fence: vk::Fence,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.device_fn_1_0.destroy_fence)(self.handle(), fence, allocation_callbacks.to_raw_ptr())
+        (self.device_fn_1_0.destroy_fence)(self.handle, fence, allocation_callbacks.to_raw_ptr())
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyEvent.html>
@@ -1137,7 +1133,7 @@ impl Device {
         event: vk::Event,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.device_fn_1_0.destroy_event)(self.handle(), event, allocation_callbacks.to_raw_ptr())
+        (self.device_fn_1_0.destroy_event)(self.handle, event, allocation_callbacks.to_raw_ptr())
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyImage.html>
@@ -1147,7 +1143,7 @@ impl Device {
         image: vk::Image,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.device_fn_1_0.destroy_image)(self.handle(), image, allocation_callbacks.to_raw_ptr())
+        (self.device_fn_1_0.destroy_image)(self.handle, image, allocation_callbacks.to_raw_ptr())
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyCommandPool.html>
@@ -1158,7 +1154,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_command_pool)(
-            self.handle(),
+            self.handle,
             pool,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -1172,7 +1168,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_image_view)(
-            self.handle(),
+            self.handle,
             image_view,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -1186,7 +1182,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_render_pass)(
-            self.handle(),
+            self.handle,
             renderpass,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -1200,7 +1196,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_framebuffer)(
-            self.handle(),
+            self.handle,
             framebuffer,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -1214,7 +1210,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_pipeline_layout)(
-            self.handle(),
+            self.handle,
             pipeline_layout,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -1228,7 +1224,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_pipeline_cache)(
-            self.handle(),
+            self.handle,
             pipeline_cache,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -1241,11 +1237,7 @@ impl Device {
         buffer: vk::Buffer,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.device_fn_1_0.destroy_buffer)(
-            self.handle(),
-            buffer,
-            allocation_callbacks.to_raw_ptr(),
-        )
+        (self.device_fn_1_0.destroy_buffer)(self.handle, buffer, allocation_callbacks.to_raw_ptr())
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyShaderModule.html>
@@ -1256,7 +1248,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_shader_module)(
-            self.handle(),
+            self.handle,
             shader,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -1270,7 +1262,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_pipeline)(
-            self.handle(),
+            self.handle,
             pipeline,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -1284,7 +1276,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_semaphore)(
-            self.handle(),
+            self.handle,
             semaphore,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -1298,7 +1290,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_descriptor_pool)(
-            self.handle(),
+            self.handle,
             pool,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -1312,7 +1304,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_query_pool)(
-            self.handle(),
+            self.handle,
             pool,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -1326,7 +1318,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_descriptor_set_layout)(
-            self.handle(),
+            self.handle,
             layout,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -1340,7 +1332,7 @@ impl Device {
         descriptor_sets: &[vk::DescriptorSet],
     ) -> VkResult<()> {
         (self.device_fn_1_0.free_descriptor_sets)(
-            self.handle(),
+            self.handle,
             pool,
             descriptor_sets.len() as u32,
             descriptor_sets.as_ptr(),
@@ -1356,7 +1348,7 @@ impl Device {
         descriptor_copies: &[vk::CopyDescriptorSet<'_>],
     ) {
         (self.device_fn_1_0.update_descriptor_sets)(
-            self.handle(),
+            self.handle,
             descriptor_writes.len() as u32,
             descriptor_writes.as_ptr(),
             descriptor_copies.len() as u32,
@@ -1373,7 +1365,7 @@ impl Device {
     ) -> VkResult<vk::Sampler> {
         let mut sampler = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_sampler)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             sampler.as_mut_ptr(),
@@ -1546,7 +1538,7 @@ impl Device {
     ) -> VkResult<Vec<vk::DescriptorSet>> {
         let mut desc_set = Vec::with_capacity(allocate_info.descriptor_set_count as usize);
         (self.device_fn_1_0.allocate_descriptor_sets)(
-            self.handle(),
+            self.handle,
             allocate_info,
             desc_set.as_mut_ptr(),
         )
@@ -1562,7 +1554,7 @@ impl Device {
     ) -> VkResult<vk::DescriptorSetLayout> {
         let mut layout = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_descriptor_set_layout)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             layout.as_mut_ptr(),
@@ -1573,7 +1565,7 @@ impl Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDeviceWaitIdle.html>
     #[inline]
     pub unsafe fn device_wait_idle(&self) -> VkResult<()> {
-        (self.device_fn_1_0.device_wait_idle)(self.handle()).result()
+        (self.device_fn_1_0.device_wait_idle)(self.handle).result()
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDescriptorPool.html>
@@ -1585,7 +1577,7 @@ impl Device {
     ) -> VkResult<vk::DescriptorPool> {
         let mut pool = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_descriptor_pool)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             pool.as_mut_ptr(),
@@ -1600,7 +1592,7 @@ impl Device {
         pool: vk::DescriptorPool,
         flags: vk::DescriptorPoolResetFlags,
     ) -> VkResult<()> {
-        (self.device_fn_1_0.reset_descriptor_pool)(self.handle(), pool, flags).result()
+        (self.device_fn_1_0.reset_descriptor_pool)(self.handle, pool, flags).result()
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkResetCommandPool.html>
@@ -1610,7 +1602,7 @@ impl Device {
         command_pool: vk::CommandPool,
         flags: vk::CommandPoolResetFlags,
     ) -> VkResult<()> {
-        (self.device_fn_1_0.reset_command_pool)(self.handle(), command_pool, flags).result()
+        (self.device_fn_1_0.reset_command_pool)(self.handle, command_pool, flags).result()
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkResetCommandBuffer.html>
@@ -1626,7 +1618,7 @@ impl Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkResetFences.html>
     #[inline]
     pub unsafe fn reset_fences(&self, fences: &[vk::Fence]) -> VkResult<()> {
-        (self.device_fn_1_0.reset_fences)(self.handle(), fences.len() as u32, fences.as_ptr())
+        (self.device_fn_1_0.reset_fences)(self.handle, fences.len() as u32, fences.as_ptr())
             .result()
     }
 
@@ -2062,7 +2054,7 @@ impl Device {
     ) -> VkResult<()> {
         let data_size = size_of_val(data);
         (self.device_fn_1_0.get_query_pool_results)(
-            self.handle(),
+            self.handle,
             query_pool,
             first_query,
             data.len() as u32,
@@ -2130,7 +2122,7 @@ impl Device {
     ) -> VkResult<vk::Semaphore> {
         let mut semaphore = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_semaphore)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             semaphore.as_mut_ptr(),
@@ -2152,7 +2144,7 @@ impl Device {
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
         let mut pipelines = Vec::with_capacity(create_infos.len());
         let err_code = (self.device_fn_1_0.create_graphics_pipelines)(
-            self.handle(),
+            self.handle,
             pipeline_cache,
             create_infos.len() as u32,
             create_infos.as_ptr(),
@@ -2180,7 +2172,7 @@ impl Device {
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
         let mut pipelines = Vec::with_capacity(create_infos.len());
         let err_code = (self.device_fn_1_0.create_compute_pipelines)(
-            self.handle(),
+            self.handle,
             pipeline_cache,
             create_infos.len() as u32,
             create_infos.as_ptr(),
@@ -2203,7 +2195,7 @@ impl Device {
     ) -> VkResult<vk::Buffer> {
         let mut buffer = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_buffer)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             buffer.as_mut_ptr(),
@@ -2220,7 +2212,7 @@ impl Device {
     ) -> VkResult<vk::PipelineLayout> {
         let mut pipeline_layout = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_pipeline_layout)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             pipeline_layout.as_mut_ptr(),
@@ -2237,7 +2229,7 @@ impl Device {
     ) -> VkResult<vk::PipelineCache> {
         let mut pipeline_cache = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_pipeline_cache)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             pipeline_cache.as_mut_ptr(),
@@ -2253,7 +2245,7 @@ impl Device {
     ) -> VkResult<Vec<u8>> {
         read_into_uninitialized_vector(|count, data: *mut u8| {
             (self.device_fn_1_0.get_pipeline_cache_data)(
-                self.handle(),
+                self.handle,
                 pipeline_cache,
                 count,
                 data.cast(),
@@ -2269,7 +2261,7 @@ impl Device {
         src_caches: &[vk::PipelineCache],
     ) -> VkResult<()> {
         (self.device_fn_1_0.merge_pipeline_caches)(
-            self.handle(),
+            self.handle,
             dst_cache,
             src_caches.len() as u32,
             src_caches.as_ptr(),
@@ -2287,21 +2279,14 @@ impl Device {
         flags: vk::MemoryMapFlags,
     ) -> VkResult<*mut ffi::c_void> {
         let mut data = mem::MaybeUninit::uninit();
-        (self.device_fn_1_0.map_memory)(
-            self.handle(),
-            memory,
-            offset,
-            size,
-            flags,
-            data.as_mut_ptr(),
-        )
-        .assume_init_on_success(data)
+        (self.device_fn_1_0.map_memory)(self.handle, memory, offset, size, flags, data.as_mut_ptr())
+            .assume_init_on_success(data)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUnmapMemory.html>
     #[inline]
     pub unsafe fn unmap_memory(&self, memory: vk::DeviceMemory) {
-        (self.device_fn_1_0.unmap_memory)(self.handle(), memory)
+        (self.device_fn_1_0.unmap_memory)(self.handle, memory)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkInvalidateMappedMemoryRanges.html>
@@ -2311,7 +2296,7 @@ impl Device {
         ranges: &[vk::MappedMemoryRange<'_>],
     ) -> VkResult<()> {
         (self.device_fn_1_0.invalidate_mapped_memory_ranges)(
-            self.handle(),
+            self.handle,
             ranges.len() as u32,
             ranges.as_ptr(),
         )
@@ -2325,7 +2310,7 @@ impl Device {
         ranges: &[vk::MappedMemoryRange<'_>],
     ) -> VkResult<()> {
         (self.device_fn_1_0.flush_mapped_memory_ranges)(
-            self.handle(),
+            self.handle,
             ranges.len() as u32,
             ranges.as_ptr(),
         )
@@ -2341,7 +2326,7 @@ impl Device {
     ) -> VkResult<vk::Framebuffer> {
         let mut framebuffer = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_framebuffer)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             framebuffer.as_mut_ptr(),
@@ -2354,7 +2339,7 @@ impl Device {
     pub unsafe fn get_device_queue(&self, queue_family_index: u32, queue_index: u32) -> vk::Queue {
         let mut queue = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.get_device_queue)(
-            self.handle(),
+            self.handle,
             queue_family_index,
             queue_index,
             queue.as_mut_ptr(),
@@ -2397,7 +2382,7 @@ impl Device {
     ) -> VkResult<vk::RenderPass> {
         let mut renderpass = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_render_pass)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             renderpass.as_mut_ptr(),
@@ -2430,7 +2415,7 @@ impl Device {
         timeout: u64,
     ) -> VkResult<()> {
         (self.device_fn_1_0.wait_for_fences)(
-            self.handle(),
+            self.handle,
             fences.len() as u32,
             fences.as_ptr(),
             wait_all as u32,
@@ -2446,7 +2431,7 @@ impl Device {
     /// fence is _unsignaled_ ([`vk::Result::NOT_READY`]), or [`Err`] on failure.
     #[inline]
     pub unsafe fn get_fence_status(&self, fence: vk::Fence) -> VkResult<bool> {
-        let err_code = (self.device_fn_1_0.get_fence_status)(self.handle(), fence);
+        let err_code = (self.device_fn_1_0.get_fence_status)(self.handle, fence);
         match err_code {
             vk::Result::SUCCESS => Ok(true),
             vk::Result::NOT_READY => Ok(false),
@@ -2498,7 +2483,7 @@ impl Device {
     ) -> VkResult<vk::BufferView> {
         let mut buffer_view = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_buffer_view)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             buffer_view.as_mut_ptr(),
@@ -2514,7 +2499,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         (self.device_fn_1_0.destroy_buffer_view)(
-            self.handle(),
+            self.handle,
             buffer_view,
             allocation_callbacks.to_raw_ptr(),
         )
@@ -2529,7 +2514,7 @@ impl Device {
     ) -> VkResult<vk::ImageView> {
         let mut image_view = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_image_view)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             image_view.as_mut_ptr(),
@@ -2545,7 +2530,7 @@ impl Device {
     ) -> VkResult<Vec<vk::CommandBuffer>> {
         let mut buffers = Vec::with_capacity(allocate_info.command_buffer_count as usize);
         (self.device_fn_1_0.allocate_command_buffers)(
-            self.handle(),
+            self.handle,
             allocate_info,
             buffers.as_mut_ptr(),
         )
@@ -2561,7 +2546,7 @@ impl Device {
     ) -> VkResult<vk::CommandPool> {
         let mut pool = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_command_pool)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             pool.as_mut_ptr(),
@@ -2578,7 +2563,7 @@ impl Device {
     ) -> VkResult<vk::QueryPool> {
         let mut pool = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_query_pool)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             pool.as_mut_ptr(),
@@ -2595,7 +2580,7 @@ impl Device {
     ) -> VkResult<vk::Image> {
         let mut image = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_image)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             image.as_mut_ptr(),
@@ -2612,7 +2597,7 @@ impl Device {
     ) -> vk::SubresourceLayout {
         let mut layout = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.get_image_subresource_layout)(
-            self.handle(),
+            self.handle,
             image,
             &subresource,
             layout.as_mut_ptr(),
@@ -2625,7 +2610,7 @@ impl Device {
     pub unsafe fn get_image_memory_requirements(&self, image: vk::Image) -> vk::MemoryRequirements {
         let mut mem_req = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.get_image_memory_requirements)(
-            self.handle(),
+            self.handle,
             image,
             mem_req.as_mut_ptr(),
         );
@@ -2640,7 +2625,7 @@ impl Device {
     ) -> vk::MemoryRequirements {
         let mut mem_req = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.get_buffer_memory_requirements)(
-            self.handle(),
+            self.handle,
             buffer,
             mem_req.as_mut_ptr(),
         );
@@ -2656,7 +2641,7 @@ impl Device {
     ) -> VkResult<vk::DeviceMemory> {
         let mut memory = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.allocate_memory)(
-            self.handle(),
+            self.handle,
             allocate_info,
             allocation_callbacks.to_raw_ptr(),
             memory.as_mut_ptr(),
@@ -2673,7 +2658,7 @@ impl Device {
     ) -> VkResult<vk::ShaderModule> {
         let mut shader = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_shader_module)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             shader.as_mut_ptr(),
@@ -2690,7 +2675,7 @@ impl Device {
     ) -> VkResult<vk::Fence> {
         let mut fence = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.create_fence)(
-            self.handle(),
+            self.handle,
             create_info,
             allocation_callbacks.to_raw_ptr(),
             fence.as_mut_ptr(),
@@ -2706,8 +2691,7 @@ impl Device {
         device_memory: vk::DeviceMemory,
         offset: vk::DeviceSize,
     ) -> VkResult<()> {
-        (self.device_fn_1_0.bind_buffer_memory)(self.handle(), buffer, device_memory, offset)
-            .result()
+        (self.device_fn_1_0.bind_buffer_memory)(self.handle, buffer, device_memory, offset).result()
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindImageMemory.html>
@@ -2718,7 +2702,7 @@ impl Device {
         device_memory: vk::DeviceMemory,
         offset: vk::DeviceSize,
     ) -> VkResult<()> {
-        (self.device_fn_1_0.bind_image_memory)(self.handle(), image, device_memory, offset).result()
+        (self.device_fn_1_0.bind_image_memory)(self.handle, image, device_memory, offset).result()
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRenderAreaGranularity.html>
@@ -2726,7 +2710,7 @@ impl Device {
     pub unsafe fn get_render_area_granularity(&self, render_pass: vk::RenderPass) -> vk::Extent2D {
         let mut granularity = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.get_render_area_granularity)(
-            self.handle(),
+            self.handle,
             render_pass,
             granularity.as_mut_ptr(),
         );
@@ -2738,7 +2722,7 @@ impl Device {
     pub unsafe fn get_device_memory_commitment(&self, memory: vk::DeviceMemory) -> vk::DeviceSize {
         let mut committed_memory_in_bytes = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.get_device_memory_commitment)(
-            self.handle(),
+            self.handle,
             memory,
             committed_memory_in_bytes.as_mut_ptr(),
         );
@@ -2753,7 +2737,7 @@ impl Device {
     ) -> Vec<vk::SparseImageMemoryRequirements> {
         read_into_uninitialized_vector(|count, data| {
             (self.device_fn_1_0.get_image_sparse_memory_requirements)(
-                self.handle(),
+                self.handle,
                 image,
                 count,
                 data,
