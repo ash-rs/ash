@@ -35,7 +35,7 @@ impl crate::khr::acceleration_structure::Device {
             self.handle,
             accel_struct,
             allocation_callbacks.to_raw_ptr(),
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildAccelerationStructuresKHR.html>
@@ -187,7 +187,7 @@ impl crate::khr::acceleration_structure::Device {
         command_buffer: vk::CommandBuffer,
         info: &vk::CopyAccelerationStructureInfoKHR<'_>,
     ) {
-        (self.fp.cmd_copy_acceleration_structure_khr)(command_buffer, info);
+        (self.fp.cmd_copy_acceleration_structure_khr)(command_buffer, info)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureToMemoryKHR.html>
@@ -197,7 +197,7 @@ impl crate::khr::acceleration_structure::Device {
         command_buffer: vk::CommandBuffer,
         info: &vk::CopyAccelerationStructureToMemoryInfoKHR<'_>,
     ) {
-        (self.fp.cmd_copy_acceleration_structure_to_memory_khr)(command_buffer, info);
+        (self.fp.cmd_copy_acceleration_structure_to_memory_khr)(command_buffer, info)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryToAccelerationStructureKHR.html>
@@ -207,7 +207,7 @@ impl crate::khr::acceleration_structure::Device {
         command_buffer: vk::CommandBuffer,
         info: &vk::CopyMemoryToAccelerationStructureInfoKHR<'_>,
     ) {
-        (self.fp.cmd_copy_memory_to_acceleration_structure_khr)(command_buffer, info);
+        (self.fp.cmd_copy_memory_to_acceleration_structure_khr)(command_buffer, info)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureHandleKHR.html>
@@ -236,7 +236,7 @@ impl crate::khr::acceleration_structure::Device {
             query_type,
             query_pool,
             first_query,
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceAccelerationStructureCompatibilityKHR.html>

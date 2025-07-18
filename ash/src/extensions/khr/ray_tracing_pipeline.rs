@@ -28,7 +28,7 @@ impl crate::khr::ray_tracing_pipeline::Device {
             width,
             height,
             depth,
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateRayTracingPipelinesKHR.html>
@@ -125,7 +125,7 @@ impl crate::khr::ray_tracing_pipeline::Device {
             hit_shader_binding_table,
             callable_shader_binding_table,
             indirect_device_address,
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupStackSizeKHR.html>
@@ -151,6 +151,6 @@ impl crate::khr::ray_tracing_pipeline::Device {
         command_buffer: vk::CommandBuffer,
         pipeline_stack_size: u32,
     ) {
-        (self.fp.cmd_set_ray_tracing_pipeline_stack_size_khr)(command_buffer, pipeline_stack_size);
+        (self.fp.cmd_set_ray_tracing_pipeline_stack_size_khr)(command_buffer, pipeline_stack_size)
     }
 }

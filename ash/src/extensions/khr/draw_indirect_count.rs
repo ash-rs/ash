@@ -23,7 +23,7 @@ impl crate::khr::draw_indirect_count::Device {
             count_buffer_offset,
             max_draw_count,
             stride,
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndirectCountKHR.html>
@@ -46,6 +46,6 @@ impl crate::khr::draw_indirect_count::Device {
             count_buffer_offset,
             max_draw_count,
             stride,
-        );
+        )
     }
 }

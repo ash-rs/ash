@@ -10,6 +10,6 @@ impl crate::khr::maintenance1::Device {
         command_pool: vk::CommandPool,
         flags: vk::CommandPoolTrimFlagsKHR,
     ) {
-        (self.fp.trim_command_pool_khr)(self.handle, command_pool, flags);
+        (self.fp.trim_command_pool_khr)(self.handle, command_pool, flags)
     }
 }
