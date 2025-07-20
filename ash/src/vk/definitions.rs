@@ -6,8 +6,8 @@ use super::enums::*;
 use super::native::*;
 use super::platform_types::*;
 use super::{
-    ptr_chain_iter, wrap_c_str_slice_until_nul, write_c_str_slice_with_nul,
-    CStrTooLargeForStaticArray, Extends, Handle, Packed24_8, TaggedStructure,
+    wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
+    Handle, Packed24_8, TaggedStructure,
 };
 use core::ffi::*;
 use core::fmt;
@@ -1096,7 +1096,7 @@ impl ::core::default::Default for ApplicationInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ApplicationInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ApplicationInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::APPLICATION_INFO;
 }
 impl<'a> ApplicationInfo<'a> {
@@ -1259,7 +1259,7 @@ impl ::core::default::Default for DeviceQueueCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceQueueCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceQueueCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_QUEUE_CREATE_INFO;
 }
 impl<'a> DeviceQueueCreateInfo<'a> {
@@ -1278,50 +1278,6 @@ impl<'a> DeviceQueueCreateInfo<'a> {
         self.queue_count = queue_priorities.len() as _;
         self.p_queue_priorities = queue_priorities.as_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -1365,7 +1321,7 @@ impl ::core::default::Default for DeviceCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_CREATE_INFO;
 }
 impl<'a> DeviceCreateInfo<'a> {
@@ -1402,50 +1358,6 @@ impl<'a> DeviceCreateInfo<'a> {
         self.p_enabled_features = enabled_features;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -1481,7 +1393,7 @@ impl ::core::default::Default for InstanceCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for InstanceCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for InstanceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INSTANCE_CREATE_INFO;
 }
 impl<'a> InstanceCreateInfo<'a> {
@@ -1506,50 +1418,6 @@ impl<'a> InstanceCreateInfo<'a> {
         self.enabled_extension_count = enabled_extension_names.len() as _;
         self.pp_enabled_extension_names = enabled_extension_names.as_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -1668,7 +1536,7 @@ impl ::core::default::Default for MemoryAllocateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryAllocateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_ALLOCATE_INFO;
 }
 impl<'a> MemoryAllocateInfo<'a> {
@@ -1681,50 +1549,6 @@ impl<'a> MemoryAllocateInfo<'a> {
     pub fn memory_type_index(mut self, memory_type_index: u32) -> Self {
         self.memory_type_index = memory_type_index;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -1890,7 +1714,7 @@ impl ::core::default::Default for MappedMemoryRange<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MappedMemoryRange<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MappedMemoryRange<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MAPPED_MEMORY_RANGE;
 }
 impl<'a> MappedMemoryRange<'a> {
@@ -2068,7 +1892,7 @@ impl ::core::default::Default for WriteDescriptorSet<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for WriteDescriptorSet<'a> {
+unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSet<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_DESCRIPTOR_SET;
 }
 impl<'a> WriteDescriptorSet<'a> {
@@ -2115,50 +1939,6 @@ impl<'a> WriteDescriptorSet<'a> {
         self.p_texel_buffer_view = texel_buffer_view.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -2196,7 +1976,7 @@ impl ::core::default::Default for CopyDescriptorSet<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyDescriptorSet<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyDescriptorSet<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_DESCRIPTOR_SET;
 }
 impl<'a> CopyDescriptorSet<'a> {
@@ -2260,7 +2040,7 @@ impl ::core::default::Default for BufferUsageFlags2CreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferUsageFlags2CreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferUsageFlags2CreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_USAGE_FLAGS_2_CREATE_INFO_KHR;
 }
 unsafe impl Extends<BufferViewCreateInfo<'_>> for BufferUsageFlags2CreateInfoKHR<'_> {}
@@ -2308,7 +2088,7 @@ impl ::core::default::Default for BufferCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_CREATE_INFO;
 }
 impl<'a> BufferCreateInfo<'a> {
@@ -2337,50 +2117,6 @@ impl<'a> BufferCreateInfo<'a> {
         self.queue_family_index_count = queue_family_indices.len() as _;
         self.p_queue_family_indices = queue_family_indices.as_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -2415,7 +2151,7 @@ impl ::core::default::Default for BufferViewCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferViewCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferViewCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_VIEW_CREATE_INFO;
 }
 impl<'a> BufferViewCreateInfo<'a> {
@@ -2443,50 +2179,6 @@ impl<'a> BufferViewCreateInfo<'a> {
     pub fn range(mut self, range: DeviceSize) -> Self {
         self.range = range;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -2614,7 +2306,7 @@ impl ::core::default::Default for MemoryBarrier<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryBarrier<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryBarrier<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_BARRIER;
 }
 impl<'a> MemoryBarrier<'a> {
@@ -2665,7 +2357,7 @@ impl ::core::default::Default for BufferMemoryBarrier<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferMemoryBarrier<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferMemoryBarrier<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_MEMORY_BARRIER;
 }
 impl<'a> BufferMemoryBarrier<'a> {
@@ -2703,50 +2395,6 @@ impl<'a> BufferMemoryBarrier<'a> {
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -2787,7 +2435,7 @@ impl ::core::default::Default for ImageMemoryBarrier<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageMemoryBarrier<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageMemoryBarrier<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_MEMORY_BARRIER;
 }
 impl<'a> ImageMemoryBarrier<'a> {
@@ -2830,50 +2478,6 @@ impl<'a> ImageMemoryBarrier<'a> {
     pub fn subresource_range(mut self, subresource_range: ImageSubresourceRange) -> Self {
         self.subresource_range = subresource_range;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -2924,7 +2528,7 @@ impl ::core::default::Default for ImageCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CREATE_INFO;
 }
 impl<'a> ImageCreateInfo<'a> {
@@ -2988,50 +2592,6 @@ impl<'a> ImageCreateInfo<'a> {
     pub fn initial_layout(mut self, initial_layout: ImageLayout) -> Self {
         self.initial_layout = initial_layout;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -3107,7 +2667,7 @@ impl ::core::default::Default for ImageViewCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_CREATE_INFO;
 }
 impl<'a> ImageViewCreateInfo<'a> {
@@ -3140,50 +2700,6 @@ impl<'a> ImageViewCreateInfo<'a> {
     pub fn subresource_range(mut self, subresource_range: ImageSubresourceRange) -> Self {
         self.subresource_range = subresource_range;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -3450,7 +2966,7 @@ impl ::core::default::Default for BindSparseInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindSparseInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindSparseInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_SPARSE_INFO;
 }
 impl<'a> BindSparseInfo<'a> {
@@ -3486,50 +3002,6 @@ impl<'a> BindSparseInfo<'a> {
         self.signal_semaphore_count = signal_semaphores.len() as _;
         self.p_signal_semaphores = signal_semaphores.as_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -3799,7 +3271,7 @@ impl ::core::default::Default for ShaderModuleCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ShaderModuleCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ShaderModuleCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_MODULE_CREATE_INFO;
 }
 unsafe impl Extends<PipelineShaderStageCreateInfo<'_>> for ShaderModuleCreateInfo<'_> {}
@@ -3814,50 +3286,6 @@ impl<'a> ShaderModuleCreateInfo<'a> {
         self.code_size = code.len() * 4;
         self.p_code = code.as_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -3944,7 +3372,7 @@ impl ::core::default::Default for DescriptorSetLayoutCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetLayoutCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
 }
 impl<'a> DescriptorSetLayoutCreateInfo<'a> {
@@ -3958,50 +3386,6 @@ impl<'a> DescriptorSetLayoutCreateInfo<'a> {
         self.binding_count = bindings.len() as _;
         self.p_bindings = bindings.as_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -4055,7 +3439,7 @@ impl ::core::default::Default for DescriptorPoolCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorPoolCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorPoolCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_POOL_CREATE_INFO;
 }
 impl<'a> DescriptorPoolCreateInfo<'a> {
@@ -4074,50 +3458,6 @@ impl<'a> DescriptorPoolCreateInfo<'a> {
         self.pool_size_count = pool_sizes.len() as _;
         self.p_pool_sizes = pool_sizes.as_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -4148,7 +3488,7 @@ impl ::core::default::Default for DescriptorSetAllocateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetAllocateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_ALLOCATE_INFO;
 }
 impl<'a> DescriptorSetAllocateInfo<'a> {
@@ -4162,50 +3502,6 @@ impl<'a> DescriptorSetAllocateInfo<'a> {
         self.descriptor_set_count = set_layouts.len() as _;
         self.p_set_layouts = set_layouts.as_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -4307,7 +3603,7 @@ impl ::core::default::Default for PipelineShaderStageCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineShaderStageCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_SHADER_STAGE_CREATE_INFO;
 }
 impl<'a> PipelineShaderStageCreateInfo<'a> {
@@ -4344,50 +3640,6 @@ impl<'a> PipelineShaderStageCreateInfo<'a> {
         self.p_specialization_info = specialization_info;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -4421,7 +3673,7 @@ impl ::core::default::Default for ComputePipelineCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ComputePipelineCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ComputePipelineCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_PIPELINE_CREATE_INFO;
 }
 impl<'a> ComputePipelineCreateInfo<'a> {
@@ -4449,50 +3701,6 @@ impl<'a> ComputePipelineCreateInfo<'a> {
     pub fn base_pipeline_index(mut self, base_pipeline_index: i32) -> Self {
         self.base_pipeline_index = base_pipeline_index;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -4523,7 +3731,7 @@ impl ::core::default::Default for ComputePipelineIndirectBufferInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ComputePipelineIndirectBufferInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ComputePipelineIndirectBufferInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_PIPELINE_INDIRECT_BUFFER_INFO_NV;
 }
 unsafe impl Extends<ComputePipelineCreateInfo<'_>> for ComputePipelineIndirectBufferInfoNV<'_> {}
@@ -4571,7 +3779,7 @@ impl ::core::default::Default for PipelineCreateFlags2CreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCreateFlags2CreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCreateFlags2CreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CREATE_FLAGS_2_CREATE_INFO_KHR;
 }
 unsafe impl Extends<ComputePipelineCreateInfo<'_>> for PipelineCreateFlags2CreateInfoKHR<'_> {}
@@ -4677,7 +3885,7 @@ impl ::core::default::Default for PipelineVertexInputStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineVertexInputStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineVertexInputStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 }
 impl<'a> PipelineVertexInputStateCreateInfo<'a> {
@@ -4703,50 +3911,6 @@ impl<'a> PipelineVertexInputStateCreateInfo<'a> {
         self.vertex_attribute_description_count = vertex_attribute_descriptions.len() as _;
         self.p_vertex_attribute_descriptions = vertex_attribute_descriptions.as_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -4777,7 +3941,7 @@ impl ::core::default::Default for PipelineInputAssemblyStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineInputAssemblyStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineInputAssemblyStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 }
 impl<'a> PipelineInputAssemblyStateCreateInfo<'a> {
@@ -4823,7 +3987,7 @@ impl ::core::default::Default for PipelineTessellationStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineTessellationStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineTessellationStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_TESSELLATION_STATE_CREATE_INFO;
 }
 impl<'a> PipelineTessellationStateCreateInfo<'a> {
@@ -4836,50 +4000,6 @@ impl<'a> PipelineTessellationStateCreateInfo<'a> {
     pub fn patch_control_points(mut self, patch_control_points: u32) -> Self {
         self.patch_control_points = patch_control_points;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -4914,7 +4034,7 @@ impl ::core::default::Default for PipelineViewportStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_VIEWPORT_STATE_CREATE_INFO;
 }
 impl<'a> PipelineViewportStateCreateInfo<'a> {
@@ -4944,50 +4064,6 @@ impl<'a> PipelineViewportStateCreateInfo<'a> {
         self.scissor_count = scissors.len() as _;
         self.p_scissors = scissors.as_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -5034,7 +4110,7 @@ impl ::core::default::Default for PipelineRasterizationStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRasterizationStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 }
 impl<'a> PipelineRasterizationStateCreateInfo<'a> {
@@ -5093,50 +4169,6 @@ impl<'a> PipelineRasterizationStateCreateInfo<'a> {
         self.line_width = line_width;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -5174,7 +4206,7 @@ impl ::core::default::Default for PipelineMultisampleStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineMultisampleStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineMultisampleStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 }
 impl<'a> PipelineMultisampleStateCreateInfo<'a> {
@@ -5221,50 +4253,6 @@ impl<'a> PipelineMultisampleStateCreateInfo<'a> {
     pub fn alpha_to_one_enable(mut self, alpha_to_one_enable: bool) -> Self {
         self.alpha_to_one_enable = alpha_to_one_enable.into();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -5358,7 +4346,7 @@ impl ::core::default::Default for PipelineColorBlendStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineColorBlendStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineColorBlendStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
 }
 impl<'a> PipelineColorBlendStateCreateInfo<'a> {
@@ -5387,50 +4375,6 @@ impl<'a> PipelineColorBlendStateCreateInfo<'a> {
     pub fn blend_constants(mut self, blend_constants: [f32; 4]) -> Self {
         self.blend_constants = blend_constants;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -5461,7 +4405,7 @@ impl ::core::default::Default for PipelineDynamicStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineDynamicStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineDynamicStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 }
 impl<'a> PipelineDynamicStateCreateInfo<'a> {
@@ -5570,7 +4514,7 @@ impl ::core::default::Default for PipelineDepthStencilStateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineDepthStencilStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineDepthStencilStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
 }
 impl<'a> PipelineDepthStencilStateCreateInfo<'a> {
@@ -5681,7 +4625,7 @@ impl ::core::default::Default for GraphicsPipelineCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GraphicsPipelineCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GRAPHICS_PIPELINE_CREATE_INFO;
 }
 impl<'a> GraphicsPipelineCreateInfo<'a> {
@@ -5790,50 +4734,6 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
         self.base_pipeline_index = base_pipeline_index;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -5863,7 +4763,7 @@ impl ::core::default::Default for PipelineCacheCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCacheCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCacheCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CACHE_CREATE_INFO;
 }
 impl<'a> PipelineCacheCreateInfo<'a> {
@@ -5985,7 +4885,7 @@ impl ::core::default::Default for PipelineBinaryCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineBinaryCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_CREATE_INFO_KHR;
 }
 impl<'a> PipelineBinaryCreateInfoKHR<'a> {
@@ -6037,7 +4937,7 @@ impl ::core::default::Default for PipelineBinaryHandlesInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineBinaryHandlesInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryHandlesInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_HANDLES_INFO_KHR;
 }
 impl<'a> PipelineBinaryHandlesInfoKHR<'a> {
@@ -6148,7 +5048,7 @@ impl ::core::default::Default for PipelineBinaryKeyKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineBinaryKeyKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryKeyKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_KEY_KHR;
 }
 impl<'a> PipelineBinaryKeyKHR<'a> {
@@ -6189,7 +5089,7 @@ impl ::core::default::Default for PipelineBinaryInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineBinaryInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_INFO_KHR;
 }
 unsafe impl Extends<GraphicsPipelineCreateInfo<'_>> for PipelineBinaryInfoKHR<'_> {}
@@ -6227,7 +5127,7 @@ impl ::core::default::Default for ReleaseCapturedPipelineDataInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ReleaseCapturedPipelineDataInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ReleaseCapturedPipelineDataInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RELEASE_CAPTURED_PIPELINE_DATA_INFO_KHR;
 }
 impl<'a> ReleaseCapturedPipelineDataInfoKHR<'a> {
@@ -6261,7 +5161,7 @@ impl ::core::default::Default for PipelineBinaryDataInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineBinaryDataInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryDataInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_DATA_INFO_KHR;
 }
 impl<'a> PipelineBinaryDataInfoKHR<'a> {
@@ -6293,7 +5193,7 @@ impl ::core::default::Default for PipelineCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CREATE_INFO_KHR;
 }
 impl<'a> PipelineCreateInfoKHR<'a> {}
@@ -6329,7 +5229,7 @@ impl ::core::default::Default for PipelineLayoutCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineLayoutCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineLayoutCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_LAYOUT_CREATE_INFO;
 }
 unsafe impl Extends<BindDescriptorSetsInfoKHR<'_>> for PipelineLayoutCreateInfo<'_> {}
@@ -6415,7 +5315,7 @@ impl ::core::default::Default for SamplerCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_CREATE_INFO;
 }
 impl<'a> SamplerCreateInfo<'a> {
@@ -6499,50 +5399,6 @@ impl<'a> SamplerCreateInfo<'a> {
         self.unnormalized_coordinates = unnormalized_coordinates.into();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -6570,7 +5426,7 @@ impl ::core::default::Default for CommandPoolCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandPoolCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandPoolCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_POOL_CREATE_INFO;
 }
 impl<'a> CommandPoolCreateInfo<'a> {
@@ -6613,7 +5469,7 @@ impl ::core::default::Default for CommandBufferAllocateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferAllocateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_ALLOCATE_INFO;
 }
 impl<'a> CommandBufferAllocateInfo<'a> {
@@ -6667,7 +5523,7 @@ impl ::core::default::Default for CommandBufferInheritanceInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferInheritanceInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_INHERITANCE_INFO;
 }
 impl<'a> CommandBufferInheritanceInfo<'a> {
@@ -6701,50 +5557,6 @@ impl<'a> CommandBufferInheritanceInfo<'a> {
         self.pipeline_statistics = pipeline_statistics;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -6772,7 +5584,7 @@ impl ::core::default::Default for CommandBufferBeginInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferBeginInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_BEGIN_INFO;
 }
 impl<'a> CommandBufferBeginInfo<'a> {
@@ -6788,50 +5600,6 @@ impl<'a> CommandBufferBeginInfo<'a> {
     ) -> Self {
         self.p_inheritance_info = inheritance_info;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -6879,7 +5647,7 @@ impl ::core::default::Default for RenderPassBeginInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassBeginInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_BEGIN_INFO;
 }
 impl<'a> RenderPassBeginInfo<'a> {
@@ -6903,50 +5671,6 @@ impl<'a> RenderPassBeginInfo<'a> {
         self.clear_value_count = clear_values.len() as _;
         self.p_clear_values = clear_values.as_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -7286,7 +6010,7 @@ impl ::core::default::Default for RenderPassCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_CREATE_INFO;
 }
 impl<'a> RenderPassCreateInfo<'a> {
@@ -7313,50 +6037,6 @@ impl<'a> RenderPassCreateInfo<'a> {
         self.p_dependencies = dependencies.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -7382,7 +6062,7 @@ impl ::core::default::Default for EventCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for EventCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for EventCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EVENT_CREATE_INFO;
 }
 impl<'a> EventCreateInfo<'a> {
@@ -7390,50 +6070,6 @@ impl<'a> EventCreateInfo<'a> {
     pub fn flags(mut self, flags: EventCreateFlags) -> Self {
         self.flags = flags;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -7460,7 +6096,7 @@ impl ::core::default::Default for FenceCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FenceCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FenceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FENCE_CREATE_INFO;
 }
 impl<'a> FenceCreateInfo<'a> {
@@ -7468,50 +6104,6 @@ impl<'a> FenceCreateInfo<'a> {
     pub fn flags(mut self, flags: FenceCreateFlags) -> Self {
         self.flags = flags;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -8853,7 +7445,7 @@ impl ::core::default::Default for SemaphoreCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_CREATE_INFO;
 }
 impl<'a> SemaphoreCreateInfo<'a> {
@@ -8861,50 +7453,6 @@ impl<'a> SemaphoreCreateInfo<'a> {
     pub fn flags(mut self, flags: SemaphoreCreateFlags) -> Self {
         self.flags = flags;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -8937,7 +7485,7 @@ impl ::core::default::Default for QueryPoolCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueryPoolCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueryPoolCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUERY_POOL_CREATE_INFO;
 }
 impl<'a> QueryPoolCreateInfo<'a> {
@@ -8960,50 +7508,6 @@ impl<'a> QueryPoolCreateInfo<'a> {
     pub fn pipeline_statistics(mut self, pipeline_statistics: QueryPipelineStatisticFlags) -> Self {
         self.pipeline_statistics = pipeline_statistics;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -9042,7 +7546,7 @@ impl ::core::default::Default for FramebufferCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FramebufferCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FramebufferCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_CREATE_INFO;
 }
 impl<'a> FramebufferCreateInfo<'a> {
@@ -9081,50 +7585,6 @@ impl<'a> FramebufferCreateInfo<'a> {
     pub fn layers(mut self, layers: u32) -> Self {
         self.layers = layers;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -9310,7 +7770,7 @@ impl ::core::default::Default for SubmitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubmitInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBMIT_INFO;
 }
 impl<'a> SubmitInfo<'a> {
@@ -9337,50 +7797,6 @@ impl<'a> SubmitInfo<'a> {
         self.signal_semaphore_count = signal_semaphores.len() as _;
         self.p_signal_semaphores = signal_semaphores.as_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -9549,7 +7965,7 @@ impl ::core::default::Default for DisplayModeCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayModeCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayModeCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_MODE_CREATE_INFO_KHR;
 }
 impl<'a> DisplayModeCreateInfoKHR<'a> {
@@ -9665,7 +8081,7 @@ impl ::core::default::Default for DisplaySurfaceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplaySurfaceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplaySurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_SURFACE_CREATE_INFO_KHR;
 }
 impl<'a> DisplaySurfaceCreateInfoKHR<'a> {
@@ -9738,7 +8154,7 @@ impl ::core::default::Default for DisplayPresentInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayPresentInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayPresentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PRESENT_INFO_KHR;
 }
 unsafe impl Extends<PresentInfoKHR<'_>> for DisplayPresentInfoKHR<'_> {}
@@ -9857,7 +8273,7 @@ impl ::core::default::Default for AndroidSurfaceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AndroidSurfaceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AndroidSurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANDROID_SURFACE_CREATE_INFO_KHR;
 }
 impl<'a> AndroidSurfaceCreateInfoKHR<'a> {
@@ -9898,7 +8314,7 @@ impl ::core::default::Default for ViSurfaceCreateInfoNN<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ViSurfaceCreateInfoNN<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ViSurfaceCreateInfoNN<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VI_SURFACE_CREATE_INFO_NN;
 }
 impl<'a> ViSurfaceCreateInfoNN<'a> {
@@ -9941,7 +8357,7 @@ impl ::core::default::Default for WaylandSurfaceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for WaylandSurfaceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for WaylandSurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WAYLAND_SURFACE_CREATE_INFO_KHR;
 }
 impl<'a> WaylandSurfaceCreateInfoKHR<'a> {
@@ -9989,7 +8405,7 @@ impl ::core::default::Default for Win32SurfaceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for Win32SurfaceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for Win32SurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WIN32_SURFACE_CREATE_INFO_KHR;
 }
 impl<'a> Win32SurfaceCreateInfoKHR<'a> {
@@ -10037,7 +8453,7 @@ impl ::core::default::Default for XlibSurfaceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for XlibSurfaceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for XlibSurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::XLIB_SURFACE_CREATE_INFO_KHR;
 }
 impl<'a> XlibSurfaceCreateInfoKHR<'a> {
@@ -10085,7 +8501,7 @@ impl ::core::default::Default for XcbSurfaceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for XcbSurfaceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for XcbSurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::XCB_SURFACE_CREATE_INFO_KHR;
 }
 impl<'a> XcbSurfaceCreateInfoKHR<'a> {
@@ -10133,7 +8549,7 @@ impl ::core::default::Default for DirectFBSurfaceCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DirectFBSurfaceCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DirectFBSurfaceCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DIRECTFB_SURFACE_CREATE_INFO_EXT;
 }
 impl<'a> DirectFBSurfaceCreateInfoEXT<'a> {
@@ -10179,7 +8595,7 @@ impl ::core::default::Default for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA;
 }
 impl<'a> ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
@@ -10220,7 +8636,7 @@ impl ::core::default::Default for StreamDescriptorSurfaceCreateInfoGGP<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for StreamDescriptorSurfaceCreateInfoGGP<'a> {
+unsafe impl<'a> TaggedStructure<'a> for StreamDescriptorSurfaceCreateInfoGGP<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::STREAM_DESCRIPTOR_SURFACE_CREATE_INFO_GGP;
 }
 impl<'a> StreamDescriptorSurfaceCreateInfoGGP<'a> {
@@ -10263,7 +8679,7 @@ impl ::core::default::Default for ScreenSurfaceCreateInfoQNX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ScreenSurfaceCreateInfoQNX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ScreenSurfaceCreateInfoQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SCREEN_SURFACE_CREATE_INFO_QNX;
 }
 impl<'a> ScreenSurfaceCreateInfoQNX<'a> {
@@ -10358,7 +8774,7 @@ impl ::core::default::Default for SwapchainCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_CREATE_INFO_KHR;
 }
 impl<'a> SwapchainCreateInfoKHR<'a> {
@@ -10438,50 +8854,6 @@ impl<'a> SwapchainCreateInfoKHR<'a> {
         self.old_swapchain = old_swapchain;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -10517,7 +8889,7 @@ impl ::core::default::Default for PresentInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PresentInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PresentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_INFO_KHR;
 }
 impl<'a> PresentInfoKHR<'a> {
@@ -10544,50 +8916,6 @@ impl<'a> PresentInfoKHR<'a> {
         self.swapchain_count = results.len() as _;
         self.p_results = results.as_mut_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -10629,7 +8957,7 @@ impl ::core::default::Default for DebugReportCallbackCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugReportCallbackCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugReportCallbackCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
 }
 unsafe impl Extends<InstanceCreateInfo<'_>> for DebugReportCallbackCreateInfoEXT<'_> {}
@@ -10676,7 +9004,7 @@ impl ::core::default::Default for ValidationFlagsEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ValidationFlagsEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ValidationFlagsEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VALIDATION_FLAGS_EXT;
 }
 unsafe impl Extends<InstanceCreateInfo<'_>> for ValidationFlagsEXT<'_> {}
@@ -10721,7 +9049,7 @@ impl ::core::default::Default for ValidationFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ValidationFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ValidationFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VALIDATION_FEATURES_EXT;
 }
 unsafe impl Extends<InstanceCreateInfo<'_>> for ValidationFeaturesEXT<'_> {}
@@ -10773,7 +9101,7 @@ impl ::core::default::Default for LayerSettingsCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for LayerSettingsCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for LayerSettingsCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LAYER_SETTINGS_CREATE_INFO_EXT;
 }
 unsafe impl Extends<InstanceCreateInfo<'_>> for LayerSettingsCreateInfoEXT<'_> {}
@@ -10876,7 +9204,7 @@ impl ::core::default::Default for PipelineRasterizationStateRasterizationOrderAM
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRasterizationStateRasterizationOrderAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateRasterizationOrderAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD;
 }
@@ -10919,7 +9247,7 @@ impl ::core::default::Default for DebugMarkerObjectNameInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugMarkerObjectNameInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugMarkerObjectNameInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_MARKER_OBJECT_NAME_INFO_EXT;
 }
 impl<'a> DebugMarkerObjectNameInfoEXT<'a> {
@@ -10979,7 +9307,7 @@ impl ::core::default::Default for DebugMarkerObjectTagInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugMarkerObjectTagInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugMarkerObjectTagInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_MARKER_OBJECT_TAG_INFO_EXT;
 }
 impl<'a> DebugMarkerObjectTagInfoEXT<'a> {
@@ -11031,7 +9359,7 @@ impl ::core::default::Default for DebugMarkerMarkerInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugMarkerMarkerInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugMarkerMarkerInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_MARKER_MARKER_INFO_EXT;
 }
 impl<'a> DebugMarkerMarkerInfoEXT<'a> {
@@ -11078,7 +9406,7 @@ impl ::core::default::Default for DedicatedAllocationImageCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DedicatedAllocationImageCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationImageCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV;
 }
 unsafe impl Extends<ImageCreateInfo<'_>> for DedicatedAllocationImageCreateInfoNV<'_> {}
@@ -11113,7 +9441,7 @@ impl ::core::default::Default for DedicatedAllocationBufferCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DedicatedAllocationBufferCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationBufferCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV;
 }
 unsafe impl Extends<BufferCreateInfo<'_>> for DedicatedAllocationBufferCreateInfoNV<'_> {}
@@ -11150,7 +9478,7 @@ impl ::core::default::Default for DedicatedAllocationMemoryAllocateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DedicatedAllocationMemoryAllocateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationMemoryAllocateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV;
 }
@@ -11236,7 +9564,7 @@ impl ::core::default::Default for ExternalMemoryImageCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalMemoryImageCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryImageCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV;
 }
 unsafe impl Extends<ImageCreateInfo<'_>> for ExternalMemoryImageCreateInfoNV<'_> {}
@@ -11271,7 +9599,7 @@ impl ::core::default::Default for ExportMemoryAllocateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMemoryAllocateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMemoryAllocateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_MEMORY_ALLOCATE_INFO_NV;
 }
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ExportMemoryAllocateInfoNV<'_> {}
@@ -11308,7 +9636,7 @@ impl ::core::default::Default for ImportMemoryWin32HandleInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMemoryWin32HandleInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMemoryWin32HandleInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_NV;
 }
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ImportMemoryWin32HandleInfoNV<'_> {}
@@ -11350,7 +9678,7 @@ impl ::core::default::Default for ExportMemoryWin32HandleInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMemoryWin32HandleInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_NV;
 }
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ExportMemoryWin32HandleInfoNV<'_> {}
@@ -11402,7 +9730,7 @@ impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for Win32KeyedMutexAcquireReleaseInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for Win32KeyedMutexAcquireReleaseInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV;
 }
 unsafe impl Extends<SubmitInfo<'_>> for Win32KeyedMutexAcquireReleaseInfoNV<'_> {}
@@ -11463,7 +9791,7 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesN
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_FEATURES_NV;
 }
@@ -11507,7 +9835,7 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsComputeFe
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_COMPUTE_FEATURES_NV;
 }
@@ -11567,7 +9895,7 @@ impl ::core::default::Default for DevicePrivateDataCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DevicePrivateDataCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DevicePrivateDataCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_PRIVATE_DATA_CREATE_INFO;
 }
 unsafe impl Extends<DeviceCreateInfo<'_>> for DevicePrivateDataCreateInfo<'_> {}
@@ -11602,7 +9930,7 @@ impl ::core::default::Default for PrivateDataSlotCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PrivateDataSlotCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PrivateDataSlotCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRIVATE_DATA_SLOT_CREATE_INFO;
 }
 impl<'a> PrivateDataSlotCreateInfo<'a> {
@@ -11636,7 +9964,7 @@ impl ::core::default::Default for PhysicalDevicePrivateDataFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePrivateDataFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrivateDataFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDevicePrivateDataFeatures<'_> {}
@@ -11688,7 +10016,7 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertie
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_PROPERTIES_NV;
 }
@@ -11791,7 +10119,7 @@ impl ::core::default::Default for PhysicalDeviceMultiDrawPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiDrawPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiDrawPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceMultiDrawPropertiesEXT<'_> {}
@@ -11832,7 +10160,7 @@ impl ::core::default::Default for GraphicsShaderGroupCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GraphicsShaderGroupCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GraphicsShaderGroupCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GRAPHICS_SHADER_GROUP_CREATE_INFO_NV;
 }
 impl<'a> GraphicsShaderGroupCreateInfoNV<'a> {
@@ -11889,7 +10217,7 @@ impl ::core::default::Default for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::GRAPHICS_PIPELINE_SHADER_GROUPS_CREATE_INFO_NV;
 }
@@ -12064,7 +10392,7 @@ impl ::core::default::Default for IndirectCommandsLayoutTokenNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectCommandsLayoutTokenNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutTokenNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_COMMANDS_LAYOUT_TOKEN_NV;
 }
 impl<'a> IndirectCommandsLayoutTokenNV<'a> {
@@ -12171,7 +10499,7 @@ impl ::core::default::Default for IndirectCommandsLayoutCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectCommandsLayoutCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NV;
 }
 impl<'a> IndirectCommandsLayoutCreateInfoNV<'a> {
@@ -12246,7 +10574,7 @@ impl ::core::default::Default for GeneratedCommandsInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeneratedCommandsInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GENERATED_COMMANDS_INFO_NV;
 }
 impl<'a> GeneratedCommandsInfoNV<'a> {
@@ -12345,7 +10673,7 @@ impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoNV<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeneratedCommandsMemoryRequirementsInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsMemoryRequirementsInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::GENERATED_COMMANDS_MEMORY_REQUIREMENTS_INFO_NV;
 }
@@ -12400,7 +10728,7 @@ impl ::core::default::Default for PipelineIndirectDeviceAddressInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineIndirectDeviceAddressInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineIndirectDeviceAddressInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_INDIRECT_DEVICE_ADDRESS_INFO_NV;
 }
 impl<'a> PipelineIndirectDeviceAddressInfoNV<'a> {
@@ -12454,7 +10782,7 @@ impl ::core::default::Default for PhysicalDeviceFeatures2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFeatures2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFeatures2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FEATURES_2;
 }
 unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceFeatures2<'_> {}
@@ -12463,50 +10791,6 @@ impl<'a> PhysicalDeviceFeatures2<'a> {
     pub fn features(mut self, features: PhysicalDeviceFeatures) -> Self {
         self.features = features;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -12533,7 +10817,7 @@ impl ::core::default::Default for PhysicalDeviceProperties2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceProperties2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PROPERTIES_2;
 }
 impl<'a> PhysicalDeviceProperties2<'a> {
@@ -12541,50 +10825,6 @@ impl<'a> PhysicalDeviceProperties2<'a> {
     pub fn properties(mut self, properties: PhysicalDeviceProperties) -> Self {
         self.properties = properties;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -12611,7 +10851,7 @@ impl ::core::default::Default for FormatProperties2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FormatProperties2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FormatProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FORMAT_PROPERTIES_2;
 }
 impl<'a> FormatProperties2<'a> {
@@ -12619,50 +10859,6 @@ impl<'a> FormatProperties2<'a> {
     pub fn format_properties(mut self, format_properties: FormatProperties) -> Self {
         self.format_properties = format_properties;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -12689,7 +10885,7 @@ impl ::core::default::Default for ImageFormatProperties2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageFormatProperties2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageFormatProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_FORMAT_PROPERTIES_2;
 }
 impl<'a> ImageFormatProperties2<'a> {
@@ -12700,50 +10896,6 @@ impl<'a> ImageFormatProperties2<'a> {
     ) -> Self {
         self.image_format_properties = image_format_properties;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -12778,7 +10930,7 @@ impl ::core::default::Default for PhysicalDeviceImageFormatInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageFormatInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageFormatInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2;
 }
 impl<'a> PhysicalDeviceImageFormatInfo2<'a> {
@@ -12807,50 +10959,6 @@ impl<'a> PhysicalDeviceImageFormatInfo2<'a> {
         self.flags = flags;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -12876,7 +10984,7 @@ impl ::core::default::Default for QueueFamilyProperties2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueueFamilyProperties2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueueFamilyProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_PROPERTIES_2;
 }
 impl<'a> QueueFamilyProperties2<'a> {
@@ -12887,50 +10995,6 @@ impl<'a> QueueFamilyProperties2<'a> {
     ) -> Self {
         self.queue_family_properties = queue_family_properties;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -12957,7 +11021,7 @@ impl ::core::default::Default for PhysicalDeviceMemoryProperties2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryProperties2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MEMORY_PROPERTIES_2;
 }
 impl<'a> PhysicalDeviceMemoryProperties2<'a> {
@@ -12965,50 +11029,6 @@ impl<'a> PhysicalDeviceMemoryProperties2<'a> {
     pub fn memory_properties(mut self, memory_properties: PhysicalDeviceMemoryProperties) -> Self {
         self.memory_properties = memory_properties;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -13035,7 +11055,7 @@ impl ::core::default::Default for SparseImageFormatProperties2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SparseImageFormatProperties2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SparseImageFormatProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SPARSE_IMAGE_FORMAT_PROPERTIES_2;
 }
 impl<'a> SparseImageFormatProperties2<'a> {
@@ -13077,7 +11097,7 @@ impl ::core::default::Default for PhysicalDeviceSparseImageFormatInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSparseImageFormatInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSparseImageFormatInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2;
 }
 impl<'a> PhysicalDeviceSparseImageFormatInfo2<'a> {
@@ -13131,7 +11151,7 @@ impl ::core::default::Default for PhysicalDevicePushDescriptorPropertiesKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePushDescriptorPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushDescriptorPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR;
 }
@@ -13221,7 +11241,7 @@ impl ::core::default::Default for PhysicalDeviceDriverProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDriverProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDriverProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_DRIVER_PROPERTIES;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceDriverProperties<'_> {}
@@ -13285,7 +11305,7 @@ impl ::core::default::Default for PresentRegionsKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PresentRegionsKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PresentRegionsKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_REGIONS_KHR;
 }
 unsafe impl Extends<PresentInfoKHR<'_>> for PresentRegionsKHR<'_> {}
@@ -13380,7 +11400,7 @@ impl ::core::default::Default for PhysicalDeviceVariablePointersFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVariablePointersFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVariablePointersFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceVariablePointersFeatures<'_> {}
@@ -13460,7 +11480,7 @@ impl ::core::default::Default for PhysicalDeviceExternalImageFormatInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalImageFormatInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalImageFormatInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO;
 }
 unsafe impl Extends<PhysicalDeviceImageFormatInfo2<'_>>
@@ -13498,7 +11518,7 @@ impl ::core::default::Default for ExternalImageFormatProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalImageFormatProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalImageFormatProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_IMAGE_FORMAT_PROPERTIES;
 }
 unsafe impl Extends<ImageFormatProperties2<'_>> for ExternalImageFormatProperties<'_> {}
@@ -13540,7 +11560,7 @@ impl ::core::default::Default for PhysicalDeviceExternalBufferInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalBufferInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalBufferInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO;
 }
 impl<'a> PhysicalDeviceExternalBufferInfo<'a> {
@@ -13558,50 +11578,6 @@ impl<'a> PhysicalDeviceExternalBufferInfo<'a> {
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -13628,7 +11604,7 @@ impl ::core::default::Default for ExternalBufferProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalBufferProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalBufferProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_BUFFER_PROPERTIES;
 }
 impl<'a> ExternalBufferProperties<'a> {
@@ -13673,7 +11649,7 @@ impl ::core::default::Default for PhysicalDeviceIDProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceIDProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceIDProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_ID_PROPERTIES;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceIDProperties<'_> {}
@@ -13728,7 +11704,7 @@ impl ::core::default::Default for ExternalMemoryImageCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalMemoryImageCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryImageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO;
 }
 unsafe impl Extends<ImageCreateInfo<'_>> for ExternalMemoryImageCreateInfo<'_> {}
@@ -13763,7 +11739,7 @@ impl ::core::default::Default for ExternalMemoryBufferCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalMemoryBufferCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryBufferCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_BUFFER_CREATE_INFO;
 }
 unsafe impl Extends<BufferCreateInfo<'_>> for ExternalMemoryBufferCreateInfo<'_> {}
@@ -13798,7 +11774,7 @@ impl ::core::default::Default for ExportMemoryAllocateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMemoryAllocateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMemoryAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_MEMORY_ALLOCATE_INFO;
 }
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ExportMemoryAllocateInfo<'_> {}
@@ -13837,7 +11813,7 @@ impl ::core::default::Default for ImportMemoryWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMemoryWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMemoryWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR;
 }
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ImportMemoryWin32HandleInfoKHR<'_> {}
@@ -13886,7 +11862,7 @@ impl ::core::default::Default for ExportMemoryWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMemoryWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_KHR;
 }
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ExportMemoryWin32HandleInfoKHR<'_> {}
@@ -13933,7 +11909,7 @@ impl ::core::default::Default for ImportMemoryZirconHandleInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMemoryZirconHandleInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMemoryZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_ZIRCON_HANDLE_INFO_FUCHSIA;
 }
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ImportMemoryZirconHandleInfoFUCHSIA<'_> {}
@@ -13973,7 +11949,7 @@ impl ::core::default::Default for MemoryZirconHandlePropertiesFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryZirconHandlePropertiesFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryZirconHandlePropertiesFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_ZIRCON_HANDLE_PROPERTIES_FUCHSIA;
 }
 impl<'a> MemoryZirconHandlePropertiesFUCHSIA<'a> {
@@ -14009,7 +11985,7 @@ impl ::core::default::Default for MemoryGetZirconHandleInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryGetZirconHandleInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryGetZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_ZIRCON_HANDLE_INFO_FUCHSIA;
 }
 impl<'a> MemoryGetZirconHandleInfoFUCHSIA<'a> {
@@ -14048,7 +12024,7 @@ impl ::core::default::Default for MemoryWin32HandlePropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryWin32HandlePropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryWin32HandlePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_WIN32_HANDLE_PROPERTIES_KHR;
 }
 impl<'a> MemoryWin32HandlePropertiesKHR<'a> {
@@ -14084,7 +12060,7 @@ impl ::core::default::Default for MemoryGetWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryGetWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryGetWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_WIN32_HANDLE_INFO_KHR;
 }
 impl<'a> MemoryGetWin32HandleInfoKHR<'a> {
@@ -14125,7 +12101,7 @@ impl ::core::default::Default for ImportMemoryFdInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMemoryFdInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMemoryFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_FD_INFO_KHR;
 }
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ImportMemoryFdInfoKHR<'_> {}
@@ -14165,7 +12141,7 @@ impl ::core::default::Default for MemoryFdPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryFdPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryFdPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_FD_PROPERTIES_KHR;
 }
 impl<'a> MemoryFdPropertiesKHR<'a> {
@@ -14201,7 +12177,7 @@ impl ::core::default::Default for MemoryGetFdInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryGetFdInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryGetFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_FD_INFO_KHR;
 }
 impl<'a> MemoryGetFdInfoKHR<'a> {
@@ -14252,7 +12228,7 @@ impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR;
 }
 unsafe impl Extends<SubmitInfo<'_>> for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {}
@@ -14313,7 +12289,7 @@ impl ::core::default::Default for PhysicalDeviceExternalSemaphoreInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalSemaphoreInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalSemaphoreInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO;
 }
 impl<'a> PhysicalDeviceExternalSemaphoreInfo<'a> {
@@ -14321,50 +12297,6 @@ impl<'a> PhysicalDeviceExternalSemaphoreInfo<'a> {
     pub fn handle_type(mut self, handle_type: ExternalSemaphoreHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -14395,7 +12327,7 @@ impl ::core::default::Default for ExternalSemaphoreProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalSemaphoreProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalSemaphoreProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_SEMAPHORE_PROPERTIES;
 }
 impl<'a> ExternalSemaphoreProperties<'a> {
@@ -14448,7 +12380,7 @@ impl ::core::default::Default for ExportSemaphoreCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportSemaphoreCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportSemaphoreCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_SEMAPHORE_CREATE_INFO;
 }
 unsafe impl Extends<SemaphoreCreateInfo<'_>> for ExportSemaphoreCreateInfo<'_> {}
@@ -14491,7 +12423,7 @@ impl ::core::default::Default for ImportSemaphoreWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportSemaphoreWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR;
 }
 impl<'a> ImportSemaphoreWin32HandleInfoKHR<'a> {
@@ -14549,7 +12481,7 @@ impl ::core::default::Default for ExportSemaphoreWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportSemaphoreWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportSemaphoreWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR;
 }
 unsafe impl Extends<SemaphoreCreateInfo<'_>> for ExportSemaphoreWin32HandleInfoKHR<'_> {}
@@ -14600,7 +12532,7 @@ impl ::core::default::Default for D3D12FenceSubmitInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for D3D12FenceSubmitInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for D3D12FenceSubmitInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::D3D12_FENCE_SUBMIT_INFO_KHR;
 }
 unsafe impl Extends<SubmitInfo<'_>> for D3D12FenceSubmitInfoKHR<'_> {}
@@ -14644,7 +12576,7 @@ impl ::core::default::Default for SemaphoreGetWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreGetWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR;
 }
 impl<'a> SemaphoreGetWin32HandleInfoKHR<'a> {
@@ -14689,7 +12621,7 @@ impl ::core::default::Default for ImportSemaphoreFdInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportSemaphoreFdInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_SEMAPHORE_FD_INFO_KHR;
 }
 impl<'a> ImportSemaphoreFdInfoKHR<'a> {
@@ -14740,7 +12672,7 @@ impl ::core::default::Default for SemaphoreGetFdInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreGetFdInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_GET_FD_INFO_KHR;
 }
 impl<'a> SemaphoreGetFdInfoKHR<'a> {
@@ -14785,7 +12717,7 @@ impl ::core::default::Default for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::IMPORT_SEMAPHORE_ZIRCON_HANDLE_INFO_FUCHSIA;
 }
@@ -14837,7 +12769,7 @@ impl ::core::default::Default for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA;
 }
 impl<'a> SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
@@ -14876,7 +12808,7 @@ impl ::core::default::Default for PhysicalDeviceExternalFenceInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalFenceInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFenceInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO;
 }
 impl<'a> PhysicalDeviceExternalFenceInfo<'a> {
@@ -14914,7 +12846,7 @@ impl ::core::default::Default for ExternalFenceProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalFenceProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalFenceProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_FENCE_PROPERTIES;
 }
 impl<'a> ExternalFenceProperties<'a> {
@@ -14967,7 +12899,7 @@ impl ::core::default::Default for ExportFenceCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportFenceCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportFenceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_FENCE_CREATE_INFO;
 }
 unsafe impl Extends<FenceCreateInfo<'_>> for ExportFenceCreateInfo<'_> {}
@@ -15010,7 +12942,7 @@ impl ::core::default::Default for ImportFenceWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportFenceWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportFenceWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_FENCE_WIN32_HANDLE_INFO_KHR;
 }
 impl<'a> ImportFenceWin32HandleInfoKHR<'a> {
@@ -15068,7 +13000,7 @@ impl ::core::default::Default for ExportFenceWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportFenceWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportFenceWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_FENCE_WIN32_HANDLE_INFO_KHR;
 }
 unsafe impl Extends<FenceCreateInfo<'_>> for ExportFenceWin32HandleInfoKHR<'_> {}
@@ -15115,7 +13047,7 @@ impl ::core::default::Default for FenceGetWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FenceGetWin32HandleInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FenceGetWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FENCE_GET_WIN32_HANDLE_INFO_KHR;
 }
 impl<'a> FenceGetWin32HandleInfoKHR<'a> {
@@ -15160,7 +13092,7 @@ impl ::core::default::Default for ImportFenceFdInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportFenceFdInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportFenceFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_FENCE_FD_INFO_KHR;
 }
 impl<'a> ImportFenceFdInfoKHR<'a> {
@@ -15211,7 +13143,7 @@ impl ::core::default::Default for FenceGetFdInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FenceGetFdInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FenceGetFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FENCE_GET_FD_INFO_KHR;
 }
 impl<'a> FenceGetFdInfoKHR<'a> {
@@ -15254,7 +13186,7 @@ impl ::core::default::Default for PhysicalDeviceMultiviewFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiviewFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTIVIEW_FEATURES;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceMultiviewFeatures<'_> {}
@@ -15302,7 +13234,7 @@ impl ::core::default::Default for PhysicalDeviceMultiviewProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiviewProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceMultiviewProperties<'_> {}
@@ -15352,7 +13284,7 @@ impl ::core::default::Default for RenderPassMultiviewCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassMultiviewCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassMultiviewCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_MULTIVIEW_CREATE_INFO;
 }
 unsafe impl Extends<RenderPassCreateInfo<'_>> for RenderPassMultiviewCreateInfo<'_> {}
@@ -15420,7 +13352,7 @@ impl ::core::default::Default for SurfaceCapabilities2EXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceCapabilities2EXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilities2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_2_EXT;
 }
 impl<'a> SurfaceCapabilities2EXT<'a> {
@@ -15510,7 +13442,7 @@ impl ::core::default::Default for DisplayPowerInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayPowerInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayPowerInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_POWER_INFO_EXT;
 }
 impl<'a> DisplayPowerInfoEXT<'a> {
@@ -15544,7 +13476,7 @@ impl ::core::default::Default for DeviceEventInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceEventInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceEventInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_EVENT_INFO_EXT;
 }
 impl<'a> DeviceEventInfoEXT<'a> {
@@ -15578,7 +13510,7 @@ impl ::core::default::Default for DisplayEventInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayEventInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayEventInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_EVENT_INFO_EXT;
 }
 impl<'a> DisplayEventInfoEXT<'a> {
@@ -15612,7 +13544,7 @@ impl ::core::default::Default for SwapchainCounterCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainCounterCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainCounterCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_COUNTER_CREATE_INFO_EXT;
 }
 unsafe impl Extends<SwapchainCreateInfoKHR<'_>> for SwapchainCounterCreateInfoEXT<'_> {}
@@ -15662,7 +13594,7 @@ impl ::core::default::Default for PhysicalDeviceGroupProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceGroupProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGroupProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_GROUP_PROPERTIES;
 }
 impl<'a> PhysicalDeviceGroupProperties<'a> {
@@ -15708,7 +13640,7 @@ impl ::core::default::Default for MemoryAllocateFlagsInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryAllocateFlagsInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryAllocateFlagsInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_ALLOCATE_FLAGS_INFO;
 }
 unsafe impl Extends<MemoryAllocateInfo<'_>> for MemoryAllocateFlagsInfo<'_> {}
@@ -15752,7 +13684,7 @@ impl ::core::default::Default for BindBufferMemoryInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindBufferMemoryInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindBufferMemoryInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_BUFFER_MEMORY_INFO;
 }
 impl<'a> BindBufferMemoryInfo<'a> {
@@ -15770,50 +13702,6 @@ impl<'a> BindBufferMemoryInfo<'a> {
     pub fn memory_offset(mut self, memory_offset: DeviceSize) -> Self {
         self.memory_offset = memory_offset;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -15842,7 +13730,7 @@ impl ::core::default::Default for BindBufferMemoryDeviceGroupInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindBufferMemoryDeviceGroupInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindBufferMemoryDeviceGroupInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO;
 }
 unsafe impl Extends<BindBufferMemoryInfo<'_>> for BindBufferMemoryDeviceGroupInfo<'_> {}
@@ -15882,7 +13770,7 @@ impl ::core::default::Default for BindImageMemoryInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindImageMemoryInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindImageMemoryInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_IMAGE_MEMORY_INFO;
 }
 impl<'a> BindImageMemoryInfo<'a> {
@@ -15900,50 +13788,6 @@ impl<'a> BindImageMemoryInfo<'a> {
     pub fn memory_offset(mut self, memory_offset: DeviceSize) -> Self {
         self.memory_offset = memory_offset;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -15976,7 +13820,7 @@ impl ::core::default::Default for BindImageMemoryDeviceGroupInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindImageMemoryDeviceGroupInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindImageMemoryDeviceGroupInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO;
 }
 unsafe impl Extends<BindImageMemoryInfo<'_>> for BindImageMemoryDeviceGroupInfo<'_> {}
@@ -16025,7 +13869,7 @@ impl ::core::default::Default for DeviceGroupRenderPassBeginInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupRenderPassBeginInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupRenderPassBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_RENDER_PASS_BEGIN_INFO;
 }
 unsafe impl Extends<RenderPassBeginInfo<'_>> for DeviceGroupRenderPassBeginInfo<'_> {}
@@ -16067,7 +13911,7 @@ impl ::core::default::Default for DeviceGroupCommandBufferBeginInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupCommandBufferBeginInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupCommandBufferBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO;
 }
 unsafe impl Extends<CommandBufferBeginInfo<'_>> for DeviceGroupCommandBufferBeginInfo<'_> {}
@@ -16112,7 +13956,7 @@ impl ::core::default::Default for DeviceGroupSubmitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupSubmitInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_SUBMIT_INFO;
 }
 unsafe impl Extends<SubmitInfo<'_>> for DeviceGroupSubmitInfo<'_> {}
@@ -16168,7 +14012,7 @@ impl ::core::default::Default for DeviceGroupBindSparseInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupBindSparseInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupBindSparseInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_BIND_SPARSE_INFO;
 }
 unsafe impl Extends<BindSparseInfo<'_>> for DeviceGroupBindSparseInfo<'_> {}
@@ -16210,7 +14054,7 @@ impl ::core::default::Default for DeviceGroupPresentCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupPresentCapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupPresentCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_PRESENT_CAPABILITIES_KHR;
 }
 impl<'a> DeviceGroupPresentCapabilitiesKHR<'a> {
@@ -16249,7 +14093,7 @@ impl ::core::default::Default for ImageSwapchainCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageSwapchainCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageSwapchainCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_SWAPCHAIN_CREATE_INFO_KHR;
 }
 unsafe impl Extends<ImageCreateInfo<'_>> for ImageSwapchainCreateInfoKHR<'_> {}
@@ -16286,7 +14130,7 @@ impl ::core::default::Default for BindImageMemorySwapchainInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindImageMemorySwapchainInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindImageMemorySwapchainInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR;
 }
 unsafe impl Extends<BindImageMemoryInfo<'_>> for BindImageMemorySwapchainInfoKHR<'_> {}
@@ -16334,7 +14178,7 @@ impl ::core::default::Default for AcquireNextImageInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AcquireNextImageInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AcquireNextImageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACQUIRE_NEXT_IMAGE_INFO_KHR;
 }
 impl<'a> AcquireNextImageInfoKHR<'a> {
@@ -16392,7 +14236,7 @@ impl ::core::default::Default for DeviceGroupPresentInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupPresentInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupPresentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_PRESENT_INFO_KHR;
 }
 unsafe impl Extends<PresentInfoKHR<'_>> for DeviceGroupPresentInfoKHR<'_> {}
@@ -16435,7 +14279,7 @@ impl ::core::default::Default for DeviceGroupDeviceCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupDeviceCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupDeviceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_DEVICE_CREATE_INFO;
 }
 unsafe impl Extends<DeviceCreateInfo<'_>> for DeviceGroupDeviceCreateInfo<'_> {}
@@ -16471,7 +14315,7 @@ impl ::core::default::Default for DeviceGroupSwapchainCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceGroupSwapchainCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceGroupSwapchainCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR;
 }
 unsafe impl Extends<SwapchainCreateInfoKHR<'_>> for DeviceGroupSwapchainCreateInfoKHR<'_> {}
@@ -16565,7 +14409,7 @@ impl ::core::default::Default for DescriptorUpdateTemplateCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorUpdateTemplateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorUpdateTemplateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO;
 }
 impl<'a> DescriptorUpdateTemplateCreateInfo<'a> {
@@ -16654,7 +14498,7 @@ impl ::core::default::Default for PhysicalDevicePresentIdFeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePresentIdFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentIdFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PRESENT_ID_FEATURES_KHR;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDevicePresentIdFeaturesKHR<'_> {}
@@ -16692,7 +14536,7 @@ impl ::core::default::Default for PresentIdKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PresentIdKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PresentIdKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_ID_KHR;
 }
 unsafe impl Extends<PresentInfoKHR<'_>> for PresentIdKHR<'_> {}
@@ -16728,7 +14572,7 @@ impl ::core::default::Default for PhysicalDevicePresentWaitFeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePresentWaitFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentWaitFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PRESENT_WAIT_FEATURES_KHR;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDevicePresentWaitFeaturesKHR<'_> {}
@@ -16778,7 +14622,7 @@ impl ::core::default::Default for HdrMetadataEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for HdrMetadataEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for HdrMetadataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::HDR_METADATA_EXT;
 }
 impl<'a> HdrMetadataEXT<'a> {
@@ -16847,7 +14691,7 @@ impl ::core::default::Default for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DISPLAY_NATIVE_HDR_SURFACE_CAPABILITIES_AMD;
 }
@@ -16883,7 +14727,7 @@ impl ::core::default::Default for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SWAPCHAIN_DISPLAY_NATIVE_HDR_CREATE_INFO_AMD;
 }
@@ -16975,7 +14819,7 @@ impl ::core::default::Default for PresentTimesInfoGOOGLE<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PresentTimesInfoGOOGLE<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PresentTimesInfoGOOGLE<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_TIMES_INFO_GOOGLE;
 }
 unsafe impl Extends<PresentInfoKHR<'_>> for PresentTimesInfoGOOGLE<'_> {}
@@ -17034,7 +14878,7 @@ impl ::core::default::Default for IOSSurfaceCreateInfoMVK<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IOSSurfaceCreateInfoMVK<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IOSSurfaceCreateInfoMVK<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IOS_SURFACE_CREATE_INFO_MVK;
 }
 impl<'a> IOSSurfaceCreateInfoMVK<'a> {
@@ -17075,7 +14919,7 @@ impl ::core::default::Default for MacOSSurfaceCreateInfoMVK<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MacOSSurfaceCreateInfoMVK<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MacOSSurfaceCreateInfoMVK<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MACOS_SURFACE_CREATE_INFO_MVK;
 }
 impl<'a> MacOSSurfaceCreateInfoMVK<'a> {
@@ -17116,7 +14960,7 @@ impl ::core::default::Default for MetalSurfaceCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MetalSurfaceCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MetalSurfaceCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::METAL_SURFACE_CREATE_INFO_EXT;
 }
 impl<'a> MetalSurfaceCreateInfoEXT<'a> {
@@ -17180,7 +15024,7 @@ impl ::core::default::Default for PipelineViewportWScalingStateCreateInfoNV<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportWScalingStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportWScalingStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV;
 }
@@ -17262,7 +15106,7 @@ impl ::core::default::Default for PipelineViewportSwizzleStateCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportSwizzleStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportSwizzleStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV;
 }
@@ -17307,7 +15151,7 @@ impl ::core::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT;
 }
@@ -17352,7 +15196,7 @@ impl ::core::default::Default for PipelineDiscardRectangleStateCreateInfoEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineDiscardRectangleStateCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineDiscardRectangleStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT;
 }
@@ -17405,7 +15249,7 @@ impl ::core::default::Default for PhysicalDeviceMultiviewPerViewAttributesProper
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX;
 }
@@ -17476,7 +15320,7 @@ impl ::core::default::Default for RenderPassInputAttachmentAspectCreateInfo<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassInputAttachmentAspectCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassInputAttachmentAspectCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO;
 }
@@ -17516,7 +15360,7 @@ impl ::core::default::Default for PhysicalDeviceSurfaceInfo2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSurfaceInfo2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSurfaceInfo2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SURFACE_INFO_2_KHR;
 }
 impl<'a> PhysicalDeviceSurfaceInfo2KHR<'a> {
@@ -17524,50 +15368,6 @@ impl<'a> PhysicalDeviceSurfaceInfo2KHR<'a> {
     pub fn surface(mut self, surface: SurfaceKHR) -> Self {
         self.surface = surface;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -17594,7 +15394,7 @@ impl ::core::default::Default for SurfaceCapabilities2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceCapabilities2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilities2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_2_KHR;
 }
 impl<'a> SurfaceCapabilities2KHR<'a> {
@@ -17602,50 +15402,6 @@ impl<'a> SurfaceCapabilities2KHR<'a> {
     pub fn surface_capabilities(mut self, surface_capabilities: SurfaceCapabilitiesKHR) -> Self {
         self.surface_capabilities = surface_capabilities;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -17672,7 +15428,7 @@ impl ::core::default::Default for SurfaceFormat2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceFormat2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceFormat2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_FORMAT_2_KHR;
 }
 impl<'a> SurfaceFormat2KHR<'a> {
@@ -17680,50 +15436,6 @@ impl<'a> SurfaceFormat2KHR<'a> {
     pub fn surface_format(mut self, surface_format: SurfaceFormatKHR) -> Self {
         self.surface_format = surface_format;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -17750,7 +15462,7 @@ impl ::core::default::Default for DisplayProperties2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayProperties2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayProperties2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PROPERTIES_2_KHR;
 }
 impl<'a> DisplayProperties2KHR<'a> {
@@ -17784,7 +15496,7 @@ impl ::core::default::Default for DisplayPlaneProperties2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayPlaneProperties2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneProperties2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PLANE_PROPERTIES_2_KHR;
 }
 impl<'a> DisplayPlaneProperties2KHR<'a> {
@@ -17821,7 +15533,7 @@ impl ::core::default::Default for DisplayModeProperties2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayModeProperties2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayModeProperties2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_MODE_PROPERTIES_2_KHR;
 }
 impl<'a> DisplayModeProperties2KHR<'a> {
@@ -17860,7 +15572,7 @@ impl ::core::default::Default for DisplayPlaneInfo2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayPlaneInfo2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneInfo2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PLANE_INFO_2_KHR;
 }
 impl<'a> DisplayPlaneInfo2KHR<'a> {
@@ -17899,7 +15611,7 @@ impl ::core::default::Default for DisplayPlaneCapabilities2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DisplayPlaneCapabilities2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneCapabilities2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PLANE_CAPABILITIES_2_KHR;
 }
 impl<'a> DisplayPlaneCapabilities2KHR<'a> {
@@ -17933,7 +15645,7 @@ impl ::core::default::Default for SharedPresentSurfaceCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SharedPresentSurfaceCapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SharedPresentSurfaceCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHARED_PRESENT_SURFACE_CAPABILITIES_KHR;
 }
 unsafe impl Extends<SurfaceCapabilities2KHR<'_>> for SharedPresentSurfaceCapabilitiesKHR<'_> {}
@@ -17977,7 +15689,7 @@ impl ::core::default::Default for PhysicalDevice16BitStorageFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevice16BitStorageFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice16BitStorageFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDevice16BitStorageFeatures<'_> {}
@@ -18038,7 +15750,7 @@ impl ::core::default::Default for PhysicalDeviceSubgroupProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSubgroupProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceSubgroupProperties<'_> {}
@@ -18088,7 +15800,7 @@ impl ::core::default::Default for PhysicalDeviceShaderSubgroupExtendedTypesFeatu
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES;
 }
@@ -18131,7 +15843,7 @@ impl ::core::default::Default for BufferMemoryRequirementsInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferMemoryRequirementsInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferMemoryRequirementsInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_MEMORY_REQUIREMENTS_INFO_2;
 }
 impl<'a> BufferMemoryRequirementsInfo2<'a> {
@@ -18165,7 +15877,7 @@ impl ::core::default::Default for DeviceBufferMemoryRequirements<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceBufferMemoryRequirements<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceBufferMemoryRequirements<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_BUFFER_MEMORY_REQUIREMENTS;
 }
 impl<'a> DeviceBufferMemoryRequirements<'a> {
@@ -18199,7 +15911,7 @@ impl ::core::default::Default for ImageMemoryRequirementsInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageMemoryRequirementsInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageMemoryRequirementsInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_MEMORY_REQUIREMENTS_INFO_2;
 }
 impl<'a> ImageMemoryRequirementsInfo2<'a> {
@@ -18207,50 +15919,6 @@ impl<'a> ImageMemoryRequirementsInfo2<'a> {
     pub fn image(mut self, image: Image) -> Self {
         self.image = image;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -18277,7 +15945,7 @@ impl ::core::default::Default for ImageSparseMemoryRequirementsInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageSparseMemoryRequirementsInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageSparseMemoryRequirementsInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2;
 }
 impl<'a> ImageSparseMemoryRequirementsInfo2<'a> {
@@ -18313,7 +15981,7 @@ impl ::core::default::Default for DeviceImageMemoryRequirements<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceImageMemoryRequirements<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceImageMemoryRequirements<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_IMAGE_MEMORY_REQUIREMENTS;
 }
 impl<'a> DeviceImageMemoryRequirements<'a> {
@@ -18352,7 +16020,7 @@ impl ::core::default::Default for MemoryRequirements2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryRequirements2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryRequirements2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_REQUIREMENTS_2;
 }
 impl<'a> MemoryRequirements2<'a> {
@@ -18360,50 +16028,6 @@ impl<'a> MemoryRequirements2<'a> {
     pub fn memory_requirements(mut self, memory_requirements: MemoryRequirements) -> Self {
         self.memory_requirements = memory_requirements;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -18430,7 +16054,7 @@ impl ::core::default::Default for SparseImageMemoryRequirements2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SparseImageMemoryRequirements2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SparseImageMemoryRequirements2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SPARSE_IMAGE_MEMORY_REQUIREMENTS_2;
 }
 impl<'a> SparseImageMemoryRequirements2<'a> {
@@ -18467,7 +16091,7 @@ impl ::core::default::Default for PhysicalDevicePointClippingProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePointClippingProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePointClippingProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDevicePointClippingProperties<'_> {}
@@ -18507,7 +16131,7 @@ impl ::core::default::Default for MemoryDedicatedRequirements<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryDedicatedRequirements<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedRequirements<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_DEDICATED_REQUIREMENTS;
 }
 unsafe impl Extends<MemoryRequirements2<'_>> for MemoryDedicatedRequirements<'_> {}
@@ -18549,7 +16173,7 @@ impl ::core::default::Default for MemoryDedicatedAllocateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryDedicatedAllocateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_DEDICATED_ALLOCATE_INFO;
 }
 unsafe impl Extends<MemoryAllocateInfo<'_>> for MemoryDedicatedAllocateInfo<'_> {}
@@ -18589,7 +16213,7 @@ impl ::core::default::Default for ImageViewUsageCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewUsageCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewUsageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_USAGE_CREATE_INFO;
 }
 unsafe impl Extends<ImageViewCreateInfo<'_>> for ImageViewUsageCreateInfo<'_> {}
@@ -18626,7 +16250,7 @@ impl ::core::default::Default for ImageViewSlicedCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewSlicedCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewSlicedCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_SLICED_CREATE_INFO_EXT;
 }
 unsafe impl Extends<ImageViewCreateInfo<'_>> for ImageViewSlicedCreateInfoEXT<'_> {}
@@ -18666,7 +16290,7 @@ impl ::core::default::Default for PipelineTessellationDomainOriginStateCreateInf
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineTessellationDomainOriginStateCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineTessellationDomainOriginStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO;
 }
@@ -18705,7 +16329,7 @@ impl ::core::default::Default for SamplerYcbcrConversionInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerYcbcrConversionInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_YCBCR_CONVERSION_INFO;
 }
 unsafe impl Extends<SamplerCreateInfo<'_>> for SamplerYcbcrConversionInfo<'_> {}
@@ -18755,7 +16379,7 @@ impl ::core::default::Default for SamplerYcbcrConversionCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerYcbcrConversionCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_YCBCR_CONVERSION_CREATE_INFO;
 }
 impl<'a> SamplerYcbcrConversionCreateInfo<'a> {
@@ -18799,50 +16423,6 @@ impl<'a> SamplerYcbcrConversionCreateInfo<'a> {
         self.force_explicit_reconstruction = force_explicit_reconstruction.into();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -18868,7 +16448,7 @@ impl ::core::default::Default for BindImagePlaneMemoryInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindImagePlaneMemoryInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindImagePlaneMemoryInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_IMAGE_PLANE_MEMORY_INFO;
 }
 unsafe impl Extends<BindImageMemoryInfo<'_>> for BindImagePlaneMemoryInfo<'_> {}
@@ -18903,7 +16483,7 @@ impl ::core::default::Default for ImagePlaneMemoryRequirementsInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImagePlaneMemoryRequirementsInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImagePlaneMemoryRequirementsInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO;
 }
 unsafe impl Extends<ImageMemoryRequirementsInfo2<'_>> for ImagePlaneMemoryRequirementsInfo<'_> {}
@@ -18938,7 +16518,7 @@ impl ::core::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES;
 }
@@ -18978,7 +16558,7 @@ impl ::core::default::Default for SamplerYcbcrConversionImageFormatProperties<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerYcbcrConversionImageFormatProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionImageFormatProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES;
 }
@@ -19020,7 +16600,7 @@ impl ::core::default::Default for TextureLODGatherFormatPropertiesAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for TextureLODGatherFormatPropertiesAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for TextureLODGatherFormatPropertiesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD;
 }
 unsafe impl Extends<ImageFormatProperties2<'_>> for TextureLODGatherFormatPropertiesAMD<'_> {}
@@ -19062,7 +16642,7 @@ impl ::core::default::Default for ConditionalRenderingBeginInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ConditionalRenderingBeginInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ConditionalRenderingBeginInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CONDITIONAL_RENDERING_BEGIN_INFO_EXT;
 }
 impl<'a> ConditionalRenderingBeginInfoEXT<'a> {
@@ -19106,7 +16686,7 @@ impl ::core::default::Default for ProtectedSubmitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ProtectedSubmitInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ProtectedSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PROTECTED_SUBMIT_INFO;
 }
 unsafe impl Extends<SubmitInfo<'_>> for ProtectedSubmitInfo<'_> {}
@@ -19141,7 +16721,7 @@ impl ::core::default::Default for PhysicalDeviceProtectedMemoryFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceProtectedMemoryFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProtectedMemoryFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceProtectedMemoryFeatures<'_> {}
@@ -19177,7 +16757,7 @@ impl ::core::default::Default for PhysicalDeviceProtectedMemoryProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceProtectedMemoryProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProtectedMemoryProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES;
 }
@@ -19217,7 +16797,7 @@ impl ::core::default::Default for DeviceQueueInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceQueueInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceQueueInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_QUEUE_INFO_2;
 }
 impl<'a> DeviceQueueInfo2<'a> {
@@ -19265,7 +16845,7 @@ impl ::core::default::Default for PipelineCoverageToColorStateCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCoverageToColorStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageToColorStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV;
 }
@@ -19316,7 +16896,7 @@ impl ::core::default::Default for PhysicalDeviceSamplerFilterMinmaxProperties<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES;
 }
@@ -19393,7 +16973,7 @@ impl ::core::default::Default for SampleLocationsInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SampleLocationsInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SampleLocationsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLE_LOCATIONS_INFO_EXT;
 }
 unsafe impl Extends<ImageMemoryBarrier<'_>> for SampleLocationsInfoEXT<'_> {}
@@ -19499,7 +17079,7 @@ impl ::core::default::Default for RenderPassSampleLocationsBeginInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassSampleLocationsBeginInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassSampleLocationsBeginInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT;
 }
@@ -19551,7 +17131,7 @@ impl ::core::default::Default for PipelineSampleLocationsStateCreateInfoEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineSampleLocationsStateCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineSampleLocationsStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_SAMPLE_LOCATIONS_STATE_CREATE_INFO_EXT;
 }
@@ -19606,7 +17186,7 @@ impl ::core::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT;
 }
@@ -19674,7 +17254,7 @@ impl ::core::default::Default for MultisamplePropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MultisamplePropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MultisamplePropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MULTISAMPLE_PROPERTIES_EXT;
 }
 impl<'a> MultisamplePropertiesEXT<'a> {
@@ -19711,7 +17291,7 @@ impl ::core::default::Default for SamplerReductionModeCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerReductionModeCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerReductionModeCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_REDUCTION_MODE_CREATE_INFO;
 }
 unsafe impl Extends<SamplerCreateInfo<'_>> for SamplerReductionModeCreateInfo<'_> {}
@@ -19746,7 +17326,7 @@ impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEX
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_FEATURES_EXT;
 }
@@ -19789,7 +17369,7 @@ impl ::core::default::Default for PhysicalDeviceMultiDrawFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiDrawFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiDrawFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceMultiDrawFeaturesEXT<'_> {}
@@ -19835,7 +17415,7 @@ impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedProperties
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_PROPERTIES_EXT;
 }
@@ -19920,7 +17500,7 @@ impl ::core::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT;
 }
@@ -19971,7 +17551,7 @@ impl ::core::default::Default for PhysicalDeviceInlineUniformBlockFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceInlineUniformBlockFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInlineUniformBlockFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES;
 }
@@ -20025,7 +17605,7 @@ impl ::core::default::Default for PhysicalDeviceInlineUniformBlockProperties<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceInlineUniformBlockProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInlineUniformBlockProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES;
 }
@@ -20101,7 +17681,7 @@ impl ::core::default::Default for WriteDescriptorSetInlineUniformBlock<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for WriteDescriptorSetInlineUniformBlock<'a> {
+unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetInlineUniformBlock<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK;
 }
 unsafe impl Extends<WriteDescriptorSet<'_>> for WriteDescriptorSetInlineUniformBlock<'_> {}
@@ -20137,7 +17717,7 @@ impl ::core::default::Default for DescriptorPoolInlineUniformBlockCreateInfo<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorPoolInlineUniformBlockCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorPoolInlineUniformBlockCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO;
 }
@@ -20187,7 +17767,7 @@ impl ::core::default::Default for PipelineCoverageModulationStateCreateInfoNV<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCoverageModulationStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageModulationStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV;
 }
@@ -20250,7 +17830,7 @@ impl ::core::default::Default for ImageFormatListCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageFormatListCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageFormatListCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_FORMAT_LIST_CREATE_INFO;
 }
 unsafe impl Extends<ImageCreateInfo<'_>> for ImageFormatListCreateInfo<'_> {}
@@ -20292,7 +17872,7 @@ impl ::core::default::Default for ValidationCacheCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ValidationCacheCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ValidationCacheCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VALIDATION_CACHE_CREATE_INFO_EXT;
 }
 impl<'a> ValidationCacheCreateInfoEXT<'a> {
@@ -20332,7 +17912,7 @@ impl ::core::default::Default for ShaderModuleValidationCacheCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ShaderModuleValidationCacheCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ShaderModuleValidationCacheCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT;
 }
@@ -20374,7 +17954,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance3Properties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance3Properties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance3Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceMaintenance3Properties<'_> {}
@@ -20414,7 +17994,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance4Features<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance4Features<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance4Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceMaintenance4Features<'_> {}
@@ -20450,7 +18030,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance4Properties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance4Properties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance4Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceMaintenance4Properties<'_> {}
@@ -20485,7 +18065,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance5FeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance5FeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance5FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_5_FEATURES_KHR;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceMaintenance5FeaturesKHR<'_> {}
@@ -20531,7 +18111,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance5PropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance5PropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance5PropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAINTENANCE_5_PROPERTIES_KHR;
 }
@@ -20611,7 +18191,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance6FeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance6FeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance6FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_6_FEATURES_KHR;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceMaintenance6FeaturesKHR<'_> {}
@@ -20651,7 +18231,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance6PropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance6PropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance6PropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAINTENANCE_6_PROPERTIES_KHR;
 }
@@ -20709,7 +18289,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance7FeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance7FeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance7FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_7_FEATURES_KHR;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceMaintenance7FeaturesKHR<'_> {}
@@ -20759,7 +18339,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance7PropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance7PropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance7PropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAINTENANCE_7_PROPERTIES_KHR;
 }
@@ -20863,7 +18443,7 @@ impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesListKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_LIST_KHR;
 }
@@ -20924,7 +18504,7 @@ impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLayeredApiPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_KHR;
 }
 impl<'a> PhysicalDeviceLayeredApiPropertiesKHR<'a> {
@@ -20954,50 +18534,6 @@ impl<'a> PhysicalDeviceLayeredApiPropertiesKHR<'a> {
     pub fn device_name_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
         wrap_c_str_slice_until_nul(&self.device_name)
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -21023,7 +18559,7 @@ impl ::core::default::Default for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LAYERED_API_VULKAN_PROPERTIES_KHR;
 }
@@ -21070,7 +18606,7 @@ impl ::core::default::Default for RenderingAreaInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderingAreaInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderingAreaInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_AREA_INFO_KHR;
 }
 impl<'a> RenderingAreaInfoKHR<'a> {
@@ -21120,7 +18656,7 @@ impl ::core::default::Default for DescriptorSetLayoutSupport<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetLayoutSupport<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutSupport<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_LAYOUT_SUPPORT;
 }
 impl<'a> DescriptorSetLayoutSupport<'a> {
@@ -21128,50 +18664,6 @@ impl<'a> DescriptorSetLayoutSupport<'a> {
     pub fn supported(mut self, supported: bool) -> Self {
         self.supported = supported.into();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -21198,7 +18690,7 @@ impl ::core::default::Default for PhysicalDeviceShaderDrawParametersFeatures<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderDrawParametersFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderDrawParametersFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES;
 }
@@ -21240,7 +18732,7 @@ impl ::core::default::Default for PhysicalDeviceShaderFloat16Int8Features<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderFloat16Int8Features<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloat16Int8Features<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES;
 }
@@ -21314,7 +18806,7 @@ impl ::core::default::Default for PhysicalDeviceFloatControlsProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFloatControlsProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFloatControlsProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceFloatControlsProperties<'_> {}
@@ -21474,7 +18966,7 @@ impl ::core::default::Default for PhysicalDeviceHostQueryResetFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceHostQueryResetFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostQueryResetFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceHostQueryResetFeatures<'_> {}
@@ -21539,7 +19031,7 @@ impl ::core::default::Default for NativeBufferANDROID<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for NativeBufferANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for NativeBufferANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::NATIVE_BUFFER_ANDROID;
 }
 impl<'a> NativeBufferANDROID<'a> {
@@ -21593,7 +19085,7 @@ impl ::core::default::Default for SwapchainImageCreateInfoANDROID<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainImageCreateInfoANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainImageCreateInfoANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_IMAGE_CREATE_INFO_ANDROID;
 }
 impl<'a> SwapchainImageCreateInfoANDROID<'a> {
@@ -21627,7 +19119,7 @@ impl ::core::default::Default for PhysicalDevicePresentationPropertiesANDROID<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePresentationPropertiesANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentationPropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRESENTATION_PROPERTIES_ANDROID;
 }
@@ -21766,7 +19258,7 @@ impl ::core::default::Default for DeviceQueueGlobalPriorityCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceQueueGlobalPriorityCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceQueueGlobalPriorityCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_KHR;
 }
@@ -21802,7 +19294,7 @@ impl ::core::default::Default for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_KHR;
 }
@@ -21854,7 +19346,7 @@ impl ::core::default::Default for QueueFamilyGlobalPriorityPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueueFamilyGlobalPriorityPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueueFamilyGlobalPriorityPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_KHR;
 }
@@ -21899,7 +19391,7 @@ impl ::core::default::Default for DebugUtilsObjectNameInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugUtilsObjectNameInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugUtilsObjectNameInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_OBJECT_NAME_INFO_EXT;
 }
 unsafe impl Extends<PipelineShaderStageCreateInfo<'_>> for DebugUtilsObjectNameInfoEXT<'_> {}
@@ -21956,7 +19448,7 @@ impl ::core::default::Default for DebugUtilsObjectTagInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugUtilsObjectTagInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugUtilsObjectTagInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_OBJECT_TAG_INFO_EXT;
 }
 impl<'a> DebugUtilsObjectTagInfoEXT<'a> {
@@ -22004,7 +19496,7 @@ impl ::core::default::Default for DebugUtilsLabelEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugUtilsLabelEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugUtilsLabelEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_LABEL_EXT;
 }
 impl<'a> DebugUtilsLabelEXT<'a> {
@@ -22075,7 +19567,7 @@ impl ::core::default::Default for DebugUtilsMessengerCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugUtilsMessengerCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugUtilsMessengerCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
 }
 unsafe impl Extends<InstanceCreateInfo<'_>> for DebugUtilsMessengerCreateInfoEXT<'_> {}
@@ -22151,7 +19643,7 @@ impl ::core::default::Default for DebugUtilsMessengerCallbackDataEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DebugUtilsMessengerCallbackDataEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DebugUtilsMessengerCallbackDataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT;
 }
 impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
@@ -22209,50 +19701,6 @@ impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
         self.p_objects = objects.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -22278,7 +19726,7 @@ impl ::core::default::Default for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_MEMORY_REPORT_FEATURES_EXT;
 }
@@ -22336,7 +19784,7 @@ impl ::core::default::Default for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceDeviceMemoryReportCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceDeviceMemoryReportCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEVICE_DEVICE_MEMORY_REPORT_CREATE_INFO_EXT;
 }
@@ -22397,7 +19845,7 @@ impl ::core::default::Default for DeviceMemoryReportCallbackDataEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceMemoryReportCallbackDataEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryReportCallbackDataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_MEMORY_REPORT_CALLBACK_DATA_EXT;
 }
 impl<'a> DeviceMemoryReportCallbackDataEXT<'a> {
@@ -22459,7 +19907,7 @@ impl ::core::default::Default for ImportMemoryHostPointerInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMemoryHostPointerInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMemoryHostPointerInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_HOST_POINTER_INFO_EXT;
 }
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ImportMemoryHostPointerInfoEXT<'_> {}
@@ -22499,7 +19947,7 @@ impl ::core::default::Default for MemoryHostPointerPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryHostPointerPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryHostPointerPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_HOST_POINTER_PROPERTIES_EXT;
 }
 impl<'a> MemoryHostPointerPropertiesEXT<'a> {
@@ -22533,7 +19981,7 @@ impl ::core::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT;
 }
@@ -22591,7 +20039,7 @@ impl ::core::default::Default for PhysicalDeviceConservativeRasterizationPropert
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT;
 }
@@ -22692,7 +20140,7 @@ impl ::core::default::Default for CalibratedTimestampInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CalibratedTimestampInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CalibratedTimestampInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CALIBRATED_TIMESTAMP_INFO_KHR;
 }
 impl<'a> CalibratedTimestampInfoKHR<'a> {
@@ -22752,7 +20200,7 @@ impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCorePropertiesAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCorePropertiesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceShaderCorePropertiesAMD<'_> {}
@@ -22854,7 +20302,7 @@ impl ::core::default::Default for PhysicalDeviceShaderCoreProperties2AMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCoreProperties2AMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreProperties2AMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_2_AMD;
 }
@@ -22902,7 +20350,7 @@ impl ::core::default::Default for PipelineRasterizationConservativeStateCreateIn
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT;
 }
@@ -22995,7 +20443,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorIndexingFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorIndexingFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorIndexingFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES;
 }
@@ -23246,7 +20694,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorIndexingProperties<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorIndexingProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorIndexingProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES;
 }
@@ -23483,7 +20931,7 @@ impl ::core::default::Default for DescriptorSetLayoutBindingFlagsCreateInfo<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO;
 }
@@ -23525,7 +20973,7 @@ impl ::core::default::Default for DescriptorSetVariableDescriptorCountAllocateIn
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO;
 }
@@ -23565,7 +21013,7 @@ impl ::core::default::Default for DescriptorSetVariableDescriptorCountLayoutSupp
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT;
 }
@@ -23620,7 +21068,7 @@ impl ::core::default::Default for AttachmentDescription2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AttachmentDescription2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AttachmentDescription2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_DESCRIPTION_2;
 }
 impl<'a> AttachmentDescription2<'a> {
@@ -23669,50 +21117,6 @@ impl<'a> AttachmentDescription2<'a> {
         self.final_layout = final_layout;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -23742,7 +21146,7 @@ impl ::core::default::Default for AttachmentReference2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AttachmentReference2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AttachmentReference2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_REFERENCE_2;
 }
 impl<'a> AttachmentReference2<'a> {
@@ -23760,50 +21164,6 @@ impl<'a> AttachmentReference2<'a> {
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.aspect_mask = aspect_mask;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -23850,7 +21210,7 @@ impl ::core::default::Default for SubpassDescription2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassDescription2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassDescription2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_DESCRIPTION_2;
 }
 impl<'a> SubpassDescription2<'a> {
@@ -23904,50 +21264,6 @@ impl<'a> SubpassDescription2<'a> {
         self.p_preserve_attachments = preserve_attachments.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -23987,7 +21303,7 @@ impl ::core::default::Default for SubpassDependency2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassDependency2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassDependency2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_DEPENDENCY_2;
 }
 impl<'a> SubpassDependency2<'a> {
@@ -24031,50 +21347,6 @@ impl<'a> SubpassDependency2<'a> {
         self.view_offset = view_offset;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -24116,7 +21388,7 @@ impl ::core::default::Default for RenderPassCreateInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassCreateInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassCreateInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_CREATE_INFO_2;
 }
 impl<'a> RenderPassCreateInfo2<'a> {
@@ -24149,50 +21421,6 @@ impl<'a> RenderPassCreateInfo2<'a> {
         self.p_correlated_view_masks = correlated_view_masks.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -24218,7 +21446,7 @@ impl ::core::default::Default for SubpassBeginInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassBeginInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_BEGIN_INFO;
 }
 impl<'a> SubpassBeginInfo<'a> {
@@ -24250,55 +21478,10 @@ impl ::core::default::Default for SubpassEndInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassEndInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassEndInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_END_INFO;
 }
-impl<'a> SubpassEndInfo<'a> {
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
-}
+impl<'a> SubpassEndInfo<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -24323,7 +21506,7 @@ impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTimelineSemaphoreFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTimelineSemaphoreFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_FEATURES;
 }
@@ -24360,7 +21543,7 @@ impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreProperties<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTimelineSemaphoreProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTimelineSemaphoreProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_PROPERTIES;
 }
@@ -24404,7 +21587,7 @@ impl ::core::default::Default for SemaphoreTypeCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreTypeCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreTypeCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_TYPE_CREATE_INFO;
 }
 unsafe impl Extends<SemaphoreCreateInfo<'_>> for SemaphoreTypeCreateInfo<'_> {}
@@ -24451,7 +21634,7 @@ impl ::core::default::Default for TimelineSemaphoreSubmitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for TimelineSemaphoreSubmitInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for TimelineSemaphoreSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TIMELINE_SEMAPHORE_SUBMIT_INFO;
 }
 unsafe impl Extends<SubmitInfo<'_>> for TimelineSemaphoreSubmitInfo<'_> {}
@@ -24500,7 +21683,7 @@ impl ::core::default::Default for SemaphoreWaitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreWaitInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreWaitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_WAIT_INFO;
 }
 impl<'a> SemaphoreWaitInfo<'a> {
@@ -24548,7 +21731,7 @@ impl ::core::default::Default for SemaphoreSignalInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreSignalInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreSignalInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_SIGNAL_INFO;
 }
 impl<'a> SemaphoreSignalInfo<'a> {
@@ -24610,7 +21793,7 @@ impl ::core::default::Default for PipelineVertexInputDivisorStateCreateInfoKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineVertexInputDivisorStateCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineVertexInputDivisorStateCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_KHR;
 }
@@ -24653,7 +21836,7 @@ impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorProperties
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT;
 }
@@ -24694,7 +21877,7 @@ impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorProperties
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_KHR;
 }
@@ -24747,7 +21930,7 @@ impl ::core::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PCI_BUS_INFO_PROPERTIES_EXT;
 }
@@ -24798,7 +21981,7 @@ impl ::core::default::Default for ImportAndroidHardwareBufferInfoANDROID<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportAndroidHardwareBufferInfoANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportAndroidHardwareBufferInfoANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID;
 }
@@ -24834,7 +22017,7 @@ impl ::core::default::Default for AndroidHardwareBufferUsageANDROID<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AndroidHardwareBufferUsageANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferUsageANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANDROID_HARDWARE_BUFFER_USAGE_ANDROID;
 }
 unsafe impl Extends<ImageFormatProperties2<'_>> for AndroidHardwareBufferUsageANDROID<'_> {}
@@ -24871,7 +22054,7 @@ impl ::core::default::Default for AndroidHardwareBufferPropertiesANDROID<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AndroidHardwareBufferPropertiesANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferPropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID;
 }
 impl<'a> AndroidHardwareBufferPropertiesANDROID<'a> {
@@ -24884,50 +22067,6 @@ impl<'a> AndroidHardwareBufferPropertiesANDROID<'a> {
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.memory_type_bits = memory_type_bits;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -24954,7 +22093,7 @@ impl ::core::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID;
 }
@@ -25003,7 +22142,7 @@ impl ::core::default::Default for AndroidHardwareBufferFormatPropertiesANDROID<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AndroidHardwareBufferFormatPropertiesANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatPropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_ANDROID;
 }
@@ -25083,7 +22222,7 @@ impl ::core::default::Default for CommandBufferInheritanceConditionalRenderingIn
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COMMAND_BUFFER_INHERITANCE_CONDITIONAL_RENDERING_INFO_EXT;
 }
@@ -25122,7 +22261,7 @@ impl ::core::default::Default for ExternalFormatANDROID<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalFormatANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalFormatANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_FORMAT_ANDROID;
 }
 unsafe impl Extends<ImageCreateInfo<'_>> for ExternalFormatANDROID<'_> {}
@@ -25165,7 +22304,7 @@ impl ::core::default::Default for PhysicalDevice8BitStorageFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevice8BitStorageFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice8BitStorageFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDevice8BitStorageFeatures<'_> {}
@@ -25216,7 +22355,7 @@ impl ::core::default::Default for PhysicalDeviceConditionalRenderingFeaturesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CONDITIONAL_RENDERING_FEATURES_EXT;
 }
@@ -25268,7 +22407,7 @@ impl ::core::default::Default for PhysicalDeviceVulkanMemoryModelFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkanMemoryModelFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkanMemoryModelFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES;
 }
@@ -25324,7 +22463,7 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicInt64Features<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderAtomicInt64Features<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicInt64Features<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES;
 }
@@ -25388,7 +22527,7 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_FEATURES_EXT;
 }
@@ -25523,7 +22662,7 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT;
 }
@@ -25650,7 +22789,7 @@ impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorFeaturesKH
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_KHR;
 }
@@ -25702,7 +22841,7 @@ impl ::core::default::Default for QueueFamilyCheckpointPropertiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueueFamilyCheckpointPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueueFamilyCheckpointPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV;
 }
 unsafe impl Extends<QueueFamilyProperties2<'_>> for QueueFamilyCheckpointPropertiesNV<'_> {}
@@ -25742,7 +22881,7 @@ impl ::core::default::Default for CheckpointDataNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CheckpointDataNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CheckpointDataNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CHECKPOINT_DATA_NV;
 }
 impl<'a> CheckpointDataNV<'a> {
@@ -25787,7 +22926,7 @@ impl ::core::default::Default for PhysicalDeviceDepthStencilResolveProperties<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthStencilResolveProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthStencilResolveProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES;
 }
@@ -25851,7 +22990,7 @@ impl ::core::default::Default for SubpassDescriptionDepthStencilResolve<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassDescriptionDepthStencilResolve<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassDescriptionDepthStencilResolve<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE;
 }
 unsafe impl Extends<SubpassDescription2<'_>> for SubpassDescriptionDepthStencilResolve<'_> {}
@@ -25899,7 +23038,7 @@ impl ::core::default::Default for ImageViewASTCDecodeModeEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewASTCDecodeModeEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewASTCDecodeModeEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_ASTC_DECODE_MODE_EXT;
 }
 unsafe impl Extends<ImageViewCreateInfo<'_>> for ImageViewASTCDecodeModeEXT<'_> {}
@@ -25934,7 +23073,7 @@ impl ::core::default::Default for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_ASTC_DECODE_FEATURES_EXT;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {}
@@ -25972,7 +23111,7 @@ impl ::core::default::Default for PhysicalDeviceTransformFeedbackFeaturesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_FEATURES_EXT;
 }
@@ -26035,7 +23174,7 @@ impl ::core::default::Default for PhysicalDeviceTransformFeedbackPropertiesEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_PROPERTIES_EXT;
 }
@@ -26141,7 +23280,7 @@ impl ::core::default::Default for PipelineRasterizationStateStreamCreateInfoEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRasterizationStateStreamCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateStreamCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_STATE_STREAM_CREATE_INFO_EXT;
 }
@@ -26185,7 +23324,7 @@ impl ::core::default::Default for PhysicalDeviceRepresentativeFragmentTestFeatur
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_REPRESENTATIVE_FRAGMENT_TEST_FEATURES_NV;
 }
@@ -26228,7 +23367,7 @@ impl ::core::default::Default for PipelineRepresentativeFragmentTestStateCreateI
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_REPRESENTATIVE_FRAGMENT_TEST_STATE_CREATE_INFO_NV;
 }
@@ -26270,7 +23409,7 @@ impl ::core::default::Default for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXCLUSIVE_SCISSOR_FEATURES_NV;
 }
@@ -26309,7 +23448,7 @@ impl ::core::default::Default for PipelineViewportExclusiveScissorStateCreateInf
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_EXCLUSIVE_SCISSOR_STATE_CREATE_INFO_NV;
 }
@@ -26349,7 +23488,7 @@ impl ::core::default::Default for PhysicalDeviceCornerSampledImageFeaturesNV<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CORNER_SAMPLED_IMAGE_FEATURES_NV;
 }
@@ -26391,7 +23530,7 @@ impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_KHR;
 }
@@ -26442,7 +23581,7 @@ impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesProperti
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_PROPERTIES_KHR;
 }
@@ -26484,7 +23623,7 @@ impl ::core::default::Default for PhysicalDeviceShaderImageFootprintFeaturesNV<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_IMAGE_FOOTPRINT_FEATURES_NV;
 }
@@ -26524,7 +23663,9 @@ impl ::core::default::Default for PhysicalDeviceDedicatedAllocationImageAliasing
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a>
+{
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEDICATED_ALLOCATION_IMAGE_ALIASING_FEATURES_NV;
 }
@@ -26570,7 +23711,7 @@ impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_NV;
 }
@@ -26610,7 +23751,7 @@ impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_NV;
 }
@@ -26649,7 +23790,7 @@ impl ::core::default::Default for PhysicalDeviceMemoryDecompressionFeaturesNV<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV;
 }
@@ -26691,7 +23832,7 @@ impl ::core::default::Default for PhysicalDeviceMemoryDecompressionPropertiesNV<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV;
 }
@@ -26778,7 +23919,7 @@ impl ::core::default::Default for PipelineViewportShadingRateImageStateCreateInf
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_SHADING_RATE_IMAGE_STATE_CREATE_INFO_NV;
 }
@@ -26828,7 +23969,7 @@ impl ::core::default::Default for PhysicalDeviceShadingRateImageFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShadingRateImageFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShadingRateImageFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADING_RATE_IMAGE_FEATURES_NV;
 }
@@ -26877,7 +24018,7 @@ impl ::core::default::Default for PhysicalDeviceShadingRateImagePropertiesNV<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShadingRateImagePropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShadingRateImagePropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADING_RATE_IMAGE_PROPERTIES_NV;
 }
@@ -26926,7 +24067,7 @@ impl ::core::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INVOCATION_MASK_FEATURES_HUAWEI;
 }
@@ -27041,7 +24182,7 @@ impl ::core::default::Default for PipelineViewportCoarseSampleOrderStateCreateIn
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_COARSE_SAMPLE_ORDER_STATE_CREATE_INFO_NV;
 }
@@ -27091,7 +24232,7 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMeshShaderFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MESH_SHADER_FEATURES_NV;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceMeshShaderFeaturesNV<'_> {}
@@ -27156,7 +24297,7 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMeshShaderPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_NV;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceMeshShaderPropertiesNV<'_> {}
@@ -27286,7 +24427,7 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMeshShaderFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MESH_SHADER_FEATURES_EXT;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceMeshShaderFeaturesEXT<'_> {}
@@ -27400,7 +24541,7 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMeshShaderPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_EXT;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceMeshShaderPropertiesEXT<'_> {}
@@ -27636,7 +24777,7 @@ impl ::core::default::Default for RayTracingShaderGroupCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RayTracingShaderGroupCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RayTracingShaderGroupCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_SHADER_GROUP_CREATE_INFO_NV;
 }
 impl<'a> RayTracingShaderGroupCreateInfoNV<'a> {
@@ -27700,7 +24841,7 @@ impl ::core::default::Default for RayTracingShaderGroupCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RayTracingShaderGroupCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RayTracingShaderGroupCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_SHADER_GROUP_CREATE_INFO_KHR;
 }
 impl<'a> RayTracingShaderGroupCreateInfoKHR<'a> {
@@ -27778,7 +24919,7 @@ impl ::core::default::Default for RayTracingPipelineCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RayTracingPipelineCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_NV;
 }
 impl<'a> RayTracingPipelineCreateInfoNV<'a> {
@@ -27818,50 +24959,6 @@ impl<'a> RayTracingPipelineCreateInfoNV<'a> {
     pub fn base_pipeline_index(mut self, base_pipeline_index: i32) -> Self {
         self.base_pipeline_index = base_pipeline_index;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -27910,7 +25007,7 @@ impl ::core::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RayTracingPipelineCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_KHR;
 }
 impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
@@ -27972,50 +25069,6 @@ impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
         self.base_pipeline_index = base_pipeline_index;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -28061,7 +25114,7 @@ impl ::core::default::Default for GeometryTrianglesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeometryTrianglesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeometryTrianglesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GEOMETRY_TRIANGLES_NV;
 }
 impl<'a> GeometryTrianglesNV<'a> {
@@ -28151,7 +25204,7 @@ impl ::core::default::Default for GeometryAABBNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeometryAABBNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeometryAABBNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GEOMETRY_AABB_NV;
 }
 impl<'a> GeometryAABBNV<'a> {
@@ -28226,7 +25279,7 @@ impl ::core::default::Default for GeometryNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeometryNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeometryNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GEOMETRY_NV;
 }
 impl<'a> GeometryNV<'a> {
@@ -28278,7 +25331,7 @@ impl ::core::default::Default for AccelerationStructureInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_INFO_NV;
 }
 impl<'a> AccelerationStructureInfoNV<'a> {
@@ -28330,7 +25383,7 @@ impl ::core::default::Default for AccelerationStructureCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_NV;
 }
 impl<'a> AccelerationStructureCreateInfoNV<'a> {
@@ -28343,50 +25396,6 @@ impl<'a> AccelerationStructureCreateInfoNV<'a> {
     pub fn info(mut self, info: AccelerationStructureInfoNV<'a>) -> Self {
         self.info = info;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -28421,7 +25430,7 @@ impl ::core::default::Default for BindAccelerationStructureMemoryInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindAccelerationStructureMemoryInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindAccelerationStructureMemoryInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_ACCELERATION_STRUCTURE_MEMORY_INFO_NV;
 }
 impl<'a> BindAccelerationStructureMemoryInfoNV<'a> {
@@ -28476,7 +25485,7 @@ impl ::core::default::Default for WriteDescriptorSetAccelerationStructureKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for WriteDescriptorSetAccelerationStructureKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetAccelerationStructureKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR;
 }
@@ -28518,7 +25527,7 @@ impl ::core::default::Default for WriteDescriptorSetAccelerationStructureNV<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for WriteDescriptorSetAccelerationStructureNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetAccelerationStructureNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_NV;
 }
@@ -28560,7 +25569,7 @@ impl ::core::default::Default for AccelerationStructureMemoryRequirementsInfoNV<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureMemoryRequirementsInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureMemoryRequirementsInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_INFO_NV;
 }
@@ -28611,7 +25620,7 @@ impl ::core::default::Default for PhysicalDeviceAccelerationStructureFeaturesKHR
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_FEATURES_KHR;
 }
@@ -28692,7 +25701,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_FEATURES_KHR;
 }
@@ -28767,7 +25776,7 @@ impl ::core::default::Default for PhysicalDeviceRayQueryFeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayQueryFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayQueryFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_RAY_QUERY_FEATURES_KHR;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceRayQueryFeaturesKHR<'_> {}
@@ -28817,7 +25826,7 @@ impl ::core::default::Default for PhysicalDeviceAccelerationStructurePropertiesK
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_PROPERTIES_KHR;
 }
@@ -28925,7 +25934,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPipelinePropertiesKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_PROPERTIES_KHR;
 }
@@ -29019,7 +26028,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPropertiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_RAY_TRACING_PROPERTIES_NV;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceRayTracingPropertiesNV<'_> {}
@@ -29272,7 +26281,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingMaintenance1FeaturesKH
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_MAINTENANCE_1_FEATURES_KHR;
 }
@@ -29323,7 +26332,7 @@ impl ::core::default::Default for DrmFormatModifierPropertiesListEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DrmFormatModifierPropertiesListEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DrmFormatModifierPropertiesListEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_EXT;
 }
 unsafe impl Extends<FormatProperties2<'_>> for DrmFormatModifierPropertiesListEXT<'_> {}
@@ -29398,7 +26407,7 @@ impl ::core::default::Default for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_DRM_FORMAT_MODIFIER_INFO_EXT;
 }
@@ -29450,7 +26459,7 @@ impl ::core::default::Default for ImageDrmFormatModifierListCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageDrmFormatModifierListCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierListCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::IMAGE_DRM_FORMAT_MODIFIER_LIST_CREATE_INFO_EXT;
 }
@@ -29491,7 +26500,7 @@ impl ::core::default::Default for ImageDrmFormatModifierExplicitCreateInfoEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::IMAGE_DRM_FORMAT_MODIFIER_EXPLICIT_CREATE_INFO_EXT;
 }
@@ -29533,7 +26542,7 @@ impl ::core::default::Default for ImageDrmFormatModifierPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageDrmFormatModifierPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT;
 }
 impl<'a> ImageDrmFormatModifierPropertiesEXT<'a> {
@@ -29567,7 +26576,7 @@ impl ::core::default::Default for ImageStencilUsageCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageStencilUsageCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageStencilUsageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_STENCIL_USAGE_CREATE_INFO;
 }
 unsafe impl Extends<ImageCreateInfo<'_>> for ImageStencilUsageCreateInfo<'_> {}
@@ -29603,7 +26612,7 @@ impl ::core::default::Default for DeviceMemoryOverallocationCreateInfoAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceMemoryOverallocationCreateInfoAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryOverallocationCreateInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEVICE_MEMORY_OVERALLOCATION_CREATE_INFO_AMD;
 }
@@ -29646,7 +26655,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_FEATURES_EXT;
 }
@@ -29700,7 +26709,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_FEATURES_EXT;
 }
@@ -29740,7 +26749,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_QCOM;
 }
@@ -29787,7 +26796,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT;
 }
@@ -29848,7 +26857,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2PropertiesEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_PROPERTIES_EXT;
 }
@@ -29909,7 +26918,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetProperti
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_PROPERTIES_QCOM;
 }
@@ -29951,7 +26960,7 @@ impl ::core::default::Default for RenderPassFragmentDensityMapCreateInfoEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassFragmentDensityMapCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassFragmentDensityMapCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT;
 }
@@ -29993,7 +27002,7 @@ impl ::core::default::Default for SubpassFragmentDensityMapOffsetEndInfoQCOM<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SUBPASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_QCOM;
 }
@@ -30030,7 +27039,7 @@ impl ::core::default::Default for PhysicalDeviceScalarBlockLayoutFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceScalarBlockLayoutFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceScalarBlockLayoutFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES;
 }
@@ -30067,7 +27076,7 @@ impl ::core::default::Default for SurfaceProtectedCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceProtectedCapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceProtectedCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PROTECTED_CAPABILITIES_KHR;
 }
 unsafe impl Extends<SurfaceCapabilities2KHR<'_>> for SurfaceProtectedCapabilitiesKHR<'_> {}
@@ -30102,7 +27111,7 @@ impl ::core::default::Default for PhysicalDeviceUniformBufferStandardLayoutFeatu
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES;
 }
@@ -30145,7 +27154,7 @@ impl ::core::default::Default for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_CLIP_ENABLE_FEATURES_EXT;
 }
@@ -30184,7 +27193,7 @@ impl ::core::default::Default for PipelineRasterizationDepthClipStateCreateInfoE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_DEPTH_CLIP_STATE_CREATE_INFO_EXT;
 }
@@ -30230,7 +27239,7 @@ impl ::core::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT;
 }
@@ -30274,7 +27283,7 @@ impl ::core::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT;
 }
@@ -30311,7 +27320,7 @@ impl ::core::default::Default for MemoryPriorityAllocateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryPriorityAllocateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryPriorityAllocateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_PRIORITY_ALLOCATE_INFO_EXT;
 }
 unsafe impl Extends<MemoryAllocateInfo<'_>> for MemoryPriorityAllocateInfoEXT<'_> {}
@@ -30346,7 +27355,7 @@ impl ::core::default::Default for PhysicalDevicePageableDeviceLocalMemoryFeature
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT;
 }
@@ -30393,7 +27402,7 @@ impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeatures<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceBufferDeviceAddressFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBufferDeviceAddressFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES;
 }
@@ -30450,7 +27459,7 @@ impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES_EXT;
 }
@@ -30506,7 +27515,7 @@ impl ::core::default::Default for BufferDeviceAddressInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferDeviceAddressInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferDeviceAddressInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_DEVICE_ADDRESS_INFO;
 }
 impl<'a> BufferDeviceAddressInfo<'a> {
@@ -30540,7 +27549,7 @@ impl ::core::default::Default for BufferOpaqueCaptureAddressCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferOpaqueCaptureAddressCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferOpaqueCaptureAddressCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_OPAQUE_CAPTURE_ADDRESS_CREATE_INFO;
 }
 unsafe impl Extends<BufferCreateInfo<'_>> for BufferOpaqueCaptureAddressCreateInfo<'_> {}
@@ -30575,7 +27584,7 @@ impl ::core::default::Default for BufferDeviceAddressCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferDeviceAddressCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferDeviceAddressCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT;
 }
 unsafe impl Extends<BufferCreateInfo<'_>> for BufferDeviceAddressCreateInfoEXT<'_> {}
@@ -30610,7 +27619,7 @@ impl ::core::default::Default for PhysicalDeviceImageViewImageFormatInfoEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_VIEW_IMAGE_FORMAT_INFO_EXT;
 }
@@ -30651,7 +27660,7 @@ impl ::core::default::Default for FilterCubicImageViewImageFormatPropertiesEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FilterCubicImageViewImageFormatPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FilterCubicImageViewImageFormatPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::FILTER_CUBIC_IMAGE_VIEW_IMAGE_FORMAT_PROPERTIES_EXT;
 }
@@ -30695,7 +27704,7 @@ impl ::core::default::Default for PhysicalDeviceImagelessFramebufferFeatures<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImagelessFramebufferFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImagelessFramebufferFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES;
 }
@@ -30737,7 +27746,7 @@ impl ::core::default::Default for FramebufferAttachmentsCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FramebufferAttachmentsCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FramebufferAttachmentsCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_ATTACHMENTS_CREATE_INFO;
 }
 unsafe impl Extends<FramebufferCreateInfo<'_>> for FramebufferAttachmentsCreateInfo<'_> {}
@@ -30788,7 +27797,7 @@ impl ::core::default::Default for FramebufferAttachmentImageInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FramebufferAttachmentImageInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FramebufferAttachmentImageInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_ATTACHMENT_IMAGE_INFO;
 }
 impl<'a> FramebufferAttachmentImageInfo<'a> {
@@ -30850,7 +27859,7 @@ impl ::core::default::Default for RenderPassAttachmentBeginInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassAttachmentBeginInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassAttachmentBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_ATTACHMENT_BEGIN_INFO;
 }
 unsafe impl Extends<RenderPassBeginInfo<'_>> for RenderPassAttachmentBeginInfo<'_> {}
@@ -30886,7 +27895,7 @@ impl ::core::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeature
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES;
 }
@@ -30928,7 +27937,7 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_NV;
 }
@@ -30974,7 +27983,7 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesNV<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_NV;
 }
@@ -31030,7 +28039,7 @@ impl ::core::default::Default for CooperativeMatrixPropertiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CooperativeMatrixPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COOPERATIVE_MATRIX_PROPERTIES_NV;
 }
 impl<'a> CooperativeMatrixPropertiesNV<'a> {
@@ -31099,7 +28108,7 @@ impl ::core::default::Default for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_YCBCR_IMAGE_ARRAYS_FEATURES_EXT;
 }
@@ -31140,7 +28149,7 @@ impl ::core::default::Default for ImageViewHandleInfoNVX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewHandleInfoNVX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewHandleInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_HANDLE_INFO_NVX;
 }
 impl<'a> ImageViewHandleInfoNVX<'a> {
@@ -31186,7 +28195,7 @@ impl ::core::default::Default for ImageViewAddressPropertiesNVX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewAddressPropertiesNVX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewAddressPropertiesNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_ADDRESS_PROPERTIES_NVX;
 }
 impl<'a> ImageViewAddressPropertiesNVX<'a> {
@@ -31225,7 +28234,7 @@ impl ::core::default::Default for PresentFrameTokenGGP<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PresentFrameTokenGGP<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PresentFrameTokenGGP<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_FRAME_TOKEN_GGP;
 }
 unsafe impl Extends<PresentInfoKHR<'_>> for PresentFrameTokenGGP<'_> {}
@@ -31285,7 +28294,7 @@ impl ::core::default::Default for PipelineCreationFeedbackCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCreationFeedbackCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCreationFeedbackCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CREATION_FEEDBACK_CREATE_INFO;
 }
 unsafe impl Extends<GraphicsPipelineCreateInfo<'_>> for PipelineCreationFeedbackCreateInfo<'_> {}
@@ -31342,7 +28351,7 @@ impl ::core::default::Default for SurfaceFullScreenExclusiveInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceFullScreenExclusiveInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceFullScreenExclusiveInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_FULL_SCREEN_EXCLUSIVE_INFO_EXT;
 }
 unsafe impl Extends<PhysicalDeviceSurfaceInfo2KHR<'_>> for SurfaceFullScreenExclusiveInfoEXT<'_> {}
@@ -31378,7 +28387,7 @@ impl ::core::default::Default for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SURFACE_FULL_SCREEN_EXCLUSIVE_WIN32_INFO_EXT;
 }
@@ -31418,7 +28427,7 @@ impl ::core::default::Default for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SURFACE_CAPABILITIES_FULL_SCREEN_EXCLUSIVE_EXT;
 }
@@ -31457,7 +28466,7 @@ impl ::core::default::Default for PhysicalDevicePresentBarrierFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePresentBarrierFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentBarrierFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRESENT_BARRIER_FEATURES_NV;
 }
@@ -31494,7 +28503,7 @@ impl ::core::default::Default for SurfaceCapabilitiesPresentBarrierNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfaceCapabilitiesPresentBarrierNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentBarrierNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_PRESENT_BARRIER_NV;
 }
 unsafe impl Extends<SurfaceCapabilities2KHR<'_>> for SurfaceCapabilitiesPresentBarrierNV<'_> {}
@@ -31529,7 +28538,7 @@ impl ::core::default::Default for SwapchainPresentBarrierCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainPresentBarrierCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentBarrierCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_BARRIER_CREATE_INFO_NV;
 }
 unsafe impl Extends<SwapchainCreateInfoKHR<'_>> for SwapchainPresentBarrierCreateInfoNV<'_> {}
@@ -31566,7 +28575,7 @@ impl ::core::default::Default for PhysicalDevicePerformanceQueryFeaturesKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PERFORMANCE_QUERY_FEATURES_KHR;
 }
@@ -31615,7 +28624,7 @@ impl ::core::default::Default for PhysicalDevicePerformanceQueryPropertiesKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PERFORMANCE_QUERY_PROPERTIES_KHR;
 }
@@ -31663,7 +28672,7 @@ impl ::core::default::Default for PerformanceCounterKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PerformanceCounterKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_COUNTER_KHR;
 }
 impl<'a> PerformanceCounterKHR<'a> {
@@ -31730,7 +28739,7 @@ impl ::core::default::Default for PerformanceCounterDescriptionKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PerformanceCounterDescriptionKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterDescriptionKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_COUNTER_DESCRIPTION_KHR;
 }
 impl<'a> PerformanceCounterDescriptionKHR<'a> {
@@ -31798,7 +28807,7 @@ impl ::core::default::Default for QueryPoolPerformanceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueryPoolPerformanceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueryPoolPerformanceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUERY_POOL_PERFORMANCE_CREATE_INFO_KHR;
 }
 unsafe impl Extends<QueryPoolCreateInfo<'_>> for QueryPoolPerformanceCreateInfoKHR<'_> {}
@@ -31858,7 +28867,7 @@ impl ::core::default::Default for AcquireProfilingLockInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AcquireProfilingLockInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AcquireProfilingLockInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACQUIRE_PROFILING_LOCK_INFO_KHR;
 }
 impl<'a> AcquireProfilingLockInfoKHR<'a> {
@@ -31897,7 +28906,7 @@ impl ::core::default::Default for PerformanceQuerySubmitInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PerformanceQuerySubmitInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PerformanceQuerySubmitInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_QUERY_SUBMIT_INFO_KHR;
 }
 unsafe impl Extends<SubmitInfo<'_>> for PerformanceQuerySubmitInfoKHR<'_> {}
@@ -31933,7 +28942,7 @@ impl ::core::default::Default for HeadlessSurfaceCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for HeadlessSurfaceCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for HeadlessSurfaceCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::HEADLESS_SURFACE_CREATE_INFO_EXT;
 }
 impl<'a> HeadlessSurfaceCreateInfoEXT<'a> {
@@ -31967,7 +28976,7 @@ impl ::core::default::Default for PhysicalDeviceCoverageReductionModeFeaturesNV<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COVERAGE_REDUCTION_MODE_FEATURES_NV;
 }
@@ -32009,7 +29018,7 @@ impl ::core::default::Default for PipelineCoverageReductionStateCreateInfoNV<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCoverageReductionStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageReductionStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_COVERAGE_REDUCTION_STATE_CREATE_INFO_NV;
 }
@@ -32062,7 +29071,7 @@ impl ::core::default::Default for FramebufferMixedSamplesCombinationNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FramebufferMixedSamplesCombinationNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FramebufferMixedSamplesCombinationNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_MIXED_SAMPLES_COMBINATION_NV;
 }
 impl<'a> FramebufferMixedSamplesCombinationNV<'a> {
@@ -32114,7 +29123,7 @@ impl ::core::default::Default for PhysicalDeviceShaderIntegerFunctions2FeaturesI
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_INTEGER_FUNCTIONS_2_FEATURES_INTEL;
 }
@@ -32202,7 +29211,7 @@ impl ::core::default::Default for InitializePerformanceApiInfoINTEL<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for InitializePerformanceApiInfoINTEL<'a> {
+unsafe impl<'a> TaggedStructure<'a> for InitializePerformanceApiInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INITIALIZE_PERFORMANCE_API_INFO_INTEL;
 }
 impl<'a> InitializePerformanceApiInfoINTEL<'a> {
@@ -32236,7 +29245,7 @@ impl ::core::default::Default for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::QUERY_POOL_PERFORMANCE_QUERY_CREATE_INFO_INTEL;
 }
@@ -32275,7 +29284,7 @@ impl ::core::default::Default for PerformanceMarkerInfoINTEL<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PerformanceMarkerInfoINTEL<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PerformanceMarkerInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_MARKER_INFO_INTEL;
 }
 impl<'a> PerformanceMarkerInfoINTEL<'a> {
@@ -32309,7 +29318,7 @@ impl ::core::default::Default for PerformanceStreamMarkerInfoINTEL<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PerformanceStreamMarkerInfoINTEL<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PerformanceStreamMarkerInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_STREAM_MARKER_INFO_INTEL;
 }
 impl<'a> PerformanceStreamMarkerInfoINTEL<'a> {
@@ -32347,7 +29356,7 @@ impl ::core::default::Default for PerformanceOverrideInfoINTEL<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PerformanceOverrideInfoINTEL<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PerformanceOverrideInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_OVERRIDE_INFO_INTEL;
 }
 impl<'a> PerformanceOverrideInfoINTEL<'a> {
@@ -32391,7 +29400,7 @@ impl ::core::default::Default for PerformanceConfigurationAcquireInfoINTEL<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PerformanceConfigurationAcquireInfoINTEL<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PerformanceConfigurationAcquireInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PERFORMANCE_CONFIGURATION_ACQUIRE_INFO_INTEL;
 }
@@ -32428,7 +29437,7 @@ impl ::core::default::Default for PhysicalDeviceShaderClockFeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderClockFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderClockFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_CLOCK_FEATURES_KHR;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceShaderClockFeaturesKHR<'_> {}
@@ -32469,7 +29478,7 @@ impl ::core::default::Default for PhysicalDeviceIndexTypeUint8FeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceIndexTypeUint8FeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceIndexTypeUint8FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_KHR;
 }
@@ -32508,7 +29517,7 @@ impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SM_BUILTINS_PROPERTIES_NV;
 }
@@ -32552,7 +29561,7 @@ impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SM_BUILTINS_FEATURES_NV;
 }
@@ -32593,7 +29602,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShaderInterlockFeaturesE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_INTERLOCK_FEATURES_EXT;
 }
@@ -32652,7 +29661,7 @@ impl ::core::default::Default for PhysicalDeviceSeparateDepthStencilLayoutsFeatu
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES;
 }
@@ -32695,7 +29704,7 @@ impl ::core::default::Default for AttachmentReferenceStencilLayout<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AttachmentReferenceStencilLayout<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AttachmentReferenceStencilLayout<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_REFERENCE_STENCIL_LAYOUT;
 }
 unsafe impl Extends<AttachmentReference2<'_>> for AttachmentReferenceStencilLayout<'_> {}
@@ -32732,7 +29741,7 @@ impl ::core::default::Default for PhysicalDevicePrimitiveTopologyListRestartFeat
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRIMITIVE_TOPOLOGY_LIST_RESTART_FEATURES_EXT;
 }
@@ -32788,7 +29797,7 @@ impl ::core::default::Default for AttachmentDescriptionStencilLayout<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AttachmentDescriptionStencilLayout<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AttachmentDescriptionStencilLayout<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT;
 }
 unsafe impl Extends<AttachmentDescription2<'_>> for AttachmentDescriptionStencilLayout<'_> {}
@@ -32828,7 +29837,7 @@ impl ::core::default::Default for PhysicalDevicePipelineExecutablePropertiesFeat
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_EXECUTABLE_PROPERTIES_FEATURES_KHR;
 }
@@ -32871,7 +29880,7 @@ impl ::core::default::Default for PipelineInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_INFO_KHR;
 }
 impl<'a> PipelineInfoKHR<'a> {
@@ -32923,7 +29932,7 @@ impl ::core::default::Default for PipelineExecutablePropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineExecutablePropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineExecutablePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_EXECUTABLE_PROPERTIES_KHR;
 }
 impl<'a> PipelineExecutablePropertiesKHR<'a> {
@@ -32983,7 +29992,7 @@ impl ::core::default::Default for PipelineExecutableInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineExecutableInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_EXECUTABLE_INFO_KHR;
 }
 impl<'a> PipelineExecutableInfoKHR<'a> {
@@ -33055,7 +30064,7 @@ impl ::core::default::Default for PipelineExecutableStatisticKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineExecutableStatisticKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableStatisticKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_EXECUTABLE_STATISTIC_KHR;
 }
 impl<'a> PipelineExecutableStatisticKHR<'a> {
@@ -33134,7 +30143,7 @@ impl ::core::default::Default for PipelineExecutableInternalRepresentationKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineExecutableInternalRepresentationKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableInternalRepresentationKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR;
 }
@@ -33194,7 +30203,7 @@ impl ::core::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFe
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES;
 }
@@ -33240,7 +30249,7 @@ impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_FEATURES_EXT;
 }
@@ -33286,7 +30295,7 @@ impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentProperties<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTexelBufferAlignmentProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTexelBufferAlignmentProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES;
 }
@@ -33358,7 +30367,7 @@ impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlFeatures<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSubgroupSizeControlFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupSizeControlFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES;
 }
@@ -33406,7 +30415,7 @@ impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlProperties<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSubgroupSizeControlProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupSizeControlProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_PROPERTIES;
 }
@@ -33463,7 +30472,7 @@ impl ::core::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateI
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO;
 }
@@ -33508,7 +30517,7 @@ impl ::core::default::Default for SubpassShadingPipelineCreateInfoHUAWEI<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassShadingPipelineCreateInfoHUAWEI<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassShadingPipelineCreateInfoHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SUBPASS_SHADING_PIPELINE_CREATE_INFO_HUAWEI;
 }
@@ -33549,7 +30558,7 @@ impl ::core::default::Default for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SUBPASS_SHADING_PROPERTIES_HUAWEI;
 }
@@ -33598,7 +30607,7 @@ impl ::core::default::Default for PhysicalDeviceClusterCullingShaderPropertiesHU
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_PROPERTIES_HUAWEI;
 }
@@ -33655,7 +30664,7 @@ impl ::core::default::Default for MemoryOpaqueCaptureAddressAllocateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryOpaqueCaptureAddressAllocateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryOpaqueCaptureAddressAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO;
 }
@@ -33691,7 +30700,7 @@ impl ::core::default::Default for DeviceMemoryOpaqueCaptureAddressInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceMemoryOpaqueCaptureAddressInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryOpaqueCaptureAddressInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO;
 }
 impl<'a> DeviceMemoryOpaqueCaptureAddressInfo<'a> {
@@ -33735,7 +30744,7 @@ impl ::core::default::Default for PhysicalDeviceLineRasterizationFeaturesKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLineRasterizationFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLineRasterizationFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_KHR;
 }
@@ -33800,7 +30809,7 @@ impl ::core::default::Default for PhysicalDeviceLineRasterizationPropertiesKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLineRasterizationPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLineRasterizationPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_KHR;
 }
@@ -33845,7 +30854,7 @@ impl ::core::default::Default for PipelineRasterizationLineStateCreateInfoKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRasterizationLineStateCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationLineStateCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_KHR;
 }
@@ -33902,7 +30911,7 @@ impl ::core::default::Default for PhysicalDevicePipelineCreationCacheControlFeat
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES;
 }
@@ -33970,7 +30979,7 @@ impl ::core::default::Default for PhysicalDeviceVulkan11Features<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan11Features<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan11Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_1_FEATURES;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceVulkan11Features<'_> {}
@@ -34096,7 +31105,7 @@ impl ::core::default::Default for PhysicalDeviceVulkan11Properties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan11Properties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan11Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_1_PROPERTIES;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceVulkan11Properties<'_> {}
@@ -34305,7 +31314,7 @@ impl ::core::default::Default for PhysicalDeviceVulkan12Features<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan12Features<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan12Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_2_FEATURES;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceVulkan12Features<'_> {}
@@ -34962,7 +31971,7 @@ impl ::core::default::Default for PhysicalDeviceVulkan12Properties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan12Properties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan12Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_2_PROPERTIES;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceVulkan12Properties<'_> {}
@@ -35441,7 +32450,7 @@ impl ::core::default::Default for PhysicalDeviceVulkan13Features<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan13Features<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan13Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_3_FEATURES;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceVulkan13Features<'_> {}
@@ -35601,7 +32610,7 @@ impl ::core::default::Default for PhysicalDeviceVulkan13Properties<'_> {
         Self { s_type : Self :: STRUCTURE_TYPE , p_next : :: core :: ptr :: null_mut () , min_subgroup_size : u32 :: default () , max_subgroup_size : u32 :: default () , max_compute_workgroup_subgroups : u32 :: default () , required_subgroup_size_stages : ShaderStageFlags :: default () , max_inline_uniform_block_size : u32 :: default () , max_per_stage_descriptor_inline_uniform_blocks : u32 :: default () , max_per_stage_descriptor_update_after_bind_inline_uniform_blocks : u32 :: default () , max_descriptor_set_inline_uniform_blocks : u32 :: default () , max_descriptor_set_update_after_bind_inline_uniform_blocks : u32 :: default () , max_inline_uniform_total_size : u32 :: default () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , storage_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , storage_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , uniform_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , uniform_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , max_buffer_size : DeviceSize :: default () , _marker : PhantomData , }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan13Properties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan13Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_3_PROPERTIES;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceVulkan13Properties<'_> {}
@@ -36009,7 +33018,7 @@ impl ::core::default::Default for PipelineCompilerControlCreateInfoAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineCompilerControlCreateInfoAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineCompilerControlCreateInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_COMPILER_CONTROL_CREATE_INFO_AMD;
 }
 unsafe impl Extends<GraphicsPipelineCreateInfo<'_>> for PipelineCompilerControlCreateInfoAMD<'_> {}
@@ -36052,7 +33061,7 @@ impl ::core::default::Default for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD;
 }
@@ -36110,7 +33119,7 @@ impl ::core::default::Default for PhysicalDeviceToolProperties<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceToolProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceToolProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_TOOL_PROPERTIES;
 }
 impl<'a> PhysicalDeviceToolProperties<'a> {
@@ -36194,7 +33203,7 @@ impl ::core::default::Default for SamplerCustomBorderColorCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerCustomBorderColorCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerCustomBorderColorCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_CUSTOM_BORDER_COLOR_CREATE_INFO_EXT;
 }
@@ -36235,7 +33244,7 @@ impl ::core::default::Default for PhysicalDeviceCustomBorderColorPropertiesEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_PROPERTIES_EXT;
 }
@@ -36279,7 +33288,7 @@ impl ::core::default::Default for PhysicalDeviceCustomBorderColorFeaturesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT;
 }
@@ -36329,7 +33338,7 @@ impl ::core::default::Default for SamplerBorderColorComponentMappingCreateInfoEX
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_BORDER_COLOR_COMPONENT_MAPPING_CREATE_INFO_EXT;
 }
@@ -36372,7 +33381,7 @@ impl ::core::default::Default for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT;
 }
@@ -36486,7 +33495,7 @@ impl ::core::default::Default for AccelerationStructureGeometryTrianglesDataKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureGeometryTrianglesDataKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryTrianglesDataKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_TRIANGLES_DATA_KHR;
 }
@@ -36526,50 +33535,6 @@ impl<'a> AccelerationStructureGeometryTrianglesDataKHR<'a> {
         self.transform_data = transform_data;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -36607,7 +33572,7 @@ impl ::core::default::Default for AccelerationStructureGeometryAabbsDataKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureGeometryAabbsDataKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryAabbsDataKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_AABBS_DATA_KHR;
 }
@@ -36659,7 +33624,7 @@ impl ::core::default::Default for AccelerationStructureGeometryInstancesDataKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureGeometryInstancesDataKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryInstancesDataKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_INSTANCES_DATA_KHR;
 }
@@ -36728,7 +33693,7 @@ impl ::core::default::Default for AccelerationStructureGeometryKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureGeometryKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_GEOMETRY_KHR;
 }
 impl<'a> AccelerationStructureGeometryKHR<'a> {
@@ -36811,7 +33776,7 @@ impl ::core::default::Default for AccelerationStructureBuildGeometryInfoKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureBuildGeometryInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureBuildGeometryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_BUILD_GEOMETRY_INFO_KHR;
 }
@@ -36935,7 +33900,7 @@ impl ::core::default::Default for AccelerationStructureCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_KHR;
 }
 impl<'a> AccelerationStructureCreateInfoKHR<'a> {
@@ -36968,50 +33933,6 @@ impl<'a> AccelerationStructureCreateInfoKHR<'a> {
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
         self.device_address = device_address;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -37105,7 +34026,7 @@ impl ::core::default::Default for AccelerationStructureDeviceAddressInfoKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureDeviceAddressInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureDeviceAddressInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_DEVICE_ADDRESS_INFO_KHR;
 }
@@ -37143,7 +34064,7 @@ impl ::core::default::Default for AccelerationStructureVersionInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureVersionInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureVersionInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_VERSION_INFO_KHR;
 }
 impl<'a> AccelerationStructureVersionInfoKHR<'a> {
@@ -37181,7 +34102,7 @@ impl ::core::default::Default for CopyAccelerationStructureInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyAccelerationStructureInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyAccelerationStructureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_ACCELERATION_STRUCTURE_INFO_KHR;
 }
 impl<'a> CopyAccelerationStructureInfoKHR<'a> {
@@ -37240,7 +34161,7 @@ impl ::core::default::Default for CopyAccelerationStructureToMemoryInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyAccelerationStructureToMemoryInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyAccelerationStructureToMemoryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COPY_ACCELERATION_STRUCTURE_TO_MEMORY_INFO_KHR;
 }
@@ -37300,7 +34221,7 @@ impl ::core::default::Default for CopyMemoryToAccelerationStructureInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyMemoryToAccelerationStructureInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToAccelerationStructureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COPY_MEMORY_TO_ACCELERATION_STRUCTURE_INFO_KHR;
 }
@@ -37347,7 +34268,7 @@ impl ::core::default::Default for RayTracingPipelineInterfaceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RayTracingPipelineInterfaceCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineInterfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RAY_TRACING_PIPELINE_INTERFACE_CREATE_INFO_KHR;
 }
@@ -37392,7 +34313,7 @@ impl ::core::default::Default for PipelineLibraryCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineLibraryCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineLibraryCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_LIBRARY_CREATE_INFO_KHR;
 }
 unsafe impl Extends<GraphicsPipelineCreateInfo<'_>> for PipelineLibraryCreateInfoKHR<'_> {}
@@ -37428,7 +34349,7 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicStateFeaturesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT;
 }
@@ -37472,7 +34393,7 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicState2FeaturesEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT;
 }
@@ -37589,7 +34510,7 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3FeaturesEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_FEATURES_EXT;
 }
@@ -37901,7 +34822,7 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3PropertiesE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_PROPERTIES_EXT;
 }
@@ -38028,7 +34949,7 @@ impl ::core::default::Default for RenderPassTransformBeginInfoQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassTransformBeginInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassTransformBeginInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_TRANSFORM_BEGIN_INFO_QCOM;
 }
 unsafe impl Extends<RenderPassBeginInfo<'_>> for RenderPassTransformBeginInfoQCOM<'_> {}
@@ -38063,7 +34984,7 @@ impl ::core::default::Default for CopyCommandTransformInfoQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyCommandTransformInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyCommandTransformInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_COMMAND_TRANSFORM_INFO_QCOM;
 }
 unsafe impl Extends<BufferImageCopy2<'_>> for CopyCommandTransformInfoQCOM<'_> {}
@@ -38101,7 +35022,7 @@ impl ::core::default::Default for CommandBufferInheritanceRenderPassTransformInf
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COMMAND_BUFFER_INHERITANCE_RENDER_PASS_TRANSFORM_INFO_QCOM;
 }
@@ -38145,7 +35066,7 @@ impl ::core::default::Default for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DIAGNOSTICS_CONFIG_FEATURES_NV;
 }
@@ -38182,7 +35103,7 @@ impl ::core::default::Default for DeviceDiagnosticsConfigCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceDiagnosticsConfigCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceDiagnosticsConfigCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_DIAGNOSTICS_CONFIG_CREATE_INFO_NV;
 }
 unsafe impl Extends<DeviceCreateInfo<'_>> for DeviceDiagnosticsConfigCreateInfoNV<'_> {}
@@ -38217,7 +35138,7 @@ impl ::core::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFea
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES;
 }
@@ -38264,7 +35185,9 @@ impl ::core::default::Default for PhysicalDeviceShaderSubgroupUniformControlFlow
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a>
+{
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_FEATURES_KHR;
 }
@@ -38314,7 +35237,7 @@ impl ::core::default::Default for PhysicalDeviceRobustness2FeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRobustness2FeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRobustness2FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_EXT;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceRobustness2FeaturesEXT<'_> {}
@@ -38362,7 +35285,7 @@ impl ::core::default::Default for PhysicalDeviceRobustness2PropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRobustness2PropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRobustness2PropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_ROBUSTNESS_2_PROPERTIES_EXT;
 }
@@ -38411,7 +35334,7 @@ impl ::core::default::Default for PhysicalDeviceImageRobustnessFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageRobustnessFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageRobustnessFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceImageRobustnessFeatures<'_> {}
@@ -38453,7 +35376,7 @@ impl ::core::default::Default for PhysicalDeviceWorkgroupMemoryExplicitLayoutFea
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_FEATURES_KHR;
 }
@@ -38554,7 +35477,7 @@ impl ::core::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PORTABILITY_SUBSET_FEATURES_KHR;
 }
@@ -38677,7 +35600,7 @@ impl ::core::default::Default for PhysicalDevicePortabilitySubsetPropertiesKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PORTABILITY_SUBSET_PROPERTIES_KHR;
 }
@@ -38721,7 +35644,7 @@ impl ::core::default::Default for PhysicalDevice4444FormatsFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevice4444FormatsFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice4444FormatsFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDevice4444FormatsFeaturesEXT<'_> {}
@@ -38762,7 +35685,7 @@ impl ::core::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SUBPASS_SHADING_FEATURES_HUAWEI;
 }
@@ -38804,7 +35727,7 @@ impl ::core::default::Default for PhysicalDeviceClusterCullingShaderFeaturesHUAW
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_FEATURES_HUAWEI;
 }
@@ -38826,50 +35749,6 @@ impl<'a> PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
     ) -> Self {
         self.multiview_cluster_culling_shader = multiview_cluster_culling_shader.into();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -38896,7 +35775,7 @@ impl ::core::default::Default for PhysicalDeviceClusterCullingShaderVrsFeaturesH
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_VRS_FEATURES_HUAWEI;
 }
@@ -38939,7 +35818,7 @@ impl ::core::default::Default for BufferCopy2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCopy2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCopy2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_COPY_2;
 }
 impl<'a> BufferCopy2<'a> {
@@ -38991,7 +35870,7 @@ impl ::core::default::Default for ImageCopy2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageCopy2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageCopy2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_COPY_2;
 }
 impl<'a> ImageCopy2<'a> {
@@ -39051,7 +35930,7 @@ impl ::core::default::Default for ImageBlit2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageBlit2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageBlit2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_BLIT_2;
 }
 impl<'a> ImageBlit2<'a> {
@@ -39074,50 +35953,6 @@ impl<'a> ImageBlit2<'a> {
     pub fn dst_offsets(mut self, dst_offsets: [Offset3D; 2]) -> Self {
         self.dst_offsets = dst_offsets;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -39154,7 +35989,7 @@ impl ::core::default::Default for BufferImageCopy2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferImageCopy2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferImageCopy2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_IMAGE_COPY_2;
 }
 impl<'a> BufferImageCopy2<'a> {
@@ -39187,50 +36022,6 @@ impl<'a> BufferImageCopy2<'a> {
     pub fn image_extent(mut self, image_extent: Extent3D) -> Self {
         self.image_extent = image_extent;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -39265,7 +36056,7 @@ impl ::core::default::Default for ImageResolve2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageResolve2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageResolve2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_RESOLVE_2;
 }
 impl<'a> ImageResolve2<'a> {
@@ -39325,7 +36116,7 @@ impl ::core::default::Default for CopyBufferInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyBufferInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyBufferInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_BUFFER_INFO_2;
 }
 impl<'a> CopyBufferInfo2<'a> {
@@ -39380,7 +36171,7 @@ impl ::core::default::Default for CopyImageInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyImageInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_IMAGE_INFO_2;
 }
 impl<'a> CopyImageInfo2<'a> {
@@ -39447,7 +36238,7 @@ impl ::core::default::Default for BlitImageInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BlitImageInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BlitImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BLIT_IMAGE_INFO_2;
 }
 impl<'a> BlitImageInfo2<'a> {
@@ -39482,50 +36273,6 @@ impl<'a> BlitImageInfo2<'a> {
         self.filter = filter;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -39559,7 +36306,7 @@ impl ::core::default::Default for CopyBufferToImageInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyBufferToImageInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyBufferToImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_BUFFER_TO_IMAGE_INFO_2;
 }
 impl<'a> CopyBufferToImageInfo2<'a> {
@@ -39617,7 +36364,7 @@ impl ::core::default::Default for CopyImageToBufferInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyImageToBufferInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyImageToBufferInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_IMAGE_TO_BUFFER_INFO_2;
 }
 impl<'a> CopyImageToBufferInfo2<'a> {
@@ -39677,7 +36424,7 @@ impl ::core::default::Default for ResolveImageInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ResolveImageInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ResolveImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RESOLVE_IMAGE_INFO_2;
 }
 impl<'a> ResolveImageInfo2<'a> {
@@ -39734,7 +36481,7 @@ impl ::core::default::Default for PhysicalDeviceShaderImageAtomicInt64FeaturesEX
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT;
 }
@@ -39781,7 +36528,7 @@ impl ::core::default::Default for FragmentShadingRateAttachmentInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FragmentShadingRateAttachmentInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FragmentShadingRateAttachmentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR;
 }
 unsafe impl Extends<SubpassDescription2<'_>> for FragmentShadingRateAttachmentInfoKHR<'_> {}
@@ -39829,7 +36576,7 @@ impl ::core::default::Default for PipelineFragmentShadingRateStateCreateInfoKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_FRAGMENT_SHADING_RATE_STATE_CREATE_INFO_KHR;
 }
@@ -39877,7 +36624,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateFeaturesKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_FEATURES_KHR;
 }
@@ -39965,7 +36712,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRatePropertiesKHR
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_PROPERTIES_KHR;
 }
@@ -40144,7 +36891,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShadingRateKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_KHR;
 }
 impl<'a> PhysicalDeviceFragmentShadingRateKHR<'a> {
@@ -40183,7 +36930,7 @@ impl ::core::default::Default for PhysicalDeviceShaderTerminateInvocationFeature
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES;
 }
@@ -40227,7 +36974,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_FEATURES_NV;
 }
@@ -40283,7 +37030,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsProperti
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_PROPERTIES_NV;
 }
@@ -40330,7 +37077,7 @@ impl ::core::default::Default for PipelineFragmentShadingRateEnumStateCreateInfo
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_FRAGMENT_SHADING_RATE_ENUM_STATE_CREATE_INFO_NV;
 }
@@ -40383,7 +37130,7 @@ impl ::core::default::Default for AccelerationStructureBuildSizesInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureBuildSizesInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureBuildSizesInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR;
 }
@@ -40430,7 +37177,7 @@ impl ::core::default::Default for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_2D_VIEW_OF_3D_FEATURES_EXT;
 }
@@ -40472,7 +37219,7 @@ impl ::core::default::Default for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_SLICED_VIEW_OF_3D_FEATURES_EXT;
 }
@@ -40512,7 +37259,7 @@ impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopDynamicSta
         }
     }
 }
-unsafe impl<'a> TaggedStructure
+unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a>
 {
     const STRUCTURE_TYPE: StructureType =
@@ -40560,7 +37307,7 @@ impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesFeaturesEX
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_FEATURES_EXT;
 }
@@ -40600,7 +37347,7 @@ impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesProperties
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_PROPERTIES_EXT;
 }
@@ -40639,7 +37386,7 @@ impl ::core::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT;
 }
@@ -40711,7 +37458,7 @@ impl ::core::default::Default for MutableDescriptorTypeCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MutableDescriptorTypeCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MutableDescriptorTypeCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT;
 }
 unsafe impl Extends<DescriptorSetLayoutCreateInfo<'_>> for MutableDescriptorTypeCreateInfoEXT<'_> {}
@@ -40751,7 +37498,7 @@ impl ::core::default::Default for PhysicalDeviceDepthClipControlFeaturesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT;
 }
@@ -40790,7 +37537,7 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_FEATURES_EXT;
 }
@@ -40860,7 +37607,7 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertie
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_PROPERTIES_EXT;
 }
@@ -40988,7 +37735,7 @@ impl ::core::default::Default for GeneratedCommandsPipelineInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeneratedCommandsPipelineInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsPipelineInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GENERATED_COMMANDS_PIPELINE_INFO_EXT;
 }
 unsafe impl Extends<GeneratedCommandsInfoEXT<'_>> for GeneratedCommandsPipelineInfoEXT<'_> {}
@@ -41029,7 +37776,7 @@ impl ::core::default::Default for GeneratedCommandsShaderInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeneratedCommandsShaderInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsShaderInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GENERATED_COMMANDS_SHADER_INFO_EXT;
 }
 unsafe impl Extends<GeneratedCommandsInfoEXT<'_>> for GeneratedCommandsShaderInfoEXT<'_> {}
@@ -41075,7 +37822,7 @@ impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::GENERATED_COMMANDS_MEMORY_REQUIREMENTS_INFO_EXT;
 }
@@ -41106,50 +37853,6 @@ impl<'a> GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
         self.max_draw_count = max_draw_count;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -41177,7 +37880,7 @@ impl ::core::default::Default for IndirectExecutionSetPipelineInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectExecutionSetPipelineInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetPipelineInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_EXECUTION_SET_PIPELINE_INFO_EXT;
 }
 impl<'a> IndirectExecutionSetPipelineInfoEXT<'a> {
@@ -41218,7 +37921,7 @@ impl ::core::default::Default for IndirectExecutionSetShaderLayoutInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectExecutionSetShaderLayoutInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetShaderLayoutInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::INDIRECT_EXECUTION_SET_SHADER_LAYOUT_INFO_EXT;
 }
@@ -41264,7 +37967,7 @@ impl ::core::default::Default for IndirectExecutionSetShaderInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectExecutionSetShaderInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetShaderInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_EXECUTION_SET_SHADER_INFO_EXT;
 }
 impl<'a> IndirectExecutionSetShaderInfoEXT<'a> {
@@ -41344,7 +38047,7 @@ impl ::core::default::Default for IndirectExecutionSetCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectExecutionSetCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_EXECUTION_SET_CREATE_INFO_EXT;
 }
 impl<'a> IndirectExecutionSetCreateInfoEXT<'a> {
@@ -41401,7 +38104,7 @@ impl ::core::default::Default for GeneratedCommandsInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GeneratedCommandsInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GENERATED_COMMANDS_INFO_EXT;
 }
 impl<'a> GeneratedCommandsInfoEXT<'a> {
@@ -41461,50 +38164,6 @@ impl<'a> GeneratedCommandsInfoEXT<'a> {
         self.max_draw_count = max_draw_count;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -41532,7 +38191,7 @@ impl ::core::default::Default for WriteIndirectExecutionSetPipelineEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for WriteIndirectExecutionSetPipelineEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for WriteIndirectExecutionSetPipelineEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_INDIRECT_EXECUTION_SET_PIPELINE_EXT;
 }
 impl<'a> WriteIndirectExecutionSetPipelineEXT<'a> {
@@ -41573,7 +38232,7 @@ impl ::core::default::Default for WriteIndirectExecutionSetShaderEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for WriteIndirectExecutionSetShaderEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for WriteIndirectExecutionSetShaderEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_INDIRECT_EXECUTION_SET_SHADER_EXT;
 }
 impl<'a> WriteIndirectExecutionSetShaderEXT<'a> {
@@ -41622,7 +38281,7 @@ impl ::core::default::Default for IndirectCommandsLayoutCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectCommandsLayoutCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_EXT;
 }
 impl<'a> IndirectCommandsLayoutCreateInfoEXT<'a> {
@@ -41651,50 +38310,6 @@ impl<'a> IndirectCommandsLayoutCreateInfoEXT<'a> {
         self.token_count = tokens.len() as _;
         self.p_tokens = tokens.as_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -41736,7 +38351,7 @@ impl ::core::default::Default for IndirectCommandsLayoutTokenEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for IndirectCommandsLayoutTokenEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutTokenEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_COMMANDS_LAYOUT_TOKEN_EXT;
 }
 impl<'a> IndirectCommandsLayoutTokenEXT<'a> {
@@ -41942,7 +38557,7 @@ impl ::core::default::Default for PipelineViewportDepthClipControlCreateInfoEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportDepthClipControlCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportDepthClipControlCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_DEPTH_CLIP_CONTROL_CREATE_INFO_EXT;
 }
@@ -41981,7 +38596,7 @@ impl ::core::default::Default for PhysicalDeviceDepthClampControlFeaturesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_CLAMP_CONTROL_FEATURES_EXT;
 }
@@ -42023,7 +38638,7 @@ impl ::core::default::Default for PipelineViewportDepthClampControlCreateInfoEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineViewportDepthClampControlCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineViewportDepthClampControlCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_DEPTH_CLAMP_CONTROL_CREATE_INFO_EXT;
 }
@@ -42067,7 +38682,7 @@ impl ::core::default::Default for PhysicalDeviceVertexInputDynamicStateFeaturesE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VERTEX_INPUT_DYNAMIC_STATE_FEATURES_EXT;
 }
@@ -42107,7 +38722,7 @@ impl ::core::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV;
 }
@@ -42147,7 +38762,9 @@ impl ::core::default::Default for PhysicalDeviceShaderRelaxedExtendedInstruction
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a>
+{
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_RELAXED_EXTENDED_INSTRUCTION_FEATURES_KHR;
 }
@@ -42199,7 +38816,7 @@ impl ::core::default::Default for VertexInputBindingDescription2EXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VertexInputBindingDescription2EXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VertexInputBindingDescription2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VERTEX_INPUT_BINDING_DESCRIPTION_2_EXT;
 }
 impl<'a> VertexInputBindingDescription2EXT<'a> {
@@ -42254,7 +38871,7 @@ impl ::core::default::Default for VertexInputAttributeDescription2EXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VertexInputAttributeDescription2EXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VertexInputAttributeDescription2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VERTEX_INPUT_ATTRIBUTE_DESCRIPTION_2_EXT;
 }
 impl<'a> VertexInputAttributeDescription2EXT<'a> {
@@ -42303,7 +38920,7 @@ impl ::core::default::Default for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COLOR_WRITE_ENABLE_FEATURES_EXT;
 }
@@ -42342,7 +38959,7 @@ impl ::core::default::Default for PipelineColorWriteCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineColorWriteCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineColorWriteCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_COLOR_WRITE_CREATE_INFO_EXT;
 }
 unsafe impl Extends<PipelineColorBlendStateCreateInfo<'_>> for PipelineColorWriteCreateInfoEXT<'_> {}
@@ -42384,7 +39001,7 @@ impl ::core::default::Default for MemoryBarrier2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryBarrier2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryBarrier2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_BARRIER_2;
 }
 unsafe impl Extends<SubpassDependency2<'_>> for MemoryBarrier2<'_> {}
@@ -42452,7 +39069,7 @@ impl ::core::default::Default for ImageMemoryBarrier2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageMemoryBarrier2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageMemoryBarrier2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_MEMORY_BARRIER_2;
 }
 impl<'a> ImageMemoryBarrier2<'a> {
@@ -42506,50 +39123,6 @@ impl<'a> ImageMemoryBarrier2<'a> {
         self.subresource_range = subresource_range;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -42591,7 +39164,7 @@ impl ::core::default::Default for BufferMemoryBarrier2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferMemoryBarrier2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferMemoryBarrier2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_MEMORY_BARRIER_2;
 }
 impl<'a> BufferMemoryBarrier2<'a> {
@@ -42640,50 +39213,6 @@ impl<'a> BufferMemoryBarrier2<'a> {
         self.size = size;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -42721,7 +39250,7 @@ impl ::core::default::Default for DependencyInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DependencyInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DependencyInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEPENDENCY_INFO;
 }
 impl<'a> DependencyInfo<'a> {
@@ -42785,7 +39314,7 @@ impl ::core::default::Default for SemaphoreSubmitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SemaphoreSubmitInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SemaphoreSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_SUBMIT_INFO;
 }
 impl<'a> SemaphoreSubmitInfo<'a> {
@@ -42836,7 +39365,7 @@ impl ::core::default::Default for CommandBufferSubmitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferSubmitInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_SUBMIT_INFO;
 }
 impl<'a> CommandBufferSubmitInfo<'a> {
@@ -42849,50 +39378,6 @@ impl<'a> CommandBufferSubmitInfo<'a> {
     pub fn device_mask(mut self, device_mask: u32) -> Self {
         self.device_mask = device_mask;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -42931,7 +39416,7 @@ impl ::core::default::Default for SubmitInfo2<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubmitInfo2<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubmitInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBMIT_INFO_2;
 }
 impl<'a> SubmitInfo2<'a> {
@@ -42967,50 +39452,6 @@ impl<'a> SubmitInfo2<'a> {
         self.p_signal_semaphore_infos = signal_semaphore_infos.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -43036,7 +39477,7 @@ impl ::core::default::Default for QueueFamilyCheckpointProperties2NV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueueFamilyCheckpointProperties2NV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueueFamilyCheckpointProperties2NV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV;
 }
 unsafe impl Extends<QueueFamilyProperties2<'_>> for QueueFamilyCheckpointProperties2NV<'_> {}
@@ -43076,7 +39517,7 @@ impl ::core::default::Default for CheckpointData2NV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CheckpointData2NV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CheckpointData2NV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CHECKPOINT_DATA_2_NV;
 }
 impl<'a> CheckpointData2NV<'a> {
@@ -43115,7 +39556,7 @@ impl ::core::default::Default for PhysicalDeviceSynchronization2Features<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSynchronization2Features<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSynchronization2Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceSynchronization2Features<'_> {}
@@ -43151,7 +39592,7 @@ impl ::core::default::Default for PhysicalDeviceHostImageCopyFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceHostImageCopyFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostImageCopyFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_HOST_IMAGE_COPY_FEATURES_EXT;
 }
@@ -43198,7 +39639,7 @@ impl ::core::default::Default for PhysicalDeviceHostImageCopyPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceHostImageCopyPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostImageCopyPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_HOST_IMAGE_COPY_PROPERTIES_EXT;
 }
@@ -43270,7 +39711,7 @@ impl ::core::default::Default for MemoryToImageCopyEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryToImageCopyEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryToImageCopyEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_TO_IMAGE_COPY_EXT;
 }
 impl<'a> MemoryToImageCopyEXT<'a> {
@@ -43339,7 +39780,7 @@ impl ::core::default::Default for ImageToMemoryCopyEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageToMemoryCopyEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageToMemoryCopyEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_TO_MEMORY_COPY_EXT;
 }
 impl<'a> ImageToMemoryCopyEXT<'a> {
@@ -43406,7 +39847,7 @@ impl ::core::default::Default for CopyMemoryToImageInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyMemoryToImageInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToImageInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MEMORY_TO_IMAGE_INFO_EXT;
 }
 impl<'a> CopyMemoryToImageInfoEXT<'a> {
@@ -43464,7 +39905,7 @@ impl ::core::default::Default for CopyImageToMemoryInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyImageToMemoryInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyImageToMemoryInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_IMAGE_TO_MEMORY_INFO_EXT;
 }
 impl<'a> CopyImageToMemoryInfoEXT<'a> {
@@ -43526,7 +39967,7 @@ impl ::core::default::Default for CopyImageToImageInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyImageToImageInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyImageToImageInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_IMAGE_TO_IMAGE_INFO_EXT;
 }
 impl<'a> CopyImageToImageInfoEXT<'a> {
@@ -43592,7 +40033,7 @@ impl ::core::default::Default for HostImageLayoutTransitionInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for HostImageLayoutTransitionInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for HostImageLayoutTransitionInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::HOST_IMAGE_LAYOUT_TRANSITION_INFO_EXT;
 }
 impl<'a> HostImageLayoutTransitionInfoEXT<'a> {
@@ -43641,7 +40082,7 @@ impl ::core::default::Default for SubresourceHostMemcpySizeEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubresourceHostMemcpySizeEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubresourceHostMemcpySizeEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBRESOURCE_HOST_MEMCPY_SIZE_EXT;
 }
 unsafe impl Extends<SubresourceLayout2KHR<'_>> for SubresourceHostMemcpySizeEXT<'_> {}
@@ -43678,7 +40119,7 @@ impl ::core::default::Default for HostImageCopyDevicePerformanceQueryEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for HostImageCopyDevicePerformanceQueryEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for HostImageCopyDevicePerformanceQueryEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::HOST_IMAGE_COPY_DEVICE_PERFORMANCE_QUERY_EXT;
 }
@@ -43723,7 +40164,7 @@ impl ::core::default::Default for PhysicalDevicePrimitivesGeneratedQueryFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRIMITIVES_GENERATED_QUERY_FEATURES_EXT;
 }
@@ -43784,7 +40225,7 @@ impl ::core::default::Default for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LEGACY_DITHERING_FEATURES_EXT;
 }
@@ -43821,7 +40262,9 @@ impl ::core::default::Default for PhysicalDeviceMultisampledRenderToSingleSample
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a>
+{
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_FEATURES_EXT;
 }
@@ -43867,7 +40310,7 @@ impl ::core::default::Default for SubpassResolvePerformanceQueryEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubpassResolvePerformanceQueryEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubpassResolvePerformanceQueryEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_RESOLVE_PERFORMANCE_QUERY_EXT;
 }
 unsafe impl Extends<FormatProperties2<'_>> for SubpassResolvePerformanceQueryEXT<'_> {}
@@ -43904,7 +40347,7 @@ impl ::core::default::Default for MultisampledRenderToSingleSampledInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MultisampledRenderToSingleSampledInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MultisampledRenderToSingleSampledInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_INFO_EXT;
 }
@@ -43950,7 +40393,7 @@ impl ::core::default::Default for PhysicalDevicePipelineProtectedAccessFeaturesE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineProtectedAccessFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineProtectedAccessFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT;
 }
@@ -43990,7 +40433,7 @@ impl ::core::default::Default for QueueFamilyVideoPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueueFamilyVideoPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueueFamilyVideoPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_VIDEO_PROPERTIES_KHR;
 }
 unsafe impl Extends<QueueFamilyProperties2<'_>> for QueueFamilyVideoPropertiesKHR<'_> {}
@@ -44028,7 +40471,7 @@ impl ::core::default::Default for QueueFamilyQueryResultStatusPropertiesKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueueFamilyQueryResultStatusPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueueFamilyQueryResultStatusPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_KHR;
 }
@@ -44066,7 +40509,7 @@ impl ::core::default::Default for VideoProfileListInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoProfileListInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoProfileListInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_PROFILE_LIST_INFO_KHR;
 }
 unsafe impl Extends<PhysicalDeviceImageFormatInfo2<'_>> for VideoProfileListInfoKHR<'_> {}
@@ -44105,7 +40548,7 @@ impl ::core::default::Default for PhysicalDeviceVideoFormatInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVideoFormatInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoFormatInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VIDEO_FORMAT_INFO_KHR;
 }
 impl<'a> PhysicalDeviceVideoFormatInfoKHR<'a> {
@@ -44113,50 +40556,6 @@ impl<'a> PhysicalDeviceVideoFormatInfoKHR<'a> {
     pub fn image_usage(mut self, image_usage: ImageUsageFlags) -> Self {
         self.image_usage = image_usage;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -44193,7 +40592,7 @@ impl ::core::default::Default for VideoFormatPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoFormatPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoFormatPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_FORMAT_PROPERTIES_KHR;
 }
 impl<'a> VideoFormatPropertiesKHR<'a> {
@@ -44258,7 +40657,7 @@ impl ::core::default::Default for VideoProfileInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoProfileInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_PROFILE_INFO_KHR;
 }
 unsafe impl Extends<QueryPoolCreateInfo<'_>> for VideoProfileInfoKHR<'_> {}
@@ -44288,50 +40687,6 @@ impl<'a> VideoProfileInfoKHR<'a> {
     pub fn chroma_bit_depth(mut self, chroma_bit_depth: VideoComponentBitDepthFlagsKHR) -> Self {
         self.chroma_bit_depth = chroma_bit_depth;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -44374,7 +40729,7 @@ impl ::core::default::Default for VideoCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoCapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_CAPABILITIES_KHR;
 }
 impl<'a> VideoCapabilitiesKHR<'a> {
@@ -44429,50 +40784,6 @@ impl<'a> VideoCapabilitiesKHR<'a> {
         self.std_header_version = std_header_version;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -44500,7 +40811,7 @@ impl ::core::default::Default for VideoSessionMemoryRequirementsKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoSessionMemoryRequirementsKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoSessionMemoryRequirementsKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_MEMORY_REQUIREMENTS_KHR;
 }
 impl<'a> VideoSessionMemoryRequirementsKHR<'a> {
@@ -44545,7 +40856,7 @@ impl ::core::default::Default for BindVideoSessionMemoryInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindVideoSessionMemoryInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindVideoSessionMemoryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_VIDEO_SESSION_MEMORY_INFO_KHR;
 }
 impl<'a> BindVideoSessionMemoryInfoKHR<'a> {
@@ -44600,7 +40911,7 @@ impl ::core::default::Default for VideoPictureResourceInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoPictureResourceInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoPictureResourceInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_PICTURE_RESOURCE_INFO_KHR;
 }
 impl<'a> VideoPictureResourceInfoKHR<'a> {
@@ -44651,7 +40962,7 @@ impl ::core::default::Default for VideoReferenceSlotInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoReferenceSlotInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoReferenceSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_REFERENCE_SLOT_INFO_KHR;
 }
 impl<'a> VideoReferenceSlotInfoKHR<'a> {
@@ -44667,50 +40978,6 @@ impl<'a> VideoReferenceSlotInfoKHR<'a> {
     ) -> Self {
         self.p_picture_resource = picture_resource;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -44737,7 +41004,7 @@ impl ::core::default::Default for VideoDecodeCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeCapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_CAPABILITIES_KHR;
 }
 unsafe impl Extends<VideoCapabilitiesKHR<'_>> for VideoDecodeCapabilitiesKHR<'_> {}
@@ -44772,7 +41039,7 @@ impl ::core::default::Default for VideoDecodeUsageInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeUsageInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeUsageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_USAGE_INFO_KHR;
 }
 unsafe impl Extends<VideoProfileInfoKHR<'_>> for VideoDecodeUsageInfoKHR<'_> {}
@@ -44822,7 +41089,7 @@ impl ::core::default::Default for VideoDecodeInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_INFO_KHR;
 }
 impl<'a> VideoDecodeInfoKHR<'a> {
@@ -44868,50 +41135,6 @@ impl<'a> VideoDecodeInfoKHR<'a> {
         self.p_reference_slots = reference_slots.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -44937,7 +41160,7 @@ impl ::core::default::Default for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVideoMaintenance1FeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoMaintenance1FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VIDEO_MAINTENANCE_1_FEATURES_KHR;
 }
@@ -44981,7 +41204,7 @@ impl ::core::default::Default for VideoInlineQueryInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoInlineQueryInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoInlineQueryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_INLINE_QUERY_INFO_KHR;
 }
 unsafe impl Extends<VideoDecodeInfoKHR<'_>> for VideoInlineQueryInfoKHR<'_> {}
@@ -45029,7 +41252,7 @@ impl ::core::default::Default for VideoDecodeH264ProfileInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264ProfileInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_PROFILE_INFO_KHR;
 }
 unsafe impl Extends<VideoProfileInfoKHR<'_>> for VideoDecodeH264ProfileInfoKHR<'_> {}
@@ -45072,7 +41295,7 @@ impl ::core::default::Default for VideoDecodeH264CapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264CapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_CAPABILITIES_KHR;
 }
 unsafe impl Extends<VideoCapabilitiesKHR<'_>> for VideoDecodeH264CapabilitiesKHR<'_> {}
@@ -45118,7 +41341,7 @@ impl ::core::default::Default for VideoDecodeH264SessionParametersAddInfoKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264SessionParametersAddInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264SessionParametersAddInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_KHR;
 }
@@ -45168,7 +41391,7 @@ impl ::core::default::Default for VideoDecodeH264SessionParametersCreateInfoKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
@@ -45224,7 +41447,7 @@ impl ::core::default::Default for VideoDecodeH264PictureInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264PictureInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_PICTURE_INFO_KHR;
 }
 unsafe impl Extends<VideoDecodeInfoKHR<'_>> for VideoDecodeH264PictureInfoKHR<'_> {}
@@ -45265,7 +41488,7 @@ impl ::core::default::Default for VideoDecodeH264DpbSlotInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264DpbSlotInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_DPB_SLOT_INFO_KHR;
 }
 unsafe impl Extends<VideoReferenceSlotInfoKHR<'_>> for VideoDecodeH264DpbSlotInfoKHR<'_> {}
@@ -45303,7 +41526,7 @@ impl ::core::default::Default for VideoDecodeH265ProfileInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265ProfileInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_PROFILE_INFO_KHR;
 }
 unsafe impl Extends<VideoProfileInfoKHR<'_>> for VideoDecodeH265ProfileInfoKHR<'_> {}
@@ -45339,7 +41562,7 @@ impl ::core::default::Default for VideoDecodeH265CapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265CapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_CAPABILITIES_KHR;
 }
 unsafe impl Extends<VideoCapabilitiesKHR<'_>> for VideoDecodeH265CapabilitiesKHR<'_> {}
@@ -45384,7 +41607,7 @@ impl ::core::default::Default for VideoDecodeH265SessionParametersAddInfoKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265SessionParametersAddInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265SessionParametersAddInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_KHR;
 }
@@ -45442,7 +41665,7 @@ impl ::core::default::Default for VideoDecodeH265SessionParametersCreateInfoKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
@@ -45503,7 +41726,7 @@ impl ::core::default::Default for VideoDecodeH265PictureInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265PictureInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_PICTURE_INFO_KHR;
 }
 unsafe impl Extends<VideoDecodeInfoKHR<'_>> for VideoDecodeH265PictureInfoKHR<'_> {}
@@ -45544,7 +41767,7 @@ impl ::core::default::Default for VideoDecodeH265DpbSlotInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265DpbSlotInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_DPB_SLOT_INFO_KHR;
 }
 unsafe impl Extends<VideoReferenceSlotInfoKHR<'_>> for VideoDecodeH265DpbSlotInfoKHR<'_> {}
@@ -45584,7 +41807,7 @@ impl ::core::default::Default for VideoDecodeAV1ProfileInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeAV1ProfileInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_PROFILE_INFO_KHR;
 }
 unsafe impl Extends<VideoProfileInfoKHR<'_>> for VideoDecodeAV1ProfileInfoKHR<'_> {}
@@ -45625,7 +41848,7 @@ impl ::core::default::Default for VideoDecodeAV1CapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeAV1CapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_CAPABILITIES_KHR;
 }
 unsafe impl Extends<VideoCapabilitiesKHR<'_>> for VideoDecodeAV1CapabilitiesKHR<'_> {}
@@ -45660,7 +41883,7 @@ impl ::core::default::Default for VideoDecodeAV1SessionParametersCreateInfoKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_DECODE_AV1_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
@@ -45712,7 +41935,7 @@ impl ::core::default::Default for VideoDecodeAV1PictureInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeAV1PictureInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_PICTURE_INFO_KHR;
 }
 unsafe impl Extends<VideoDecodeInfoKHR<'_>> for VideoDecodeAV1PictureInfoKHR<'_> {}
@@ -45772,7 +41995,7 @@ impl ::core::default::Default for VideoDecodeAV1DpbSlotInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeAV1DpbSlotInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_DPB_SLOT_INFO_KHR;
 }
 unsafe impl Extends<VideoReferenceSlotInfoKHR<'_>> for VideoDecodeAV1DpbSlotInfoKHR<'_> {}
@@ -45826,7 +42049,7 @@ impl ::core::default::Default for VideoSessionCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoSessionCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoSessionCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_CREATE_INFO_KHR;
 }
 impl<'a> VideoSessionCreateInfoKHR<'a> {
@@ -45875,50 +42098,6 @@ impl<'a> VideoSessionCreateInfoKHR<'a> {
         self.p_std_header_version = std_header_version;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -45948,7 +42127,7 @@ impl ::core::default::Default for VideoSessionParametersCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoSessionParametersCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoSessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
 impl<'a> VideoSessionParametersCreateInfoKHR<'a> {
@@ -45969,50 +42148,6 @@ impl<'a> VideoSessionParametersCreateInfoKHR<'a> {
     pub fn video_session(mut self, video_session: VideoSessionKHR) -> Self {
         self.video_session = video_session;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -46039,7 +42174,7 @@ impl ::core::default::Default for VideoSessionParametersUpdateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoSessionParametersUpdateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoSessionParametersUpdateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_PARAMETERS_UPDATE_INFO_KHR;
 }
 impl<'a> VideoSessionParametersUpdateInfoKHR<'a> {
@@ -46047,50 +42182,6 @@ impl<'a> VideoSessionParametersUpdateInfoKHR<'a> {
     pub fn update_sequence_count(mut self, update_sequence_count: u32) -> Self {
         self.update_sequence_count = update_sequence_count;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -46117,7 +42208,7 @@ impl ::core::default::Default for VideoEncodeSessionParametersGetInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeSessionParametersGetInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionParametersGetInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_SESSION_PARAMETERS_GET_INFO_KHR;
 }
@@ -46129,50 +42220,6 @@ impl<'a> VideoEncodeSessionParametersGetInfoKHR<'a> {
     ) -> Self {
         self.video_session_parameters = video_session_parameters;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -46199,7 +42246,7 @@ impl ::core::default::Default for VideoEncodeSessionParametersFeedbackInfoKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_SESSION_PARAMETERS_FEEDBACK_INFO_KHR;
 }
@@ -46208,50 +42255,6 @@ impl<'a> VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
     pub fn has_overrides(mut self, has_overrides: bool) -> Self {
         self.has_overrides = has_overrides.into();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -46286,7 +42289,7 @@ impl ::core::default::Default for VideoBeginCodingInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoBeginCodingInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoBeginCodingInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_BEGIN_CODING_INFO_KHR;
 }
 impl<'a> VideoBeginCodingInfoKHR<'a> {
@@ -46314,50 +42317,6 @@ impl<'a> VideoBeginCodingInfoKHR<'a> {
         self.p_reference_slots = reference_slots.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -46383,7 +42342,7 @@ impl ::core::default::Default for VideoEndCodingInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEndCodingInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEndCodingInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_END_CODING_INFO_KHR;
 }
 impl<'a> VideoEndCodingInfoKHR<'a> {
@@ -46417,7 +42376,7 @@ impl ::core::default::Default for VideoCodingControlInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoCodingControlInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoCodingControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_CODING_CONTROL_INFO_KHR;
 }
 impl<'a> VideoCodingControlInfoKHR<'a> {
@@ -46425,50 +42384,6 @@ impl<'a> VideoCodingControlInfoKHR<'a> {
     pub fn flags(mut self, flags: VideoCodingControlFlagsKHR) -> Self {
         self.flags = flags;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -46499,7 +42414,7 @@ impl ::core::default::Default for VideoEncodeUsageInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeUsageInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeUsageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_USAGE_INFO_KHR;
 }
 unsafe impl Extends<VideoProfileInfoKHR<'_>> for VideoEncodeUsageInfoKHR<'_> {}
@@ -46561,7 +42476,7 @@ impl ::core::default::Default for VideoEncodeInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_INFO_KHR;
 }
 impl<'a> VideoEncodeInfoKHR<'a> {
@@ -46615,50 +42530,6 @@ impl<'a> VideoEncodeInfoKHR<'a> {
         self.preceding_externally_encoded_bytes = preceding_externally_encoded_bytes;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -46684,7 +42555,7 @@ impl ::core::default::Default for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::QUERY_POOL_VIDEO_ENCODE_FEEDBACK_CREATE_INFO_KHR;
 }
@@ -46723,7 +42594,7 @@ impl ::core::default::Default for VideoEncodeQualityLevelInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeQualityLevelInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQualityLevelInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_QUALITY_LEVEL_INFO_KHR;
 }
 unsafe impl Extends<VideoCodingControlInfoKHR<'_>> for VideoEncodeQualityLevelInfoKHR<'_> {}
@@ -46764,7 +42635,7 @@ impl ::core::default::Default for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VIDEO_ENCODE_QUALITY_LEVEL_INFO_KHR;
 }
@@ -46806,7 +42677,7 @@ impl ::core::default::Default for VideoEncodeQualityLevelPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeQualityLevelPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQualityLevelPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_QUALITY_LEVEL_PROPERTIES_KHR;
 }
 impl<'a> VideoEncodeQualityLevelPropertiesKHR<'a> {
@@ -46825,50 +42696,6 @@ impl<'a> VideoEncodeQualityLevelPropertiesKHR<'a> {
     ) -> Self {
         self.preferred_rate_control_layer_count = preferred_rate_control_layer_count;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -46905,7 +42732,7 @@ impl ::core::default::Default for VideoEncodeRateControlInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeRateControlInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRateControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_RATE_CONTROL_INFO_KHR;
 }
 unsafe impl Extends<VideoCodingControlInfoKHR<'_>> for VideoEncodeRateControlInfoKHR<'_> {}
@@ -46974,7 +42801,7 @@ impl ::core::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeRateControlLayerInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRateControlLayerInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR;
 }
 impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
@@ -46997,50 +42824,6 @@ impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
     pub fn frame_rate_denominator(mut self, frame_rate_denominator: u32) -> Self {
         self.frame_rate_denominator = frame_rate_denominator;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -47079,7 +42862,7 @@ impl ::core::default::Default for VideoEncodeCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeCapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_CAPABILITIES_KHR;
 }
 unsafe impl Extends<VideoCapabilitiesKHR<'_>> for VideoEncodeCapabilitiesKHR<'_> {}
@@ -47177,7 +42960,7 @@ impl ::core::default::Default for VideoEncodeH264CapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264CapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_CAPABILITIES_KHR;
 }
 unsafe impl Extends<VideoCapabilitiesKHR<'_>> for VideoEncodeH264CapabilitiesKHR<'_> {}
@@ -47297,7 +43080,7 @@ impl ::core::default::Default for VideoEncodeH264QualityLevelPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264QualityLevelPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264QualityLevelPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_QUALITY_LEVEL_PROPERTIES_KHR;
 }
@@ -47393,7 +43176,7 @@ impl ::core::default::Default for VideoEncodeH264SessionCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264SessionCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_SESSION_CREATE_INFO_KHR;
 }
 unsafe impl Extends<VideoSessionCreateInfoKHR<'_>> for VideoEncodeH264SessionCreateInfoKHR<'_> {}
@@ -47439,7 +43222,7 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersAddInfoKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264SessionParametersAddInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersAddInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_KHR;
 }
@@ -47489,7 +43272,7 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersCreateInfoKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264SessionParametersCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
@@ -47547,7 +43330,7 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersGetInfoKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264SessionParametersGetInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersGetInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_GET_INFO_KHR;
 }
@@ -47603,7 +43386,7 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersFeedbackInfoKH
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_FEEDBACK_INFO_KHR;
 }
@@ -47647,7 +43430,7 @@ impl ::core::default::Default for VideoEncodeH264DpbSlotInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264DpbSlotInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_DPB_SLOT_INFO_KHR;
 }
 unsafe impl Extends<VideoReferenceSlotInfoKHR<'_>> for VideoEncodeH264DpbSlotInfoKHR<'_> {}
@@ -47691,7 +43474,7 @@ impl ::core::default::Default for VideoEncodeH264PictureInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264PictureInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_PICTURE_INFO_KHR;
 }
 unsafe impl Extends<VideoEncodeInfoKHR<'_>> for VideoEncodeH264PictureInfoKHR<'_> {}
@@ -47740,7 +43523,7 @@ impl ::core::default::Default for VideoEncodeH264ProfileInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264ProfileInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_PROFILE_INFO_KHR;
 }
 unsafe impl Extends<VideoProfileInfoKHR<'_>> for VideoEncodeH264ProfileInfoKHR<'_> {}
@@ -47778,7 +43561,7 @@ impl ::core::default::Default for VideoEncodeH264NaluSliceInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264NaluSliceInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264NaluSliceInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_NALU_SLICE_INFO_KHR;
 }
 impl<'a> VideoEncodeH264NaluSliceInfoKHR<'a> {
@@ -47825,7 +43608,7 @@ impl ::core::default::Default for VideoEncodeH264RateControlInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264RateControlInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264RateControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_RATE_CONTROL_INFO_KHR;
 }
 unsafe impl Extends<VideoCodingControlInfoKHR<'_>> for VideoEncodeH264RateControlInfoKHR<'_> {}
@@ -47941,7 +43724,7 @@ impl ::core::default::Default for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264GopRemainingFrameInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264GopRemainingFrameInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_GOP_REMAINING_FRAME_INFO_KHR;
 }
@@ -48002,7 +43785,7 @@ impl ::core::default::Default for VideoEncodeH264RateControlLayerInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264RateControlLayerInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264RateControlLayerInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_KHR;
 }
@@ -48096,7 +43879,7 @@ impl ::core::default::Default for VideoEncodeH265CapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265CapabilitiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_CAPABILITIES_KHR;
 }
 unsafe impl Extends<VideoCapabilitiesKHR<'_>> for VideoEncodeH265CapabilitiesKHR<'_> {}
@@ -48233,7 +44016,7 @@ impl ::core::default::Default for VideoEncodeH265QualityLevelPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265QualityLevelPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265QualityLevelPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_QUALITY_LEVEL_PROPERTIES_KHR;
 }
@@ -48321,7 +44104,7 @@ impl ::core::default::Default for VideoEncodeH265SessionCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265SessionCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_SESSION_CREATE_INFO_KHR;
 }
 unsafe impl Extends<VideoSessionCreateInfoKHR<'_>> for VideoEncodeH265SessionCreateInfoKHR<'_> {}
@@ -48371,7 +44154,7 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersAddInfoKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265SessionParametersAddInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersAddInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_KHR;
 }
@@ -48429,7 +44212,7 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersCreateInfoKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265SessionParametersCreateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
@@ -48496,7 +44279,7 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersGetInfoKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265SessionParametersGetInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersGetInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_GET_INFO_KHR;
 }
@@ -48564,7 +44347,7 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersFeedbackInfoKH
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_FEEDBACK_INFO_KHR;
 }
@@ -48617,7 +44400,7 @@ impl ::core::default::Default for VideoEncodeH265PictureInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265PictureInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_PICTURE_INFO_KHR;
 }
 unsafe impl Extends<VideoEncodeInfoKHR<'_>> for VideoEncodeH265PictureInfoKHR<'_> {}
@@ -48663,7 +44446,7 @@ impl ::core::default::Default for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265NaluSliceSegmentInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265NaluSliceSegmentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_INFO_KHR;
 }
@@ -48714,7 +44497,7 @@ impl ::core::default::Default for VideoEncodeH265RateControlInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265RateControlInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265RateControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_RATE_CONTROL_INFO_KHR;
 }
 unsafe impl Extends<VideoCodingControlInfoKHR<'_>> for VideoEncodeH265RateControlInfoKHR<'_> {}
@@ -48830,7 +44613,7 @@ impl ::core::default::Default for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265GopRemainingFrameInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265GopRemainingFrameInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_GOP_REMAINING_FRAME_INFO_KHR;
 }
@@ -48891,7 +44674,7 @@ impl ::core::default::Default for VideoEncodeH265RateControlLayerInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265RateControlLayerInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265RateControlLayerInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_KHR;
 }
@@ -48955,7 +44738,7 @@ impl ::core::default::Default for VideoEncodeH265ProfileInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265ProfileInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_PROFILE_INFO_KHR;
 }
 unsafe impl Extends<VideoProfileInfoKHR<'_>> for VideoEncodeH265ProfileInfoKHR<'_> {}
@@ -48991,7 +44774,7 @@ impl ::core::default::Default for VideoEncodeH265DpbSlotInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265DpbSlotInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_DPB_SLOT_INFO_KHR;
 }
 unsafe impl Extends<VideoReferenceSlotInfoKHR<'_>> for VideoEncodeH265DpbSlotInfoKHR<'_> {}
@@ -49029,7 +44812,7 @@ impl ::core::default::Default for PhysicalDeviceInheritedViewportScissorFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INHERITED_VIEWPORT_SCISSOR_FEATURES_NV;
 }
@@ -49073,7 +44856,7 @@ impl ::core::default::Default for CommandBufferInheritanceViewportScissorInfoNV<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferInheritanceViewportScissorInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceViewportScissorInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COMMAND_BUFFER_INHERITANCE_VIEWPORT_SCISSOR_INFO_NV;
 }
@@ -49122,7 +44905,7 @@ impl ::core::default::Default for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_YCBCR_2_PLANE_444_FORMATS_FEATURES_EXT;
 }
@@ -49164,7 +44947,7 @@ impl ::core::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PROVOKING_VERTEX_FEATURES_EXT;
 }
@@ -49212,7 +44995,7 @@ impl ::core::default::Default for PhysicalDeviceProvokingVertexPropertiesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PROVOKING_VERTEX_PROPERTIES_EXT;
 }
@@ -49263,7 +45046,7 @@ impl ::core::default::Default for PipelineRasterizationProvokingVertexStateCreat
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_PROVOKING_VERTEX_STATE_CREATE_INFO_EXT;
 }
@@ -49304,7 +45087,7 @@ impl ::core::default::Default for CuModuleCreateInfoNVX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CuModuleCreateInfoNVX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CuModuleCreateInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CU_MODULE_CREATE_INFO_NVX;
 }
 impl<'a> CuModuleCreateInfoNVX<'a> {
@@ -49341,7 +45124,7 @@ impl ::core::default::Default for CuFunctionCreateInfoNVX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CuFunctionCreateInfoNVX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CuFunctionCreateInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CU_FUNCTION_CREATE_INFO_NVX;
 }
 impl<'a> CuFunctionCreateInfoNVX<'a> {
@@ -49410,7 +45193,7 @@ impl ::core::default::Default for CuLaunchInfoNVX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CuLaunchInfoNVX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CuLaunchInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CU_LAUNCH_INFO_NVX;
 }
 impl<'a> CuLaunchInfoNVX<'a> {
@@ -49497,7 +45280,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_FEATURES_EXT;
 }
@@ -49622,7 +45405,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferPropertiesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_PROPERTIES_EXT;
 }
@@ -49906,7 +45689,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferDensityMapProper
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_DENSITY_MAP_PROPERTIES_EXT;
 }
@@ -49953,7 +45736,7 @@ impl ::core::default::Default for DescriptorAddressInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorAddressInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorAddressInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_ADDRESS_INFO_EXT;
 }
 impl<'a> DescriptorAddressInfoEXT<'a> {
@@ -49999,7 +45782,7 @@ impl ::core::default::Default for DescriptorBufferBindingInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorBufferBindingInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorBufferBindingInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_BUFFER_BINDING_INFO_EXT;
 }
 impl<'a> DescriptorBufferBindingInfoEXT<'a> {
@@ -50012,50 +45795,6 @@ impl<'a> DescriptorBufferBindingInfoEXT<'a> {
     pub fn usage(mut self, usage: BufferUsageFlags) -> Self {
         self.usage = usage;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -50082,7 +45821,7 @@ impl ::core::default::Default for DescriptorBufferBindingPushDescriptorBufferHan
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_BUFFER_BINDING_PUSH_DESCRIPTOR_BUFFER_HANDLE_EXT;
 }
@@ -50154,7 +45893,7 @@ impl ::core::default::Default for DescriptorGetInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorGetInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorGetInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_GET_INFO_EXT;
 }
 impl<'a> DescriptorGetInfoEXT<'a> {
@@ -50193,7 +45932,7 @@ impl ::core::default::Default for BufferCaptureDescriptorDataInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCaptureDescriptorDataInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
 impl<'a> BufferCaptureDescriptorDataInfoEXT<'a> {
@@ -50227,7 +45966,7 @@ impl ::core::default::Default for ImageCaptureDescriptorDataInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageCaptureDescriptorDataInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
 impl<'a> ImageCaptureDescriptorDataInfoEXT<'a> {
@@ -50261,7 +46000,7 @@ impl ::core::default::Default for ImageViewCaptureDescriptorDataInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewCaptureDescriptorDataInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::IMAGE_VIEW_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
@@ -50296,7 +46035,7 @@ impl ::core::default::Default for SamplerCaptureDescriptorDataInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerCaptureDescriptorDataInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
 impl<'a> SamplerCaptureDescriptorDataInfoEXT<'a> {
@@ -50332,7 +46071,7 @@ impl ::core::default::Default for AccelerationStructureCaptureDescriptorDataInfo
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
@@ -50378,7 +46117,7 @@ impl ::core::default::Default for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::OPAQUE_CAPTURE_DESCRIPTOR_DATA_CREATE_INFO_EXT;
 }
@@ -50428,7 +46167,7 @@ impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductFeatures<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_FEATURES;
 }
@@ -50493,7 +46232,7 @@ impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductPropertie
         Self { s_type : Self :: STRUCTURE_TYPE , p_next : :: core :: ptr :: null_mut () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , _marker : PhantomData , }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderIntegerDotProductProperties<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerDotProductProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_PROPERTIES;
 }
@@ -50806,7 +46545,7 @@ impl ::core::default::Default for PhysicalDeviceDrmPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDrmPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDrmPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_DRM_PROPERTIES_EXT;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceDrmPropertiesEXT<'_> {}
@@ -50866,7 +46605,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricFeature
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_KHR;
 }
@@ -50909,7 +46648,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricPropert
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_PROPERTIES_KHR;
 }
@@ -50954,7 +46693,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_MOTION_BLUR_FEATURES_NV;
 }
@@ -51003,7 +46742,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingValidationFeaturesNV<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV;
 }
@@ -51052,7 +46791,7 @@ impl ::core::default::Default for AccelerationStructureGeometryMotionTrianglesDa
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_MOTION_TRIANGLES_DATA_NV;
 }
@@ -51093,7 +46832,7 @@ impl ::core::default::Default for AccelerationStructureMotionInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureMotionInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureMotionInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_MOTION_INFO_NV;
 }
 unsafe impl Extends<AccelerationStructureCreateInfoKHR<'_>>
@@ -51319,7 +47058,7 @@ impl ::core::default::Default for MemoryGetRemoteAddressInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryGetRemoteAddressInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryGetRemoteAddressInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_REMOTE_ADDRESS_INFO_NV;
 }
 impl<'a> MemoryGetRemoteAddressInfoNV<'a> {
@@ -51360,7 +47099,7 @@ impl ::core::default::Default for ImportMemoryBufferCollectionFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMemoryBufferCollectionFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMemoryBufferCollectionFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_BUFFER_COLLECTION_FUCHSIA;
 }
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ImportMemoryBufferCollectionFUCHSIA<'_> {}
@@ -51402,7 +47141,7 @@ impl ::core::default::Default for BufferCollectionImageCreateInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCollectionImageCreateInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCollectionImageCreateInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::BUFFER_COLLECTION_IMAGE_CREATE_INFO_FUCHSIA;
 }
@@ -51445,7 +47184,7 @@ impl ::core::default::Default for BufferCollectionBufferCreateInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCollectionBufferCreateInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCollectionBufferCreateInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::BUFFER_COLLECTION_BUFFER_CREATE_INFO_FUCHSIA;
 }
@@ -51486,7 +47225,7 @@ impl ::core::default::Default for BufferCollectionCreateInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCollectionCreateInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCollectionCreateInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_COLLECTION_CREATE_INFO_FUCHSIA;
 }
 impl<'a> BufferCollectionCreateInfoFUCHSIA<'a> {
@@ -51540,7 +47279,7 @@ impl ::core::default::Default for BufferCollectionPropertiesFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCollectionPropertiesFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCollectionPropertiesFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_COLLECTION_PROPERTIES_FUCHSIA;
 }
 impl<'a> BufferCollectionPropertiesFUCHSIA<'a> {
@@ -51637,7 +47376,7 @@ impl ::core::default::Default for BufferConstraintsInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferConstraintsInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferConstraintsInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_CONSTRAINTS_INFO_FUCHSIA;
 }
 impl<'a> BufferConstraintsInfoFUCHSIA<'a> {
@@ -51687,7 +47426,7 @@ impl ::core::default::Default for SysmemColorSpaceFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SysmemColorSpaceFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SysmemColorSpaceFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SYSMEM_COLOR_SPACE_FUCHSIA;
 }
 impl<'a> SysmemColorSpaceFUCHSIA<'a> {
@@ -51731,7 +47470,7 @@ impl ::core::default::Default for ImageFormatConstraintsInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageFormatConstraintsInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageFormatConstraintsInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_FORMAT_CONSTRAINTS_INFO_FUCHSIA;
 }
 impl<'a> ImageFormatConstraintsInfoFUCHSIA<'a> {
@@ -51795,7 +47534,7 @@ impl ::core::default::Default for ImageConstraintsInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageConstraintsInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageConstraintsInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CONSTRAINTS_INFO_FUCHSIA;
 }
 impl<'a> ImageConstraintsInfoFUCHSIA<'a> {
@@ -51854,7 +47593,7 @@ impl ::core::default::Default for BufferCollectionConstraintsInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BufferCollectionConstraintsInfoFUCHSIA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BufferCollectionConstraintsInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_COLLECTION_CONSTRAINTS_INFO_FUCHSIA;
 }
 impl<'a> BufferCollectionConstraintsInfoFUCHSIA<'a> {
@@ -51927,7 +47666,7 @@ impl ::core::default::Default for CudaModuleCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CudaModuleCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CudaModuleCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CUDA_MODULE_CREATE_INFO_NV;
 }
 impl<'a> CudaModuleCreateInfoNV<'a> {
@@ -51964,7 +47703,7 @@ impl ::core::default::Default for CudaFunctionCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CudaFunctionCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CudaFunctionCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CUDA_FUNCTION_CREATE_INFO_NV;
 }
 impl<'a> CudaFunctionCreateInfoNV<'a> {
@@ -52033,7 +47772,7 @@ impl ::core::default::Default for CudaLaunchInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CudaLaunchInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CudaLaunchInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CUDA_LAUNCH_INFO_NV;
 }
 impl<'a> CudaLaunchInfoNV<'a> {
@@ -52114,7 +47853,7 @@ impl ::core::default::Default for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT;
 }
@@ -52159,7 +47898,7 @@ impl ::core::default::Default for FormatProperties3<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FormatProperties3<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FormatProperties3<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FORMAT_PROPERTIES_3;
 }
 unsafe impl Extends<FormatProperties2<'_>> for FormatProperties3<'_> {}
@@ -52206,7 +47945,7 @@ impl ::core::default::Default for DrmFormatModifierPropertiesList2EXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DrmFormatModifierPropertiesList2EXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DrmFormatModifierPropertiesList2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_2_EXT;
 }
 unsafe impl Extends<FormatProperties2<'_>> for DrmFormatModifierPropertiesList2EXT<'_> {}
@@ -52289,7 +48028,7 @@ impl ::core::default::Default for AndroidHardwareBufferFormatProperties2ANDROID<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AndroidHardwareBufferFormatProperties2ANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatProperties2ANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_2_ANDROID;
 }
@@ -52377,7 +48116,7 @@ impl ::core::default::Default for PipelineRenderingCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRenderingCreateInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRenderingCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_RENDERING_CREATE_INFO;
 }
 unsafe impl Extends<GraphicsPipelineCreateInfo<'_>> for PipelineRenderingCreateInfo<'_> {}
@@ -52442,7 +48181,7 @@ impl ::core::default::Default for RenderingInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderingInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderingInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_INFO;
 }
 impl<'a> RenderingInfo<'a> {
@@ -52487,50 +48226,6 @@ impl<'a> RenderingInfo<'a> {
     ) -> Self {
         self.p_stencil_attachment = stencil_attachment;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -52587,7 +48282,7 @@ impl ::core::default::Default for RenderingAttachmentInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderingAttachmentInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_ATTACHMENT_INFO;
 }
 impl<'a> RenderingAttachmentInfo<'a> {
@@ -52660,7 +48355,7 @@ impl ::core::default::Default for RenderingFragmentShadingRateAttachmentInfoKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR;
 }
@@ -52711,7 +48406,7 @@ impl ::core::default::Default for RenderingFragmentDensityMapAttachmentInfoEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_INFO_EXT;
 }
@@ -52752,7 +48447,7 @@ impl ::core::default::Default for PhysicalDeviceDynamicRenderingFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDynamicRenderingFeatures<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDynamicRenderingFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceDynamicRenderingFeatures<'_> {}
@@ -52800,7 +48495,7 @@ impl ::core::default::Default for CommandBufferInheritanceRenderingInfo<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CommandBufferInheritanceRenderingInfo<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceRenderingInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_INHERITANCE_RENDERING_INFO;
 }
 unsafe impl Extends<CommandBufferInheritanceInfo<'_>>
@@ -52868,7 +48563,7 @@ impl ::core::default::Default for AttachmentSampleCountInfoAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AttachmentSampleCountInfoAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AttachmentSampleCountInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_SAMPLE_COUNT_INFO_AMD;
 }
 unsafe impl Extends<CommandBufferInheritanceInfo<'_>> for AttachmentSampleCountInfoAMD<'_> {}
@@ -52918,7 +48613,7 @@ impl ::core::default::Default for MultiviewPerViewAttributesInfoNVX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MultiviewPerViewAttributesInfoNVX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MultiviewPerViewAttributesInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MULTIVIEW_PER_VIEW_ATTRIBUTES_INFO_NVX;
 }
 unsafe impl Extends<CommandBufferInheritanceInfo<'_>> for MultiviewPerViewAttributesInfoNVX<'_> {}
@@ -52963,7 +48658,7 @@ impl ::core::default::Default for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT;
 }
@@ -53000,7 +48695,7 @@ impl ::core::default::Default for ImageViewMinLodCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewMinLodCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewMinLodCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_MIN_LOD_CREATE_INFO_EXT;
 }
 unsafe impl Extends<ImageViewCreateInfo<'_>> for ImageViewMinLodCreateInfoEXT<'_> {}
@@ -53039,7 +48734,7 @@ impl ::core::default::Default for PhysicalDeviceRasterizationOrderAttachmentAcce
         }
     }
 }
-unsafe impl<'a> TaggedStructure
+unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a>
 {
     const STRUCTURE_TYPE: StructureType =
@@ -53106,7 +48801,7 @@ impl ::core::default::Default for PhysicalDeviceLinearColorAttachmentFeaturesNV<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV;
 }
@@ -53146,7 +48841,7 @@ impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryFeaturesE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT;
 }
@@ -53186,7 +48881,7 @@ impl ::core::default::Default for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_BINARY_FEATURES_KHR;
 }
@@ -53223,7 +48918,7 @@ impl ::core::default::Default for DevicePipelineBinaryInternalCacheControlKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DevicePipelineBinaryInternalCacheControlKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DevicePipelineBinaryInternalCacheControlKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEVICE_PIPELINE_BINARY_INTERNAL_CACHE_CONTROL_KHR;
 }
@@ -53267,7 +48962,7 @@ impl ::core::default::Default for PhysicalDevicePipelineBinaryPropertiesKHR<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_BINARY_PROPERTIES_KHR;
 }
@@ -53341,7 +49036,7 @@ impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryPropertie
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_PROPERTIES_EXT;
 }
@@ -53392,7 +49087,7 @@ impl ::core::default::Default for GraphicsPipelineLibraryCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GraphicsPipelineLibraryCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineLibraryCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GRAPHICS_PIPELINE_LIBRARY_CREATE_INFO_EXT;
 }
 unsafe impl Extends<GraphicsPipelineCreateInfo<'_>> for GraphicsPipelineLibraryCreateInfoEXT<'_> {}
@@ -53427,7 +49122,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorSetHostMappingFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_SET_HOST_MAPPING_FEATURES_VALVE;
 }
@@ -53472,7 +49167,7 @@ impl ::core::default::Default for DescriptorSetBindingReferenceVALVE<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetBindingReferenceVALVE<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetBindingReferenceVALVE<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_BINDING_REFERENCE_VALVE;
 }
 impl<'a> DescriptorSetBindingReferenceVALVE<'a> {
@@ -53513,7 +49208,7 @@ impl ::core::default::Default for DescriptorSetLayoutHostMappingInfoVALVE<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DescriptorSetLayoutHostMappingInfoVALVE<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutHostMappingInfoVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE;
 }
@@ -53557,7 +49252,7 @@ impl ::core::default::Default for PhysicalDeviceNestedCommandBufferFeaturesEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_FEATURES_EXT;
 }
@@ -53613,7 +49308,7 @@ impl ::core::default::Default for PhysicalDeviceNestedCommandBufferPropertiesEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_PROPERTIES_EXT;
 }
@@ -53655,7 +49350,7 @@ impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierFeaturesEX
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_FEATURES_EXT;
 }
@@ -53695,7 +49390,7 @@ impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierProperties
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_PROPERTIES_EXT;
 }
@@ -53739,7 +49434,7 @@ impl ::core::default::Default for PipelineShaderStageModuleIdentifierCreateInfoE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_SHADER_STAGE_MODULE_IDENTIFIER_CREATE_INFO_EXT;
 }
@@ -53791,7 +49486,7 @@ impl ::core::default::Default for ShaderModuleIdentifierEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ShaderModuleIdentifierEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ShaderModuleIdentifierEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_MODULE_IDENTIFIER_EXT;
 }
 impl<'a> ShaderModuleIdentifierEXT<'a> {
@@ -53834,7 +49529,7 @@ impl ::core::default::Default for ImageCompressionControlEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageCompressionControlEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageCompressionControlEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_COMPRESSION_CONTROL_EXT;
 }
 unsafe impl Extends<ImageCreateInfo<'_>> for ImageCompressionControlEXT<'_> {}
@@ -53880,7 +49575,7 @@ impl ::core::default::Default for PhysicalDeviceImageCompressionControlFeaturesE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT;
 }
@@ -53922,7 +49617,7 @@ impl ::core::default::Default for ImageCompressionPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageCompressionPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageCompressionPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_COMPRESSION_PROPERTIES_EXT;
 }
 unsafe impl Extends<ImageFormatProperties2<'_>> for ImageCompressionPropertiesEXT<'_> {}
@@ -53970,7 +49665,9 @@ impl ::core::default::Default for PhysicalDeviceImageCompressionControlSwapchain
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a>
+{
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT;
 }
@@ -54016,7 +49713,7 @@ impl ::core::default::Default for ImageSubresource2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageSubresource2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageSubresource2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_SUBRESOURCE_2_KHR;
 }
 impl<'a> ImageSubresource2KHR<'a> {
@@ -54050,7 +49747,7 @@ impl ::core::default::Default for SubresourceLayout2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubresourceLayout2KHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SubresourceLayout2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBRESOURCE_LAYOUT_2_KHR;
 }
 impl<'a> SubresourceLayout2KHR<'a> {
@@ -54058,50 +49755,6 @@ impl<'a> SubresourceLayout2KHR<'a> {
     pub fn subresource_layout(mut self, subresource_layout: SubresourceLayout) -> Self {
         self.subresource_layout = subresource_layout;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -54128,7 +49781,7 @@ impl ::core::default::Default for RenderPassCreationControlEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassCreationControlEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassCreationControlEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_CREATION_CONTROL_EXT;
 }
 unsafe impl Extends<RenderPassCreateInfo2<'_>> for RenderPassCreationControlEXT<'_> {}
@@ -54179,7 +49832,7 @@ impl ::core::default::Default for RenderPassCreationFeedbackCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassCreationFeedbackCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassCreationFeedbackCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_CREATION_FEEDBACK_CREATE_INFO_EXT;
 }
@@ -54270,7 +49923,7 @@ impl ::core::default::Default for RenderPassSubpassFeedbackCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassSubpassFeedbackCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassSubpassFeedbackCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT;
 }
@@ -54309,7 +49962,7 @@ impl ::core::default::Default for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SUBPASS_MERGE_FEEDBACK_FEATURES_EXT;
 }
@@ -54388,7 +50041,7 @@ impl ::core::default::Default for MicromapBuildInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MicromapBuildInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MicromapBuildInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_BUILD_INFO_EXT;
 }
 impl<'a> MicromapBuildInfoEXT<'a> {
@@ -54479,7 +50132,7 @@ impl ::core::default::Default for MicromapCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MicromapCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MicromapCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_CREATE_INFO_EXT;
 }
 impl<'a> MicromapCreateInfoEXT<'a> {
@@ -54538,7 +50191,7 @@ impl ::core::default::Default for MicromapVersionInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MicromapVersionInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MicromapVersionInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_VERSION_INFO_EXT;
 }
 impl<'a> MicromapVersionInfoEXT<'a> {
@@ -54576,7 +50229,7 @@ impl ::core::default::Default for CopyMicromapInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyMicromapInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyMicromapInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MICROMAP_INFO_EXT;
 }
 impl<'a> CopyMicromapInfoEXT<'a> {
@@ -54635,7 +50288,7 @@ impl ::core::default::Default for CopyMicromapToMemoryInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyMicromapToMemoryInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyMicromapToMemoryInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MICROMAP_TO_MEMORY_INFO_EXT;
 }
 impl<'a> CopyMicromapToMemoryInfoEXT<'a> {
@@ -54694,7 +50347,7 @@ impl ::core::default::Default for CopyMemoryToMicromapInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CopyMemoryToMicromapInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToMicromapInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MEMORY_TO_MICROMAP_INFO_EXT;
 }
 impl<'a> CopyMemoryToMicromapInfoEXT<'a> {
@@ -54742,7 +50395,7 @@ impl ::core::default::Default for MicromapBuildSizesInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MicromapBuildSizesInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MicromapBuildSizesInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_BUILD_SIZES_INFO_EXT;
 }
 impl<'a> MicromapBuildSizesInfoEXT<'a> {
@@ -54844,7 +50497,7 @@ impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_OPACITY_MICROMAP_FEATURES_EXT;
 }
@@ -54893,7 +50546,7 @@ impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_OPACITY_MICROMAP_PROPERTIES_EXT;
 }
@@ -54973,7 +50626,7 @@ impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapE
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT;
 }
@@ -55044,7 +50697,7 @@ impl ::core::default::Default for PhysicalDeviceDisplacementMicromapFeaturesNV<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV;
 }
@@ -55084,7 +50737,7 @@ impl ::core::default::Default for PhysicalDeviceDisplacementMicromapPropertiesNV
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_PROPERTIES_NV;
 }
@@ -55196,7 +50849,7 @@ impl ::core::default::Default for AccelerationStructureTrianglesDisplacementMicr
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_TRIANGLES_DISPLACEMENT_MICROMAP_NV;
 }
@@ -55325,7 +50978,7 @@ impl ::core::default::Default for PipelinePropertiesIdentifierEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelinePropertiesIdentifierEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelinePropertiesIdentifierEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_PROPERTIES_IDENTIFIER_EXT;
 }
 impl<'a> PipelinePropertiesIdentifierEXT<'a> {
@@ -55359,7 +51012,7 @@ impl ::core::default::Default for PhysicalDevicePipelinePropertiesFeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_PROPERTIES_FEATURES_EXT;
 }
@@ -55399,7 +51052,9 @@ impl ::core::default::Default for PhysicalDeviceShaderEarlyAndLateFragmentTestsF
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a>
+{
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_FEATURES_AMD;
 }
@@ -55445,7 +51100,7 @@ impl ::core::default::Default for ExternalMemoryAcquireUnmodifiedEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalMemoryAcquireUnmodifiedEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryAcquireUnmodifiedEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_EXT;
 }
 unsafe impl Extends<BufferMemoryBarrier<'_>> for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
@@ -55483,7 +51138,7 @@ impl ::core::default::Default for ExportMetalObjectCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalObjectCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalObjectCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_OBJECT_CREATE_INFO_EXT;
 }
 unsafe impl Extends<InstanceCreateInfo<'_>> for ExportMetalObjectCreateInfoEXT<'_> {}
@@ -55522,55 +51177,10 @@ impl ::core::default::Default for ExportMetalObjectsInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalObjectsInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalObjectsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_OBJECTS_INFO_EXT;
 }
-impl<'a> ExportMetalObjectsInfoEXT<'a> {
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
-}
+impl<'a> ExportMetalObjectsInfoEXT<'a> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -55595,7 +51205,7 @@ impl ::core::default::Default for ExportMetalDeviceInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalDeviceInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalDeviceInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_DEVICE_INFO_EXT;
 }
 unsafe impl Extends<ExportMetalObjectsInfoEXT<'_>> for ExportMetalDeviceInfoEXT<'_> {}
@@ -55632,7 +51242,7 @@ impl ::core::default::Default for ExportMetalCommandQueueInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalCommandQueueInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalCommandQueueInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_COMMAND_QUEUE_INFO_EXT;
 }
 unsafe impl Extends<ExportMetalObjectsInfoEXT<'_>> for ExportMetalCommandQueueInfoEXT<'_> {}
@@ -55674,7 +51284,7 @@ impl ::core::default::Default for ExportMetalBufferInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalBufferInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalBufferInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_BUFFER_INFO_EXT;
 }
 unsafe impl Extends<ExportMetalObjectsInfoEXT<'_>> for ExportMetalBufferInfoEXT<'_> {}
@@ -55714,7 +51324,7 @@ impl ::core::default::Default for ImportMetalBufferInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMetalBufferInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMetalBufferInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_METAL_BUFFER_INFO_EXT;
 }
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ImportMetalBufferInfoEXT<'_> {}
@@ -55757,7 +51367,7 @@ impl ::core::default::Default for ExportMetalTextureInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalTextureInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalTextureInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_TEXTURE_INFO_EXT;
 }
 unsafe impl Extends<ExportMetalObjectsInfoEXT<'_>> for ExportMetalTextureInfoEXT<'_> {}
@@ -55814,7 +51424,7 @@ impl ::core::default::Default for ImportMetalTextureInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMetalTextureInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMetalTextureInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_METAL_TEXTURE_INFO_EXT;
 }
 unsafe impl Extends<ImageCreateInfo<'_>> for ImportMetalTextureInfoEXT<'_> {}
@@ -55856,7 +51466,7 @@ impl ::core::default::Default for ExportMetalIOSurfaceInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalIOSurfaceInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalIOSurfaceInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_IO_SURFACE_INFO_EXT;
 }
 unsafe impl Extends<ExportMetalObjectsInfoEXT<'_>> for ExportMetalIOSurfaceInfoEXT<'_> {}
@@ -55896,7 +51506,7 @@ impl ::core::default::Default for ImportMetalIOSurfaceInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMetalIOSurfaceInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMetalIOSurfaceInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_METAL_IO_SURFACE_INFO_EXT;
 }
 unsafe impl Extends<ImageCreateInfo<'_>> for ImportMetalIOSurfaceInfoEXT<'_> {}
@@ -55935,7 +51545,7 @@ impl ::core::default::Default for ExportMetalSharedEventInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExportMetalSharedEventInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExportMetalSharedEventInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_SHARED_EVENT_INFO_EXT;
 }
 unsafe impl Extends<ExportMetalObjectsInfoEXT<'_>> for ExportMetalSharedEventInfoEXT<'_> {}
@@ -55980,7 +51590,7 @@ impl ::core::default::Default for ImportMetalSharedEventInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportMetalSharedEventInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportMetalSharedEventInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_METAL_SHARED_EVENT_INFO_EXT;
 }
 unsafe impl Extends<SemaphoreCreateInfo<'_>> for ImportMetalSharedEventInfoEXT<'_> {}
@@ -56016,7 +51626,7 @@ impl ::core::default::Default for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT;
 }
@@ -56056,7 +51666,7 @@ impl ::core::default::Default for PhysicalDevicePipelineRobustnessFeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineRobustnessFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineRobustnessFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_FEATURES_EXT;
 }
@@ -56102,7 +51712,7 @@ impl ::core::default::Default for PipelineRobustnessCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineRobustnessCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineRobustnessCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_ROBUSTNESS_CREATE_INFO_EXT;
 }
 unsafe impl Extends<GraphicsPipelineCreateInfo<'_>> for PipelineRobustnessCreateInfoEXT<'_> {}
@@ -56161,7 +51771,7 @@ impl ::core::default::Default for PhysicalDevicePipelineRobustnessPropertiesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineRobustnessPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineRobustnessPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_PROPERTIES_EXT;
 }
@@ -56231,7 +51841,7 @@ impl ::core::default::Default for ImageViewSampleWeightCreateInfoQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageViewSampleWeightCreateInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageViewSampleWeightCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM;
 }
 unsafe impl Extends<ImageViewCreateInfo<'_>> for ImageViewSampleWeightCreateInfoQCOM<'_> {}
@@ -56280,7 +51890,7 @@ impl ::core::default::Default for PhysicalDeviceImageProcessingFeaturesQCOM<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_FEATURES_QCOM;
 }
@@ -56333,7 +51943,7 @@ impl ::core::default::Default for PhysicalDeviceImageProcessingPropertiesQCOM<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_PROPERTIES_QCOM;
 }
@@ -56387,7 +51997,7 @@ impl ::core::default::Default for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM;
 }
@@ -56428,7 +52038,7 @@ impl ::core::default::Default for TilePropertiesQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for TilePropertiesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for TilePropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TILE_PROPERTIES_QCOM;
 }
 impl<'a> TilePropertiesQCOM<'a> {
@@ -56472,7 +52082,7 @@ impl ::core::default::Default for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_AMIGO_PROFILING_FEATURES_SEC;
 }
@@ -56511,7 +52121,7 @@ impl ::core::default::Default for AmigoProfilingSubmitInfoSEC<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AmigoProfilingSubmitInfoSEC<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AmigoProfilingSubmitInfoSEC<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::AMIGO_PROFILING_SUBMIT_INFO_SEC;
 }
 unsafe impl Extends<SubmitInfo<'_>> for AmigoProfilingSubmitInfoSEC<'_> {}
@@ -56551,7 +52161,7 @@ impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopLayoutFeat
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_FEATURES_EXT;
 }
@@ -56597,7 +52207,7 @@ impl ::core::default::Default for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_EXT;
 }
@@ -56637,7 +52247,7 @@ impl ::core::default::Default for PhysicalDeviceAddressBindingReportFeaturesEXT<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_ADDRESS_BINDING_REPORT_FEATURES_EXT;
 }
@@ -56683,7 +52293,7 @@ impl ::core::default::Default for DeviceAddressBindingCallbackDataEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceAddressBindingCallbackDataEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceAddressBindingCallbackDataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_ADDRESS_BINDING_CALLBACK_DATA_EXT;
 }
 unsafe impl Extends<DebugUtilsMessengerCallbackDataEXT<'_>>
@@ -56736,7 +52346,7 @@ impl ::core::default::Default for PhysicalDeviceOpticalFlowFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceOpticalFlowFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpticalFlowFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_OPTICAL_FLOW_FEATURES_NV;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceOpticalFlowFeaturesNV<'_> {}
@@ -56792,7 +52402,7 @@ impl ::core::default::Default for PhysicalDeviceOpticalFlowPropertiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceOpticalFlowPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpticalFlowPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_OPTICAL_FLOW_PROPERTIES_NV;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceOpticalFlowPropertiesNV<'_> {}
@@ -56883,7 +52493,7 @@ impl ::core::default::Default for OpticalFlowImageFormatInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for OpticalFlowImageFormatInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for OpticalFlowImageFormatInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_IMAGE_FORMAT_INFO_NV;
 }
 unsafe impl Extends<PhysicalDeviceImageFormatInfo2<'_>> for OpticalFlowImageFormatInfoNV<'_> {}
@@ -56919,7 +52529,7 @@ impl ::core::default::Default for OpticalFlowImageFormatPropertiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for OpticalFlowImageFormatPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for OpticalFlowImageFormatPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_IMAGE_FORMAT_PROPERTIES_NV;
 }
 impl<'a> OpticalFlowImageFormatPropertiesNV<'a> {
@@ -56969,7 +52579,7 @@ impl ::core::default::Default for OpticalFlowSessionCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for OpticalFlowSessionCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for OpticalFlowSessionCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_SESSION_CREATE_INFO_NV;
 }
 impl<'a> OpticalFlowSessionCreateInfoNV<'a> {
@@ -57018,50 +52628,6 @@ impl<'a> OpticalFlowSessionCreateInfoNV<'a> {
         self.flags = flags;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -57091,7 +52657,7 @@ impl ::core::default::Default for OpticalFlowSessionCreatePrivateDataInfoNV<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::OPTICAL_FLOW_SESSION_CREATE_PRIVATE_DATA_INFO_NV;
 }
@@ -57144,7 +52710,7 @@ impl ::core::default::Default for OpticalFlowExecuteInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for OpticalFlowExecuteInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for OpticalFlowExecuteInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_EXECUTE_INFO_NV;
 }
 impl<'a> OpticalFlowExecuteInfoNV<'a> {
@@ -57186,7 +52752,7 @@ impl ::core::default::Default for PhysicalDeviceFaultFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFaultFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FAULT_FEATURES_EXT;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceFaultFeaturesEXT<'_> {}
@@ -57310,7 +52876,7 @@ impl ::core::default::Default for DeviceFaultCountsEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceFaultCountsEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceFaultCountsEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_FAULT_COUNTS_EXT;
 }
 impl<'a> DeviceFaultCountsEXT<'a> {
@@ -57372,7 +52938,7 @@ impl ::core::default::Default for DeviceFaultInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceFaultInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceFaultInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_FAULT_INFO_EXT;
 }
 impl<'a> DeviceFaultInfoEXT<'a> {
@@ -57523,7 +53089,7 @@ impl ::core::default::Default for PhysicalDevicePipelineLibraryGroupHandlesFeatu
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_EXT;
 }
@@ -57570,7 +53136,7 @@ impl ::core::default::Default for DepthBiasInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DepthBiasInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DepthBiasInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEPTH_BIAS_INFO_EXT;
 }
 impl<'a> DepthBiasInfoEXT<'a> {
@@ -57588,50 +53154,6 @@ impl<'a> DepthBiasInfoEXT<'a> {
     pub fn depth_bias_slope_factor(mut self, depth_bias_slope_factor: f32) -> Self {
         self.depth_bias_slope_factor = depth_bias_slope_factor;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -57660,7 +53182,7 @@ impl ::core::default::Default for DepthBiasRepresentationInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DepthBiasRepresentationInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DepthBiasRepresentationInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEPTH_BIAS_REPRESENTATION_INFO_EXT;
 }
 unsafe impl Extends<DepthBiasInfoEXT<'_>> for DepthBiasRepresentationInfoEXT<'_> {}
@@ -57753,7 +53275,7 @@ impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_PROPERTIES_ARM;
 }
@@ -57802,7 +53324,7 @@ impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_FEATURES_ARM;
 }
@@ -57858,7 +53380,7 @@ impl ::core::default::Default for FrameBoundaryEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for FrameBoundaryEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for FrameBoundaryEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAME_BOUNDARY_EXT;
 }
 unsafe impl Extends<SubmitInfo<'_>> for FrameBoundaryEXT<'_> {}
@@ -57924,7 +53446,7 @@ impl ::core::default::Default for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAME_BOUNDARY_FEATURES_EXT;
 }
@@ -57961,7 +53483,9 @@ impl ::core::default::Default for PhysicalDeviceDynamicRenderingUnusedAttachment
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a>
+{
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT;
 }
@@ -58007,7 +53531,7 @@ impl ::core::default::Default for SurfacePresentModeEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfacePresentModeEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfacePresentModeEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PRESENT_MODE_EXT;
 }
 unsafe impl Extends<PhysicalDeviceSurfaceInfo2KHR<'_>> for SurfacePresentModeEXT<'_> {}
@@ -58050,7 +53574,7 @@ impl ::core::default::Default for SurfacePresentScalingCapabilitiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfacePresentScalingCapabilitiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfacePresentScalingCapabilitiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PRESENT_SCALING_CAPABILITIES_EXT;
 }
 unsafe impl Extends<SurfaceCapabilities2KHR<'_>> for SurfacePresentScalingCapabilitiesEXT<'_> {}
@@ -58116,7 +53640,7 @@ impl ::core::default::Default for SurfacePresentModeCompatibilityEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SurfacePresentModeCompatibilityEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SurfacePresentModeCompatibilityEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PRESENT_MODE_COMPATIBILITY_EXT;
 }
 unsafe impl Extends<SurfaceCapabilities2KHR<'_>> for SurfacePresentModeCompatibilityEXT<'_> {}
@@ -58152,7 +53676,7 @@ impl ::core::default::Default for PhysicalDeviceSwapchainMaintenance1FeaturesEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SWAPCHAIN_MAINTENANCE_1_FEATURES_EXT;
 }
@@ -58194,7 +53718,7 @@ impl ::core::default::Default for SwapchainPresentFenceInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainPresentFenceInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentFenceInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_FENCE_INFO_EXT;
 }
 unsafe impl Extends<PresentInfoKHR<'_>> for SwapchainPresentFenceInfoEXT<'_> {}
@@ -58232,7 +53756,7 @@ impl ::core::default::Default for SwapchainPresentModesCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainPresentModesCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentModesCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_MODES_CREATE_INFO_EXT;
 }
 unsafe impl Extends<SwapchainCreateInfoKHR<'_>> for SwapchainPresentModesCreateInfoEXT<'_> {}
@@ -58270,7 +53794,7 @@ impl ::core::default::Default for SwapchainPresentModeInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainPresentModeInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentModeInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_MODE_INFO_EXT;
 }
 unsafe impl Extends<PresentInfoKHR<'_>> for SwapchainPresentModeInfoEXT<'_> {}
@@ -58310,7 +53834,7 @@ impl ::core::default::Default for SwapchainPresentScalingCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainPresentScalingCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentScalingCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_SCALING_CREATE_INFO_EXT;
 }
 unsafe impl Extends<SwapchainCreateInfoKHR<'_>> for SwapchainPresentScalingCreateInfoEXT<'_> {}
@@ -58359,7 +53883,7 @@ impl ::core::default::Default for ReleaseSwapchainImagesInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ReleaseSwapchainImagesInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ReleaseSwapchainImagesInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RELEASE_SWAPCHAIN_IMAGES_INFO_EXT;
 }
 impl<'a> ReleaseSwapchainImagesInfoEXT<'a> {
@@ -58405,7 +53929,7 @@ impl ::core::default::Default for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_BIAS_CONTROL_FEATURES_EXT;
 }
@@ -58461,7 +53985,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeatu
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_FEATURES_NV;
 }
@@ -58505,7 +54029,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPrope
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV;
 }
@@ -58548,7 +54072,7 @@ impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpaceFeatur
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_FEATURES_NV;
 }
@@ -58595,7 +54119,7 @@ impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpaceProper
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_PROPERTIES_NV;
 }
@@ -58668,7 +54192,7 @@ impl ::core::default::Default for DirectDriverLoadingInfoLUNARG<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DirectDriverLoadingInfoLUNARG<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DirectDriverLoadingInfoLUNARG<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DIRECT_DRIVER_LOADING_INFO_LUNARG;
 }
 impl<'a> DirectDriverLoadingInfoLUNARG<'a> {
@@ -58714,7 +54238,7 @@ impl ::core::default::Default for DirectDriverLoadingListLUNARG<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DirectDriverLoadingListLUNARG<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DirectDriverLoadingListLUNARG<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DIRECT_DRIVER_LOADING_LIST_LUNARG;
 }
 unsafe impl Extends<InstanceCreateInfo<'_>> for DirectDriverLoadingListLUNARG<'_> {}
@@ -58755,7 +54279,7 @@ impl ::core::default::Default for PhysicalDeviceMultiviewPerViewViewportsFeature
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_VIEWPORTS_FEATURES_QCOM;
 }
@@ -58798,7 +54322,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPositionFetchFeaturesK
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR;
 }
@@ -58840,7 +54364,7 @@ impl ::core::default::Default for DeviceImageSubresourceInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceImageSubresourceInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceImageSubresourceInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_IMAGE_SUBRESOURCE_INFO_KHR;
 }
 impl<'a> DeviceImageSubresourceInfoKHR<'a> {
@@ -58883,7 +54407,7 @@ impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesARM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCorePropertiesARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCorePropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceShaderCorePropertiesARM<'_> {}
@@ -58928,7 +54452,7 @@ impl ::core::default::Default for PhysicalDeviceMultiviewPerViewRenderAreasFeatu
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_RENDER_AREAS_FEATURES_QCOM;
 }
@@ -58976,7 +54500,7 @@ impl ::core::default::Default for MultiviewPerViewRenderAreasRenderPassBeginInfo
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM;
 }
@@ -59017,7 +54541,7 @@ impl ::core::default::Default for QueryLowLatencySupportNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for QueryLowLatencySupportNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for QueryLowLatencySupportNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUERY_LOW_LATENCY_SUPPORT_NV;
 }
 unsafe impl Extends<SemaphoreCreateInfo<'_>> for QueryLowLatencySupportNV<'_> {}
@@ -59058,7 +54582,7 @@ impl ::core::default::Default for MemoryMapInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryMapInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryMapInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_MAP_INFO_KHR;
 }
 impl<'a> MemoryMapInfoKHR<'a> {
@@ -59081,50 +54605,6 @@ impl<'a> MemoryMapInfoKHR<'a> {
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -59153,7 +54633,7 @@ impl ::core::default::Default for MemoryUnmapInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryUnmapInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryUnmapInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_UNMAP_INFO_KHR;
 }
 impl<'a> MemoryUnmapInfoKHR<'a> {
@@ -59192,7 +54672,7 @@ impl ::core::default::Default for PhysicalDeviceShaderObjectFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderObjectFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderObjectFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceShaderObjectFeaturesEXT<'_> {}
@@ -59230,7 +54710,7 @@ impl ::core::default::Default for PhysicalDeviceShaderObjectPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderObjectPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderObjectPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_OBJECT_PROPERTIES_EXT;
 }
@@ -59293,7 +54773,7 @@ impl ::core::default::Default for ShaderCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ShaderCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ShaderCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_CREATE_INFO_EXT;
 }
 impl<'a> ShaderCreateInfoEXT<'a> {
@@ -59353,50 +54833,6 @@ impl<'a> ShaderCreateInfoEXT<'a> {
         self.p_specialization_info = specialization_info;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -59426,7 +54862,7 @@ impl ::core::default::Default for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_FEATURES_EXT;
 }
@@ -59486,7 +54922,7 @@ impl ::core::default::Default for PhysicalDeviceShaderTileImagePropertiesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_PROPERTIES_EXT;
 }
@@ -59547,7 +54983,7 @@ impl ::core::default::Default for ImportScreenBufferInfoQNX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImportScreenBufferInfoQNX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImportScreenBufferInfoQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_SCREEN_BUFFER_INFO_QNX;
 }
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ImportScreenBufferInfoQNX<'_> {}
@@ -59584,7 +55020,7 @@ impl ::core::default::Default for ScreenBufferPropertiesQNX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ScreenBufferPropertiesQNX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ScreenBufferPropertiesQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SCREEN_BUFFER_PROPERTIES_QNX;
 }
 impl<'a> ScreenBufferPropertiesQNX<'a> {
@@ -59597,50 +55033,6 @@ impl<'a> ScreenBufferPropertiesQNX<'a> {
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.memory_type_bits = memory_type_bits;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -59683,7 +55075,7 @@ impl ::core::default::Default for ScreenBufferFormatPropertiesQNX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ScreenBufferFormatPropertiesQNX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ScreenBufferFormatPropertiesQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SCREEN_BUFFER_FORMAT_PROPERTIES_QNX;
 }
 unsafe impl Extends<ScreenBufferPropertiesQNX<'_>> for ScreenBufferFormatPropertiesQNX<'_> {}
@@ -59764,7 +55156,7 @@ impl ::core::default::Default for ExternalFormatQNX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExternalFormatQNX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExternalFormatQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_FORMAT_QNX;
 }
 unsafe impl Extends<ImageCreateInfo<'_>> for ExternalFormatQNX<'_> {}
@@ -59800,7 +55192,7 @@ impl ::core::default::Default for PhysicalDeviceExternalMemoryScreenBufferFeatur
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_SCREEN_BUFFER_FEATURES_QNX;
 }
@@ -59845,7 +55237,7 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_KHR;
 }
@@ -59910,7 +55302,7 @@ impl ::core::default::Default for CooperativeMatrixPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CooperativeMatrixPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COOPERATIVE_MATRIX_PROPERTIES_KHR;
 }
 impl<'a> CooperativeMatrixPropertiesKHR<'a> {
@@ -59984,7 +55376,7 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesKHR<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_KHR;
 }
@@ -60034,7 +55426,7 @@ impl ::core::default::Default for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ENQUEUE_PROPERTIES_AMDX;
 }
@@ -60106,7 +55498,7 @@ impl ::core::default::Default for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ENQUEUE_FEATURES_AMDX;
 }
@@ -60155,7 +55547,7 @@ impl ::core::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExecutionGraphPipelineCreateInfoAMDX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExecutionGraphPipelineCreateInfoAMDX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXECUTION_GRAPH_PIPELINE_CREATE_INFO_AMDX;
 }
 impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
@@ -60190,50 +55582,6 @@ impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
         self.base_pipeline_index = base_pipeline_index;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -60261,7 +55609,7 @@ impl ::core::default::Default for PipelineShaderStageNodeCreateInfoAMDX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineShaderStageNodeCreateInfoAMDX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageNodeCreateInfoAMDX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_SHADER_STAGE_NODE_CREATE_INFO_AMDX;
 }
@@ -60313,7 +55661,7 @@ impl ::core::default::Default for ExecutionGraphPipelineScratchSizeAMDX<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ExecutionGraphPipelineScratchSizeAMDX<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ExecutionGraphPipelineScratchSizeAMDX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXECUTION_GRAPH_PIPELINE_SCRATCH_SIZE_AMDX;
 }
 impl<'a> ExecutionGraphPipelineScratchSizeAMDX<'a> {
@@ -60426,7 +55774,7 @@ impl ::core::default::Default for PhysicalDeviceAntiLagFeaturesAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceAntiLagFeaturesAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAntiLagFeaturesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_ANTI_LAG_FEATURES_AMD;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceAntiLagFeaturesAMD<'_> {}
@@ -60466,7 +55814,7 @@ impl ::core::default::Default for AntiLagDataAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AntiLagDataAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AntiLagDataAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANTI_LAG_DATA_AMD;
 }
 impl<'a> AntiLagDataAMD<'a> {
@@ -60515,7 +55863,7 @@ impl ::core::default::Default for AntiLagPresentationInfoAMD<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AntiLagPresentationInfoAMD<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AntiLagPresentationInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANTI_LAG_PRESENTATION_INFO_AMD;
 }
 impl<'a> AntiLagPresentationInfoAMD<'a> {
@@ -60554,7 +55902,7 @@ impl ::core::default::Default for BindMemoryStatusKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindMemoryStatusKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindMemoryStatusKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_MEMORY_STATUS_KHR;
 }
 unsafe impl Extends<BindBufferMemoryInfo<'_>> for BindMemoryStatusKHR<'_> {}
@@ -60602,7 +55950,7 @@ impl ::core::default::Default for BindDescriptorSetsInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindDescriptorSetsInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindDescriptorSetsInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_DESCRIPTOR_SETS_INFO_KHR;
 }
 impl<'a> BindDescriptorSetsInfoKHR<'a> {
@@ -60632,50 +55980,6 @@ impl<'a> BindDescriptorSetsInfoKHR<'a> {
         self.dynamic_offset_count = dynamic_offsets.len() as _;
         self.p_dynamic_offsets = dynamic_offsets.as_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -60710,7 +56014,7 @@ impl ::core::default::Default for PushConstantsInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PushConstantsInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PushConstantsInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_CONSTANTS_INFO_KHR;
 }
 impl<'a> PushConstantsInfoKHR<'a> {
@@ -60734,50 +56038,6 @@ impl<'a> PushConstantsInfoKHR<'a> {
         self.size = values.len() as _;
         self.p_values = values.as_ptr().cast();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -60812,7 +56072,7 @@ impl ::core::default::Default for PushDescriptorSetInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PushDescriptorSetInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PushDescriptorSetInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_DESCRIPTOR_SET_INFO_KHR;
 }
 impl<'a> PushDescriptorSetInfoKHR<'a> {
@@ -60836,50 +56096,6 @@ impl<'a> PushDescriptorSetInfoKHR<'a> {
         self.descriptor_write_count = descriptor_writes.len() as _;
         self.p_descriptor_writes = descriptor_writes.as_ptr();
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -60912,7 +56128,7 @@ impl ::core::default::Default for PushDescriptorSetWithTemplateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PushDescriptorSetWithTemplateInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PushDescriptorSetWithTemplateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_DESCRIPTOR_SET_WITH_TEMPLATE_INFO_KHR;
 }
 impl<'a> PushDescriptorSetWithTemplateInfoKHR<'a> {
@@ -60938,50 +56154,6 @@ impl<'a> PushDescriptorSetWithTemplateInfoKHR<'a> {
     pub fn data(mut self, data: *const c_void) -> Self {
         self.p_data = data;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -61018,7 +56190,7 @@ impl ::core::default::Default for SetDescriptorBufferOffsetsInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SetDescriptorBufferOffsetsInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SetDescriptorBufferOffsetsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SET_DESCRIPTOR_BUFFER_OFFSETS_INFO_EXT;
 }
 impl<'a> SetDescriptorBufferOffsetsInfoEXT<'a> {
@@ -61049,50 +56221,6 @@ impl<'a> SetDescriptorBufferOffsetsInfoEXT<'a> {
         self.p_offsets = offsets.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -61122,7 +56250,7 @@ impl ::core::default::Default for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::BIND_DESCRIPTOR_BUFFER_EMBEDDED_SAMPLERS_INFO_EXT;
 }
@@ -61141,50 +56269,6 @@ impl<'a> BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     pub fn set(mut self, set: u32) -> Self {
         self.set = set;
         self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `A.push(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Panics"]
-    #[doc = r" If `next` contains a pointer chain of its own, this function will panic.  Call"]
-    #[doc = r" `unsafe` [`Self::extend()`] to insert this chain instead."]
-    pub fn push<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let next_base = unsafe { &mut *<*mut T>::cast::<BaseOutStructure<'a>>(next) };
-        assert!(
-            next_base.p_next.is_null(),
-            "push() expects a struct without an existing p_next pointer chain (equal to NULL)"
-        );
-        next_base.p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C` and `D -> E`, and you call `A.extend(&mut D)`,"]
-    #[doc = r" then the chain will look like `A -> D -> E -> B -> C`."]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function will walk the [`BaseOutStructure::p_next`] chain of `next`, requiring"]
-    #[doc = r" all non-`NULL` pointers to point to a valid Vulkan structure starting with the"]
-    #[doc = r" [`BaseOutStructure`] layout."]
-    #[doc = r""]
-    #[doc = r" The last struct in this chain (i.e. the one where `p_next` is `NULL`) must"]
-    #[doc = r" be writable memory, as its `p_next` field will be updated with the value of"]
-    #[doc = r" `self.p_next`."]
-    pub unsafe fn extend<T: Extends<Self> + ?Sized>(mut self, next: &'a mut T) -> Self {
-        let last_next = ptr_chain_iter(next).last().unwrap();
-        (*last_next).p_next = self.p_next as _;
-        self.p_next = <*mut T>::cast(next);
-        self
-    }
-    #[doc(hidden)]
-    #[deprecated = "Migrate to `push()` if `next` does not have an existing chain (i.e. `p_next` is `NULL`), `extend()` otherwise"]
-    pub unsafe fn push_next<T: Extends<Self> + ?Sized>(self, next: &'a mut T) -> Self {
-        self.extend(next)
     }
 }
 #[repr(C)]
@@ -61211,7 +56295,7 @@ impl ::core::default::Default for PhysicalDeviceCubicClampFeaturesQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCubicClampFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCubicClampFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_CUBIC_CLAMP_FEATURES_QCOM;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceCubicClampFeaturesQCOM<'_> {}
@@ -61247,7 +56331,7 @@ impl ::core::default::Default for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_YCBCR_DEGAMMA_FEATURES_QCOM;
 }
@@ -61286,7 +56370,7 @@ impl ::core::default::Default for SamplerYcbcrConversionYcbcrDegammaCreateInfoQC
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_YCBCR_CONVERSION_YCBCR_DEGAMMA_CREATE_INFO_QCOM;
 }
@@ -61330,7 +56414,7 @@ impl ::core::default::Default for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUBIC_WEIGHTS_FEATURES_QCOM;
 }
@@ -61367,7 +56451,7 @@ impl ::core::default::Default for SamplerCubicWeightsCreateInfoQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerCubicWeightsCreateInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerCubicWeightsCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_CUBIC_WEIGHTS_CREATE_INFO_QCOM;
 }
 unsafe impl Extends<SamplerCreateInfo<'_>> for SamplerCubicWeightsCreateInfoQCOM<'_> {}
@@ -61402,7 +56486,7 @@ impl ::core::default::Default for BlitImageCubicWeightsInfoQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for BlitImageCubicWeightsInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for BlitImageCubicWeightsInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BLIT_IMAGE_CUBIC_WEIGHTS_INFO_QCOM;
 }
 unsafe impl Extends<BlitImageInfo2<'_>> for BlitImageCubicWeightsInfoQCOM<'_> {}
@@ -61437,7 +56521,7 @@ impl ::core::default::Default for PhysicalDeviceImageProcessing2FeaturesQCOM<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_2_FEATURES_QCOM;
 }
@@ -61477,7 +56561,7 @@ impl ::core::default::Default for PhysicalDeviceImageProcessing2PropertiesQCOM<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_2_PROPERTIES_QCOM;
 }
@@ -61518,7 +56602,7 @@ impl ::core::default::Default for SamplerBlockMatchWindowCreateInfoQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SamplerBlockMatchWindowCreateInfoQCOM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SamplerBlockMatchWindowCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_BLOCK_MATCH_WINDOW_CREATE_INFO_QCOM;
 }
@@ -61562,7 +56646,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorPoolOverallocationFeat
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV;
 }
@@ -61605,7 +56689,7 @@ impl ::core::default::Default for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT;
 }
@@ -61646,7 +56730,7 @@ impl ::core::default::Default for PhysicalDevicePerStageDescriptorSetFeaturesNV<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PER_STAGE_DESCRIPTOR_SET_FEATURES_NV;
 }
@@ -61691,7 +56775,7 @@ impl ::core::default::Default for PhysicalDeviceExternalFormatResolveFeaturesAND
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_FORMAT_RESOLVE_FEATURES_ANDROID;
 }
@@ -61738,7 +56822,7 @@ impl ::core::default::Default for PhysicalDeviceExternalFormatResolvePropertiesA
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_FORMAT_RESOLVE_PROPERTIES_ANDROID;
 }
@@ -61797,7 +56881,7 @@ impl ::core::default::Default for AndroidHardwareBufferFormatResolvePropertiesAN
         }
     }
 }
-unsafe impl<'a> TaggedStructure for AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
+unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_RESOLVE_PROPERTIES_ANDROID;
 }
@@ -61840,7 +56924,7 @@ impl ::core::default::Default for LatencySleepModeInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for LatencySleepModeInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for LatencySleepModeInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_SLEEP_MODE_INFO_NV;
 }
 impl<'a> LatencySleepModeInfoNV<'a> {
@@ -61886,7 +56970,7 @@ impl ::core::default::Default for LatencySleepInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for LatencySleepInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for LatencySleepInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_SLEEP_INFO_NV;
 }
 impl<'a> LatencySleepInfoNV<'a> {
@@ -61927,7 +57011,7 @@ impl ::core::default::Default for SetLatencyMarkerInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SetLatencyMarkerInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SetLatencyMarkerInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SET_LATENCY_MARKER_INFO_NV;
 }
 impl<'a> SetLatencyMarkerInfoNV<'a> {
@@ -61968,7 +57052,7 @@ impl ::core::default::Default for GetLatencyMarkerInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for GetLatencyMarkerInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for GetLatencyMarkerInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GET_LATENCY_MARKER_INFO_NV;
 }
 impl<'a> GetLatencyMarkerInfoNV<'a> {
@@ -62029,7 +57113,7 @@ impl ::core::default::Default for LatencyTimingsFrameReportNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for LatencyTimingsFrameReportNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for LatencyTimingsFrameReportNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_TIMINGS_FRAME_REPORT_NV;
 }
 impl<'a> LatencyTimingsFrameReportNV<'a> {
@@ -62128,7 +57212,7 @@ impl ::core::default::Default for OutOfBandQueueTypeInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for OutOfBandQueueTypeInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for OutOfBandQueueTypeInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OUT_OF_BAND_QUEUE_TYPE_INFO_NV;
 }
 impl<'a> OutOfBandQueueTypeInfoNV<'a> {
@@ -62162,7 +57246,7 @@ impl ::core::default::Default for LatencySubmissionPresentIdNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for LatencySubmissionPresentIdNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for LatencySubmissionPresentIdNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_SUBMISSION_PRESENT_ID_NV;
 }
 unsafe impl Extends<SubmitInfo<'_>> for LatencySubmissionPresentIdNV<'_> {}
@@ -62198,7 +57282,7 @@ impl ::core::default::Default for SwapchainLatencyCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SwapchainLatencyCreateInfoNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for SwapchainLatencyCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_LATENCY_CREATE_INFO_NV;
 }
 unsafe impl Extends<SwapchainCreateInfoKHR<'_>> for SwapchainLatencyCreateInfoNV<'_> {}
@@ -62235,7 +57319,7 @@ impl ::core::default::Default for LatencySurfaceCapabilitiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for LatencySurfaceCapabilitiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for LatencySurfaceCapabilitiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_SURFACE_CAPABILITIES_NV;
 }
 unsafe impl Extends<SurfaceCapabilities2KHR<'_>> for LatencySurfaceCapabilitiesNV<'_> {}
@@ -62271,7 +57355,7 @@ impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_FEATURES_NV;
 }
@@ -62310,7 +57394,7 @@ impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_PROPERTIES_NV;
 }
@@ -62354,7 +57438,7 @@ impl ::core::default::Default for DeviceQueueShaderCoreControlCreateInfoARM<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for DeviceQueueShaderCoreControlCreateInfoARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for DeviceQueueShaderCoreControlCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEVICE_QUEUE_SHADER_CORE_CONTROL_CREATE_INFO_ARM;
 }
@@ -62391,7 +57475,7 @@ impl ::core::default::Default for PhysicalDeviceSchedulingControlsFeaturesARM<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SCHEDULING_CONTROLS_FEATURES_ARM;
 }
@@ -62431,7 +57515,7 @@ impl ::core::default::Default for PhysicalDeviceSchedulingControlsPropertiesARM<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SCHEDULING_CONTROLS_PROPERTIES_ARM;
 }
@@ -62473,7 +57557,7 @@ impl ::core::default::Default for PhysicalDeviceRelaxedLineRasterizationFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RELAXED_LINE_RASTERIZATION_FEATURES_IMG;
 }
@@ -62516,7 +57600,7 @@ impl ::core::default::Default for PhysicalDeviceRenderPassStripedFeaturesARM<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RENDER_PASS_STRIPED_FEATURES_ARM;
 }
@@ -62558,7 +57642,7 @@ impl ::core::default::Default for PhysicalDeviceRenderPassStripedPropertiesARM<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RENDER_PASS_STRIPED_PROPERTIES_ARM;
 }
@@ -62605,7 +57689,7 @@ impl ::core::default::Default for RenderPassStripeInfoARM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassStripeInfoARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_STRIPE_INFO_ARM;
 }
 impl<'a> RenderPassStripeInfoARM<'a> {
@@ -62641,7 +57725,7 @@ impl ::core::default::Default for RenderPassStripeBeginInfoARM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassStripeBeginInfoARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeBeginInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_STRIPE_BEGIN_INFO_ARM;
 }
 unsafe impl Extends<RenderingInfo<'_>> for RenderPassStripeBeginInfoARM<'_> {}
@@ -62680,7 +57764,7 @@ impl ::core::default::Default for RenderPassStripeSubmitInfoARM<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderPassStripeSubmitInfoARM<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeSubmitInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_STRIPE_SUBMIT_INFO_ARM;
 }
 unsafe impl Extends<CommandBufferSubmitInfo<'_>> for RenderPassStripeSubmitInfoARM<'_> {}
@@ -62719,7 +57803,7 @@ impl ::core::default::Default for PhysicalDeviceShaderMaximalReconvergenceFeatur
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_MAXIMAL_RECONVERGENCE_FEATURES_KHR;
 }
@@ -62764,7 +57848,7 @@ impl ::core::default::Default for PhysicalDeviceShaderSubgroupRotateFeaturesKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderSubgroupRotateFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupRotateFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SUBGROUP_ROTATE_FEATURES_KHR;
 }
@@ -62812,7 +57896,7 @@ impl ::core::default::Default for PhysicalDeviceShaderExpectAssumeFeaturesKHR<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderExpectAssumeFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderExpectAssumeFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_EXPECT_ASSUME_FEATURES_KHR;
 }
@@ -62852,7 +57936,7 @@ impl ::core::default::Default for PhysicalDeviceShaderFloatControls2FeaturesKHR<
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderFloatControls2FeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloatControls2FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_FLOAT_CONTROLS_2_FEATURES_KHR;
 }
@@ -62892,7 +57976,7 @@ impl ::core::default::Default for PhysicalDeviceDynamicRenderingLocalReadFeature
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DYNAMIC_RENDERING_LOCAL_READ_FEATURES_KHR;
 }
@@ -62937,7 +58021,7 @@ impl ::core::default::Default for RenderingAttachmentLocationInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderingAttachmentLocationInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentLocationInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_ATTACHMENT_LOCATION_INFO_KHR;
 }
 unsafe impl Extends<GraphicsPipelineCreateInfo<'_>> for RenderingAttachmentLocationInfoKHR<'_> {}
@@ -62980,7 +58064,7 @@ impl ::core::default::Default for RenderingInputAttachmentIndexInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for RenderingInputAttachmentIndexInfoKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for RenderingInputAttachmentIndexInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_INPUT_ATTACHMENT_INDEX_INFO_KHR;
 }
 unsafe impl Extends<GraphicsPipelineCreateInfo<'_>> for RenderingInputAttachmentIndexInfoKHR<'_> {}
@@ -63033,7 +58117,7 @@ impl ::core::default::Default for PhysicalDeviceShaderQuadControlFeaturesKHR<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_QUAD_CONTROL_FEATURES_KHR;
 }
@@ -63073,7 +58157,7 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat16VectorFeature
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV;
 }
@@ -63120,7 +58204,7 @@ impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAP_MEMORY_PLACED_FEATURES_EXT;
 }
@@ -63167,7 +58251,7 @@ impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_>
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAP_MEMORY_PLACED_PROPERTIES_EXT;
 }
@@ -63209,7 +58293,7 @@ impl ::core::default::Default for MemoryMapPlacedInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for MemoryMapPlacedInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for MemoryMapPlacedInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_MAP_PLACED_INFO_EXT;
 }
 unsafe impl Extends<MemoryMapInfoKHR<'_>> for MemoryMapPlacedInfoEXT<'_> {}
@@ -63244,7 +58328,7 @@ impl ::core::default::Default for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAW_ACCESS_CHAINS_FEATURES_NV;
 }
@@ -63281,7 +58365,7 @@ impl ::core::default::Default for PhysicalDeviceCommandBufferInheritanceFeatures
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COMMAND_BUFFER_INHERITANCE_FEATURES_NV;
 }
@@ -63321,7 +58405,7 @@ impl ::core::default::Default for PhysicalDeviceImageAlignmentControlFeaturesMES
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_FEATURES_MESA;
 }
@@ -63361,7 +58445,7 @@ impl ::core::default::Default for PhysicalDeviceImageAlignmentControlPropertiesM
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_PROPERTIES_MESA;
 }
@@ -63400,7 +58484,7 @@ impl ::core::default::Default for ImageAlignmentControlCreateInfoMESA<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageAlignmentControlCreateInfoMESA<'a> {
+unsafe impl<'a> TaggedStructure<'a> for ImageAlignmentControlCreateInfoMESA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_ALIGNMENT_CONTROL_CREATE_INFO_MESA;
 }
 unsafe impl Extends<ImageCreateInfo<'_>> for ImageAlignmentControlCreateInfoMESA<'_> {}
@@ -63435,7 +58519,7 @@ impl ::core::default::Default for PhysicalDeviceShaderReplicatedCompositesFeatur
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_REPLICATED_COMPOSITES_FEATURES_EXT;
 }
