@@ -8689,12 +8689,12 @@ impl<'a> ScreenSurfaceCreateInfoQNX<'a> {
         self
     }
     #[inline]
-    pub fn context(mut self, context: &'a mut _screen_context) -> Self {
+    pub fn context(mut self, context: *mut _screen_context) -> Self {
         self.context = context;
         self
     }
     #[inline]
-    pub fn window(mut self, window: &'a mut _screen_window) -> Self {
+    pub fn window(mut self, window: *mut _screen_window) -> Self {
         self.window = window;
         self
     }
@@ -9684,7 +9684,7 @@ unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoNV<'a> {
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ExportMemoryWin32HandleInfoNV<'_> {}
 impl<'a> ExportMemoryWin32HandleInfoNV<'a> {
     #[inline]
-    pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
+    pub fn attributes(mut self, attributes: *const SECURITY_ATTRIBUTES) -> Self {
         self.p_attributes = attributes;
         self
     }
@@ -11868,7 +11868,7 @@ unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoKHR<'a> {
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ExportMemoryWin32HandleInfoKHR<'_> {}
 impl<'a> ExportMemoryWin32HandleInfoKHR<'a> {
     #[inline]
-    pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
+    pub fn attributes(mut self, attributes: *const SECURITY_ATTRIBUTES) -> Self {
         self.p_attributes = attributes;
         self
     }
@@ -12487,7 +12487,7 @@ unsafe impl<'a> TaggedStructure<'a> for ExportSemaphoreWin32HandleInfoKHR<'a> {
 unsafe impl Extends<SemaphoreCreateInfo<'_>> for ExportSemaphoreWin32HandleInfoKHR<'_> {}
 impl<'a> ExportSemaphoreWin32HandleInfoKHR<'a> {
     #[inline]
-    pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
+    pub fn attributes(mut self, attributes: *const SECURITY_ATTRIBUTES) -> Self {
         self.p_attributes = attributes;
         self
     }
@@ -13006,7 +13006,7 @@ unsafe impl<'a> TaggedStructure<'a> for ExportFenceWin32HandleInfoKHR<'a> {
 unsafe impl Extends<FenceCreateInfo<'_>> for ExportFenceWin32HandleInfoKHR<'_> {}
 impl<'a> ExportFenceWin32HandleInfoKHR<'a> {
     #[inline]
-    pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
+    pub fn attributes(mut self, attributes: *const SECURITY_ATTRIBUTES) -> Self {
         self.p_attributes = attributes;
         self
     }
@@ -54989,7 +54989,7 @@ unsafe impl<'a> TaggedStructure<'a> for ImportScreenBufferInfoQNX<'a> {
 unsafe impl Extends<MemoryAllocateInfo<'_>> for ImportScreenBufferInfoQNX<'_> {}
 impl<'a> ImportScreenBufferInfoQNX<'a> {
     #[inline]
-    pub fn buffer(mut self, buffer: &'a mut _screen_buffer) -> Self {
+    pub fn buffer(mut self, buffer: *mut _screen_buffer) -> Self {
         self.buffer = buffer;
         self
     }

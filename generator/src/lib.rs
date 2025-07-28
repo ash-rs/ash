@@ -300,6 +300,10 @@ fn is_opaque_type(ty: &str) -> bool {
             | "CAMetalLayer"
             | "IDirectFB"
             | "IDirectFBSurface"
+            | "_screen_buffer"
+            | "_screen_context"
+            | "_screen_window"
+            | "SECURITY_ATTRIBUTES"
     )
 }
 

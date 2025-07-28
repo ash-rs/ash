@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `push_next()` has been renamed to `extend()` and marked as `unsafe`. Users are encouraged to call `push()` for singular structs instead. (#909)
+- Treat QNX "void" type aliases and `SECURITY_ATTRIBUTES` as "opaque" to make them raw pointers instead of borrows in public structures. (#950)
 - Enable passing mutable arrays of `pNext`-initialized structs for these remaining extension functions: (#966)
   - `VK_EXT_tooling_info`: `get_physical_device_tool_properties()`;
   - `VK_KHR_cooperative_matrix`: `get_physical_device_cooperative_matrix_properties()`;
@@ -26,7 +28,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `get_pipeline_executable_properties()`;
     - `get_pipeline_executable_statistics()`.
   The expected length of this array can be queried with the respective `*_len()` variant of these functions.
-- `push_next()` has been renamed to `extend()` and marked as `unsafe`. Users are encouraged to call `push()` for singular structs instead. (#909)
 - Changed and renamed `RawPtr::as_raw_ptr(&self)` trait function to a by-value `RawPtr::to_raw_ptr(self)` function. (#965)
 - All `Extends{Root}` traits have been replaced with a single `Extends<Root>` trait using generics. (#971)
 - Moved `push()` and `extend()` methods from individual Vulkan structs (builders) into the `TaggedStructure` trait. (#994)
