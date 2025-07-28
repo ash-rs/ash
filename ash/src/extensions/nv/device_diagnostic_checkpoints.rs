@@ -13,7 +13,7 @@ impl crate::nv::device_diagnostic_checkpoints::Device {
         command_buffer: vk::CommandBuffer,
         p_checkpoint_marker: *const ffi::c_void,
     ) {
-        (self.fp.cmd_set_checkpoint_nv)(command_buffer, p_checkpoint_marker);
+        (self.fp.cmd_set_checkpoint_nv)(command_buffer, p_checkpoint_marker)
     }
 
     /// Retrieve the number of elements to pass to [`get_queue_checkpoint_data()`][Self::get_queue_checkpoint_data()]

@@ -17,7 +17,7 @@ impl crate::ext::debug_report::Instance {
             self.handle,
             debug,
             allocation_callbacks.to_raw_ptr(),
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDebugReportCallbackEXT.html>

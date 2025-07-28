@@ -12,7 +12,7 @@ impl crate::khr::get_memory_requirements2::Device {
         info: &vk::BufferMemoryRequirementsInfo2KHR<'_>,
         memory_requirements: &mut vk::MemoryRequirements2KHR<'_>,
     ) {
-        (self.fp.get_buffer_memory_requirements2_khr)(self.handle, info, memory_requirements);
+        (self.fp.get_buffer_memory_requirements2_khr)(self.handle, info, memory_requirements)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageMemoryRequirements2KHR.html>
@@ -22,7 +22,7 @@ impl crate::khr::get_memory_requirements2::Device {
         info: &vk::ImageMemoryRequirementsInfo2KHR<'_>,
         memory_requirements: &mut vk::MemoryRequirements2KHR<'_>,
     ) {
-        (self.fp.get_image_memory_requirements2_khr)(self.handle, info, memory_requirements);
+        (self.fp.get_image_memory_requirements2_khr)(self.handle, info, memory_requirements)
     }
 
     /// Retrieve the number of elements to pass to [`get_image_sparse_memory_requirements2()`][Self::get_image_sparse_memory_requirements2()]

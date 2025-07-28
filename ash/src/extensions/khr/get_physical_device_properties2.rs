@@ -13,7 +13,7 @@ impl crate::khr::get_physical_device_properties2::Instance {
         physical_device: vk::PhysicalDevice,
         features: &mut vk::PhysicalDeviceFeatures2KHR<'_>,
     ) {
-        (self.fp.get_physical_device_features2_khr)(physical_device, features);
+        (self.fp.get_physical_device_features2_khr)(physical_device, features)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFormatProperties2KHR.html>
@@ -28,7 +28,7 @@ impl crate::khr::get_physical_device_properties2::Instance {
             physical_device,
             format,
             format_properties,
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2KHR.html>
@@ -54,7 +54,7 @@ impl crate::khr::get_physical_device_properties2::Instance {
         physical_device: vk::PhysicalDevice,
         memory_properties: &mut vk::PhysicalDeviceMemoryProperties2KHR<'_>,
     ) {
-        (self.fp.get_physical_device_memory_properties2_khr)(physical_device, memory_properties);
+        (self.fp.get_physical_device_memory_properties2_khr)(physical_device, memory_properties)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceProperties2KHR.html>
@@ -64,7 +64,7 @@ impl crate::khr::get_physical_device_properties2::Instance {
         physical_device: vk::PhysicalDevice,
         properties: &mut vk::PhysicalDeviceProperties2KHR<'_>,
     ) {
-        (self.fp.get_physical_device_properties2_khr)(physical_device, properties);
+        (self.fp.get_physical_device_properties2_khr)(physical_device, properties)
     }
 
     /// Retrieve the number of elements to pass to [`get_physical_device_queue_family_properties2()`][Self::get_physical_device_queue_family_properties2()]

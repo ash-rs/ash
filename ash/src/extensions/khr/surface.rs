@@ -79,6 +79,6 @@ impl crate::khr::surface::Instance {
         surface: vk::SurfaceKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.fp.destroy_surface_khr)(self.handle, surface, allocation_callbacks.to_raw_ptr());
+        (self.fp.destroy_surface_khr)(self.handle, surface, allocation_callbacks.to_raw_ptr())
     }
 }

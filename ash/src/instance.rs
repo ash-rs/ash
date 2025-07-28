@@ -154,7 +154,7 @@ impl Instance {
         physical_device: vk::PhysicalDevice,
         features: &mut vk::PhysicalDeviceFeatures2<'_>,
     ) {
-        (self.instance_fn_1_1.get_physical_device_features2)(physical_device, features);
+        (self.instance_fn_1_1.get_physical_device_features2)(physical_device, features)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceProperties2.html>
@@ -164,7 +164,7 @@ impl Instance {
         physical_device: vk::PhysicalDevice,
         prop: &mut vk::PhysicalDeviceProperties2<'_>,
     ) {
-        (self.instance_fn_1_1.get_physical_device_properties2)(physical_device, prop);
+        (self.instance_fn_1_1.get_physical_device_properties2)(physical_device, prop)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFormatProperties2.html>
@@ -175,7 +175,7 @@ impl Instance {
         format: vk::Format,
         out: &mut vk::FormatProperties2<'_>,
     ) {
-        (self.instance_fn_1_1.get_physical_device_format_properties2)(physical_device, format, out);
+        (self.instance_fn_1_1.get_physical_device_format_properties2)(physical_device, format, out)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2.html>
@@ -241,7 +241,7 @@ impl Instance {
         physical_device: vk::PhysicalDevice,
         out: &mut vk::PhysicalDeviceMemoryProperties2<'_>,
     ) {
-        (self.instance_fn_1_1.get_physical_device_memory_properties2)(physical_device, out);
+        (self.instance_fn_1_1.get_physical_device_memory_properties2)(physical_device, out)
     }
 
     /// Retrieve the number of elements to pass to [`get_physical_device_sparse_image_format_properties2()`][Self::get_physical_device_sparse_image_format_properties2()]
@@ -300,7 +300,7 @@ impl Instance {
             physical_device,
             external_buffer_info,
             out,
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceExternalFenceProperties.html>
@@ -317,7 +317,7 @@ impl Instance {
             physical_device,
             external_fence_info,
             out,
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceExternalSemaphoreProperties.html>
@@ -334,7 +334,7 @@ impl Instance {
             physical_device,
             external_semaphore_info,
             out,
-        );
+        )
     }
 }
 
@@ -390,7 +390,7 @@ impl Instance {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyInstance.html>
     #[inline]
     pub unsafe fn destroy_instance(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
-        (self.instance_fn_1_0.destroy_instance)(self.handle(), allocation_callbacks.to_raw_ptr());
+        (self.instance_fn_1_0.destroy_instance)(self.handle(), allocation_callbacks.to_raw_ptr())
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFormatProperties.html>

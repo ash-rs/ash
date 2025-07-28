@@ -10,6 +10,6 @@ impl crate::khr::maintenance3::Device {
         create_info: &vk::DescriptorSetLayoutCreateInfo<'_>,
         out: &mut vk::DescriptorSetLayoutSupportKHR<'_>,
     ) {
-        (self.fp.get_descriptor_set_layout_support_khr)(self.handle, create_info, out);
+        (self.fp.get_descriptor_set_layout_support_khr)(self.handle, create_info, out)
     }
 }

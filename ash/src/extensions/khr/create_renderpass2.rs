@@ -35,7 +35,7 @@ impl crate::khr::create_renderpass2::Device {
             command_buffer,
             render_pass_begin_info,
             subpass_begin_info,
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdNextSubpass2.html>
@@ -46,7 +46,7 @@ impl crate::khr::create_renderpass2::Device {
         subpass_begin_info: &vk::SubpassBeginInfo<'_>,
         subpass_end_info: &vk::SubpassEndInfo<'_>,
     ) {
-        (self.fp.cmd_next_subpass2_khr)(command_buffer, subpass_begin_info, subpass_end_info);
+        (self.fp.cmd_next_subpass2_khr)(command_buffer, subpass_begin_info, subpass_end_info)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderPass2.html>
@@ -56,6 +56,6 @@ impl crate::khr::create_renderpass2::Device {
         command_buffer: vk::CommandBuffer,
         subpass_end_info: &vk::SubpassEndInfo<'_>,
     ) {
-        (self.fp.cmd_end_render_pass2_khr)(command_buffer, subpass_end_info);
+        (self.fp.cmd_end_render_pass2_khr)(command_buffer, subpass_end_info)
     }
 }

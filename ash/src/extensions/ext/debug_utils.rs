@@ -31,13 +31,13 @@ impl crate::ext::debug_utils::Device {
         command_buffer: vk::CommandBuffer,
         label: &vk::DebugUtilsLabelEXT<'_>,
     ) {
-        (self.fp.cmd_begin_debug_utils_label_ext)(command_buffer, label);
+        (self.fp.cmd_begin_debug_utils_label_ext)(command_buffer, label)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndDebugUtilsLabelEXT.html>
     #[inline]
     pub unsafe fn cmd_end_debug_utils_label(&self, command_buffer: vk::CommandBuffer) {
-        (self.fp.cmd_end_debug_utils_label_ext)(command_buffer);
+        (self.fp.cmd_end_debug_utils_label_ext)(command_buffer)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdInsertDebugUtilsLabelEXT.html>
@@ -47,7 +47,7 @@ impl crate::ext::debug_utils::Device {
         command_buffer: vk::CommandBuffer,
         label: &vk::DebugUtilsLabelEXT<'_>,
     ) {
-        (self.fp.cmd_insert_debug_utils_label_ext)(command_buffer, label);
+        (self.fp.cmd_insert_debug_utils_label_ext)(command_buffer, label)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueBeginDebugUtilsLabelEXT.html>
@@ -57,13 +57,13 @@ impl crate::ext::debug_utils::Device {
         queue: vk::Queue,
         label: &vk::DebugUtilsLabelEXT<'_>,
     ) {
-        (self.fp.queue_begin_debug_utils_label_ext)(queue, label);
+        (self.fp.queue_begin_debug_utils_label_ext)(queue, label)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueEndDebugUtilsLabelEXT.html>
     #[inline]
     pub unsafe fn queue_end_debug_utils_label(&self, queue: vk::Queue) {
-        (self.fp.queue_end_debug_utils_label_ext)(queue);
+        (self.fp.queue_end_debug_utils_label_ext)(queue)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueInsertDebugUtilsLabelEXT.html>
@@ -73,7 +73,7 @@ impl crate::ext::debug_utils::Device {
         queue: vk::Queue,
         label: &vk::DebugUtilsLabelEXT<'_>,
     ) {
-        (self.fp.queue_insert_debug_utils_label_ext)(queue, label);
+        (self.fp.queue_insert_debug_utils_label_ext)(queue, label)
     }
 }
 
@@ -102,7 +102,7 @@ impl crate::ext::debug_utils::Instance {
         messenger: vk::DebugUtilsMessengerEXT,
         allocator: Option<&vk::AllocationCallbacks>,
     ) {
-        (self.fp.destroy_debug_utils_messenger_ext)(self.handle, messenger, allocator.to_raw_ptr());
+        (self.fp.destroy_debug_utils_messenger_ext)(self.handle, messenger, allocator.to_raw_ptr())
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSubmitDebugUtilsMessageEXT.html>
@@ -118,6 +118,6 @@ impl crate::ext::debug_utils::Instance {
             message_severity,
             message_types,
             callback_data,
-        );
+        )
     }
 }

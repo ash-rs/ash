@@ -41,7 +41,7 @@ impl crate::khr::deferred_host_operations::Device {
             self.handle,
             operation,
             allocation_callbacks.to_raw_ptr(),
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeferredOperationMaxConcurrencyKHR.html>
