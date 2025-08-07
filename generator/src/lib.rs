@@ -21,7 +21,6 @@ use nom::{
     sequence::{delimited, pair, preceded, separated_pair, terminated},
     IResult, Parser,
 };
-use once_cell::sync::Lazy;
 use proc_macro2::{Delimiter, Group, Literal, Span, TokenStream, TokenTree};
 use quote::*;
 use regex::Regex;
@@ -31,6 +30,7 @@ use std::{
     fmt::Display,
     ops::Not,
     path::Path,
+    sync::LazyLock,
 };
 use syn::Ident;
 
@@ -326,7 +326,7 @@ pub trait ConstantExt {
     fn variant_ident(&self, enum_name: &str) -> Ident;
     fn notation(&self) -> Option<&str>;
     fn formatted_notation(&self) -> Option<Cow<'_, str>> {
-        static DOC_LINK: Lazy<Regex> = Lazy::new(|| Regex::new(r"<<([\w-]+)>>").unwrap());
+        static DOC_LINK: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"<<([\w-]+)>>").unwrap());
         self.notation().map(|n| {
             DOC_LINK.replace(
                 n,
@@ -1586,7 +1586,7 @@ pub enum EnumType {
     Enum(TokenStream),
 }
 
-static TRAILING_NUMBER: Lazy<Regex> = Lazy::new(|| Regex::new("(\\d+)$").unwrap());
+static TRAILING_NUMBER: LazyLock<Regex> = LazyLock::new(|| Regex::new("(\\d+)$").unwrap());
 
 pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     let variant_name = variant_name.to_uppercase();
