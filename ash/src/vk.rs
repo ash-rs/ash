@@ -81,7 +81,7 @@ pub unsafe trait TaggedStructure<'a>: Sized {
     /// # Panics
     /// If `next` contains a pointer chain of its own, this function will panic.  Call `unsafe`
     /// [`Self::extend()`] to insert this chain instead.
-    fn push<T: Extends<Self> + TaggedStructure<'a>>(mut self, next: &'a mut T) -> Self {
+    fn push<'b: 'a, T: Extends<Self> + TaggedStructure<'b>>(mut self, next: &'a mut T) -> Self {
         // SAFETY: All implementers of `TaggedStructure` are required to have the `BaseOutStructure` layout
         let slf_base = unsafe { &mut *<*mut _>::cast::<BaseOutStructure<'_>>(&mut self) };
         // SAFETY: All implementers of `T: TaggedStructure` are required to have the `BaseOutStructure` layout
@@ -110,7 +110,10 @@ pub unsafe trait TaggedStructure<'a>: Sized {
     ///
     /// The last struct in this chain (i.e. the one where `p_next` is `NULL`) must be writable
     /// memory, as its `p_next` field will be updated with the value of `self.p_next`.
-    unsafe fn extend<T: Extends<Self> + TaggedStructure<'a>>(mut self, next: &'a mut T) -> Self {
+    unsafe fn extend<'b: 'a, T: Extends<Self> + TaggedStructure<'b>>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
         // `next` here can contain a pointer chain. This means that we must correctly attach he head
         // to the root and the tail to the rest of the chain For example:
         //
@@ -271,20 +274,23 @@ mod tests {
     #[test]
     fn test_ptr_chains() {
         let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::default();
-        let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::default();
-        let chain = alloc::vec![
-            <*mut _>::cast(&mut variable_pointers),
-            <*mut _>::cast(&mut corner),
-        ];
-        let mut device_create_info = vk::DeviceCreateInfo::default()
-            .push(&mut corner)
-            .push(&mut variable_pointers);
-        let chain2: Vec<*mut vk::BaseOutStructure<'_>> = unsafe {
-            vk::ptr_chain_iter(&mut device_create_info)
-                .skip(1)
-                .collect()
-        };
-        assert_eq!(chain, chain2);
+        {
+            let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::default();
+            let chain = alloc::vec![
+                <*mut _>::cast(&mut variable_pointers),
+                <*mut _>::cast(&mut corner),
+            ];
+            let mut device_create_info = vk::DeviceCreateInfo::default()
+                .push(&mut corner)
+                .push(&mut variable_pointers);
+            let chain2: Vec<*mut vk::BaseOutStructure<'_>> = unsafe {
+                vk::ptr_chain_iter(&mut device_create_info)
+                    .skip(1)
+                    .collect()
+            };
+            assert_eq!(chain, chain2);
+        }
+        let _ = variable_pointers;
     }
 
     #[test]
