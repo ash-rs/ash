@@ -887,7 +887,7 @@ impl FieldExt for vk_parse::CommandParam {
 
     fn type_tokens(&self, is_ffi_param: bool, type_lifetime: Option<TokenStream>) -> TokenStream {
         assert!(!self.is_void(), "{self:?}");
-        let (rem, ty) = parse_c_parameter(&self.definition.code).unwrap();
+        let (rem, ty) = parse_c_parameter(self.definition.code.trim()).unwrap();
         assert!(rem.is_empty());
         // Disambiguate overloaded names
         let qualifier = match ty.type_.name == "VkDevice" || ty.type_.name == "VkInstance" {
@@ -1497,7 +1497,8 @@ pub fn generate_define(
 
     if define_name.contains("VERSION") && !spec.code.contains("//#define") {
         let link = khronos_link(define_name);
-        let (c_expr, (comment, (_name, parameters))) = parse_c_define_header(&spec.code).unwrap();
+        let (c_expr, (comment, (_name, parameters))) =
+            parse_c_define_header(spec.code.trim()).unwrap();
         let c_expr = c_expr.trim().trim_start_matches('\\');
         let c_expr = c_expr.replace("(uint32_t)", "");
         let c_expr = convert_c_expression(&c_expr, identifier_renames);
@@ -2027,6 +2028,7 @@ fn derive_getters_and_setters(
 
     let name = name_to_tokens(&struct_.name);
 
+    println!("struct: {struct_:#?}");
     let next_field = members
         .iter()
         .find(|member| member.vkxml_field.param_ident() == "p_next");
@@ -3028,6 +3030,22 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     if !errors.is_empty() {
         eprintln!("vk_parse encountered one or more errors while parsing: {errors:?}")
     }
+
+    let test = spec2
+        .0
+        .iter()
+        .find_map(get_variant!(vk_parse::RegistryChild::Types))
+        .unwrap();
+    let test = test
+        .children
+        .iter()
+        .filter_map(get_variant!(vk_parse::TypesChild::Type))
+        .find(|it| {
+            it.name
+                == Some("VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV".to_string())
+        });
+    println!("{test:#?}");
+
     let extensions: Vec<&vk_parse::Extension> = spec2
         .0
         .iter()
