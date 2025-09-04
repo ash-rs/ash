@@ -1,25 +1,25 @@
 [package]
-name = "ash"
-version = "0.38.0+1.3.296"
 authors = [
     "Maik Klein <maikklein@googlemail.com>",
     "Benjamin Saunders <ben.e.saunders@gmail.com>",
     "Marijn Suijten <marijn@traverseresearch.nl>",
 ]
-description = "Vulkan bindings for Rust"
-license = "MIT OR Apache-2.0"
-repository = "https://github.com/ash-rs/ash"
-readme = "../README.md"
-keywords = ["gamedev", "graphics", "vulkan", "bindings"]
 categories = [
     "api-bindings",
     "external-ffi-bindings",
     "game-development",
     "graphics",
-    "rendering::graphics-api"
+    "rendering::graphics-api",
 ]
+description = "Vulkan bindings for Rust"
 edition = "2021"
+keywords = ["gamedev", "graphics", "vulkan", "bindings"]
+license = "MIT OR Apache-2.0"
+name = "ash-patch"
+readme = "../README.md"
+repository = "https://github.com/ash-rs/ash"
 rust-version = "1.69.0"
+version = "0.38.0+1.3.296"
 
 [dependencies]
 libloading = { version = "0.8", optional = true }
@@ -44,6 +44,3 @@ no-dev-version = true
 [package.metadata.docs.rs]
 all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
-
-[hints]
-mostly-unused = true
