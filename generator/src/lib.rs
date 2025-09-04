@@ -2028,7 +2028,6 @@ fn derive_getters_and_setters(
 
     let name = name_to_tokens(&struct_.name);
 
-    println!("struct: {struct_:#?}");
     let next_field = members
         .iter()
         .find(|member| member.vkxml_field.param_ident() == "p_next");
@@ -2469,6 +2468,43 @@ pub fn generate_struct(
                 /// Use [`Packed24_8::new(instance_shader_binding_table_record_offset, flags)`][Packed24_8::new()] to construct this field
                 pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
+            }
+        };
+    }
+
+    if &struct_.name == "VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/latest/man/html/VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV.html>"]
+            pub struct ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV {
+                /// Use [`Packed24_5_3::new(geometry-index, 0, geometry_flags)`][Packed24_5_3::new()] to construct this field
+                pub geometry_index_and_geometry_flags: Packed24_8,
+            }
+        };
+    }
+
+    // TODO: Maybe support this
+    if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterInfoNV" {
+        return quote! {};
+    }
+
+    // TODO: Maybe support this
+    if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV" {
+        return quote! {};
+    }
+
+    if &struct_.name == "VkClusterAccelerationStructureInstantiateClusterInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureInstantiateClusterInfoNV.html>"]
+            pub struct ClusterAccelerationStructureInstantiateClusterInfoNV {
+                pub cluster_id_offset: uint32_t,
+                /// Use [`Packed24_8::new(geometry_index_offset, 0)`][Packed24_8::new()] to construct this field
+                pub geometry_index_offset_and_reserved: Packed24_8,
+                pub cluster_template_address: DeviceAddress,
+                pub vertex_buffer: StridedDeviceAddressNV,
             }
         };
     }
@@ -3371,6 +3407,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use core::ffi::*;
         use core::fmt;
         use core::marker::PhantomData;
+        use ash::*;
         #(#definition_code)*
     };
 
@@ -3382,6 +3419,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let bitflags_code = quote! {
         use super::definitions::*;
+        use ash::*;
         #(#bitflags_code)*
     };
 
