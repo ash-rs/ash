@@ -2,6 +2,6 @@
 	path = generator/Vulkan-Headers
 	url = https://github.com/KhronosGroup/Vulkan-Headers
 	update = none
-[submodule "generator/ash/Vulkan-Headers"]
-	path = generator/ash/Vulkan-Headers
-	url = https://github.com/KhronosGroup/Vulkan-Headers.git
+[submodule "generator/ash-release"]
+	path = generator/ash-release
+	url = https://github.com/ash-rs/ash.git

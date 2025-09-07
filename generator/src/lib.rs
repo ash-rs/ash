@@ -3059,7 +3059,11 @@ pub fn generate_aliases_of_types(
         #(#aliases)*
     }
 }
-pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
+pub fn write_source_code<P: AsRef<Path>>(
+    vk_headers_dir: &Path,
+    old_vk_headers_dir: &Path,
+    src_dir: P,
+) {
     let vk_xml = vk_headers_dir.join("registry/vk.xml");
     use std::fs::File;
     use std::io::Write;
