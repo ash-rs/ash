@@ -891,7 +891,7 @@ impl FieldExt for vk_parse::CommandParam {
         assert!(rem.is_empty());
         // Disambiguate overloaded names
         let qualifier = match ty.type_.name == "VkDevice" || ty.type_.name == "VkInstance" {
-            true => quote!(crate::vk::),
+            true => quote!(ash::vk::),
             false => quote!(),
         };
         let type_name = name_to_tokens(ty.type_.name);
@@ -1368,12 +1368,12 @@ pub fn generate_extension_commands<'a>(
             #[derive(Clone)]
             pub struct Instance {
                 pub(crate) fp: InstanceFn,
-                pub(crate) handle: crate::vk::Instance,
+                pub(crate) handle: ash::vk::Instance,
             }
 
             impl Instance {
-                pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                    let handle = instance.handle;
+                pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                    let handle = instance.handle();
                     let fp = InstanceFn::load(|name| unsafe {
                         core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                     });
@@ -1386,7 +1386,7 @@ pub fn generate_extension_commands<'a>(
                 }
 
                 #[inline]
-                pub fn instance(&self) -> crate::vk::Instance {
+                pub fn instance(&self) -> ash::vk::Instance {
                     self.handle
                 }
             }
@@ -1413,12 +1413,12 @@ pub fn generate_extension_commands<'a>(
             #[derive(Clone)]
             pub struct Device {
                 pub(crate) fp: DeviceFn,
-                pub(crate) handle: crate::vk::Device,
+                pub(crate) handle: ash::vk::Device,
             }
 
             impl Device {
-                pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                    let handle = device.handle;
+                pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                    let handle = device.handle();
                     let fp = DeviceFn::load(|name| unsafe {
                         core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                     });
@@ -1431,7 +1431,7 @@ pub fn generate_extension_commands<'a>(
                 }
 
                 #[inline]
-                pub fn device(&self) -> crate::vk::Device {
+                pub fn device(&self) -> ash::vk::Device {
                     self.handle
                 }
             }
@@ -2408,8 +2408,9 @@ pub fn generate_struct(
 
     if &struct_.name == "VkTransformMatrixKHR" {
         return quote! {
+            #[cfg_attr(feature = "debug", derive(Debug))]
             #[repr(C)]
-            #[derive(Copy, Clone)]
+            #[derive(Copy, Clone, Default)]
             pub struct TransformMatrixKHR {
                 pub matrix: [f32; 12],
             }
@@ -2500,7 +2501,7 @@ pub fn generate_struct(
             #[derive(Copy, Clone)]
             #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureInstantiateClusterInfoNV.html>"]
             pub struct ClusterAccelerationStructureInstantiateClusterInfoNV {
-                pub cluster_id_offset: uint32_t,
+                pub cluster_id_offset: u32,
                 /// Use [`Packed24_8::new(geometry_index_offset, 0)`][Packed24_8::new()] to construct this field
                 pub geometry_index_offset_and_reserved: Packed24_8,
                 pub cluster_template_address: DeviceAddress,
@@ -3066,21 +3067,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     if !errors.is_empty() {
         eprintln!("vk_parse encountered one or more errors while parsing: {errors:?}")
     }
-
-    let test = spec2
-        .0
-        .iter()
-        .find_map(get_variant!(vk_parse::RegistryChild::Types))
-        .unwrap();
-    let test = test
-        .children
-        .iter()
-        .filter_map(get_variant!(vk_parse::TypesChild::Type))
-        .find(|it| {
-            it.name
-                == Some("VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV".to_string())
-        });
-    println!("{test:#?}");
 
     let extensions: Vec<&vk_parse::Extension> = spec2
         .0

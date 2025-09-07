@@ -8,8 +8,6 @@ pub type Window = c_ulong;
 pub type xcb_connection_t = c_void;
 pub type xcb_window_t = u32;
 pub type xcb_visualid_t = u32;
-pub type MirConnection = *const c_void;
-pub type MirSurface = *const c_void;
 /// <https://microsoft.github.io/windows-docs-rs/doc/windows/Win32/Foundation/struct.HANDLE.html>
 pub type HANDLE = isize;
 /// <https://microsoft.github.io/windows-docs-rs/doc/windows/Win32/Foundation/struct.HINSTANCE.html>
@@ -29,6 +27,7 @@ pub type _screen_window = c_void;
 pub type SECURITY_ATTRIBUTES = c_void;
 // Opaque types
 pub type ANativeWindow = c_void;
+pub type OHNativeWindow = c_void;
 pub type AHardwareBuffer = c_void;
 pub type CAMetalLayer = c_void;
 // This definition is behind an NDA with a best effort guess from

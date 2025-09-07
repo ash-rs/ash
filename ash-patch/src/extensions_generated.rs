@@ -40,11 +40,11 @@ pub mod amd {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -55,7 +55,7 @@ pub mod amd {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -166,11 +166,11 @@ pub mod amd {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -181,7 +181,7 @@ pub mod amd {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -200,7 +200,7 @@ pub mod amd {
                 Self {
                     get_shader_info_amd: unsafe {
                         unsafe extern "system" fn get_shader_info_amd(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _pipeline: Pipeline,
                             _shader_stage: ShaderStageFlags,
                             _info_type: ShaderInfoTypeAMD,
@@ -261,11 +261,11 @@ pub mod amd {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -276,7 +276,7 @@ pub mod amd {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -375,11 +375,11 @@ pub mod amd {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -390,7 +390,7 @@ pub mod amd {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -409,7 +409,7 @@ pub mod amd {
                 Self {
                     set_local_dimming_amd: unsafe {
                         unsafe extern "system" fn set_local_dimming_amd(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swap_chain: SwapchainKHR,
                             _local_dimming_enable: Bool32,
                         ) {
@@ -463,11 +463,11 @@ pub mod amd {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -478,7 +478,7 @@ pub mod amd {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -497,7 +497,7 @@ pub mod amd {
                 Self {
                     anti_lag_update_amd: unsafe {
                         unsafe extern "system" fn anti_lag_update_amd(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_data: *const AntiLagDataAMD<'_>,
                         ) {
                             panic!(concat!("Unable to load ", stringify!(anti_lag_update_amd)))
@@ -529,11 +529,11 @@ pub mod amdx {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -544,7 +544,7 @@ pub mod amdx {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -571,7 +571,7 @@ pub mod amdx {
                 Self {
                     create_execution_graph_pipelines_amdx: unsafe {
                         unsafe extern "system" fn create_execution_graph_pipelines_amdx(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _pipeline_cache: PipelineCache,
                             _create_info_count: u32,
                             _p_create_infos: *const ExecutionGraphPipelineCreateInfoAMDX<'_>,
@@ -595,7 +595,7 @@ pub mod amdx {
                     },
                     get_execution_graph_pipeline_scratch_size_amdx: unsafe {
                         unsafe extern "system" fn get_execution_graph_pipeline_scratch_size_amdx(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _execution_graph: Pipeline,
                             _p_size_info: *mut ExecutionGraphPipelineScratchSizeAMDX<'_>,
                         ) -> Result {
@@ -616,7 +616,7 @@ pub mod amdx {
                     },
                     get_execution_graph_pipeline_node_index_amdx: unsafe {
                         unsafe extern "system" fn get_execution_graph_pipeline_node_index_amdx(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _execution_graph: Pipeline,
                             _p_node_info: *const PipelineShaderStageNodeCreateInfoAMDX<'_>,
                             _p_node_index: *mut u32,
@@ -742,11 +742,11 @@ pub mod android {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -757,7 +757,7 @@ pub mod android {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -779,7 +779,7 @@ pub mod android {
                 Self {
                     get_swapchain_gralloc_usage_android: unsafe {
                         unsafe extern "system" fn get_swapchain_gralloc_usage_android(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _format: Format,
                             _image_usage: ImageUsageFlags,
                             _gralloc_usage: *mut c_int,
@@ -801,7 +801,7 @@ pub mod android {
                     },
                     acquire_image_android: unsafe {
                         unsafe extern "system" fn acquire_image_android(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _image: Image,
                             _native_fence_fd: c_int,
                             _semaphore: Semaphore,
@@ -845,7 +845,7 @@ pub mod android {
                     },
                     get_swapchain_gralloc_usage2_android: unsafe {
                         unsafe extern "system" fn get_swapchain_gralloc_usage2_android(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _format: Format,
                             _image_usage: ImageUsageFlags,
                             _swapchain_image_usage: SwapchainImageUsageFlagsANDROID,
@@ -883,11 +883,11 @@ pub mod android {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -898,7 +898,7 @@ pub mod android {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -920,7 +920,7 @@ pub mod android {
                 Self {
                     get_android_hardware_buffer_properties_android: unsafe {
                         unsafe extern "system" fn get_android_hardware_buffer_properties_android(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _buffer: *const AHardwareBuffer,
                             _p_properties: *mut AndroidHardwareBufferPropertiesANDROID<'_>,
                         ) -> Result {
@@ -941,7 +941,7 @@ pub mod android {
                     },
                     get_memory_android_hardware_buffer_android: unsafe {
                         unsafe extern "system" fn get_memory_android_hardware_buffer_android(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const MemoryGetAndroidHardwareBufferInfoANDROID<'_>,
                             _p_buffer: *mut *mut AHardwareBuffer,
                         ) -> Result {
@@ -1014,11 +1014,11 @@ pub mod arm {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -1029,7 +1029,7 @@ pub mod arm {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -1075,11 +1075,11 @@ pub mod arm {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -1090,7 +1090,7 @@ pub mod arm {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -1121,7 +1121,7 @@ pub mod arm {
                 Self {
                     create_tensor_arm: unsafe {
                         unsafe extern "system" fn create_tensor_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const TensorCreateInfoARM<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_tensor: *mut TensorARM,
@@ -1138,7 +1138,7 @@ pub mod arm {
                     },
                     destroy_tensor_arm: unsafe {
                         unsafe extern "system" fn destroy_tensor_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _tensor: TensorARM,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -1154,7 +1154,7 @@ pub mod arm {
                     },
                     create_tensor_view_arm: unsafe {
                         unsafe extern "system" fn create_tensor_view_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const TensorViewCreateInfoARM<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_view: *mut TensorViewARM,
@@ -1174,7 +1174,7 @@ pub mod arm {
                     },
                     destroy_tensor_view_arm: unsafe {
                         unsafe extern "system" fn destroy_tensor_view_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _tensor_view: TensorViewARM,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -1194,7 +1194,7 @@ pub mod arm {
                     },
                     get_tensor_memory_requirements_arm: unsafe {
                         unsafe extern "system" fn get_tensor_memory_requirements_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const TensorMemoryRequirementsInfoARM<'_>,
                             _p_memory_requirements: *mut MemoryRequirements2<'_>,
                         ) {
@@ -1215,7 +1215,7 @@ pub mod arm {
                     },
                     bind_tensor_memory_arm: unsafe {
                         unsafe extern "system" fn bind_tensor_memory_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _bind_info_count: u32,
                             _p_bind_infos: *const BindTensorMemoryInfoARM<'_>,
                         ) -> Result {
@@ -1234,7 +1234,7 @@ pub mod arm {
                     },
                     get_device_tensor_memory_requirements_arm: unsafe {
                         unsafe extern "system" fn get_device_tensor_memory_requirements_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const DeviceTensorMemoryRequirementsARM<'_>,
                             _p_memory_requirements: *mut MemoryRequirements2<'_>,
                         ) {
@@ -1270,7 +1270,7 @@ pub mod arm {
                     },
                     get_tensor_opaque_capture_descriptor_data_arm: unsafe {
                         unsafe extern "system" fn get_tensor_opaque_capture_descriptor_data_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const TensorCaptureDescriptorDataInfoARM<'_>,
                             _p_data: *mut c_void,
                         ) -> Result {
@@ -1291,7 +1291,7 @@ pub mod arm {
                     },
                     get_tensor_view_opaque_capture_descriptor_data_arm: unsafe {
                         unsafe extern "system" fn get_tensor_view_opaque_capture_descriptor_data_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const TensorViewCaptureDescriptorDataInfoARM<'_>,
                             _p_data: *mut c_void,
                         ) -> Result {
@@ -1333,11 +1333,11 @@ pub mod arm {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -1348,7 +1348,7 @@ pub mod arm {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -1415,11 +1415,11 @@ pub mod arm {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -1430,7 +1430,7 @@ pub mod arm {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -1461,7 +1461,7 @@ pub mod arm {
                 Self {
                     create_data_graph_pipelines_arm: unsafe {
                         unsafe extern "system" fn create_data_graph_pipelines_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _deferred_operation: DeferredOperationKHR,
                             _pipeline_cache: PipelineCache,
                             _create_info_count: u32,
@@ -1485,7 +1485,7 @@ pub mod arm {
                     },
                     create_data_graph_pipeline_session_arm: unsafe {
                         unsafe extern "system" fn create_data_graph_pipeline_session_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const DataGraphPipelineSessionCreateInfoARM<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_session: *mut DataGraphPipelineSessionARM,
@@ -1507,7 +1507,7 @@ pub mod arm {
                     },
                     get_data_graph_pipeline_session_bind_point_requirements_arm: unsafe {
                         unsafe extern "system" fn get_data_graph_pipeline_session_bind_point_requirements_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const DataGraphPipelineSessionBindPointRequirementsInfoARM<
                                 '_,
                             >,
@@ -1533,7 +1533,7 @@ pub mod arm {
                     },
                     get_data_graph_pipeline_session_memory_requirements_arm: unsafe {
                         unsafe extern "system" fn get_data_graph_pipeline_session_memory_requirements_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const DataGraphPipelineSessionMemoryRequirementsInfoARM<'_>,
                             _p_memory_requirements: *mut MemoryRequirements2<'_>,
                         ) {
@@ -1554,7 +1554,7 @@ pub mod arm {
                     },
                     bind_data_graph_pipeline_session_memory_arm: unsafe {
                         unsafe extern "system" fn bind_data_graph_pipeline_session_memory_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _bind_info_count: u32,
                             _p_bind_infos: *const BindDataGraphPipelineSessionMemoryInfoARM<'_>,
                         ) -> Result {
@@ -1575,7 +1575,7 @@ pub mod arm {
                     },
                     destroy_data_graph_pipeline_session_arm: unsafe {
                         unsafe extern "system" fn destroy_data_graph_pipeline_session_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _session: DataGraphPipelineSessionARM,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -1616,7 +1616,7 @@ pub mod arm {
                     },
                     get_data_graph_pipeline_available_properties_arm: unsafe {
                         unsafe extern "system" fn get_data_graph_pipeline_available_properties_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_pipeline_info: *const DataGraphPipelineInfoARM<'_>,
                             _p_properties_count: *mut u32,
                             _p_properties: *mut DataGraphPipelinePropertyARM,
@@ -1638,7 +1638,7 @@ pub mod arm {
                     },
                     get_data_graph_pipeline_properties_arm: unsafe {
                         unsafe extern "system" fn get_data_graph_pipeline_properties_arm(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_pipeline_info: *const DataGraphPipelineInfoARM<'_>,
                             _properties_count: u32,
                             _p_properties: *mut DataGraphPipelinePropertyQueryResultARM<'_>,
@@ -1691,11 +1691,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -1706,7 +1706,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -1727,7 +1727,7 @@ pub mod ext {
                 Self {
                     create_debug_report_callback_ext: unsafe {
                         unsafe extern "system" fn create_debug_report_callback_ext(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const DebugReportCallbackCreateInfoEXT<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_callback: *mut DebugReportCallbackEXT,
@@ -1749,7 +1749,7 @@ pub mod ext {
                     },
                     destroy_debug_report_callback_ext: unsafe {
                         unsafe extern "system" fn destroy_debug_report_callback_ext(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _callback: DebugReportCallbackEXT,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -1770,7 +1770,7 @@ pub mod ext {
                     },
                     debug_report_message_ext: unsafe {
                         unsafe extern "system" fn debug_report_message_ext(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _flags: DebugReportFlagsEXT,
                             _object_type: DebugReportObjectTypeEXT,
                             _object: u64,
@@ -1816,11 +1816,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -1831,7 +1831,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -1854,7 +1854,7 @@ pub mod ext {
                 Self {
                     debug_marker_set_object_tag_ext: unsafe {
                         unsafe extern "system" fn debug_marker_set_object_tag_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_tag_info: *const DebugMarkerObjectTagInfoEXT<'_>,
                         ) -> Result {
                             panic!(concat!(
@@ -1873,7 +1873,7 @@ pub mod ext {
                     },
                     debug_marker_set_object_name_ext: unsafe {
                         unsafe extern "system" fn debug_marker_set_object_name_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_name_info: *const DebugMarkerObjectNameInfoEXT<'_>,
                         ) -> Result {
                             panic!(concat!(
@@ -1962,11 +1962,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -1977,7 +1977,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -2193,11 +2193,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -2208,7 +2208,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -2283,11 +2283,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -2298,7 +2298,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -2346,11 +2346,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -2361,7 +2361,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -2436,11 +2436,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -2451,7 +2451,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -2506,11 +2506,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -2521,7 +2521,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -2543,7 +2543,7 @@ pub mod ext {
                 Self {
                     display_power_control_ext: unsafe {
                         unsafe extern "system" fn display_power_control_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _display: DisplayKHR,
                             _p_display_power_info: *const DisplayPowerInfoEXT<'_>,
                         ) -> Result {
@@ -2563,7 +2563,7 @@ pub mod ext {
                     },
                     register_device_event_ext: unsafe {
                         unsafe extern "system" fn register_device_event_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_device_event_info: *const DeviceEventInfoEXT<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_fence: *mut Fence,
@@ -2584,7 +2584,7 @@ pub mod ext {
                     },
                     register_display_event_ext: unsafe {
                         unsafe extern "system" fn register_display_event_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _display: DisplayKHR,
                             _p_display_event_info: *const DisplayEventInfoEXT<'_>,
                             _p_allocator: *const AllocationCallbacks,
@@ -2606,7 +2606,7 @@ pub mod ext {
                     },
                     get_swapchain_counter_ext: unsafe {
                         unsafe extern "system" fn get_swapchain_counter_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain: SwapchainKHR,
                             _counter: SurfaceCounterFlagsEXT,
                             _p_counter_value: *mut u64,
@@ -2641,11 +2641,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -2656,7 +2656,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -2773,11 +2773,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -2788,7 +2788,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -2807,7 +2807,7 @@ pub mod ext {
                 Self {
                     set_hdr_metadata_ext: unsafe {
                         unsafe extern "system" fn set_hdr_metadata_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain_count: u32,
                             _p_swapchains: *const SwapchainKHR,
                             _p_metadata: *const HdrMetadataEXT<'_>,
@@ -2852,11 +2852,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -2867,7 +2867,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -2888,7 +2888,7 @@ pub mod ext {
                 Self {
                     create_debug_utils_messenger_ext: unsafe {
                         unsafe extern "system" fn create_debug_utils_messenger_ext(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const DebugUtilsMessengerCreateInfoEXT<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_messenger: *mut DebugUtilsMessengerEXT,
@@ -2910,7 +2910,7 @@ pub mod ext {
                     },
                     destroy_debug_utils_messenger_ext: unsafe {
                         unsafe extern "system" fn destroy_debug_utils_messenger_ext(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _messenger: DebugUtilsMessengerEXT,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -2931,7 +2931,7 @@ pub mod ext {
                     },
                     submit_debug_utils_message_ext: unsafe {
                         unsafe extern "system" fn submit_debug_utils_message_ext(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _message_severity: DebugUtilsMessageSeverityFlagsEXT,
                             _message_types: DebugUtilsMessageTypeFlagsEXT,
                             _p_callback_data: *const DebugUtilsMessengerCallbackDataEXT<'_>,
@@ -2957,11 +2957,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -2972,7 +2972,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -2998,7 +2998,7 @@ pub mod ext {
                 Self {
                     set_debug_utils_object_name_ext: unsafe {
                         unsafe extern "system" fn set_debug_utils_object_name_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_name_info: *const DebugUtilsObjectNameInfoEXT<'_>,
                         ) -> Result {
                             panic!(concat!(
@@ -3017,7 +3017,7 @@ pub mod ext {
                     },
                     set_debug_utils_object_tag_ext: unsafe {
                         unsafe extern "system" fn set_debug_utils_object_tag_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_tag_info: *const DebugUtilsObjectTagInfoEXT<'_>,
                         ) -> Result {
                             panic!(concat!(
@@ -3183,11 +3183,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -3198,7 +3198,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -3244,11 +3244,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -3259,7 +3259,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -3325,11 +3325,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -3340,7 +3340,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -3360,7 +3360,7 @@ pub mod ext {
                 Self {
                     get_image_drm_format_modifier_properties_ext: unsafe {
                         unsafe extern "system" fn get_image_drm_format_modifier_properties_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _image: Image,
                             _p_properties: *mut ImageDrmFormatModifierPropertiesEXT<'_>,
                         ) -> Result {
@@ -3395,11 +3395,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -3410,7 +3410,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -3432,7 +3432,7 @@ pub mod ext {
                 Self {
                     create_validation_cache_ext: unsafe {
                         unsafe extern "system" fn create_validation_cache_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const ValidationCacheCreateInfoEXT<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_validation_cache: *mut ValidationCacheEXT,
@@ -3453,7 +3453,7 @@ pub mod ext {
                     },
                     destroy_validation_cache_ext: unsafe {
                         unsafe extern "system" fn destroy_validation_cache_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _validation_cache: ValidationCacheEXT,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -3473,7 +3473,7 @@ pub mod ext {
                     },
                     merge_validation_caches_ext: unsafe {
                         unsafe extern "system" fn merge_validation_caches_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _dst_cache: ValidationCacheEXT,
                             _src_cache_count: u32,
                             _p_src_caches: *const ValidationCacheEXT,
@@ -3494,7 +3494,7 @@ pub mod ext {
                     },
                     get_validation_cache_data_ext: unsafe {
                         unsafe extern "system" fn get_validation_cache_data_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _validation_cache: ValidationCacheEXT,
                             _p_data_size: *mut usize,
                             _p_data: *mut c_void,
@@ -3557,11 +3557,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -3572,7 +3572,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -3591,7 +3591,7 @@ pub mod ext {
                 Self {
                     get_memory_host_pointer_properties_ext: unsafe {
                         unsafe extern "system" fn get_memory_host_pointer_properties_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _handle_type: ExternalMemoryHandleTypeFlags,
                             _p_host_pointer: *const c_void,
                             _p_memory_host_pointer_properties: *mut MemoryHostPointerPropertiesEXT<
@@ -3629,11 +3629,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -3644,7 +3644,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -3690,11 +3690,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -3705,7 +3705,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -3724,7 +3724,7 @@ pub mod ext {
                 Self {
                     get_calibrated_timestamps_ext: unsafe {
                         unsafe extern "system" fn get_calibrated_timestamps_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _timestamp_count: u32,
                             _p_timestamp_infos: *const CalibratedTimestampInfoKHR<'_>,
                             _p_timestamps: *mut u64,
@@ -3781,11 +3781,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -3796,7 +3796,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -3815,7 +3815,7 @@ pub mod ext {
                 Self {
                     create_metal_surface_ext: unsafe {
                         unsafe extern "system" fn create_metal_surface_ext(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const MetalSurfaceCreateInfoEXT<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -3892,11 +3892,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -3907,7 +3907,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -3926,7 +3926,7 @@ pub mod ext {
                 Self {
                     get_buffer_device_address_ext: unsafe {
                         unsafe extern "system" fn get_buffer_device_address_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const BufferDeviceAddressInfo<'_>,
                         ) -> DeviceAddress {
                             panic!(concat!(
@@ -3959,11 +3959,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -3974,7 +3974,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -4063,11 +4063,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -4078,7 +4078,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -4125,11 +4125,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -4140,7 +4140,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -4162,7 +4162,7 @@ pub mod ext {
                 Self {
                     acquire_full_screen_exclusive_mode_ext: unsafe {
                         unsafe extern "system" fn acquire_full_screen_exclusive_mode_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain: SwapchainKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -4182,7 +4182,7 @@ pub mod ext {
                     },
                     release_full_screen_exclusive_mode_ext: unsafe {
                         unsafe extern "system" fn release_full_screen_exclusive_mode_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain: SwapchainKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -4202,7 +4202,7 @@ pub mod ext {
                     },
                     get_device_group_surface_present_modes2_ext: unsafe {
                         unsafe extern "system" fn get_device_group_surface_present_modes2_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR<'_>,
                             _p_modes: *mut DeviceGroupPresentModeFlagsKHR,
                         ) -> Result {
@@ -4237,11 +4237,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -4252,7 +4252,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -4271,7 +4271,7 @@ pub mod ext {
                 Self {
                     create_headless_surface_ext: unsafe {
                         unsafe extern "system" fn create_headless_surface_ext(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const HeadlessSurfaceCreateInfoEXT<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -4306,11 +4306,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -4321,7 +4321,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -4381,11 +4381,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -4396,7 +4396,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -4415,7 +4415,7 @@ pub mod ext {
                 Self {
                     reset_query_pool_ext: unsafe {
                         unsafe extern "system" fn reset_query_pool_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _query_pool: QueryPool,
                             _first_query: u32,
                             _query_count: u32,
@@ -4453,11 +4453,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -4468,7 +4468,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -4749,11 +4749,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -4764,7 +4764,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -4787,7 +4787,7 @@ pub mod ext {
                 Self {
                     copy_memory_to_image_ext: unsafe {
                         unsafe extern "system" fn copy_memory_to_image_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_copy_memory_to_image_info: *const CopyMemoryToImageInfo<'_>,
                         ) -> Result {
                             panic!(concat!(
@@ -4806,7 +4806,7 @@ pub mod ext {
                     },
                     copy_image_to_memory_ext: unsafe {
                         unsafe extern "system" fn copy_image_to_memory_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_copy_image_to_memory_info: *const CopyImageToMemoryInfo<'_>,
                         ) -> Result {
                             panic!(concat!(
@@ -4825,7 +4825,7 @@ pub mod ext {
                     },
                     copy_image_to_image_ext: unsafe {
                         unsafe extern "system" fn copy_image_to_image_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_copy_image_to_image_info: *const CopyImageToImageInfo<'_>,
                         ) -> Result {
                             panic!(concat!(
@@ -4843,7 +4843,7 @@ pub mod ext {
                     },
                     transition_image_layout_ext: unsafe {
                         unsafe extern "system" fn transition_image_layout_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _transition_count: u32,
                             _p_transitions: *const HostImageLayoutTransitionInfo<'_>,
                         ) -> Result {
@@ -4863,7 +4863,7 @@ pub mod ext {
                     },
                     get_image_subresource_layout2_ext: unsafe {
                         unsafe extern "system" fn get_image_subresource_layout2_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _image: Image,
                             _p_subresource: *const ImageSubresource2<'_>,
                             _p_layout: *mut SubresourceLayout2<'_>,
@@ -4920,11 +4920,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -4935,7 +4935,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -4954,7 +4954,7 @@ pub mod ext {
                 Self {
                     release_swapchain_images_ext: unsafe {
                         unsafe extern "system" fn release_swapchain_images_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_release_info: *const ReleaseSwapchainImagesInfoKHR<'_>,
                         ) -> Result {
                             panic!(concat!(
@@ -5001,11 +5001,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -5016,7 +5016,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -5074,11 +5074,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -5089,7 +5089,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -5174,11 +5174,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -5189,7 +5189,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -5211,7 +5211,7 @@ pub mod ext {
                 Self {
                     create_private_data_slot_ext: unsafe {
                         unsafe extern "system" fn create_private_data_slot_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const PrivateDataSlotCreateInfo<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_private_data_slot: *mut PrivateDataSlot,
@@ -5232,7 +5232,7 @@ pub mod ext {
                     },
                     destroy_private_data_slot_ext: unsafe {
                         unsafe extern "system" fn destroy_private_data_slot_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _private_data_slot: PrivateDataSlot,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -5252,7 +5252,7 @@ pub mod ext {
                     },
                     set_private_data_ext: unsafe {
                         unsafe extern "system" fn set_private_data_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _object_type: ObjectType,
                             _object_handle: u64,
                             _private_data_slot: PrivateDataSlot,
@@ -5270,7 +5270,7 @@ pub mod ext {
                     },
                     get_private_data_ext: unsafe {
                         unsafe extern "system" fn get_private_data_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _object_type: ObjectType,
                             _object_handle: u64,
                             _private_data_slot: PrivateDataSlot,
@@ -5309,11 +5309,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -5324,7 +5324,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -5343,7 +5343,7 @@ pub mod ext {
                 Self {
                     export_metal_objects_ext: unsafe {
                         unsafe extern "system" fn export_metal_objects_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_metal_objects_info: *mut ExportMetalObjectsInfoEXT<'_>,
                         ) {
                             panic!(concat!(
@@ -5376,11 +5376,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -5391,7 +5391,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -5427,7 +5427,7 @@ pub mod ext {
                 Self {
                     get_descriptor_set_layout_size_ext: unsafe {
                         unsafe extern "system" fn get_descriptor_set_layout_size_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _layout: DescriptorSetLayout,
                             _p_layout_size_in_bytes: *mut DeviceSize,
                         ) {
@@ -5448,7 +5448,7 @@ pub mod ext {
                     },
                     get_descriptor_set_layout_binding_offset_ext: unsafe {
                         unsafe extern "system" fn get_descriptor_set_layout_binding_offset_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _layout: DescriptorSetLayout,
                             _binding: u32,
                             _p_offset: *mut DeviceSize,
@@ -5470,7 +5470,7 @@ pub mod ext {
                     },
                     get_descriptor_ext: unsafe {
                         unsafe extern "system" fn get_descriptor_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_descriptor_info: *const DescriptorGetInfoEXT<'_>,
                             _data_size: usize,
                             _p_descriptor: *mut c_void,
@@ -5554,7 +5554,7 @@ pub mod ext {
                     },
                     get_buffer_opaque_capture_descriptor_data_ext: unsafe {
                         unsafe extern "system" fn get_buffer_opaque_capture_descriptor_data_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const BufferCaptureDescriptorDataInfoEXT<'_>,
                             _p_data: *mut c_void,
                         ) -> Result {
@@ -5575,7 +5575,7 @@ pub mod ext {
                     },
                     get_image_opaque_capture_descriptor_data_ext: unsafe {
                         unsafe extern "system" fn get_image_opaque_capture_descriptor_data_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const ImageCaptureDescriptorDataInfoEXT<'_>,
                             _p_data: *mut c_void,
                         ) -> Result {
@@ -5596,7 +5596,7 @@ pub mod ext {
                     },
                     get_image_view_opaque_capture_descriptor_data_ext: unsafe {
                         unsafe extern "system" fn get_image_view_opaque_capture_descriptor_data_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const ImageViewCaptureDescriptorDataInfoEXT<'_>,
                             _p_data: *mut c_void,
                         ) -> Result {
@@ -5617,7 +5617,7 @@ pub mod ext {
                     },
                     get_sampler_opaque_capture_descriptor_data_ext: unsafe {
                         unsafe extern "system" fn get_sampler_opaque_capture_descriptor_data_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const SamplerCaptureDescriptorDataInfoEXT<'_>,
                             _p_data: *mut c_void,
                         ) -> Result {
@@ -5638,7 +5638,7 @@ pub mod ext {
                     },
                     get_acceleration_structure_opaque_capture_descriptor_data_ext: unsafe {
                         unsafe extern "system" fn get_acceleration_structure_opaque_capture_descriptor_data_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const AccelerationStructureCaptureDescriptorDataInfoEXT<'_>,
                             _p_data: *mut c_void,
                         ) -> Result {
@@ -5682,11 +5682,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -5697,7 +5697,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -5820,11 +5820,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -5835,7 +5835,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -5854,7 +5854,7 @@ pub mod ext {
                 Self {
                     get_image_subresource_layout2_ext: unsafe {
                         unsafe extern "system" fn get_image_subresource_layout2_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _image: Image,
                             _p_subresource: *const ImageSubresource2<'_>,
                             _p_layout: *mut SubresourceLayout2<'_>,
@@ -5904,11 +5904,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -5919,7 +5919,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -5938,7 +5938,7 @@ pub mod ext {
                 Self {
                     get_device_fault_info_ext: unsafe {
                         unsafe extern "system" fn get_device_fault_info_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_fault_counts: *mut DeviceFaultCountsEXT<'_>,
                             _p_fault_info: *mut DeviceFaultInfoEXT<'_>,
                         ) -> Result {
@@ -5979,11 +5979,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -5994,7 +5994,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -6015,7 +6015,7 @@ pub mod ext {
                 Self {
                     create_direct_fb_surface_ext: unsafe {
                         unsafe extern "system" fn create_direct_fb_surface_ext(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const DirectFBSurfaceCreateInfoEXT<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -6071,11 +6071,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -6086,7 +6086,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -6176,11 +6176,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -6191,7 +6191,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -6217,7 +6217,7 @@ pub mod ext {
                 Self {
                     get_pipeline_properties_ext: unsafe {
                         unsafe extern "system" fn get_pipeline_properties_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_pipeline_info: *const PipelineInfoEXT<'_>,
                             _p_pipeline_properties: *mut BaseOutStructure<'_>,
                         ) -> Result {
@@ -6265,11 +6265,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -6280,7 +6280,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -6410,11 +6410,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -6425,7 +6425,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -6499,11 +6499,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -6514,7 +6514,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -6605,11 +6605,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -6620,7 +6620,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -6652,7 +6652,7 @@ pub mod ext {
                 Self {
                     create_micromap_ext: unsafe {
                         unsafe extern "system" fn create_micromap_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const MicromapCreateInfoEXT<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_micromap: *mut MicromapEXT,
@@ -6669,7 +6669,7 @@ pub mod ext {
                     },
                     destroy_micromap_ext: unsafe {
                         unsafe extern "system" fn destroy_micromap_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _micromap: MicromapEXT,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -6705,7 +6705,7 @@ pub mod ext {
                     },
                     build_micromaps_ext: unsafe {
                         unsafe extern "system" fn build_micromaps_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _deferred_operation: DeferredOperationKHR,
                             _info_count: u32,
                             _p_infos: *const MicromapBuildInfoEXT<'_>,
@@ -6722,7 +6722,7 @@ pub mod ext {
                     },
                     copy_micromap_ext: unsafe {
                         unsafe extern "system" fn copy_micromap_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _deferred_operation: DeferredOperationKHR,
                             _p_info: *const CopyMicromapInfoEXT<'_>,
                         ) -> Result {
@@ -6738,7 +6738,7 @@ pub mod ext {
                     },
                     copy_micromap_to_memory_ext: unsafe {
                         unsafe extern "system" fn copy_micromap_to_memory_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _deferred_operation: DeferredOperationKHR,
                             _p_info: *const CopyMicromapToMemoryInfoEXT<'_>,
                         ) -> Result {
@@ -6758,7 +6758,7 @@ pub mod ext {
                     },
                     copy_memory_to_micromap_ext: unsafe {
                         unsafe extern "system" fn copy_memory_to_micromap_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _deferred_operation: DeferredOperationKHR,
                             _p_info: *const CopyMemoryToMicromapInfoEXT<'_>,
                         ) -> Result {
@@ -6778,7 +6778,7 @@ pub mod ext {
                     },
                     write_micromaps_properties_ext: unsafe {
                         unsafe extern "system" fn write_micromaps_properties_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _micromap_count: u32,
                             _p_micromaps: *const MicromapEXT,
                             _query_type: QueryType,
@@ -6882,7 +6882,7 @@ pub mod ext {
                     },
                     get_device_micromap_compatibility_ext: unsafe {
                         unsafe extern "system" fn get_device_micromap_compatibility_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_version_info: *const MicromapVersionInfoEXT<'_>,
                             _p_compatibility: *mut AccelerationStructureCompatibilityKHR,
                         ) {
@@ -6903,7 +6903,7 @@ pub mod ext {
                     },
                     get_micromap_build_sizes_ext: unsafe {
                         unsafe extern "system" fn get_micromap_build_sizes_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _build_type: AccelerationStructureBuildTypeKHR,
                             _p_build_info: *const MicromapBuildInfoEXT<'_>,
                             _p_size_info: *mut MicromapBuildSizesInfoEXT<'_>,
@@ -6952,11 +6952,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -6967,7 +6967,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -6986,7 +6986,7 @@ pub mod ext {
                 Self {
                     set_device_memory_priority_ext: unsafe {
                         unsafe extern "system" fn set_device_memory_priority_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _memory: DeviceMemory,
                             _priority: f32,
                         ) {
@@ -7062,11 +7062,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -7077,7 +7077,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -7771,11 +7771,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -7786,7 +7786,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -7807,7 +7807,7 @@ pub mod ext {
                 Self {
                     get_shader_module_identifier_ext: unsafe {
                         unsafe extern "system" fn get_shader_module_identifier_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _shader_module: ShaderModule,
                             _p_identifier: *mut ShaderModuleIdentifierEXT<'_>,
                         ) {
@@ -7828,7 +7828,7 @@ pub mod ext {
                     },
                     get_shader_module_create_info_identifier_ext: unsafe {
                         unsafe extern "system" fn get_shader_module_create_info_identifier_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const ShaderModuleCreateInfo<'_>,
                             _p_identifier: *mut ShaderModuleIdentifierEXT<'_>,
                         ) {
@@ -7884,11 +7884,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -7899,7 +7899,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -7976,7 +7976,7 @@ pub mod ext {
                 Self {
                     create_shaders_ext: unsafe {
                         unsafe extern "system" fn create_shaders_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _create_info_count: u32,
                             _p_create_infos: *const ShaderCreateInfoEXT<'_>,
                             _p_allocator: *const AllocationCallbacks,
@@ -7994,7 +7994,7 @@ pub mod ext {
                     },
                     destroy_shader_ext: unsafe {
                         unsafe extern "system" fn destroy_shader_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _shader: ShaderEXT,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -8010,7 +8010,7 @@ pub mod ext {
                     },
                     get_shader_binary_data_ext: unsafe {
                         unsafe extern "system" fn get_shader_binary_data_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _shader: ShaderEXT,
                             _p_data_size: *mut usize,
                             _p_data: *mut c_void,
@@ -9088,11 +9088,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -9103,7 +9103,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -9171,11 +9171,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -9186,7 +9186,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -9215,7 +9215,7 @@ pub mod ext {
                 Self {
                     get_generated_commands_memory_requirements_ext: unsafe {
                         unsafe extern "system" fn get_generated_commands_memory_requirements_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const GeneratedCommandsMemoryRequirementsInfoEXT<'_>,
                             _p_memory_requirements: *mut MemoryRequirements2<'_>,
                         ) {
@@ -9278,7 +9278,7 @@ pub mod ext {
                     },
                     create_indirect_commands_layout_ext: unsafe {
                         unsafe extern "system" fn create_indirect_commands_layout_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const IndirectCommandsLayoutCreateInfoEXT<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_indirect_commands_layout: *mut IndirectCommandsLayoutEXT,
@@ -9300,7 +9300,7 @@ pub mod ext {
                     },
                     destroy_indirect_commands_layout_ext: unsafe {
                         unsafe extern "system" fn destroy_indirect_commands_layout_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _indirect_commands_layout: IndirectCommandsLayoutEXT,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -9321,7 +9321,7 @@ pub mod ext {
                     },
                     create_indirect_execution_set_ext: unsafe {
                         unsafe extern "system" fn create_indirect_execution_set_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const IndirectExecutionSetCreateInfoEXT<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_indirect_execution_set: *mut IndirectExecutionSetEXT,
@@ -9343,7 +9343,7 @@ pub mod ext {
                     },
                     destroy_indirect_execution_set_ext: unsafe {
                         unsafe extern "system" fn destroy_indirect_execution_set_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _indirect_execution_set: IndirectExecutionSetEXT,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -9364,7 +9364,7 @@ pub mod ext {
                     },
                     update_indirect_execution_set_pipeline_ext: unsafe {
                         unsafe extern "system" fn update_indirect_execution_set_pipeline_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _indirect_execution_set: IndirectExecutionSetEXT,
                             _execution_set_write_count: u32,
                             _p_execution_set_writes: *const WriteIndirectExecutionSetPipelineEXT<
@@ -9388,7 +9388,7 @@ pub mod ext {
                     },
                     update_indirect_execution_set_shader_ext: unsafe {
                         unsafe extern "system" fn update_indirect_execution_set_shader_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _indirect_execution_set: IndirectExecutionSetEXT,
                             _execution_set_write_count: u32,
                             _p_execution_set_writes: *const WriteIndirectExecutionSetShaderEXT<'_>,
@@ -9424,11 +9424,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -9439,7 +9439,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -9492,11 +9492,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -9507,7 +9507,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -9527,7 +9527,7 @@ pub mod ext {
                 Self {
                     get_memory_metal_handle_ext: unsafe {
                         unsafe extern "system" fn get_memory_metal_handle_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_get_metal_handle_info: *const MemoryGetMetalHandleInfoEXT<'_>,
                             _p_handle: *mut *mut c_void,
                         ) -> Result {
@@ -9547,7 +9547,7 @@ pub mod ext {
                     },
                     get_memory_metal_handle_properties_ext: unsafe {
                         unsafe extern "system" fn get_memory_metal_handle_properties_ext(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _handle_type: ExternalMemoryHandleTypeFlags,
                             _p_handle: *const c_void,
                             _p_memory_metal_handle_properties: *mut MemoryMetalHandlePropertiesEXT<
@@ -9592,11 +9592,11 @@ pub mod ext {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -9607,7 +9607,7 @@ pub mod ext {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -9668,11 +9668,11 @@ pub mod fuchsia {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -9683,7 +9683,7 @@ pub mod fuchsia {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -9702,7 +9702,7 @@ pub mod fuchsia {
                 Self {
                     create_image_pipe_surface_fuchsia: unsafe {
                         unsafe extern "system" fn create_image_pipe_surface_fuchsia(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const ImagePipeSurfaceCreateInfoFUCHSIA<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -9738,11 +9738,11 @@ pub mod fuchsia {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -9753,7 +9753,7 @@ pub mod fuchsia {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -9774,7 +9774,7 @@ pub mod fuchsia {
                 Self {
                     get_memory_zircon_handle_fuchsia: unsafe {
                         unsafe extern "system" fn get_memory_zircon_handle_fuchsia(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_get_zircon_handle_info: *const MemoryGetZirconHandleInfoFUCHSIA<'_>,
                             _p_zircon_handle: *mut zx_handle_t,
                         ) -> Result {
@@ -9795,7 +9795,7 @@ pub mod fuchsia {
                     },
                     get_memory_zircon_handle_properties_fuchsia: unsafe {
                         unsafe extern "system" fn get_memory_zircon_handle_properties_fuchsia(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _handle_type: ExternalMemoryHandleTypeFlags,
                             _zircon_handle: zx_handle_t,
                             _p_memory_zircon_handle_properties : * mut MemoryZirconHandlePropertiesFUCHSIA < '_ >,
@@ -9831,11 +9831,11 @@ pub mod fuchsia {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -9846,7 +9846,7 @@ pub mod fuchsia {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -9866,7 +9866,7 @@ pub mod fuchsia {
                 Self {
                     import_semaphore_zircon_handle_fuchsia: unsafe {
                         unsafe extern "system" fn import_semaphore_zircon_handle_fuchsia(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_import_semaphore_zircon_handle_info : * const ImportSemaphoreZirconHandleInfoFUCHSIA < '_ >,
                         ) -> Result {
                             panic!(concat!(
@@ -9886,7 +9886,7 @@ pub mod fuchsia {
                     },
                     get_semaphore_zircon_handle_fuchsia: unsafe {
                         unsafe extern "system" fn get_semaphore_zircon_handle_fuchsia(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_get_zircon_handle_info: *const SemaphoreGetZirconHandleInfoFUCHSIA<
                                 '_,
                             >,
@@ -9923,11 +9923,11 @@ pub mod fuchsia {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -9938,7 +9938,7 @@ pub mod fuchsia {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -9964,7 +9964,7 @@ pub mod fuchsia {
                 Self {
                     create_buffer_collection_fuchsia: unsafe {
                         unsafe extern "system" fn create_buffer_collection_fuchsia(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const BufferCollectionCreateInfoFUCHSIA<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_collection: *mut BufferCollectionFUCHSIA,
@@ -9986,7 +9986,7 @@ pub mod fuchsia {
                     },
                     set_buffer_collection_image_constraints_fuchsia: unsafe {
                         unsafe extern "system" fn set_buffer_collection_image_constraints_fuchsia(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _collection: BufferCollectionFUCHSIA,
                             _p_image_constraints_info: *const ImageConstraintsInfoFUCHSIA<'_>,
                         ) -> Result {
@@ -10007,7 +10007,7 @@ pub mod fuchsia {
                     },
                     set_buffer_collection_buffer_constraints_fuchsia: unsafe {
                         unsafe extern "system" fn set_buffer_collection_buffer_constraints_fuchsia(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _collection: BufferCollectionFUCHSIA,
                             _p_buffer_constraints_info: *const BufferConstraintsInfoFUCHSIA<'_>,
                         ) -> Result {
@@ -10028,7 +10028,7 @@ pub mod fuchsia {
                     },
                     destroy_buffer_collection_fuchsia: unsafe {
                         unsafe extern "system" fn destroy_buffer_collection_fuchsia(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _collection: BufferCollectionFUCHSIA,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -10049,7 +10049,7 @@ pub mod fuchsia {
                     },
                     get_buffer_collection_properties_fuchsia: unsafe {
                         unsafe extern "system" fn get_buffer_collection_properties_fuchsia(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _collection: BufferCollectionFUCHSIA,
                             _p_properties: *mut BufferCollectionPropertiesFUCHSIA<'_>,
                         ) -> Result {
@@ -10087,11 +10087,11 @@ pub mod ggp {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -10102,7 +10102,7 @@ pub mod ggp {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -10121,7 +10121,7 @@ pub mod ggp {
                 Self {
                     create_stream_descriptor_surface_ggp: unsafe {
                         unsafe extern "system" fn create_stream_descriptor_surface_ggp(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const StreamDescriptorSurfaceCreateInfoGGP<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -10167,11 +10167,11 @@ pub mod google {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -10182,7 +10182,7 @@ pub mod google {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -10202,7 +10202,7 @@ pub mod google {
                 Self {
                     get_refresh_cycle_duration_google: unsafe {
                         unsafe extern "system" fn get_refresh_cycle_duration_google(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain: SwapchainKHR,
                             _p_display_timing_properties: *mut RefreshCycleDurationGOOGLE,
                         ) -> Result {
@@ -10223,7 +10223,7 @@ pub mod google {
                     },
                     get_past_presentation_timing_google: unsafe {
                         unsafe extern "system" fn get_past_presentation_timing_google(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain: SwapchainKHR,
                             _p_presentation_timing_count: *mut u32,
                             _p_presentation_timings: *mut PastPresentationTimingGOOGLE,
@@ -10290,11 +10290,11 @@ pub mod huawei {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -10305,7 +10305,7 @@ pub mod huawei {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -10326,7 +10326,7 @@ pub mod huawei {
                 Self {
                     get_device_subpass_shading_max_workgroup_size_huawei: unsafe {
                         unsafe extern "system" fn get_device_subpass_shading_max_workgroup_size_huawei(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _renderpass: RenderPass,
                             _p_max_workgroup_size: *mut Extent2D,
                         ) -> Result {
@@ -10379,11 +10379,11 @@ pub mod huawei {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -10394,7 +10394,7 @@ pub mod huawei {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -10447,11 +10447,11 @@ pub mod huawei {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -10462,7 +10462,7 @@ pub mod huawei {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -10579,11 +10579,11 @@ pub mod intel {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -10594,7 +10594,7 @@ pub mod intel {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -10622,7 +10622,7 @@ pub mod intel {
                 Self {
                     initialize_performance_api_intel: unsafe {
                         unsafe extern "system" fn initialize_performance_api_intel(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_initialize_info: *const InitializePerformanceApiInfoINTEL<'_>,
                         ) -> Result {
                             panic!(concat!(
@@ -10642,7 +10642,7 @@ pub mod intel {
                     },
                     uninitialize_performance_api_intel: unsafe {
                         unsafe extern "system" fn uninitialize_performance_api_intel(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -10721,7 +10721,7 @@ pub mod intel {
                     },
                     acquire_performance_configuration_intel: unsafe {
                         unsafe extern "system" fn acquire_performance_configuration_intel(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_acquire_info: *const PerformanceConfigurationAcquireInfoINTEL<'_>,
                             _p_configuration: *mut PerformanceConfigurationINTEL,
                         ) -> Result {
@@ -10742,7 +10742,7 @@ pub mod intel {
                     },
                     release_performance_configuration_intel: unsafe {
                         unsafe extern "system" fn release_performance_configuration_intel(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _configuration: PerformanceConfigurationINTEL,
                         ) -> Result {
                             panic!(concat!(
@@ -10782,7 +10782,7 @@ pub mod intel {
                     },
                     get_performance_parameter_intel: unsafe {
                         unsafe extern "system" fn get_performance_parameter_intel(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _parameter: PerformanceParameterTypeINTEL,
                             _p_value: *mut PerformanceValueINTEL,
                         ) -> Result {
@@ -10820,11 +10820,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -10835,7 +10835,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -10860,7 +10860,7 @@ pub mod khr {
                 Self {
                     destroy_surface_khr: unsafe {
                         unsafe extern "system" fn destroy_surface_khr(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _surface: SurfaceKHR,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -10977,11 +10977,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -10992,7 +10992,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -11039,11 +11039,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -11054,7 +11054,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -11082,7 +11082,7 @@ pub mod khr {
                 Self {
                     create_swapchain_khr: unsafe {
                         unsafe extern "system" fn create_swapchain_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const SwapchainCreateInfoKHR<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_swapchain: *mut SwapchainKHR,
@@ -11099,7 +11099,7 @@ pub mod khr {
                     },
                     destroy_swapchain_khr: unsafe {
                         unsafe extern "system" fn destroy_swapchain_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain: SwapchainKHR,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -11118,7 +11118,7 @@ pub mod khr {
                     },
                     get_swapchain_images_khr: unsafe {
                         unsafe extern "system" fn get_swapchain_images_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain: SwapchainKHR,
                             _p_swapchain_image_count: *mut u32,
                             _p_swapchain_images: *mut Image,
@@ -11139,7 +11139,7 @@ pub mod khr {
                     },
                     acquire_next_image_khr: unsafe {
                         unsafe extern "system" fn acquire_next_image_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain: SwapchainKHR,
                             _timeout: u64,
                             _semaphore: Semaphore,
@@ -11176,7 +11176,7 @@ pub mod khr {
                     },
                     get_device_group_present_capabilities_khr: unsafe {
                         unsafe extern "system" fn get_device_group_present_capabilities_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_device_group_present_capabilities : * mut DeviceGroupPresentCapabilitiesKHR < '_ >,
                         ) -> Result {
                             panic!(concat!(
@@ -11196,7 +11196,7 @@ pub mod khr {
                     },
                     get_device_group_surface_present_modes_khr: unsafe {
                         unsafe extern "system" fn get_device_group_surface_present_modes_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _surface: SurfaceKHR,
                             _p_modes: *mut DeviceGroupPresentModeFlagsKHR,
                         ) -> Result {
@@ -11217,7 +11217,7 @@ pub mod khr {
                     },
                     acquire_next_image2_khr: unsafe {
                         unsafe extern "system" fn acquire_next_image2_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_acquire_info: *const AcquireNextImageInfoKHR<'_>,
                             _p_image_index: *mut u32,
                         ) -> Result {
@@ -11251,11 +11251,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -11266,7 +11266,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -11422,7 +11422,7 @@ pub mod khr {
                     },
                     create_display_plane_surface_khr: unsafe {
                         unsafe extern "system" fn create_display_plane_surface_khr(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const DisplaySurfaceCreateInfoKHR<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -11458,11 +11458,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -11473,7 +11473,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -11492,7 +11492,7 @@ pub mod khr {
                 Self {
                     create_shared_swapchains_khr: unsafe {
                         unsafe extern "system" fn create_shared_swapchains_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain_count: u32,
                             _p_create_infos: *const SwapchainCreateInfoKHR<'_>,
                             _p_allocator: *const AllocationCallbacks,
@@ -11528,11 +11528,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -11543,7 +11543,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -11564,7 +11564,7 @@ pub mod khr {
                 Self {
                     create_xlib_surface_khr: unsafe {
                         unsafe extern "system" fn create_xlib_surface_khr(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const XlibSurfaceCreateInfoKHR<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -11621,11 +11621,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -11636,7 +11636,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -11657,7 +11657,7 @@ pub mod khr {
                 Self {
                     create_xcb_surface_khr: unsafe {
                         unsafe extern "system" fn create_xcb_surface_khr(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const XcbSurfaceCreateInfoKHR<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -11713,11 +11713,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -11728,7 +11728,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -11749,7 +11749,7 @@ pub mod khr {
                 Self {
                     create_wayland_surface_khr: unsafe {
                         unsafe extern "system" fn create_wayland_surface_khr(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const WaylandSurfaceCreateInfoKHR<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -11805,11 +11805,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -11820,7 +11820,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -11839,7 +11839,7 @@ pub mod khr {
                 Self {
                     create_android_surface_khr: unsafe {
                         unsafe extern "system" fn create_android_surface_khr(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const AndroidSurfaceCreateInfoKHR<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -11874,11 +11874,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -11889,7 +11889,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -11910,7 +11910,7 @@ pub mod khr {
                 Self {
                     create_win32_surface_khr: unsafe {
                         unsafe extern "system" fn create_win32_surface_khr(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const Win32SurfaceCreateInfoKHR<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -11972,11 +11972,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -11987,7 +11987,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -12057,11 +12057,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -12072,7 +12072,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -12101,7 +12101,7 @@ pub mod khr {
                 Self {
                     create_video_session_khr: unsafe {
                         unsafe extern "system" fn create_video_session_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const VideoSessionCreateInfoKHR<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_video_session: *mut VideoSessionKHR,
@@ -12122,7 +12122,7 @@ pub mod khr {
                     },
                     destroy_video_session_khr: unsafe {
                         unsafe extern "system" fn destroy_video_session_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _video_session: VideoSessionKHR,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -12142,7 +12142,7 @@ pub mod khr {
                     },
                     get_video_session_memory_requirements_khr: unsafe {
                         unsafe extern "system" fn get_video_session_memory_requirements_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _video_session: VideoSessionKHR,
                             _p_memory_requirements_count: *mut u32,
                             _p_memory_requirements: *mut VideoSessionMemoryRequirementsKHR<'_>,
@@ -12164,7 +12164,7 @@ pub mod khr {
                     },
                     bind_video_session_memory_khr: unsafe {
                         unsafe extern "system" fn bind_video_session_memory_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _video_session: VideoSessionKHR,
                             _bind_session_memory_info_count: u32,
                             _p_bind_session_memory_infos: *const BindVideoSessionMemoryInfoKHR<'_>,
@@ -12185,7 +12185,7 @@ pub mod khr {
                     },
                     create_video_session_parameters_khr: unsafe {
                         unsafe extern "system" fn create_video_session_parameters_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const VideoSessionParametersCreateInfoKHR<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_video_session_parameters: *mut VideoSessionParametersKHR,
@@ -12207,7 +12207,7 @@ pub mod khr {
                     },
                     update_video_session_parameters_khr: unsafe {
                         unsafe extern "system" fn update_video_session_parameters_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _video_session_parameters: VideoSessionParametersKHR,
                             _p_update_info: *const VideoSessionParametersUpdateInfoKHR<'_>,
                         ) -> Result {
@@ -12228,7 +12228,7 @@ pub mod khr {
                     },
                     destroy_video_session_parameters_khr: unsafe {
                         unsafe extern "system" fn destroy_video_session_parameters_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _video_session_parameters: VideoSessionParametersKHR,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -12320,11 +12320,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -12335,7 +12335,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -12404,11 +12404,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -12419,7 +12419,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -12496,11 +12496,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -12511,7 +12511,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -12700,11 +12700,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -12715,7 +12715,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -12762,11 +12762,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -12777,7 +12777,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -12803,7 +12803,7 @@ pub mod khr {
                 Self {
                     get_device_group_peer_memory_features_khr: unsafe {
                         unsafe extern "system" fn get_device_group_peer_memory_features_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _heap_index: u32,
                             _local_device_index: u32,
                             _remote_device_index: u32,
@@ -12867,7 +12867,7 @@ pub mod khr {
                     },
                     get_device_group_present_capabilities_khr: unsafe {
                         unsafe extern "system" fn get_device_group_present_capabilities_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_device_group_present_capabilities : * mut DeviceGroupPresentCapabilitiesKHR < '_ >,
                         ) -> Result {
                             panic!(concat!(
@@ -12887,7 +12887,7 @@ pub mod khr {
                     },
                     get_device_group_surface_present_modes_khr: unsafe {
                         unsafe extern "system" fn get_device_group_surface_present_modes_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _surface: SurfaceKHR,
                             _p_modes: *mut DeviceGroupPresentModeFlagsKHR,
                         ) -> Result {
@@ -12908,7 +12908,7 @@ pub mod khr {
                     },
                     acquire_next_image2_khr: unsafe {
                         unsafe extern "system" fn acquire_next_image2_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_acquire_info: *const AcquireNextImageInfoKHR<'_>,
                             _p_image_index: *mut u32,
                         ) -> Result {
@@ -12949,11 +12949,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -12964,7 +12964,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -12983,7 +12983,7 @@ pub mod khr {
                 Self {
                     trim_command_pool_khr: unsafe {
                         unsafe extern "system" fn trim_command_pool_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _command_pool: CommandPool,
                             _flags: CommandPoolTrimFlags,
                         ) {
@@ -13016,11 +13016,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -13031,7 +13031,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -13050,7 +13050,7 @@ pub mod khr {
                 Self {
                     enumerate_physical_device_groups_khr: unsafe {
                         unsafe extern "system" fn enumerate_physical_device_groups_khr(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_physical_device_group_count: *mut u32,
                             _p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties<
                                 '_,
@@ -13087,11 +13087,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -13102,7 +13102,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -13164,11 +13164,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -13179,7 +13179,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -13199,7 +13199,7 @@ pub mod khr {
                 Self {
                     get_memory_win32_handle_khr: unsafe {
                         unsafe extern "system" fn get_memory_win32_handle_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_get_win32_handle_info: *const MemoryGetWin32HandleInfoKHR<'_>,
                             _p_handle: *mut HANDLE,
                         ) -> Result {
@@ -13219,7 +13219,7 @@ pub mod khr {
                     },
                     get_memory_win32_handle_properties_khr: unsafe {
                         unsafe extern "system" fn get_memory_win32_handle_properties_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _handle_type: ExternalMemoryHandleTypeFlags,
                             _handle: HANDLE,
                             _p_memory_win32_handle_properties: *mut MemoryWin32HandlePropertiesKHR<
@@ -13257,11 +13257,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -13272,7 +13272,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -13292,7 +13292,7 @@ pub mod khr {
                 Self {
                     get_memory_fd_khr: unsafe {
                         unsafe extern "system" fn get_memory_fd_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_get_fd_info: *const MemoryGetFdInfoKHR<'_>,
                             _p_fd: *mut c_int,
                         ) -> Result {
@@ -13308,7 +13308,7 @@ pub mod khr {
                     },
                     get_memory_fd_properties_khr: unsafe {
                         unsafe extern "system" fn get_memory_fd_properties_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _handle_type: ExternalMemoryHandleTypeFlags,
                             _fd: c_int,
                             _p_memory_fd_properties: *mut MemoryFdPropertiesKHR<'_>,
@@ -13350,11 +13350,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -13365,7 +13365,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -13429,11 +13429,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -13444,7 +13444,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -13464,7 +13464,7 @@ pub mod khr {
                 Self {
                     import_semaphore_win32_handle_khr: unsafe {
                         unsafe extern "system" fn import_semaphore_win32_handle_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_import_semaphore_win32_handle_info : * const ImportSemaphoreWin32HandleInfoKHR < '_ >,
                         ) -> Result {
                             panic!(concat!(
@@ -13484,7 +13484,7 @@ pub mod khr {
                     },
                     get_semaphore_win32_handle_khr: unsafe {
                         unsafe extern "system" fn get_semaphore_win32_handle_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_get_win32_handle_info: *const SemaphoreGetWin32HandleInfoKHR<'_>,
                             _p_handle: *mut HANDLE,
                         ) -> Result {
@@ -13518,11 +13518,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -13533,7 +13533,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -13553,7 +13553,7 @@ pub mod khr {
                 Self {
                     import_semaphore_fd_khr: unsafe {
                         unsafe extern "system" fn import_semaphore_fd_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_import_semaphore_fd_info: *const ImportSemaphoreFdInfoKHR<'_>,
                         ) -> Result {
                             panic!(concat!(
@@ -13572,7 +13572,7 @@ pub mod khr {
                     },
                     get_semaphore_fd_khr: unsafe {
                         unsafe extern "system" fn get_semaphore_fd_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_get_fd_info: *const SemaphoreGetFdInfoKHR<'_>,
                             _p_fd: *mut c_int,
                         ) -> Result {
@@ -13602,11 +13602,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -13617,7 +13617,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -13718,11 +13718,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -13733,7 +13733,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -13755,7 +13755,7 @@ pub mod khr {
                 Self {
                     create_descriptor_update_template_khr: unsafe {
                         unsafe extern "system" fn create_descriptor_update_template_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const DescriptorUpdateTemplateCreateInfo<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_descriptor_update_template: *mut DescriptorUpdateTemplate,
@@ -13777,7 +13777,7 @@ pub mod khr {
                     },
                     destroy_descriptor_update_template_khr: unsafe {
                         unsafe extern "system" fn destroy_descriptor_update_template_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _descriptor_update_template: DescriptorUpdateTemplate,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -13798,7 +13798,7 @@ pub mod khr {
                     },
                     update_descriptor_set_with_template_khr: unsafe {
                         unsafe extern "system" fn update_descriptor_set_with_template_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _descriptor_set: DescriptorSet,
                             _descriptor_update_template: DescriptorUpdateTemplate,
                             _p_data: *const c_void,
@@ -13864,11 +13864,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -13879,7 +13879,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -13901,7 +13901,7 @@ pub mod khr {
                 Self {
                     create_render_pass2_khr: unsafe {
                         unsafe extern "system" fn create_render_pass2_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const RenderPassCreateInfo2<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_render_pass: *mut RenderPass,
@@ -13994,11 +13994,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -14009,7 +14009,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -14028,7 +14028,7 @@ pub mod khr {
                 Self {
                     get_swapchain_status_khr: unsafe {
                         unsafe extern "system" fn get_swapchain_status_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain: SwapchainKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -14061,11 +14061,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -14076,7 +14076,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -14138,11 +14138,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -14153,7 +14153,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -14173,7 +14173,7 @@ pub mod khr {
                 Self {
                     import_fence_win32_handle_khr: unsafe {
                         unsafe extern "system" fn import_fence_win32_handle_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_import_fence_win32_handle_info: *const ImportFenceWin32HandleInfoKHR<
                                 '_,
                             >,
@@ -14194,7 +14194,7 @@ pub mod khr {
                     },
                     get_fence_win32_handle_khr: unsafe {
                         unsafe extern "system" fn get_fence_win32_handle_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_get_win32_handle_info: *const FenceGetWin32HandleInfoKHR<'_>,
                             _p_handle: *mut HANDLE,
                         ) -> Result {
@@ -14228,11 +14228,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -14243,7 +14243,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -14263,7 +14263,7 @@ pub mod khr {
                 Self {
                     import_fence_fd_khr: unsafe {
                         unsafe extern "system" fn import_fence_fd_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_import_fence_fd_info: *const ImportFenceFdInfoKHR<'_>,
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(import_fence_fd_khr)))
@@ -14278,7 +14278,7 @@ pub mod khr {
                     },
                     get_fence_fd_khr: unsafe {
                         unsafe extern "system" fn get_fence_fd_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_get_fd_info: *const FenceGetFdInfoKHR<'_>,
                             _p_fd: *mut c_int,
                         ) -> Result {
@@ -14308,11 +14308,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -14323,7 +14323,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -14393,11 +14393,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -14408,7 +14408,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -14428,7 +14428,7 @@ pub mod khr {
                 Self {
                     acquire_profiling_lock_khr: unsafe {
                         unsafe extern "system" fn acquire_profiling_lock_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const AcquireProfilingLockInfoKHR<'_>,
                         ) -> Result {
                             panic!(concat!(
@@ -14447,7 +14447,7 @@ pub mod khr {
                     },
                     release_profiling_lock_khr: unsafe {
                         unsafe extern "system" fn release_profiling_lock_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -14486,11 +14486,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -14501,7 +14501,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -14586,11 +14586,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -14601,7 +14601,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -14752,11 +14752,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -14767,7 +14767,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -14788,7 +14788,7 @@ pub mod khr {
                 Self {
                     get_image_memory_requirements2_khr: unsafe {
                         unsafe extern "system" fn get_image_memory_requirements2_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const ImageMemoryRequirementsInfo2<'_>,
                             _p_memory_requirements: *mut MemoryRequirements2<'_>,
                         ) {
@@ -14809,7 +14809,7 @@ pub mod khr {
                     },
                     get_buffer_memory_requirements2_khr: unsafe {
                         unsafe extern "system" fn get_buffer_memory_requirements2_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const BufferMemoryRequirementsInfo2<'_>,
                             _p_memory_requirements: *mut MemoryRequirements2<'_>,
                         ) {
@@ -14830,7 +14830,7 @@ pub mod khr {
                     },
                     get_image_sparse_memory_requirements2_khr: unsafe {
                         unsafe extern "system" fn get_image_sparse_memory_requirements2_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const ImageSparseMemoryRequirementsInfo2<'_>,
                             _p_sparse_memory_requirement_count: *mut u32,
                             _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2<'_>,
@@ -14873,11 +14873,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -14888,7 +14888,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -14932,7 +14932,7 @@ pub mod khr {
                 Self {
                     create_acceleration_structure_khr: unsafe {
                         unsafe extern "system" fn create_acceleration_structure_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const AccelerationStructureCreateInfoKHR<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_acceleration_structure: *mut AccelerationStructureKHR,
@@ -14954,7 +14954,7 @@ pub mod khr {
                     },
                     destroy_acceleration_structure_khr: unsafe {
                         unsafe extern "system" fn destroy_acceleration_structure_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _acceleration_structure: AccelerationStructureKHR,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -15021,7 +15021,7 @@ pub mod khr {
                     },
                     build_acceleration_structures_khr: unsafe {
                         unsafe extern "system" fn build_acceleration_structures_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _deferred_operation: DeferredOperationKHR,
                             _info_count: u32,
                             _p_infos: *const AccelerationStructureBuildGeometryInfoKHR<'_>,
@@ -15044,7 +15044,7 @@ pub mod khr {
                     },
                     copy_acceleration_structure_khr: unsafe {
                         unsafe extern "system" fn copy_acceleration_structure_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _deferred_operation: DeferredOperationKHR,
                             _p_info: *const CopyAccelerationStructureInfoKHR<'_>,
                         ) -> Result {
@@ -15065,7 +15065,7 @@ pub mod khr {
                     },
                     copy_acceleration_structure_to_memory_khr: unsafe {
                         unsafe extern "system" fn copy_acceleration_structure_to_memory_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _deferred_operation: DeferredOperationKHR,
                             _p_info: *const CopyAccelerationStructureToMemoryInfoKHR<'_>,
                         ) -> Result {
@@ -15086,7 +15086,7 @@ pub mod khr {
                     },
                     copy_memory_to_acceleration_structure_khr: unsafe {
                         unsafe extern "system" fn copy_memory_to_acceleration_structure_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _deferred_operation: DeferredOperationKHR,
                             _p_info: *const CopyMemoryToAccelerationStructureInfoKHR<'_>,
                         ) -> Result {
@@ -15107,7 +15107,7 @@ pub mod khr {
                     },
                     write_acceleration_structures_properties_khr: unsafe {
                         unsafe extern "system" fn write_acceleration_structures_properties_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _acceleration_structure_count: u32,
                             _p_acceleration_structures: *const AccelerationStructureKHR,
                             _query_type: QueryType,
@@ -15192,7 +15192,7 @@ pub mod khr {
                     },
                     get_acceleration_structure_device_address_khr: unsafe {
                         unsafe extern "system" fn get_acceleration_structure_device_address_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const AccelerationStructureDeviceAddressInfoKHR<'_>,
                         ) -> DeviceAddress {
                             panic!(concat!(
@@ -15236,7 +15236,7 @@ pub mod khr {
                     },
                     get_device_acceleration_structure_compatibility_khr: unsafe {
                         unsafe extern "system" fn get_device_acceleration_structure_compatibility_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_version_info: *const AccelerationStructureVersionInfoKHR<'_>,
                             _p_compatibility: *mut AccelerationStructureCompatibilityKHR,
                         ) {
@@ -15257,7 +15257,7 @@ pub mod khr {
                     },
                     get_acceleration_structure_build_sizes_khr: unsafe {
                         unsafe extern "system" fn get_acceleration_structure_build_sizes_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _build_type: AccelerationStructureBuildTypeKHR,
                             _p_build_info: *const AccelerationStructureBuildGeometryInfoKHR<'_>,
                             _p_max_primitive_counts: *const u32,
@@ -15294,11 +15294,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -15309,7 +15309,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -15358,7 +15358,7 @@ pub mod khr {
                     },
                     create_ray_tracing_pipelines_khr: unsafe {
                         unsafe extern "system" fn create_ray_tracing_pipelines_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _deferred_operation: DeferredOperationKHR,
                             _pipeline_cache: PipelineCache,
                             _create_info_count: u32,
@@ -15383,7 +15383,7 @@ pub mod khr {
                     },
                     get_ray_tracing_shader_group_handles_khr: unsafe {
                         unsafe extern "system" fn get_ray_tracing_shader_group_handles_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _pipeline: Pipeline,
                             _first_group: u32,
                             _group_count: u32,
@@ -15407,7 +15407,7 @@ pub mod khr {
                     },
                     get_ray_tracing_capture_replay_shader_group_handles_khr: unsafe {
                         unsafe extern "system" fn get_ray_tracing_capture_replay_shader_group_handles_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _pipeline: Pipeline,
                             _first_group: u32,
                             _group_count: u32,
@@ -15454,7 +15454,7 @@ pub mod khr {
                     },
                     get_ray_tracing_shader_group_stack_size_khr: unsafe {
                         unsafe extern "system" fn get_ray_tracing_shader_group_stack_size_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _pipeline: Pipeline,
                             _group: u32,
                             _group_shader: ShaderGroupShaderKHR,
@@ -15517,11 +15517,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -15532,7 +15532,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -15552,7 +15552,7 @@ pub mod khr {
                 Self {
                     create_sampler_ycbcr_conversion_khr: unsafe {
                         unsafe extern "system" fn create_sampler_ycbcr_conversion_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const SamplerYcbcrConversionCreateInfo<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_ycbcr_conversion: *mut SamplerYcbcrConversion,
@@ -15574,7 +15574,7 @@ pub mod khr {
                     },
                     destroy_sampler_ycbcr_conversion_khr: unsafe {
                         unsafe extern "system" fn destroy_sampler_ycbcr_conversion_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _ycbcr_conversion: SamplerYcbcrConversion,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -15609,11 +15609,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -15624,7 +15624,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -15644,7 +15644,7 @@ pub mod khr {
                 Self {
                     bind_buffer_memory2_khr: unsafe {
                         unsafe extern "system" fn bind_buffer_memory2_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _bind_info_count: u32,
                             _p_bind_infos: *const BindBufferMemoryInfo<'_>,
                         ) -> Result {
@@ -15664,7 +15664,7 @@ pub mod khr {
                     },
                     bind_image_memory2_khr: unsafe {
                         unsafe extern "system" fn bind_image_memory2_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _bind_info_count: u32,
                             _p_bind_infos: *const BindImageMemoryInfo<'_>,
                         ) -> Result {
@@ -15704,11 +15704,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -15719,7 +15719,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -15738,7 +15738,7 @@ pub mod khr {
                 Self {
                     get_descriptor_set_layout_support_khr: unsafe {
                         unsafe extern "system" fn get_descriptor_set_layout_support_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const DescriptorSetLayoutCreateInfo<'_>,
                             _p_support: *mut DescriptorSetLayoutSupport<'_>,
                         ) {
@@ -15773,11 +15773,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -15788,7 +15788,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -15941,11 +15941,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -15956,7 +15956,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -15977,7 +15977,7 @@ pub mod khr {
                 Self {
                     get_semaphore_counter_value_khr: unsafe {
                         unsafe extern "system" fn get_semaphore_counter_value_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _semaphore: Semaphore,
                             _p_value: *mut u64,
                         ) -> Result {
@@ -15997,7 +15997,7 @@ pub mod khr {
                     },
                     wait_semaphores_khr: unsafe {
                         unsafe extern "system" fn wait_semaphores_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_wait_info: *const SemaphoreWaitInfo<'_>,
                             _timeout: u64,
                         ) -> Result {
@@ -16013,7 +16013,7 @@ pub mod khr {
                     },
                     signal_semaphore_khr: unsafe {
                         unsafe extern "system" fn signal_semaphore_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_signal_info: *const SemaphoreSignalInfo<'_>,
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(signal_semaphore_khr)))
@@ -16056,11 +16056,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -16071,7 +16071,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -16119,11 +16119,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -16134,7 +16134,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -16188,11 +16188,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -16203,7 +16203,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -16307,11 +16307,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -16322,7 +16322,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -16341,7 +16341,7 @@ pub mod khr {
                 Self {
                     wait_for_present_khr: unsafe {
                         unsafe extern "system" fn wait_for_present_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain: SwapchainKHR,
                             _present_id: u64,
                             _timeout: u64,
@@ -16379,11 +16379,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -16394,7 +16394,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -16416,7 +16416,7 @@ pub mod khr {
                 Self {
                     get_buffer_device_address_khr: unsafe {
                         unsafe extern "system" fn get_buffer_device_address_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const BufferDeviceAddressInfo<'_>,
                         ) -> DeviceAddress {
                             panic!(concat!(
@@ -16435,7 +16435,7 @@ pub mod khr {
                     },
                     get_buffer_opaque_capture_address_khr: unsafe {
                         unsafe extern "system" fn get_buffer_opaque_capture_address_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const BufferDeviceAddressInfo<'_>,
                         ) -> u64 {
                             panic!(concat!(
@@ -16455,7 +16455,7 @@ pub mod khr {
                     },
                     get_device_memory_opaque_capture_address_khr: unsafe {
                         unsafe extern "system" fn get_device_memory_opaque_capture_address_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const DeviceMemoryOpaqueCaptureAddressInfo<'_>,
                         ) -> u64 {
                             panic!(concat!(
@@ -16489,11 +16489,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -16504,7 +16504,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -16528,7 +16528,7 @@ pub mod khr {
                 Self {
                     create_deferred_operation_khr: unsafe {
                         unsafe extern "system" fn create_deferred_operation_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_allocator: *const AllocationCallbacks,
                             _p_deferred_operation: *mut DeferredOperationKHR,
                         ) -> Result {
@@ -16548,7 +16548,7 @@ pub mod khr {
                     },
                     destroy_deferred_operation_khr: unsafe {
                         unsafe extern "system" fn destroy_deferred_operation_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _operation: DeferredOperationKHR,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -16568,7 +16568,7 @@ pub mod khr {
                     },
                     get_deferred_operation_max_concurrency_khr: unsafe {
                         unsafe extern "system" fn get_deferred_operation_max_concurrency_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _operation: DeferredOperationKHR,
                         ) -> u32 {
                             panic!(concat!(
@@ -16588,7 +16588,7 @@ pub mod khr {
                     },
                     get_deferred_operation_result_khr: unsafe {
                         unsafe extern "system" fn get_deferred_operation_result_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _operation: DeferredOperationKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -16608,7 +16608,7 @@ pub mod khr {
                     },
                     deferred_operation_join_khr: unsafe {
                         unsafe extern "system" fn deferred_operation_join_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _operation: DeferredOperationKHR,
                         ) -> Result {
                             panic!(concat!(
@@ -16641,11 +16641,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -16656,7 +16656,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -16678,7 +16678,7 @@ pub mod khr {
                 Self {
                     get_pipeline_executable_properties_khr: unsafe {
                         unsafe extern "system" fn get_pipeline_executable_properties_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_pipeline_info: *const PipelineInfoKHR<'_>,
                             _p_executable_count: *mut u32,
                             _p_properties: *mut PipelineExecutablePropertiesKHR<'_>,
@@ -16700,7 +16700,7 @@ pub mod khr {
                     },
                     get_pipeline_executable_statistics_khr: unsafe {
                         unsafe extern "system" fn get_pipeline_executable_statistics_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_executable_info: *const PipelineExecutableInfoKHR<'_>,
                             _p_statistic_count: *mut u32,
                             _p_statistics: *mut PipelineExecutableStatisticKHR<'_>,
@@ -16722,7 +16722,7 @@ pub mod khr {
                     },
                     get_pipeline_executable_internal_representations_khr: unsafe {
                         unsafe extern "system" fn get_pipeline_executable_internal_representations_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_executable_info: *const PipelineExecutableInfoKHR<'_>,
                             _p_internal_representation_count: *mut u32,
                             _p_internal_representations : * mut PipelineExecutableInternalRepresentationKHR < '_ >,
@@ -16758,11 +16758,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -16773,7 +16773,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -16793,7 +16793,7 @@ pub mod khr {
                 Self {
                     map_memory2_khr: unsafe {
                         unsafe extern "system" fn map_memory2_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_memory_map_info: *const MemoryMapInfo<'_>,
                             _pp_data: *mut *mut c_void,
                         ) -> Result {
@@ -16809,7 +16809,7 @@ pub mod khr {
                     },
                     unmap_memory2_khr: unsafe {
                         unsafe extern "system" fn unmap_memory2_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_memory_unmap_info: *const MemoryUnmapInfo<'_>,
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(unmap_memory2_khr)))
@@ -16866,11 +16866,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -16881,7 +16881,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -16931,11 +16931,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -16946,7 +16946,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -16966,7 +16966,7 @@ pub mod khr {
                 Self {
                     get_encoded_video_session_parameters_khr: unsafe {
                         unsafe extern "system" fn get_encoded_video_session_parameters_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_video_session_parameters_info : * const VideoEncodeSessionParametersGetInfoKHR < '_ >,
                             _p_feedback_info: *mut VideoEncodeSessionParametersFeedbackInfoKHR<'_>,
                             _p_data_size: *mut usize,
@@ -17018,11 +17018,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -17033,7 +17033,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -17205,11 +17205,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -17220,7 +17220,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -17366,11 +17366,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -17381,7 +17381,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -17440,11 +17440,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -17455,7 +17455,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -17477,7 +17477,7 @@ pub mod khr {
                 Self {
                     get_device_buffer_memory_requirements_khr: unsafe {
                         unsafe extern "system" fn get_device_buffer_memory_requirements_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const DeviceBufferMemoryRequirements<'_>,
                             _p_memory_requirements: *mut MemoryRequirements2<'_>,
                         ) {
@@ -17498,7 +17498,7 @@ pub mod khr {
                     },
                     get_device_image_memory_requirements_khr: unsafe {
                         unsafe extern "system" fn get_device_image_memory_requirements_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const DeviceImageMemoryRequirements<'_>,
                             _p_memory_requirements: *mut MemoryRequirements2<'_>,
                         ) {
@@ -17519,7 +17519,7 @@ pub mod khr {
                     },
                     get_device_image_sparse_memory_requirements_khr: unsafe {
                         unsafe extern "system" fn get_device_image_sparse_memory_requirements_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const DeviceImageMemoryRequirements<'_>,
                             _p_sparse_memory_requirement_count: *mut u32,
                             _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2<'_>,
@@ -17569,11 +17569,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -17584,7 +17584,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -17628,7 +17628,7 @@ pub mod khr {
                     },
                     get_rendering_area_granularity_khr: unsafe {
                         unsafe extern "system" fn get_rendering_area_granularity_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_rendering_area_info: *const RenderingAreaInfo<'_>,
                             _p_granularity: *mut Extent2D,
                         ) {
@@ -17649,7 +17649,7 @@ pub mod khr {
                     },
                     get_device_image_subresource_layout_khr: unsafe {
                         unsafe extern "system" fn get_device_image_subresource_layout_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const DeviceImageSubresourceInfo<'_>,
                             _p_layout: *mut SubresourceLayout2<'_>,
                         ) {
@@ -17670,7 +17670,7 @@ pub mod khr {
                     },
                     get_image_subresource_layout2_khr: unsafe {
                         unsafe extern "system" fn get_image_subresource_layout2_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _image: Image,
                             _p_subresource: *const ImageSubresource2<'_>,
                             _p_layout: *mut SubresourceLayout2<'_>,
@@ -17713,11 +17713,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -17728,7 +17728,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -17747,7 +17747,7 @@ pub mod khr {
                 Self {
                     wait_for_present2_khr: unsafe {
                         unsafe extern "system" fn wait_for_present2_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain: SwapchainKHR,
                             _p_present_wait2_info: *const PresentWait2InfoKHR<'_>,
                         ) -> Result {
@@ -17787,11 +17787,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -17802,7 +17802,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -17825,7 +17825,7 @@ pub mod khr {
                 Self {
                     create_pipeline_binaries_khr: unsafe {
                         unsafe extern "system" fn create_pipeline_binaries_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const PipelineBinaryCreateInfoKHR<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_binaries: *mut PipelineBinaryHandlesInfoKHR<'_>,
@@ -17846,7 +17846,7 @@ pub mod khr {
                     },
                     destroy_pipeline_binary_khr: unsafe {
                         unsafe extern "system" fn destroy_pipeline_binary_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _pipeline_binary: PipelineBinaryKHR,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -17866,7 +17866,7 @@ pub mod khr {
                     },
                     get_pipeline_key_khr: unsafe {
                         unsafe extern "system" fn get_pipeline_key_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_pipeline_create_info: *const PipelineCreateInfoKHR<'_>,
                             _p_pipeline_key: *mut PipelineBinaryKeyKHR<'_>,
                         ) -> Result {
@@ -17882,7 +17882,7 @@ pub mod khr {
                     },
                     get_pipeline_binary_data_khr: unsafe {
                         unsafe extern "system" fn get_pipeline_binary_data_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const PipelineBinaryDataInfoKHR<'_>,
                             _p_pipeline_binary_key: *mut PipelineBinaryKeyKHR<'_>,
                             _p_pipeline_binary_data_size: *mut usize,
@@ -17904,7 +17904,7 @@ pub mod khr {
                     },
                     release_captured_pipeline_data_khr: unsafe {
                         unsafe extern "system" fn release_captured_pipeline_data_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const ReleaseCapturedPipelineDataInfoKHR<'_>,
                             _p_allocator: *const AllocationCallbacks,
                         ) -> Result {
@@ -17946,11 +17946,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -17961,7 +17961,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -17980,7 +17980,7 @@ pub mod khr {
                 Self {
                     release_swapchain_images_khr: unsafe {
                         unsafe extern "system" fn release_swapchain_images_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_release_info: *const ReleaseSwapchainImagesInfoKHR<'_>,
                         ) -> Result {
                             panic!(concat!(
@@ -18013,11 +18013,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -18028,7 +18028,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -18153,11 +18153,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -18168,7 +18168,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -18221,11 +18221,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -18236,7 +18236,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -18282,11 +18282,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -18297,7 +18297,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -18316,7 +18316,7 @@ pub mod khr {
                 Self {
                     get_calibrated_timestamps_khr: unsafe {
                         unsafe extern "system" fn get_calibrated_timestamps_khr(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _timestamp_count: u32,
                             _p_timestamp_infos: *const CalibratedTimestampInfoKHR<'_>,
                             _p_timestamps: *mut u64,
@@ -18359,11 +18359,11 @@ pub mod khr {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -18374,7 +18374,7 @@ pub mod khr {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -18633,11 +18633,11 @@ pub mod mvk {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -18648,7 +18648,7 @@ pub mod mvk {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -18667,7 +18667,7 @@ pub mod mvk {
                 Self {
                     create_ios_surface_mvk: unsafe {
                         unsafe extern "system" fn create_ios_surface_mvk(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const IOSSurfaceCreateInfoMVK<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -18701,11 +18701,11 @@ pub mod mvk {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -18716,7 +18716,7 @@ pub mod mvk {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -18735,7 +18735,7 @@ pub mod mvk {
                 Self {
                     create_mac_os_surface_mvk: unsafe {
                         unsafe extern "system" fn create_mac_os_surface_mvk(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const MacOSSurfaceCreateInfoMVK<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -18773,11 +18773,11 @@ pub mod nn {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -18788,7 +18788,7 @@ pub mod nn {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -18807,7 +18807,7 @@ pub mod nn {
                 Self {
                     create_vi_surface_nn: unsafe {
                         unsafe extern "system" fn create_vi_surface_nn(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const ViSurfaceCreateInfoNN<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -18862,11 +18862,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -18877,7 +18877,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -18944,11 +18944,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -18959,7 +18959,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -18978,7 +18978,7 @@ pub mod nv {
                 Self {
                     get_memory_win32_handle_nv: unsafe {
                         unsafe extern "system" fn get_memory_win32_handle_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _memory: DeviceMemory,
                             _handle_type: ExternalMemoryHandleTypeFlagsNV,
                             _p_handle: *mut HANDLE,
@@ -19020,11 +19020,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -19035,7 +19035,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -19145,11 +19145,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -19160,7 +19160,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -19258,11 +19258,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -19273,7 +19273,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -19305,7 +19305,7 @@ pub mod nv {
                 Self {
                     create_acceleration_structure_nv: unsafe {
                         unsafe extern "system" fn create_acceleration_structure_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const AccelerationStructureCreateInfoNV<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_acceleration_structure: *mut AccelerationStructureNV,
@@ -19327,7 +19327,7 @@ pub mod nv {
                     },
                     destroy_acceleration_structure_nv: unsafe {
                         unsafe extern "system" fn destroy_acceleration_structure_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _acceleration_structure: AccelerationStructureNV,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -19348,7 +19348,7 @@ pub mod nv {
                     },
                     get_acceleration_structure_memory_requirements_nv: unsafe {
                         unsafe extern "system" fn get_acceleration_structure_memory_requirements_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const AccelerationStructureMemoryRequirementsInfoNV<'_>,
                             _p_memory_requirements: *mut MemoryRequirements2KHR<'_>,
                         ) {
@@ -19369,7 +19369,7 @@ pub mod nv {
                     },
                     bind_acceleration_structure_memory_nv: unsafe {
                         unsafe extern "system" fn bind_acceleration_structure_memory_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _bind_info_count: u32,
                             _p_bind_infos: *const BindAccelerationStructureMemoryInfoNV<'_>,
                         ) -> Result {
@@ -19467,7 +19467,7 @@ pub mod nv {
                     },
                     create_ray_tracing_pipelines_nv: unsafe {
                         unsafe extern "system" fn create_ray_tracing_pipelines_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _pipeline_cache: PipelineCache,
                             _create_info_count: u32,
                             _p_create_infos: *const RayTracingPipelineCreateInfoNV<'_>,
@@ -19490,7 +19490,7 @@ pub mod nv {
                     },
                     get_ray_tracing_shader_group_handles_nv: unsafe {
                         unsafe extern "system" fn get_ray_tracing_shader_group_handles_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _pipeline: Pipeline,
                             _first_group: u32,
                             _group_count: u32,
@@ -19514,7 +19514,7 @@ pub mod nv {
                     },
                     get_acceleration_structure_handle_nv: unsafe {
                         unsafe extern "system" fn get_acceleration_structure_handle_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _acceleration_structure: AccelerationStructureNV,
                             _data_size: usize,
                             _p_data: *mut c_void,
@@ -19560,7 +19560,7 @@ pub mod nv {
                     },
                     compile_deferred_nv: unsafe {
                         unsafe extern "system" fn compile_deferred_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _pipeline: Pipeline,
                             _shader: u32,
                         ) -> Result {
@@ -19611,11 +19611,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -19626,7 +19626,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -19741,11 +19741,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -19756,7 +19756,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -19833,11 +19833,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -19848,7 +19848,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -19948,11 +19948,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -19963,7 +19963,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -20018,11 +20018,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -20033,7 +20033,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -20085,11 +20085,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -20100,7 +20100,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -20125,7 +20125,7 @@ pub mod nv {
                 Self {
                     get_generated_commands_memory_requirements_nv: unsafe {
                         unsafe extern "system" fn get_generated_commands_memory_requirements_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const GeneratedCommandsMemoryRequirementsInfoNV<'_>,
                             _p_memory_requirements: *mut MemoryRequirements2<'_>,
                         ) {
@@ -20209,7 +20209,7 @@ pub mod nv {
                     },
                     create_indirect_commands_layout_nv: unsafe {
                         unsafe extern "system" fn create_indirect_commands_layout_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const IndirectCommandsLayoutCreateInfoNV<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_indirect_commands_layout: *mut IndirectCommandsLayoutNV,
@@ -20231,7 +20231,7 @@ pub mod nv {
                     },
                     destroy_indirect_commands_layout_nv: unsafe {
                         unsafe extern "system" fn destroy_indirect_commands_layout_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _indirect_commands_layout: IndirectCommandsLayoutNV,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -20287,11 +20287,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -20302,7 +20302,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -20326,7 +20326,7 @@ pub mod nv {
                 Self {
                     create_cuda_module_nv: unsafe {
                         unsafe extern "system" fn create_cuda_module_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const CudaModuleCreateInfoNV<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_module: *mut CudaModuleNV,
@@ -20346,7 +20346,7 @@ pub mod nv {
                     },
                     get_cuda_module_cache_nv: unsafe {
                         unsafe extern "system" fn get_cuda_module_cache_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _module: CudaModuleNV,
                             _p_cache_size: *mut usize,
                             _p_cache_data: *mut c_void,
@@ -20367,7 +20367,7 @@ pub mod nv {
                     },
                     create_cuda_function_nv: unsafe {
                         unsafe extern "system" fn create_cuda_function_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const CudaFunctionCreateInfoNV<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_function: *mut CudaFunctionNV,
@@ -20388,7 +20388,7 @@ pub mod nv {
                     },
                     destroy_cuda_module_nv: unsafe {
                         unsafe extern "system" fn destroy_cuda_module_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _module: CudaModuleNV,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -20407,7 +20407,7 @@ pub mod nv {
                     },
                     destroy_cuda_function_nv: unsafe {
                         unsafe extern "system" fn destroy_cuda_function_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _function: CudaFunctionNV,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -20467,11 +20467,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -20482,7 +20482,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -20543,11 +20543,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -20558,7 +20558,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -20627,11 +20627,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -20642,7 +20642,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -20661,7 +20661,7 @@ pub mod nv {
                 Self {
                     get_memory_remote_address_nv: unsafe {
                         unsafe extern "system" fn get_memory_remote_address_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_memory_get_remote_address_info: *const MemoryGetRemoteAddressInfoNV<
                                 '_,
                             >,
@@ -20704,11 +20704,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -20719,7 +20719,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -20799,11 +20799,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -20814,7 +20814,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -20890,11 +20890,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -20905,7 +20905,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -20927,7 +20927,7 @@ pub mod nv {
                 Self {
                     get_pipeline_indirect_memory_requirements_nv: unsafe {
                         unsafe extern "system" fn get_pipeline_indirect_memory_requirements_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const ComputePipelineCreateInfo<'_>,
                             _p_memory_requirements: *mut MemoryRequirements2<'_>,
                         ) {
@@ -20969,7 +20969,7 @@ pub mod nv {
                     },
                     get_pipeline_indirect_device_address_nv: unsafe {
                         unsafe extern "system" fn get_pipeline_indirect_device_address_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const PipelineIndirectDeviceAddressInfoNV<'_>,
                         ) -> DeviceAddress {
                             panic!(concat!(
@@ -21017,11 +21017,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -21032,7 +21032,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -21081,11 +21081,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -21096,7 +21096,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -21118,7 +21118,7 @@ pub mod nv {
                 Self {
                     create_optical_flow_session_nv: unsafe {
                         unsafe extern "system" fn create_optical_flow_session_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const OpticalFlowSessionCreateInfoNV<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_session: *mut OpticalFlowSessionNV,
@@ -21139,7 +21139,7 @@ pub mod nv {
                     },
                     destroy_optical_flow_session_nv: unsafe {
                         unsafe extern "system" fn destroy_optical_flow_session_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _session: OpticalFlowSessionNV,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -21159,7 +21159,7 @@ pub mod nv {
                     },
                     bind_optical_flow_session_image_nv: unsafe {
                         unsafe extern "system" fn bind_optical_flow_session_image_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _session: OpticalFlowSessionNV,
                             _binding_point: OpticalFlowSessionBindingPointNV,
                             _view: ImageView,
@@ -21223,11 +21223,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -21238,7 +21238,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -21284,11 +21284,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -21299,7 +21299,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -21319,7 +21319,7 @@ pub mod nv {
                 Self {
                     convert_cooperative_vector_matrix_nv: unsafe {
                         unsafe extern "system" fn convert_cooperative_vector_matrix_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const ConvertCooperativeVectorMatrixInfoNV<'_>,
                         ) -> Result {
                             panic!(concat!(
@@ -21381,11 +21381,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -21396,7 +21396,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -21419,7 +21419,7 @@ pub mod nv {
                 Self {
                     set_latency_sleep_mode_nv: unsafe {
                         unsafe extern "system" fn set_latency_sleep_mode_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain: SwapchainKHR,
                             _p_sleep_mode_info: *const LatencySleepModeInfoNV<'_>,
                         ) -> Result {
@@ -21439,7 +21439,7 @@ pub mod nv {
                     },
                     latency_sleep_nv: unsafe {
                         unsafe extern "system" fn latency_sleep_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain: SwapchainKHR,
                             _p_sleep_info: *const LatencySleepInfoNV<'_>,
                         ) -> Result {
@@ -21455,7 +21455,7 @@ pub mod nv {
                     },
                     set_latency_marker_nv: unsafe {
                         unsafe extern "system" fn set_latency_marker_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain: SwapchainKHR,
                             _p_latency_marker_info: *const SetLatencyMarkerInfoNV<'_>,
                         ) {
@@ -21474,7 +21474,7 @@ pub mod nv {
                     },
                     get_latency_timings_nv: unsafe {
                         unsafe extern "system" fn get_latency_timings_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _swapchain: SwapchainKHR,
                             _p_latency_marker_info: *mut GetLatencyMarkerInfoNV<'_>,
                         ) {
@@ -21554,11 +21554,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -21569,7 +21569,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -21614,11 +21614,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -21629,7 +21629,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -21649,7 +21649,7 @@ pub mod nv {
                 Self {
                     create_external_compute_queue_nv: unsafe {
                         unsafe extern "system" fn create_external_compute_queue_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const ExternalComputeQueueCreateInfoNV<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_external_queue: *mut ExternalComputeQueueNV,
@@ -21671,7 +21671,7 @@ pub mod nv {
                     },
                     destroy_external_compute_queue_nv: unsafe {
                         unsafe extern "system" fn destroy_external_compute_queue_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _external_queue: ExternalComputeQueueNV,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -21727,11 +21727,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -21742,7 +21742,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -21764,7 +21764,7 @@ pub mod nv {
                 Self {
                     get_cluster_acceleration_structure_build_sizes_nv: unsafe {
                         unsafe extern "system" fn get_cluster_acceleration_structure_build_sizes_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const ClusterAccelerationStructureInputInfoNV<'_>,
                             _p_size_info: *mut AccelerationStructureBuildSizesInfoKHR<'_>,
                         ) {
@@ -21819,11 +21819,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -21834,7 +21834,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -21856,7 +21856,7 @@ pub mod nv {
                 Self {
                     get_partitioned_acceleration_structures_build_sizes_nv: unsafe {
                         unsafe extern "system" fn get_partitioned_acceleration_structures_build_sizes_nv(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const PartitionedAccelerationStructureInstancesInputNV<'_>,
                             _p_size_info: *mut AccelerationStructureBuildSizesInfoKHR<'_>,
                         ) {
@@ -21911,11 +21911,11 @@ pub mod nv {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -21926,7 +21926,7 @@ pub mod nv {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -21988,11 +21988,11 @@ pub mod nvx {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -22003,7 +22003,7 @@ pub mod nvx {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -22026,7 +22026,7 @@ pub mod nvx {
                 Self {
                     create_cu_module_nvx: unsafe {
                         unsafe extern "system" fn create_cu_module_nvx(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const CuModuleCreateInfoNVX<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_module: *mut CuModuleNVX,
@@ -22043,7 +22043,7 @@ pub mod nvx {
                     },
                     create_cu_function_nvx: unsafe {
                         unsafe extern "system" fn create_cu_function_nvx(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_create_info: *const CuFunctionCreateInfoNVX<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_function: *mut CuFunctionNVX,
@@ -22063,7 +22063,7 @@ pub mod nvx {
                     },
                     destroy_cu_module_nvx: unsafe {
                         unsafe extern "system" fn destroy_cu_module_nvx(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _module: CuModuleNVX,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -22082,7 +22082,7 @@ pub mod nvx {
                     },
                     destroy_cu_function_nvx: unsafe {
                         unsafe extern "system" fn destroy_cu_function_nvx(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _function: CuFunctionNVX,
                             _p_allocator: *const AllocationCallbacks,
                         ) {
@@ -22135,11 +22135,11 @@ pub mod nvx {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -22150,7 +22150,7 @@ pub mod nvx {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -22171,7 +22171,7 @@ pub mod nvx {
                 Self {
                     get_image_view_handle_nvx: unsafe {
                         unsafe extern "system" fn get_image_view_handle_nvx(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const ImageViewHandleInfoNVX<'_>,
                         ) -> u32 {
                             panic!(concat!(
@@ -22190,7 +22190,7 @@ pub mod nvx {
                     },
                     get_image_view_handle64_nvx: unsafe {
                         unsafe extern "system" fn get_image_view_handle64_nvx(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_info: *const ImageViewHandleInfoNVX<'_>,
                         ) -> u64 {
                             panic!(concat!(
@@ -22209,7 +22209,7 @@ pub mod nvx {
                     },
                     get_image_view_address_nvx: unsafe {
                         unsafe extern "system" fn get_image_view_address_nvx(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _image_view: ImageView,
                             _p_properties: *mut ImageViewAddressPropertiesNVX<'_>,
                         ) -> Result {
@@ -22253,11 +22253,11 @@ pub mod ohos {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -22268,7 +22268,7 @@ pub mod ohos {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -22287,7 +22287,7 @@ pub mod ohos {
                 Self {
                     create_surface_ohos: unsafe {
                         unsafe extern "system" fn create_surface_ohos(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const SurfaceCreateInfoOHOS<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -22342,11 +22342,11 @@ pub mod qcom {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -22357,7 +22357,7 @@ pub mod qcom {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -22470,11 +22470,11 @@ pub mod qcom {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -22485,7 +22485,7 @@ pub mod qcom {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -22506,7 +22506,7 @@ pub mod qcom {
                 Self {
                     get_framebuffer_tile_properties_qcom: unsafe {
                         unsafe extern "system" fn get_framebuffer_tile_properties_qcom(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _framebuffer: Framebuffer,
                             _p_properties_count: *mut u32,
                             _p_properties: *mut TilePropertiesQCOM<'_>,
@@ -22528,7 +22528,7 @@ pub mod qcom {
                     },
                     get_dynamic_rendering_tile_properties_qcom: unsafe {
                         unsafe extern "system" fn get_dynamic_rendering_tile_properties_qcom(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_rendering_info: *const RenderingInfo<'_>,
                             _p_properties: *mut TilePropertiesQCOM<'_>,
                         ) -> Result {
@@ -22605,11 +22605,11 @@ pub mod qcom {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -22620,7 +22620,7 @@ pub mod qcom {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -22675,11 +22675,11 @@ pub mod qnx {
         #[derive(Clone)]
         pub struct Instance {
             pub(crate) fp: InstanceFn,
-            pub(crate) handle: crate::vk::Instance,
+            pub(crate) handle: ash::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-                let handle = instance.handle;
+            pub fn new(entry: &ash::Entry, instance: &ash::Instance) -> Self {
+                let handle = instance.handle();
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
                 });
@@ -22690,7 +22690,7 @@ pub mod qnx {
                 &self.fp
             }
             #[inline]
-            pub fn instance(&self) -> crate::vk::Instance {
+            pub fn instance(&self) -> ash::vk::Instance {
                 self.handle
             }
         }
@@ -22711,7 +22711,7 @@ pub mod qnx {
                 Self {
                     create_screen_surface_qnx: unsafe {
                         unsafe extern "system" fn create_screen_surface_qnx(
-                            _instance: crate::vk::Instance,
+                            _instance: ash::vk::Instance,
                             _p_create_info: *const ScreenSurfaceCreateInfoQNX<'_>,
                             _p_allocator: *const AllocationCallbacks,
                             _p_surface: *mut SurfaceKHR,
@@ -22767,11 +22767,11 @@ pub mod qnx {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -22782,7 +22782,7 @@ pub mod qnx {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -22801,7 +22801,7 @@ pub mod qnx {
                 Self {
                     get_screen_buffer_properties_qnx: unsafe {
                         unsafe extern "system" fn get_screen_buffer_properties_qnx(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _buffer: *const _screen_buffer,
                             _p_properties: *mut ScreenBufferPropertiesQNX<'_>,
                         ) -> Result {
@@ -22863,11 +22863,11 @@ pub mod valve {
         #[derive(Clone)]
         pub struct Device {
             pub(crate) fp: DeviceFn,
-            pub(crate) handle: crate::vk::Device,
+            pub(crate) handle: ash::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-                let handle = device.handle;
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
                 });
@@ -22878,7 +22878,7 @@ pub mod valve {
                 &self.fp
             }
             #[inline]
-            pub fn device(&self) -> crate::vk::Device {
+            pub fn device(&self) -> ash::vk::Device {
                 self.handle
             }
         }
@@ -22899,7 +22899,7 @@ pub mod valve {
                 Self {
                     get_descriptor_set_layout_host_mapping_info_valve: unsafe {
                         unsafe extern "system" fn get_descriptor_set_layout_host_mapping_info_valve(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _p_binding_reference: *const DescriptorSetBindingReferenceVALVE<'_>,
                             _p_host_mapping: *mut DescriptorSetLayoutHostMappingInfoVALVE<'_>,
                         ) {
@@ -22920,7 +22920,7 @@ pub mod valve {
                     },
                     get_descriptor_set_host_mapping_valve: unsafe {
                         unsafe extern "system" fn get_descriptor_set_host_mapping_valve(
-                            _device: crate::vk::Device,
+                            _device: ash::vk::Device,
                             _descriptor_set: DescriptorSet,
                             _pp_data: *mut *mut c_void,
                         ) {

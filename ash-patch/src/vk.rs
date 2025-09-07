@@ -26,6 +26,7 @@ pub use features::*;
 #[allow(clippy::useless_transmute, nonstandard_style)]
 pub mod native;
 pub(crate) mod platform_types;
+pub(crate) use platform_types::*;
 
 pub trait Handle: Sized {
     const TYPE: ObjectType;
