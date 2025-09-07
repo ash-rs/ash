@@ -29,6 +29,7 @@ use std::{
     borrow::Cow,
     collections::{BTreeMap, HashMap, HashSet},
     fmt::Display,
+    fs,
     ops::Not,
     path::Path,
 };
@@ -2426,14 +2427,16 @@ pub fn generate_struct(
                 pub host_handle: AccelerationStructureKHR,
             }
             #[repr(C)]
-            #[derive(Copy, Clone)]
+            #[derive(Copy, Clone, BitfieldStruct)]
             #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureInstanceKHR.html>"]
             pub struct AccelerationStructureInstanceKHR {
                 pub transform: TransformMatrixKHR,
-                /// Use [`Packed24_8::new(instance_custom_index, mask)`][Packed24_8::new()] to construct this field
-                pub instance_custom_index_and_mask: Packed24_8,
-                /// Use [`Packed24_8::new(instance_shader_binding_table_record_offset, flags)`][Packed24_8::new()] to construct this field
-                pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
+                #[bitfield(name = "instance_custom_index", ty = "u32", bits = "0..=23")]
+                #[bitfield(name = "mask", ty = "u32", bits = "24..=31")]
+                pub instance_custom_index_and_mask: [u8; 4],
+                #[bitfield(name = "instance_shader_binding_table_record_offset", ty = "u32", bits = "0..=23")]
+                #[bitfield(name = "flags", ty = "u32", bits = "24..=31")]
+                pub instance_shader_binding_table_record_offset_and_flags: [u8; 4],
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
         };
@@ -2442,15 +2445,17 @@ pub fn generate_struct(
     if &struct_.name == "VkAccelerationStructureSRTMotionInstanceNV" {
         return quote! {
             #[repr(C)]
-            #[derive(Copy, Clone)]
+            #[derive(Copy, Clone, BitfieldStruct)]
             #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureSRTMotionInstanceNV.html>"]
             pub struct AccelerationStructureSRTMotionInstanceNV {
                 pub transform_t0: SRTDataNV,
                 pub transform_t1: SRTDataNV,
-                /// Use [`Packed24_8::new(instance_custom_index, mask)`][Packed24_8::new()] to construct this field
-                pub instance_custom_index_and_mask: Packed24_8,
-                /// Use [`Packed24_8::new(instance_shader_binding_table_record_offset, flags)`][Packed24_8::new()] to construct this field
-                pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
+                #[bitfield(name = "instance_custom_index", ty = "u32", bits = "0..=23")]
+                #[bitfield(name = "mask", ty = "u32", bits = "24..=31")]
+                pub instance_custom_index_and_mask: [u8; 4],
+                #[bitfield(name = "instance_shader_binding_table_record_offset", ty = "u32", bits = "0..=23")]
+                #[bitfield(name = "flags", ty = "u32", bits = "24..=31")]
+                pub instance_shader_binding_table_record_offset_and_flags: [u8; 4],
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
         };
@@ -2459,15 +2464,17 @@ pub fn generate_struct(
     if &struct_.name == "VkAccelerationStructureMatrixMotionInstanceNV" {
         return quote! {
             #[repr(C)]
-            #[derive(Copy, Clone)]
+            #[derive(Copy, Clone, BitfieldStruct)]
             #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/AccelerationStructureMatrixMotionInstanceNV.html>"]
             pub struct AccelerationStructureMatrixMotionInstanceNV {
                 pub transform_t0: TransformMatrixKHR,
                 pub transform_t1: TransformMatrixKHR,
-                /// Use [`Packed24_8::new(instance_custom_index, mask)`][Packed24_8::new()] to construct this field
-                pub instance_custom_index_and_mask: Packed24_8,
-                /// Use [`Packed24_8::new(instance_shader_binding_table_record_offset, flags)`][Packed24_8::new()] to construct this field
-                pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
+                #[bitfield(name = "instance_custom_index", ty = "u32", bits = "0..=23")]
+                #[bitfield(name = "mask", ty = "u32", bits = "24..=31")]
+                pub instance_custom_index_and_mask: [u8; 4],
+                #[bitfield(name = "instance_shader_binding_table_record_offset", ty = "u32", bits = "0..=23")]
+                #[bitfield(name = "flags", ty = "u32", bits = "24..=31")]
+                pub instance_shader_binding_table_record_offset_and_flags: [u8; 4],
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
         };
@@ -2476,34 +2483,85 @@ pub fn generate_struct(
     if &struct_.name == "VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV" {
         return quote! {
             #[repr(C)]
-            #[derive(Copy, Clone)]
+            #[derive(Copy, Clone, BitfieldStruct)]
             #[doc = "<https://registry.khronos.org/vulkan/specs/latest/man/html/VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV.html>"]
             pub struct ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV {
-                /// Use [`Packed24_5_3::new(geometry-index, 0, geometry_flags)`][Packed24_5_3::new()] to construct this field
-                pub geometry_index_and_geometry_flags: Packed24_8,
+                #[bitfield(name = "geometry_index", ty = "u32", bits = "0..=23")]
+                #[bitfield(name = "reserved", ty = "u32", bits = "24..=28")]
+                #[bitfield(name = "geometry_flags", ty = "u32", bits = "29..=31")]
+                pub geometry_index_and_geometry_flags: [u8; 4],
+            }
+        };
+    }
+
+    if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone, BitfieldStruct)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/latest/man/html/VkClusterAccelerationStructureBuildTriangleClusterInfoNV.html>"]
+            pub struct ClusterAccelerationStructureBuildTriangleClusterInfoNV {
+                pub cluster_id: u32,
+                pub cluster_flags: Flags,
+                #[bitfield(name = "triangle_count", ty = "u32", bits = "0..=8")]
+                #[bitfield(name = "vertex_count", ty = "u32", bits = "9..=17")]
+                #[bitfield(name = "position_truncate_bit_count", ty = "u32", bits = "18..=23")]
+                #[bitfield(name = "index_type", ty = "u32", bits = "24..=27")]
+                #[bitfield(name = "opacity_micromap_index_type", ty = "u32", bits = "28..=31")]
+                pub triangle_count_vertex_count_position_truncate_bit_count_index_type_and_opacity_micromap_index_type: [u8; 4],
+                pub base_geometry_index_and_geometry_flags: ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV,
+                pub index_buffer_stride: u16,
+                pub vertex_buffer_stride: u16,
+                pub geometry_index_and_flags_buffer_stride: u16,
+                pub opacity_micromap_index_buffer_stride: u16,
+                pub index_buffer: DeviceAddress,
+                pub vertex_buffer: DeviceAddress,
+                pub geometry_index_and_flags_buffer: DeviceAddress,
+                pub opacity_micromap_array: DeviceAddress,
+                pub opacity_micromap_index_buffer: DeviceAddress,
             }
         };
     }
 
     // TODO: Maybe support this
-    if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterInfoNV" {
-        return quote! {};
-    }
-
-    // TODO: Maybe support this
     if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV" {
-        return quote! {};
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone, BitfieldStruct)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/latest/man/html/VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV.html>"]
+            pub struct ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV {
+                pub cluster_id: u32,
+                pub cluster_flags: Flags,
+                #[bitfield(name = "triangle_count", ty = "u32", bits = "0..=8")]
+                #[bitfield(name = "vertex_count", ty = "u32", bits = "9..=17")]
+                #[bitfield(name = "position_truncate_bit_count", ty = "u32", bits = "18..=23")]
+                #[bitfield(name = "index_type", ty = "u32", bits = "24..=27")]
+                #[bitfield(name = "opacity_micromap_index_type", ty = "u32", bits = "28..=31")]
+                pub triangle_count_vertex_count_position_truncate_bit_count_index_type_and_opacity_micromap_index_type: [u8; 4],
+                pub base_geometry_index_and_geometry_flags: ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV,
+                pub index_buffer_stride: u16,
+                pub vertex_buffer_stride: u16,
+                pub geometry_index_and_flags_buffer_stride: u16,
+                pub opacity_micromap_index_buffer_stride: u16,
+                pub index_buffer: DeviceAddress,
+                pub vertex_buffer: DeviceAddress,
+                pub geometry_index_and_flags_buffer: DeviceAddress,
+                pub opacity_micromap_array: DeviceAddress,
+                pub opacity_micromap_index_buffer: DeviceAddress,
+                pub instantiation_bounding_box_limit: DeviceAddress,
+            }
+        };
     }
 
     if &struct_.name == "VkClusterAccelerationStructureInstantiateClusterInfoNV" {
         return quote! {
             #[repr(C)]
-            #[derive(Copy, Clone)]
+            #[derive(Copy, Clone, BitfieldStruct)]
             #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureInstantiateClusterInfoNV.html>"]
             pub struct ClusterAccelerationStructureInstantiateClusterInfoNV {
                 pub cluster_id_offset: u32,
-                /// Use [`Packed24_8::new(geometry_index_offset, 0)`][Packed24_8::new()] to construct this field
-                pub geometry_index_offset_and_reserved: Packed24_8,
+                #[bitfield(name = "geometry_index_offset", ty = "u32", bits = "0..=23")]
+                #[bitfield(name = "reserved", ty = "u32", bits = "24..=31")]
+                pub geometry_index_offset_and_resrved: [u8; 4],
                 pub cluster_template_address: DeviceAddress,
                 pub vertex_buffer: StridedDeviceAddressNV,
             }
@@ -3065,9 +3123,12 @@ pub fn write_source_code<P: AsRef<Path>>(
     src_dir: P,
 ) {
     let vk_xml = vk_headers_dir.join("registry/vk.xml");
-    use std::fs::File;
-    use std::io::Write;
+    let vk_xml_old = old_vk_headers_dir.join("registry/vk.xml");
     let (spec2, errors) = vk_parse::parse_file(&vk_xml).expect("Invalid xml file");
+    if !errors.is_empty() {
+        eprintln!("vk_parse encountered one or more errors while parsing: {errors:?}")
+    }
+    let (spec2_old, errors) = vk_parse::parse_file(&vk_xml_old).expect("Invalid xml file");
     if !errors.is_empty() {
         eprintln!("vk_parse encountered one or more errors while parsing: {errors:?}")
     }
@@ -3093,6 +3154,7 @@ pub fn write_source_code<P: AsRef<Path>>(
         .collect();
 
     let spec = vk_parse::parse_file_as_vkxml(&vk_xml).expect("Invalid xml file.");
+    let spec_old = vk_parse::parse_file_as_vkxml(&vk_xml_old).expect("Invalid xml file.");
 
     let features: Vec<&vkxml::Feature> = spec
         .elements
@@ -3355,23 +3417,19 @@ pub fn write_source_code<P: AsRef<Path>>(
     let src_dir = src_dir.as_ref();
 
     let vk_dir = src_dir.join("vk");
-    std::fs::create_dir_all(&vk_dir).expect("failed to create vk dir");
+    fs::create_dir_all(&vk_dir).expect("failed to create vk dir");
 
-    let vk_features_file = File::create(vk_dir.join("features.rs")).expect("vk/features.rs");
-    let vk_definitions_file =
-        File::create(vk_dir.join("definitions.rs")).expect("vk/definitions.rs");
-    let vk_enums_file = File::create(vk_dir.join("enums.rs")).expect("vk/enums.rs");
-    let vk_bitflags_file = File::create(vk_dir.join("bitflags.rs")).expect("vk/bitflags.rs");
-    let vk_constants_file = File::create(vk_dir.join("constants.rs")).expect("vk/constants.rs");
-    let vk_extensions_file = File::create(vk_dir.join("extensions.rs")).expect("vk/extensions.rs");
-    let vk_feature_extensions_file =
-        File::create(vk_dir.join("feature_extensions.rs")).expect("vk/feature_extensions.rs");
-    let vk_const_debugs_file =
-        File::create(vk_dir.join("const_debugs.rs")).expect("vk/const_debugs.rs");
-    let vk_aliases_file = File::create(vk_dir.join("aliases.rs")).expect("vk/aliases.rs");
-    let high_level_extensions_file =
-        File::create(src_dir.join("extensions_generated.rs")).expect("extensions_generated.rs");
-    let tables_file = File::create(src_dir.join("tables.rs")).expect("tables.rs");
+    let vk_features_file = vk_dir.join("features.rs");
+    let vk_definitions_file = vk_dir.join("definitions.rs");
+    let vk_enums_file = vk_dir.join("enums.rs");
+    let vk_bitflags_file = vk_dir.join("bitflags.rs");
+    let vk_constants_file = vk_dir.join("constants.rs");
+    let vk_extensions_file = vk_dir.join("extensions.rs");
+    let vk_feature_extensions_file = vk_dir.join("feature_extensions.rs");
+    let vk_const_debugs_file = vk_dir.join("const_debugs.rs");
+    let vk_aliases_file = vk_dir.join("aliases.rs");
+    let high_level_extensions_file = src_dir.join("extensions_generated.rs");
+    let tables_file = src_dir.join("tables.rs");
 
     let feature_code = quote! {
         use core::ffi::*;
@@ -3392,12 +3450,13 @@ pub fn write_source_code<P: AsRef<Path>>(
         use super::platform_types::*;
         use super::{
             wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
-            Handle, Packed24_8, TaggedStructure,
+            Handle, TaggedStructure,
         };
         use core::ffi::*;
         use core::fmt;
         use core::marker::PhantomData;
         use ash::*;
+        use c2rust_bitfields::*;
         #(#definition_code)*
     };
 
@@ -3467,41 +3526,24 @@ pub fn write_source_code<P: AsRef<Path>>(
         #(#feature_table_code)*
     };
 
-    fn write_formatted(text: &[u8], out: File) -> std::process::Child {
-        let mut child = std::process::Command::new("rustfmt")
-            .stdin(std::process::Stdio::piped())
-            .stdout(out)
-            .spawn()
-            .expect("Failed to spawn `rustfmt`");
-        let mut stdin = child.stdin.take().expect("Failed to open stdin");
-        stdin.write_all(text).unwrap();
-        drop(stdin);
-        child
+    fn write_formatted(code: impl ToString, out: impl AsRef<Path>) {
+        let text = code.to_string();
+        let syntax_tree = syn::parse_file(&text).unwrap();
+        let formatted = prettyplease::unparse(&syntax_tree);
+        fs::write(out, formatted).unwrap();
     }
 
-    let processes = [
-        write_formatted(feature_code.to_string().as_bytes(), vk_features_file),
-        write_formatted(definition_code.to_string().as_bytes(), vk_definitions_file),
-        write_formatted(enum_code.to_string().as_bytes(), vk_enums_file),
-        write_formatted(bitflags_code.to_string().as_bytes(), vk_bitflags_file),
-        write_formatted(constants_code.to_string().as_bytes(), vk_constants_file),
-        write_formatted(extension_code.to_string().as_bytes(), vk_extensions_file),
-        write_formatted(
-            feature_extensions_code.to_string().as_bytes(),
-            vk_feature_extensions_file,
-        ),
-        write_formatted(const_debugs.to_string().as_bytes(), vk_const_debugs_file),
-        write_formatted(aliases.to_string().as_bytes(), vk_aliases_file),
-        write_formatted(
-            high_level_extensions.to_string().as_bytes(),
-            high_level_extensions_file,
-        ),
-        write_formatted(tables.to_string().as_bytes(), tables_file),
-    ];
-    for mut p in processes {
-        let status = p.wait().unwrap();
-        assert!(status.success());
-    }
+    write_formatted(feature_code, vk_features_file);
+    write_formatted(definition_code, vk_definitions_file);
+    write_formatted(enum_code, vk_enums_file);
+    write_formatted(bitflags_code, vk_bitflags_file);
+    write_formatted(constants_code, vk_constants_file);
+    write_formatted(extension_code, vk_extensions_file);
+    write_formatted(feature_extensions_code, vk_feature_extensions_file);
+    write_formatted(const_debugs, vk_const_debugs_file);
+    write_formatted(aliases, vk_aliases_file);
+    write_formatted(high_level_extensions, high_level_extensions_file);
+    write_formatted(tables, tables_file);
 
     let vk_include = vk_headers_dir.join("include");
 

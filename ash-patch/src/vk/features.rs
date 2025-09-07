@@ -1,7 +1,7 @@
+use core::ffi::*;
 use super::bitflags::*;
 use super::definitions::*;
 use super::enums::*;
-use core::ffi::*;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetInstanceProcAddr = unsafe extern "system" fn(
     instance: ash::vk::Instance,
@@ -25,8 +25,10 @@ pub type PFN_vkEnumerateInstanceLayerProperties = unsafe extern "system" fn(
     p_properties: *mut LayerProperties,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyInstance =
-    unsafe extern "system" fn(instance: ash::vk::Instance, p_allocator: *const AllocationCallbacks);
+pub type PFN_vkDestroyInstance = unsafe extern "system" fn(
+    instance: ash::vk::Instance,
+    p_allocator: *const AllocationCallbacks,
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumeratePhysicalDevices = unsafe extern "system" fn(
     instance: ash::vk::Instance,
@@ -71,8 +73,10 @@ pub type PFN_vkGetPhysicalDeviceMemoryProperties = unsafe extern "system" fn(
     p_memory_properties: *mut PhysicalDeviceMemoryProperties,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetDeviceProcAddr =
-    unsafe extern "system" fn(device: ash::vk::Device, p_name: *const c_char) -> PFN_vkVoidFunction;
+pub type PFN_vkGetDeviceProcAddr = unsafe extern "system" fn(
+    device: ash::vk::Device,
+    p_name: *const c_char,
+) -> PFN_vkVoidFunction;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDevice = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
@@ -105,8 +109,10 @@ pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties = unsafe extern "sys
     p_properties: *mut SparseImageFormatProperties,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyDevice =
-    unsafe extern "system" fn(device: ash::vk::Device, p_allocator: *const AllocationCallbacks);
+pub type PFN_vkDestroyDevice = unsafe extern "system" fn(
+    device: ash::vk::Device,
+    p_allocator: *const AllocationCallbacks,
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceQueue = unsafe extern "system" fn(
     device: ash::vk::Device,
@@ -124,7 +130,9 @@ pub type PFN_vkQueueSubmit = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkQueueWaitIdle = unsafe extern "system" fn(queue: Queue) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDeviceWaitIdle = unsafe extern "system" fn(device: ash::vk::Device) -> Result;
+pub type PFN_vkDeviceWaitIdle = unsafe extern "system" fn(
+    device: ash::vk::Device,
+) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkAllocateMemory = unsafe extern "system" fn(
     device: ash::vk::Device,
@@ -148,8 +156,10 @@ pub type PFN_vkMapMemory = unsafe extern "system" fn(
     pp_data: *mut *mut c_void,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkUnmapMemory =
-    unsafe extern "system" fn(device: ash::vk::Device, memory: DeviceMemory);
+pub type PFN_vkUnmapMemory = unsafe extern "system" fn(
+    device: ash::vk::Device,
+    memory: DeviceMemory,
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkFlushMappedMemoryRanges = unsafe extern "system" fn(
     device: ash::vk::Device,
@@ -228,8 +238,10 @@ pub type PFN_vkResetFences = unsafe extern "system" fn(
     p_fences: *const Fence,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetFenceStatus =
-    unsafe extern "system" fn(device: ash::vk::Device, fence: Fence) -> Result;
+pub type PFN_vkGetFenceStatus = unsafe extern "system" fn(
+    device: ash::vk::Device,
+    fence: Fence,
+) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkWaitForFences = unsafe extern "system" fn(
     device: ash::vk::Device,
@@ -265,14 +277,20 @@ pub type PFN_vkDestroyEvent = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetEventStatus =
-    unsafe extern "system" fn(device: ash::vk::Device, event: Event) -> Result;
+pub type PFN_vkGetEventStatus = unsafe extern "system" fn(
+    device: ash::vk::Device,
+    event: Event,
+) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkSetEvent =
-    unsafe extern "system" fn(device: ash::vk::Device, event: Event) -> Result;
+pub type PFN_vkSetEvent = unsafe extern "system" fn(
+    device: ash::vk::Device,
+    event: Event,
+) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkResetEvent =
-    unsafe extern "system" fn(device: ash::vk::Device, event: Event) -> Result;
+pub type PFN_vkResetEvent = unsafe extern "system" fn(
+    device: ash::vk::Device,
+    event: Event,
+) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateQueryPool = unsafe extern "system" fn(
     device: ash::vk::Device,
@@ -569,8 +587,9 @@ pub type PFN_vkBeginCommandBuffer = unsafe extern "system" fn(
     p_begin_info: *const CommandBufferBeginInfo<'_>,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkEndCommandBuffer =
-    unsafe extern "system" fn(command_buffer: CommandBuffer) -> Result;
+pub type PFN_vkEndCommandBuffer = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetCommandBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -597,8 +616,10 @@ pub type PFN_vkCmdSetScissor = unsafe extern "system" fn(
     p_scissors: *const Rect2D,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetLineWidth =
-    unsafe extern "system" fn(command_buffer: CommandBuffer, line_width: f32);
+pub type PFN_vkCmdSetLineWidth = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    line_width: f32,
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDepthBias = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -607,8 +628,10 @@ pub type PFN_vkCmdSetDepthBias = unsafe extern "system" fn(
     depth_bias_slope_factor: f32,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetBlendConstants =
-    unsafe extern "system" fn(command_buffer: CommandBuffer, blend_constants: *const [f32; 4usize]);
+pub type PFN_vkCmdSetBlendConstants = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    blend_constants: *const [f32; 4usize],
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDepthBounds = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -700,8 +723,11 @@ pub type PFN_vkCmdDispatch = unsafe extern "system" fn(
     group_count_z: u32,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdDispatchIndirect =
-    unsafe extern "system" fn(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize);
+pub type PFN_vkCmdDispatchIndirect = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    buffer: Buffer,
+    offset: DeviceSize,
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -848,8 +874,11 @@ pub type PFN_vkCmdBeginQuery = unsafe extern "system" fn(
     flags: QueryControlFlags,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdEndQuery =
-    unsafe extern "system" fn(command_buffer: CommandBuffer, query_pool: QueryPool, query: u32);
+pub type PFN_vkCmdEndQuery = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    query_pool: QueryPool,
+    query: u32,
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdResetQueryPool = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -891,10 +920,14 @@ pub type PFN_vkCmdBeginRenderPass = unsafe extern "system" fn(
     contents: SubpassContents,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdNextSubpass =
-    unsafe extern "system" fn(command_buffer: CommandBuffer, contents: SubpassContents);
+pub type PFN_vkCmdNextSubpass = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    contents: SubpassContents,
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdEndRenderPass = unsafe extern "system" fn(command_buffer: CommandBuffer);
+pub type PFN_vkCmdEndRenderPass = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdExecuteCommands = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -902,8 +935,9 @@ pub type PFN_vkCmdExecuteCommands = unsafe extern "system" fn(
     p_command_buffers: *const CommandBuffer,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkEnumerateInstanceVersion =
-    unsafe extern "system" fn(p_api_version: *mut u32) -> Result;
+pub type PFN_vkEnumerateInstanceVersion = unsafe extern "system" fn(
+    p_api_version: *mut u32,
+) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceQueue2 = unsafe extern "system" fn(
     device: ash::vk::Device,

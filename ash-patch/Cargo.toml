@@ -23,6 +23,7 @@ version = "0.38.0+1.3.296"
 
 [dependencies]
 ash = "0.38.0+1.3.281"
+c2rust-bitfields = "0.20"
 libloading = { version = "0.8", optional = true }
 
 [dev-dependencies]

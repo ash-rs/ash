@@ -5,3 +5,4 @@
 [submodule "generator/ash-release"]
 	path = generator/ash-release
 	url = https://github.com/ash-rs/ash.git
+	update = none
