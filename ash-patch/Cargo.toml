@@ -23,8 +23,9 @@ version = "0.38.0+1.3.296"
 
 [dependencies]
 ash = "0.38.0+1.3.281"
+# Closest to the feature set we need, but might replace it with a custom macro to support u32 as
+# a bitfield representation
 c2rust-bitfields = "0.20"
-libloading = { version = "0.8", optional = true }
 
 [dev-dependencies]
 trybuild = "1.0"
@@ -34,7 +35,7 @@ default = ["loaded", "debug", "std"]
 # Link the Vulkan loader at compile time.
 linked = []
 # Support searching for the Vulkan loader manually at runtime.
-loaded = ["libloading", "std"]
+loaded = ["std"]
 # Whether Vulkan structs should implement Debug.
 debug = []
 # Whether the standard library should be required

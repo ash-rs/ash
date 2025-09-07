@@ -13,6 +13,7 @@ pub use bitflags::*;
 mod const_debugs;
 mod constants;
 pub use constants::*;
+#[allow(clippy::double_parens)]
 mod definitions;
 pub use definitions::*;
 mod enums;
