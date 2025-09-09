@@ -236,6 +236,55 @@ pub(crate) fn debug_flags<Value: Into<u64> + Copy>(
     Ok(())
 }
 
+#[macro_export]
+macro_rules! define_handle {
+    ($ name : ident , $ ty : ident) => {
+        define_handle!($name, $ty, doc = "");
+    };
+    ($ name : ident , $ ty : ident , $ doc_link : meta) => {
+        #[repr(transparent)]
+        #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash)]
+        #[$doc_link]
+        pub struct $name(*mut u8);
+        impl Default for $name {
+            fn default() -> Self {
+                Self::null()
+            }
+        }
+        impl Handle for $name {
+            const TYPE: ObjectType = ObjectType::$ty;
+            fn as_raw(self) -> u64 {
+                self.0 as u64
+            }
+            fn from_raw(x: u64) -> Self {
+                Self(x as _)
+            }
+        }
+        unsafe impl Send for $name {}
+        unsafe impl Sync for $name {}
+        impl $name {
+            pub const fn null() -> Self {
+                Self(::core::ptr::null_mut())
+            }
+        }
+        impl fmt::Pointer for $name {
+            fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+                fmt::Pointer::fmt(&self.0, f)
+            }
+        }
+        impl fmt::Debug for $name {
+            fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+                fmt::Debug::fmt(&self.0, f)
+            }
+        }
+        impl<T: ash::vk::Handle> From<T> for $name {
+            fn from(value: T) -> $name {
+                $name::from_raw(value.as_raw())
+            }
+        }
+    };
+}
+
 #[cfg(test)]
 mod tests {
     use crate::vk;

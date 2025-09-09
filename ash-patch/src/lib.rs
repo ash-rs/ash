@@ -56,7 +56,7 @@
 extern crate alloc;
 
 use alloc::vec::Vec;
-use core::mem;
+use core::{mem, ptr};
 
 #[cfg(feature = "loaded")]
 pub use crate::extensions_generated::*;
@@ -67,6 +67,39 @@ mod tables;
 /// Raw Vulkan bindings and types, generated from `vk.xml`
 #[macro_use]
 pub mod vk;
+
+// macros of vk need to be defined beforehand
+/// Hand-written ergonomic wrappers for extension functions
+mod extensions;
+
+/// Compat with crates.io version of ash
+mod compat;
+
+pub trait RawPtr<T> {
+    fn to_raw_ptr(self) -> *const T;
+}
+
+impl<T> RawPtr<T> for Option<&T> {
+    fn to_raw_ptr(self) -> *const T {
+        match self {
+            Some(inner) => inner,
+            None => ptr::null(),
+        }
+    }
+}
+
+pub trait RawMutPtr<T> {
+    unsafe fn to_raw_mut_ptr(self) -> *mut T;
+}
+
+impl<T> RawMutPtr<T> for Option<&mut T> {
+    unsafe fn to_raw_mut_ptr(self) -> *mut T {
+        match self {
+            Some(inner) => inner,
+            None => ptr::null_mut(),
+        }
+    }
+}
 
 /// Given an immutable raw pointer to a type with an `s_type` member such as [`vk::BaseInStructure`],
 /// match on a set of Vulkan structures. The struct will be rebound to the given variable of the
@@ -134,6 +167,36 @@ impl vk::Result {
             v.set_len(len);
             v
         })
+    }
+}
+
+/// Repeatedly calls `f` until it does not return [`vk::Result::INCOMPLETE`] anymore, ensuring all
+/// available data has been read into the vector.
+///
+/// See for example [`vkEnumerateInstanceExtensionProperties`]: the number of available items may
+/// change between calls; [`vk::Result::INCOMPLETE`] is returned when the count increased (and the
+/// vector is not large enough after querying the initial size), requiring Ash to try again.
+///
+/// [`vkEnumerateInstanceExtensionProperties`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html
+pub(crate) unsafe fn read_into_uninitialized_vector<N: Copy + Default + TryInto<usize>, T>(
+    f: impl Fn(&mut N, *mut T) -> vk::Result,
+) -> VkResult<Vec<T>>
+where
+    <N as TryInto<usize>>::Error: core::fmt::Debug,
+{
+    loop {
+        let mut count = N::default();
+        f(&mut count, ptr::null_mut()).result()?;
+        let mut data =
+            Vec::with_capacity(count.try_into().expect("`N` failed to convert to `usize`"));
+
+        let err_code = f(&mut count, data.as_mut_ptr());
+        if err_code != vk::Result::INCOMPLETE {
+            break err_code.set_vec_len_on_success(
+                data,
+                count.try_into().expect("`N` failed to convert to `usize`"),
+            );
+        }
     }
 }
 

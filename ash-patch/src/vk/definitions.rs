@@ -13,6 +13,7 @@ use core::ffi::*;
 use core::fmt;
 use core::marker::PhantomData;
 use ash::*;
+use crate::define_handle;
 use c2rust_bitfields::*;
 ///<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_MAKE_VERSION.html>
 pub const fn make_version(major: u32, minor: u32, patch: u32) -> u32 {

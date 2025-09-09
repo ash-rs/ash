@@ -3449,6 +3449,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use core::fmt;
         use core::marker::PhantomData;
         use ash::*;
+        use crate::define_handle;
         use c2rust_bitfields::*;
         #(#definition_code)*
     };
