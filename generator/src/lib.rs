@@ -3117,18 +3117,12 @@ pub fn generate_aliases_of_types(
         #(#aliases)*
     }
 }
-pub fn write_source_code<P: AsRef<Path>>(
-    vk_headers_dir: &Path,
-    old_vk_headers_dir: &Path,
-    src_dir: P,
-) {
+pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let vk_xml = vk_headers_dir.join("registry/vk.xml");
-    let vk_xml_old = old_vk_headers_dir.join("registry/vk.xml");
     let (spec2, errors) = vk_parse::parse_file(&vk_xml).expect("Invalid xml file");
     if !errors.is_empty() {
         eprintln!("vk_parse encountered one or more errors while parsing: {errors:?}")
     }
-    let (spec2_old, errors) = vk_parse::parse_file(&vk_xml_old).expect("Invalid xml file");
     if !errors.is_empty() {
         eprintln!("vk_parse encountered one or more errors while parsing: {errors:?}")
     }
@@ -3154,7 +3148,6 @@ pub fn write_source_code<P: AsRef<Path>>(
         .collect();
 
     let spec = vk_parse::parse_file_as_vkxml(&vk_xml).expect("Invalid xml file.");
-    let spec_old = vk_parse::parse_file_as_vkxml(&vk_xml_old).expect("Invalid xml file.");
 
     let features: Vec<&vkxml::Feature> = spec
         .elements

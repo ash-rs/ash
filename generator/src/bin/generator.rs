@@ -3,7 +3,6 @@ use std::path::Path;
 
 fn main() {
     let headers = "Vulkan-Headers";
-    let old_headers = "ash-release/generator/Vulkan-Headers";
     let cwd = std::env::current_dir().unwrap();
 
     let (base_path, src_dir) = if cwd.ends_with("generator") {
@@ -13,7 +12,6 @@ fn main() {
     };
 
     let headers = base_path.join(headers);
-    let old_headers = base_path.join(old_headers);
 
-    write_source_code(&headers, &old_headers, src_dir);
+    write_source_code(&headers, src_dir);
 }
