@@ -299,6 +299,7 @@ fn is_opaque_type(ty: &str) -> bool {
             | "xcb_connection_t"
             | "ANativeWindow"
             | "AHardwareBuffer"
+            | "OHNativeWindow"
             | "CAMetalLayer"
             | "IDirectFB"
             | "IDirectFBSurface"
@@ -2450,9 +2451,12 @@ pub fn generate_struct(
         return quote! {
             #provisional
             #[repr(C)]
-            #[derive(Copy, Clone)]
+            #[cfg_attr(feature = "debug", derive(Debug))]
+            #[derive(Copy, Clone, Default)]
+            #[doc = #khronos_link]
+            #[must_use]
             pub struct TransformMatrixKHR {
-                pub matrix: [f32; 12],
+                pub matrix: [[f32; 3]; 4],
             }
         };
     }
@@ -2462,6 +2466,8 @@ pub fn generate_struct(
             #provisional
             #[repr(C)]
             #[derive(Copy, Clone)]
+            #[must_use]
+            #[doc = "Type defined by `ash` to make it easier to store a [`DeviceAddress`] or [`AccelerationStructureKHR`] in [`AccelerationStructureInstanceKHR`]."]
             pub union AccelerationStructureReferenceKHR {
                 pub device_handle: DeviceAddress,
                 pub host_handle: AccelerationStructureKHR,
@@ -2470,6 +2476,7 @@ pub fn generate_struct(
             #[repr(C)]
             #[derive(Copy, Clone)]
             #[doc = #khronos_link]
+            #[must_use]
             pub struct AccelerationStructureInstanceKHR {
                 pub transform: TransformMatrixKHR,
                 /// Use [`Packed24_8::new(instance_custom_index, mask)`][Packed24_8::new()] to construct this field
@@ -2487,6 +2494,7 @@ pub fn generate_struct(
             #[repr(C)]
             #[derive(Copy, Clone)]
             #[doc = #khronos_link]
+            #[must_use]
             pub struct AccelerationStructureSRTMotionInstanceNV {
                 pub transform_t0: SRTDataNV,
                 pub transform_t1: SRTDataNV,
@@ -2505,6 +2513,7 @@ pub fn generate_struct(
             #[repr(C)]
             #[derive(Copy, Clone)]
             #[doc = #khronos_link]
+            #[must_use]
             pub struct AccelerationStructureMatrixMotionInstanceNV {
                 pub transform_t0: TransformMatrixKHR,
                 pub transform_t1: TransformMatrixKHR,
@@ -2513,6 +2522,83 @@ pub fn generate_struct(
                 /// Use [`Packed24_8::new(instance_shader_binding_table_record_offset, flags)`][Packed24_8::new()] to construct this field
                 pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
+            }
+        };
+    }
+
+    if &struct_.name == "VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = #khronos_link]
+            #[must_use]
+            pub struct ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV {
+                /// Use [`Packed24_5_3::new(geometry_index, geometry_flags)`][Packed24_5_3::new()] to construct this field
+                pub geometry_index_and_geometry_flags: Packed24_5_3,
+            }
+        };
+    }
+    if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = #khronos_link]
+            #[must_use]
+            pub struct ClusterAccelerationStructureBuildTriangleClusterInfoNV {
+                pub cluster_id: u32,
+                pub cluster_flags: ClusterAccelerationStructureClusterFlagsNV,
+                /// Use [`Packed9_9_6_4_4::new(triangle_count, vertex_count, position_truncate_bit_count, index_type, opacity_micromap_index_type)`][Packed9_9_6_4_4::new()] to construct this field
+                pub triangle_cluster_info_packed: Packed9_9_6_4_4,
+                pub base_geometry_index_and_geometry_flags: ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV,
+                pub index_buffer_stride: u16,
+                pub vertex_buffer_stride: u16,
+                pub geometry_index_and_flags_buffer_stride: u16,
+                pub opacity_micromap_index_buffer_stride: u16,
+                pub index_buffer: DeviceAddress,
+                pub vertex_buffer: DeviceAddress,
+                pub geometry_index_and_flags_buffer: DeviceAddress,
+                pub opacity_micromap_array: DeviceAddress,
+                pub opacity_micromap_index_buffer: DeviceAddress,
+            }
+        };
+    }
+    if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = #khronos_link]
+            #[must_use]
+            pub struct ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV {
+                pub cluster_id: u32,
+                pub cluster_flags: ClusterAccelerationStructureClusterFlagsNV,
+                /// Use [`Packed9_9_6_4_4::new(triangle_count, vertex_count, position_truncate_bit_count, index_type, opacity_micromap_index_type)`][Packed9_9_6_4_4::new()] to construct this field
+                pub triangle_cluster_info_packed: Packed9_9_6_4_4,
+                pub base_geometry_index_and_geometry_flags: ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV,
+                pub index_buffer_stride: u16,
+                pub vertex_buffer_stride: u16,
+                pub geometry_index_and_flags_buffer_stride: u16,
+                pub opacity_micromap_index_buffer_stride: u16,
+                pub index_buffer: DeviceAddress,
+                pub vertex_buffer: DeviceAddress,
+                pub geometry_index_and_flags_buffer: DeviceAddress,
+                pub opacity_micromap_array: DeviceAddress,
+                pub opacity_micromap_index_buffer: DeviceAddress,
+                pub instantiation_bounding_box_limit: DeviceAddress,
+            }
+        };
+    }
+    if &struct_.name == "VkClusterAccelerationStructureInstantiateClusterInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = #khronos_link]
+            #[must_use]
+            pub struct ClusterAccelerationStructureInstantiateClusterInfoNV {
+                pub cluster_id_offset: u32,
+                /// Use [`Packed24_8::new(geometry_index_offset, 0)`][Packed24_8::new()] to construct this field; the high 8 bits are reserved and must be 0
+                pub geometry_index_offset_and_reserved: Packed24_8,
+                pub cluster_template_address: DeviceAddress,
+                pub vertex_buffer: StridedDeviceAddressNV,
             }
         };
     }
@@ -3490,7 +3576,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use super::platform_types::*;
         use super::{
             wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
-            Handle, Packed24_8, TaggedStructure,
+            Handle, Packed24_5_3, Packed24_8, Packed9_9_6_4_4, TaggedStructure,
         };
         use core::ffi::*;
         use core::fmt;

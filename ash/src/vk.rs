@@ -169,6 +169,75 @@ impl Packed24_8 {
     }
 }
 
+/// Holds 24 bits in the least significant bits and 3 bits in the most
+/// significant bits, occupying a single [`u32`] in total. The 5 middle bits
+/// are reserved and held at zero. Used by
+/// [`ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV`].
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
+#[repr(transparent)]
+pub struct Packed24_5_3(u32);
+
+impl Packed24_5_3 {
+    pub fn new(low_24: u32, high_3: u8) -> Self {
+        Self((low_24 & 0x00ff_ffff) | ((u32::from(high_3) & 0x7) << 29))
+    }
+
+    /// Extracts the least-significant 24 bits (3 bytes) of this integer
+    pub fn low_24(&self) -> u32 {
+        self.0 & 0x00ff_ffff
+    }
+
+    /// Extracts the most-significant 3 bits of this integer
+    pub fn high_3(&self) -> u8 {
+        ((self.0 >> 29) & 0x7) as u8
+    }
+}
+
+/// Packs five fields of width 9, 9, 6, 4, and 4 (LSB to MSB) into a single
+/// [`u32`]. Used by
+/// [`ClusterAccelerationStructureBuildTriangleClusterInfoNV`] and
+/// [`ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV`].
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
+#[repr(transparent)]
+pub struct Packed9_9_6_4_4(u32);
+
+impl Packed9_9_6_4_4 {
+    pub fn new(low_9: u32, lower_mid_9: u32, mid_6: u32, upper_mid_4: u32, high_4: u32) -> Self {
+        Self(
+            (low_9 & 0x1ff)
+                | ((lower_mid_9 & 0x1ff) << 9)
+                | ((mid_6 & 0x3f) << 18)
+                | ((upper_mid_4 & 0xf) << 24)
+                | ((high_4 & 0xf) << 28),
+        )
+    }
+
+    /// Extracts bits 0..9 of this integer
+    pub fn low_9(&self) -> u32 {
+        self.0 & 0x1ff
+    }
+
+    /// Extracts bits 9..18 of this integer
+    pub fn lower_mid_9(&self) -> u32 {
+        (self.0 >> 9) & 0x1ff
+    }
+
+    /// Extracts bits 18..24 of this integer
+    pub fn mid_6(&self) -> u32 {
+        (self.0 >> 18) & 0x3f
+    }
+
+    /// Extracts bits 24..28 of this integer
+    pub fn upper_mid_4(&self) -> u32 {
+        (self.0 >> 24) & 0xf
+    }
+
+    /// Extracts bits 28..32 of this integer
+    pub fn high_4(&self) -> u32 {
+        (self.0 >> 28) & 0xf
+    }
+}
+
 impl ColorComponentFlags {
     /// Contraction of [`R`][Self::R] | [`G`][Self::G] | [`B`][Self::B] | [`A`][Self::A]
     pub const RGBA: Self = Self(Self::R.0 | Self::G.0 | Self::B.0 | Self::A.0);
