@@ -284,6 +284,7 @@ pub mod amd {
         #[doc = "Raw VK_AMD_buffer_marker device-level function pointers"]
         pub struct DeviceFn {
             pub cmd_write_buffer_marker_amd: PFN_vkCmdWriteBufferMarkerAMD,
+            pub cmd_write_buffer_marker2_amd: PFN_vkCmdWriteBufferMarker2AMD,
         }
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
@@ -311,6 +312,28 @@ pub mod amd {
                         let val = _f(cname);
                         if val.is_null() {
                             cmd_write_buffer_marker_amd
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_write_buffer_marker2_amd: unsafe {
+                        unsafe extern "system" fn cmd_write_buffer_marker2_amd(
+                            _command_buffer: CommandBuffer,
+                            _stage: PipelineStageFlags2,
+                            _dst_buffer: Buffer,
+                            _dst_offset: DeviceSize,
+                            _marker: u32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_write_buffer_marker2_amd)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkCmdWriteBufferMarker2AMD\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_write_buffer_marker2_amd
                         } else {
                             ::core::mem::transmute(val)
                         }
@@ -616,7 +639,9 @@ pub mod amdx {
                     cmd_initialize_graph_scratch_memory_amdx: unsafe {
                         unsafe extern "system" fn cmd_initialize_graph_scratch_memory_amdx(
                             _command_buffer: CommandBuffer,
+                            _execution_graph: Pipeline,
                             _scratch: DeviceAddress,
+                            _scratch_size: DeviceSize,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -637,6 +662,7 @@ pub mod amdx {
                         unsafe extern "system" fn cmd_dispatch_graph_amdx(
                             _command_buffer: CommandBuffer,
                             _scratch: DeviceAddress,
+                            _scratch_size: DeviceSize,
                             _p_count_info: *const DispatchGraphCountInfoAMDX,
                         ) {
                             panic!(concat!(
@@ -657,6 +683,7 @@ pub mod amdx {
                         unsafe extern "system" fn cmd_dispatch_graph_indirect_amdx(
                             _command_buffer: CommandBuffer,
                             _scratch: DeviceAddress,
+                            _scratch_size: DeviceSize,
                             _p_count_info: *const DispatchGraphCountInfoAMDX,
                         ) {
                             panic!(concat!(
@@ -678,6 +705,7 @@ pub mod amdx {
                         unsafe extern "system" fn cmd_dispatch_graph_indirect_count_amdx(
                             _command_buffer: CommandBuffer,
                             _scratch: DeviceAddress,
+                            _scratch_size: DeviceSize,
                             _count_info: DeviceAddress,
                         ) {
                             panic!(concat!(
@@ -974,11 +1002,337 @@ pub mod arm {
             crate::vk::ARM_RENDER_PASS_STRIPED_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_ARM_tensors"]
+    pub mod tensors {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::ARM_TENSORS_NAME as NAME,
+            crate::vk::ARM_TENSORS_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_ARM_tensors instance-level functions"]
+        #[derive(Clone)]
+        pub struct Instance {
+            pub(crate) fp: InstanceFn,
+            pub(crate) handle: crate::vk::Instance,
+        }
+        impl Instance {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+                let handle = instance.handle;
+                let fp = InstanceFn::load(|name| unsafe {
+                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &InstanceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn instance(&self) -> crate::vk::Instance {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_ARM_tensors instance-level function pointers"]
+        pub struct InstanceFn {
+            pub get_physical_device_external_tensor_properties_arm:
+                PFN_vkGetPhysicalDeviceExternalTensorPropertiesARM,
+        }
+        unsafe impl Send for InstanceFn {}
+        unsafe impl Sync for InstanceFn {}
+        impl InstanceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    get_physical_device_external_tensor_properties_arm: unsafe {
+                        unsafe extern "system" fn get_physical_device_external_tensor_properties_arm(
+                            _physical_device: PhysicalDevice,
+                            _p_external_tensor_info: *const PhysicalDeviceExternalTensorInfoARM<'_>,
+                            _p_external_tensor_properties: *mut ExternalTensorPropertiesARM<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_physical_device_external_tensor_properties_arm)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetPhysicalDeviceExternalTensorPropertiesARM\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_physical_device_external_tensor_properties_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+        #[doc = "VK_ARM_tensors device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_ARM_tensors device-level function pointers"]
+        pub struct DeviceFn {
+            pub create_tensor_arm: PFN_vkCreateTensorARM,
+            pub destroy_tensor_arm: PFN_vkDestroyTensorARM,
+            pub create_tensor_view_arm: PFN_vkCreateTensorViewARM,
+            pub destroy_tensor_view_arm: PFN_vkDestroyTensorViewARM,
+            pub get_tensor_memory_requirements_arm: PFN_vkGetTensorMemoryRequirementsARM,
+            pub bind_tensor_memory_arm: PFN_vkBindTensorMemoryARM,
+            pub get_device_tensor_memory_requirements_arm:
+                PFN_vkGetDeviceTensorMemoryRequirementsARM,
+            pub cmd_copy_tensor_arm: PFN_vkCmdCopyTensorARM,
+            pub get_tensor_opaque_capture_descriptor_data_arm:
+                PFN_vkGetTensorOpaqueCaptureDescriptorDataARM,
+            pub get_tensor_view_opaque_capture_descriptor_data_arm:
+                PFN_vkGetTensorViewOpaqueCaptureDescriptorDataARM,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    create_tensor_arm: unsafe {
+                        unsafe extern "system" fn create_tensor_arm(
+                            _device: crate::vk::Device,
+                            _p_create_info: *const TensorCreateInfoARM<'_>,
+                            _p_allocator: *const AllocationCallbacks,
+                            _p_tensor: *mut TensorARM,
+                        ) -> Result {
+                            panic!(concat!("Unable to load ", stringify!(create_tensor_arm)))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateTensorARM\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            create_tensor_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    destroy_tensor_arm: unsafe {
+                        unsafe extern "system" fn destroy_tensor_arm(
+                            _device: crate::vk::Device,
+                            _tensor: TensorARM,
+                            _p_allocator: *const AllocationCallbacks,
+                        ) {
+                            panic!(concat!("Unable to load ", stringify!(destroy_tensor_arm)))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyTensorARM\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            destroy_tensor_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    create_tensor_view_arm: unsafe {
+                        unsafe extern "system" fn create_tensor_view_arm(
+                            _device: crate::vk::Device,
+                            _p_create_info: *const TensorViewCreateInfoARM<'_>,
+                            _p_allocator: *const AllocationCallbacks,
+                            _p_view: *mut TensorViewARM,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(create_tensor_view_arm)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateTensorViewARM\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            create_tensor_view_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    destroy_tensor_view_arm: unsafe {
+                        unsafe extern "system" fn destroy_tensor_view_arm(
+                            _device: crate::vk::Device,
+                            _tensor_view: TensorViewARM,
+                            _p_allocator: *const AllocationCallbacks,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(destroy_tensor_view_arm)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkDestroyTensorViewARM\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            destroy_tensor_view_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_tensor_memory_requirements_arm: unsafe {
+                        unsafe extern "system" fn get_tensor_memory_requirements_arm(
+                            _device: crate::vk::Device,
+                            _p_info: *const TensorMemoryRequirementsInfoARM<'_>,
+                            _p_memory_requirements: *mut MemoryRequirements2<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_tensor_memory_requirements_arm)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetTensorMemoryRequirementsARM\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_tensor_memory_requirements_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    bind_tensor_memory_arm: unsafe {
+                        unsafe extern "system" fn bind_tensor_memory_arm(
+                            _device: crate::vk::Device,
+                            _bind_info_count: u32,
+                            _p_bind_infos: *const BindTensorMemoryInfoARM<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(bind_tensor_memory_arm)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkBindTensorMemoryARM\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            bind_tensor_memory_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_device_tensor_memory_requirements_arm: unsafe {
+                        unsafe extern "system" fn get_device_tensor_memory_requirements_arm(
+                            _device: crate::vk::Device,
+                            _p_info: *const DeviceTensorMemoryRequirementsARM<'_>,
+                            _p_memory_requirements: *mut MemoryRequirements2<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_device_tensor_memory_requirements_arm)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetDeviceTensorMemoryRequirementsARM\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_device_tensor_memory_requirements_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_copy_tensor_arm: unsafe {
+                        unsafe extern "system" fn cmd_copy_tensor_arm(
+                            _command_buffer: CommandBuffer,
+                            _p_copy_tensor_info: *const CopyTensorInfoARM<'_>,
+                        ) {
+                            panic!(concat!("Unable to load ", stringify!(cmd_copy_tensor_arm)))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyTensorARM\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_copy_tensor_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_tensor_opaque_capture_descriptor_data_arm: unsafe {
+                        unsafe extern "system" fn get_tensor_opaque_capture_descriptor_data_arm(
+                            _device: crate::vk::Device,
+                            _p_info: *const TensorCaptureDescriptorDataInfoARM<'_>,
+                            _p_data: *mut c_void,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_tensor_opaque_capture_descriptor_data_arm)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetTensorOpaqueCaptureDescriptorDataARM\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_tensor_opaque_capture_descriptor_data_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_tensor_view_opaque_capture_descriptor_data_arm: unsafe {
+                        unsafe extern "system" fn get_tensor_view_opaque_capture_descriptor_data_arm(
+                            _device: crate::vk::Device,
+                            _p_info: *const TensorViewCaptureDescriptorDataInfoARM<'_>,
+                            _p_data: *mut c_void,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_tensor_view_opaque_capture_descriptor_data_arm)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetTensorViewOpaqueCaptureDescriptorDataARM\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_tensor_view_opaque_capture_descriptor_data_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
     #[doc = "VK_ARM_shader_core_builtins"]
     pub mod shader_core_builtins {
         pub use {
             crate::vk::ARM_SHADER_CORE_BUILTINS_NAME as NAME,
             crate::vk::ARM_SHADER_CORE_BUILTINS_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_ARM_pipeline_opacity_micromap"]
+    pub mod pipeline_opacity_micromap {
+        pub use {
+            crate::vk::ARM_PIPELINE_OPACITY_MICROMAP_NAME as NAME,
+            crate::vk::ARM_PIPELINE_OPACITY_MICROMAP_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_ARM_format_pack"]
+    pub mod format_pack {
+        pub use {
+            crate::vk::ARM_FORMAT_PACK_NAME as NAME,
+            crate::vk::ARM_FORMAT_PACK_SPEC_VERSION as SPEC_VERSION,
         };
     }
 }
@@ -3633,7 +3987,7 @@ pub mod ext {
         #[derive(Clone)]
         #[doc = "Raw VK_EXT_line_rasterization device-level function pointers"]
         pub struct DeviceFn {
-            pub cmd_set_line_stipple_ext: PFN_vkCmdSetLineStippleKHR,
+            pub cmd_set_line_stipple_ext: PFN_vkCmdSetLineStipple,
         }
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
@@ -4076,11 +4430,11 @@ pub mod ext {
         #[derive(Clone)]
         #[doc = "Raw VK_EXT_host_image_copy device-level function pointers"]
         pub struct DeviceFn {
-            pub copy_memory_to_image_ext: PFN_vkCopyMemoryToImageEXT,
-            pub copy_image_to_memory_ext: PFN_vkCopyImageToMemoryEXT,
-            pub copy_image_to_image_ext: PFN_vkCopyImageToImageEXT,
-            pub transition_image_layout_ext: PFN_vkTransitionImageLayoutEXT,
-            pub get_image_subresource_layout2_ext: PFN_vkGetImageSubresourceLayout2KHR,
+            pub copy_memory_to_image_ext: PFN_vkCopyMemoryToImage,
+            pub copy_image_to_memory_ext: PFN_vkCopyImageToMemory,
+            pub copy_image_to_image_ext: PFN_vkCopyImageToImage,
+            pub transition_image_layout_ext: PFN_vkTransitionImageLayout,
+            pub get_image_subresource_layout2_ext: PFN_vkGetImageSubresourceLayout2,
         }
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
@@ -4093,7 +4447,7 @@ pub mod ext {
                     copy_memory_to_image_ext: unsafe {
                         unsafe extern "system" fn copy_memory_to_image_ext(
                             _device: crate::vk::Device,
-                            _p_copy_memory_to_image_info: *const CopyMemoryToImageInfoEXT<'_>,
+                            _p_copy_memory_to_image_info: *const CopyMemoryToImageInfo<'_>,
                         ) -> Result {
                             panic!(concat!(
                                 "Unable to load ",
@@ -4112,7 +4466,7 @@ pub mod ext {
                     copy_image_to_memory_ext: unsafe {
                         unsafe extern "system" fn copy_image_to_memory_ext(
                             _device: crate::vk::Device,
-                            _p_copy_image_to_memory_info: *const CopyImageToMemoryInfoEXT<'_>,
+                            _p_copy_image_to_memory_info: *const CopyImageToMemoryInfo<'_>,
                         ) -> Result {
                             panic!(concat!(
                                 "Unable to load ",
@@ -4131,7 +4485,7 @@ pub mod ext {
                     copy_image_to_image_ext: unsafe {
                         unsafe extern "system" fn copy_image_to_image_ext(
                             _device: crate::vk::Device,
-                            _p_copy_image_to_image_info: *const CopyImageToImageInfoEXT<'_>,
+                            _p_copy_image_to_image_info: *const CopyImageToImageInfo<'_>,
                         ) -> Result {
                             panic!(concat!(
                                 "Unable to load ",
@@ -4150,7 +4504,7 @@ pub mod ext {
                         unsafe extern "system" fn transition_image_layout_ext(
                             _device: crate::vk::Device,
                             _transition_count: u32,
-                            _p_transitions: *const HostImageLayoutTransitionInfoEXT<'_>,
+                            _p_transitions: *const HostImageLayoutTransitionInfo<'_>,
                         ) -> Result {
                             panic!(concat!(
                                 "Unable to load ",
@@ -4170,8 +4524,8 @@ pub mod ext {
                         unsafe extern "system" fn get_image_subresource_layout2_ext(
                             _device: crate::vk::Device,
                             _image: Image,
-                            _p_subresource: *const ImageSubresource2KHR<'_>,
-                            _p_layout: *mut SubresourceLayout2KHR<'_>,
+                            _p_subresource: *const ImageSubresource2<'_>,
+                            _p_layout: *mut SubresourceLayout2<'_>,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -5147,7 +5501,7 @@ pub mod ext {
         #[derive(Clone)]
         #[doc = "Raw VK_EXT_image_compression_control device-level function pointers"]
         pub struct DeviceFn {
-            pub get_image_subresource_layout2_ext: PFN_vkGetImageSubresourceLayout2KHR,
+            pub get_image_subresource_layout2_ext: PFN_vkGetImageSubresourceLayout2,
         }
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
@@ -5161,8 +5515,8 @@ pub mod ext {
                         unsafe extern "system" fn get_image_subresource_layout2_ext(
                             _device: crate::vk::Device,
                             _image: Image,
-                            _p_subresource: *const ImageSubresource2KHR<'_>,
-                            _p_layout: *mut SubresourceLayout2KHR<'_>,
+                            _p_subresource: *const ImageSubresource2<'_>,
+                            _p_layout: *mut SubresourceLayout2<'_>,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -5460,6 +5814,13 @@ pub mod ext {
         pub use {
             crate::vk::EXT_PRIMITIVE_TOPOLOGY_LIST_RESTART_NAME as NAME,
             crate::vk::EXT_PRIMITIVE_TOPOLOGY_LIST_RESTART_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_EXT_present_mode_fifo_latest_ready"]
+    pub mod present_mode_fifo_latest_ready {
+        pub use {
+            crate::vk::EXT_PRESENT_MODE_FIFO_LATEST_READY_NAME as NAME,
+            crate::vk::EXT_PRESENT_MODE_FIFO_LATEST_READY_SPEC_VERSION as SPEC_VERSION,
         };
     }
     #[doc = "VK_EXT_pipeline_properties"]
@@ -8450,6 +8811,13 @@ pub mod ext {
             crate::vk::EXT_SHADER_REPLICATED_COMPOSITES_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_EXT_shader_float8"]
+    pub mod shader_float8 {
+        pub use {
+            crate::vk::EXT_SHADER_FLOAT8_NAME as NAME,
+            crate::vk::EXT_SHADER_FLOAT8_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_EXT_device_generated_commands"]
     pub mod device_generated_commands {
         use crate::vk::*;
@@ -8770,6 +9138,179 @@ pub mod ext {
                 }
             }
         }
+    }
+    #[doc = "VK_EXT_external_memory_metal"]
+    pub mod external_memory_metal {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::EXT_EXTERNAL_MEMORY_METAL_NAME as NAME,
+            crate::vk::EXT_EXTERNAL_MEMORY_METAL_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_EXT_external_memory_metal device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_EXT_external_memory_metal device-level function pointers"]
+        pub struct DeviceFn {
+            pub get_memory_metal_handle_ext: PFN_vkGetMemoryMetalHandleEXT,
+            pub get_memory_metal_handle_properties_ext: PFN_vkGetMemoryMetalHandlePropertiesEXT,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    get_memory_metal_handle_ext: unsafe {
+                        unsafe extern "system" fn get_memory_metal_handle_ext(
+                            _device: crate::vk::Device,
+                            _p_get_metal_handle_info: *const MemoryGetMetalHandleInfoEXT<'_>,
+                            _p_handle: *mut *mut c_void,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_memory_metal_handle_ext)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetMemoryMetalHandleEXT\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_memory_metal_handle_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_memory_metal_handle_properties_ext: unsafe {
+                        unsafe extern "system" fn get_memory_metal_handle_properties_ext(
+                            _device: crate::vk::Device,
+                            _handle_type: ExternalMemoryHandleTypeFlags,
+                            _p_handle: *const c_void,
+                            _p_memory_metal_handle_properties: *mut MemoryMetalHandlePropertiesEXT<
+                                '_,
+                            >,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_memory_metal_handle_properties_ext)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetMemoryMetalHandlePropertiesEXT\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_memory_metal_handle_properties_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
+    #[doc = "VK_EXT_vertex_attribute_robustness"]
+    pub mod vertex_attribute_robustness {
+        pub use {
+            crate::vk::EXT_VERTEX_ATTRIBUTE_ROBUSTNESS_NAME as NAME,
+            crate::vk::EXT_VERTEX_ATTRIBUTE_ROBUSTNESS_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_EXT_fragment_density_map_offset"]
+    pub mod fragment_density_map_offset {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::EXT_FRAGMENT_DENSITY_MAP_OFFSET_NAME as NAME,
+            crate::vk::EXT_FRAGMENT_DENSITY_MAP_OFFSET_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_EXT_fragment_density_map_offset device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_EXT_fragment_density_map_offset device-level function pointers"]
+        pub struct DeviceFn {
+            pub cmd_end_rendering2_ext: PFN_vkCmdEndRendering2EXT,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    cmd_end_rendering2_ext: unsafe {
+                        unsafe extern "system" fn cmd_end_rendering2_ext(
+                            _command_buffer: CommandBuffer,
+                            _p_rendering_end_info: *const RenderingEndInfoEXT<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_end_rendering2_ext)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRendering2EXT\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_end_rendering2_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
+    #[doc = "VK_EXT_zero_initialize_device_memory"]
+    pub mod zero_initialize_device_memory {
+        pub use {
+            crate::vk::EXT_ZERO_INITIALIZE_DEVICE_MEMORY_NAME as NAME,
+            crate::vk::EXT_ZERO_INITIALIZE_DEVICE_MEMORY_SPEC_VERSION as SPEC_VERSION,
+        };
     }
 }
 #[doc = "Extensions tagged FUCHSIA"]
@@ -9643,6 +10184,13 @@ pub mod huawei {
                 }
             }
         }
+    }
+    #[doc = "VK_HUAWEI_hdr_vivid"]
+    pub mod hdr_vivid {
+        pub use {
+            crate::vk::HUAWEI_HDR_VIVID_NAME as NAME,
+            crate::vk::HUAWEI_HDR_VIVID_SPEC_VERSION as SPEC_VERSION,
+        };
     }
 }
 #[doc = "Extensions tagged IMG"]
@@ -12735,9 +13283,8 @@ pub mod khr {
         #[derive(Clone)]
         #[doc = "Raw VK_KHR_push_descriptor device-level function pointers"]
         pub struct DeviceFn {
-            pub cmd_push_descriptor_set_khr: PFN_vkCmdPushDescriptorSetKHR,
-            pub cmd_push_descriptor_set_with_template_khr:
-                PFN_vkCmdPushDescriptorSetWithTemplateKHR,
+            pub cmd_push_descriptor_set_khr: PFN_vkCmdPushDescriptorSet,
+            pub cmd_push_descriptor_set_with_template_khr: PFN_vkCmdPushDescriptorSetWithTemplate,
         }
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
@@ -12855,8 +13402,7 @@ pub mod khr {
             pub create_descriptor_update_template_khr: PFN_vkCreateDescriptorUpdateTemplate,
             pub destroy_descriptor_update_template_khr: PFN_vkDestroyDescriptorUpdateTemplate,
             pub update_descriptor_set_with_template_khr: PFN_vkUpdateDescriptorSetWithTemplate,
-            pub cmd_push_descriptor_set_with_template_khr:
-                PFN_vkCmdPushDescriptorSetWithTemplateKHR,
+            pub cmd_push_descriptor_set_with_template_khr: PFN_vkCmdPushDescriptorSetWithTemplate,
         }
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
@@ -13837,6 +14383,13 @@ pub mod khr {
         pub use {
             crate::vk::KHR_STORAGE_BUFFER_STORAGE_CLASS_NAME as NAME,
             crate::vk::KHR_STORAGE_BUFFER_STORAGE_CLASS_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_shader_bfloat16"]
+    pub mod shader_bfloat16 {
+        pub use {
+            crate::vk::KHR_SHADER_BFLOAT16_NAME as NAME,
+            crate::vk::KHR_SHADER_BFLOAT16_SPEC_VERSION as SPEC_VERSION,
         };
     }
     #[doc = "VK_KHR_relaxed_block_layout"]
@@ -15317,9 +15870,9 @@ pub mod khr {
         #[doc = "Raw VK_KHR_dynamic_rendering_local_read device-level function pointers"]
         pub struct DeviceFn {
             pub cmd_set_rendering_attachment_locations_khr:
-                PFN_vkCmdSetRenderingAttachmentLocationsKHR,
+                PFN_vkCmdSetRenderingAttachmentLocations,
             pub cmd_set_rendering_input_attachment_indices_khr:
-                PFN_vkCmdSetRenderingInputAttachmentIndicesKHR,
+                PFN_vkCmdSetRenderingInputAttachmentIndices,
         }
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
@@ -15332,7 +15885,7 @@ pub mod khr {
                     cmd_set_rendering_attachment_locations_khr: unsafe {
                         unsafe extern "system" fn cmd_set_rendering_attachment_locations_khr(
                             _command_buffer: CommandBuffer,
-                            _p_location_info: *const RenderingAttachmentLocationInfoKHR<'_>,
+                            _p_location_info: *const RenderingAttachmentLocationInfo<'_>,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -15352,7 +15905,7 @@ pub mod khr {
                     cmd_set_rendering_input_attachment_indices_khr: unsafe {
                         unsafe extern "system" fn cmd_set_rendering_input_attachment_indices_khr(
                             _command_buffer: CommandBuffer,
-                            _p_input_attachment_index_info : * const RenderingInputAttachmentIndexInfoKHR < '_ >,
+                            _p_input_attachment_index_info : * const RenderingInputAttachmentIndexInfo < '_ >,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -15886,8 +16439,8 @@ pub mod khr {
         #[derive(Clone)]
         #[doc = "Raw VK_KHR_map_memory2 device-level function pointers"]
         pub struct DeviceFn {
-            pub map_memory2_khr: PFN_vkMapMemory2KHR,
-            pub unmap_memory2_khr: PFN_vkUnmapMemory2KHR,
+            pub map_memory2_khr: PFN_vkMapMemory2,
+            pub unmap_memory2_khr: PFN_vkUnmapMemory2,
         }
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
@@ -15900,7 +16453,7 @@ pub mod khr {
                     map_memory2_khr: unsafe {
                         unsafe extern "system" fn map_memory2_khr(
                             _device: crate::vk::Device,
-                            _p_memory_map_info: *const MemoryMapInfoKHR<'_>,
+                            _p_memory_map_info: *const MemoryMapInfo<'_>,
                             _pp_data: *mut *mut c_void,
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(map_memory2_khr)))
@@ -15916,7 +16469,7 @@ pub mod khr {
                     unmap_memory2_khr: unsafe {
                         unsafe extern "system" fn unmap_memory2_khr(
                             _device: crate::vk::Device,
-                            _p_memory_unmap_info: *const MemoryUnmapInfoKHR<'_>,
+                            _p_memory_unmap_info: *const MemoryUnmapInfo<'_>,
                         ) -> Result {
                             panic!(concat!("Unable to load ", stringify!(unmap_memory2_khr)))
                         }
@@ -16152,8 +16705,6 @@ pub mod khr {
             pub cmd_pipeline_barrier2_khr: PFN_vkCmdPipelineBarrier2,
             pub cmd_write_timestamp2_khr: PFN_vkCmdWriteTimestamp2,
             pub queue_submit2_khr: PFN_vkQueueSubmit2,
-            pub cmd_write_buffer_marker2_amd: PFN_vkCmdWriteBufferMarker2AMD,
-            pub get_queue_checkpoint_data2_nv: PFN_vkGetQueueCheckpointData2NV,
         }
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
@@ -16265,48 +16816,6 @@ pub mod khr {
                         let val = _f(cname);
                         if val.is_null() {
                             queue_submit2_khr
-                        } else {
-                            ::core::mem::transmute(val)
-                        }
-                    },
-                    cmd_write_buffer_marker2_amd: unsafe {
-                        unsafe extern "system" fn cmd_write_buffer_marker2_amd(
-                            _command_buffer: CommandBuffer,
-                            _stage: PipelineStageFlags2,
-                            _dst_buffer: Buffer,
-                            _dst_offset: DeviceSize,
-                            _marker: u32,
-                        ) {
-                            panic!(concat!(
-                                "Unable to load ",
-                                stringify!(cmd_write_buffer_marker2_amd)
-                            ))
-                        }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkCmdWriteBufferMarker2AMD\0");
-                        let val = _f(cname);
-                        if val.is_null() {
-                            cmd_write_buffer_marker2_amd
-                        } else {
-                            ::core::mem::transmute(val)
-                        }
-                    },
-                    get_queue_checkpoint_data2_nv: unsafe {
-                        unsafe extern "system" fn get_queue_checkpoint_data2_nv(
-                            _queue: Queue,
-                            _p_checkpoint_data_count: *mut u32,
-                            _p_checkpoint_data: *mut CheckpointData2NV<'_>,
-                        ) {
-                            panic!(concat!(
-                                "Unable to load ",
-                                stringify!(get_queue_checkpoint_data2_nv)
-                            ))
-                        }
-                        let cname =
-                            CStr::from_bytes_with_nul_unchecked(b"vkGetQueueCheckpointData2NV\0");
-                        let val = _f(cname);
-                        if val.is_null() {
-                            get_queue_checkpoint_data2_nv
                         } else {
                             ::core::mem::transmute(val)
                         }
@@ -16741,10 +17250,10 @@ pub mod khr {
         #[derive(Clone)]
         #[doc = "Raw VK_KHR_maintenance5 device-level function pointers"]
         pub struct DeviceFn {
-            pub cmd_bind_index_buffer2_khr: PFN_vkCmdBindIndexBuffer2KHR,
-            pub get_rendering_area_granularity_khr: PFN_vkGetRenderingAreaGranularityKHR,
-            pub get_device_image_subresource_layout_khr: PFN_vkGetDeviceImageSubresourceLayoutKHR,
-            pub get_image_subresource_layout2_khr: PFN_vkGetImageSubresourceLayout2KHR,
+            pub cmd_bind_index_buffer2_khr: PFN_vkCmdBindIndexBuffer2,
+            pub get_rendering_area_granularity_khr: PFN_vkGetRenderingAreaGranularity,
+            pub get_device_image_subresource_layout_khr: PFN_vkGetDeviceImageSubresourceLayout,
+            pub get_image_subresource_layout2_khr: PFN_vkGetImageSubresourceLayout2,
         }
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
@@ -16779,7 +17288,7 @@ pub mod khr {
                     get_rendering_area_granularity_khr: unsafe {
                         unsafe extern "system" fn get_rendering_area_granularity_khr(
                             _device: crate::vk::Device,
-                            _p_rendering_area_info: *const RenderingAreaInfoKHR<'_>,
+                            _p_rendering_area_info: *const RenderingAreaInfo<'_>,
                             _p_granularity: *mut Extent2D,
                         ) {
                             panic!(concat!(
@@ -16800,8 +17309,8 @@ pub mod khr {
                     get_device_image_subresource_layout_khr: unsafe {
                         unsafe extern "system" fn get_device_image_subresource_layout_khr(
                             _device: crate::vk::Device,
-                            _p_info: *const DeviceImageSubresourceInfoKHR<'_>,
-                            _p_layout: *mut SubresourceLayout2KHR<'_>,
+                            _p_info: *const DeviceImageSubresourceInfo<'_>,
+                            _p_layout: *mut SubresourceLayout2<'_>,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -16822,8 +17331,8 @@ pub mod khr {
                         unsafe extern "system" fn get_image_subresource_layout2_khr(
                             _device: crate::vk::Device,
                             _image: Image,
-                            _p_subresource: *const ImageSubresource2KHR<'_>,
-                            _p_layout: *mut SubresourceLayout2KHR<'_>,
+                            _p_subresource: *const ImageSubresource2<'_>,
+                            _p_layout: *mut SubresourceLayout2<'_>,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -16836,6 +17345,80 @@ pub mod khr {
                         let val = _f(cname);
                         if val.is_null() {
                             get_image_subresource_layout2_khr
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
+    #[doc = "VK_KHR_present_id2"]
+    pub mod present_id2 {
+        pub use {
+            crate::vk::KHR_PRESENT_ID2_NAME as NAME,
+            crate::vk::KHR_PRESENT_ID2_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_present_wait2"]
+    pub mod present_wait2 {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::KHR_PRESENT_WAIT2_NAME as NAME,
+            crate::vk::KHR_PRESENT_WAIT2_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_KHR_present_wait2 device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_KHR_present_wait2 device-level function pointers"]
+        pub struct DeviceFn {
+            pub wait_for_present2_khr: PFN_vkWaitForPresent2KHR,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    wait_for_present2_khr: unsafe {
+                        unsafe extern "system" fn wait_for_present2_khr(
+                            _device: crate::vk::Device,
+                            _swapchain: SwapchainKHR,
+                            _p_present_wait2_info: *const PresentWait2InfoKHR<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(wait_for_present2_khr)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkWaitForPresent2KHR\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            wait_for_present2_khr
                         } else {
                             ::core::mem::transmute(val)
                         }
@@ -17087,6 +17670,20 @@ pub mod khr {
             crate::vk::KHR_VIDEO_DECODE_AV1_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_KHR_video_encode_av1"]
+    pub mod video_encode_av1 {
+        pub use {
+            crate::vk::KHR_VIDEO_ENCODE_AV1_NAME as NAME,
+            crate::vk::KHR_VIDEO_ENCODE_AV1_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_video_decode_vp9"]
+    pub mod video_decode_vp9 {
+        pub use {
+            crate::vk::KHR_VIDEO_DECODE_VP9_NAME as NAME,
+            crate::vk::KHR_VIDEO_DECODE_VP9_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_KHR_video_maintenance1"]
     pub mod video_maintenance1 {
         pub use {
@@ -17106,6 +17703,13 @@ pub mod khr {
         pub use {
             crate::vk::KHR_LOAD_STORE_OP_NONE_NAME as NAME,
             crate::vk::KHR_LOAD_STORE_OP_NONE_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_unified_image_layouts"]
+    pub mod unified_image_layouts {
+        pub use {
+            crate::vk::KHR_UNIFIED_IMAGE_LAYOUTS_NAME as NAME,
+            crate::vk::KHR_UNIFIED_IMAGE_LAYOUTS_SPEC_VERSION as SPEC_VERSION,
         };
     }
     #[doc = "VK_KHR_shader_float_controls2"]
@@ -17156,7 +17760,7 @@ pub mod khr {
         #[derive(Clone)]
         #[doc = "Raw VK_KHR_line_rasterization device-level function pointers"]
         pub struct DeviceFn {
-            pub cmd_set_line_stipple_khr: PFN_vkCmdSetLineStippleKHR,
+            pub cmd_set_line_stipple_khr: PFN_vkCmdSetLineStipple,
         }
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
@@ -17362,11 +17966,10 @@ pub mod khr {
         #[derive(Clone)]
         #[doc = "Raw VK_KHR_maintenance6 device-level function pointers"]
         pub struct DeviceFn {
-            pub cmd_bind_descriptor_sets2_khr: PFN_vkCmdBindDescriptorSets2KHR,
-            pub cmd_push_constants2_khr: PFN_vkCmdPushConstants2KHR,
-            pub cmd_push_descriptor_set2_khr: PFN_vkCmdPushDescriptorSet2KHR,
-            pub cmd_push_descriptor_set_with_template2_khr:
-                PFN_vkCmdPushDescriptorSetWithTemplate2KHR,
+            pub cmd_bind_descriptor_sets2_khr: PFN_vkCmdBindDescriptorSets2,
+            pub cmd_push_constants2_khr: PFN_vkCmdPushConstants2,
+            pub cmd_push_descriptor_set2_khr: PFN_vkCmdPushDescriptorSet2,
+            pub cmd_push_descriptor_set_with_template2_khr: PFN_vkCmdPushDescriptorSetWithTemplate2,
             pub cmd_set_descriptor_buffer_offsets2_ext: PFN_vkCmdSetDescriptorBufferOffsets2EXT,
             pub cmd_bind_descriptor_buffer_embedded_samplers2_ext:
                 PFN_vkCmdBindDescriptorBufferEmbeddedSamplers2EXT,
@@ -17382,7 +17985,7 @@ pub mod khr {
                     cmd_bind_descriptor_sets2_khr: unsafe {
                         unsafe extern "system" fn cmd_bind_descriptor_sets2_khr(
                             _command_buffer: CommandBuffer,
-                            _p_bind_descriptor_sets_info: *const BindDescriptorSetsInfoKHR<'_>,
+                            _p_bind_descriptor_sets_info: *const BindDescriptorSetsInfo<'_>,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -17401,7 +18004,7 @@ pub mod khr {
                     cmd_push_constants2_khr: unsafe {
                         unsafe extern "system" fn cmd_push_constants2_khr(
                             _command_buffer: CommandBuffer,
-                            _p_push_constants_info: *const PushConstantsInfoKHR<'_>,
+                            _p_push_constants_info: *const PushConstantsInfo<'_>,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -17420,7 +18023,7 @@ pub mod khr {
                     cmd_push_descriptor_set2_khr: unsafe {
                         unsafe extern "system" fn cmd_push_descriptor_set2_khr(
                             _command_buffer: CommandBuffer,
-                            _p_push_descriptor_set_info: *const PushDescriptorSetInfoKHR<'_>,
+                            _p_push_descriptor_set_info: *const PushDescriptorSetInfo<'_>,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -17439,7 +18042,7 @@ pub mod khr {
                     cmd_push_descriptor_set_with_template2_khr: unsafe {
                         unsafe extern "system" fn cmd_push_descriptor_set_with_template2_khr(
                             _command_buffer: CommandBuffer,
-                            _p_push_descriptor_set_with_template_info : * const PushDescriptorSetWithTemplateInfoKHR < '_ >,
+                            _p_push_descriptor_set_with_template_info : * const PushDescriptorSetWithTemplateInfo < '_ >,
                         ) {
                             panic!(concat!(
                                 "Unable to load ",
@@ -17500,6 +18103,13 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_video_encode_quantization_map"]
+    pub mod video_encode_quantization_map {
+        pub use {
+            crate::vk::KHR_VIDEO_ENCODE_QUANTIZATION_MAP_NAME as NAME,
+            crate::vk::KHR_VIDEO_ENCODE_QUANTIZATION_MAP_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_KHR_shader_relaxed_extended_instruction"]
     pub mod shader_relaxed_extended_instruction {
         pub use {
@@ -17512,6 +18122,41 @@ pub mod khr {
         pub use {
             crate::vk::KHR_MAINTENANCE7_NAME as NAME,
             crate::vk::KHR_MAINTENANCE7_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_maintenance8"]
+    pub mod maintenance8 {
+        pub use {
+            crate::vk::KHR_MAINTENANCE8_NAME as NAME,
+            crate::vk::KHR_MAINTENANCE8_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_maintenance9"]
+    pub mod maintenance9 {
+        pub use {
+            crate::vk::KHR_MAINTENANCE9_NAME as NAME,
+            crate::vk::KHR_MAINTENANCE9_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_video_maintenance2"]
+    pub mod video_maintenance2 {
+        pub use {
+            crate::vk::KHR_VIDEO_MAINTENANCE2_NAME as NAME,
+            crate::vk::KHR_VIDEO_MAINTENANCE2_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_depth_clamp_zero_one"]
+    pub mod depth_clamp_zero_one {
+        pub use {
+            crate::vk::KHR_DEPTH_CLAMP_ZERO_ONE_NAME as NAME,
+            crate::vk::KHR_DEPTH_CLAMP_ZERO_ONE_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_robustness2"]
+    pub mod robustness2 {
+        pub use {
+            crate::vk::KHR_ROBUSTNESS2_NAME as NAME,
+            crate::vk::KHR_ROBUSTNESS2_SPEC_VERSION as SPEC_VERSION,
         };
     }
 }
@@ -18783,6 +19428,7 @@ pub mod nv {
         pub struct DeviceFn {
             pub cmd_set_checkpoint_nv: PFN_vkCmdSetCheckpointNV,
             pub get_queue_checkpoint_data_nv: PFN_vkGetQueueCheckpointDataNV,
+            pub get_queue_checkpoint_data2_nv: PFN_vkGetQueueCheckpointData2NV,
         }
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
@@ -18826,6 +19472,26 @@ pub mod nv {
                         let val = _f(cname);
                         if val.is_null() {
                             get_queue_checkpoint_data_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_queue_checkpoint_data2_nv: unsafe {
+                        unsafe extern "system" fn get_queue_checkpoint_data2_nv(
+                            _queue: Queue,
+                            _p_checkpoint_data_count: *mut u32,
+                            _p_checkpoint_data: *mut CheckpointData2NV<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_queue_checkpoint_data2_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetQueueCheckpointData2NV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_queue_checkpoint_data2_nv
                         } else {
                             ::core::mem::transmute(val)
                         }
@@ -19896,6 +20562,13 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_ray_tracing_linear_swept_spheres"]
+    pub mod ray_tracing_linear_swept_spheres {
+        pub use {
+            crate::vk::NV_RAY_TRACING_LINEAR_SWEPT_SPHERES_NAME as NAME,
+            crate::vk::NV_RAY_TRACING_LINEAR_SWEPT_SPHERES_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_NV_linear_color_attachment"]
     pub mod linear_color_attachment {
         pub use {
@@ -20109,6 +20782,157 @@ pub mod nv {
             crate::vk::NV_RAY_TRACING_INVOCATION_REORDER_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_NV_cooperative_vector"]
+    pub mod cooperative_vector {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::NV_COOPERATIVE_VECTOR_NAME as NAME,
+            crate::vk::NV_COOPERATIVE_VECTOR_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_NV_cooperative_vector instance-level functions"]
+        #[derive(Clone)]
+        pub struct Instance {
+            pub(crate) fp: InstanceFn,
+            pub(crate) handle: crate::vk::Instance,
+        }
+        impl Instance {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+                let handle = instance.handle;
+                let fp = InstanceFn::load(|name| unsafe {
+                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &InstanceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn instance(&self) -> crate::vk::Instance {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_NV_cooperative_vector instance-level function pointers"]
+        pub struct InstanceFn {
+            pub get_physical_device_cooperative_vector_properties_nv:
+                PFN_vkGetPhysicalDeviceCooperativeVectorPropertiesNV,
+        }
+        unsafe impl Send for InstanceFn {}
+        unsafe impl Sync for InstanceFn {}
+        impl InstanceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    get_physical_device_cooperative_vector_properties_nv: unsafe {
+                        unsafe extern "system" fn get_physical_device_cooperative_vector_properties_nv(
+                            _physical_device: PhysicalDevice,
+                            _p_property_count: *mut u32,
+                            _p_properties: *mut CooperativeVectorPropertiesNV<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_physical_device_cooperative_vector_properties_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetPhysicalDeviceCooperativeVectorPropertiesNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_physical_device_cooperative_vector_properties_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+        #[doc = "VK_NV_cooperative_vector device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_NV_cooperative_vector device-level function pointers"]
+        pub struct DeviceFn {
+            pub convert_cooperative_vector_matrix_nv: PFN_vkConvertCooperativeVectorMatrixNV,
+            pub cmd_convert_cooperative_vector_matrix_nv: PFN_vkCmdConvertCooperativeVectorMatrixNV,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    convert_cooperative_vector_matrix_nv: unsafe {
+                        unsafe extern "system" fn convert_cooperative_vector_matrix_nv(
+                            _device: crate::vk::Device,
+                            _p_info: *const ConvertCooperativeVectorMatrixInfoNV<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(convert_cooperative_vector_matrix_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkConvertCooperativeVectorMatrixNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            convert_cooperative_vector_matrix_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_convert_cooperative_vector_matrix_nv: unsafe {
+                        unsafe extern "system" fn cmd_convert_cooperative_vector_matrix_nv(
+                            _command_buffer: CommandBuffer,
+                            _info_count: u32,
+                            _p_infos: *const ConvertCooperativeVectorMatrixInfoNV<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_convert_cooperative_vector_matrix_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkCmdConvertCooperativeVectorMatrixNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_convert_cooperative_vector_matrix_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
     #[doc = "VK_NV_extended_sparse_address_space"]
     pub mod extended_sparse_address_space {
         pub use {
@@ -20275,12 +21099,171 @@ pub mod nv {
             crate::vk::NV_DESCRIPTOR_POOL_OVERALLOCATION_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_NV_display_stereo"]
+    pub mod display_stereo {
+        pub use {
+            crate::vk::NV_DISPLAY_STEREO_NAME as NAME,
+            crate::vk::NV_DISPLAY_STEREO_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_NV_raw_access_chains"]
     pub mod raw_access_chains {
         pub use {
             crate::vk::NV_RAW_ACCESS_CHAINS_NAME as NAME,
             crate::vk::NV_RAW_ACCESS_CHAINS_SPEC_VERSION as SPEC_VERSION,
         };
+    }
+    #[doc = "VK_NV_external_compute_queue"]
+    pub mod external_compute_queue {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::NV_EXTERNAL_COMPUTE_QUEUE_NAME as NAME,
+            crate::vk::NV_EXTERNAL_COMPUTE_QUEUE_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_NV_external_compute_queue instance-level functions"]
+        #[derive(Clone)]
+        pub struct Instance {
+            pub(crate) fp: InstanceFn,
+            pub(crate) handle: crate::vk::Instance,
+        }
+        impl Instance {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+                let handle = instance.handle;
+                let fp = InstanceFn::load(|name| unsafe {
+                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &InstanceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn instance(&self) -> crate::vk::Instance {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_NV_external_compute_queue instance-level function pointers"]
+        pub struct InstanceFn {
+            pub get_external_compute_queue_data_nv: PFN_vkGetExternalComputeQueueDataNV,
+        }
+        unsafe impl Send for InstanceFn {}
+        unsafe impl Sync for InstanceFn {}
+        impl InstanceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    get_external_compute_queue_data_nv: unsafe {
+                        unsafe extern "system" fn get_external_compute_queue_data_nv(
+                            _external_queue: ExternalComputeQueueNV,
+                            _params: *mut ExternalComputeQueueDataParamsNV<'_>,
+                            _p_data: *mut c_void,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_external_compute_queue_data_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetExternalComputeQueueDataNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_external_compute_queue_data_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+        #[doc = "VK_NV_external_compute_queue device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_NV_external_compute_queue device-level function pointers"]
+        pub struct DeviceFn {
+            pub create_external_compute_queue_nv: PFN_vkCreateExternalComputeQueueNV,
+            pub destroy_external_compute_queue_nv: PFN_vkDestroyExternalComputeQueueNV,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    create_external_compute_queue_nv: unsafe {
+                        unsafe extern "system" fn create_external_compute_queue_nv(
+                            _device: crate::vk::Device,
+                            _p_create_info: *const ExternalComputeQueueCreateInfoNV<'_>,
+                            _p_allocator: *const AllocationCallbacks,
+                            _p_external_queue: *mut ExternalComputeQueueNV,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(create_external_compute_queue_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkCreateExternalComputeQueueNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            create_external_compute_queue_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    destroy_external_compute_queue_nv: unsafe {
+                        unsafe extern "system" fn destroy_external_compute_queue_nv(
+                            _device: crate::vk::Device,
+                            _external_queue: ExternalComputeQueueNV,
+                            _p_allocator: *const AllocationCallbacks,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(destroy_external_compute_queue_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkDestroyExternalComputeQueueNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            destroy_external_compute_queue_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
     }
     #[doc = "VK_NV_command_buffer_inheritance"]
     pub mod command_buffer_inheritance {
@@ -20301,6 +21284,264 @@ pub mod nv {
         pub use {
             crate::vk::NV_RAY_TRACING_VALIDATION_NAME as NAME,
             crate::vk::NV_RAY_TRACING_VALIDATION_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_NV_cluster_acceleration_structure"]
+    pub mod cluster_acceleration_structure {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::NV_CLUSTER_ACCELERATION_STRUCTURE_NAME as NAME,
+            crate::vk::NV_CLUSTER_ACCELERATION_STRUCTURE_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_NV_cluster_acceleration_structure device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_NV_cluster_acceleration_structure device-level function pointers"]
+        pub struct DeviceFn {
+            pub get_cluster_acceleration_structure_build_sizes_nv:
+                PFN_vkGetClusterAccelerationStructureBuildSizesNV,
+            pub cmd_build_cluster_acceleration_structure_indirect_nv:
+                PFN_vkCmdBuildClusterAccelerationStructureIndirectNV,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    get_cluster_acceleration_structure_build_sizes_nv: unsafe {
+                        unsafe extern "system" fn get_cluster_acceleration_structure_build_sizes_nv(
+                            _device: crate::vk::Device,
+                            _p_info: *const ClusterAccelerationStructureInputInfoNV<'_>,
+                            _p_size_info: *mut AccelerationStructureBuildSizesInfoKHR<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_cluster_acceleration_structure_build_sizes_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetClusterAccelerationStructureBuildSizesNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_cluster_acceleration_structure_build_sizes_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_build_cluster_acceleration_structure_indirect_nv: unsafe {
+                        unsafe extern "system" fn cmd_build_cluster_acceleration_structure_indirect_nv(
+                            _command_buffer: CommandBuffer,
+                            _p_command_infos: *const ClusterAccelerationStructureCommandsInfoNV<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_build_cluster_acceleration_structure_indirect_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkCmdBuildClusterAccelerationStructureIndirectNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_build_cluster_acceleration_structure_indirect_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
+    #[doc = "VK_NV_partitioned_acceleration_structure"]
+    pub mod partitioned_acceleration_structure {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::NV_PARTITIONED_ACCELERATION_STRUCTURE_NAME as NAME,
+            crate::vk::NV_PARTITIONED_ACCELERATION_STRUCTURE_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_NV_partitioned_acceleration_structure device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_NV_partitioned_acceleration_structure device-level function pointers"]
+        pub struct DeviceFn {
+            pub get_partitioned_acceleration_structures_build_sizes_nv:
+                PFN_vkGetPartitionedAccelerationStructuresBuildSizesNV,
+            pub cmd_build_partitioned_acceleration_structures_nv:
+                PFN_vkCmdBuildPartitionedAccelerationStructuresNV,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    get_partitioned_acceleration_structures_build_sizes_nv: unsafe {
+                        unsafe extern "system" fn get_partitioned_acceleration_structures_build_sizes_nv(
+                            _device: crate::vk::Device,
+                            _p_info: *const PartitionedAccelerationStructureInstancesInputNV<'_>,
+                            _p_size_info: *mut AccelerationStructureBuildSizesInfoKHR<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_partitioned_acceleration_structures_build_sizes_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetPartitionedAccelerationStructuresBuildSizesNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_partitioned_acceleration_structures_build_sizes_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_build_partitioned_acceleration_structures_nv: unsafe {
+                        unsafe extern "system" fn cmd_build_partitioned_acceleration_structures_nv(
+                            _command_buffer: CommandBuffer,
+                            _p_build_info: *const BuildPartitionedAccelerationStructureInfoNV<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_build_partitioned_acceleration_structures_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkCmdBuildPartitionedAccelerationStructuresNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_build_partitioned_acceleration_structures_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
+    #[doc = "VK_NV_cooperative_matrix2"]
+    pub mod cooperative_matrix2 {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::NV_COOPERATIVE_MATRIX2_NAME as NAME,
+            crate::vk::NV_COOPERATIVE_MATRIX2_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_NV_cooperative_matrix2 instance-level functions"]
+        #[derive(Clone)]
+        pub struct Instance {
+            pub(crate) fp: InstanceFn,
+            pub(crate) handle: crate::vk::Instance,
+        }
+        impl Instance {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+                let handle = instance.handle;
+                let fp = InstanceFn::load(|name| unsafe {
+                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &InstanceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn instance(&self) -> crate::vk::Instance {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_NV_cooperative_matrix2 instance-level function pointers"]
+        pub struct InstanceFn {
+            pub get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv:
+                PFN_vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV,
+        }
+        unsafe impl Send for InstanceFn {}
+        unsafe impl Sync for InstanceFn {}
+        impl InstanceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv: unsafe {
+                        unsafe extern "system" fn get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv(
+                            _physical_device: PhysicalDevice,
+                            _p_property_count: *mut u32,
+                            _p_properties: *mut CooperativeMatrixFlexibleDimensionsPropertiesNV<'_>,
+                        ) -> Result {
+                            panic ! (concat ! ("Unable to load " , stringify ! (get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv)))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
+    #[doc = "VK_NV_present_metering"]
+    pub mod present_metering {
+        pub use {
+            crate::vk::NV_PRESENT_METERING_NAME as NAME,
+            crate::vk::NV_PRESENT_METERING_SPEC_VERSION as SPEC_VERSION,
         };
     }
 }
@@ -20488,6 +21729,7 @@ pub mod nvx {
         #[doc = "Raw VK_NVX_image_view_handle device-level function pointers"]
         pub struct DeviceFn {
             pub get_image_view_handle_nvx: PFN_vkGetImageViewHandleNVX,
+            pub get_image_view_handle64_nvx: PFN_vkGetImageViewHandle64NVX,
             pub get_image_view_address_nvx: PFN_vkGetImageViewAddressNVX,
         }
         unsafe impl Send for DeviceFn {}
@@ -20513,6 +21755,25 @@ pub mod nvx {
                         let val = _f(cname);
                         if val.is_null() {
                             get_image_view_handle_nvx
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_image_view_handle64_nvx: unsafe {
+                        unsafe extern "system" fn get_image_view_handle64_nvx(
+                            _device: crate::vk::Device,
+                            _p_info: *const ImageViewHandleInfoNVX<'_>,
+                        ) -> u64 {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_image_view_handle64_nvx)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetImageViewHandle64NVX\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_image_view_handle64_nvx
                         } else {
                             ::core::mem::transmute(val)
                         }
@@ -20549,6 +21810,74 @@ pub mod nvx {
         };
     }
 }
+#[doc = "Extensions tagged OHOS"]
+pub mod ohos {
+    #[doc = "VK_OHOS_surface"]
+    pub mod surface {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::OHOS_SURFACE_NAME as NAME,
+            crate::vk::OHOS_SURFACE_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_OHOS_surface instance-level functions"]
+        #[derive(Clone)]
+        pub struct Instance {
+            pub(crate) fp: InstanceFn,
+            pub(crate) handle: crate::vk::Instance,
+        }
+        impl Instance {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+                let handle = instance.handle;
+                let fp = InstanceFn::load(|name| unsafe {
+                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &InstanceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn instance(&self) -> crate::vk::Instance {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_OHOS_surface instance-level function pointers"]
+        pub struct InstanceFn {
+            pub create_surface_ohos: PFN_vkCreateSurfaceOHOS,
+        }
+        unsafe impl Send for InstanceFn {}
+        unsafe impl Sync for InstanceFn {}
+        impl InstanceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    create_surface_ohos: unsafe {
+                        unsafe extern "system" fn create_surface_ohos(
+                            _instance: crate::vk::Instance,
+                            _p_create_info: *const SurfaceCreateInfoOHOS<'_>,
+                            _p_allocator: *const AllocationCallbacks,
+                            _p_surface: *mut SurfaceKHR,
+                        ) -> Result {
+                            panic!(concat!("Unable to load ", stringify!(create_surface_ohos)))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateSurfaceOHOS\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            create_surface_ohos
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
+}
 #[doc = "Extensions tagged QCOM"]
 pub mod qcom {
     #[doc = "VK_QCOM_render_pass_shader_resolve"]
@@ -20571,6 +21900,113 @@ pub mod qcom {
             crate::vk::QCOM_RENDER_PASS_STORE_OPS_NAME as NAME,
             crate::vk::QCOM_RENDER_PASS_STORE_OPS_SPEC_VERSION as SPEC_VERSION,
         };
+    }
+    #[doc = "VK_QCOM_tile_shading"]
+    pub mod tile_shading {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::QCOM_TILE_SHADING_NAME as NAME,
+            crate::vk::QCOM_TILE_SHADING_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_QCOM_tile_shading device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_QCOM_tile_shading device-level function pointers"]
+        pub struct DeviceFn {
+            pub cmd_dispatch_tile_qcom: PFN_vkCmdDispatchTileQCOM,
+            pub cmd_begin_per_tile_execution_qcom: PFN_vkCmdBeginPerTileExecutionQCOM,
+            pub cmd_end_per_tile_execution_qcom: PFN_vkCmdEndPerTileExecutionQCOM,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    cmd_dispatch_tile_qcom: unsafe {
+                        unsafe extern "system" fn cmd_dispatch_tile_qcom(
+                            _command_buffer: CommandBuffer,
+                            _p_dispatch_tile_info: *const DispatchTileInfoQCOM<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_dispatch_tile_qcom)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchTileQCOM\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_dispatch_tile_qcom
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_begin_per_tile_execution_qcom: unsafe {
+                        unsafe extern "system" fn cmd_begin_per_tile_execution_qcom(
+                            _command_buffer: CommandBuffer,
+                            _p_per_tile_begin_info: *const PerTileBeginInfoQCOM<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_begin_per_tile_execution_qcom)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkCmdBeginPerTileExecutionQCOM\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_begin_per_tile_execution_qcom
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_end_per_tile_execution_qcom: unsafe {
+                        unsafe extern "system" fn cmd_end_per_tile_execution_qcom(
+                            _command_buffer: CommandBuffer,
+                            _p_per_tile_end_info: *const PerTileEndInfoQCOM<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_end_per_tile_execution_qcom)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkCmdEndPerTileExecutionQCOM\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_end_per_tile_execution_qcom
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
     }
     #[doc = "VK_QCOM_rotated_copy_commands"]
     pub mod rotated_copy_commands {
@@ -20727,6 +22163,73 @@ pub mod qcom {
             crate::vk::QCOM_FILTER_CUBIC_CLAMP_NAME as NAME,
             crate::vk::QCOM_FILTER_CUBIC_CLAMP_SPEC_VERSION as SPEC_VERSION,
         };
+    }
+    #[doc = "VK_QCOM_tile_memory_heap"]
+    pub mod tile_memory_heap {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::QCOM_TILE_MEMORY_HEAP_NAME as NAME,
+            crate::vk::QCOM_TILE_MEMORY_HEAP_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_QCOM_tile_memory_heap device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_QCOM_tile_memory_heap device-level function pointers"]
+        pub struct DeviceFn {
+            pub cmd_bind_tile_memory_qcom: PFN_vkCmdBindTileMemoryQCOM,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    cmd_bind_tile_memory_qcom: unsafe {
+                        unsafe extern "system" fn cmd_bind_tile_memory_qcom(
+                            _command_buffer: CommandBuffer,
+                            _p_tile_memory_bind_info: *const TileMemoryBindInfoQCOM<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_bind_tile_memory_qcom)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBindTileMemoryQCOM\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_bind_tile_memory_qcom
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
     }
 }
 #[doc = "Extensions tagged QNX"]
@@ -21003,5 +22506,12 @@ pub mod valve {
                 }
             }
         }
+    }
+    #[doc = "VK_VALVE_fragment_density_map_layered"]
+    pub mod fragment_density_map_layered {
+        pub use {
+            crate::vk::VALVE_FRAGMENT_DENSITY_MAP_LAYERED_NAME as NAME,
+            crate::vk::VALVE_FRAGMENT_DENSITY_MAP_LAYERED_SPEC_VERSION as SPEC_VERSION,
+        };
     }
 }
