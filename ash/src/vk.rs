@@ -329,6 +329,25 @@ mod tests {
     }
 
     #[test]
+    fn test_use_struct_after_pointer_chain() {
+        // The negative case of this test, where `pdev_props` stays alive by being
+        // used at the end of this function while `api` is invalidly accessed first
+        // (resulting in an immutable borrow while mutably borrowed error), exists in
+        // `tests/fail/long_lived_root_struct_borrow.rs`.  This test demonstrates the expected usage
+        // pattern of dropping `pdev_props` so that `api` no longer becomes mutably borrowed and the
+        // properties read from Vulkan can now be accessed by the caller.
+
+        let mut layers = vec![];
+        let mut api =
+            vk::PhysicalDeviceLayeredApiPropertiesListKHR::default().layered_apis(&mut layers);
+        let _pdev_props = vk::PhysicalDeviceProperties2::default().push(&mut api);
+
+        // Access to either variable is allowed because `pdev_props` is no longer used
+        dbg!(&api);
+        dbg!(&layers);
+    }
+
+    #[test]
     fn test_debug_flags() {
         assert_eq!(
             format!(
