@@ -15,7 +15,7 @@ description = "Vulkan bindings for Rust"
 edition = "2021"
 keywords = ["gamedev", "graphics", "vulkan", "bindings"]
 license = "MIT OR Apache-2.0"
-name = "ash-patch"
+name = "tracel-ash"
 readme = "../README.md"
 repository = "https://github.com/ash-rs/ash"
 rust-version = "1.69.0"
@@ -33,13 +33,13 @@ trybuild = "1.0"
 [features]
 default = ["loaded", "debug", "std"]
 # Link the Vulkan loader at compile time.
-linked = []
+linked = ["ash/linked"]
 # Support searching for the Vulkan loader manually at runtime.
-loaded = ["std"]
+loaded = ["std", "ash/loaded"]
 # Whether Vulkan structs should implement Debug.
-debug = []
+debug = ["ash/debug"]
 # Whether the standard library should be required
-std = []
+std = ["ash/std"]
 
 [package.metadata.release]
 no-dev-version = true
