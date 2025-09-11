@@ -137,10 +137,10 @@ impl BufferUsageFlags {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferUsageFlagBits2KHR.html>"]
-pub struct BufferUsageFlags2KHR(pub(crate) Flags64);
-vk_bitflags_wrapped!(BufferUsageFlags2KHR, Flags64);
-impl BufferUsageFlags2KHR {
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferUsageFlagBits2.html>"]
+pub struct BufferUsageFlags2(pub(crate) Flags64);
+vk_bitflags_wrapped!(BufferUsageFlags2, Flags64);
+impl BufferUsageFlags2 {
     pub const TRANSFER_SRC: Self = Self(0b1);
     pub const TRANSFER_DST: Self = Self(0b10);
     pub const UNIFORM_TEXEL_BUFFER: Self = Self(0b100);
@@ -243,13 +243,19 @@ impl PipelineCreateFlags {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCreateFlagBits2KHR.html>"]
-pub struct PipelineCreateFlags2KHR(pub(crate) Flags64);
-vk_bitflags_wrapped!(PipelineCreateFlags2KHR, Flags64);
-impl PipelineCreateFlags2KHR {
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCreateFlagBits2.html>"]
+pub struct PipelineCreateFlags2(pub(crate) Flags64);
+vk_bitflags_wrapped!(PipelineCreateFlags2, Flags64);
+impl PipelineCreateFlags2 {
     pub const DISABLE_OPTIMIZATION: Self = Self(0b1);
     pub const ALLOW_DERIVATIVES: Self = Self(0b10);
     pub const DERIVATIVE: Self = Self(0b100);
+    pub const VIEW_INDEX_FROM_DEVICE_INDEX: Self = Self(0b1000);
+    pub const DISPATCH_BASE: Self = Self(0b1_0000);
+    pub const FAIL_ON_PIPELINE_COMPILE_REQUIRED: Self = Self(0b1_0000_0000);
+    pub const EARLY_RETURN_ON_FAILURE: Self = Self(0b10_0000_0000);
+    pub const NO_PROTECTED_ACCESS: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+    pub const PROTECTED_ACCESS_ONLY: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -638,6 +644,47 @@ impl ExternalMemoryFeatureFlagsNV {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureIndexFormatFlagBitsNV.html>"]
+pub struct ClusterAccelerationStructureIndexFormatFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(ClusterAccelerationStructureIndexFormatFlagsNV, Flags);
+impl ClusterAccelerationStructureIndexFormatFlagsNV {
+    pub const TYPE_8BIT: Self = Self(0b1);
+    pub const TYPE_16BIT: Self = Self(0b10);
+    pub const TYPE_32BIT: Self = Self(0b100);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureClusterFlagBitsNV.html>"]
+pub struct ClusterAccelerationStructureClusterFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(ClusterAccelerationStructureClusterFlagsNV, Flags);
+impl ClusterAccelerationStructureClusterFlagsNV {
+    pub const ALLOW_DISABLE_OPACITY_MICROMAPS: Self = Self(0b1);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureGeometryFlagBitsNV.html>"]
+pub struct ClusterAccelerationStructureGeometryFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(ClusterAccelerationStructureGeometryFlagsNV, Flags);
+impl ClusterAccelerationStructureGeometryFlagsNV {
+    pub const CULL_DISABLE: Self = Self(0b1);
+    pub const NO_DUPLICATE_ANYHIT_INVOCATION: Self = Self(0b10);
+    pub const OPAQUE: Self = Self(0b100);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureAddressResolutionFlagBitsNV.html>"]
+pub struct ClusterAccelerationStructureAddressResolutionFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(ClusterAccelerationStructureAddressResolutionFlagsNV, Flags);
+impl ClusterAccelerationStructureAddressResolutionFlagsNV {
+    pub const INDIRECTED_DST_IMPLICIT_DATA: Self = Self(0b1);
+    pub const INDIRECTED_SCRATCH_DATA: Self = Self(0b10);
+    pub const INDIRECTED_DST_ADDRESS_ARRAY: Self = Self(0b100);
+    pub const INDIRECTED_DST_SIZES_ARRAY: Self = Self(0b1000);
+    pub const INDIRECTED_SRC_INFOS_ARRAY: Self = Self(0b1_0000);
+    pub const INDIRECTED_SRC_INFOS_COUNT: Self = Self(0b10_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubgroupFeatureFlagBits.html>"]
 pub struct SubgroupFeatureFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(SubgroupFeatureFlags, Flags);
@@ -931,6 +978,12 @@ vk_bitflags_wrapped!(FramebufferCreateFlags, Flags);
 impl FramebufferCreateFlags {}
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueryPoolCreateFlagBits.html>"]
+pub struct QueryPoolCreateFlags(pub(crate) Flags);
+vk_bitflags_wrapped!(QueryPoolCreateFlags, Flags);
+impl QueryPoolCreateFlags {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceDiagnosticsConfigFlagBitsNV.html>"]
 pub struct DeviceDiagnosticsConfigFlagsNV(pub(crate) Flags);
 vk_bitflags_wrapped!(DeviceDiagnosticsConfigFlagsNV, Flags);
@@ -947,11 +1000,8 @@ pub struct PipelineCreationFeedbackFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(PipelineCreationFeedbackFlags, Flags);
 impl PipelineCreationFeedbackFlags {
     pub const VALID: Self = Self(0b1);
-    pub const VALID_EXT: Self = Self::VALID;
     pub const APPLICATION_PIPELINE_CACHE_HIT: Self = Self(0b10);
-    pub const APPLICATION_PIPELINE_CACHE_HIT_EXT: Self = Self::APPLICATION_PIPELINE_CACHE_HIT;
     pub const BASE_PIPELINE_ACCELERATION: Self = Self(0b100);
-    pub const BASE_PIPELINE_ACCELERATION_EXT: Self = Self::BASE_PIPELINE_ACCELERATION;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1001,15 +1051,10 @@ pub struct ToolPurposeFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(ToolPurposeFlags, Flags);
 impl ToolPurposeFlags {
     pub const VALIDATION: Self = Self(0b1);
-    pub const VALIDATION_EXT: Self = Self::VALIDATION;
     pub const PROFILING: Self = Self(0b10);
-    pub const PROFILING_EXT: Self = Self::PROFILING;
     pub const TRACING: Self = Self(0b100);
-    pub const TRACING_EXT: Self = Self::TRACING;
     pub const ADDITIONAL_FEATURES: Self = Self(0b1000);
-    pub const ADDITIONAL_FEATURES_EXT: Self = Self::ADDITIONAL_FEATURES;
     pub const MODIFYING_FEATURES: Self = Self(0b1_0000);
-    pub const MODIFYING_FEATURES_EXT: Self = Self::MODIFYING_FEATURES;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1018,47 +1063,26 @@ pub struct AccessFlags2(pub(crate) Flags64);
 vk_bitflags_wrapped!(AccessFlags2, Flags64);
 impl AccessFlags2 {
     pub const NONE: Self = Self(0);
-    pub const NONE_KHR: Self = Self::NONE;
     pub const INDIRECT_COMMAND_READ: Self = Self(0b1);
-    pub const INDIRECT_COMMAND_READ_KHR: Self = Self::INDIRECT_COMMAND_READ;
     pub const INDEX_READ: Self = Self(0b10);
-    pub const INDEX_READ_KHR: Self = Self::INDEX_READ;
     pub const VERTEX_ATTRIBUTE_READ: Self = Self(0b100);
-    pub const VERTEX_ATTRIBUTE_READ_KHR: Self = Self::VERTEX_ATTRIBUTE_READ;
     pub const UNIFORM_READ: Self = Self(0b1000);
-    pub const UNIFORM_READ_KHR: Self = Self::UNIFORM_READ;
     pub const INPUT_ATTACHMENT_READ: Self = Self(0b1_0000);
-    pub const INPUT_ATTACHMENT_READ_KHR: Self = Self::INPUT_ATTACHMENT_READ;
     pub const SHADER_READ: Self = Self(0b10_0000);
-    pub const SHADER_READ_KHR: Self = Self::SHADER_READ;
     pub const SHADER_WRITE: Self = Self(0b100_0000);
-    pub const SHADER_WRITE_KHR: Self = Self::SHADER_WRITE;
     pub const COLOR_ATTACHMENT_READ: Self = Self(0b1000_0000);
-    pub const COLOR_ATTACHMENT_READ_KHR: Self = Self::COLOR_ATTACHMENT_READ;
     pub const COLOR_ATTACHMENT_WRITE: Self = Self(0b1_0000_0000);
-    pub const COLOR_ATTACHMENT_WRITE_KHR: Self = Self::COLOR_ATTACHMENT_WRITE;
     pub const DEPTH_STENCIL_ATTACHMENT_READ: Self = Self(0b10_0000_0000);
-    pub const DEPTH_STENCIL_ATTACHMENT_READ_KHR: Self = Self::DEPTH_STENCIL_ATTACHMENT_READ;
     pub const DEPTH_STENCIL_ATTACHMENT_WRITE: Self = Self(0b100_0000_0000);
-    pub const DEPTH_STENCIL_ATTACHMENT_WRITE_KHR: Self = Self::DEPTH_STENCIL_ATTACHMENT_WRITE;
     pub const TRANSFER_READ: Self = Self(0b1000_0000_0000);
-    pub const TRANSFER_READ_KHR: Self = Self::TRANSFER_READ;
     pub const TRANSFER_WRITE: Self = Self(0b1_0000_0000_0000);
-    pub const TRANSFER_WRITE_KHR: Self = Self::TRANSFER_WRITE;
     pub const HOST_READ: Self = Self(0b10_0000_0000_0000);
-    pub const HOST_READ_KHR: Self = Self::HOST_READ;
     pub const HOST_WRITE: Self = Self(0b100_0000_0000_0000);
-    pub const HOST_WRITE_KHR: Self = Self::HOST_WRITE;
     pub const MEMORY_READ: Self = Self(0b1000_0000_0000_0000);
-    pub const MEMORY_READ_KHR: Self = Self::MEMORY_READ;
     pub const MEMORY_WRITE: Self = Self(0b1_0000_0000_0000_0000);
-    pub const MEMORY_WRITE_KHR: Self = Self::MEMORY_WRITE;
     pub const SHADER_SAMPLED_READ: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const SHADER_SAMPLED_READ_KHR: Self = Self::SHADER_SAMPLED_READ;
     pub const SHADER_STORAGE_READ: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const SHADER_STORAGE_READ_KHR: Self = Self::SHADER_STORAGE_READ;
     pub const SHADER_STORAGE_WRITE: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const SHADER_STORAGE_WRITE_KHR: Self = Self::SHADER_STORAGE_WRITE;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1067,59 +1091,33 @@ pub struct PipelineStageFlags2(pub(crate) Flags64);
 vk_bitflags_wrapped!(PipelineStageFlags2, Flags64);
 impl PipelineStageFlags2 {
     pub const NONE: Self = Self(0);
-    pub const NONE_KHR: Self = Self::NONE;
     pub const TOP_OF_PIPE: Self = Self(0b1);
-    pub const TOP_OF_PIPE_KHR: Self = Self::TOP_OF_PIPE;
     pub const DRAW_INDIRECT: Self = Self(0b10);
-    pub const DRAW_INDIRECT_KHR: Self = Self::DRAW_INDIRECT;
     pub const VERTEX_INPUT: Self = Self(0b100);
-    pub const VERTEX_INPUT_KHR: Self = Self::VERTEX_INPUT;
     pub const VERTEX_SHADER: Self = Self(0b1000);
-    pub const VERTEX_SHADER_KHR: Self = Self::VERTEX_SHADER;
     pub const TESSELLATION_CONTROL_SHADER: Self = Self(0b1_0000);
-    pub const TESSELLATION_CONTROL_SHADER_KHR: Self = Self::TESSELLATION_CONTROL_SHADER;
     pub const TESSELLATION_EVALUATION_SHADER: Self = Self(0b10_0000);
-    pub const TESSELLATION_EVALUATION_SHADER_KHR: Self = Self::TESSELLATION_EVALUATION_SHADER;
     pub const GEOMETRY_SHADER: Self = Self(0b100_0000);
-    pub const GEOMETRY_SHADER_KHR: Self = Self::GEOMETRY_SHADER;
     pub const FRAGMENT_SHADER: Self = Self(0b1000_0000);
-    pub const FRAGMENT_SHADER_KHR: Self = Self::FRAGMENT_SHADER;
     pub const EARLY_FRAGMENT_TESTS: Self = Self(0b1_0000_0000);
-    pub const EARLY_FRAGMENT_TESTS_KHR: Self = Self::EARLY_FRAGMENT_TESTS;
     pub const LATE_FRAGMENT_TESTS: Self = Self(0b10_0000_0000);
-    pub const LATE_FRAGMENT_TESTS_KHR: Self = Self::LATE_FRAGMENT_TESTS;
     pub const COLOR_ATTACHMENT_OUTPUT: Self = Self(0b100_0000_0000);
-    pub const COLOR_ATTACHMENT_OUTPUT_KHR: Self = Self::COLOR_ATTACHMENT_OUTPUT;
     pub const COMPUTE_SHADER: Self = Self(0b1000_0000_0000);
-    pub const COMPUTE_SHADER_KHR: Self = Self::COMPUTE_SHADER;
     pub const ALL_TRANSFER: Self = Self(0b1_0000_0000_0000);
-    pub const ALL_TRANSFER_KHR: Self = Self::ALL_TRANSFER;
-    pub const TRANSFER: Self = Self::ALL_TRANSFER_KHR;
-    pub const TRANSFER_KHR: Self = Self::ALL_TRANSFER;
+    pub const TRANSFER: Self = Self::ALL_TRANSFER;
     pub const BOTTOM_OF_PIPE: Self = Self(0b10_0000_0000_0000);
-    pub const BOTTOM_OF_PIPE_KHR: Self = Self::BOTTOM_OF_PIPE;
     pub const HOST: Self = Self(0b100_0000_0000_0000);
-    pub const HOST_KHR: Self = Self::HOST;
     pub const ALL_GRAPHICS: Self = Self(0b1000_0000_0000_0000);
-    pub const ALL_GRAPHICS_KHR: Self = Self::ALL_GRAPHICS;
     pub const ALL_COMMANDS: Self = Self(0b1_0000_0000_0000_0000);
-    pub const ALL_COMMANDS_KHR: Self = Self::ALL_COMMANDS;
     pub const COPY: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const COPY_KHR: Self = Self::COPY;
     pub const RESOLVE: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const RESOLVE_KHR: Self = Self::RESOLVE;
     pub const BLIT: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const BLIT_KHR: Self = Self::BLIT;
     pub const CLEAR: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const CLEAR_KHR: Self = Self::CLEAR;
     pub const INDEX_INPUT: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const INDEX_INPUT_KHR: Self = Self::INDEX_INPUT;
     pub const VERTEX_ATTRIBUTE_INPUT: Self =
         Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const VERTEX_ATTRIBUTE_INPUT_KHR: Self = Self::VERTEX_ATTRIBUTE_INPUT;
     pub const PRE_RASTERIZATION_SHADERS: Self =
         Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const PRE_RASTERIZATION_SHADERS_KHR: Self = Self::PRE_RASTERIZATION_SHADERS;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1128,7 +1126,6 @@ pub struct SubmitFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(SubmitFlags, Flags);
 impl SubmitFlags {
     pub const PROTECTED: Self = Self(0b1);
-    pub const PROTECTED_KHR: Self = Self::PROTECTED;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1257,6 +1254,12 @@ vk_bitflags_wrapped!(VideoSessionCreateFlagsKHR, Flags);
 impl VideoSessionCreateFlagsKHR {
     pub const PROTECTED_CONTENT: Self = Self(0b1);
 }
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoSessionParametersCreateFlagBitsKHR.html>"]
+pub struct VideoSessionParametersCreateFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoSessionParametersCreateFlagsKHR, Flags);
+impl VideoSessionParametersCreateFlagsKHR {}
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264PictureLayoutFlagBitsKHR.html>"]
@@ -1411,11 +1414,23 @@ impl VideoEncodeH264RateControlFlagsKHR {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkHostImageCopyFlagBitsEXT.html>"]
-pub struct HostImageCopyFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(HostImageCopyFlagsEXT, Flags);
-impl HostImageCopyFlagsEXT {
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkHostImageCopyFlagBits.html>"]
+pub struct HostImageCopyFlags(pub(crate) Flags);
+vk_bitflags_wrapped!(HostImageCopyFlags, Flags);
+impl HostImageCopyFlags {
     pub const MEMCPY: Self = Self(0b1);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPartitionedAccelerationStructureInstanceFlagBitsNV.html>"]
+pub struct PartitionedAccelerationStructureInstanceFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(PartitionedAccelerationStructureInstanceFlagsNV, Flags);
+impl PartitionedAccelerationStructureInstanceFlagsNV {
+    pub const FLAG_TRIANGLE_FACING_CULL_DISABLE: Self = Self(0b1);
+    pub const FLAG_TRIANGLE_FLIP_FACING: Self = Self(0b10);
+    pub const FLAG_FORCE_OPAQUE: Self = Self(0b100);
+    pub const FLAG_FORCE_NO_OPAQUE: Self = Self(0b1000);
+    pub const FLAG_ENABLE_EXPLICIT_BOUNDING_BOX: Self = Self(0b1_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1442,68 +1457,36 @@ pub struct FormatFeatureFlags2(pub(crate) Flags64);
 vk_bitflags_wrapped!(FormatFeatureFlags2, Flags64);
 impl FormatFeatureFlags2 {
     pub const SAMPLED_IMAGE: Self = Self(0b1);
-    pub const SAMPLED_IMAGE_KHR: Self = Self::SAMPLED_IMAGE;
     pub const STORAGE_IMAGE: Self = Self(0b10);
-    pub const STORAGE_IMAGE_KHR: Self = Self::STORAGE_IMAGE;
     pub const STORAGE_IMAGE_ATOMIC: Self = Self(0b100);
-    pub const STORAGE_IMAGE_ATOMIC_KHR: Self = Self::STORAGE_IMAGE_ATOMIC;
     pub const UNIFORM_TEXEL_BUFFER: Self = Self(0b1000);
-    pub const UNIFORM_TEXEL_BUFFER_KHR: Self = Self::UNIFORM_TEXEL_BUFFER;
     pub const STORAGE_TEXEL_BUFFER: Self = Self(0b1_0000);
-    pub const STORAGE_TEXEL_BUFFER_KHR: Self = Self::STORAGE_TEXEL_BUFFER;
     pub const STORAGE_TEXEL_BUFFER_ATOMIC: Self = Self(0b10_0000);
-    pub const STORAGE_TEXEL_BUFFER_ATOMIC_KHR: Self = Self::STORAGE_TEXEL_BUFFER_ATOMIC;
     pub const VERTEX_BUFFER: Self = Self(0b100_0000);
-    pub const VERTEX_BUFFER_KHR: Self = Self::VERTEX_BUFFER;
     pub const COLOR_ATTACHMENT: Self = Self(0b1000_0000);
-    pub const COLOR_ATTACHMENT_KHR: Self = Self::COLOR_ATTACHMENT;
     pub const COLOR_ATTACHMENT_BLEND: Self = Self(0b1_0000_0000);
-    pub const COLOR_ATTACHMENT_BLEND_KHR: Self = Self::COLOR_ATTACHMENT_BLEND;
     pub const DEPTH_STENCIL_ATTACHMENT: Self = Self(0b10_0000_0000);
-    pub const DEPTH_STENCIL_ATTACHMENT_KHR: Self = Self::DEPTH_STENCIL_ATTACHMENT;
     pub const BLIT_SRC: Self = Self(0b100_0000_0000);
-    pub const BLIT_SRC_KHR: Self = Self::BLIT_SRC;
     pub const BLIT_DST: Self = Self(0b1000_0000_0000);
-    pub const BLIT_DST_KHR: Self = Self::BLIT_DST;
     pub const SAMPLED_IMAGE_FILTER_LINEAR: Self = Self(0b1_0000_0000_0000);
-    pub const SAMPLED_IMAGE_FILTER_LINEAR_KHR: Self = Self::SAMPLED_IMAGE_FILTER_LINEAR;
-    pub const SAMPLED_IMAGE_FILTER_CUBIC: Self = Self(0b10_0000_0000_0000);
-    pub const SAMPLED_IMAGE_FILTER_CUBIC_EXT: Self = Self::SAMPLED_IMAGE_FILTER_CUBIC;
     pub const TRANSFER_SRC: Self = Self(0b100_0000_0000_0000);
-    pub const TRANSFER_SRC_KHR: Self = Self::TRANSFER_SRC;
     pub const TRANSFER_DST: Self = Self(0b1000_0000_0000_0000);
-    pub const TRANSFER_DST_KHR: Self = Self::TRANSFER_DST;
     pub const SAMPLED_IMAGE_FILTER_MINMAX: Self = Self(0b1_0000_0000_0000_0000);
-    pub const SAMPLED_IMAGE_FILTER_MINMAX_KHR: Self = Self::SAMPLED_IMAGE_FILTER_MINMAX;
     pub const MIDPOINT_CHROMA_SAMPLES: Self = Self(0b10_0000_0000_0000_0000);
-    pub const MIDPOINT_CHROMA_SAMPLES_KHR: Self = Self::MIDPOINT_CHROMA_SAMPLES;
     pub const SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER: Self = Self(0b100_0000_0000_0000_0000);
-    pub const SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER_KHR: Self =
-        Self::SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER;
     pub const SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER: Self =
         Self(0b1000_0000_0000_0000_0000);
-    pub const SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER_KHR: Self =
-        Self::SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER;
     pub const SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT: Self =
         Self(0b1_0000_0000_0000_0000_0000);
-    pub const SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_KHR: Self =
-        Self::SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT;
     pub const SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE: Self =
         Self(0b10_0000_0000_0000_0000_0000);
-    pub const SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE_KHR: Self =
-        Self::SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE;
     pub const DISJOINT: Self = Self(0b100_0000_0000_0000_0000_0000);
-    pub const DISJOINT_KHR: Self = Self::DISJOINT;
     pub const COSITED_CHROMA_SAMPLES: Self = Self(0b1000_0000_0000_0000_0000_0000);
-    pub const COSITED_CHROMA_SAMPLES_KHR: Self = Self::COSITED_CHROMA_SAMPLES;
     pub const STORAGE_READ_WITHOUT_FORMAT: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000);
-    pub const STORAGE_READ_WITHOUT_FORMAT_KHR: Self = Self::STORAGE_READ_WITHOUT_FORMAT;
     pub const STORAGE_WRITE_WITHOUT_FORMAT: Self =
         Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const STORAGE_WRITE_WITHOUT_FORMAT_KHR: Self = Self::STORAGE_WRITE_WITHOUT_FORMAT;
     pub const SAMPLED_IMAGE_DEPTH_COMPARISON: Self =
         Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const SAMPLED_IMAGE_DEPTH_COMPARISON_KHR: Self = Self::SAMPLED_IMAGE_DEPTH_COMPARISON;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1512,12 +1495,8 @@ pub struct RenderingFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(RenderingFlags, Flags);
 impl RenderingFlags {
     pub const CONTENTS_SECONDARY_COMMAND_BUFFERS: Self = Self(0b1);
-    pub const CONTENTS_SECONDARY_COMMAND_BUFFERS_KHR: Self =
-        Self::CONTENTS_SECONDARY_COMMAND_BUFFERS;
     pub const SUSPENDING: Self = Self(0b10);
-    pub const SUSPENDING_KHR: Self = Self::SUSPENDING;
     pub const RESUMING: Self = Self(0b100);
-    pub const RESUMING_KHR: Self = Self::RESUMING;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1596,6 +1575,49 @@ impl VideoEncodeH265TransformBlockSizeFlagsKHR {
     pub const TYPE_8: Self = Self(0b10);
     pub const TYPE_16: Self = Self(0b100);
     pub const TYPE_32: Self = Self(0b1000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeAV1CapabilityFlagBitsKHR.html>"]
+pub struct VideoEncodeAV1CapabilityFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeAV1CapabilityFlagsKHR, Flags);
+impl VideoEncodeAV1CapabilityFlagsKHR {
+    pub const PER_RATE_CONTROL_GROUP_MIN_MAX_Q_INDEX: Self = Self(0b1);
+    pub const GENERATE_OBU_EXTENSION_HEADER: Self = Self(0b10);
+    pub const PRIMARY_REFERENCE_CDF_ONLY: Self = Self(0b100);
+    pub const FRAME_SIZE_OVERRIDE: Self = Self(0b1000);
+    pub const MOTION_VECTOR_SCALING: Self = Self(0b1_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeAV1StdFlagBitsKHR.html>"]
+pub struct VideoEncodeAV1StdFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeAV1StdFlagsKHR, Flags);
+impl VideoEncodeAV1StdFlagsKHR {
+    pub const UNIFORM_TILE_SPACING_FLAG_SET: Self = Self(0b1);
+    pub const SKIP_MODE_PRESENT_UNSET: Self = Self(0b10);
+    pub const PRIMARY_REF_FRAME: Self = Self(0b100);
+    pub const DELTA_Q: Self = Self(0b1000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeAV1RateControlFlagBitsKHR.html>"]
+pub struct VideoEncodeAV1RateControlFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeAV1RateControlFlagsKHR, Flags);
+impl VideoEncodeAV1RateControlFlagsKHR {
+    pub const REGULAR_GOP: Self = Self(0b1);
+    pub const TEMPORAL_LAYER_PATTERN_DYADIC: Self = Self(0b10);
+    pub const REFERENCE_PATTERN_FLAT: Self = Self(0b100);
+    pub const REFERENCE_PATTERN_DYADIC: Self = Self(0b1000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeAV1SuperblockSizeFlagBitsKHR.html>"]
+pub struct VideoEncodeAV1SuperblockSizeFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeAV1SuperblockSizeFlagsKHR, Flags);
+impl VideoEncodeAV1SuperblockSizeFlagsKHR {
+    pub const TYPE_64: Self = Self(0b1);
+    pub const TYPE_128: Self = Self(0b10);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1750,13 +1772,60 @@ impl ShaderCreateFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryUnmapFlagBitsKHR.html>"]
-pub struct MemoryUnmapFlagsKHR(pub(crate) Flags);
-vk_bitflags_wrapped!(MemoryUnmapFlagsKHR, Flags);
-impl MemoryUnmapFlagsKHR {}
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryUnmapFlagBits.html>"]
+pub struct MemoryUnmapFlags(pub(crate) Flags);
+vk_bitflags_wrapped!(MemoryUnmapFlags, Flags);
+impl MemoryUnmapFlags {}
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkWaylandSurfaceCreateFlagBitsKHR.html>"]
 pub struct WaylandSurfaceCreateFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(WaylandSurfaceCreateFlagsKHR, Flags);
 impl WaylandSurfaceCreateFlagsKHR {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccessFlagBits3KHR.html>"]
+pub struct AccessFlags3KHR(pub(crate) Flags64);
+vk_bitflags_wrapped!(AccessFlags3KHR, Flags64);
+impl AccessFlags3KHR {
+    pub const NONE: Self = Self(0);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTileShadingRenderPassFlagBitsQCOM.html>"]
+pub struct TileShadingRenderPassFlagsQCOM(pub(crate) Flags);
+vk_bitflags_wrapped!(TileShadingRenderPassFlagsQCOM, Flags);
+impl TileShadingRenderPassFlagsQCOM {
+    pub const ENABLE: Self = Self(0b1);
+    pub const PER_TILE_EXECUTION: Self = Self(0b10);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTensorCreateFlagBitsARM.html>"]
+pub struct TensorCreateFlagsARM(pub(crate) Flags64);
+vk_bitflags_wrapped!(TensorCreateFlagsARM, Flags64);
+impl TensorCreateFlagsARM {
+    pub const MUTABLE_FORMAT: Self = Self(0b1);
+    pub const PROTECTED: Self = Self(0b10);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTensorUsageFlagBitsARM.html>"]
+pub struct TensorUsageFlagsARM(pub(crate) Flags64);
+vk_bitflags_wrapped!(TensorUsageFlagsARM, Flags64);
+impl TensorUsageFlagsARM {
+    #[doc = "Tensor written/read through shader descriptor"]
+    pub const SHADER: Self = Self(0b10);
+    #[doc = "Tensor can be src of a transfer operation"]
+    pub const TRANSFER_SRC: Self = Self(0b100);
+    #[doc = "Tensor can be dst of a transfer operation"]
+    pub const TRANSFER_DST: Self = Self(0b1000);
+    #[doc = "Tensor can be aliased with an image"]
+    pub const IMAGE_ALIASING: Self = Self(0b1_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTensorViewCreateFlagBitsARM.html>"]
+pub struct TensorViewCreateFlagsARM(pub(crate) Flags64);
+vk_bitflags_wrapped!(TensorViewCreateFlagsARM, Flags64);
+impl TensorViewCreateFlagsARM {}
