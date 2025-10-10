@@ -13,7 +13,7 @@ use winit::{
     event_loop::EventLoop,
     keyboard::{Key, NamedKey},
     raw_window_handle::{HasDisplayHandle, HasWindowHandle},
-    window::WindowBuilder,
+    window::WindowAttributes,
 };
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -30,9 +30,9 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         let instance = entry.create_instance(&instance_desc, None)?;
 
-        let window = WindowBuilder::new()
-            .with_inner_size(PhysicalSize::<u32>::from((800, 600)))
-            .build(&event_loop)?;
+        let window_attributes =
+            WindowAttributes::default().with_inner_size(PhysicalSize::<u32>::from((800, 600)));
+        let window = event_loop.create_window(window_attributes)?;
 
         // Load the surface extensions
         let surface_fn = ash::khr::surface::Instance::new(&entry, &instance);
