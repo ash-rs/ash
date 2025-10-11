@@ -16,6 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: dtolnay/rust-toolchain@1.69.0
+      - name: Downgrade incompatible dependencies
+        run: |
+          cargo update -p libloading --precise 0.8.8
       - name: Check ash, ash-window and ash-rewrite
         run: cargo check -p ash -p ash-rewrite -p ash-window --all-features
       - name: Check ash with no_std
