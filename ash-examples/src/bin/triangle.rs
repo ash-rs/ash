@@ -373,6 +373,9 @@ fn main() -> Result<(), Box<dyn Error>> {
                 },
             ];
 
+            let rendering_complete_semaphore =
+                base.rendering_complete_semaphores[present_index as usize];
+
             let render_pass_begin_info = vk::RenderPassBeginInfo::default()
                 .render_pass(renderpass)
                 .framebuffer(framebuffers[present_index as usize])
@@ -386,7 +389,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 base.present_queue,
                 &[vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT],
                 &[base.present_complete_semaphore],
-                &[base.rendering_complete_semaphore],
+                &[rendering_complete_semaphore],
                 |device, draw_command_buffer| {
                     device.cmd_begin_render_pass(
                         draw_command_buffer,
@@ -425,7 +428,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                     device.cmd_end_render_pass(draw_command_buffer);
                 },
             );
-            let wait_semaphors = [base.rendering_complete_semaphore];
+            let wait_semaphors = [rendering_complete_semaphore];
             let swapchains = [base.swapchain];
             let image_indices = [present_index];
             let present_info = vk::PresentInfoKHR::default()

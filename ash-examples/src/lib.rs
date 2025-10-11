@@ -167,7 +167,7 @@ pub struct ExampleBase {
     pub depth_image_memory: vk::DeviceMemory,
 
     pub present_complete_semaphore: vk::Semaphore,
-    pub rendering_complete_semaphore: vk::Semaphore,
+    pub rendering_complete_semaphores: Vec<vk::Semaphore>,
 
     pub draw_commands_reuse_fence: vk::Fence,
     pub setup_commands_reuse_fence: vk::Fence,
@@ -533,9 +533,13 @@ impl ExampleBase {
             let present_complete_semaphore = device
                 .create_semaphore(&semaphore_create_info, None)
                 .unwrap();
-            let rendering_complete_semaphore = device
-                .create_semaphore(&semaphore_create_info, None)
-                .unwrap();
+            let rendering_complete_semaphores = (0..present_images.len())
+                .map(|_| {
+                    device
+                        .create_semaphore(&semaphore_create_info, None)
+                        .unwrap()
+                })
+                .collect();
 
             Ok(Self {
                 event_loop: RefCell::new(event_loop),
@@ -560,7 +564,7 @@ impl ExampleBase {
                 depth_image,
                 depth_image_view,
                 present_complete_semaphore,
-                rendering_complete_semaphore,
+                rendering_complete_semaphores,
                 draw_commands_reuse_fence,
                 setup_commands_reuse_fence,
                 surface,
@@ -578,8 +582,9 @@ impl Drop for ExampleBase {
             self.device.device_wait_idle().unwrap();
             self.device
                 .destroy_semaphore(self.present_complete_semaphore, None);
-            self.device
-                .destroy_semaphore(self.rendering_complete_semaphore, None);
+            for &semaphore in &self.rendering_complete_semaphores {
+                self.device.destroy_semaphore(semaphore, None);
+            }
             self.device
                 .destroy_fence(self.draw_commands_reuse_fence, None);
             self.device
@@ -587,7 +592,7 @@ impl Drop for ExampleBase {
             self.device.free_memory(self.depth_image_memory, None);
             self.device.destroy_image_view(self.depth_image_view, None);
             self.device.destroy_image(self.depth_image, None);
-            for &image_view in self.present_image_views.iter() {
+            for &image_view in &self.present_image_views {
                 self.device.destroy_image_view(image_view, None);
             }
             self.device.destroy_command_pool(self.pool, None);

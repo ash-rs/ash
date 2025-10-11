@@ -711,6 +711,9 @@ fn main() -> Result<(), Box<dyn Error>> {
                 },
             ];
 
+            let rendering_complete_semaphore =
+                base.rendering_complete_semaphores[present_index as usize];
+
             let render_pass_begin_info = vk::RenderPassBeginInfo::default()
                 .render_pass(renderpass)
                 .framebuffer(framebuffers[present_index as usize])
@@ -724,7 +727,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 base.present_queue,
                 &[vk::PipelineStageFlags::BOTTOM_OF_PIPE],
                 &[base.present_complete_semaphore],
-                &[base.rendering_complete_semaphore],
+                &[rendering_complete_semaphore],
                 |device, draw_command_buffer| {
                     device.cmd_begin_render_pass(
                         draw_command_buffer,
@@ -773,7 +776,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             );
             let present_info = vk::PresentInfoKHR {
                 wait_semaphore_count: 1,
-                p_wait_semaphores: &base.rendering_complete_semaphore,
+                p_wait_semaphores: &rendering_complete_semaphore,
                 swapchain_count: 1,
                 p_swapchains: &base.swapchain,
                 p_image_indices: &present_index,
