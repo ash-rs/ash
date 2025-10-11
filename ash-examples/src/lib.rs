@@ -36,9 +36,7 @@ macro_rules! offset_of {
         }
     }};
 }
-/// Helper function for submitting command buffers. Immediately waits for the fence before the command buffer
-/// is executed. That way we can delay the waiting for the fences by 1 frame which is good for performance.
-/// Make sure to create the fence in a signaled state on the first use.
+
 #[allow(clippy::too_many_arguments)]
 pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(
     device: &Device,
@@ -51,14 +49,6 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(
     f: F,
 ) {
     unsafe {
-        device
-            .wait_for_fences(&[command_buffer_reuse_fence], true, u64::MAX)
-            .expect("Wait for fence failed.");
-
-        device
-            .reset_fences(&[command_buffer_reuse_fence])
-            .expect("Reset fences failed.");
-
         device
             .reset_command_buffer(
                 command_buffer,
@@ -161,6 +151,7 @@ pub struct ExampleBase {
     pub pool: vk::CommandPool,
     pub draw_command_buffer: vk::CommandBuffer,
     pub setup_command_buffer: vk::CommandBuffer,
+    pub app_setup_command_buffer: vk::CommandBuffer,
 
     pub depth_image: vk::Image,
     pub depth_image_view: vk::ImageView,
@@ -170,7 +161,6 @@ pub struct ExampleBase {
     pub rendering_complete_semaphores: Vec<vk::Semaphore>,
 
     pub draw_commands_reuse_fence: vk::Fence,
-    pub setup_commands_reuse_fence: vk::Fence,
 }
 
 impl ExampleBase {
@@ -194,7 +184,21 @@ impl ExampleBase {
                 } => {
                     elwp.exit();
                 }
-                Event::AboutToWait => f(),
+                Event::AboutToWait => {
+                    unsafe {
+                        self.device.wait_for_fences(
+                            &[self.draw_commands_reuse_fence],
+                            true,
+                            u64::MAX,
+                        )
+                    }
+                    .expect("Wait for fence failed.");
+
+                    unsafe { self.device.reset_fences(&[self.draw_commands_reuse_fence]) }
+                        .expect("Reset fences failed.");
+
+                    f()
+                }
                 _ => (),
             }
         })
@@ -400,7 +404,7 @@ impl ExampleBase {
             let pool = device.create_command_pool(&pool_create_info, None).unwrap();
 
             let command_buffer_allocate_info = vk::CommandBufferAllocateInfo::default()
-                .command_buffer_count(2)
+                .command_buffer_count(3)
                 .command_pool(pool)
                 .level(vk::CommandBufferLevel::PRIMARY);
 
@@ -408,7 +412,8 @@ impl ExampleBase {
                 .allocate_command_buffers(&command_buffer_allocate_info)
                 .unwrap();
             let setup_command_buffer = command_buffers[0];
-            let draw_command_buffer = command_buffers[1];
+            let app_setup_command_buffer = command_buffers[1];
+            let draw_command_buffer = command_buffers[2];
 
             let present_images = swapchain_loader.get_swapchain_images(swapchain).unwrap();
             let present_image_views: Vec<vk::ImageView> = present_images
@@ -473,14 +478,11 @@ impl ExampleBase {
             let draw_commands_reuse_fence = device
                 .create_fence(&fence_create_info, None)
                 .expect("Create fence failed.");
-            let setup_commands_reuse_fence = device
-                .create_fence(&fence_create_info, None)
-                .expect("Create fence failed.");
 
             record_submit_commandbuffer(
                 &device,
                 setup_command_buffer,
-                setup_commands_reuse_fence,
+                vk::Fence::null(),
                 present_queue,
                 &[],
                 &[],
@@ -561,12 +563,12 @@ impl ExampleBase {
                 pool,
                 draw_command_buffer,
                 setup_command_buffer,
+                app_setup_command_buffer,
                 depth_image,
                 depth_image_view,
                 present_complete_semaphore,
                 rendering_complete_semaphores,
                 draw_commands_reuse_fence,
-                setup_commands_reuse_fence,
                 surface,
                 debug_call_back,
                 debug_utils_loader,
@@ -587,8 +589,6 @@ impl Drop for ExampleBase {
             }
             self.device
                 .destroy_fence(self.draw_commands_reuse_fence, None);
-            self.device
-                .destroy_fence(self.setup_commands_reuse_fence, None);
             self.device.free_memory(self.depth_image_memory, None);
             self.device.destroy_image_view(self.depth_image_view, None);
             self.device.destroy_image(self.depth_image, None);

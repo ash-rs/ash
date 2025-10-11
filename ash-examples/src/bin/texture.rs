@@ -352,8 +352,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         record_submit_commandbuffer(
             &base.device,
-            base.setup_command_buffer,
-            base.setup_commands_reuse_fence,
+            base.app_setup_command_buffer,
+            vk::Fence::null(),
             base.present_queue,
             &[],
             &[],
