@@ -349,13 +349,19 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         let graphic_pipeline = graphics_pipelines[0];
 
-        let _ = base.render_loop(|| {
+        let _ = base.render_loop(|frame_index| {
+            let present_complete_semaphore =
+                base.present_complete_semaphores[frame_index % MAX_FRAME_LATENCY];
+            let draw_commands_reuse_fence =
+                base.draw_commands_reuse_fences[frame_index % MAX_FRAME_LATENCY];
+            let draw_command_buffer = base.draw_command_buffers[frame_index % MAX_FRAME_LATENCY];
+
             let (present_index, _) = base
                 .swapchain_loader
                 .acquire_next_image(
                     base.swapchain,
                     u64::MAX,
-                    base.present_complete_semaphore,
+                    present_complete_semaphore,
                     vk::Fence::null(),
                 )
                 .unwrap();
@@ -384,11 +390,11 @@ fn main() -> Result<(), Box<dyn Error>> {
 
             record_submit_commandbuffer(
                 &base.device,
-                base.draw_command_buffer,
-                base.draw_commands_reuse_fence,
+                draw_command_buffer,
+                draw_commands_reuse_fence,
                 base.present_queue,
                 &[vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT],
-                &[base.present_complete_semaphore],
+                &[present_complete_semaphore],
                 &[rendering_complete_semaphore],
                 |device, draw_command_buffer| {
                     device.cmd_begin_render_pass(
@@ -428,11 +434,11 @@ fn main() -> Result<(), Box<dyn Error>> {
                     device.cmd_end_render_pass(draw_command_buffer);
                 },
             );
-            let wait_semaphors = [rendering_complete_semaphore];
+            let wait_semaphores = [rendering_complete_semaphore];
             let swapchains = [base.swapchain];
             let image_indices = [present_index];
             let present_info = vk::PresentInfoKHR::default()
-                .wait_semaphores(&wait_semaphors) // &base.rendering_complete_semaphore)
+                .wait_semaphores(&wait_semaphores)
                 .swapchains(&swapchains)
                 .image_indices(&image_indices);
 

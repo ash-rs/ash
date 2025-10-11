@@ -25,6 +25,9 @@ use winit::{
     window::WindowBuilder,
 };
 
+// The maximum number of frames we allow to be in flight at any given time
+pub const MAX_FRAME_LATENCY: usize = 3;
+
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
 macro_rules! offset_of {
@@ -133,6 +136,7 @@ pub struct ExampleBase {
     pub debug_utils_loader: debug_utils::Instance,
     pub window: winit::window::Window,
     pub event_loop: RefCell<EventLoop<()>>,
+    pub frame_index: RefCell<usize>,
     pub debug_call_back: vk::DebugUtilsMessengerEXT,
 
     pub pdevice: vk::PhysicalDevice,
@@ -149,7 +153,7 @@ pub struct ExampleBase {
     pub present_image_views: Vec<vk::ImageView>,
 
     pub pool: vk::CommandPool,
-    pub draw_command_buffer: vk::CommandBuffer,
+    pub draw_command_buffers: [vk::CommandBuffer; MAX_FRAME_LATENCY],
     pub setup_command_buffer: vk::CommandBuffer,
     pub app_setup_command_buffer: vk::CommandBuffer,
 
@@ -157,14 +161,14 @@ pub struct ExampleBase {
     pub depth_image_view: vk::ImageView,
     pub depth_image_memory: vk::DeviceMemory,
 
-    pub present_complete_semaphore: vk::Semaphore,
+    pub present_complete_semaphores: [vk::Semaphore; MAX_FRAME_LATENCY],
     pub rendering_complete_semaphores: Vec<vk::Semaphore>,
 
-    pub draw_commands_reuse_fence: vk::Fence,
+    pub draw_commands_reuse_fences: [vk::Fence; MAX_FRAME_LATENCY],
 }
 
 impl ExampleBase {
-    pub fn render_loop<F: Fn()>(&self, f: F) -> Result<(), impl Error> {
+    pub fn render_loop<F: Fn(usize)>(&self, f: F) -> Result<(), impl Error> {
         self.event_loop.borrow_mut().run_on_demand(|event, elwp| {
             elwp.set_control_flow(ControlFlow::Poll);
             match event {
@@ -185,19 +189,22 @@ impl ExampleBase {
                     elwp.exit();
                 }
                 Event::AboutToWait => {
+                    let mut frame_index = self.frame_index.borrow_mut();
+
+                    // The fence from 3 frames ago, that will also be signaled this frame
+                    let draw_commands_reuse_fence =
+                        self.draw_commands_reuse_fences[*frame_index % MAX_FRAME_LATENCY];
                     unsafe {
-                        self.device.wait_for_fences(
-                            &[self.draw_commands_reuse_fence],
-                            true,
-                            u64::MAX,
-                        )
+                        self.device
+                            .wait_for_fences(&[draw_commands_reuse_fence], true, u64::MAX)
                     }
                     .expect("Wait for fence failed.");
 
-                    unsafe { self.device.reset_fences(&[self.draw_commands_reuse_fence]) }
+                    unsafe { self.device.reset_fences(&[draw_commands_reuse_fence]) }
                         .expect("Reset fences failed.");
 
-                    f()
+                    f(*frame_index);
+                    *frame_index += 1;
                 }
                 _ => (),
             }
@@ -404,7 +411,7 @@ impl ExampleBase {
             let pool = device.create_command_pool(&pool_create_info, None).unwrap();
 
             let command_buffer_allocate_info = vk::CommandBufferAllocateInfo::default()
-                .command_buffer_count(3)
+                .command_buffer_count(2 + MAX_FRAME_LATENCY as u32)
                 .command_pool(pool)
                 .level(vk::CommandBufferLevel::PRIMARY);
 
@@ -413,7 +420,9 @@ impl ExampleBase {
                 .unwrap();
             let setup_command_buffer = command_buffers[0];
             let app_setup_command_buffer = command_buffers[1];
-            let draw_command_buffer = command_buffers[2];
+            let draw_command_buffers = command_buffers[2..][..MAX_FRAME_LATENCY]
+                .try_into()
+                .unwrap();
 
             let present_images = swapchain_loader.get_swapchain_images(swapchain).unwrap();
             let present_image_views: Vec<vk::ImageView> = present_images
@@ -472,13 +481,6 @@ impl ExampleBase {
                 .bind_image_memory(depth_image, depth_image_memory, 0)
                 .expect("Unable to bind depth image memory");
 
-            let fence_create_info =
-                vk::FenceCreateInfo::default().flags(vk::FenceCreateFlags::SIGNALED);
-
-            let draw_commands_reuse_fence = device
-                .create_fence(&fence_create_info, None)
-                .expect("Create fence failed.");
-
             record_submit_commandbuffer(
                 &device,
                 setup_command_buffer,
@@ -532,9 +534,11 @@ impl ExampleBase {
 
             let semaphore_create_info = vk::SemaphoreCreateInfo::default();
 
-            let present_complete_semaphore = device
-                .create_semaphore(&semaphore_create_info, None)
-                .unwrap();
+            let present_complete_semaphores = std::array::from_fn(|_| {
+                device
+                    .create_semaphore(&semaphore_create_info, None)
+                    .unwrap()
+            });
             let rendering_complete_semaphores = (0..present_images.len())
                 .map(|_| {
                     device
@@ -543,8 +547,18 @@ impl ExampleBase {
                 })
                 .collect();
 
+            let fence_create_info =
+                vk::FenceCreateInfo::default().flags(vk::FenceCreateFlags::SIGNALED);
+
+            let draw_commands_reuse_fences = std::array::from_fn(|_| {
+                device
+                    .create_fence(&fence_create_info, None)
+                    .expect("Create fence failed.")
+            });
+
             Ok(Self {
                 event_loop: RefCell::new(event_loop),
+                frame_index: RefCell::new(0),
                 entry,
                 instance,
                 device,
@@ -561,14 +575,14 @@ impl ExampleBase {
                 present_images,
                 present_image_views,
                 pool,
-                draw_command_buffer,
+                draw_command_buffers,
                 setup_command_buffer,
                 app_setup_command_buffer,
                 depth_image,
                 depth_image_view,
-                present_complete_semaphore,
+                present_complete_semaphores,
                 rendering_complete_semaphores,
-                draw_commands_reuse_fence,
+                draw_commands_reuse_fences,
                 surface,
                 debug_call_back,
                 debug_utils_loader,
@@ -582,13 +596,15 @@ impl Drop for ExampleBase {
     fn drop(&mut self) {
         unsafe {
             self.device.device_wait_idle().unwrap();
-            self.device
-                .destroy_semaphore(self.present_complete_semaphore, None);
+            for &semaphore in &self.present_complete_semaphores {
+                self.device.destroy_semaphore(semaphore, None);
+            }
             for &semaphore in &self.rendering_complete_semaphores {
                 self.device.destroy_semaphore(semaphore, None);
             }
-            self.device
-                .destroy_fence(self.draw_commands_reuse_fence, None);
+            for &fence in &self.draw_commands_reuse_fences {
+                self.device.destroy_fence(fence, None);
+            }
             self.device.free_memory(self.depth_image_memory, None);
             self.device.destroy_image_view(self.depth_image_view, None);
             self.device.destroy_image(self.depth_image, None);

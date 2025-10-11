@@ -687,13 +687,19 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         let graphic_pipeline = graphics_pipelines[0];
 
-        let _ = base.render_loop(|| {
+        let _ = base.render_loop(|frame_index| {
+            let present_complete_semaphore =
+                base.present_complete_semaphores[frame_index % MAX_FRAME_LATENCY];
+            let draw_commands_reuse_fence =
+                base.draw_commands_reuse_fences[frame_index % MAX_FRAME_LATENCY];
+            let draw_command_buffer = base.draw_command_buffers[frame_index % MAX_FRAME_LATENCY];
+
             let (present_index, _) = base
                 .swapchain_loader
                 .acquire_next_image(
                     base.swapchain,
                     u64::MAX,
-                    base.present_complete_semaphore,
+                    present_complete_semaphore,
                     vk::Fence::null(),
                 )
                 .unwrap();
@@ -722,11 +728,11 @@ fn main() -> Result<(), Box<dyn Error>> {
 
             record_submit_commandbuffer(
                 &base.device,
-                base.draw_command_buffer,
-                base.draw_commands_reuse_fence,
+                draw_command_buffer,
+                draw_commands_reuse_fence,
                 base.present_queue,
                 &[vk::PipelineStageFlags::BOTTOM_OF_PIPE],
-                &[base.present_complete_semaphore],
+                &[present_complete_semaphore],
                 &[rendering_complete_semaphore],
                 |device, draw_command_buffer| {
                     device.cmd_begin_render_pass(
