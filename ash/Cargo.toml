@@ -19,7 +19,7 @@ name = "tracel-ash"
 readme = "../README.md"
 repository = "https://github.com/ash-rs/ash"
 rust-version = "1.69.0"
-version = "0.38.0+1.3.296"
+version = { workspace = true }
 
 [dependencies]
 ash = "0.38.0"

@@ -3,7 +3,7 @@ authors = ["Maik Klein <maikklein@googlemail.com>"]
 edition = "2021"
 name = "generator"
 publish = false
-version = "0.1.0"
+version = { workspace = true }
 
 [dependencies]
 # Pin version to have control over how ash/src/vk/native.rs

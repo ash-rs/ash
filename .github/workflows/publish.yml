@@ -1,0 +1,11 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish-tracel-ash:
+    uses: tracel-ai/github-actions/.github/workflows/publish-crate.yml@v4
+    secrets: inherit
