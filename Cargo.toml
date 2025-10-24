@@ -1,3 +1,14 @@
 [workspace]
-members = ["ash", "generator"]
+members = ["ash", "generator", "xtask"]
 resolver = "2"
+
+[workspace.package]
+edition = "2024"
+rust-version = "1.88"
+version = "0.1.0"
+
+[workspace.dependencies]
+log = { default-features = false, version = "0.4.22" }
+strum = { version = "0.27.1", features = ["derive"] }
+rstest = "0.26.1"
+tracel-xtask = { version = "=2.1.11" }
