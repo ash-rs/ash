@@ -352,8 +352,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         record_submit_commandbuffer(
             &base.device,
-            base.setup_command_buffer,
-            base.setup_commands_reuse_fence,
+            base.app_setup_command_buffer,
+            vk::Fence::null(),
             base.present_queue,
             &[],
             &[],
@@ -687,13 +687,19 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         let graphic_pipeline = graphics_pipelines[0];
 
-        let _ = base.render_loop(|| {
+        let _ = base.render_loop(|frame_index| {
+            let present_complete_semaphore =
+                base.present_complete_semaphores[frame_index % MAX_FRAME_LATENCY];
+            let draw_commands_reuse_fence =
+                base.draw_commands_reuse_fences[frame_index % MAX_FRAME_LATENCY];
+            let draw_command_buffer = base.draw_command_buffers[frame_index % MAX_FRAME_LATENCY];
+
             let (present_index, _) = base
                 .swapchain_loader
                 .acquire_next_image(
                     base.swapchain,
                     u64::MAX,
-                    base.present_complete_semaphore,
+                    present_complete_semaphore,
                     vk::Fence::null(),
                 )
                 .unwrap();
@@ -711,6 +717,9 @@ fn main() -> Result<(), Box<dyn Error>> {
                 },
             ];
 
+            let rendering_complete_semaphore =
+                base.rendering_complete_semaphores[present_index as usize];
+
             let render_pass_begin_info = vk::RenderPassBeginInfo::default()
                 .render_pass(renderpass)
                 .framebuffer(framebuffers[present_index as usize])
@@ -719,12 +728,12 @@ fn main() -> Result<(), Box<dyn Error>> {
 
             record_submit_commandbuffer(
                 &base.device,
-                base.draw_command_buffer,
-                base.draw_commands_reuse_fence,
+                draw_command_buffer,
+                draw_commands_reuse_fence,
                 base.present_queue,
                 &[vk::PipelineStageFlags::BOTTOM_OF_PIPE],
-                &[base.present_complete_semaphore],
-                &[base.rendering_complete_semaphore],
+                &[present_complete_semaphore],
+                &[rendering_complete_semaphore],
                 |device, draw_command_buffer| {
                     device.cmd_begin_render_pass(
                         draw_command_buffer,
@@ -773,7 +782,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             );
             let present_info = vk::PresentInfoKHR {
                 wait_semaphore_count: 1,
-                p_wait_semaphores: &base.rendering_complete_semaphore,
+                p_wait_semaphores: &rendering_complete_semaphore,
                 swapchain_count: 1,
                 p_swapchains: &base.swapchain,
                 p_image_indices: &present_index,
