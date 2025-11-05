@@ -1992,6 +1992,8 @@ impl DriverId {
     pub const MESA_HONEYKRISP: Self = Self(26);
     #[doc = "Vulkan SC Emulation on Vulkan"]
     pub const VULKAN_SC_EMULATION_ON_VULKAN: Self = Self(27);
+    #[doc = "Mesa open source project"]
+    pub const MESA_KOSMICKRISP: Self = Self(28);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -3440,8 +3442,8 @@ impl fmt::Debug for ObjectType {
             Self::EXTERNAL_COMPUTE_QUEUE_NV => Some("EXTERNAL_COMPUTE_QUEUE_NV"),
             Self::INDIRECT_COMMANDS_LAYOUT_EXT => Some("INDIRECT_COMMANDS_LAYOUT_EXT"),
             Self::INDIRECT_EXECUTION_SET_EXT => Some("INDIRECT_EXECUTION_SET_EXT"),
-            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
             Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
+            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
             Self::PRIVATE_DATA_SLOT => Some("PRIVATE_DATA_SLOT"),
             _ => None,
         };
@@ -3518,10 +3520,10 @@ impl fmt::Debug for Result {
             Self::ERROR_VALIDATION_FAILED => Some("ERROR_VALIDATION_FAILED"),
             Self::ERROR_OUT_OF_POOL_MEMORY => Some("ERROR_OUT_OF_POOL_MEMORY"),
             Self::ERROR_INVALID_EXTERNAL_HANDLE => Some("ERROR_INVALID_EXTERNAL_HANDLE"),
-            Self::ERROR_FRAGMENTATION => Some("ERROR_FRAGMENTATION"),
             Self::ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS => {
                 Some("ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS")
             }
+            Self::ERROR_FRAGMENTATION => Some("ERROR_FRAGMENTATION"),
             Self::PIPELINE_COMPILE_REQUIRED => Some("PIPELINE_COMPILE_REQUIRED"),
             Self::ERROR_NOT_PERMITTED => Some("ERROR_NOT_PERMITTED"),
             _ => None,

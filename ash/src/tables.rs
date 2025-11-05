@@ -420,49 +420,16 @@ pub struct DeviceFnV1_0 {
     pub wait_for_fences: PFN_vkWaitForFences,
     pub create_semaphore: PFN_vkCreateSemaphore,
     pub destroy_semaphore: PFN_vkDestroySemaphore,
-    pub create_event: PFN_vkCreateEvent,
-    pub destroy_event: PFN_vkDestroyEvent,
-    pub get_event_status: PFN_vkGetEventStatus,
-    pub set_event: PFN_vkSetEvent,
-    pub reset_event: PFN_vkResetEvent,
     pub create_query_pool: PFN_vkCreateQueryPool,
     pub destroy_query_pool: PFN_vkDestroyQueryPool,
     pub get_query_pool_results: PFN_vkGetQueryPoolResults,
     pub create_buffer: PFN_vkCreateBuffer,
     pub destroy_buffer: PFN_vkDestroyBuffer,
-    pub create_buffer_view: PFN_vkCreateBufferView,
-    pub destroy_buffer_view: PFN_vkDestroyBufferView,
     pub create_image: PFN_vkCreateImage,
     pub destroy_image: PFN_vkDestroyImage,
     pub get_image_subresource_layout: PFN_vkGetImageSubresourceLayout,
     pub create_image_view: PFN_vkCreateImageView,
     pub destroy_image_view: PFN_vkDestroyImageView,
-    pub create_shader_module: PFN_vkCreateShaderModule,
-    pub destroy_shader_module: PFN_vkDestroyShaderModule,
-    pub create_pipeline_cache: PFN_vkCreatePipelineCache,
-    pub destroy_pipeline_cache: PFN_vkDestroyPipelineCache,
-    pub get_pipeline_cache_data: PFN_vkGetPipelineCacheData,
-    pub merge_pipeline_caches: PFN_vkMergePipelineCaches,
-    pub create_graphics_pipelines: PFN_vkCreateGraphicsPipelines,
-    pub create_compute_pipelines: PFN_vkCreateComputePipelines,
-    pub destroy_pipeline: PFN_vkDestroyPipeline,
-    pub create_pipeline_layout: PFN_vkCreatePipelineLayout,
-    pub destroy_pipeline_layout: PFN_vkDestroyPipelineLayout,
-    pub create_sampler: PFN_vkCreateSampler,
-    pub destroy_sampler: PFN_vkDestroySampler,
-    pub create_descriptor_set_layout: PFN_vkCreateDescriptorSetLayout,
-    pub destroy_descriptor_set_layout: PFN_vkDestroyDescriptorSetLayout,
-    pub create_descriptor_pool: PFN_vkCreateDescriptorPool,
-    pub destroy_descriptor_pool: PFN_vkDestroyDescriptorPool,
-    pub reset_descriptor_pool: PFN_vkResetDescriptorPool,
-    pub allocate_descriptor_sets: PFN_vkAllocateDescriptorSets,
-    pub free_descriptor_sets: PFN_vkFreeDescriptorSets,
-    pub update_descriptor_sets: PFN_vkUpdateDescriptorSets,
-    pub create_framebuffer: PFN_vkCreateFramebuffer,
-    pub destroy_framebuffer: PFN_vkDestroyFramebuffer,
-    pub create_render_pass: PFN_vkCreateRenderPass,
-    pub destroy_render_pass: PFN_vkDestroyRenderPass,
-    pub get_render_area_granularity: PFN_vkGetRenderAreaGranularity,
     pub create_command_pool: PFN_vkCreateCommandPool,
     pub destroy_command_pool: PFN_vkDestroyCommandPool,
     pub reset_command_pool: PFN_vkResetCommandPool,
@@ -471,49 +438,18 @@ pub struct DeviceFnV1_0 {
     pub begin_command_buffer: PFN_vkBeginCommandBuffer,
     pub end_command_buffer: PFN_vkEndCommandBuffer,
     pub reset_command_buffer: PFN_vkResetCommandBuffer,
-    pub cmd_bind_pipeline: PFN_vkCmdBindPipeline,
-    pub cmd_set_viewport: PFN_vkCmdSetViewport,
-    pub cmd_set_scissor: PFN_vkCmdSetScissor,
-    pub cmd_set_line_width: PFN_vkCmdSetLineWidth,
-    pub cmd_set_depth_bias: PFN_vkCmdSetDepthBias,
-    pub cmd_set_blend_constants: PFN_vkCmdSetBlendConstants,
-    pub cmd_set_depth_bounds: PFN_vkCmdSetDepthBounds,
-    pub cmd_set_stencil_compare_mask: PFN_vkCmdSetStencilCompareMask,
-    pub cmd_set_stencil_write_mask: PFN_vkCmdSetStencilWriteMask,
-    pub cmd_set_stencil_reference: PFN_vkCmdSetStencilReference,
-    pub cmd_bind_descriptor_sets: PFN_vkCmdBindDescriptorSets,
-    pub cmd_bind_index_buffer: PFN_vkCmdBindIndexBuffer,
-    pub cmd_bind_vertex_buffers: PFN_vkCmdBindVertexBuffers,
-    pub cmd_draw: PFN_vkCmdDraw,
-    pub cmd_draw_indexed: PFN_vkCmdDrawIndexed,
-    pub cmd_draw_indirect: PFN_vkCmdDrawIndirect,
-    pub cmd_draw_indexed_indirect: PFN_vkCmdDrawIndexedIndirect,
-    pub cmd_dispatch: PFN_vkCmdDispatch,
-    pub cmd_dispatch_indirect: PFN_vkCmdDispatchIndirect,
     pub cmd_copy_buffer: PFN_vkCmdCopyBuffer,
     pub cmd_copy_image: PFN_vkCmdCopyImage,
-    pub cmd_blit_image: PFN_vkCmdBlitImage,
     pub cmd_copy_buffer_to_image: PFN_vkCmdCopyBufferToImage,
     pub cmd_copy_image_to_buffer: PFN_vkCmdCopyImageToBuffer,
     pub cmd_update_buffer: PFN_vkCmdUpdateBuffer,
     pub cmd_fill_buffer: PFN_vkCmdFillBuffer,
-    pub cmd_clear_color_image: PFN_vkCmdClearColorImage,
-    pub cmd_clear_depth_stencil_image: PFN_vkCmdClearDepthStencilImage,
-    pub cmd_clear_attachments: PFN_vkCmdClearAttachments,
-    pub cmd_resolve_image: PFN_vkCmdResolveImage,
-    pub cmd_set_event: PFN_vkCmdSetEvent,
-    pub cmd_reset_event: PFN_vkCmdResetEvent,
-    pub cmd_wait_events: PFN_vkCmdWaitEvents,
     pub cmd_pipeline_barrier: PFN_vkCmdPipelineBarrier,
     pub cmd_begin_query: PFN_vkCmdBeginQuery,
     pub cmd_end_query: PFN_vkCmdEndQuery,
     pub cmd_reset_query_pool: PFN_vkCmdResetQueryPool,
     pub cmd_write_timestamp: PFN_vkCmdWriteTimestamp,
     pub cmd_copy_query_pool_results: PFN_vkCmdCopyQueryPoolResults,
-    pub cmd_push_constants: PFN_vkCmdPushConstants,
-    pub cmd_begin_render_pass: PFN_vkCmdBeginRenderPass,
-    pub cmd_next_subpass: PFN_vkCmdNextSubpass,
-    pub cmd_end_render_pass: PFN_vkCmdEndRenderPass,
     pub cmd_execute_commands: PFN_vkCmdExecuteCommands,
 }
 unsafe impl Send for DeviceFnV1_0 {}
@@ -947,84 +883,6 @@ impl DeviceFnV1_0 {
                     ::core::mem::transmute(val)
                 }
             },
-            create_event: unsafe {
-                unsafe extern "system" fn create_event(
-                    _device: crate::vk::Device,
-                    _p_create_info: *const EventCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks,
-                    _p_event: *mut Event,
-                ) -> Result {
-                    panic!(concat!("Unable to load ", stringify!(create_event)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateEvent\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    create_event
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            destroy_event: unsafe {
-                unsafe extern "system" fn destroy_event(
-                    _device: crate::vk::Device,
-                    _event: Event,
-                    _p_allocator: *const AllocationCallbacks,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(destroy_event)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyEvent\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    destroy_event
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            get_event_status: unsafe {
-                unsafe extern "system" fn get_event_status(
-                    _device: crate::vk::Device,
-                    _event: Event,
-                ) -> Result {
-                    panic!(concat!("Unable to load ", stringify!(get_event_status)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetEventStatus\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    get_event_status
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            set_event: unsafe {
-                unsafe extern "system" fn set_event(
-                    _device: crate::vk::Device,
-                    _event: Event,
-                ) -> Result {
-                    panic!(concat!("Unable to load ", stringify!(set_event)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkSetEvent\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    set_event
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            reset_event: unsafe {
-                unsafe extern "system" fn reset_event(
-                    _device: crate::vk::Device,
-                    _event: Event,
-                ) -> Result {
-                    panic!(concat!("Unable to load ", stringify!(reset_event)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetEvent\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    reset_event
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
             create_query_pool: unsafe {
                 unsafe extern "system" fn create_query_pool(
                     _device: crate::vk::Device,
@@ -1115,39 +973,6 @@ impl DeviceFnV1_0 {
                     ::core::mem::transmute(val)
                 }
             },
-            create_buffer_view: unsafe {
-                unsafe extern "system" fn create_buffer_view(
-                    _device: crate::vk::Device,
-                    _p_create_info: *const BufferViewCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks,
-                    _p_view: *mut BufferView,
-                ) -> Result {
-                    panic!(concat!("Unable to load ", stringify!(create_buffer_view)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateBufferView\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    create_buffer_view
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            destroy_buffer_view: unsafe {
-                unsafe extern "system" fn destroy_buffer_view(
-                    _device: crate::vk::Device,
-                    _buffer_view: BufferView,
-                    _p_allocator: *const AllocationCallbacks,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(destroy_buffer_view)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyBufferView\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    destroy_buffer_view
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
             create_image: unsafe {
                 unsafe extern "system" fn create_image(
                     _device: crate::vk::Device,
@@ -1230,6 +1055,554 @@ impl DeviceFnV1_0 {
                 let val = _f(cname);
                 if val.is_null() {
                     destroy_image_view
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            create_command_pool: unsafe {
+                unsafe extern "system" fn create_command_pool(
+                    _device: crate::vk::Device,
+                    _p_create_info: *const CommandPoolCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_command_pool: *mut CommandPool,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(create_command_pool)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateCommandPool\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_command_pool
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            destroy_command_pool: unsafe {
+                unsafe extern "system" fn destroy_command_pool(
+                    _device: crate::vk::Device,
+                    _command_pool: CommandPool,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(destroy_command_pool)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyCommandPool\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_command_pool
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            reset_command_pool: unsafe {
+                unsafe extern "system" fn reset_command_pool(
+                    _device: crate::vk::Device,
+                    _command_pool: CommandPool,
+                    _flags: CommandPoolResetFlags,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(reset_command_pool)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetCommandPool\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    reset_command_pool
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            allocate_command_buffers: unsafe {
+                unsafe extern "system" fn allocate_command_buffers(
+                    _device: crate::vk::Device,
+                    _p_allocate_info: *const CommandBufferAllocateInfo<'_>,
+                    _p_command_buffers: *mut CommandBuffer,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(allocate_command_buffers)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkAllocateCommandBuffers\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    allocate_command_buffers
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            free_command_buffers: unsafe {
+                unsafe extern "system" fn free_command_buffers(
+                    _device: crate::vk::Device,
+                    _command_pool: CommandPool,
+                    _command_buffer_count: u32,
+                    _p_command_buffers: *const CommandBuffer,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(free_command_buffers)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkFreeCommandBuffers\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    free_command_buffers
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            begin_command_buffer: unsafe {
+                unsafe extern "system" fn begin_command_buffer(
+                    _command_buffer: CommandBuffer,
+                    _p_begin_info: *const CommandBufferBeginInfo<'_>,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(begin_command_buffer)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkBeginCommandBuffer\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    begin_command_buffer
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            end_command_buffer: unsafe {
+                unsafe extern "system" fn end_command_buffer(
+                    _command_buffer: CommandBuffer,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(end_command_buffer)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkEndCommandBuffer\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    end_command_buffer
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            reset_command_buffer: unsafe {
+                unsafe extern "system" fn reset_command_buffer(
+                    _command_buffer: CommandBuffer,
+                    _flags: CommandBufferResetFlags,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(reset_command_buffer)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetCommandBuffer\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    reset_command_buffer
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_copy_buffer: unsafe {
+                unsafe extern "system" fn cmd_copy_buffer(
+                    _command_buffer: CommandBuffer,
+                    _src_buffer: Buffer,
+                    _dst_buffer: Buffer,
+                    _region_count: u32,
+                    _p_regions: *const BufferCopy,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_copy_buffer)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBuffer\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_copy_buffer
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_copy_image: unsafe {
+                unsafe extern "system" fn cmd_copy_image(
+                    _command_buffer: CommandBuffer,
+                    _src_image: Image,
+                    _src_image_layout: ImageLayout,
+                    _dst_image: Image,
+                    _dst_image_layout: ImageLayout,
+                    _region_count: u32,
+                    _p_regions: *const ImageCopy,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_copy_image)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImage\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_copy_image
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_copy_buffer_to_image: unsafe {
+                unsafe extern "system" fn cmd_copy_buffer_to_image(
+                    _command_buffer: CommandBuffer,
+                    _src_buffer: Buffer,
+                    _dst_image: Image,
+                    _dst_image_layout: ImageLayout,
+                    _region_count: u32,
+                    _p_regions: *const BufferImageCopy,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_copy_buffer_to_image)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBufferToImage\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_copy_buffer_to_image
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_copy_image_to_buffer: unsafe {
+                unsafe extern "system" fn cmd_copy_image_to_buffer(
+                    _command_buffer: CommandBuffer,
+                    _src_image: Image,
+                    _src_image_layout: ImageLayout,
+                    _dst_buffer: Buffer,
+                    _region_count: u32,
+                    _p_regions: *const BufferImageCopy,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_copy_image_to_buffer)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImageToBuffer\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_copy_image_to_buffer
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_update_buffer: unsafe {
+                unsafe extern "system" fn cmd_update_buffer(
+                    _command_buffer: CommandBuffer,
+                    _dst_buffer: Buffer,
+                    _dst_offset: DeviceSize,
+                    _data_size: DeviceSize,
+                    _p_data: *const c_void,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_update_buffer)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdUpdateBuffer\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_update_buffer
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_fill_buffer: unsafe {
+                unsafe extern "system" fn cmd_fill_buffer(
+                    _command_buffer: CommandBuffer,
+                    _dst_buffer: Buffer,
+                    _dst_offset: DeviceSize,
+                    _size: DeviceSize,
+                    _data: u32,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_fill_buffer)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdFillBuffer\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_fill_buffer
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_pipeline_barrier: unsafe {
+                unsafe extern "system" fn cmd_pipeline_barrier(
+                    _command_buffer: CommandBuffer,
+                    _src_stage_mask: PipelineStageFlags,
+                    _dst_stage_mask: PipelineStageFlags,
+                    _dependency_flags: DependencyFlags,
+                    _memory_barrier_count: u32,
+                    _p_memory_barriers: *const MemoryBarrier<'_>,
+                    _buffer_memory_barrier_count: u32,
+                    _p_buffer_memory_barriers: *const BufferMemoryBarrier<'_>,
+                    _image_memory_barrier_count: u32,
+                    _p_image_memory_barriers: *const ImageMemoryBarrier<'_>,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_pipeline_barrier)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPipelineBarrier\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_pipeline_barrier
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_begin_query: unsafe {
+                unsafe extern "system" fn cmd_begin_query(
+                    _command_buffer: CommandBuffer,
+                    _query_pool: QueryPool,
+                    _query: u32,
+                    _flags: QueryControlFlags,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_begin_query)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginQuery\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_begin_query
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_end_query: unsafe {
+                unsafe extern "system" fn cmd_end_query(
+                    _command_buffer: CommandBuffer,
+                    _query_pool: QueryPool,
+                    _query: u32,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_end_query)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndQuery\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_end_query
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_reset_query_pool: unsafe {
+                unsafe extern "system" fn cmd_reset_query_pool(
+                    _command_buffer: CommandBuffer,
+                    _query_pool: QueryPool,
+                    _first_query: u32,
+                    _query_count: u32,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_reset_query_pool)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResetQueryPool\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_reset_query_pool
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_write_timestamp: unsafe {
+                unsafe extern "system" fn cmd_write_timestamp(
+                    _command_buffer: CommandBuffer,
+                    _pipeline_stage: PipelineStageFlags,
+                    _query_pool: QueryPool,
+                    _query: u32,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_write_timestamp)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdWriteTimestamp\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_write_timestamp
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_copy_query_pool_results: unsafe {
+                unsafe extern "system" fn cmd_copy_query_pool_results(
+                    _command_buffer: CommandBuffer,
+                    _query_pool: QueryPool,
+                    _first_query: u32,
+                    _query_count: u32,
+                    _dst_buffer: Buffer,
+                    _dst_offset: DeviceSize,
+                    _stride: DeviceSize,
+                    _flags: QueryResultFlags,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_copy_query_pool_results)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyQueryPoolResults\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_copy_query_pool_results
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_execute_commands: unsafe {
+                unsafe extern "system" fn cmd_execute_commands(
+                    _command_buffer: CommandBuffer,
+                    _command_buffer_count: u32,
+                    _p_command_buffers: *const CommandBuffer,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_execute_commands)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdExecuteCommands\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_execute_commands
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1 static function pointers"]
+pub struct StaticFn;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1 entry point function pointers"]
+pub struct EntryFnV1_0;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1 instance-level function pointers"]
+pub struct InstanceFnV1_0;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1 device-level function pointers"]
+pub struct DeviceFnV1_0 {
+    pub create_event: PFN_vkCreateEvent,
+    pub destroy_event: PFN_vkDestroyEvent,
+    pub get_event_status: PFN_vkGetEventStatus,
+    pub set_event: PFN_vkSetEvent,
+    pub reset_event: PFN_vkResetEvent,
+    pub create_buffer_view: PFN_vkCreateBufferView,
+    pub destroy_buffer_view: PFN_vkDestroyBufferView,
+    pub create_shader_module: PFN_vkCreateShaderModule,
+    pub destroy_shader_module: PFN_vkDestroyShaderModule,
+    pub create_pipeline_cache: PFN_vkCreatePipelineCache,
+    pub destroy_pipeline_cache: PFN_vkDestroyPipelineCache,
+    pub get_pipeline_cache_data: PFN_vkGetPipelineCacheData,
+    pub merge_pipeline_caches: PFN_vkMergePipelineCaches,
+    pub create_compute_pipelines: PFN_vkCreateComputePipelines,
+    pub destroy_pipeline: PFN_vkDestroyPipeline,
+    pub create_pipeline_layout: PFN_vkCreatePipelineLayout,
+    pub destroy_pipeline_layout: PFN_vkDestroyPipelineLayout,
+    pub create_sampler: PFN_vkCreateSampler,
+    pub destroy_sampler: PFN_vkDestroySampler,
+    pub create_descriptor_set_layout: PFN_vkCreateDescriptorSetLayout,
+    pub destroy_descriptor_set_layout: PFN_vkDestroyDescriptorSetLayout,
+    pub create_descriptor_pool: PFN_vkCreateDescriptorPool,
+    pub destroy_descriptor_pool: PFN_vkDestroyDescriptorPool,
+    pub reset_descriptor_pool: PFN_vkResetDescriptorPool,
+    pub allocate_descriptor_sets: PFN_vkAllocateDescriptorSets,
+    pub free_descriptor_sets: PFN_vkFreeDescriptorSets,
+    pub update_descriptor_sets: PFN_vkUpdateDescriptorSets,
+    pub cmd_bind_pipeline: PFN_vkCmdBindPipeline,
+    pub cmd_bind_descriptor_sets: PFN_vkCmdBindDescriptorSets,
+    pub cmd_clear_color_image: PFN_vkCmdClearColorImage,
+    pub cmd_dispatch: PFN_vkCmdDispatch,
+    pub cmd_dispatch_indirect: PFN_vkCmdDispatchIndirect,
+    pub cmd_set_event: PFN_vkCmdSetEvent,
+    pub cmd_reset_event: PFN_vkCmdResetEvent,
+    pub cmd_wait_events: PFN_vkCmdWaitEvents,
+    pub cmd_push_constants: PFN_vkCmdPushConstants,
+}
+unsafe impl Send for DeviceFnV1_0 {}
+unsafe impl Sync for DeviceFnV1_0 {}
+impl DeviceFnV1_0 {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+        Self {
+            create_event: unsafe {
+                unsafe extern "system" fn create_event(
+                    _device: crate::vk::Device,
+                    _p_create_info: *const EventCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_event: *mut Event,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(create_event)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateEvent\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_event
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            destroy_event: unsafe {
+                unsafe extern "system" fn destroy_event(
+                    _device: crate::vk::Device,
+                    _event: Event,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(destroy_event)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyEvent\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_event
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            get_event_status: unsafe {
+                unsafe extern "system" fn get_event_status(
+                    _device: crate::vk::Device,
+                    _event: Event,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(get_event_status)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetEventStatus\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    get_event_status
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            set_event: unsafe {
+                unsafe extern "system" fn set_event(
+                    _device: crate::vk::Device,
+                    _event: Event,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(set_event)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkSetEvent\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    set_event
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            reset_event: unsafe {
+                unsafe extern "system" fn reset_event(
+                    _device: crate::vk::Device,
+                    _event: Event,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(reset_event)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetEvent\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    reset_event
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            create_buffer_view: unsafe {
+                unsafe extern "system" fn create_buffer_view(
+                    _device: crate::vk::Device,
+                    _p_create_info: *const BufferViewCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_view: *mut BufferView,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(create_buffer_view)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateBufferView\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_buffer_view
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            destroy_buffer_view: unsafe {
+                unsafe extern "system" fn destroy_buffer_view(
+                    _device: crate::vk::Device,
+                    _buffer_view: BufferView,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(destroy_buffer_view)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyBufferView\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_buffer_view
                 } else {
                     ::core::mem::transmute(val)
                 }
@@ -1345,28 +1718,6 @@ impl DeviceFnV1_0 {
                 let val = _f(cname);
                 if val.is_null() {
                     merge_pipeline_caches
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            create_graphics_pipelines: unsafe {
-                unsafe extern "system" fn create_graphics_pipelines(
-                    _device: crate::vk::Device,
-                    _pipeline_cache: PipelineCache,
-                    _create_info_count: u32,
-                    _p_create_infos: *const GraphicsPipelineCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks,
-                    _p_pipelines: *mut Pipeline,
-                ) -> Result {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(create_graphics_pipelines)
-                    ))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateGraphicsPipelines\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    create_graphics_pipelines
                 } else {
                     ::core::mem::transmute(val)
                 }
@@ -1635,6 +1986,253 @@ impl DeviceFnV1_0 {
                     ::core::mem::transmute(val)
                 }
             },
+            cmd_bind_pipeline: unsafe {
+                unsafe extern "system" fn cmd_bind_pipeline(
+                    _command_buffer: CommandBuffer,
+                    _pipeline_bind_point: PipelineBindPoint,
+                    _pipeline: Pipeline,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_bind_pipeline)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindPipeline\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_bind_pipeline
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_bind_descriptor_sets: unsafe {
+                unsafe extern "system" fn cmd_bind_descriptor_sets(
+                    _command_buffer: CommandBuffer,
+                    _pipeline_bind_point: PipelineBindPoint,
+                    _layout: PipelineLayout,
+                    _first_set: u32,
+                    _descriptor_set_count: u32,
+                    _p_descriptor_sets: *const DescriptorSet,
+                    _dynamic_offset_count: u32,
+                    _p_dynamic_offsets: *const u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_bind_descriptor_sets)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindDescriptorSets\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_bind_descriptor_sets
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_clear_color_image: unsafe {
+                unsafe extern "system" fn cmd_clear_color_image(
+                    _command_buffer: CommandBuffer,
+                    _image: Image,
+                    _image_layout: ImageLayout,
+                    _p_color: *const ClearColorValue,
+                    _range_count: u32,
+                    _p_ranges: *const ImageSubresourceRange,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_clear_color_image)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdClearColorImage\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_clear_color_image
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_dispatch: unsafe {
+                unsafe extern "system" fn cmd_dispatch(
+                    _command_buffer: CommandBuffer,
+                    _group_count_x: u32,
+                    _group_count_y: u32,
+                    _group_count_z: u32,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_dispatch)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatch\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_dispatch
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_dispatch_indirect: unsafe {
+                unsafe extern "system" fn cmd_dispatch_indirect(
+                    _command_buffer: CommandBuffer,
+                    _buffer: Buffer,
+                    _offset: DeviceSize,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_dispatch_indirect)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchIndirect\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_dispatch_indirect
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_set_event: unsafe {
+                unsafe extern "system" fn cmd_set_event(
+                    _command_buffer: CommandBuffer,
+                    _event: Event,
+                    _stage_mask: PipelineStageFlags,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_event)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetEvent\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_event
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_reset_event: unsafe {
+                unsafe extern "system" fn cmd_reset_event(
+                    _command_buffer: CommandBuffer,
+                    _event: Event,
+                    _stage_mask: PipelineStageFlags,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_reset_event)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResetEvent\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_reset_event
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_wait_events: unsafe {
+                unsafe extern "system" fn cmd_wait_events(
+                    _command_buffer: CommandBuffer,
+                    _event_count: u32,
+                    _p_events: *const Event,
+                    _src_stage_mask: PipelineStageFlags,
+                    _dst_stage_mask: PipelineStageFlags,
+                    _memory_barrier_count: u32,
+                    _p_memory_barriers: *const MemoryBarrier<'_>,
+                    _buffer_memory_barrier_count: u32,
+                    _p_buffer_memory_barriers: *const BufferMemoryBarrier<'_>,
+                    _image_memory_barrier_count: u32,
+                    _p_image_memory_barriers: *const ImageMemoryBarrier<'_>,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_wait_events)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdWaitEvents\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_wait_events
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_push_constants: unsafe {
+                unsafe extern "system" fn cmd_push_constants(
+                    _command_buffer: CommandBuffer,
+                    _layout: PipelineLayout,
+                    _stage_flags: ShaderStageFlags,
+                    _offset: u32,
+                    _size: u32,
+                    _p_values: *const c_void,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_push_constants)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPushConstants\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_push_constants
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1 static function pointers"]
+pub struct StaticFn;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1 entry point function pointers"]
+pub struct EntryFnV1_0;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1 instance-level function pointers"]
+pub struct InstanceFnV1_0;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1 device-level function pointers"]
+pub struct DeviceFnV1_0 {
+    pub create_graphics_pipelines: PFN_vkCreateGraphicsPipelines,
+    pub create_framebuffer: PFN_vkCreateFramebuffer,
+    pub destroy_framebuffer: PFN_vkDestroyFramebuffer,
+    pub create_render_pass: PFN_vkCreateRenderPass,
+    pub destroy_render_pass: PFN_vkDestroyRenderPass,
+    pub get_render_area_granularity: PFN_vkGetRenderAreaGranularity,
+    pub cmd_set_viewport: PFN_vkCmdSetViewport,
+    pub cmd_set_scissor: PFN_vkCmdSetScissor,
+    pub cmd_set_line_width: PFN_vkCmdSetLineWidth,
+    pub cmd_set_depth_bias: PFN_vkCmdSetDepthBias,
+    pub cmd_set_blend_constants: PFN_vkCmdSetBlendConstants,
+    pub cmd_set_depth_bounds: PFN_vkCmdSetDepthBounds,
+    pub cmd_set_stencil_compare_mask: PFN_vkCmdSetStencilCompareMask,
+    pub cmd_set_stencil_write_mask: PFN_vkCmdSetStencilWriteMask,
+    pub cmd_set_stencil_reference: PFN_vkCmdSetStencilReference,
+    pub cmd_bind_index_buffer: PFN_vkCmdBindIndexBuffer,
+    pub cmd_bind_vertex_buffers: PFN_vkCmdBindVertexBuffers,
+    pub cmd_draw: PFN_vkCmdDraw,
+    pub cmd_draw_indexed: PFN_vkCmdDrawIndexed,
+    pub cmd_draw_indirect: PFN_vkCmdDrawIndirect,
+    pub cmd_draw_indexed_indirect: PFN_vkCmdDrawIndexedIndirect,
+    pub cmd_blit_image: PFN_vkCmdBlitImage,
+    pub cmd_clear_depth_stencil_image: PFN_vkCmdClearDepthStencilImage,
+    pub cmd_clear_attachments: PFN_vkCmdClearAttachments,
+    pub cmd_resolve_image: PFN_vkCmdResolveImage,
+    pub cmd_begin_render_pass: PFN_vkCmdBeginRenderPass,
+    pub cmd_next_subpass: PFN_vkCmdNextSubpass,
+    pub cmd_end_render_pass: PFN_vkCmdEndRenderPass,
+}
+unsafe impl Send for DeviceFnV1_0 {}
+unsafe impl Sync for DeviceFnV1_0 {}
+impl DeviceFnV1_0 {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+        Self {
+            create_graphics_pipelines: unsafe {
+                unsafe extern "system" fn create_graphics_pipelines(
+                    _device: crate::vk::Device,
+                    _pipeline_cache: PipelineCache,
+                    _create_info_count: u32,
+                    _p_create_infos: *const GraphicsPipelineCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_pipelines: *mut Pipeline,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_graphics_pipelines)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateGraphicsPipelines\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_graphics_pipelines
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
             create_framebuffer: unsafe {
                 unsafe extern "system" fn create_framebuffer(
                     _device: crate::vk::Device,
@@ -1716,151 +2314,6 @@ impl DeviceFnV1_0 {
                 let val = _f(cname);
                 if val.is_null() {
                     get_render_area_granularity
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            create_command_pool: unsafe {
-                unsafe extern "system" fn create_command_pool(
-                    _device: crate::vk::Device,
-                    _p_create_info: *const CommandPoolCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks,
-                    _p_command_pool: *mut CommandPool,
-                ) -> Result {
-                    panic!(concat!("Unable to load ", stringify!(create_command_pool)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateCommandPool\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    create_command_pool
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            destroy_command_pool: unsafe {
-                unsafe extern "system" fn destroy_command_pool(
-                    _device: crate::vk::Device,
-                    _command_pool: CommandPool,
-                    _p_allocator: *const AllocationCallbacks,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(destroy_command_pool)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkDestroyCommandPool\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    destroy_command_pool
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            reset_command_pool: unsafe {
-                unsafe extern "system" fn reset_command_pool(
-                    _device: crate::vk::Device,
-                    _command_pool: CommandPool,
-                    _flags: CommandPoolResetFlags,
-                ) -> Result {
-                    panic!(concat!("Unable to load ", stringify!(reset_command_pool)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetCommandPool\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    reset_command_pool
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            allocate_command_buffers: unsafe {
-                unsafe extern "system" fn allocate_command_buffers(
-                    _device: crate::vk::Device,
-                    _p_allocate_info: *const CommandBufferAllocateInfo<'_>,
-                    _p_command_buffers: *mut CommandBuffer,
-                ) -> Result {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(allocate_command_buffers)
-                    ))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkAllocateCommandBuffers\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    allocate_command_buffers
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            free_command_buffers: unsafe {
-                unsafe extern "system" fn free_command_buffers(
-                    _device: crate::vk::Device,
-                    _command_pool: CommandPool,
-                    _command_buffer_count: u32,
-                    _p_command_buffers: *const CommandBuffer,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(free_command_buffers)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkFreeCommandBuffers\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    free_command_buffers
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            begin_command_buffer: unsafe {
-                unsafe extern "system" fn begin_command_buffer(
-                    _command_buffer: CommandBuffer,
-                    _p_begin_info: *const CommandBufferBeginInfo<'_>,
-                ) -> Result {
-                    panic!(concat!("Unable to load ", stringify!(begin_command_buffer)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkBeginCommandBuffer\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    begin_command_buffer
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            end_command_buffer: unsafe {
-                unsafe extern "system" fn end_command_buffer(
-                    _command_buffer: CommandBuffer,
-                ) -> Result {
-                    panic!(concat!("Unable to load ", stringify!(end_command_buffer)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkEndCommandBuffer\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    end_command_buffer
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            reset_command_buffer: unsafe {
-                unsafe extern "system" fn reset_command_buffer(
-                    _command_buffer: CommandBuffer,
-                    _flags: CommandBufferResetFlags,
-                ) -> Result {
-                    panic!(concat!("Unable to load ", stringify!(reset_command_buffer)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetCommandBuffer\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    reset_command_buffer
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_bind_pipeline: unsafe {
-                unsafe extern "system" fn cmd_bind_pipeline(
-                    _command_buffer: CommandBuffer,
-                    _pipeline_bind_point: PipelineBindPoint,
-                    _pipeline: Pipeline,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_bind_pipeline)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindPipeline\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_bind_pipeline
                 } else {
                     ::core::mem::transmute(val)
                 }
@@ -2022,30 +2475,6 @@ impl DeviceFnV1_0 {
                     ::core::mem::transmute(val)
                 }
             },
-            cmd_bind_descriptor_sets: unsafe {
-                unsafe extern "system" fn cmd_bind_descriptor_sets(
-                    _command_buffer: CommandBuffer,
-                    _pipeline_bind_point: PipelineBindPoint,
-                    _layout: PipelineLayout,
-                    _first_set: u32,
-                    _descriptor_set_count: u32,
-                    _p_descriptor_sets: *const DescriptorSet,
-                    _dynamic_offset_count: u32,
-                    _p_dynamic_offsets: *const u32,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_bind_descriptor_sets)
-                    ))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindDescriptorSets\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_bind_descriptor_sets
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
             cmd_bind_index_buffer: unsafe {
                 unsafe extern "system" fn cmd_bind_index_buffer(
                     _command_buffer: CommandBuffer,
@@ -2163,80 +2592,6 @@ impl DeviceFnV1_0 {
                     ::core::mem::transmute(val)
                 }
             },
-            cmd_dispatch: unsafe {
-                unsafe extern "system" fn cmd_dispatch(
-                    _command_buffer: CommandBuffer,
-                    _group_count_x: u32,
-                    _group_count_y: u32,
-                    _group_count_z: u32,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_dispatch)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatch\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_dispatch
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_dispatch_indirect: unsafe {
-                unsafe extern "system" fn cmd_dispatch_indirect(
-                    _command_buffer: CommandBuffer,
-                    _buffer: Buffer,
-                    _offset: DeviceSize,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_dispatch_indirect)
-                    ))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchIndirect\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_dispatch_indirect
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_copy_buffer: unsafe {
-                unsafe extern "system" fn cmd_copy_buffer(
-                    _command_buffer: CommandBuffer,
-                    _src_buffer: Buffer,
-                    _dst_buffer: Buffer,
-                    _region_count: u32,
-                    _p_regions: *const BufferCopy,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_copy_buffer)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBuffer\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_copy_buffer
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_copy_image: unsafe {
-                unsafe extern "system" fn cmd_copy_image(
-                    _command_buffer: CommandBuffer,
-                    _src_image: Image,
-                    _src_image_layout: ImageLayout,
-                    _dst_image: Image,
-                    _dst_image_layout: ImageLayout,
-                    _region_count: u32,
-                    _p_regions: *const ImageCopy,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_copy_image)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImage\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_copy_image
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
             cmd_blit_image: unsafe {
                 unsafe extern "system" fn cmd_blit_image(
                     _command_buffer: CommandBuffer,
@@ -2254,108 +2609,6 @@ impl DeviceFnV1_0 {
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_blit_image
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_copy_buffer_to_image: unsafe {
-                unsafe extern "system" fn cmd_copy_buffer_to_image(
-                    _command_buffer: CommandBuffer,
-                    _src_buffer: Buffer,
-                    _dst_image: Image,
-                    _dst_image_layout: ImageLayout,
-                    _region_count: u32,
-                    _p_regions: *const BufferImageCopy,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_copy_buffer_to_image)
-                    ))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBufferToImage\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_copy_buffer_to_image
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_copy_image_to_buffer: unsafe {
-                unsafe extern "system" fn cmd_copy_image_to_buffer(
-                    _command_buffer: CommandBuffer,
-                    _src_image: Image,
-                    _src_image_layout: ImageLayout,
-                    _dst_buffer: Buffer,
-                    _region_count: u32,
-                    _p_regions: *const BufferImageCopy,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_copy_image_to_buffer)
-                    ))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImageToBuffer\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_copy_image_to_buffer
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_update_buffer: unsafe {
-                unsafe extern "system" fn cmd_update_buffer(
-                    _command_buffer: CommandBuffer,
-                    _dst_buffer: Buffer,
-                    _dst_offset: DeviceSize,
-                    _data_size: DeviceSize,
-                    _p_data: *const c_void,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_update_buffer)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdUpdateBuffer\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_update_buffer
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_fill_buffer: unsafe {
-                unsafe extern "system" fn cmd_fill_buffer(
-                    _command_buffer: CommandBuffer,
-                    _dst_buffer: Buffer,
-                    _dst_offset: DeviceSize,
-                    _size: DeviceSize,
-                    _data: u32,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_fill_buffer)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdFillBuffer\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_fill_buffer
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_clear_color_image: unsafe {
-                unsafe extern "system" fn cmd_clear_color_image(
-                    _command_buffer: CommandBuffer,
-                    _image: Image,
-                    _image_layout: ImageLayout,
-                    _p_color: *const ClearColorValue,
-                    _range_count: u32,
-                    _p_ranges: *const ImageSubresourceRange,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_clear_color_image)
-                    ))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdClearColorImage\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_clear_color_image
                 } else {
                     ::core::mem::transmute(val)
                 }
@@ -2423,195 +2676,6 @@ impl DeviceFnV1_0 {
                     ::core::mem::transmute(val)
                 }
             },
-            cmd_set_event: unsafe {
-                unsafe extern "system" fn cmd_set_event(
-                    _command_buffer: CommandBuffer,
-                    _event: Event,
-                    _stage_mask: PipelineStageFlags,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_set_event)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetEvent\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_set_event
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_reset_event: unsafe {
-                unsafe extern "system" fn cmd_reset_event(
-                    _command_buffer: CommandBuffer,
-                    _event: Event,
-                    _stage_mask: PipelineStageFlags,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_reset_event)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResetEvent\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_reset_event
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_wait_events: unsafe {
-                unsafe extern "system" fn cmd_wait_events(
-                    _command_buffer: CommandBuffer,
-                    _event_count: u32,
-                    _p_events: *const Event,
-                    _src_stage_mask: PipelineStageFlags,
-                    _dst_stage_mask: PipelineStageFlags,
-                    _memory_barrier_count: u32,
-                    _p_memory_barriers: *const MemoryBarrier<'_>,
-                    _buffer_memory_barrier_count: u32,
-                    _p_buffer_memory_barriers: *const BufferMemoryBarrier<'_>,
-                    _image_memory_barrier_count: u32,
-                    _p_image_memory_barriers: *const ImageMemoryBarrier<'_>,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_wait_events)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdWaitEvents\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_wait_events
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_pipeline_barrier: unsafe {
-                unsafe extern "system" fn cmd_pipeline_barrier(
-                    _command_buffer: CommandBuffer,
-                    _src_stage_mask: PipelineStageFlags,
-                    _dst_stage_mask: PipelineStageFlags,
-                    _dependency_flags: DependencyFlags,
-                    _memory_barrier_count: u32,
-                    _p_memory_barriers: *const MemoryBarrier<'_>,
-                    _buffer_memory_barrier_count: u32,
-                    _p_buffer_memory_barriers: *const BufferMemoryBarrier<'_>,
-                    _image_memory_barrier_count: u32,
-                    _p_image_memory_barriers: *const ImageMemoryBarrier<'_>,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_pipeline_barrier)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPipelineBarrier\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_pipeline_barrier
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_begin_query: unsafe {
-                unsafe extern "system" fn cmd_begin_query(
-                    _command_buffer: CommandBuffer,
-                    _query_pool: QueryPool,
-                    _query: u32,
-                    _flags: QueryControlFlags,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_begin_query)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginQuery\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_begin_query
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_end_query: unsafe {
-                unsafe extern "system" fn cmd_end_query(
-                    _command_buffer: CommandBuffer,
-                    _query_pool: QueryPool,
-                    _query: u32,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_end_query)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndQuery\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_end_query
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_reset_query_pool: unsafe {
-                unsafe extern "system" fn cmd_reset_query_pool(
-                    _command_buffer: CommandBuffer,
-                    _query_pool: QueryPool,
-                    _first_query: u32,
-                    _query_count: u32,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_reset_query_pool)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResetQueryPool\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_reset_query_pool
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_write_timestamp: unsafe {
-                unsafe extern "system" fn cmd_write_timestamp(
-                    _command_buffer: CommandBuffer,
-                    _pipeline_stage: PipelineStageFlags,
-                    _query_pool: QueryPool,
-                    _query: u32,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_write_timestamp)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdWriteTimestamp\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_write_timestamp
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_copy_query_pool_results: unsafe {
-                unsafe extern "system" fn cmd_copy_query_pool_results(
-                    _command_buffer: CommandBuffer,
-                    _query_pool: QueryPool,
-                    _first_query: u32,
-                    _query_count: u32,
-                    _dst_buffer: Buffer,
-                    _dst_offset: DeviceSize,
-                    _stride: DeviceSize,
-                    _flags: QueryResultFlags,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_copy_query_pool_results)
-                    ))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyQueryPoolResults\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_copy_query_pool_results
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_push_constants: unsafe {
-                unsafe extern "system" fn cmd_push_constants(
-                    _command_buffer: CommandBuffer,
-                    _layout: PipelineLayout,
-                    _stage_flags: ShaderStageFlags,
-                    _offset: u32,
-                    _size: u32,
-                    _p_values: *const c_void,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_push_constants)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPushConstants\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_push_constants
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
             cmd_begin_render_pass: unsafe {
                 unsafe extern "system" fn cmd_begin_render_pass(
                     _command_buffer: CommandBuffer,
@@ -2658,25 +2722,21 @@ impl DeviceFnV1_0 {
                     ::core::mem::transmute(val)
                 }
             },
-            cmd_execute_commands: unsafe {
-                unsafe extern "system" fn cmd_execute_commands(
-                    _command_buffer: CommandBuffer,
-                    _command_buffer_count: u32,
-                    _p_command_buffers: *const CommandBuffer,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_execute_commands)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdExecuteCommands\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_execute_commands
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
         }
     }
 }
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1 static function pointers"]
+pub struct StaticFn;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1 entry point function pointers"]
+pub struct EntryFnV1_0;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1 instance-level function pointers"]
+pub struct InstanceFnV1_0;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1 device-level function pointers"]
+pub struct DeviceFnV1_0;
 #[derive(Clone)]
 #[doc = "Raw Vulkan 1.1 entry point function pointers"]
 pub struct EntryFnV1_1 {
@@ -2970,18 +3030,11 @@ pub struct DeviceFnV1_1 {
     pub bind_image_memory2: PFN_vkBindImageMemory2,
     pub get_device_group_peer_memory_features: PFN_vkGetDeviceGroupPeerMemoryFeatures,
     pub cmd_set_device_mask: PFN_vkCmdSetDeviceMask,
-    pub cmd_dispatch_base: PFN_vkCmdDispatchBase,
     pub get_image_memory_requirements2: PFN_vkGetImageMemoryRequirements2,
     pub get_buffer_memory_requirements2: PFN_vkGetBufferMemoryRequirements2,
     pub get_image_sparse_memory_requirements2: PFN_vkGetImageSparseMemoryRequirements2,
     pub trim_command_pool: PFN_vkTrimCommandPool,
     pub get_device_queue2: PFN_vkGetDeviceQueue2,
-    pub create_sampler_ycbcr_conversion: PFN_vkCreateSamplerYcbcrConversion,
-    pub destroy_sampler_ycbcr_conversion: PFN_vkDestroySamplerYcbcrConversion,
-    pub create_descriptor_update_template: PFN_vkCreateDescriptorUpdateTemplate,
-    pub destroy_descriptor_update_template: PFN_vkDestroyDescriptorUpdateTemplate,
-    pub update_descriptor_set_with_template: PFN_vkUpdateDescriptorSetWithTemplate,
-    pub get_descriptor_set_layout_support: PFN_vkGetDescriptorSetLayoutSupport,
 }
 unsafe impl Send for DeviceFnV1_1 {}
 unsafe impl Sync for DeviceFnV1_1 {}
@@ -3056,26 +3109,6 @@ impl DeviceFnV1_1 {
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_device_mask
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_dispatch_base: unsafe {
-                unsafe extern "system" fn cmd_dispatch_base(
-                    _command_buffer: CommandBuffer,
-                    _base_group_x: u32,
-                    _base_group_y: u32,
-                    _base_group_z: u32,
-                    _group_count_x: u32,
-                    _group_count_y: u32,
-                    _group_count_z: u32,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_dispatch_base)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchBase\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_dispatch_base
                 } else {
                     ::core::mem::transmute(val)
                 }
@@ -3172,43 +3205,50 @@ impl DeviceFnV1_1 {
                     ::core::mem::transmute(val)
                 }
             },
-            create_sampler_ycbcr_conversion: unsafe {
-                unsafe extern "system" fn create_sampler_ycbcr_conversion(
-                    _device: crate::vk::Device,
-                    _p_create_info: *const SamplerYcbcrConversionCreateInfo<'_>,
-                    _p_allocator: *const AllocationCallbacks,
-                    _p_ycbcr_conversion: *mut SamplerYcbcrConversion,
-                ) -> Result {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(create_sampler_ycbcr_conversion)
-                    ))
-                }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkCreateSamplerYcbcrConversion\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    create_sampler_ycbcr_conversion
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            destroy_sampler_ycbcr_conversion: unsafe {
-                unsafe extern "system" fn destroy_sampler_ycbcr_conversion(
-                    _device: crate::vk::Device,
-                    _ycbcr_conversion: SamplerYcbcrConversion,
-                    _p_allocator: *const AllocationCallbacks,
+        }
+    }
+}
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.1 entry point function pointers"]
+pub struct EntryFnV1_1;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.1 instance-level function pointers"]
+pub struct InstanceFnV1_1;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.1 device-level function pointers"]
+pub struct DeviceFnV1_1 {
+    pub cmd_dispatch_base: PFN_vkCmdDispatchBase,
+    pub create_descriptor_update_template: PFN_vkCreateDescriptorUpdateTemplate,
+    pub destroy_descriptor_update_template: PFN_vkDestroyDescriptorUpdateTemplate,
+    pub update_descriptor_set_with_template: PFN_vkUpdateDescriptorSetWithTemplate,
+    pub get_descriptor_set_layout_support: PFN_vkGetDescriptorSetLayoutSupport,
+    pub create_sampler_ycbcr_conversion: PFN_vkCreateSamplerYcbcrConversion,
+    pub destroy_sampler_ycbcr_conversion: PFN_vkDestroySamplerYcbcrConversion,
+}
+unsafe impl Send for DeviceFnV1_1 {}
+unsafe impl Sync for DeviceFnV1_1 {}
+impl DeviceFnV1_1 {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+        Self {
+            cmd_dispatch_base: unsafe {
+                unsafe extern "system" fn cmd_dispatch_base(
+                    _command_buffer: CommandBuffer,
+                    _base_group_x: u32,
+                    _base_group_y: u32,
+                    _base_group_z: u32,
+                    _group_count_x: u32,
+                    _group_count_y: u32,
+                    _group_count_z: u32,
                 ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(destroy_sampler_ycbcr_conversion)
-                    ))
+                    panic!(concat!("Unable to load ", stringify!(cmd_dispatch_base)))
                 }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkDestroySamplerYcbcrConversion\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchBase\0");
                 let val = _f(cname);
                 if val.is_null() {
-                    destroy_sampler_ycbcr_conversion
+                    cmd_dispatch_base
                 } else {
                     ::core::mem::transmute(val)
                 }
@@ -3295,9 +3335,68 @@ impl DeviceFnV1_1 {
                     ::core::mem::transmute(val)
                 }
             },
+            create_sampler_ycbcr_conversion: unsafe {
+                unsafe extern "system" fn create_sampler_ycbcr_conversion(
+                    _device: crate::vk::Device,
+                    _p_create_info: *const SamplerYcbcrConversionCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_ycbcr_conversion: *mut SamplerYcbcrConversion,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_sampler_ycbcr_conversion)
+                    ))
+                }
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkCreateSamplerYcbcrConversion\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_sampler_ycbcr_conversion
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            destroy_sampler_ycbcr_conversion: unsafe {
+                unsafe extern "system" fn destroy_sampler_ycbcr_conversion(
+                    _device: crate::vk::Device,
+                    _ycbcr_conversion: SamplerYcbcrConversion,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_sampler_ycbcr_conversion)
+                    ))
+                }
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkDestroySamplerYcbcrConversion\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_sampler_ycbcr_conversion
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
         }
     }
 }
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.1 entry point function pointers"]
+pub struct EntryFnV1_1;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.1 instance-level function pointers"]
+pub struct InstanceFnV1_1;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.1 device-level function pointers"]
+pub struct DeviceFnV1_1;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.1 entry point function pointers"]
+pub struct EntryFnV1_1;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.1 instance-level function pointers"]
+pub struct InstanceFnV1_1;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.1 device-level function pointers"]
+pub struct DeviceFnV1_1;
 #[derive(Clone)]
 #[doc = "Raw Vulkan 1.2 entry point function pointers"]
 pub struct EntryFnV1_2;
@@ -3307,12 +3406,6 @@ pub struct InstanceFnV1_2;
 #[derive(Clone)]
 #[doc = "Raw Vulkan 1.2 device-level function pointers"]
 pub struct DeviceFnV1_2 {
-    pub cmd_draw_indirect_count: PFN_vkCmdDrawIndirectCount,
-    pub cmd_draw_indexed_indirect_count: PFN_vkCmdDrawIndexedIndirectCount,
-    pub create_render_pass2: PFN_vkCreateRenderPass2,
-    pub cmd_begin_render_pass2: PFN_vkCmdBeginRenderPass2,
-    pub cmd_next_subpass2: PFN_vkCmdNextSubpass2,
-    pub cmd_end_render_pass2: PFN_vkCmdEndRenderPass2,
     pub reset_query_pool: PFN_vkResetQueryPool,
     pub get_semaphore_counter_value: PFN_vkGetSemaphoreCounterValue,
     pub wait_semaphores: PFN_vkWaitSemaphores,
@@ -3329,119 +3422,6 @@ impl DeviceFnV1_2 {
     }
     fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
         Self {
-            cmd_draw_indirect_count: unsafe {
-                unsafe extern "system" fn cmd_draw_indirect_count(
-                    _command_buffer: CommandBuffer,
-                    _buffer: Buffer,
-                    _offset: DeviceSize,
-                    _count_buffer: Buffer,
-                    _count_buffer_offset: DeviceSize,
-                    _max_draw_count: u32,
-                    _stride: u32,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_draw_indirect_count)
-                    ))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndirectCount\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_draw_indirect_count
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_draw_indexed_indirect_count: unsafe {
-                unsafe extern "system" fn cmd_draw_indexed_indirect_count(
-                    _command_buffer: CommandBuffer,
-                    _buffer: Buffer,
-                    _offset: DeviceSize,
-                    _count_buffer: Buffer,
-                    _count_buffer_offset: DeviceSize,
-                    _max_draw_count: u32,
-                    _stride: u32,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_draw_indexed_indirect_count)
-                    ))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndexedIndirectCount\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_draw_indexed_indirect_count
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            create_render_pass2: unsafe {
-                unsafe extern "system" fn create_render_pass2(
-                    _device: crate::vk::Device,
-                    _p_create_info: *const RenderPassCreateInfo2<'_>,
-                    _p_allocator: *const AllocationCallbacks,
-                    _p_render_pass: *mut RenderPass,
-                ) -> Result {
-                    panic!(concat!("Unable to load ", stringify!(create_render_pass2)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateRenderPass2\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    create_render_pass2
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_begin_render_pass2: unsafe {
-                unsafe extern "system" fn cmd_begin_render_pass2(
-                    _command_buffer: CommandBuffer,
-                    _p_render_pass_begin: *const RenderPassBeginInfo<'_>,
-                    _p_subpass_begin_info: *const SubpassBeginInfo<'_>,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_begin_render_pass2)
-                    ))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginRenderPass2\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_begin_render_pass2
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_next_subpass2: unsafe {
-                unsafe extern "system" fn cmd_next_subpass2(
-                    _command_buffer: CommandBuffer,
-                    _p_subpass_begin_info: *const SubpassBeginInfo<'_>,
-                    _p_subpass_end_info: *const SubpassEndInfo<'_>,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_next_subpass2)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdNextSubpass2\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_next_subpass2
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_end_render_pass2: unsafe {
-                unsafe extern "system" fn cmd_end_render_pass2(
-                    _command_buffer: CommandBuffer,
-                    _p_subpass_end_info: *const SubpassEndInfo<'_>,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_end_render_pass2)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRenderPass2\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_end_render_pass2
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
             reset_query_pool: unsafe {
                 unsafe extern "system" fn reset_query_pool(
                     _device: crate::vk::Device,
@@ -3569,6 +3549,164 @@ impl DeviceFnV1_2 {
     }
 }
 #[derive(Clone)]
+#[doc = "Raw Vulkan 1.2 entry point function pointers"]
+pub struct EntryFnV1_2;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.2 instance-level function pointers"]
+pub struct InstanceFnV1_2;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.2 device-level function pointers"]
+pub struct DeviceFnV1_2;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.2 entry point function pointers"]
+pub struct EntryFnV1_2;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.2 instance-level function pointers"]
+pub struct InstanceFnV1_2;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.2 device-level function pointers"]
+pub struct DeviceFnV1_2 {
+    pub cmd_draw_indirect_count: PFN_vkCmdDrawIndirectCount,
+    pub cmd_draw_indexed_indirect_count: PFN_vkCmdDrawIndexedIndirectCount,
+    pub create_render_pass2: PFN_vkCreateRenderPass2,
+    pub cmd_begin_render_pass2: PFN_vkCmdBeginRenderPass2,
+    pub cmd_next_subpass2: PFN_vkCmdNextSubpass2,
+    pub cmd_end_render_pass2: PFN_vkCmdEndRenderPass2,
+}
+unsafe impl Send for DeviceFnV1_2 {}
+unsafe impl Sync for DeviceFnV1_2 {}
+impl DeviceFnV1_2 {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+        Self {
+            cmd_draw_indirect_count: unsafe {
+                unsafe extern "system" fn cmd_draw_indirect_count(
+                    _command_buffer: CommandBuffer,
+                    _buffer: Buffer,
+                    _offset: DeviceSize,
+                    _count_buffer: Buffer,
+                    _count_buffer_offset: DeviceSize,
+                    _max_draw_count: u32,
+                    _stride: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_draw_indirect_count)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndirectCount\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_draw_indirect_count
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_draw_indexed_indirect_count: unsafe {
+                unsafe extern "system" fn cmd_draw_indexed_indirect_count(
+                    _command_buffer: CommandBuffer,
+                    _buffer: Buffer,
+                    _offset: DeviceSize,
+                    _count_buffer: Buffer,
+                    _count_buffer_offset: DeviceSize,
+                    _max_draw_count: u32,
+                    _stride: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_draw_indexed_indirect_count)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawIndexedIndirectCount\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_draw_indexed_indirect_count
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            create_render_pass2: unsafe {
+                unsafe extern "system" fn create_render_pass2(
+                    _device: crate::vk::Device,
+                    _p_create_info: *const RenderPassCreateInfo2<'_>,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_render_pass: *mut RenderPass,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(create_render_pass2)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateRenderPass2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_render_pass2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_begin_render_pass2: unsafe {
+                unsafe extern "system" fn cmd_begin_render_pass2(
+                    _command_buffer: CommandBuffer,
+                    _p_render_pass_begin: *const RenderPassBeginInfo<'_>,
+                    _p_subpass_begin_info: *const SubpassBeginInfo<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_begin_render_pass2)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginRenderPass2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_begin_render_pass2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_next_subpass2: unsafe {
+                unsafe extern "system" fn cmd_next_subpass2(
+                    _command_buffer: CommandBuffer,
+                    _p_subpass_begin_info: *const SubpassBeginInfo<'_>,
+                    _p_subpass_end_info: *const SubpassEndInfo<'_>,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_next_subpass2)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdNextSubpass2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_next_subpass2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_end_render_pass2: unsafe {
+                unsafe extern "system" fn cmd_end_render_pass2(
+                    _command_buffer: CommandBuffer,
+                    _p_subpass_end_info: *const SubpassEndInfo<'_>,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_end_render_pass2)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRenderPass2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_end_render_pass2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.2 entry point function pointers"]
+pub struct EntryFnV1_2;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.2 instance-level function pointers"]
+pub struct InstanceFnV1_2;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.2 device-level function pointers"]
+pub struct DeviceFnV1_2;
+#[derive(Clone)]
 #[doc = "Raw Vulkan 1.3 entry point function pointers"]
 pub struct EntryFnV1_3;
 #[derive(Clone)]
@@ -3614,9 +3752,6 @@ pub struct DeviceFnV1_3 {
     pub destroy_private_data_slot: PFN_vkDestroyPrivateDataSlot,
     pub set_private_data: PFN_vkSetPrivateData,
     pub get_private_data: PFN_vkGetPrivateData,
-    pub cmd_set_event2: PFN_vkCmdSetEvent2,
-    pub cmd_reset_event2: PFN_vkCmdResetEvent2,
-    pub cmd_wait_events2: PFN_vkCmdWaitEvents2,
     pub cmd_pipeline_barrier2: PFN_vkCmdPipelineBarrier2,
     pub cmd_write_timestamp2: PFN_vkCmdWriteTimestamp2,
     pub queue_submit2: PFN_vkQueueSubmit2,
@@ -3624,25 +3759,6 @@ pub struct DeviceFnV1_3 {
     pub cmd_copy_image2: PFN_vkCmdCopyImage2,
     pub cmd_copy_buffer_to_image2: PFN_vkCmdCopyBufferToImage2,
     pub cmd_copy_image_to_buffer2: PFN_vkCmdCopyImageToBuffer2,
-    pub cmd_blit_image2: PFN_vkCmdBlitImage2,
-    pub cmd_resolve_image2: PFN_vkCmdResolveImage2,
-    pub cmd_begin_rendering: PFN_vkCmdBeginRendering,
-    pub cmd_end_rendering: PFN_vkCmdEndRendering,
-    pub cmd_set_cull_mode: PFN_vkCmdSetCullMode,
-    pub cmd_set_front_face: PFN_vkCmdSetFrontFace,
-    pub cmd_set_primitive_topology: PFN_vkCmdSetPrimitiveTopology,
-    pub cmd_set_viewport_with_count: PFN_vkCmdSetViewportWithCount,
-    pub cmd_set_scissor_with_count: PFN_vkCmdSetScissorWithCount,
-    pub cmd_bind_vertex_buffers2: PFN_vkCmdBindVertexBuffers2,
-    pub cmd_set_depth_test_enable: PFN_vkCmdSetDepthTestEnable,
-    pub cmd_set_depth_write_enable: PFN_vkCmdSetDepthWriteEnable,
-    pub cmd_set_depth_compare_op: PFN_vkCmdSetDepthCompareOp,
-    pub cmd_set_depth_bounds_test_enable: PFN_vkCmdSetDepthBoundsTestEnable,
-    pub cmd_set_stencil_test_enable: PFN_vkCmdSetStencilTestEnable,
-    pub cmd_set_stencil_op: PFN_vkCmdSetStencilOp,
-    pub cmd_set_rasterizer_discard_enable: PFN_vkCmdSetRasterizerDiscardEnable,
-    pub cmd_set_depth_bias_enable: PFN_vkCmdSetDepthBiasEnable,
-    pub cmd_set_primitive_restart_enable: PFN_vkCmdSetPrimitiveRestartEnable,
     pub get_device_buffer_memory_requirements: PFN_vkGetDeviceBufferMemoryRequirements,
     pub get_device_image_memory_requirements: PFN_vkGetDeviceImageMemoryRequirements,
     pub get_device_image_sparse_memory_requirements: PFN_vkGetDeviceImageSparseMemoryRequirements,
@@ -3726,55 +3842,6 @@ impl DeviceFnV1_3 {
                 let val = _f(cname);
                 if val.is_null() {
                     get_private_data
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_set_event2: unsafe {
-                unsafe extern "system" fn cmd_set_event2(
-                    _command_buffer: CommandBuffer,
-                    _event: Event,
-                    _p_dependency_info: *const DependencyInfo<'_>,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_set_event2)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetEvent2\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_set_event2
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_reset_event2: unsafe {
-                unsafe extern "system" fn cmd_reset_event2(
-                    _command_buffer: CommandBuffer,
-                    _event: Event,
-                    _stage_mask: PipelineStageFlags2,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_reset_event2)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResetEvent2\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_reset_event2
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_wait_events2: unsafe {
-                unsafe extern "system" fn cmd_wait_events2(
-                    _command_buffer: CommandBuffer,
-                    _event_count: u32,
-                    _p_events: *const Event,
-                    _p_dependency_infos: *const DependencyInfo<'_>,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_wait_events2)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdWaitEvents2\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_wait_events2
                 } else {
                     ::core::mem::transmute(val)
                 }
@@ -3897,6 +3964,181 @@ impl DeviceFnV1_3 {
                     ::core::mem::transmute(val)
                 }
             },
+            get_device_buffer_memory_requirements: unsafe {
+                unsafe extern "system" fn get_device_buffer_memory_requirements(
+                    _device: crate::vk::Device,
+                    _p_info: *const DeviceBufferMemoryRequirements<'_>,
+                    _p_memory_requirements: *mut MemoryRequirements2<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_buffer_memory_requirements)
+                    ))
+                }
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceBufferMemoryRequirements\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    get_device_buffer_memory_requirements
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            get_device_image_memory_requirements: unsafe {
+                unsafe extern "system" fn get_device_image_memory_requirements(
+                    _device: crate::vk::Device,
+                    _p_info: *const DeviceImageMemoryRequirements<'_>,
+                    _p_memory_requirements: *mut MemoryRequirements2<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_image_memory_requirements)
+                    ))
+                }
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceImageMemoryRequirements\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    get_device_image_memory_requirements
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            get_device_image_sparse_memory_requirements: unsafe {
+                unsafe extern "system" fn get_device_image_sparse_memory_requirements(
+                    _device: crate::vk::Device,
+                    _p_info: *const DeviceImageMemoryRequirements<'_>,
+                    _p_sparse_memory_requirement_count: *mut u32,
+                    _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_image_sparse_memory_requirements)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetDeviceImageSparseMemoryRequirements\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_device_image_sparse_memory_requirements
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.3 entry point function pointers"]
+pub struct EntryFnV1_3;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.3 instance-level function pointers"]
+pub struct InstanceFnV1_3;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.3 device-level function pointers"]
+pub struct DeviceFnV1_3 {
+    pub cmd_set_event2: PFN_vkCmdSetEvent2,
+    pub cmd_reset_event2: PFN_vkCmdResetEvent2,
+    pub cmd_wait_events2: PFN_vkCmdWaitEvents2,
+}
+unsafe impl Send for DeviceFnV1_3 {}
+unsafe impl Sync for DeviceFnV1_3 {}
+impl DeviceFnV1_3 {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+        Self {
+            cmd_set_event2: unsafe {
+                unsafe extern "system" fn cmd_set_event2(
+                    _command_buffer: CommandBuffer,
+                    _event: Event,
+                    _p_dependency_info: *const DependencyInfo<'_>,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_event2)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetEvent2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_event2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_reset_event2: unsafe {
+                unsafe extern "system" fn cmd_reset_event2(
+                    _command_buffer: CommandBuffer,
+                    _event: Event,
+                    _stage_mask: PipelineStageFlags2,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_reset_event2)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdResetEvent2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_reset_event2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_wait_events2: unsafe {
+                unsafe extern "system" fn cmd_wait_events2(
+                    _command_buffer: CommandBuffer,
+                    _event_count: u32,
+                    _p_events: *const Event,
+                    _p_dependency_infos: *const DependencyInfo<'_>,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_wait_events2)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdWaitEvents2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_wait_events2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.3 entry point function pointers"]
+pub struct EntryFnV1_3;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.3 instance-level function pointers"]
+pub struct InstanceFnV1_3;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.3 device-level function pointers"]
+pub struct DeviceFnV1_3 {
+    pub cmd_blit_image2: PFN_vkCmdBlitImage2,
+    pub cmd_resolve_image2: PFN_vkCmdResolveImage2,
+    pub cmd_begin_rendering: PFN_vkCmdBeginRendering,
+    pub cmd_end_rendering: PFN_vkCmdEndRendering,
+    pub cmd_set_cull_mode: PFN_vkCmdSetCullMode,
+    pub cmd_set_front_face: PFN_vkCmdSetFrontFace,
+    pub cmd_set_primitive_topology: PFN_vkCmdSetPrimitiveTopology,
+    pub cmd_set_viewport_with_count: PFN_vkCmdSetViewportWithCount,
+    pub cmd_set_scissor_with_count: PFN_vkCmdSetScissorWithCount,
+    pub cmd_bind_vertex_buffers2: PFN_vkCmdBindVertexBuffers2,
+    pub cmd_set_depth_test_enable: PFN_vkCmdSetDepthTestEnable,
+    pub cmd_set_depth_write_enable: PFN_vkCmdSetDepthWriteEnable,
+    pub cmd_set_depth_compare_op: PFN_vkCmdSetDepthCompareOp,
+    pub cmd_set_depth_bounds_test_enable: PFN_vkCmdSetDepthBoundsTestEnable,
+    pub cmd_set_stencil_test_enable: PFN_vkCmdSetStencilTestEnable,
+    pub cmd_set_stencil_op: PFN_vkCmdSetStencilOp,
+    pub cmd_set_rasterizer_discard_enable: PFN_vkCmdSetRasterizerDiscardEnable,
+    pub cmd_set_depth_bias_enable: PFN_vkCmdSetDepthBiasEnable,
+    pub cmd_set_primitive_restart_enable: PFN_vkCmdSetPrimitiveRestartEnable,
+}
+unsafe impl Send for DeviceFnV1_3 {}
+unsafe impl Sync for DeviceFnV1_3 {}
+impl DeviceFnV1_3 {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+        Self {
             cmd_blit_image2: unsafe {
                 unsafe extern "system" fn cmd_blit_image2(
                     _command_buffer: CommandBuffer,
@@ -4228,71 +4470,18 @@ impl DeviceFnV1_3 {
                     ::core::mem::transmute(val)
                 }
             },
-            get_device_buffer_memory_requirements: unsafe {
-                unsafe extern "system" fn get_device_buffer_memory_requirements(
-                    _device: crate::vk::Device,
-                    _p_info: *const DeviceBufferMemoryRequirements<'_>,
-                    _p_memory_requirements: *mut MemoryRequirements2<'_>,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(get_device_buffer_memory_requirements)
-                    ))
-                }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceBufferMemoryRequirements\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    get_device_buffer_memory_requirements
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            get_device_image_memory_requirements: unsafe {
-                unsafe extern "system" fn get_device_image_memory_requirements(
-                    _device: crate::vk::Device,
-                    _p_info: *const DeviceImageMemoryRequirements<'_>,
-                    _p_memory_requirements: *mut MemoryRequirements2<'_>,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(get_device_image_memory_requirements)
-                    ))
-                }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceImageMemoryRequirements\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    get_device_image_memory_requirements
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            get_device_image_sparse_memory_requirements: unsafe {
-                unsafe extern "system" fn get_device_image_sparse_memory_requirements(
-                    _device: crate::vk::Device,
-                    _p_info: *const DeviceImageMemoryRequirements<'_>,
-                    _p_sparse_memory_requirement_count: *mut u32,
-                    _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2<'_>,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(get_device_image_sparse_memory_requirements)
-                    ))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetDeviceImageSparseMemoryRequirements\0",
-                );
-                let val = _f(cname);
-                if val.is_null() {
-                    get_device_image_sparse_memory_requirements
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
         }
     }
 }
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.3 entry point function pointers"]
+pub struct EntryFnV1_3;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.3 instance-level function pointers"]
+pub struct InstanceFnV1_3;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.3 device-level function pointers"]
+pub struct DeviceFnV1_3;
 #[derive(Clone)]
 #[doc = "Raw Vulkan 1.4 entry point function pointers"]
 pub struct EntryFnV1_4;
@@ -4302,21 +4491,10 @@ pub struct InstanceFnV1_4;
 #[derive(Clone)]
 #[doc = "Raw Vulkan 1.4 device-level function pointers"]
 pub struct DeviceFnV1_4 {
-    pub cmd_set_line_stipple: PFN_vkCmdSetLineStipple,
     pub map_memory2: PFN_vkMapMemory2,
     pub unmap_memory2: PFN_vkUnmapMemory2,
-    pub cmd_bind_index_buffer2: PFN_vkCmdBindIndexBuffer2,
-    pub get_rendering_area_granularity: PFN_vkGetRenderingAreaGranularity,
     pub get_device_image_subresource_layout: PFN_vkGetDeviceImageSubresourceLayout,
     pub get_image_subresource_layout2: PFN_vkGetImageSubresourceLayout2,
-    pub cmd_push_descriptor_set: PFN_vkCmdPushDescriptorSet,
-    pub cmd_push_descriptor_set_with_template: PFN_vkCmdPushDescriptorSetWithTemplate,
-    pub cmd_set_rendering_attachment_locations: PFN_vkCmdSetRenderingAttachmentLocations,
-    pub cmd_set_rendering_input_attachment_indices: PFN_vkCmdSetRenderingInputAttachmentIndices,
-    pub cmd_bind_descriptor_sets2: PFN_vkCmdBindDescriptorSets2,
-    pub cmd_push_constants2: PFN_vkCmdPushConstants2,
-    pub cmd_push_descriptor_set2: PFN_vkCmdPushDescriptorSet2,
-    pub cmd_push_descriptor_set_with_template2: PFN_vkCmdPushDescriptorSetWithTemplate2,
     pub copy_memory_to_image: PFN_vkCopyMemoryToImage,
     pub copy_image_to_memory: PFN_vkCopyImageToMemory,
     pub copy_image_to_image: PFN_vkCopyImageToImage,
@@ -4330,22 +4508,6 @@ impl DeviceFnV1_4 {
     }
     fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
         Self {
-            cmd_set_line_stipple: unsafe {
-                unsafe extern "system" fn cmd_set_line_stipple(
-                    _command_buffer: CommandBuffer,
-                    _line_stipple_factor: u32,
-                    _line_stipple_pattern: u16,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_set_line_stipple)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLineStipple\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_set_line_stipple
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
             map_memory2: unsafe {
                 unsafe extern "system" fn map_memory2(
                     _device: crate::vk::Device,
@@ -4373,46 +4535,6 @@ impl DeviceFnV1_4 {
                 let val = _f(cname);
                 if val.is_null() {
                     unmap_memory2
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_bind_index_buffer2: unsafe {
-                unsafe extern "system" fn cmd_bind_index_buffer2(
-                    _command_buffer: CommandBuffer,
-                    _buffer: Buffer,
-                    _offset: DeviceSize,
-                    _size: DeviceSize,
-                    _index_type: IndexType,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_bind_index_buffer2)
-                    ))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindIndexBuffer2\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_bind_index_buffer2
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            get_rendering_area_granularity: unsafe {
-                unsafe extern "system" fn get_rendering_area_granularity(
-                    _device: crate::vk::Device,
-                    _p_rendering_area_info: *const RenderingAreaInfo<'_>,
-                    _p_granularity: *mut Extent2D,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(get_rendering_area_granularity)
-                    ))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetRenderingAreaGranularity\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    get_rendering_area_granularity
                 } else {
                     ::core::mem::transmute(val)
                 }
@@ -4457,6 +4579,97 @@ impl DeviceFnV1_4 {
                     ::core::mem::transmute(val)
                 }
             },
+            copy_memory_to_image: unsafe {
+                unsafe extern "system" fn copy_memory_to_image(
+                    _device: crate::vk::Device,
+                    _p_copy_memory_to_image_info: *const CopyMemoryToImageInfo<'_>,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(copy_memory_to_image)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCopyMemoryToImage\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    copy_memory_to_image
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            copy_image_to_memory: unsafe {
+                unsafe extern "system" fn copy_image_to_memory(
+                    _device: crate::vk::Device,
+                    _p_copy_image_to_memory_info: *const CopyImageToMemoryInfo<'_>,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(copy_image_to_memory)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCopyImageToMemory\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    copy_image_to_memory
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            copy_image_to_image: unsafe {
+                unsafe extern "system" fn copy_image_to_image(
+                    _device: crate::vk::Device,
+                    _p_copy_image_to_image_info: *const CopyImageToImageInfo<'_>,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(copy_image_to_image)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCopyImageToImage\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    copy_image_to_image
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            transition_image_layout: unsafe {
+                unsafe extern "system" fn transition_image_layout(
+                    _device: crate::vk::Device,
+                    _transition_count: u32,
+                    _p_transitions: *const HostImageLayoutTransitionInfo<'_>,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(transition_image_layout)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkTransitionImageLayout\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    transition_image_layout
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.4 entry point function pointers"]
+pub struct EntryFnV1_4;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.4 instance-level function pointers"]
+pub struct InstanceFnV1_4;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.4 device-level function pointers"]
+pub struct DeviceFnV1_4 {
+    pub cmd_push_descriptor_set: PFN_vkCmdPushDescriptorSet,
+    pub cmd_push_descriptor_set_with_template: PFN_vkCmdPushDescriptorSetWithTemplate,
+    pub cmd_bind_descriptor_sets2: PFN_vkCmdBindDescriptorSets2,
+    pub cmd_push_constants2: PFN_vkCmdPushConstants2,
+    pub cmd_push_descriptor_set2: PFN_vkCmdPushDescriptorSet2,
+    pub cmd_push_descriptor_set_with_template2: PFN_vkCmdPushDescriptorSetWithTemplate2,
+}
+unsafe impl Send for DeviceFnV1_4 {}
+unsafe impl Sync for DeviceFnV1_4 {}
+impl DeviceFnV1_4 {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+        Self {
             cmd_push_descriptor_set: unsafe {
                 unsafe extern "system" fn cmd_push_descriptor_set(
                     _command_buffer: CommandBuffer,
@@ -4497,45 +4710,6 @@ impl DeviceFnV1_4 {
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_push_descriptor_set_with_template
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_set_rendering_attachment_locations: unsafe {
-                unsafe extern "system" fn cmd_set_rendering_attachment_locations(
-                    _command_buffer: CommandBuffer,
-                    _p_location_info: *const RenderingAttachmentLocationInfo<'_>,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_set_rendering_attachment_locations)
-                    ))
-                }
-                let cname =
-                    CStr::from_bytes_with_nul_unchecked(b"vkCmdSetRenderingAttachmentLocations\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_set_rendering_attachment_locations
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            cmd_set_rendering_input_attachment_indices: unsafe {
-                unsafe extern "system" fn cmd_set_rendering_input_attachment_indices(
-                    _command_buffer: CommandBuffer,
-                    _p_input_attachment_index_info: *const RenderingInputAttachmentIndexInfo<'_>,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_set_rendering_input_attachment_indices)
-                    ))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(
-                    b"vkCmdSetRenderingInputAttachmentIndices\0",
-                );
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_set_rendering_input_attachment_indices
                 } else {
                     ::core::mem::transmute(val)
                 }
@@ -4610,66 +4784,123 @@ impl DeviceFnV1_4 {
                     ::core::mem::transmute(val)
                 }
             },
-            copy_memory_to_image: unsafe {
-                unsafe extern "system" fn copy_memory_to_image(
-                    _device: crate::vk::Device,
-                    _p_copy_memory_to_image_info: *const CopyMemoryToImageInfo<'_>,
-                ) -> Result {
-                    panic!(concat!("Unable to load ", stringify!(copy_memory_to_image)))
+        }
+    }
+}
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.4 entry point function pointers"]
+pub struct EntryFnV1_4;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.4 instance-level function pointers"]
+pub struct InstanceFnV1_4;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.4 device-level function pointers"]
+pub struct DeviceFnV1_4 {
+    pub cmd_set_line_stipple: PFN_vkCmdSetLineStipple,
+    pub cmd_bind_index_buffer2: PFN_vkCmdBindIndexBuffer2,
+    pub get_rendering_area_granularity: PFN_vkGetRenderingAreaGranularity,
+    pub cmd_set_rendering_attachment_locations: PFN_vkCmdSetRenderingAttachmentLocations,
+    pub cmd_set_rendering_input_attachment_indices: PFN_vkCmdSetRenderingInputAttachmentIndices,
+}
+unsafe impl Send for DeviceFnV1_4 {}
+unsafe impl Sync for DeviceFnV1_4 {}
+impl DeviceFnV1_4 {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+        Self {
+            cmd_set_line_stipple: unsafe {
+                unsafe extern "system" fn cmd_set_line_stipple(
+                    _command_buffer: CommandBuffer,
+                    _line_stipple_factor: u32,
+                    _line_stipple_pattern: u16,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_line_stipple)))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCopyMemoryToImage\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLineStipple\0");
                 let val = _f(cname);
                 if val.is_null() {
-                    copy_memory_to_image
+                    cmd_set_line_stipple
                 } else {
                     ::core::mem::transmute(val)
                 }
             },
-            copy_image_to_memory: unsafe {
-                unsafe extern "system" fn copy_image_to_memory(
-                    _device: crate::vk::Device,
-                    _p_copy_image_to_memory_info: *const CopyImageToMemoryInfo<'_>,
-                ) -> Result {
-                    panic!(concat!("Unable to load ", stringify!(copy_image_to_memory)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCopyImageToMemory\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    copy_image_to_memory
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            copy_image_to_image: unsafe {
-                unsafe extern "system" fn copy_image_to_image(
-                    _device: crate::vk::Device,
-                    _p_copy_image_to_image_info: *const CopyImageToImageInfo<'_>,
-                ) -> Result {
-                    panic!(concat!("Unable to load ", stringify!(copy_image_to_image)))
-                }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCopyImageToImage\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    copy_image_to_image
-                } else {
-                    ::core::mem::transmute(val)
-                }
-            },
-            transition_image_layout: unsafe {
-                unsafe extern "system" fn transition_image_layout(
-                    _device: crate::vk::Device,
-                    _transition_count: u32,
-                    _p_transitions: *const HostImageLayoutTransitionInfo<'_>,
-                ) -> Result {
+            cmd_bind_index_buffer2: unsafe {
+                unsafe extern "system" fn cmd_bind_index_buffer2(
+                    _command_buffer: CommandBuffer,
+                    _buffer: Buffer,
+                    _offset: DeviceSize,
+                    _size: DeviceSize,
+                    _index_type: IndexType,
+                ) {
                     panic!(concat!(
                         "Unable to load ",
-                        stringify!(transition_image_layout)
+                        stringify!(cmd_bind_index_buffer2)
                     ))
                 }
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkTransitionImageLayout\0");
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindIndexBuffer2\0");
                 let val = _f(cname);
                 if val.is_null() {
-                    transition_image_layout
+                    cmd_bind_index_buffer2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            get_rendering_area_granularity: unsafe {
+                unsafe extern "system" fn get_rendering_area_granularity(
+                    _device: crate::vk::Device,
+                    _p_rendering_area_info: *const RenderingAreaInfo<'_>,
+                    _p_granularity: *mut Extent2D,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_rendering_area_granularity)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetRenderingAreaGranularity\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    get_rendering_area_granularity
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_set_rendering_attachment_locations: unsafe {
+                unsafe extern "system" fn cmd_set_rendering_attachment_locations(
+                    _command_buffer: CommandBuffer,
+                    _p_location_info: *const RenderingAttachmentLocationInfo<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_rendering_attachment_locations)
+                    ))
+                }
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkCmdSetRenderingAttachmentLocations\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_rendering_attachment_locations
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_set_rendering_input_attachment_indices: unsafe {
+                unsafe extern "system" fn cmd_set_rendering_input_attachment_indices(
+                    _command_buffer: CommandBuffer,
+                    _p_input_attachment_index_info: *const RenderingInputAttachmentIndexInfo<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_rendering_input_attachment_indices)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetRenderingInputAttachmentIndices\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_rendering_input_attachment_indices
                 } else {
                     ::core::mem::transmute(val)
                 }
@@ -4677,3 +4908,12 @@ impl DeviceFnV1_4 {
         }
     }
 }
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.4 entry point function pointers"]
+pub struct EntryFnV1_4;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.4 instance-level function pointers"]
+pub struct InstanceFnV1_4;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.4 device-level function pointers"]
+pub struct DeviceFnV1_4;

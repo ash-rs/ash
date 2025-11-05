@@ -58,10 +58,6 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 329;
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
-pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
 pub type SampleMask = u32;
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBool32.html>"]
@@ -289,6 +285,11 @@ vk_bitflags_wrapped!(PipelineRasterizationDepthClipStateCreateFlagsEXT, Flags);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSurfaceCreateFlagsOHOS.html>"]
 pub struct SurfaceCreateFlagsOHOS(pub(crate) Flags);
 vk_bitflags_wrapped!(SurfaceCreateFlagsOHOS, Flags);
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceCounterDescriptionFlagsARM.html>"]
+pub struct PerformanceCounterDescriptionFlagsARM(pub(crate) Flags);
+vk_bitflags_wrapped!(PerformanceCounterDescriptionFlagsARM, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoBeginCodingFlagsKHR.html>"]
@@ -19875,6 +19876,104 @@ impl<'a> PhysicalDeviceMaintenance9PropertiesKHR<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMaintenance10PropertiesKHR.html>"]
+#[must_use]
+pub struct PhysicalDeviceMaintenance10PropertiesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub rgba4_opaque_black_swizzled: Bool32,
+    pub resolve_srgb_format_applies_transfer_function: Bool32,
+    pub resolve_srgb_format_supports_transfer_function_control: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceMaintenance10PropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceMaintenance10PropertiesKHR<'_> {}
+impl ::core::default::Default for PhysicalDeviceMaintenance10PropertiesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            rgba4_opaque_black_swizzled: Bool32::default(),
+            resolve_srgb_format_applies_transfer_function: Bool32::default(),
+            resolve_srgb_format_supports_transfer_function_control: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance10PropertiesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_MAINTENANCE_10_PROPERTIES_KHR;
+}
+unsafe impl Extends<PhysicalDeviceProperties2<'_>>
+    for PhysicalDeviceMaintenance10PropertiesKHR<'_>
+{
+}
+impl<'a> PhysicalDeviceMaintenance10PropertiesKHR<'a> {
+    #[inline]
+    pub fn rgba4_opaque_black_swizzled(mut self, rgba4_opaque_black_swizzled: bool) -> Self {
+        self.rgba4_opaque_black_swizzled = rgba4_opaque_black_swizzled.into();
+        self
+    }
+    #[inline]
+    pub fn resolve_srgb_format_applies_transfer_function(
+        mut self,
+        resolve_srgb_format_applies_transfer_function: bool,
+    ) -> Self {
+        self.resolve_srgb_format_applies_transfer_function =
+            resolve_srgb_format_applies_transfer_function.into();
+        self
+    }
+    #[inline]
+    pub fn resolve_srgb_format_supports_transfer_function_control(
+        mut self,
+        resolve_srgb_format_supports_transfer_function_control: bool,
+    ) -> Self {
+        self.resolve_srgb_format_supports_transfer_function_control =
+            resolve_srgb_format_supports_transfer_function_control.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMaintenance10FeaturesKHR.html>"]
+#[must_use]
+pub struct PhysicalDeviceMaintenance10FeaturesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub maintenance10: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceMaintenance10FeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceMaintenance10FeaturesKHR<'_> {}
+impl ::core::default::Default for PhysicalDeviceMaintenance10FeaturesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            maintenance10: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance10FeaturesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_MAINTENANCE_10_FEATURES_KHR;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceMaintenance10FeaturesKHR<'_> {}
+unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceMaintenance10FeaturesKHR<'_> {}
+impl<'a> PhysicalDeviceMaintenance10FeaturesKHR<'a> {
+    #[inline]
+    pub fn maintenance10(mut self, maintenance10: bool) -> Self {
+        self.maintenance10 = maintenance10.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueueFamilyOwnershipTransferPropertiesKHR.html>"]
 #[must_use]
 pub struct QueueFamilyOwnershipTransferPropertiesKHR<'a> {
@@ -25155,17 +25254,17 @@ impl<'a> PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMemoryDecompressionFeaturesNV.html>"]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMemoryDecompressionFeaturesEXT.html>"]
 #[must_use]
-pub struct PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
+pub struct PhysicalDeviceMemoryDecompressionFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub memory_decompression: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
-unsafe impl Send for PhysicalDeviceMemoryDecompressionFeaturesNV<'_> {}
-unsafe impl Sync for PhysicalDeviceMemoryDecompressionFeaturesNV<'_> {}
-impl ::core::default::Default for PhysicalDeviceMemoryDecompressionFeaturesNV<'_> {
+unsafe impl Send for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {}
+impl ::core::default::Default for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -25176,16 +25275,16 @@ impl ::core::default::Default for PhysicalDeviceMemoryDecompressionFeaturesNV<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
-        StructureType::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV;
+        StructureType::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_EXT;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
-    for PhysicalDeviceMemoryDecompressionFeaturesNV<'_>
+    for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_>
 {
 }
-unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceMemoryDecompressionFeaturesNV<'_> {}
-impl<'a> PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
+unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceMemoryDecompressionFeaturesEXT<'a> {
     #[inline]
     pub fn memory_decompression(mut self, memory_decompression: bool) -> Self {
         self.memory_decompression = memory_decompression.into();
@@ -25195,42 +25294,42 @@ impl<'a> PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMemoryDecompressionPropertiesNV.html>"]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMemoryDecompressionPropertiesEXT.html>"]
 #[must_use]
-pub struct PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
+pub struct PhysicalDeviceMemoryDecompressionPropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub decompression_methods: MemoryDecompressionMethodFlagsNV,
+    pub decompression_methods: MemoryDecompressionMethodFlagsEXT,
     pub max_decompression_indirect_count: u64,
     pub _marker: PhantomData<&'a ()>,
 }
-unsafe impl Send for PhysicalDeviceMemoryDecompressionPropertiesNV<'_> {}
-unsafe impl Sync for PhysicalDeviceMemoryDecompressionPropertiesNV<'_> {}
-impl ::core::default::Default for PhysicalDeviceMemoryDecompressionPropertiesNV<'_> {
+unsafe impl Send for PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {}
+impl ::core::default::Default for PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::core::ptr::null_mut(),
-            decompression_methods: MemoryDecompressionMethodFlagsNV::default(),
+            decompression_methods: MemoryDecompressionMethodFlagsEXT::default(),
             max_decompression_indirect_count: u64::default(),
             _marker: PhantomData,
         }
     }
 }
-unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
-        StructureType::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV;
+        StructureType::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_EXT;
 }
 unsafe impl Extends<PhysicalDeviceProperties2<'_>>
-    for PhysicalDeviceMemoryDecompressionPropertiesNV<'_>
+    for PhysicalDeviceMemoryDecompressionPropertiesEXT<'_>
 {
 }
-impl<'a> PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
+impl<'a> PhysicalDeviceMemoryDecompressionPropertiesEXT<'a> {
     #[inline]
     pub fn decompression_methods(
         mut self,
-        decompression_methods: MemoryDecompressionMethodFlagsNV,
+        decompression_methods: MemoryDecompressionMethodFlagsEXT,
     ) -> Self {
         self.decompression_methods = decompression_methods;
         self
@@ -28393,7 +28492,7 @@ unsafe impl<'a> TaggedStructure<'a> for RenderPassFragmentDensityMapOffsetEndInf
         StructureType::RENDER_PASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_EXT;
 }
 unsafe impl Extends<SubpassEndInfo<'_>> for RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {}
-unsafe impl Extends<RenderingEndInfoEXT<'_>> for RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {}
+unsafe impl Extends<RenderingEndInfoKHR<'_>> for RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {}
 impl<'a> RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {
     #[inline]
     pub fn fragment_density_offsets(mut self, fragment_density_offsets: &'a [Offset2D]) -> Self {
@@ -53089,16 +53188,16 @@ impl<'a> RenderingInfo<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderingEndInfoEXT.html>"]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderingEndInfoKHR.html>"]
 #[must_use]
-pub struct RenderingEndInfoEXT<'a> {
+pub struct RenderingEndInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
-unsafe impl Send for RenderingEndInfoEXT<'_> {}
-unsafe impl Sync for RenderingEndInfoEXT<'_> {}
-impl ::core::default::Default for RenderingEndInfoEXT<'_> {
+unsafe impl Send for RenderingEndInfoKHR<'_> {}
+unsafe impl Sync for RenderingEndInfoKHR<'_> {}
+impl ::core::default::Default for RenderingEndInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -53108,10 +53207,10 @@ impl ::core::default::Default for RenderingEndInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure<'a> for RenderingEndInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_END_INFO_EXT;
+unsafe impl<'a> TaggedStructure<'a> for RenderingEndInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_END_INFO_KHR;
 }
-impl<'a> RenderingEndInfoEXT<'a> {}
+impl<'a> RenderingEndInfoKHR<'a> {}
 #[repr(C)]
 #[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderingAttachmentInfo.html>"]
@@ -57181,6 +57280,90 @@ impl<'a> PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderingAttachmentFlagsInfoKHR.html>"]
+#[must_use]
+pub struct RenderingAttachmentFlagsInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: RenderingAttachmentFlagsKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for RenderingAttachmentFlagsInfoKHR<'_> {}
+unsafe impl Sync for RenderingAttachmentFlagsInfoKHR<'_> {}
+impl ::core::default::Default for RenderingAttachmentFlagsInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            flags: RenderingAttachmentFlagsKHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentFlagsInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_ATTACHMENT_FLAGS_INFO_KHR;
+}
+unsafe impl Extends<RenderingAttachmentInfo<'_>> for RenderingAttachmentFlagsInfoKHR<'_> {}
+impl<'a> RenderingAttachmentFlagsInfoKHR<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: RenderingAttachmentFlagsKHR) -> Self {
+        self.flags = flags;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkResolveImageModeInfoKHR.html>"]
+#[must_use]
+pub struct ResolveImageModeInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: ResolveImageFlagsKHR,
+    pub resolve_mode: ResolveModeFlags,
+    pub stencil_resolve_mode: ResolveModeFlags,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for ResolveImageModeInfoKHR<'_> {}
+unsafe impl Sync for ResolveImageModeInfoKHR<'_> {}
+impl ::core::default::Default for ResolveImageModeInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            flags: ResolveImageFlagsKHR::default(),
+            resolve_mode: ResolveModeFlags::default(),
+            stencil_resolve_mode: ResolveModeFlags::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for ResolveImageModeInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::RESOLVE_IMAGE_MODE_INFO_KHR;
+}
+unsafe impl Extends<ResolveImageInfo2<'_>> for ResolveImageModeInfoKHR<'_> {}
+impl<'a> ResolveImageModeInfoKHR<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: ResolveImageFlagsKHR) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn resolve_mode(mut self, resolve_mode: ResolveModeFlags) -> Self {
+        self.resolve_mode = resolve_mode;
+        self
+    }
+    #[inline]
+    pub fn stencil_resolve_mode(mut self, stencil_resolve_mode: ResolveModeFlags) -> Self {
+        self.stencil_resolve_mode = stencil_resolve_mode;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceAddressBindingCallbackDataEXT.html>"]
 #[must_use]
 pub struct DeviceAddressBindingCallbackDataEXT<'a> {
@@ -58159,6 +58342,86 @@ impl DecompressMemoryRegionNV {
         decompression_method: MemoryDecompressionMethodFlagsNV,
     ) -> Self {
         self.decompression_method = decompression_method;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDecompressMemoryRegionEXT.html>"]
+#[must_use]
+pub struct DecompressMemoryRegionEXT {
+    pub src_address: DeviceAddress,
+    pub dst_address: DeviceAddress,
+    pub compressed_size: DeviceSize,
+    pub decompressed_size: DeviceSize,
+}
+impl DecompressMemoryRegionEXT {
+    #[inline]
+    pub fn src_address(mut self, src_address: DeviceAddress) -> Self {
+        self.src_address = src_address;
+        self
+    }
+    #[inline]
+    pub fn dst_address(mut self, dst_address: DeviceAddress) -> Self {
+        self.dst_address = dst_address;
+        self
+    }
+    #[inline]
+    pub fn compressed_size(mut self, compressed_size: DeviceSize) -> Self {
+        self.compressed_size = compressed_size;
+        self
+    }
+    #[inline]
+    pub fn decompressed_size(mut self, decompressed_size: DeviceSize) -> Self {
+        self.decompressed_size = decompressed_size;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDecompressMemoryInfoEXT.html>"]
+#[must_use]
+pub struct DecompressMemoryInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub decompression_method: MemoryDecompressionMethodFlagsEXT,
+    pub region_count: u32,
+    pub p_regions: *const DecompressMemoryRegionEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for DecompressMemoryInfoEXT<'_> {}
+unsafe impl Sync for DecompressMemoryInfoEXT<'_> {}
+impl ::core::default::Default for DecompressMemoryInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            decompression_method: MemoryDecompressionMethodFlagsEXT::default(),
+            region_count: u32::default(),
+            p_regions: ::core::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for DecompressMemoryInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DECOMPRESS_MEMORY_INFO_EXT;
+}
+impl<'a> DecompressMemoryInfoEXT<'a> {
+    #[inline]
+    pub fn decompression_method(
+        mut self,
+        decompression_method: MemoryDecompressionMethodFlagsEXT,
+    ) -> Self {
+        self.decompression_method = decompression_method;
+        self
+    }
+    #[inline]
+    pub fn regions(mut self, regions: &'a [DecompressMemoryRegionEXT]) -> Self {
+        self.region_count = regions.len() as _;
+        self.p_regions = regions.as_ptr();
         self
     }
 }
@@ -65305,6 +65568,54 @@ define_handle ! (ExternalComputeQueueNV , EXTERNAL_COMPUTE_QUEUE_NV , doc = "<ht
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT.html>"]
+#[must_use]
+pub struct PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_uniform_buffer_unsized_array: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_> {}
+impl ::core::default::Default for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            shader_uniform_buffer_unsized_array: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'a>
+{
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_UNIFORM_BUFFER_UNSIZED_ARRAY_FEATURES_EXT;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>>
+    for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'a> {
+    #[inline]
+    pub fn shader_uniform_buffer_unsized_array(
+        mut self,
+        shader_uniform_buffer_unsized_array: bool,
+    ) -> Self {
+        self.shader_uniform_buffer_unsized_array = shader_uniform_buffer_unsized_array.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceFormatPackFeaturesARM.html>"]
 #[must_use]
 pub struct PhysicalDeviceFormatPackFeaturesARM<'a> {
@@ -67792,6 +68103,116 @@ impl<'a> PhysicalDeviceShaderUntypedPointersFeaturesKHR<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkNativeBufferOHOS.html>"]
+#[must_use]
+pub struct NativeBufferOHOS<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub handle: *mut OHBufferHandle,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for NativeBufferOHOS<'_> {}
+unsafe impl Sync for NativeBufferOHOS<'_> {}
+impl ::core::default::Default for NativeBufferOHOS<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            handle: ::core::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for NativeBufferOHOS<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::NATIVE_BUFFER_OHOS;
+}
+unsafe impl Extends<ImageCreateInfo<'_>> for NativeBufferOHOS<'_> {}
+unsafe impl Extends<BindImageMemoryInfo<'_>> for NativeBufferOHOS<'_> {}
+impl<'a> NativeBufferOHOS<'a> {
+    #[inline]
+    pub fn handle(mut self, handle: &'a mut OHBufferHandle) -> Self {
+        self.handle = handle;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSwapchainImageCreateInfoOHOS.html>"]
+#[must_use]
+pub struct SwapchainImageCreateInfoOHOS<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub usage: SwapchainImageUsageFlagsOHOS,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for SwapchainImageCreateInfoOHOS<'_> {}
+unsafe impl Sync for SwapchainImageCreateInfoOHOS<'_> {}
+impl ::core::default::Default for SwapchainImageCreateInfoOHOS<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            usage: SwapchainImageUsageFlagsOHOS::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for SwapchainImageCreateInfoOHOS<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_IMAGE_CREATE_INFO_OHOS;
+}
+unsafe impl Extends<ImageCreateInfo<'_>> for SwapchainImageCreateInfoOHOS<'_> {}
+impl<'a> SwapchainImageCreateInfoOHOS<'a> {
+    #[inline]
+    pub fn usage(mut self, usage: SwapchainImageUsageFlagsOHOS) -> Self {
+        self.usage = usage;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePresentationPropertiesOHOS.html>"]
+#[must_use]
+pub struct PhysicalDevicePresentationPropertiesOHOS<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shared_image: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDevicePresentationPropertiesOHOS<'_> {}
+unsafe impl Sync for PhysicalDevicePresentationPropertiesOHOS<'_> {}
+impl ::core::default::Default for PhysicalDevicePresentationPropertiesOHOS<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            shared_image: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentationPropertiesOHOS<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_PRESENTATION_PROPERTIES_OHOS;
+}
+unsafe impl Extends<PhysicalDeviceProperties2<'_>>
+    for PhysicalDevicePresentationPropertiesOHOS<'_>
+{
+}
+impl<'a> PhysicalDevicePresentationPropertiesOHOS<'a> {
+    #[inline]
+    pub fn shared_image(mut self, shared_image: bool) -> Self {
+        self.shared_image = shared_image.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE.html>"]
 #[must_use]
 pub struct PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'a> {
@@ -67994,6 +68415,592 @@ impl<'a> VideoEncodeSessionRgbConversionCreateInfoVALVE<'a> {
         y_chroma_offset: VideoEncodeRgbChromaOffsetFlagsVALVE,
     ) -> Self {
         self.y_chroma_offset = y_chroma_offset;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShader64BitIndexingFeaturesEXT.html>"]
+#[must_use]
+pub struct PhysicalDeviceShader64BitIndexingFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader64_bit_indexing: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {}
+impl ::core::default::Default for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            shader64_bit_indexing: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShader64BitIndexingFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_64_INDEXING_FEATURES_EXT;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceShader64BitIndexingFeaturesEXT<'a> {
+    #[inline]
+    pub fn shader64_bit_indexing(mut self, shader64_bit_indexing: bool) -> Self {
+        self.shader64_bit_indexing = shader64_bit_indexing.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkNativeBufferUsageOHOS.html>"]
+#[must_use]
+pub struct NativeBufferUsageOHOS<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub ohos_native_buffer_usage: u64,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for NativeBufferUsageOHOS<'_> {}
+unsafe impl Sync for NativeBufferUsageOHOS<'_> {}
+impl ::core::default::Default for NativeBufferUsageOHOS<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            ohos_native_buffer_usage: u64::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for NativeBufferUsageOHOS<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::NATIVE_BUFFER_USAGE_OHOS;
+}
+unsafe impl Extends<ImageFormatProperties2<'_>> for NativeBufferUsageOHOS<'_> {}
+impl<'a> NativeBufferUsageOHOS<'a> {
+    #[inline]
+    pub fn ohos_native_buffer_usage(mut self, ohos_native_buffer_usage: u64) -> Self {
+        self.ohos_native_buffer_usage = ohos_native_buffer_usage;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkNativeBufferPropertiesOHOS.html>"]
+#[must_use]
+pub struct NativeBufferPropertiesOHOS<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub allocation_size: DeviceSize,
+    pub memory_type_bits: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for NativeBufferPropertiesOHOS<'_> {}
+unsafe impl Sync for NativeBufferPropertiesOHOS<'_> {}
+impl ::core::default::Default for NativeBufferPropertiesOHOS<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            allocation_size: DeviceSize::default(),
+            memory_type_bits: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for NativeBufferPropertiesOHOS<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::NATIVE_BUFFER_PROPERTIES_OHOS;
+}
+impl<'a> NativeBufferPropertiesOHOS<'a> {
+    #[inline]
+    pub fn allocation_size(mut self, allocation_size: DeviceSize) -> Self {
+        self.allocation_size = allocation_size;
+        self
+    }
+    #[inline]
+    pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
+        self.memory_type_bits = memory_type_bits;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkNativeBufferFormatPropertiesOHOS.html>"]
+#[must_use]
+pub struct NativeBufferFormatPropertiesOHOS<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub format: Format,
+    pub external_format: u64,
+    pub format_features: FormatFeatureFlags,
+    pub sampler_ycbcr_conversion_components: ComponentMapping,
+    pub suggested_ycbcr_model: SamplerYcbcrModelConversion,
+    pub suggested_ycbcr_range: SamplerYcbcrRange,
+    pub suggested_x_chroma_offset: ChromaLocation,
+    pub suggested_y_chroma_offset: ChromaLocation,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for NativeBufferFormatPropertiesOHOS<'_> {}
+unsafe impl Sync for NativeBufferFormatPropertiesOHOS<'_> {}
+impl ::core::default::Default for NativeBufferFormatPropertiesOHOS<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            format: Format::default(),
+            external_format: u64::default(),
+            format_features: FormatFeatureFlags::default(),
+            sampler_ycbcr_conversion_components: ComponentMapping::default(),
+            suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
+            suggested_ycbcr_range: SamplerYcbcrRange::default(),
+            suggested_x_chroma_offset: ChromaLocation::default(),
+            suggested_y_chroma_offset: ChromaLocation::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for NativeBufferFormatPropertiesOHOS<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::NATIVE_BUFFER_FORMAT_PROPERTIES_OHOS;
+}
+unsafe impl Extends<NativeBufferPropertiesOHOS<'_>> for NativeBufferFormatPropertiesOHOS<'_> {}
+impl<'a> NativeBufferFormatPropertiesOHOS<'a> {
+    #[inline]
+    pub fn format(mut self, format: Format) -> Self {
+        self.format = format;
+        self
+    }
+    #[inline]
+    pub fn external_format(mut self, external_format: u64) -> Self {
+        self.external_format = external_format;
+        self
+    }
+    #[inline]
+    pub fn format_features(mut self, format_features: FormatFeatureFlags) -> Self {
+        self.format_features = format_features;
+        self
+    }
+    #[inline]
+    pub fn sampler_ycbcr_conversion_components(
+        mut self,
+        sampler_ycbcr_conversion_components: ComponentMapping,
+    ) -> Self {
+        self.sampler_ycbcr_conversion_components = sampler_ycbcr_conversion_components;
+        self
+    }
+    #[inline]
+    pub fn suggested_ycbcr_model(
+        mut self,
+        suggested_ycbcr_model: SamplerYcbcrModelConversion,
+    ) -> Self {
+        self.suggested_ycbcr_model = suggested_ycbcr_model;
+        self
+    }
+    #[inline]
+    pub fn suggested_ycbcr_range(mut self, suggested_ycbcr_range: SamplerYcbcrRange) -> Self {
+        self.suggested_ycbcr_range = suggested_ycbcr_range;
+        self
+    }
+    #[inline]
+    pub fn suggested_x_chroma_offset(mut self, suggested_x_chroma_offset: ChromaLocation) -> Self {
+        self.suggested_x_chroma_offset = suggested_x_chroma_offset;
+        self
+    }
+    #[inline]
+    pub fn suggested_y_chroma_offset(mut self, suggested_y_chroma_offset: ChromaLocation) -> Self {
+        self.suggested_y_chroma_offset = suggested_y_chroma_offset;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImportNativeBufferInfoOHOS.html>"]
+#[must_use]
+pub struct ImportNativeBufferInfoOHOS<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub buffer: *mut OH_NativeBuffer,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for ImportNativeBufferInfoOHOS<'_> {}
+unsafe impl Sync for ImportNativeBufferInfoOHOS<'_> {}
+impl ::core::default::Default for ImportNativeBufferInfoOHOS<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            buffer: ::core::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for ImportNativeBufferInfoOHOS<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_NATIVE_BUFFER_INFO_OHOS;
+}
+unsafe impl Extends<MemoryAllocateInfo<'_>> for ImportNativeBufferInfoOHOS<'_> {}
+impl<'a> ImportNativeBufferInfoOHOS<'a> {
+    #[inline]
+    pub fn buffer(mut self, buffer: &'a mut OH_NativeBuffer) -> Self {
+        self.buffer = buffer;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryGetNativeBufferInfoOHOS.html>"]
+#[must_use]
+pub struct MemoryGetNativeBufferInfoOHOS<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub memory: DeviceMemory,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for MemoryGetNativeBufferInfoOHOS<'_> {}
+unsafe impl Sync for MemoryGetNativeBufferInfoOHOS<'_> {}
+impl ::core::default::Default for MemoryGetNativeBufferInfoOHOS<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            memory: DeviceMemory::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for MemoryGetNativeBufferInfoOHOS<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_NATIVE_BUFFER_INFO_OHOS;
+}
+impl<'a> MemoryGetNativeBufferInfoOHOS<'a> {
+    #[inline]
+    pub fn memory(mut self, memory: DeviceMemory) -> Self {
+        self.memory = memory;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalFormatOHOS.html>"]
+#[must_use]
+pub struct ExternalFormatOHOS<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub external_format: u64,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for ExternalFormatOHOS<'_> {}
+unsafe impl Sync for ExternalFormatOHOS<'_> {}
+impl ::core::default::Default for ExternalFormatOHOS<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            external_format: u64::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for ExternalFormatOHOS<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_FORMAT_OHOS;
+}
+unsafe impl Extends<ImageCreateInfo<'_>> for ExternalFormatOHOS<'_> {}
+unsafe impl Extends<SamplerYcbcrConversionCreateInfo<'_>> for ExternalFormatOHOS<'_> {}
+unsafe impl Extends<AttachmentDescription2<'_>> for ExternalFormatOHOS<'_> {}
+unsafe impl Extends<GraphicsPipelineCreateInfo<'_>> for ExternalFormatOHOS<'_> {}
+unsafe impl Extends<CommandBufferInheritanceInfo<'_>> for ExternalFormatOHOS<'_> {}
+impl<'a> ExternalFormatOHOS<'a> {
+    #[inline]
+    pub fn external_format(mut self, external_format: u64) -> Self {
+        self.external_format = external_format;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePerformanceCountersByRegionFeaturesARM.html>"]
+#[must_use]
+pub struct PhysicalDevicePerformanceCountersByRegionFeaturesARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub performance_counters_by_region: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {}
+unsafe impl Sync for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {}
+impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            performance_counters_by_region: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_PERFORMANCE_COUNTERS_BY_REGION_FEATURES_ARM;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>>
+    for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_>
+{
+}
+impl<'a> PhysicalDevicePerformanceCountersByRegionFeaturesARM<'a> {
+    #[inline]
+    pub fn performance_counters_by_region(mut self, performance_counters_by_region: bool) -> Self {
+        self.performance_counters_by_region = performance_counters_by_region.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePerformanceCountersByRegionPropertiesARM.html>"]
+#[must_use]
+pub struct PhysicalDevicePerformanceCountersByRegionPropertiesARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_per_region_performance_counters: u32,
+    pub performance_counter_region_size: Extent2D,
+    pub row_stride_alignment: u32,
+    pub region_alignment: u32,
+    pub identity_transform_order: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> {}
+unsafe impl Sync for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> {}
+impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            max_per_region_performance_counters: u32::default(),
+            performance_counter_region_size: Extent2D::default(),
+            row_stride_alignment: u32::default(),
+            region_alignment: u32::default(),
+            identity_transform_order: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_PERFORMANCE_COUNTERS_BY_REGION_PROPERTIES_ARM;
+}
+unsafe impl Extends<PhysicalDeviceProperties2<'_>>
+    for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_>
+{
+}
+impl<'a> PhysicalDevicePerformanceCountersByRegionPropertiesARM<'a> {
+    #[inline]
+    pub fn max_per_region_performance_counters(
+        mut self,
+        max_per_region_performance_counters: u32,
+    ) -> Self {
+        self.max_per_region_performance_counters = max_per_region_performance_counters;
+        self
+    }
+    #[inline]
+    pub fn performance_counter_region_size(
+        mut self,
+        performance_counter_region_size: Extent2D,
+    ) -> Self {
+        self.performance_counter_region_size = performance_counter_region_size;
+        self
+    }
+    #[inline]
+    pub fn row_stride_alignment(mut self, row_stride_alignment: u32) -> Self {
+        self.row_stride_alignment = row_stride_alignment;
+        self
+    }
+    #[inline]
+    pub fn region_alignment(mut self, region_alignment: u32) -> Self {
+        self.region_alignment = region_alignment;
+        self
+    }
+    #[inline]
+    pub fn identity_transform_order(mut self, identity_transform_order: bool) -> Self {
+        self.identity_transform_order = identity_transform_order.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceCounterARM.html>"]
+#[must_use]
+pub struct PerformanceCounterARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub counter_id: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PerformanceCounterARM<'_> {}
+unsafe impl Sync for PerformanceCounterARM<'_> {}
+impl ::core::default::Default for PerformanceCounterARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            counter_id: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterARM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_COUNTER_ARM;
+}
+impl<'a> PerformanceCounterARM<'a> {
+    #[inline]
+    pub fn counter_id(mut self, counter_id: u32) -> Self {
+        self.counter_id = counter_id;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceCounterDescriptionARM.html>"]
+#[must_use]
+pub struct PerformanceCounterDescriptionARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub flags: PerformanceCounterDescriptionFlagsARM,
+    pub name: [c_char; MAX_DESCRIPTION_SIZE],
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PerformanceCounterDescriptionARM<'_> {}
+unsafe impl Sync for PerformanceCounterDescriptionARM<'_> {}
+#[cfg(feature = "debug")]
+impl fmt::Debug for PerformanceCounterDescriptionARM<'_> {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+        fmt.debug_struct("PerformanceCounterDescriptionARM")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field("flags", &self.flags)
+            .field("name", &self.name_as_c_str())
+            .finish()
+    }
+}
+impl ::core::default::Default for PerformanceCounterDescriptionARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            flags: PerformanceCounterDescriptionFlagsARM::default(),
+            name: unsafe { ::core::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterDescriptionARM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_COUNTER_DESCRIPTION_ARM;
+}
+impl<'a> PerformanceCounterDescriptionARM<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: PerformanceCounterDescriptionFlagsARM) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn name(mut self, name: &CStr) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.name, name).map(|()| self)
+    }
+    #[inline]
+    pub fn name_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
+        wrap_c_str_slice_until_nul(&self.name)
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassPerformanceCountersByRegionBeginInfoARM.html>"]
+#[must_use]
+pub struct RenderPassPerformanceCountersByRegionBeginInfoARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub counter_address_count: u32,
+    pub p_counter_addresses: *const DeviceAddress,
+    pub serialize_regions: Bool32,
+    pub counter_index_count: u32,
+    pub p_counter_indices: *mut u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {}
+unsafe impl Sync for RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {}
+impl ::core::default::Default for RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            counter_address_count: u32::default(),
+            p_counter_addresses: ::core::ptr::null(),
+            serialize_regions: Bool32::default(),
+            counter_index_count: u32::default(),
+            p_counter_indices: ::core::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for RenderPassPerformanceCountersByRegionBeginInfoARM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::RENDER_PASS_PERFORMANCE_COUNTERS_BY_REGION_BEGIN_INFO_ARM;
+}
+unsafe impl Extends<RenderPassBeginInfo<'_>>
+    for RenderPassPerformanceCountersByRegionBeginInfoARM<'_>
+{
+}
+unsafe impl Extends<RenderingInfo<'_>> for RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {}
+impl<'a> RenderPassPerformanceCountersByRegionBeginInfoARM<'a> {
+    #[inline]
+    pub fn counter_address_count(mut self, counter_address_count: u32) -> Self {
+        self.counter_address_count = counter_address_count;
+        self
+    }
+    #[inline]
+    pub fn counter_addresses(mut self, counter_addresses: &'a DeviceAddress) -> Self {
+        self.p_counter_addresses = counter_addresses;
+        self
+    }
+    #[inline]
+    pub fn serialize_regions(mut self, serialize_regions: bool) -> Self {
+        self.serialize_regions = serialize_regions.into();
+        self
+    }
+    #[inline]
+    pub fn counter_index_count(mut self, counter_index_count: u32) -> Self {
+        self.counter_index_count = counter_index_count;
+        self
+    }
+    #[inline]
+    pub fn counter_indices(mut self, counter_indices: &'a mut u32) -> Self {
+        self.p_counter_indices = counter_indices;
         self
     }
 }

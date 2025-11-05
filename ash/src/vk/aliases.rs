@@ -12,6 +12,7 @@ pub type SemaphoreWaitFlagsKHR = SemaphoreWaitFlags;
 pub type AccessFlags2KHR = AccessFlags2;
 pub type PipelineStageFlags2KHR = PipelineStageFlags2;
 pub type FormatFeatureFlags2KHR = FormatFeatureFlags2;
+pub type MemoryDecompressionMethodFlagsNV = MemoryDecompressionMethodFlagsEXT;
 pub type RenderingFlagsKHR = RenderingFlags;
 pub type PipelineCreateFlags2KHR = PipelineCreateFlags2;
 pub type BufferUsageFlags2KHR = BufferUsageFlags2;
@@ -226,6 +227,10 @@ pub type PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'a> =
     PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a>;
 pub type PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> =
     PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'a>;
+pub type PhysicalDeviceMemoryDecompressionFeaturesNV<'a> =
+    PhysicalDeviceMemoryDecompressionFeaturesEXT<'a>;
+pub type PhysicalDeviceMemoryDecompressionPropertiesNV<'a> =
+    PhysicalDeviceMemoryDecompressionPropertiesEXT<'a>;
 pub type ImageStencilUsageCreateInfoEXT<'a> = ImageStencilUsageCreateInfo<'a>;
 pub type PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> =
     PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a>;
@@ -342,6 +347,7 @@ pub type PhysicalDeviceShaderIntegerDotProductPropertiesKHR<'a> =
 pub type FormatProperties3KHR<'a> = FormatProperties3<'a>;
 pub type PipelineRenderingCreateInfoKHR<'a> = PipelineRenderingCreateInfo<'a>;
 pub type RenderingInfoKHR<'a> = RenderingInfo<'a>;
+pub type RenderingEndInfoEXT<'a> = RenderingEndInfoKHR<'a>;
 pub type RenderingAttachmentInfoKHR<'a> = RenderingAttachmentInfo<'a>;
 pub type PhysicalDeviceDynamicRenderingFeaturesKHR<'a> = PhysicalDeviceDynamicRenderingFeatures<'a>;
 pub type CommandBufferInheritanceRenderingInfoKHR<'a> = CommandBufferInheritanceRenderingInfo<'a>;

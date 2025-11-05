@@ -1625,6 +1625,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         "_NVX",
         "_NXP",
         "_NZXT",
+        "_OHOS",
         "_QCOM",
         "_QNX",
         "_RASTERGRID",
@@ -2389,6 +2390,7 @@ pub fn manual_derives(struct_: &vkxml::Struct) -> TokenStream {
     }
 }
 
+#[derive(Debug)]
 struct PreprocessedMember<'a> {
     vkxml_field: &'a vkxml::Field,
     vk_parse_type_member: &'a vk_parse::TypeMemberDefinition,
@@ -2536,7 +2538,7 @@ pub fn generate_struct(
                 .filter_map(get_variant!(vk_parse::TypeMember::Definition)),
         )
         .filter(|(_, vk_parse_field)| {
-            matches!(vk_parse_field.api.as_deref(), None | Some(DESIRED_API))
+            vk_parse_field.api.as_deref().is_none_or(contains_desired_api)
         })
         .map(|(field, vk_parse_field)| {
             let deprecated = vk_parse_field
@@ -3091,15 +3093,13 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .children
         .iter()
         .filter(|e| {
-            if let Some(supported) = &e.supported {
+            e.supported.as_ref().is_none_or(|supported| {
                 contains_desired_api(supported) ||
                 // VK_ANDROID_native_buffer is for internal use only, but types defined elsewhere
                 // reference enum extension constants.  Exempt the extension from this check until
                 // types are properly folded in with their extension (where applicable).
                 e.name == "VK_ANDROID_native_buffer"
-            } else {
-                true
-            }
+            })
         })
         .collect();
 

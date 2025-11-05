@@ -256,28 +256,6 @@ pub type PFN_vkDestroySemaphore = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateEvent = unsafe extern "system" fn(
-    device: crate::vk::Device,
-    p_create_info: *const EventCreateInfo<'_>,
-    p_allocator: *const AllocationCallbacks,
-    p_event: *mut Event,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkDestroyEvent = unsafe extern "system" fn(
-    device: crate::vk::Device,
-    event: Event,
-    p_allocator: *const AllocationCallbacks,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetEventStatus =
-    unsafe extern "system" fn(device: crate::vk::Device, event: Event) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkSetEvent =
-    unsafe extern "system" fn(device: crate::vk::Device, event: Event) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkResetEvent =
-    unsafe extern "system" fn(device: crate::vk::Device, event: Event) -> Result;
-#[allow(non_camel_case_types)]
 pub type PFN_vkCreateQueryPool = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const QueryPoolCreateInfo<'_>,
@@ -315,19 +293,6 @@ pub type PFN_vkDestroyBuffer = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateBufferView = unsafe extern "system" fn(
-    device: crate::vk::Device,
-    p_create_info: *const BufferViewCreateInfo<'_>,
-    p_allocator: *const AllocationCallbacks,
-    p_view: *mut BufferView,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkDestroyBufferView = unsafe extern "system" fn(
-    device: crate::vk::Device,
-    buffer_view: BufferView,
-    p_allocator: *const AllocationCallbacks,
-);
-#[allow(non_camel_case_types)]
 pub type PFN_vkCreateImage = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const ImageCreateInfo<'_>,
@@ -358,6 +323,192 @@ pub type PFN_vkCreateImageView = unsafe extern "system" fn(
 pub type PFN_vkDestroyImageView = unsafe extern "system" fn(
     device: crate::vk::Device,
     image_view: ImageView,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateCommandPool = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_create_info: *const CommandPoolCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks,
+    p_command_pool: *mut CommandPool,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyCommandPool = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    command_pool: CommandPool,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkResetCommandPool = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    command_pool: CommandPool,
+    flags: CommandPoolResetFlags,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkAllocateCommandBuffers = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_allocate_info: *const CommandBufferAllocateInfo<'_>,
+    p_command_buffers: *mut CommandBuffer,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkFreeCommandBuffers = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    command_pool: CommandPool,
+    command_buffer_count: u32,
+    p_command_buffers: *const CommandBuffer,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkBeginCommandBuffer = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_begin_info: *const CommandBufferBeginInfo<'_>,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkEndCommandBuffer =
+    unsafe extern "system" fn(command_buffer: CommandBuffer) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkResetCommandBuffer = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    flags: CommandBufferResetFlags,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyBuffer = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    src_buffer: Buffer,
+    dst_buffer: Buffer,
+    region_count: u32,
+    p_regions: *const BufferCopy,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyImage = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    src_image: Image,
+    src_image_layout: ImageLayout,
+    dst_image: Image,
+    dst_image_layout: ImageLayout,
+    region_count: u32,
+    p_regions: *const ImageCopy,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyBufferToImage = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    src_buffer: Buffer,
+    dst_image: Image,
+    dst_image_layout: ImageLayout,
+    region_count: u32,
+    p_regions: *const BufferImageCopy,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyImageToBuffer = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    src_image: Image,
+    src_image_layout: ImageLayout,
+    dst_buffer: Buffer,
+    region_count: u32,
+    p_regions: *const BufferImageCopy,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdUpdateBuffer = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    dst_buffer: Buffer,
+    dst_offset: DeviceSize,
+    data_size: DeviceSize,
+    p_data: *const c_void,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdFillBuffer = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    dst_buffer: Buffer,
+    dst_offset: DeviceSize,
+    size: DeviceSize,
+    data: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdPipelineBarrier = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    src_stage_mask: PipelineStageFlags,
+    dst_stage_mask: PipelineStageFlags,
+    dependency_flags: DependencyFlags,
+    memory_barrier_count: u32,
+    p_memory_barriers: *const MemoryBarrier<'_>,
+    buffer_memory_barrier_count: u32,
+    p_buffer_memory_barriers: *const BufferMemoryBarrier<'_>,
+    image_memory_barrier_count: u32,
+    p_image_memory_barriers: *const ImageMemoryBarrier<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBeginQuery = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    query_pool: QueryPool,
+    query: u32,
+    flags: QueryControlFlags,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdEndQuery =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, query_pool: QueryPool, query: u32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdResetQueryPool = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    query_pool: QueryPool,
+    first_query: u32,
+    query_count: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdWriteTimestamp = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    pipeline_stage: PipelineStageFlags,
+    query_pool: QueryPool,
+    query: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyQueryPoolResults = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    query_pool: QueryPool,
+    first_query: u32,
+    query_count: u32,
+    dst_buffer: Buffer,
+    dst_offset: DeviceSize,
+    stride: DeviceSize,
+    flags: QueryResultFlags,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdExecuteCommands = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    command_buffer_count: u32,
+    p_command_buffers: *const CommandBuffer,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateEvent = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_create_info: *const EventCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks,
+    p_event: *mut Event,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyEvent = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    event: Event,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetEventStatus =
+    unsafe extern "system" fn(device: crate::vk::Device, event: Event) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkSetEvent =
+    unsafe extern "system" fn(device: crate::vk::Device, event: Event) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkResetEvent =
+    unsafe extern "system" fn(device: crate::vk::Device, event: Event) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateBufferView = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_create_info: *const BufferViewCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks,
+    p_view: *mut BufferView,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyBufferView = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    buffer_view: BufferView,
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
@@ -399,15 +550,6 @@ pub type PFN_vkMergePipelineCaches = unsafe extern "system" fn(
     dst_cache: PipelineCache,
     src_cache_count: u32,
     p_src_caches: *const PipelineCache,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkCreateGraphicsPipelines = unsafe extern "system" fn(
-    device: crate::vk::Device,
-    pipeline_cache: PipelineCache,
-    create_info_count: u32,
-    p_create_infos: *const GraphicsPipelineCreateInfo<'_>,
-    p_allocator: *const AllocationCallbacks,
-    p_pipelines: *mut Pipeline,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateComputePipelines = unsafe extern "system" fn(
@@ -504,6 +646,86 @@ pub type PFN_vkUpdateDescriptorSets = unsafe extern "system" fn(
     p_descriptor_copies: *const CopyDescriptorSet<'_>,
 );
 #[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindPipeline = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    pipeline_bind_point: PipelineBindPoint,
+    pipeline: Pipeline,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindDescriptorSets = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    pipeline_bind_point: PipelineBindPoint,
+    layout: PipelineLayout,
+    first_set: u32,
+    descriptor_set_count: u32,
+    p_descriptor_sets: *const DescriptorSet,
+    dynamic_offset_count: u32,
+    p_dynamic_offsets: *const u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdClearColorImage = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    image: Image,
+    image_layout: ImageLayout,
+    p_color: *const ClearColorValue,
+    range_count: u32,
+    p_ranges: *const ImageSubresourceRange,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDispatch = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    group_count_x: u32,
+    group_count_y: u32,
+    group_count_z: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDispatchIndirect =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetEvent = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    event: Event,
+    stage_mask: PipelineStageFlags,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdResetEvent = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    event: Event,
+    stage_mask: PipelineStageFlags,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdWaitEvents = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    event_count: u32,
+    p_events: *const Event,
+    src_stage_mask: PipelineStageFlags,
+    dst_stage_mask: PipelineStageFlags,
+    memory_barrier_count: u32,
+    p_memory_barriers: *const MemoryBarrier<'_>,
+    buffer_memory_barrier_count: u32,
+    p_buffer_memory_barriers: *const BufferMemoryBarrier<'_>,
+    image_memory_barrier_count: u32,
+    p_image_memory_barriers: *const ImageMemoryBarrier<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdPushConstants = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    layout: PipelineLayout,
+    stage_flags: ShaderStageFlags,
+    offset: u32,
+    size: u32,
+    p_values: *const c_void,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateGraphicsPipelines = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    pipeline_cache: PipelineCache,
+    create_info_count: u32,
+    p_create_infos: *const GraphicsPipelineCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks,
+    p_pipelines: *mut Pipeline,
+) -> Result;
+#[allow(non_camel_case_types)]
 pub type PFN_vkCreateFramebuffer = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_create_info: *const FramebufferCreateInfo<'_>,
@@ -534,57 +756,6 @@ pub type PFN_vkGetRenderAreaGranularity = unsafe extern "system" fn(
     device: crate::vk::Device,
     render_pass: RenderPass,
     p_granularity: *mut Extent2D,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCreateCommandPool = unsafe extern "system" fn(
-    device: crate::vk::Device,
-    p_create_info: *const CommandPoolCreateInfo<'_>,
-    p_allocator: *const AllocationCallbacks,
-    p_command_pool: *mut CommandPool,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkDestroyCommandPool = unsafe extern "system" fn(
-    device: crate::vk::Device,
-    command_pool: CommandPool,
-    p_allocator: *const AllocationCallbacks,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkResetCommandPool = unsafe extern "system" fn(
-    device: crate::vk::Device,
-    command_pool: CommandPool,
-    flags: CommandPoolResetFlags,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkAllocateCommandBuffers = unsafe extern "system" fn(
-    device: crate::vk::Device,
-    p_allocate_info: *const CommandBufferAllocateInfo<'_>,
-    p_command_buffers: *mut CommandBuffer,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkFreeCommandBuffers = unsafe extern "system" fn(
-    device: crate::vk::Device,
-    command_pool: CommandPool,
-    command_buffer_count: u32,
-    p_command_buffers: *const CommandBuffer,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkBeginCommandBuffer = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    p_begin_info: *const CommandBufferBeginInfo<'_>,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkEndCommandBuffer =
-    unsafe extern "system" fn(command_buffer: CommandBuffer) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkResetCommandBuffer = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    flags: CommandBufferResetFlags,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdBindPipeline = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    pipeline_bind_point: PipelineBindPoint,
-    pipeline: Pipeline,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetViewport = unsafe extern "system" fn(
@@ -638,17 +809,6 @@ pub type PFN_vkCmdSetStencilReference = unsafe extern "system" fn(
     reference: u32,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdBindDescriptorSets = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    pipeline_bind_point: PipelineBindPoint,
-    layout: PipelineLayout,
-    first_set: u32,
-    descriptor_set_count: u32,
-    p_descriptor_sets: *const DescriptorSet,
-    dynamic_offset_count: u32,
-    p_dynamic_offsets: *const u32,
-);
-#[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindIndexBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     buffer: Buffer,
@@ -697,34 +857,6 @@ pub type PFN_vkCmdDrawIndexedIndirect = unsafe extern "system" fn(
     stride: u32,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdDispatch = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    group_count_x: u32,
-    group_count_y: u32,
-    group_count_z: u32,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdDispatchIndirect =
-    unsafe extern "system" fn(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyBuffer = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    src_buffer: Buffer,
-    dst_buffer: Buffer,
-    region_count: u32,
-    p_regions: *const BufferCopy,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyImage = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    src_image: Image,
-    src_image_layout: ImageLayout,
-    dst_image: Image,
-    dst_image_layout: ImageLayout,
-    region_count: u32,
-    p_regions: *const ImageCopy,
-);
-#[allow(non_camel_case_types)]
 pub type PFN_vkCmdBlitImage = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     src_image: Image,
@@ -734,49 +866,6 @@ pub type PFN_vkCmdBlitImage = unsafe extern "system" fn(
     region_count: u32,
     p_regions: *const ImageBlit,
     filter: Filter,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyBufferToImage = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    src_buffer: Buffer,
-    dst_image: Image,
-    dst_image_layout: ImageLayout,
-    region_count: u32,
-    p_regions: *const BufferImageCopy,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyImageToBuffer = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    src_image: Image,
-    src_image_layout: ImageLayout,
-    dst_buffer: Buffer,
-    region_count: u32,
-    p_regions: *const BufferImageCopy,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdUpdateBuffer = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    dst_buffer: Buffer,
-    dst_offset: DeviceSize,
-    data_size: DeviceSize,
-    p_data: *const c_void,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdFillBuffer = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    dst_buffer: Buffer,
-    dst_offset: DeviceSize,
-    size: DeviceSize,
-    data: u32,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdClearColorImage = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    image: Image,
-    image_layout: ImageLayout,
-    p_color: *const ClearColorValue,
-    range_count: u32,
-    p_ranges: *const ImageSubresourceRange,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdClearDepthStencilImage = unsafe extern "system" fn(
@@ -806,89 +895,6 @@ pub type PFN_vkCmdResolveImage = unsafe extern "system" fn(
     p_regions: *const ImageResolve,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetEvent = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    event: Event,
-    stage_mask: PipelineStageFlags,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdResetEvent = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    event: Event,
-    stage_mask: PipelineStageFlags,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdWaitEvents = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    event_count: u32,
-    p_events: *const Event,
-    src_stage_mask: PipelineStageFlags,
-    dst_stage_mask: PipelineStageFlags,
-    memory_barrier_count: u32,
-    p_memory_barriers: *const MemoryBarrier<'_>,
-    buffer_memory_barrier_count: u32,
-    p_buffer_memory_barriers: *const BufferMemoryBarrier<'_>,
-    image_memory_barrier_count: u32,
-    p_image_memory_barriers: *const ImageMemoryBarrier<'_>,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdPipelineBarrier = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    src_stage_mask: PipelineStageFlags,
-    dst_stage_mask: PipelineStageFlags,
-    dependency_flags: DependencyFlags,
-    memory_barrier_count: u32,
-    p_memory_barriers: *const MemoryBarrier<'_>,
-    buffer_memory_barrier_count: u32,
-    p_buffer_memory_barriers: *const BufferMemoryBarrier<'_>,
-    image_memory_barrier_count: u32,
-    p_image_memory_barriers: *const ImageMemoryBarrier<'_>,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdBeginQuery = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    query_pool: QueryPool,
-    query: u32,
-    flags: QueryControlFlags,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdEndQuery =
-    unsafe extern "system" fn(command_buffer: CommandBuffer, query_pool: QueryPool, query: u32);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdResetQueryPool = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    query_pool: QueryPool,
-    first_query: u32,
-    query_count: u32,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdWriteTimestamp = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    pipeline_stage: PipelineStageFlags,
-    query_pool: QueryPool,
-    query: u32,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyQueryPoolResults = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    query_pool: QueryPool,
-    first_query: u32,
-    query_count: u32,
-    dst_buffer: Buffer,
-    dst_offset: DeviceSize,
-    stride: DeviceSize,
-    flags: QueryResultFlags,
-);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdPushConstants = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    layout: PipelineLayout,
-    stage_flags: ShaderStageFlags,
-    offset: u32,
-    size: u32,
-    p_values: *const c_void,
-);
-#[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginRenderPass = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_render_pass_begin: *const RenderPassBeginInfo<'_>,
@@ -899,12 +905,6 @@ pub type PFN_vkCmdNextSubpass =
     unsafe extern "system" fn(command_buffer: CommandBuffer, contents: SubpassContents);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEndRenderPass = unsafe extern "system" fn(command_buffer: CommandBuffer);
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdExecuteCommands = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    command_buffer_count: u32,
-    p_command_buffers: *const CommandBuffer,
-);
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumerateInstanceVersion =
     unsafe extern "system" fn(p_api_version: *mut u32) -> Result;
