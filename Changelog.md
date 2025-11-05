@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added `push()` method to all root structs to insert a single extension-struct in the pointer chain. (#909)
-- Update Vulkan-Headers to 1.4.318 (#910, #951)
+- Update Vulkan-Headers to 1.4.329 (#910, #951)
 - Added `VK_KHR_get_display_properties2` instance extension (#932)
 - Added `VK_EXT_metal_objects` device extension (#942)
 - Added `VK_AMD_anti_lag` device extension (#943)
