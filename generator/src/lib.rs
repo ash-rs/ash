@@ -40,6 +40,10 @@ fn contains_desired_api(api: &str) -> bool {
     api.split(',').any(|n| n == DESIRED_API)
 }
 
+fn all_or_desired_api(api: Option<&str>) -> bool {
+    api.is_none_or(contains_desired_api)
+}
+
 macro_rules! get_variant {
     ($variant:path) => {
         |enum_| match enum_ {
@@ -306,6 +310,7 @@ fn is_opaque_type(ty: &str) -> bool {
             | "ANativeWindow"
             | "AHardwareBuffer"
             | "OHNativeWindow"
+            | "OHBufferHandle"
             | "CAMetalLayer"
             | "IDirectFB"
             | "IDirectFBSurface"
@@ -505,25 +510,6 @@ impl Constant {
     }
 }
 
-trait FeatureExt {
-    fn version_string(&self) -> String;
-    fn is_version(&self, major: u32, minor: u32) -> bool;
-}
-impl FeatureExt for vkxml::Feature {
-    fn is_version(&self, major: u32, minor: u32) -> bool {
-        let self_major = self.version as u32;
-        let self_minor = (self.version * 10.0) as u32 - self_major * 10;
-        major == self_major && self_minor == minor
-    }
-    fn version_string(&self) -> String {
-        let mut version = format!("{}", self.version);
-        if version.len() == 1 {
-            version = format!("{version}_0")
-        }
-
-        version.replace('.', "_")
-    }
-}
 #[derive(Debug, Copy, Clone)]
 pub enum FunctionType {
     Static,
@@ -942,7 +928,7 @@ fn generate_function_pointers<'a>(
                 .0
                 .params
                 .iter()
-                .filter(|param| matches!(param.api.as_deref(), None | Some(DESIRED_API)));
+                .filter(|param| all_or_desired_api(param.api.as_deref()));
 
             let params_tokens: Vec<_> = params
                 .clone()
@@ -1202,7 +1188,7 @@ pub fn generate_extension_constants<'a>(
             api,
             items
         }))
-        .filter(|(api, _items)| matches!(api.as_deref(), None | Some(DESIRED_API)))
+        .filter(|(api, _items)| all_or_desired_api(api.as_deref()))
         .flat_map(|(_api, items)| items);
 
     let mut extended_enums = BTreeMap::<String, Vec<ExtensionConstant<'_>>>::new();
@@ -1213,7 +1199,7 @@ pub fn generate_extension_constants<'a>(
                 continue;
             }
 
-            if !matches!(enum_.api.as_deref(), None | Some(DESIRED_API)) {
+            if !all_or_desired_api(enum_.api.as_deref()) {
                 continue;
             }
 
@@ -1335,7 +1321,7 @@ pub fn generate_extension_commands<'a>(
             api,
             items
         }))
-        .filter(|(api, _items)| matches!(api.as_deref(), None | Some(DESIRED_API)))
+        .filter(|(api, _items)| all_or_desired_api(api.as_deref()))
         .flat_map(|(_api, items)| items)
         .filter_map(get_variant!(vk_parse::InterfaceItem::Command { name }));
 
@@ -1662,6 +1648,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         "_NVX",
         "_NXP",
         "_NZXT",
+        "_OHOS",
         "_QCOM",
         "_QNX",
         "_RASTERGRID",
@@ -2449,6 +2436,7 @@ pub fn manual_derives(struct_: &vkxml::Struct) -> TokenStream {
     }
 }
 
+#[derive(Debug)]
 struct PreprocessedMember<'a> {
     vkxml_field: &'a vkxml::Field,
     vk_parse_type_member: &'a vk_parse::TypeMemberDefinition,
@@ -2640,7 +2628,7 @@ pub fn generate_struct(
                 .filter_map(get_variant!(vk_parse::TypeMember::Definition)),
         )
         .filter(|(_, vk_parse_field)| {
-            matches!(vk_parse_field.api.as_deref(), None | Some(DESIRED_API))
+            all_or_desired_api( vk_parse_field.api.as_deref())
         })
         .map(|(field, vk_parse_field)| {
             let deprecated = vk_parse_field
@@ -2827,10 +2815,8 @@ pub fn generate_definition_vk_parse(
     deprecated_types: &HashMap<&str, &str>,
     identifier_renames: &mut BTreeMap<String, Ident>,
 ) -> Option<TokenStream> {
-    if let Some(api) = &definition.api {
-        if api != DESIRED_API {
-            return None;
-        }
+    if !all_or_desired_api(definition.api.as_deref()) {
+        return None;
     }
 
     match definition.category.as_deref() {
@@ -2890,19 +2876,14 @@ pub fn generate_definition(
     }
 }
 pub fn generate_feature<'a>(
-    feature: &vkxml::Feature,
+    feature_version: &str,
+    feature_elements: impl Iterator<Item = &'a vkxml::FeatureElement>,
     commands: &CommandMap<'a>,
     deprecated_commands: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
     has_lifetimes: &HashSet<Ident>,
 ) -> (TokenStream, TokenStream) {
-    if !contains_desired_api(&feature.api) {
-        return (quote!(), quote!());
-    }
-
-    let (static_commands, entry_commands, device_commands, instance_commands) = feature
-        .elements
-        .iter()
+    let (static_commands, entry_commands, device_commands, instance_commands) = feature_elements
         .filter_map(get_variant!(vkxml::FeatureElement::Require))
         .flat_map(|spec| &spec.elements)
         .filter_map(get_variant!(vkxml::FeatureReference::CommandReference))
@@ -2920,55 +2901,49 @@ pub fn generate_feature<'a>(
                 accs
             },
         );
-    let version = feature.version_string();
-    let (static_fn_fp, static_fn_table) = if feature.is_version(1, 0) {
+
+    let feature_name = feature_version.replace("_", ".");
+
+    let (static_fn_fp, static_fn_table) = if !static_commands.is_empty() {
+        assert_eq!(feature_version, "1_0");
         generate_function_pointers(
-            format_ident!("{}", "StaticFn"),
+            format_ident!("StaticFn"),
             &static_commands,
             deprecated_commands,
             &HashMap::new(),
             fn_cache,
             has_lifetimes,
-            "Raw Vulkan 1 static function pointers",
+            &format!("Raw Vulkan {feature_name} static function pointers"),
         )
     } else {
         (quote! {}, quote! {})
     };
     let (entry_fp, entry_table) = generate_function_pointers(
-        format_ident!("EntryFnV{}", version),
+        format_ident!("EntryFnV{feature_version}"),
         &entry_commands,
         deprecated_commands,
         &HashMap::new(),
         fn_cache,
         has_lifetimes,
-        &format!(
-            "Raw Vulkan {} entry point function pointers",
-            feature.version
-        ),
+        &format!("Raw Vulkan {feature_name} entry point function pointers"),
     );
     let (instance_fp, instance_table) = generate_function_pointers(
-        format_ident!("InstanceFnV{}", version),
+        format_ident!("InstanceFnV{feature_version}"),
         &instance_commands,
         deprecated_commands,
         &HashMap::new(),
         fn_cache,
         has_lifetimes,
-        &format!(
-            "Raw Vulkan {} instance-level function pointers",
-            feature.version
-        ),
+        &format!("Raw Vulkan {feature_name} instance-level function pointers"),
     );
     let (device_fp, device_table) = generate_function_pointers(
-        format_ident!("DeviceFnV{}", version),
+        format_ident!("DeviceFnV{feature_version}"),
         &device_commands,
         deprecated_commands,
         &HashMap::new(),
         fn_cache,
         has_lifetimes,
-        &format!(
-            "Raw Vulkan {} device-level function pointers",
-            feature.version
-        ),
+        &format!("Raw Vulkan {feature_name} device-level function pointers"),
     );
     (
         quote! {
@@ -3236,15 +3211,11 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .children
         .iter()
         .filter(|e| {
-            if let Some(supported) = &e.supported {
-                contains_desired_api(supported) ||
+            all_or_desired_api(e.supported.as_deref()) ||
                 // VK_ANDROID_native_buffer is for internal use only, but types defined elsewhere
                 // reference enum extension constants.  Exempt the extension from this check until
                 // types are properly folded in with their extension (where applicable).
                 e.name == "VK_ANDROID_native_buffer"
-            } else {
-                true
-            }
         })
         .collect();
 
@@ -3308,7 +3279,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         for child in feature.children {
             match child {
                 vk_parse::FeatureChild::Require { api, items, .. } => {
-                    if !matches!(api.as_deref(), None | Some(DESIRED_API)) {
+                    if !all_or_desired_api(api.as_deref()) {
                         continue;
                     }
                     for elem in items {
@@ -3357,7 +3328,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
                     items,
                     ..
                 } => {
-                    if !matches!(api.as_deref(), None | Some(DESIRED_API)) {
+                    if !all_or_desired_api(api.as_deref()) {
                         continue;
                     }
 
@@ -3608,11 +3579,25 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .filter_map(|ty| generate_alias_of_type(ty, &has_lifetimes, &mut ty_cache))
         .collect();
 
-    let (feature_fp_code, feature_table_code): (Vec<_>, Vec<_>) = features
-        .iter()
-        .map(|feature| {
+    // Merge features together by number -i.e. BASE + GRAPHICS + COMPUTE- without walking their
+    // depends= tree.
+    let mut feature_versions = BTreeMap::<_, Vec<&vkxml::FeatureElement>>::new();
+    for feature in features {
+        if !contains_desired_api(&feature.api) {
+            continue;
+        }
+        let version = (feature.version * 10f32) as u32;
+        let key = format!("{}_{}", version / 10, version % 10);
+        let map = feature_versions.entry(key).or_default();
+        map.extend(feature.elements.iter());
+    }
+
+    let (feature_fp_code, feature_table_code): (Vec<_>, Vec<_>) = feature_versions
+        .into_iter()
+        .map(|(feature_version, feature_elements)| {
             generate_feature(
-                feature,
+                &feature_version,
+                feature_elements.into_iter(),
                 &commands,
                 &deprecated_commands,
                 &mut fn_cache,

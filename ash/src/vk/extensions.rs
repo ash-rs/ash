@@ -3628,8 +3628,10 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_NV_memory_decompression'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV: Self = Self(1_000_427_000);
-    pub const PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV: Self = Self(1_000_427_001);
+    pub const PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV: Self =
+        Self::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_EXT;
+    pub const PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV: Self =
+        Self::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_EXT;
 }
 #[doc = "Generated from 'VK_NV_device_generated_commands_compute'"]
 impl DescriptorSetLayoutCreateFlags {
@@ -4594,6 +4596,28 @@ impl StructureType {
     pub const COPY_MEMORY_INDIRECT_INFO_KHR: Self = Self(1_000_549_002);
     pub const COPY_MEMORY_TO_IMAGE_INDIRECT_INFO_KHR: Self = Self(1_000_549_003);
 }
+#[doc = "Generated from 'VK_EXT_memory_decompression'"]
+impl AccessFlags2 {
+    pub const MEMORY_DECOMPRESSION_READ_EXT: Self =
+        Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const MEMORY_DECOMPRESSION_WRITE_EXT: Self =
+        Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_memory_decompression'"]
+impl BufferUsageFlags2 {
+    pub const MEMORY_DECOMPRESSION_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_memory_decompression'"]
+impl PipelineStageFlags2 {
+    pub const MEMORY_DECOMPRESSION_EXT: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_memory_decompression'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_EXT: Self = Self(1_000_427_000);
+    pub const PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_EXT: Self = Self(1_000_427_001);
+    pub const DECOMPRESS_MEMORY_INFO_EXT: Self = Self(1_000_550_002);
+}
 #[doc = "Generated from 'VK_NV_display_stereo'"]
 impl StructureType {
     pub const DISPLAY_SURFACE_STEREO_CREATE_INFO_NV: Self = Self(1_000_551_000);
@@ -4888,6 +4912,12 @@ impl VideoSessionCreateFlagsKHR {
 impl StructureType {
     pub const SURFACE_CREATE_INFO_OHOS: Self = Self(1_000_685_000);
 }
+#[doc = "Generated from 'VK_OHOS_native_buffer'"]
+impl StructureType {
+    pub const NATIVE_BUFFER_OHOS: Self = Self(1_000_453_001);
+    pub const SWAPCHAIN_IMAGE_CREATE_INFO_OHOS: Self = Self(1_000_453_002);
+    pub const PHYSICAL_DEVICE_PRESENTATION_PROPERTIES_OHOS: Self = Self(1_000_453_003);
+}
 #[doc = "Generated from 'VK_HUAWEI_hdr_vivid'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_HDR_VIVID_FEATURES_HUAWEI: Self = Self(1_000_590_000);
@@ -4986,7 +5016,7 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_PROPERTIES_EXT: Self =
         Self(1_000_425_001);
     pub const RENDER_PASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_EXT: Self = Self(1_000_425_002);
-    pub const RENDERING_END_INFO_EXT: Self = Self(1_000_619_003);
+    pub const RENDERING_END_INFO_EXT: Self = Self::RENDERING_END_INFO_KHR;
 }
 #[doc = "Generated from 'VK_EXT_zero_initialize_device_memory'"]
 impl ImageLayout {
@@ -5010,10 +5040,67 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PRESENT_MODE_FIFO_LATEST_READY_FEATURES_KHR: Self =
         Self(1_000_361_000);
 }
+#[doc = "Generated from 'VK_EXT_shader_64bit_indexing'"]
+impl PipelineCreateFlags2 {
+    pub const TYPE_64_INDEXING_EXT: Self =
+        Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_shader_64bit_indexing'"]
+impl ShaderCreateFlagsEXT {
+    pub const TYPE_64_INDEXING: Self = Self(0b1000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_shader_64bit_indexing'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_64_INDEXING_FEATURES_EXT: Self = Self(1_000_627_000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance10'"]
+impl AttachmentDescriptionFlags {
+    pub const RESOLVE_SKIP_TRANSFER_FUNCTION_KHR: Self = Self(0b10);
+    pub const RESOLVE_ENABLE_TRANSFER_FUNCTION_KHR: Self = Self(0b100);
+}
+#[doc = "Generated from 'VK_KHR_maintenance10'"]
+impl FormatFeatureFlags2 {
+    pub const DEPTH_COPY_ON_COMPUTE_QUEUE_KHR: Self =
+        Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const DEPTH_COPY_ON_TRANSFER_QUEUE_KHR: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const STENCIL_COPY_ON_COMPUTE_QUEUE_KHR: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const STENCIL_COPY_ON_TRANSFER_QUEUE_KHR: Self =
+        Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance10'"]
+impl RenderingAttachmentFlagsKHR {
+    pub const INPUT_ATTACHMENT_FEEDBACK: Self = Self(0b1);
+    pub const RESOLVE_SKIP_TRANSFER_FUNCTION: Self = Self(0b10);
+    pub const RESOLVE_ENABLE_TRANSFER_FUNCTION: Self = Self(0b100);
+}
+#[doc = "Generated from 'VK_KHR_maintenance10'"]
+impl RenderingFlags {
+    pub const LOCAL_READ_CONCURRENT_ACCESS_CONTROL_KHR: Self = Self(0b1_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance10'"]
+impl ResolveImageFlagsKHR {
+    pub const SKIP_TRANSFER_FUNCTION: Self = Self(0b1);
+    pub const ENABLE_TRANSFER_FUNCTION: Self = Self(0b10);
+}
+#[doc = "Generated from 'VK_KHR_maintenance10'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MAINTENANCE_10_FEATURES_KHR: Self = Self(1_000_630_000);
+    pub const PHYSICAL_DEVICE_MAINTENANCE_10_PROPERTIES_KHR: Self = Self(1_000_630_001);
+    pub const RENDERING_ATTACHMENT_FLAGS_INFO_KHR: Self = Self(1_000_630_002);
+    pub const RENDERING_END_INFO_KHR: Self = Self(1_000_619_003);
+    pub const RESOLVE_IMAGE_MODE_INFO_KHR: Self = Self(1_000_630_004);
+}
 #[doc = "Generated from 'VK_SEC_pipeline_cache_incremental_mode'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_CACHE_INCREMENTAL_MODE_FEATURES_SEC: Self =
         Self(1_000_637_000);
+}
+#[doc = "Generated from 'VK_EXT_shader_uniform_buffer_unsized_array'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_UNIFORM_BUFFER_UNSIZED_ARRAY_FEATURES_EXT: Self =
+        Self(1_000_642_000);
 }
 pub const KHR_SURFACE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_surface\0") };
@@ -6082,7 +6169,7 @@ pub const KHR_IMAGELESS_FRAMEBUFFER_SPEC_VERSION: u32 = 1u32;
 pub const KHR_CREATE_RENDERPASS2_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_create_renderpass2\0") };
 pub const KHR_CREATE_RENDERPASS2_SPEC_VERSION: u32 = 1u32;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateRenderPass2 = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -6090,21 +6177,21 @@ pub type PFN_vkCreateRenderPass2 = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_render_pass: *mut RenderPass,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginRenderPass2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_render_pass_begin: *const RenderPassBeginInfo<'_>,
     p_subpass_begin_info: *const SubpassBeginInfo<'_>,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdNextSubpass2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_subpass_begin_info: *const SubpassBeginInfo<'_>,
     p_subpass_end_info: *const SubpassEndInfo<'_>,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEndRenderPass2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -9276,6 +9363,23 @@ pub type PFN_vkCmdCopyMemoryToImageIndirectKHR = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_copy_memory_to_image_indirect_info: *const CopyMemoryToImageIndirectInfoKHR<'_>,
 );
+pub const EXT_MEMORY_DECOMPRESSION_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_memory_decompression\0") };
+pub const EXT_MEMORY_DECOMPRESSION_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDecompressMemoryEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_decompress_memory_info_ext: *const DecompressMemoryInfoEXT<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDecompressMemoryIndirectCountEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    decompression_method: MemoryDecompressionMethodFlagsEXT,
+    indirect_commands_address: DeviceAddress,
+    indirect_commands_count_address: DeviceAddress,
+    max_decompression_count: u32,
+    stride: u32,
+);
 pub const NV_DISPLAY_STEREO_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_display_stereo\0") };
 pub const NV_DISPLAY_STEREO_SPEC_VERSION: u32 = 1u32;
@@ -9448,6 +9552,32 @@ pub type PFN_vkCreateSurfaceOHOS = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
+pub const OHOS_NATIVE_BUFFER_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_OHOS_native_buffer\0") };
+pub const OHOS_NATIVE_BUFFER_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetSwapchainGrallocUsageOHOS = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    format: Format,
+    image_usage: ImageUsageFlags,
+    gralloc_usage: *mut u64,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkAcquireImageOHOS = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    image: Image,
+    native_fence_fd: i32,
+    semaphore: Semaphore,
+    fence: Fence,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkQueueSignalReleaseImageOHOS = unsafe extern "system" fn(
+    queue: Queue,
+    wait_semaphore_count: u32,
+    p_wait_semaphores: *const Semaphore,
+    image: Image,
+    p_native_fence_fd: *mut i32,
+) -> Result;
 pub const HUAWEI_HDR_VIVID_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_hdr_vivid\0") };
 pub const HUAWEI_HDR_VIVID_SPEC_VERSION: u32 = 1u32;
@@ -9504,9 +9634,9 @@ pub const EXT_FRAGMENT_DENSITY_MAP_OFFSET_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_density_map_offset\0") };
 pub const EXT_FRAGMENT_DENSITY_MAP_OFFSET_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdEndRendering2EXT = unsafe extern "system" fn(
+pub type PFN_vkCmdEndRendering2KHR = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    p_rendering_end_info: *const RenderingEndInfoEXT<'_>,
+    p_rendering_end_info: *const RenderingEndInfoKHR<'_>,
 );
 pub const EXT_ZERO_INITIALIZE_DEVICE_MEMORY_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_zero_initialize_device_memory\0") };
@@ -9514,6 +9644,15 @@ pub const EXT_ZERO_INITIALIZE_DEVICE_MEMORY_SPEC_VERSION: u32 = 1u32;
 pub const KHR_PRESENT_MODE_FIFO_LATEST_READY_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_present_mode_fifo_latest_ready\0") };
 pub const KHR_PRESENT_MODE_FIFO_LATEST_READY_SPEC_VERSION: u32 = 1u32;
+pub const EXT_SHADER_64BIT_INDEXING_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_64bit_indexing\0") };
+pub const EXT_SHADER_64BIT_INDEXING_SPEC_VERSION: u32 = 1u32;
+pub const KHR_MAINTENANCE10_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance10\0") };
+pub const KHR_MAINTENANCE10_SPEC_VERSION: u32 = 1u32;
 pub const SEC_PIPELINE_CACHE_INCREMENTAL_MODE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_SEC_pipeline_cache_incremental_mode\0") };
 pub const SEC_PIPELINE_CACHE_INCREMENTAL_MODE_SPEC_VERSION: u32 = 1u32;
+pub const EXT_SHADER_UNIFORM_BUFFER_UNSIZED_ARRAY_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_uniform_buffer_unsized_array\0") };
+pub const EXT_SHADER_UNIFORM_BUFFER_UNSIZED_ARRAY_SPEC_VERSION: u32 = 1u32;
