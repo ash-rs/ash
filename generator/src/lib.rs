@@ -297,6 +297,7 @@ fn is_opaque_type(ty: &str) -> bool {
             | "xcb_connection_t"
             | "ANativeWindow"
             | "AHardwareBuffer"
+            | "OHNativeWindow"
             | "CAMetalLayer"
             | "IDirectFB"
             | "IDirectFBSurface"
@@ -2408,9 +2409,12 @@ pub fn generate_struct(
     if &struct_.name == "VkTransformMatrixKHR" {
         return quote! {
             #[repr(C)]
-            #[derive(Copy, Clone)]
+            #[cfg_attr(feature = "debug", derive(Debug))]
+            #[derive(Copy, Clone, Default)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTransformMatrixKHR.html>"]
+            #[must_use]
             pub struct TransformMatrixKHR {
-                pub matrix: [f32; 12],
+                pub matrix: [[f32; 3]; 4],
             }
         };
     }
@@ -2419,6 +2423,7 @@ pub fn generate_struct(
         return quote! {
             #[repr(C)]
             #[derive(Copy, Clone)]
+            #[must_use]
             pub union AccelerationStructureReferenceKHR {
                 pub device_handle: DeviceAddress,
                 pub host_handle: AccelerationStructureKHR,
@@ -2426,6 +2431,7 @@ pub fn generate_struct(
             #[repr(C)]
             #[derive(Copy, Clone)]
             #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureInstanceKHR.html>"]
+            #[must_use]
             pub struct AccelerationStructureInstanceKHR {
                 pub transform: TransformMatrixKHR,
                 /// Use [`Packed24_8::new(instance_custom_index, mask)`][Packed24_8::new()] to construct this field
@@ -2442,6 +2448,7 @@ pub fn generate_struct(
             #[repr(C)]
             #[derive(Copy, Clone)]
             #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureSRTMotionInstanceNV.html>"]
+            #[must_use]
             pub struct AccelerationStructureSRTMotionInstanceNV {
                 pub transform_t0: SRTDataNV,
                 pub transform_t1: SRTDataNV,
@@ -2458,7 +2465,8 @@ pub fn generate_struct(
         return quote! {
             #[repr(C)]
             #[derive(Copy, Clone)]
-            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/AccelerationStructureMatrixMotionInstanceNV.html>"]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureMatrixMotionInstanceNV.html>"]
+            #[must_use]
             pub struct AccelerationStructureMatrixMotionInstanceNV {
                 pub transform_t0: TransformMatrixKHR,
                 pub transform_t1: TransformMatrixKHR,
@@ -2467,6 +2475,52 @@ pub fn generate_struct(
                 /// Use [`Packed24_8::new(instance_shader_binding_table_record_offset, flags)`][Packed24_8::new()] to construct this field
                 pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
+            }
+        };
+    }
+
+    if &struct_.name == "VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV.html>"]
+            #[must_use]
+            pub struct ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV {
+                // TODO: Add bitfield helpers
+                pub geometry_index_and_flags: u32,
+            }
+        };
+    }
+    if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureBuildTriangleClusterInfoNV.html>"]
+            #[must_use]
+            pub struct ClusterAccelerationStructureBuildTriangleClusterInfoNV {
+                _todo_many_bitfields: [u8; 0],
+            }
+        };
+    }
+    if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV.html>"]
+            #[must_use]
+            pub struct ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV {
+                _todo_many_bitfields: [u8; 0],
+            }
+        };
+    }
+    if &struct_.name == "VkClusterAccelerationStructureInstantiateClusterInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureInstantiateClusterInfoNV.html>"]
+            #[must_use]
+            pub struct ClusterAccelerationStructureInstantiateClusterInfoNV {
+                _todo_bitfield_and_other_fields: [u8; 0],
             }
         };
     }

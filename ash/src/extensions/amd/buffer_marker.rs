@@ -21,4 +21,23 @@ impl crate::amd::buffer_marker::Device {
             marker,
         )
     }
+
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteBufferMarker2AMD.html>
+    #[inline]
+    pub unsafe fn cmd_write_buffer_marker2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        stage: vk::PipelineStageFlags2,
+        dst_buffer: vk::Buffer,
+        dst_offset: vk::DeviceSize,
+        marker: u32,
+    ) {
+        (self.fp.cmd_write_buffer_marker2_amd)(
+            command_buffer,
+            stage,
+            dst_buffer,
+            dst_offset,
+            marker,
+        )
+    }
 }
