@@ -189,7 +189,7 @@ fn parse_c_define_header(i: &str) -> IResult<&str, (Option<&str>, (&str, Option<
     (pair(
         parse_comment_suffix,
         preceded(
-            tag("#define "),
+            preceded(opt(newline), tag("#define ")),
             pair(parse_c_identifier, opt(parse_parameter_names)),
         ),
     ))
@@ -1507,6 +1507,7 @@ pub fn generate_define(
         let deprecated = comment
             .and_then(|c| c.trim().strip_prefix("DEPRECATED: "))
             .map(|comment| quote!(#[deprecated = #comment]))
+            // TODO: Read from `<deprecated>` introduced in 1.4.320
             .or_else(|| match define.deprecated.as_ref()?.as_str() {
                 "true" => Some(quote!(#[deprecated])),
                 x => panic!("Unknown deprecation reason {x}"),

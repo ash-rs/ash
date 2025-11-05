@@ -727,6 +727,13 @@ pub mod amdx {
             }
         }
     }
+    #[doc = "VK_AMDX_dense_geometry_format"]
+    pub mod dense_geometry_format {
+        pub use {
+            crate::vk::AMDX_DENSE_GEOMETRY_FORMAT_NAME as NAME,
+            crate::vk::AMDX_DENSE_GEOMETRY_FORMAT_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged ANDROID"]
 pub mod android {
@@ -1320,6 +1327,347 @@ pub mod arm {
             crate::vk::ARM_SHADER_CORE_BUILTINS_NAME as NAME,
             crate::vk::ARM_SHADER_CORE_BUILTINS_SPEC_VERSION as SPEC_VERSION,
         };
+    }
+    #[doc = "VK_ARM_data_graph"]
+    pub mod data_graph {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::ARM_DATA_GRAPH_NAME as NAME,
+            crate::vk::ARM_DATA_GRAPH_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_ARM_data_graph instance-level functions"]
+        #[derive(Clone)]
+        pub struct Instance {
+            pub(crate) fp: InstanceFn,
+            pub(crate) handle: crate::vk::Instance,
+        }
+        impl Instance {
+            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+                let handle = instance.handle;
+                let fp = InstanceFn::load(|name| unsafe {
+                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &InstanceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn instance(&self) -> crate::vk::Instance {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_ARM_data_graph instance-level function pointers"]
+        pub struct InstanceFn {
+            pub get_physical_device_queue_family_data_graph_properties_arm:
+                PFN_vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM,
+            pub get_physical_device_queue_family_data_graph_processing_engine_properties_arm:
+                PFN_vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM,
+        }
+        unsafe impl Send for InstanceFn {}
+        unsafe impl Sync for InstanceFn {}
+        impl InstanceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    get_physical_device_queue_family_data_graph_properties_arm: unsafe {
+                        unsafe extern "system" fn get_physical_device_queue_family_data_graph_properties_arm(
+                            _physical_device: PhysicalDevice,
+                            _queue_family_index: u32,
+                            _p_queue_family_data_graph_property_count: *mut u32,
+                            _p_queue_family_data_graph_properties : * mut QueueFamilyDataGraphPropertiesARM < '_ >,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(
+                                    get_physical_device_queue_family_data_graph_properties_arm
+                                )
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_physical_device_queue_family_data_graph_properties_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_physical_device_queue_family_data_graph_processing_engine_properties_arm: unsafe {
+                        unsafe extern "system" fn get_physical_device_queue_family_data_graph_processing_engine_properties_arm(
+                            _physical_device: PhysicalDevice,
+                            _p_queue_family_data_graph_processing_engine_info : * const PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM < '_ >,
+                            _p_queue_family_data_graph_processing_engine_properties : * mut QueueFamilyDataGraphProcessingEnginePropertiesARM < '_ >,
+                        ) {
+                            panic ! (concat ! ("Unable to load " , stringify ! (get_physical_device_queue_family_data_graph_processing_engine_properties_arm)))
+                        }
+                        let cname = CStr :: from_bytes_with_nul_unchecked (b"vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM\0") ;
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_physical_device_queue_family_data_graph_processing_engine_properties_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+        #[doc = "VK_ARM_data_graph device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_ARM_data_graph device-level function pointers"]
+        pub struct DeviceFn {
+            pub create_data_graph_pipelines_arm: PFN_vkCreateDataGraphPipelinesARM,
+            pub create_data_graph_pipeline_session_arm: PFN_vkCreateDataGraphPipelineSessionARM,
+            pub get_data_graph_pipeline_session_bind_point_requirements_arm:
+                PFN_vkGetDataGraphPipelineSessionBindPointRequirementsARM,
+            pub get_data_graph_pipeline_session_memory_requirements_arm:
+                PFN_vkGetDataGraphPipelineSessionMemoryRequirementsARM,
+            pub bind_data_graph_pipeline_session_memory_arm:
+                PFN_vkBindDataGraphPipelineSessionMemoryARM,
+            pub destroy_data_graph_pipeline_session_arm: PFN_vkDestroyDataGraphPipelineSessionARM,
+            pub cmd_dispatch_data_graph_arm: PFN_vkCmdDispatchDataGraphARM,
+            pub get_data_graph_pipeline_available_properties_arm:
+                PFN_vkGetDataGraphPipelineAvailablePropertiesARM,
+            pub get_data_graph_pipeline_properties_arm: PFN_vkGetDataGraphPipelinePropertiesARM,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    create_data_graph_pipelines_arm: unsafe {
+                        unsafe extern "system" fn create_data_graph_pipelines_arm(
+                            _device: crate::vk::Device,
+                            _deferred_operation: DeferredOperationKHR,
+                            _pipeline_cache: PipelineCache,
+                            _create_info_count: u32,
+                            _p_create_infos: *const DataGraphPipelineCreateInfoARM<'_>,
+                            _p_allocator: *const AllocationCallbacks,
+                            _p_pipelines: *mut Pipeline,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(create_data_graph_pipelines_arm)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkCreateDataGraphPipelinesARM\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            create_data_graph_pipelines_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    create_data_graph_pipeline_session_arm: unsafe {
+                        unsafe extern "system" fn create_data_graph_pipeline_session_arm(
+                            _device: crate::vk::Device,
+                            _p_create_info: *const DataGraphPipelineSessionCreateInfoARM<'_>,
+                            _p_allocator: *const AllocationCallbacks,
+                            _p_session: *mut DataGraphPipelineSessionARM,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(create_data_graph_pipeline_session_arm)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkCreateDataGraphPipelineSessionARM\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            create_data_graph_pipeline_session_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_data_graph_pipeline_session_bind_point_requirements_arm: unsafe {
+                        unsafe extern "system" fn get_data_graph_pipeline_session_bind_point_requirements_arm(
+                            _device: crate::vk::Device,
+                            _p_info: *const DataGraphPipelineSessionBindPointRequirementsInfoARM<
+                                '_,
+                            >,
+                            _p_bind_point_requirement_count: *mut u32,
+                            _p_bind_point_requirements : * mut DataGraphPipelineSessionBindPointRequirementARM < '_ >,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(
+                                    get_data_graph_pipeline_session_bind_point_requirements_arm
+                                )
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetDataGraphPipelineSessionBindPointRequirementsARM\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_data_graph_pipeline_session_bind_point_requirements_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_data_graph_pipeline_session_memory_requirements_arm: unsafe {
+                        unsafe extern "system" fn get_data_graph_pipeline_session_memory_requirements_arm(
+                            _device: crate::vk::Device,
+                            _p_info: *const DataGraphPipelineSessionMemoryRequirementsInfoARM<'_>,
+                            _p_memory_requirements: *mut MemoryRequirements2<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_data_graph_pipeline_session_memory_requirements_arm)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetDataGraphPipelineSessionMemoryRequirementsARM\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_data_graph_pipeline_session_memory_requirements_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    bind_data_graph_pipeline_session_memory_arm: unsafe {
+                        unsafe extern "system" fn bind_data_graph_pipeline_session_memory_arm(
+                            _device: crate::vk::Device,
+                            _bind_info_count: u32,
+                            _p_bind_infos: *const BindDataGraphPipelineSessionMemoryInfoARM<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(bind_data_graph_pipeline_session_memory_arm)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkBindDataGraphPipelineSessionMemoryARM\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            bind_data_graph_pipeline_session_memory_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    destroy_data_graph_pipeline_session_arm: unsafe {
+                        unsafe extern "system" fn destroy_data_graph_pipeline_session_arm(
+                            _device: crate::vk::Device,
+                            _session: DataGraphPipelineSessionARM,
+                            _p_allocator: *const AllocationCallbacks,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(destroy_data_graph_pipeline_session_arm)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkDestroyDataGraphPipelineSessionARM\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            destroy_data_graph_pipeline_session_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_dispatch_data_graph_arm: unsafe {
+                        unsafe extern "system" fn cmd_dispatch_data_graph_arm(
+                            _command_buffer: CommandBuffer,
+                            _session: DataGraphPipelineSessionARM,
+                            _p_info: *const DataGraphPipelineDispatchInfoARM<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_dispatch_data_graph_arm)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchDataGraphARM\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_dispatch_data_graph_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_data_graph_pipeline_available_properties_arm: unsafe {
+                        unsafe extern "system" fn get_data_graph_pipeline_available_properties_arm(
+                            _device: crate::vk::Device,
+                            _p_pipeline_info: *const DataGraphPipelineInfoARM<'_>,
+                            _p_properties_count: *mut u32,
+                            _p_properties: *mut DataGraphPipelinePropertyARM,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_data_graph_pipeline_available_properties_arm)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetDataGraphPipelineAvailablePropertiesARM\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_data_graph_pipeline_available_properties_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_data_graph_pipeline_properties_arm: unsafe {
+                        unsafe extern "system" fn get_data_graph_pipeline_properties_arm(
+                            _device: crate::vk::Device,
+                            _p_pipeline_info: *const DataGraphPipelineInfoARM<'_>,
+                            _properties_count: u32,
+                            _p_properties: *mut DataGraphPipelinePropertyQueryResultARM<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_data_graph_pipeline_properties_arm)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetDataGraphPipelinePropertiesARM\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_data_graph_pipeline_properties_arm
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
     }
     #[doc = "VK_ARM_pipeline_opacity_micromap"]
     pub mod pipeline_opacity_micromap {
@@ -4601,7 +4949,7 @@ pub mod ext {
         #[derive(Clone)]
         #[doc = "Raw VK_EXT_swapchain_maintenance1 device-level function pointers"]
         pub struct DeviceFn {
-            pub release_swapchain_images_ext: PFN_vkReleaseSwapchainImagesEXT,
+            pub release_swapchain_images_ext: PFN_vkReleaseSwapchainImagesKHR,
         }
         unsafe impl Send for DeviceFn {}
         unsafe impl Sync for DeviceFn {}
@@ -4614,7 +4962,7 @@ pub mod ext {
                     release_swapchain_images_ext: unsafe {
                         unsafe extern "system" fn release_swapchain_images_ext(
                             _device: crate::vk::Device,
-                            _p_release_info: *const ReleaseSwapchainImagesInfoEXT<'_>,
+                            _p_release_info: *const ReleaseSwapchainImagesInfoKHR<'_>,
                         ) -> Result {
                             panic!(concat!(
                                 "Unable to load ",
@@ -17080,6 +17428,13 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_shader_untyped_pointers"]
+    pub mod shader_untyped_pointers {
+        pub use {
+            crate::vk::KHR_SHADER_UNTYPED_POINTERS_NAME as NAME,
+            crate::vk::KHR_SHADER_UNTYPED_POINTERS_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_KHR_portability_enumeration"]
     pub mod portability_enumeration {
         pub use {
@@ -17578,6 +17933,80 @@ pub mod khr {
                         let val = _f(cname);
                         if val.is_null() {
                             release_captured_pipeline_data_khr
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
+    #[doc = "VK_KHR_surface_maintenance1"]
+    pub mod surface_maintenance1 {
+        pub use {
+            crate::vk::KHR_SURFACE_MAINTENANCE1_NAME as NAME,
+            crate::vk::KHR_SURFACE_MAINTENANCE1_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_swapchain_maintenance1"]
+    pub mod swapchain_maintenance1 {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::KHR_SWAPCHAIN_MAINTENANCE1_NAME as NAME,
+            crate::vk::KHR_SWAPCHAIN_MAINTENANCE1_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_KHR_swapchain_maintenance1 device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_KHR_swapchain_maintenance1 device-level function pointers"]
+        pub struct DeviceFn {
+            pub release_swapchain_images_khr: PFN_vkReleaseSwapchainImagesKHR,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    release_swapchain_images_khr: unsafe {
+                        unsafe extern "system" fn release_swapchain_images_khr(
+                            _device: crate::vk::Device,
+                            _p_release_info: *const ReleaseSwapchainImagesInfoKHR<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(release_swapchain_images_khr)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkReleaseSwapchainImagesKHR\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            release_swapchain_images_khr
                         } else {
                             ::core::mem::transmute(val)
                         }
@@ -18103,6 +18532,101 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_copy_memory_indirect"]
+    pub mod copy_memory_indirect {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::KHR_COPY_MEMORY_INDIRECT_NAME as NAME,
+            crate::vk::KHR_COPY_MEMORY_INDIRECT_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_KHR_copy_memory_indirect device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_KHR_copy_memory_indirect device-level function pointers"]
+        pub struct DeviceFn {
+            pub cmd_copy_memory_indirect_khr: PFN_vkCmdCopyMemoryIndirectKHR,
+            pub cmd_copy_memory_to_image_indirect_khr: PFN_vkCmdCopyMemoryToImageIndirectKHR,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    cmd_copy_memory_indirect_khr: unsafe {
+                        unsafe extern "system" fn cmd_copy_memory_indirect_khr(
+                            _command_buffer: CommandBuffer,
+                            _p_copy_memory_indirect_info: *const CopyMemoryIndirectInfoKHR<'_>,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_copy_memory_indirect_khr)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyMemoryIndirectKHR\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_copy_memory_indirect_khr
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_copy_memory_to_image_indirect_khr: unsafe {
+                        unsafe extern "system" fn cmd_copy_memory_to_image_indirect_khr(
+                            _command_buffer: CommandBuffer,
+                            _p_copy_memory_to_image_indirect_info : * const CopyMemoryToImageIndirectInfoKHR < '_ >,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_copy_memory_to_image_indirect_khr)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkCmdCopyMemoryToImageIndirectKHR\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_copy_memory_to_image_indirect_khr
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
+    #[doc = "VK_KHR_video_encode_intra_refresh"]
+    pub mod video_encode_intra_refresh {
+        pub use {
+            crate::vk::KHR_VIDEO_ENCODE_INTRA_REFRESH_NAME as NAME,
+            crate::vk::KHR_VIDEO_ENCODE_INTRA_REFRESH_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_KHR_video_encode_quantization_map"]
     pub mod video_encode_quantization_map {
         pub use {
@@ -18131,6 +18655,13 @@ pub mod khr {
             crate::vk::KHR_MAINTENANCE8_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_KHR_shader_fma"]
+    pub mod shader_fma {
+        pub use {
+            crate::vk::KHR_SHADER_FMA_NAME as NAME,
+            crate::vk::KHR_SHADER_FMA_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_KHR_maintenance9"]
     pub mod maintenance9 {
         pub use {
@@ -18157,6 +18688,13 @@ pub mod khr {
         pub use {
             crate::vk::KHR_ROBUSTNESS2_NAME as NAME,
             crate::vk::KHR_ROBUSTNESS2_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_present_mode_fifo_latest_ready"]
+    pub mod present_mode_fifo_latest_ready {
+        pub use {
+            crate::vk::KHR_PRESENT_MODE_FIFO_LATEST_READY_NAME as NAME,
+            crate::vk::KHR_PRESENT_MODE_FIFO_LATEST_READY_SPEC_VERSION as SPEC_VERSION,
         };
     }
 }
@@ -22405,6 +22943,13 @@ pub mod sec {
             crate::vk::SEC_AMIGO_PROFILING_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_SEC_pipeline_cache_incremental_mode"]
+    pub mod pipeline_cache_incremental_mode {
+        pub use {
+            crate::vk::SEC_PIPELINE_CACHE_INCREMENTAL_MODE_NAME as NAME,
+            crate::vk::SEC_PIPELINE_CACHE_INCREMENTAL_MODE_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged VALVE"]
 pub mod valve {
@@ -22413,6 +22958,13 @@ pub mod valve {
         pub use {
             crate::vk::VALVE_MUTABLE_DESCRIPTOR_TYPE_NAME as NAME,
             crate::vk::VALVE_MUTABLE_DESCRIPTOR_TYPE_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_VALVE_video_encode_rgb_conversion"]
+    pub mod video_encode_rgb_conversion {
+        pub use {
+            crate::vk::VALVE_VIDEO_ENCODE_RGB_CONVERSION_NAME as NAME,
+            crate::vk::VALVE_VIDEO_ENCODE_RGB_CONVERSION_SPEC_VERSION as SPEC_VERSION,
         };
     }
     #[doc = "VK_VALVE_descriptor_set_host_mapping"]
