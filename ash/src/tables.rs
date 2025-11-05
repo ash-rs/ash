@@ -114,16 +114,24 @@ impl EntryFnV1_0 {
 pub struct InstanceFnV1_0 {
     pub destroy_instance: PFN_vkDestroyInstance,
     pub enumerate_physical_devices: PFN_vkEnumeratePhysicalDevices,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-gpdp2>"]
     pub get_physical_device_features: PFN_vkGetPhysicalDeviceFeatures,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-gpdp2>"]
     pub get_physical_device_format_properties: PFN_vkGetPhysicalDeviceFormatProperties,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-gpdp2>"]
     pub get_physical_device_image_format_properties: PFN_vkGetPhysicalDeviceImageFormatProperties,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-gpdp2>"]
     pub get_physical_device_properties: PFN_vkGetPhysicalDeviceProperties,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-gpdp2>"]
     pub get_physical_device_queue_family_properties: PFN_vkGetPhysicalDeviceQueueFamilyProperties,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-gpdp2>"]
     pub get_physical_device_memory_properties: PFN_vkGetPhysicalDeviceMemoryProperties,
     pub get_device_proc_addr: PFN_vkGetDeviceProcAddr,
     pub create_device: PFN_vkCreateDevice,
     pub enumerate_device_extension_properties: PFN_vkEnumerateDeviceExtensionProperties,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-devicelayers>"]
     pub enumerate_device_layer_properties: PFN_vkEnumerateDeviceLayerProperties,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-gpdp2>"]
     pub get_physical_device_sparse_image_format_properties:
         PFN_vkGetPhysicalDeviceSparseImageFormatProperties,
 }
@@ -458,10 +466,15 @@ pub struct DeviceFnV1_0 {
     pub allocate_descriptor_sets: PFN_vkAllocateDescriptorSets,
     pub free_descriptor_sets: PFN_vkFreeDescriptorSets,
     pub update_descriptor_sets: PFN_vkUpdateDescriptorSets,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub create_framebuffer: PFN_vkCreateFramebuffer,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub destroy_framebuffer: PFN_vkDestroyFramebuffer,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-renderpass2>"]
     pub create_render_pass: PFN_vkCreateRenderPass,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub destroy_render_pass: PFN_vkDestroyRenderPass,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub get_render_area_granularity: PFN_vkGetRenderAreaGranularity,
     pub create_command_pool: PFN_vkCreateCommandPool,
     pub destroy_command_pool: PFN_vkDestroyCommandPool,
@@ -511,8 +524,11 @@ pub struct DeviceFnV1_0 {
     pub cmd_write_timestamp: PFN_vkCmdWriteTimestamp,
     pub cmd_copy_query_pool_results: PFN_vkCmdCopyQueryPoolResults,
     pub cmd_push_constants: PFN_vkCmdPushConstants,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-renderpass2>"]
     pub cmd_begin_render_pass: PFN_vkCmdBeginRenderPass,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-renderpass2>"]
     pub cmd_next_subpass: PFN_vkCmdNextSubpass,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-renderpass2>"]
     pub cmd_end_render_pass: PFN_vkCmdEndRenderPass,
     pub cmd_execute_commands: PFN_vkCmdExecuteCommands,
 }
@@ -3309,9 +3325,13 @@ pub struct InstanceFnV1_2;
 pub struct DeviceFnV1_2 {
     pub cmd_draw_indirect_count: PFN_vkCmdDrawIndirectCount,
     pub cmd_draw_indexed_indirect_count: PFN_vkCmdDrawIndexedIndirectCount,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub create_render_pass2: PFN_vkCreateRenderPass2,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub cmd_begin_render_pass2: PFN_vkCmdBeginRenderPass2,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub cmd_next_subpass2: PFN_vkCmdNextSubpass2,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub cmd_end_render_pass2: PFN_vkCmdEndRenderPass2,
     pub reset_query_pool: PFN_vkResetQueryPool,
     pub get_semaphore_counter_value: PFN_vkGetSemaphoreCounterValue,
