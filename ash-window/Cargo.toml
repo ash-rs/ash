@@ -20,7 +20,7 @@ rust-version = "1.69.0"
 
 [dependencies]
 ash = { path = "../ash", version = "0.38", default-features = false, features = ["std"] }
-raw-window-handle = "0.6"
+raw-window-handle = "0.6.2"
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
 raw-window-metal = "0.4"
