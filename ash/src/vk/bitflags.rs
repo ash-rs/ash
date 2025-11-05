@@ -676,6 +676,7 @@ impl ClusterAccelerationStructureGeometryFlagsNV {
 pub struct ClusterAccelerationStructureAddressResolutionFlagsNV(pub(crate) Flags);
 vk_bitflags_wrapped!(ClusterAccelerationStructureAddressResolutionFlagsNV, Flags);
 impl ClusterAccelerationStructureAddressResolutionFlagsNV {
+    pub const NONE: Self = Self(0);
     pub const INDIRECTED_DST_IMPLICIT_DATA: Self = Self(0b1);
     pub const INDIRECTED_SCRATCH_DATA: Self = Self(0b10);
     pub const INDIRECTED_DST_ADDRESS_ARRAY: Self = Self(0b100);
@@ -1180,23 +1181,29 @@ impl FrameBoundaryFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPresentScalingFlagBitsEXT.html>"]
-pub struct PresentScalingFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(PresentScalingFlagsEXT, Flags);
-impl PresentScalingFlagsEXT {
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPresentScalingFlagBitsKHR.html>"]
+pub struct PresentScalingFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(PresentScalingFlagsKHR, Flags);
+impl PresentScalingFlagsKHR {
     pub const ONE_TO_ONE: Self = Self(0b1);
+    pub const ONE_TO_ONE_EXT: Self = Self::ONE_TO_ONE;
     pub const ASPECT_RATIO_STRETCH: Self = Self(0b10);
+    pub const ASPECT_RATIO_STRETCH_EXT: Self = Self::ASPECT_RATIO_STRETCH;
     pub const STRETCH: Self = Self(0b100);
+    pub const STRETCH_EXT: Self = Self::STRETCH;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPresentGravityFlagBitsEXT.html>"]
-pub struct PresentGravityFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(PresentGravityFlagsEXT, Flags);
-impl PresentGravityFlagsEXT {
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPresentGravityFlagBitsKHR.html>"]
+pub struct PresentGravityFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(PresentGravityFlagsKHR, Flags);
+impl PresentGravityFlagsKHR {
     pub const MIN: Self = Self(0b1);
+    pub const MIN_EXT: Self = Self::MIN;
     pub const MAX: Self = Self(0b10);
+    pub const MAX_EXT: Self = Self::MAX;
     pub const CENTERED: Self = Self(0b100);
+    pub const CENTERED_EXT: Self = Self::CENTERED;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1356,6 +1363,18 @@ impl VideoEncodeRateControlModeFlagsKHR {
     pub const DISABLED: Self = Self(0b1);
     pub const CBR: Self = Self(0b10);
     pub const VBR: Self = Self(0b100);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeIntraRefreshModeFlagBitsKHR.html>"]
+pub struct VideoEncodeIntraRefreshModeFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeIntraRefreshModeFlagsKHR, Flags);
+impl VideoEncodeIntraRefreshModeFlagsKHR {
+    pub const NONE: Self = Self(0);
+    pub const PER_PICTURE_PARTITION: Self = Self(0b1);
+    pub const BLOCK_BASED: Self = Self(0b10);
+    pub const BLOCK_ROW_BASED: Self = Self(0b100);
+    pub const BLOCK_COLUMN_BASED: Self = Self(0b1000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1801,6 +1820,16 @@ impl TileShadingRenderPassFlagsQCOM {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAddressCopyFlagBitsKHR.html>"]
+pub struct AddressCopyFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(AddressCopyFlagsKHR, Flags);
+impl AddressCopyFlagsKHR {
+    pub const DEVICE_LOCAL: Self = Self(0b1);
+    pub const SPARSE: Self = Self(0b10);
+    pub const PROTECTED: Self = Self(0b100);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTensorCreateFlagBitsARM.html>"]
 pub struct TensorCreateFlagsARM(pub(crate) Flags64);
 vk_bitflags_wrapped!(TensorCreateFlagsARM, Flags64);
@@ -1829,3 +1858,47 @@ impl TensorUsageFlagsARM {
 pub struct TensorViewCreateFlagsARM(pub(crate) Flags64);
 vk_bitflags_wrapped!(TensorViewCreateFlagsARM, Flags64);
 impl TensorViewCreateFlagsARM {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDataGraphPipelineSessionCreateFlagBitsARM.html>"]
+pub struct DataGraphPipelineSessionCreateFlagsARM(pub(crate) Flags64);
+vk_bitflags_wrapped!(DataGraphPipelineSessionCreateFlagsARM, Flags64);
+impl DataGraphPipelineSessionCreateFlagsARM {
+    pub const PROTECTED: Self = Self(0b1);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDataGraphPipelineDispatchFlagBitsARM.html>"]
+pub struct DataGraphPipelineDispatchFlagsARM(pub(crate) Flags64);
+vk_bitflags_wrapped!(DataGraphPipelineDispatchFlagsARM, Flags64);
+impl DataGraphPipelineDispatchFlagsARM {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeRgbModelConversionFlagBitsVALVE.html>"]
+pub struct VideoEncodeRgbModelConversionFlagsVALVE(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeRgbModelConversionFlagsVALVE, Flags);
+impl VideoEncodeRgbModelConversionFlagsVALVE {
+    pub const RGB_IDENTITY: Self = Self(0b1);
+    pub const YCBCR_IDENTITY: Self = Self(0b10);
+    pub const YCBCR_709: Self = Self(0b100);
+    pub const YCBCR_601: Self = Self(0b1000);
+    pub const YCBCR_2020: Self = Self(0b1_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeRgbRangeCompressionFlagBitsVALVE.html>"]
+pub struct VideoEncodeRgbRangeCompressionFlagsVALVE(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeRgbRangeCompressionFlagsVALVE, Flags);
+impl VideoEncodeRgbRangeCompressionFlagsVALVE {
+    pub const FULL_RANGE: Self = Self(0b1);
+    pub const NARROW_RANGE: Self = Self(0b10);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeRgbChromaOffsetFlagBitsVALVE.html>"]
+pub struct VideoEncodeRgbChromaOffsetFlagsVALVE(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeRgbChromaOffsetFlagsVALVE, Flags);
+impl VideoEncodeRgbChromaOffsetFlagsVALVE {
+    pub const COSITED_EVEN: Self = Self(0b1);
+    pub const MIDPOINT: Self = Self(0b10);
+}

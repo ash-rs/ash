@@ -609,6 +609,7 @@ impl Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateRenderPass2.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     #[inline]
     pub unsafe fn create_render_pass2(
         &self,
@@ -616,6 +617,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::RenderPass> {
         let mut renderpass = mem::MaybeUninit::uninit();
+        #[allow(deprecated)]
         (self.device_fn_1_2.create_render_pass2)(
             self.handle,
             create_info,
@@ -626,6 +628,7 @@ impl Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRenderPass2.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     #[inline]
     pub unsafe fn cmd_begin_render_pass2(
         &self,
@@ -633,6 +636,7 @@ impl Device {
         render_pass_begin_info: &vk::RenderPassBeginInfo<'_>,
         subpass_begin_info: &vk::SubpassBeginInfo<'_>,
     ) {
+        #[allow(deprecated)]
         (self.device_fn_1_2.cmd_begin_render_pass2)(
             command_buffer,
             render_pass_begin_info,
@@ -641,6 +645,7 @@ impl Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdNextSubpass2.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     #[inline]
     pub unsafe fn cmd_next_subpass2(
         &self,
@@ -648,16 +653,19 @@ impl Device {
         subpass_begin_info: &vk::SubpassBeginInfo<'_>,
         subpass_end_info: &vk::SubpassEndInfo<'_>,
     ) {
+        #[allow(deprecated)]
         (self.device_fn_1_2.cmd_next_subpass2)(command_buffer, subpass_begin_info, subpass_end_info)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderPass2.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     #[inline]
     pub unsafe fn cmd_end_render_pass2(
         &self,
         command_buffer: vk::CommandBuffer,
         subpass_end_info: &vk::SubpassEndInfo<'_>,
     ) {
+        #[allow(deprecated)]
         (self.device_fn_1_2.cmd_end_render_pass2)(command_buffer, subpass_end_info)
     }
 
@@ -1175,12 +1183,14 @@ impl Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyRenderPass.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     #[inline]
     pub unsafe fn destroy_render_pass(
         &self,
         renderpass: vk::RenderPass,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
+        #[allow(deprecated)]
         (self.device_fn_1_0.destroy_render_pass)(
             self.handle,
             renderpass,
@@ -1189,12 +1199,14 @@ impl Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyFramebuffer.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     #[inline]
     pub unsafe fn destroy_framebuffer(
         &self,
         framebuffer: vk::Framebuffer,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
+        #[allow(deprecated)]
         (self.device_fn_1_0.destroy_framebuffer)(
             self.handle,
             framebuffer,
@@ -1814,6 +1826,7 @@ impl Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRenderPass.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
     #[inline]
     pub unsafe fn cmd_begin_render_pass(
         &self,
@@ -1821,16 +1834,19 @@ impl Device {
         render_pass_begin: &vk::RenderPassBeginInfo<'_>,
         contents: vk::SubpassContents,
     ) {
+        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_begin_render_pass)(command_buffer, render_pass_begin, contents)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdNextSubpass.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
     #[inline]
     pub unsafe fn cmd_next_subpass(
         &self,
         command_buffer: vk::CommandBuffer,
         contents: vk::SubpassContents,
     ) {
+        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_next_subpass)(command_buffer, contents)
     }
 
@@ -1887,8 +1903,10 @@ impl Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderPass.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
     #[inline]
     pub unsafe fn cmd_end_render_pass(&self, command_buffer: vk::CommandBuffer) {
+        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_end_render_pass)(command_buffer)
     }
 
@@ -2318,6 +2336,7 @@ impl Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateFramebuffer.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     #[inline]
     pub unsafe fn create_framebuffer(
         &self,
@@ -2325,6 +2344,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Framebuffer> {
         let mut framebuffer = mem::MaybeUninit::uninit();
+        #[allow(deprecated)]
         (self.device_fn_1_0.create_framebuffer)(
             self.handle,
             create_info,
@@ -2374,6 +2394,7 @@ impl Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateRenderPass.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
     #[inline]
     pub unsafe fn create_render_pass(
         &self,
@@ -2381,6 +2402,7 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::RenderPass> {
         let mut renderpass = mem::MaybeUninit::uninit();
+        #[allow(deprecated)]
         (self.device_fn_1_0.create_render_pass)(
             self.handle,
             create_info,
@@ -2706,9 +2728,11 @@ impl Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRenderAreaGranularity.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     #[inline]
     pub unsafe fn get_render_area_granularity(&self, render_pass: vk::RenderPass) -> vk::Extent2D {
         let mut granularity = mem::MaybeUninit::uninit();
+        #[allow(deprecated)]
         (self.device_fn_1_0.get_render_area_granularity)(
             self.handle,
             render_pass,

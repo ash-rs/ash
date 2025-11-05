@@ -394,6 +394,7 @@ impl Instance {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFormatProperties.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
     #[inline]
     pub unsafe fn get_physical_device_format_properties(
         &self,
@@ -401,6 +402,7 @@ impl Instance {
         format: vk::Format,
     ) -> vk::FormatProperties {
         let mut format_prop = mem::MaybeUninit::uninit();
+        #[allow(deprecated)]
         (self.instance_fn_1_0.get_physical_device_format_properties)(
             physical_device,
             format,
@@ -410,6 +412,7 @@ impl Instance {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
     #[inline]
     pub unsafe fn get_physical_device_image_format_properties(
         &self,
@@ -421,6 +424,7 @@ impl Instance {
         flags: vk::ImageCreateFlags,
     ) -> VkResult<vk::ImageFormatProperties> {
         let mut image_format_prop = mem::MaybeUninit::uninit();
+        #[allow(deprecated)]
         (self
             .instance_fn_1_0
             .get_physical_device_image_format_properties)(
@@ -436,12 +440,14 @@ impl Instance {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMemoryProperties.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
     #[inline]
     pub unsafe fn get_physical_device_memory_properties(
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceMemoryProperties {
         let mut memory_prop = mem::MaybeUninit::uninit();
+        #[allow(deprecated)]
         (self.instance_fn_1_0.get_physical_device_memory_properties)(
             physical_device,
             memory_prop.as_mut_ptr(),
@@ -450,23 +456,27 @@ impl Instance {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceProperties.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
     #[inline]
     pub unsafe fn get_physical_device_properties(
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceProperties {
         let mut prop = mem::MaybeUninit::uninit();
+        #[allow(deprecated)]
         (self.instance_fn_1_0.get_physical_device_properties)(physical_device, prop.as_mut_ptr());
         prop.assume_init()
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
     #[inline]
     pub unsafe fn get_physical_device_queue_family_properties(
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> Vec<vk::QueueFamilyProperties> {
         read_into_uninitialized_vector(|count, data| {
+            #[allow(deprecated)]
             (self
                 .instance_fn_1_0
                 .get_physical_device_queue_family_properties)(
@@ -479,12 +489,14 @@ impl Instance {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFeatures.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
     #[inline]
     pub unsafe fn get_physical_device_features(
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceFeatures {
         let mut prop = mem::MaybeUninit::uninit();
+        #[allow(deprecated)]
         (self.instance_fn_1_0.get_physical_device_features)(physical_device, prop.as_mut_ptr());
         prop.assume_init()
     }
@@ -514,17 +526,20 @@ impl Instance {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateDeviceLayerProperties.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-devicelayers>"]
     #[inline]
     pub unsafe fn enumerate_device_layer_properties(
         &self,
         device: vk::PhysicalDevice,
     ) -> VkResult<Vec<vk::LayerProperties>> {
         read_into_uninitialized_vector(|count, data| {
+            #[allow(deprecated)]
             (self.instance_fn_1_0.enumerate_device_layer_properties)(device, count, data)
         })
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
     #[inline]
     pub unsafe fn get_physical_device_sparse_image_format_properties(
         &self,
@@ -536,6 +551,7 @@ impl Instance {
         tiling: vk::ImageTiling,
     ) -> Vec<vk::SparseImageFormatProperties> {
         read_into_uninitialized_vector(|count, data| {
+            #[allow(deprecated)]
             (self
                 .instance_fn_1_0
                 .get_physical_device_sparse_image_format_properties)(

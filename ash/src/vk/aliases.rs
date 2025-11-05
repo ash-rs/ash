@@ -31,6 +31,8 @@ pub type ResolveModeFlagsKHR = ResolveModeFlags;
 pub type ToolPurposeFlagsEXT = ToolPurposeFlags;
 pub type SubmitFlagsKHR = SubmitFlags;
 pub type HostImageCopyFlagsEXT = HostImageCopyFlags;
+pub type PresentScalingFlagsEXT = PresentScalingFlagsKHR;
+pub type PresentGravityFlagsEXT = PresentGravityFlagsKHR;
 pub type DescriptorUpdateTemplateKHR = DescriptorUpdateTemplate;
 pub type SamplerYcbcrConversionKHR = SamplerYcbcrConversion;
 pub type PrivateDataSlotEXT = PrivateDataSlot;
@@ -58,6 +60,8 @@ pub type SamplerReductionModeEXT = SamplerReductionMode;
 pub type ShaderFloatControlsIndependenceKHR = ShaderFloatControlsIndependence;
 pub type DriverIdKHR = DriverId;
 pub type BufferUsageFlags2CreateInfoKHR<'a> = BufferUsageFlags2CreateInfo<'a>;
+pub type CopyMemoryIndirectCommandNV = CopyMemoryIndirectCommandKHR;
+pub type CopyMemoryToImageIndirectCommandNV = CopyMemoryToImageIndirectCommandKHR;
 pub type PipelineCreateFlags2CreateInfoKHR<'a> = PipelineCreateFlags2CreateInfo<'a>;
 pub type DevicePrivateDataCreateInfoEXT<'a> = DevicePrivateDataCreateInfo<'a>;
 pub type PrivateDataSlotCreateInfoEXT<'a> = PrivateDataSlotCreateInfo<'a>;
@@ -220,6 +224,8 @@ pub type PhysicalDeviceComputeShaderDerivativesFeaturesNV<'a> =
     PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a>;
 pub type PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'a> =
     PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a>;
+pub type PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> =
+    PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'a>;
 pub type ImageStencilUsageCreateInfoEXT<'a> = ImageStencilUsageCreateInfo<'a>;
 pub type PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> =
     PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a>;
@@ -353,6 +359,16 @@ pub type PhysicalDevicePipelineRobustnessPropertiesEXT<'a> =
     PhysicalDevicePipelineRobustnessProperties<'a>;
 pub type PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> =
     PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a>;
+pub type SurfacePresentModeEXT<'a> = SurfacePresentModeKHR<'a>;
+pub type SurfacePresentScalingCapabilitiesEXT<'a> = SurfacePresentScalingCapabilitiesKHR<'a>;
+pub type SurfacePresentModeCompatibilityEXT<'a> = SurfacePresentModeCompatibilityKHR<'a>;
+pub type PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'a> =
+    PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'a>;
+pub type SwapchainPresentFenceInfoEXT<'a> = SwapchainPresentFenceInfoKHR<'a>;
+pub type SwapchainPresentModesCreateInfoEXT<'a> = SwapchainPresentModesCreateInfoKHR<'a>;
+pub type SwapchainPresentModeInfoEXT<'a> = SwapchainPresentModeInfoKHR<'a>;
+pub type SwapchainPresentScalingCreateInfoEXT<'a> = SwapchainPresentScalingCreateInfoKHR<'a>;
+pub type ReleaseSwapchainImagesInfoEXT<'a> = ReleaseSwapchainImagesInfoKHR<'a>;
 pub type DeviceImageSubresourceInfoKHR<'a> = DeviceImageSubresourceInfo<'a>;
 pub type MemoryMapInfoKHR<'a> = MemoryMapInfo<'a>;
 pub type MemoryUnmapInfoKHR<'a> = MemoryUnmapInfo<'a>;
@@ -371,4 +387,5 @@ pub type PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR<'a> =
     PhysicalDeviceDynamicRenderingLocalReadFeatures<'a>;
 pub type RenderingAttachmentLocationInfoKHR<'a> = RenderingAttachmentLocationInfo<'a>;
 pub type RenderingInputAttachmentIndexInfoKHR<'a> = RenderingInputAttachmentIndexInfo<'a>;
-pub type SurfaceCreateInfoOHOS<'a> = OHSurfaceCreateInfoOHOS<'a>;
+pub type PhysicalDevicePresentModeFifoLatestReadyFeaturesEXT<'a> =
+    PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a>;

@@ -1,5 +1,9 @@
 use super::bitflags::*;
 use super::enums::*;
+#[doc = "Generated from 'VK_VERSION_1_0'"]
+impl Result {
+    pub const ERROR_VALIDATION_FAILED: Self = Self(-1_000_011_001);
+}
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl BufferCreateFlags {
     #[doc = "Buffer requires protected memory"]

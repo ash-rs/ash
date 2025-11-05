@@ -1308,6 +1308,7 @@ impl ClusterAccelerationStructureOpTypeNV {
     pub const BUILD_TRIANGLE_CLUSTER: Self = Self(2);
     pub const BUILD_TRIANGLE_CLUSTER_TEMPLATE: Self = Self(3);
     pub const INSTANTIATE_TRIANGLE_CLUSTER: Self = Self(4);
+    pub const GET_CLUSTER_TEMPLATE_INDICES: Self = Self(5);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
@@ -2928,6 +2929,23 @@ impl OutOfBandQueueTypeNV {
     pub const RENDER: Self = Self(0);
     pub const PRESENT: Self = Self(1);
 }
+#[cfg(feature = "provisional")]
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCompressedTriangleFormatAMDX.html>"]
+pub struct CompressedTriangleFormatAMDX(pub(crate) i32);
+#[cfg(feature = "provisional")]
+impl CompressedTriangleFormatAMDX {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+    pub const DGF1: Self = Self(0);
+}
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDepthClampModeEXT.html>"]
@@ -2994,6 +3012,82 @@ impl DefaultVertexAttributeValueKHR {
     pub const ZERO_ZERO_ZERO_ZERO: Self = Self(0);
     pub const ZERO_ZERO_ZERO_ONE: Self = Self(1);
 }
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDataGraphPipelineSessionBindPointARM.html>"]
+pub struct DataGraphPipelineSessionBindPointARM(pub(crate) i32);
+impl DataGraphPipelineSessionBindPointARM {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+    pub const TRANSIENT: Self = Self(0);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDataGraphPipelineSessionBindPointTypeARM.html>"]
+pub struct DataGraphPipelineSessionBindPointTypeARM(pub(crate) i32);
+impl DataGraphPipelineSessionBindPointTypeARM {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+    pub const MEMORY: Self = Self(0);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDataGraphPipelinePropertyARM.html>"]
+pub struct DataGraphPipelinePropertyARM(pub(crate) i32);
+impl DataGraphPipelinePropertyARM {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+    pub const CREATION_LOG: Self = Self(0);
+    pub const IDENTIFIER: Self = Self(1);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDataGraphProcessingEngineTypeARM.html>"]
+pub struct PhysicalDeviceDataGraphProcessingEngineTypeARM(pub(crate) i32);
+impl PhysicalDeviceDataGraphProcessingEngineTypeARM {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+    pub const DEFAULT: Self = Self(0);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDataGraphOperationTypeARM.html>"]
+pub struct PhysicalDeviceDataGraphOperationTypeARM(pub(crate) i32);
+impl PhysicalDeviceDataGraphOperationTypeARM {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+    pub const SPIRV_EXTENDED_INSTRUCTION_SET: Self = Self(0);
+}
 impl fmt::Debug for ObjectType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
@@ -3050,6 +3144,7 @@ impl fmt::Debug for ObjectType {
             Self::OPTICAL_FLOW_SESSION_NV => Some("OPTICAL_FLOW_SESSION_NV"),
             Self::SHADER_EXT => Some("SHADER_EXT"),
             Self::PIPELINE_BINARY_KHR => Some("PIPELINE_BINARY_KHR"),
+            Self::DATA_GRAPH_PIPELINE_SESSION_ARM => Some("DATA_GRAPH_PIPELINE_SESSION_ARM"),
             Self::EXTERNAL_COMPUTE_QUEUE_NV => Some("EXTERNAL_COMPUTE_QUEUE_NV"),
             Self::INDIRECT_COMMANDS_LAYOUT_EXT => Some("INDIRECT_COMMANDS_LAYOUT_EXT"),
             Self::INDIRECT_EXECUTION_SET_EXT => Some("INDIRECT_EXECUTION_SET_EXT"),
@@ -3092,7 +3187,6 @@ impl fmt::Debug for Result {
             Self::SUBOPTIMAL_KHR => Some("SUBOPTIMAL_KHR"),
             Self::ERROR_OUT_OF_DATE_KHR => Some("ERROR_OUT_OF_DATE_KHR"),
             Self::ERROR_INCOMPATIBLE_DISPLAY_KHR => Some("ERROR_INCOMPATIBLE_DISPLAY_KHR"),
-            Self::ERROR_VALIDATION_FAILED_EXT => Some("ERROR_VALIDATION_FAILED_EXT"),
             Self::ERROR_INVALID_SHADER_NV => Some("ERROR_INVALID_SHADER_NV"),
             Self::ERROR_IMAGE_USAGE_NOT_SUPPORTED_KHR => {
                 Some("ERROR_IMAGE_USAGE_NOT_SUPPORTED_KHR")
@@ -3129,6 +3223,7 @@ impl fmt::Debug for Result {
             Self::INCOMPATIBLE_SHADER_BINARY_EXT => Some("INCOMPATIBLE_SHADER_BINARY_EXT"),
             Self::PIPELINE_BINARY_MISSING_KHR => Some("PIPELINE_BINARY_MISSING_KHR"),
             Self::ERROR_NOT_ENOUGH_SPACE_KHR => Some("ERROR_NOT_ENOUGH_SPACE_KHR"),
+            Self::ERROR_VALIDATION_FAILED => Some("ERROR_VALIDATION_FAILED"),
             Self::ERROR_OUT_OF_POOL_MEMORY => Some("ERROR_OUT_OF_POOL_MEMORY"),
             Self::ERROR_INVALID_EXTERNAL_HANDLE => Some("ERROR_INVALID_EXTERNAL_HANDLE"),
             Self::ERROR_FRAGMENTATION => Some("ERROR_FRAGMENTATION"),

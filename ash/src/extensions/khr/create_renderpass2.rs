@@ -1,4 +1,5 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_create_renderpass2.html>
+#![deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
 
 use crate::vk;
 use crate::RawPtr;
@@ -14,6 +15,7 @@ impl crate::khr::create_renderpass2::Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::RenderPass> {
         let mut renderpass = mem::MaybeUninit::uninit();
+        #[allow(deprecated)]
         (self.fp.create_render_pass2_khr)(
             self.handle,
             create_info,
@@ -31,6 +33,7 @@ impl crate::khr::create_renderpass2::Device {
         render_pass_begin_info: &vk::RenderPassBeginInfo<'_>,
         subpass_begin_info: &vk::SubpassBeginInfo<'_>,
     ) {
+        #[allow(deprecated)]
         (self.fp.cmd_begin_render_pass2_khr)(
             command_buffer,
             render_pass_begin_info,
@@ -46,6 +49,7 @@ impl crate::khr::create_renderpass2::Device {
         subpass_begin_info: &vk::SubpassBeginInfo<'_>,
         subpass_end_info: &vk::SubpassEndInfo<'_>,
     ) {
+        #[allow(deprecated)]
         (self.fp.cmd_next_subpass2_khr)(command_buffer, subpass_begin_info, subpass_end_info)
     }
 
@@ -56,6 +60,7 @@ impl crate::khr::create_renderpass2::Device {
         command_buffer: vk::CommandBuffer,
         subpass_end_info: &vk::SubpassEndInfo<'_>,
     ) {
+        #[allow(deprecated)]
         (self.fp.cmd_end_render_pass2_khr)(command_buffer, subpass_end_info)
     }
 }

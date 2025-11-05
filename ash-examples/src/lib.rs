@@ -302,6 +302,7 @@ impl ExampleBase {
             let (pdevice, queue_family_index) = pdevices
                 .iter()
                 .find_map(|pdevice| {
+                    #[allow(deprecated)]
                     instance
                         .get_physical_device_queue_family_properties(*pdevice)
                         .iter()
@@ -451,6 +452,7 @@ impl ExampleBase {
                     device.create_image_view(&create_view_info, None).unwrap()
                 })
                 .collect();
+            #[allow(deprecated)]
             let device_memory_properties = instance.get_physical_device_memory_properties(pdevice);
             let depth_image_create_info = vk::ImageCreateInfo::default()
                 .image_type(vk::ImageType::TYPE_2D)

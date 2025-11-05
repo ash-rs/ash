@@ -191,7 +191,7 @@ fn parse_c_define_header(i: &str) -> IResult<&str, (Option<&str>, (&str, Option<
     (pair(
         parse_comment_suffix,
         preceded(
-            tag("#define "),
+            preceded(opt(newline), tag("#define ")),
             pair(parse_c_identifier, opt(parse_parameter_names)),
         ),
     ))
@@ -287,6 +287,12 @@ fn khronos_link<S: Display + ?Sized>(name: &S) -> Literal {
     Literal::string(&format!(
         "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{name}.html>"
     ))
+}
+
+fn deprecated_annotation<S: Display + ?Sized>(explanationlink: &S) -> TokenStream {
+    let comment =
+        format!("<https://docs.vulkan.org/spec/latest/appendices/legacy.html#{explanationlink}>");
+    quote!(#[deprecated = #comment])
 }
 
 fn is_opaque_type(ty: &str) -> bool {
@@ -891,7 +897,8 @@ pub type CommandMap<'a> = HashMap<&'a str, (&'a vk_parse::CommandDefinition, &'a
 fn generate_function_pointers<'a>(
     ident: Ident,
     commands: &[(&'a vk_parse::CommandDefinition, &'a ProvidedBy<'_>)],
-    rename_commands: &HashMap<&str, &str>,
+    deprecated_commands: &HashMap<&'a str, &'a str>,
+    rename_commands: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
     has_lifetimes: &HashSet<Ident>,
     doc: &str,
@@ -914,6 +921,7 @@ fn generate_function_pointers<'a>(
         returns: TokenStream,
         parameter_validstructs: Vec<(Ident, Vec<String>)>,
         provided_by: &'a ProvidedBy<'a>,
+        deprecated: Option<TokenStream>,
     }
 
     let commands = commands
@@ -977,6 +985,10 @@ fn generate_function_pointers<'a>(
             // must only emit a single definition.
             let define_pfn = fn_cache.insert(name.as_str());
 
+            let deprecated = deprecated_commands
+                .get(name.as_str())
+                .map(deprecated_annotation);
+
             Command {
                 define_pfn,
                 type_name,
@@ -993,6 +1005,7 @@ fn generate_function_pointers<'a>(
                 },
                 parameter_validstructs,
                 provided_by: cmd.1,
+                deprecated,
             }
         })
         .collect::<Vec<_>>();
@@ -1048,9 +1061,11 @@ fn generate_function_pointers<'a>(
                 .provided_by
                 .provisional
                 .then(|| quote!(#[cfg(feature = "provisional")]));
+            let deprecated = &self.0.deprecated;
 
             quote!(
                 #provisional
+                #deprecated
                 #[allow(non_camel_case_types)]
                 pub type #type_name = unsafe extern "system" fn(#parameters) #returns;
             )
@@ -1063,7 +1078,8 @@ fn generate_function_pointers<'a>(
         fn to_tokens(&self, tokens: &mut TokenStream) {
             let type_name = &self.0.pfn_type_name;
             let function_name_rust = &self.0.function_name_rust;
-            quote!(pub #function_name_rust: #type_name).to_tokens(tokens)
+            let deprecated = &self.0.deprecated;
+            quote!(#deprecated pub #function_name_rust: #type_name).to_tokens(tokens)
         }
     }
 
@@ -1273,6 +1289,7 @@ pub struct ExtensionCommands<'a> {
 
 pub fn generate_extension_commands<'a>(
     extension: &'a vk_parse::Extension,
+    deprecated_commands: &HashMap<&'a str, &'a str>,
     cmd_map: &CommandMap<'a>,
     cmd_aliases: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
@@ -1346,6 +1363,7 @@ pub fn generate_extension_commands<'a>(
         let (fp, table) = generate_function_pointers(
             instance_ident,
             &instance_commands,
+            deprecated_commands,
             &rename_commands,
             fn_cache,
             has_lifetimes,
@@ -1393,6 +1411,7 @@ pub fn generate_extension_commands<'a>(
         let (fp, table) = generate_function_pointers(
             device_ident,
             &device_commands,
+            deprecated_commands,
             &rename_commands,
             fn_cache,
             has_lifetimes,
@@ -1478,6 +1497,7 @@ pub fn generate_extension_commands<'a>(
 pub fn generate_define(
     define: &vk_parse::Type,
     allowed_types: &HashMap<&str, ProvidedBy<'_>>,
+    deprecated_types: &HashMap<&str, &str>,
     identifier_renames: &mut BTreeMap<String, Ident>,
 ) -> Option<TokenStream> {
     let vk_parse::TypeSpec::Code(spec) = &define.spec else {
@@ -1502,9 +1522,15 @@ pub fn generate_define(
     let c_expr = convert_c_expression(&c_expr, identifier_renames);
     let c_expr = discard_outmost_delimiter(c_expr);
 
-    let deprecated = comment
-        .and_then(|c| c.trim().strip_prefix("DEPRECATED: "))
-        .map(|comment| quote!(#[deprecated = #comment]))
+    if let Some(c) = comment {
+        assert!(!c.starts_with("DEPRECATED:"), "{comment:?}");
+    }
+
+    assert!(define.deprecated.is_none()); // Unused
+
+    let deprecated = deprecated_types
+        .get(define_name.as_str())
+        .map(deprecated_annotation)
         .or_else(|| match define.deprecated.as_ref()?.as_str() {
             "true" => Some(quote!(#[deprecated])),
             x => panic!("Unknown deprecation reason {}", x),
@@ -1537,6 +1563,7 @@ pub fn generate_define(
         #code
     })
 }
+
 pub fn generate_typedef(
     typedef: &vkxml::Typedef,
     provided_by: &ProvidedBy<'_>,
@@ -2797,6 +2824,7 @@ fn generate_union(
 pub fn generate_definition_vk_parse(
     definition: &vk_parse::Type,
     allowed_types: &HashMap<&str, ProvidedBy<'_>>,
+    deprecated_types: &HashMap<&str, &str>,
     identifier_renames: &mut BTreeMap<String, Ident>,
 ) -> Option<TokenStream> {
     if let Some(api) = &definition.api {
@@ -2806,7 +2834,12 @@ pub fn generate_definition_vk_parse(
     }
 
     match definition.category.as_deref() {
-        Some("define") => generate_define(definition, allowed_types, identifier_renames),
+        Some("define") => generate_define(
+            definition,
+            allowed_types,
+            deprecated_types,
+            identifier_renames,
+        ),
         _ => None,
     }
 }
@@ -2858,7 +2891,8 @@ pub fn generate_definition(
 }
 pub fn generate_feature<'a>(
     feature: &vkxml::Feature,
-    commands: &'a CommandMap<'a>,
+    commands: &CommandMap<'a>,
+    deprecated_commands: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
     has_lifetimes: &HashSet<Ident>,
 ) -> (TokenStream, TokenStream) {
@@ -2891,6 +2925,7 @@ pub fn generate_feature<'a>(
         generate_function_pointers(
             format_ident!("{}", "StaticFn"),
             &static_commands,
+            deprecated_commands,
             &HashMap::new(),
             fn_cache,
             has_lifetimes,
@@ -2902,6 +2937,7 @@ pub fn generate_feature<'a>(
     let (entry_fp, entry_table) = generate_function_pointers(
         format_ident!("EntryFnV{}", version),
         &entry_commands,
+        deprecated_commands,
         &HashMap::new(),
         fn_cache,
         has_lifetimes,
@@ -2913,6 +2949,7 @@ pub fn generate_feature<'a>(
     let (instance_fp, instance_table) = generate_function_pointers(
         format_ident!("InstanceFnV{}", version),
         &instance_commands,
+        deprecated_commands,
         &HashMap::new(),
         fn_cache,
         has_lifetimes,
@@ -2924,6 +2961,7 @@ pub fn generate_feature<'a>(
     let (device_fp, device_table) = generate_function_pointers(
         format_ident!("DeviceFnV{}", version),
         &device_commands,
+        deprecated_commands,
         &HashMap::new(),
         fn_cache,
         has_lifetimes,
@@ -3260,45 +3298,85 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         children: &extension.children,
     });
 
+    let mut deprecated_types = HashMap::new();
+    let mut deprecated_commands = HashMap::new();
+
     let mut required_types = HashMap::<_, ProvidedBy<'_>>::new();
     let mut required_commands = HashMap::<_, ProvidedBy<'_>>::new();
     let mut required_enums = HashMap::<_, ProvidedBy<'_>>::new();
     for feature in features_children.chain(extension_children) {
         for child in feature.children {
-            let vk_parse::FeatureChild::Require { api, items, .. } = child else {
-                continue;
-            };
-            if !matches!(api.as_deref(), None | Some(DESIRED_API)) {
-                continue;
-            }
-            for elem in items {
-                let provided_by = match elem {
-                    vk_parse::InterfaceItem::Type { name, .. } => {
-                        required_types.entry(name.as_str())
+            match child {
+                vk_parse::FeatureChild::Require { api, items, .. } => {
+                    if !matches!(api.as_deref(), None | Some(DESIRED_API)) {
+                        continue;
                     }
-                    vk_parse::InterfaceItem::Command { name, .. } => {
-                        required_commands.entry(name.as_str())
-                    }
-                    vk_parse::InterfaceItem::Enum(vk_parse::Enum {
-                        name,
-                        spec: vk_parse::EnumSpec::None,
-                        ..
-                    }) => required_enums.entry(name.as_str()),
-                    _ => continue,
-                };
-                match provided_by {
-                    Entry::Occupied(mut e) => {
-                        let provided_by = e.get_mut();
-                        assert_eq!(provided_by.provisional, feature.provisional);
-                        provided_by.names.push(feature.name);
-                    }
-                    Entry::Vacant(e) => {
-                        e.insert(ProvidedBy {
-                            names: vec![feature.name],
-                            provisional: feature.provisional,
-                        });
+                    for elem in items {
+                        let provided_by = match elem {
+                            vk_parse::InterfaceItem::Type { name, .. } => {
+                                required_types.entry(name.as_str())
+                            }
+                            vk_parse::InterfaceItem::Command { name, .. } => {
+                                required_commands.entry(name.as_str())
+                            }
+                            vk_parse::InterfaceItem::Enum(vk_parse::Enum {
+                                name,
+                                spec: vk_parse::EnumSpec::None,
+                                ..
+                            }) => required_enums.entry(name.as_str()),
+                            vk_parse::InterfaceItem::Enum(vk_parse::Enum { name: _, .. }) => {
+                                // TODO: Filter thes spec'd enum constants, don't just generate them all
+                                continue;
+                            }
+                            vk_parse::InterfaceItem::Feature { .. } => {
+                                // Programmatically requires features to be set
+                                continue;
+                            }
+                            vk_parse::InterfaceItem::Comment { .. } => continue,
+                            x => todo!("{x:?}"), // _ => {}
+                                                 // _ => continue,
+                        };
+                        match provided_by {
+                            Entry::Occupied(mut e) => {
+                                let provided_by = e.get_mut();
+                                assert_eq!(provided_by.provisional, feature.provisional);
+                                provided_by.names.push(feature.name);
+                            }
+                            Entry::Vacant(e) => {
+                                e.insert(ProvidedBy {
+                                    names: vec![feature.name],
+                                    provisional: feature.provisional,
+                                });
+                            }
+                        }
                     }
                 }
+                vk_parse::FeatureChild::Deprecate {
+                    api,
+                    explanationlink,
+                    items,
+                    ..
+                } => {
+                    if !matches!(api.as_deref(), None | Some(DESIRED_API)) {
+                        continue;
+                    }
+
+                    for item in items {
+                        // TODO: Immediately merge this into the required_ maps?
+                        match item {
+                            vk_parse::InterfaceItem::Type { name, .. } => {
+                                // TODO: Also track (and include in the docs!) the surrounding feature or extension that caused the deprecation!
+                                deprecated_types.insert(name.as_str(), explanationlink.as_str());
+                            }
+                            vk_parse::InterfaceItem::Command { name, .. } => {
+                                deprecated_commands.insert(name.as_str(), explanationlink.as_str());
+                            }
+                            x => todo!("{x:?}"),
+                        }
+                    }
+                }
+                vk_parse::FeatureChild::Remove { .. } => {}
+                x => todo!("{x:?}"),
             }
         }
     }
@@ -3451,6 +3529,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     for ext in extensions.iter() {
         let cmds = generate_extension_commands(
             ext,
+            &deprecated_commands,
             &commands,
             &cmd_aliases,
             &mut fn_cache,
@@ -3486,7 +3565,12 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let vk_parse_definitions: Vec<_> = vk_parse_types
         .iter()
         .filter_map(|def| {
-            generate_definition_vk_parse(def, &required_types, &mut identifier_renames)
+            generate_definition_vk_parse(
+                def,
+                &required_types,
+                &deprecated_types,
+                &mut identifier_renames,
+            )
         })
         .collect();
 
@@ -3526,7 +3610,15 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let (feature_fp_code, feature_table_code): (Vec<_>, Vec<_>) = features
         .iter()
-        .map(|feature| generate_feature(feature, &commands, &mut fn_cache, &has_lifetimes))
+        .map(|feature| {
+            generate_feature(
+                feature,
+                &commands,
+                &deprecated_commands,
+                &mut fn_cache,
+                &has_lifetimes,
+            )
+        })
         .unzip();
     let feature_extensions_code =
         generate_feature_extension(&spec2, &mut const_cache, &mut const_values);
@@ -3637,12 +3729,13 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let high_level_extensions = quote! {
-
+        #![allow(deprecated)] // For a few deprecated commands like VK_KHR_create_renderpass2. Realistically the entire extension/module should be marked as deprecated and annotated with a local allow.
         #(#high_level_extension_cmds)*
     };
 
     let tables = quote! {
         #![allow(unused_qualifications)] // For simplicity, we always generate absolute paths for `Device`/`Instance`
+        #![allow(deprecated)] // For a few deprecated commands like VK_KHR_create_renderpass2. Realistically the entire extension/module should be marked as deprecated and annotated with a local allow.
 
         use core::ffi::*;
 

@@ -64,6 +64,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             .subpasses(std::slice::from_ref(&subpass))
             .dependencies(&dependencies);
 
+        #[allow(deprecated)]
         let renderpass = base
             .device
             .create_render_pass(&renderpass_create_info, None)
@@ -81,6 +82,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                     .height(base.surface_resolution.height)
                     .layers(1);
 
+                #[allow(deprecated)]
                 base.device
                     .create_framebuffer(&frame_buffer_create_info, None)
                     .unwrap()
@@ -397,6 +399,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 &[present_complete_semaphore],
                 &[rendering_complete_semaphore],
                 |device, draw_command_buffer| {
+                    #[allow(deprecated)]
                     device.cmd_begin_render_pass(
                         draw_command_buffer,
                         &render_pass_begin_info,
@@ -431,6 +434,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                     );
                     // Or draw without the index buffer
                     // device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
+                    #[allow(deprecated)]
                     device.cmd_end_render_pass(draw_command_buffer);
                 },
             );
@@ -461,8 +465,10 @@ fn main() -> Result<(), Box<dyn Error>> {
         base.device.free_memory(vertex_input_buffer_memory, None);
         base.device.destroy_buffer(vertex_input_buffer, None);
         for framebuffer in framebuffers {
+            #[allow(deprecated)]
             base.device.destroy_framebuffer(framebuffer, None);
         }
+        #[allow(deprecated)]
         base.device.destroy_render_pass(renderpass, None);
     }
 
