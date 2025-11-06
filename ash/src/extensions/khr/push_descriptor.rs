@@ -6,6 +6,7 @@ use core::ffi;
 impl crate::khr::push_descriptor::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetKHR.html>
     #[inline]
+    #[doc(alias = "vkCmdPushDescriptorSetKHR")]
     pub unsafe fn cmd_push_descriptor_set(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -26,6 +27,7 @@ impl crate::khr::push_descriptor::Device {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>
     #[inline]
+    #[doc(alias = "vkCmdPushDescriptorSetWithTemplateKHR")]
     pub unsafe fn cmd_push_descriptor_set_with_template(
         &self,
         command_buffer: vk::CommandBuffer,
