@@ -22,7 +22,7 @@ use winit::{
     keyboard::{Key, NamedKey},
     platform::run_on_demand::EventLoopExtRunOnDemand,
     raw_window_handle::{HasDisplayHandle, HasWindowHandle},
-    window::WindowBuilder,
+    window::WindowAttributes,
 };
 
 // The maximum number of frames we allow to be in flight at any given time
@@ -214,14 +214,13 @@ impl ExampleBase {
     pub fn new(window_width: u32, window_height: u32) -> Result<Self, Box<dyn Error>> {
         unsafe {
             let event_loop = EventLoop::new()?;
-            let window = WindowBuilder::new()
+            let window_attributes = WindowAttributes::default()
                 .with_title("Ash - Example")
                 .with_inner_size(winit::dpi::LogicalSize::new(
                     f64::from(window_width),
                     f64::from(window_height),
-                ))
-                .build(&event_loop)
-                .unwrap();
+                ));
+            let window = event_loop.create_window(window_attributes)?;
             let entry = Entry::linked();
             let app_name = c"VulkanTriangle";
 
