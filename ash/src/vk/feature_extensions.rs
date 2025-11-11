@@ -1,5 +1,9 @@
 use super::bitflags::*;
 use super::enums::*;
+#[doc = "Generated from 'VK_VERSION_1_0'"]
+impl Result {
+    pub const ERROR_VALIDATION_FAILED: Self = Self(-1_000_011_001);
+}
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl BufferCreateFlags {
     #[doc = "Buffer requires protected memory"]
@@ -359,6 +363,11 @@ impl Format {
     pub const ASTC_12X12_SFLOAT_BLOCK: Self = Self(1_000_066_013);
 }
 #[doc = "Generated from 'VK_VERSION_1_3'"]
+impl FormatFeatureFlags2 {
+    #[doc = "This is an interaction with EXT_filter_cubic, though not tagged that way"]
+    pub const SAMPLED_IMAGE_FILTER_CUBIC: Self = Self(0b10_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_VERSION_1_3'"]
 impl ImageAspectFlags {
     pub const NONE: Self = Self(0);
 }
@@ -448,4 +457,113 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES: Self = Self(1_000_413_001);
     pub const DEVICE_BUFFER_MEMORY_REQUIREMENTS: Self = Self(1_000_413_002);
     pub const DEVICE_IMAGE_MEMORY_REQUIREMENTS: Self = Self(1_000_413_003);
+}
+#[doc = "Generated from 'VK_VERSION_1_4'"]
+impl AttachmentLoadOp {
+    pub const NONE: Self = Self(1_000_400_000);
+}
+#[doc = "Generated from 'VK_VERSION_1_4'"]
+impl BufferUsageFlags2 {
+    pub const SHADER_DEVICE_ADDRESS: Self = Self(0b10_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_VERSION_1_4'"]
+impl DescriptorSetLayoutCreateFlags {
+    pub const PUSH_DESCRIPTOR: Self = Self(0b1);
+}
+#[doc = "Generated from 'VK_VERSION_1_4'"]
+impl DescriptorUpdateTemplateType {
+    pub const PUSH_DESCRIPTORS: Self = Self(1);
+}
+#[doc = "Generated from 'VK_VERSION_1_4'"]
+impl DynamicState {
+    pub const LINE_STIPPLE: Self = Self(1_000_259_000);
+}
+#[doc = "Generated from 'VK_VERSION_1_4'"]
+impl Format {
+    pub const A1B5G5R5_UNORM_PACK16: Self = Self(1_000_470_000);
+    pub const A8_UNORM: Self = Self(1_000_470_001);
+}
+#[doc = "Generated from 'VK_VERSION_1_4'"]
+impl FormatFeatureFlags2 {
+    pub const HOST_IMAGE_TRANSFER: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_VERSION_1_4'"]
+impl ImageLayout {
+    pub const RENDERING_LOCAL_READ: Self = Self(1_000_232_000);
+}
+#[doc = "Generated from 'VK_VERSION_1_4'"]
+impl ImageUsageFlags {
+    pub const HOST_TRANSFER: Self = Self(0b100_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_VERSION_1_4'"]
+impl IndexType {
+    pub const UINT8: Self = Self(1_000_265_000);
+}
+#[doc = "Generated from 'VK_VERSION_1_4'"]
+impl PipelineCreateFlags {
+    pub const NO_PROTECTED_ACCESS: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+    pub const PROTECTED_ACCESS_ONLY: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_VERSION_1_4'"]
+impl Result {
+    pub const ERROR_NOT_PERMITTED: Self = Self(-1_000_174_001);
+}
+#[doc = "Generated from 'VK_VERSION_1_4'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_VULKAN_1_4_FEATURES: Self = Self(55);
+    pub const PHYSICAL_DEVICE_VULKAN_1_4_PROPERTIES: Self = Self(56);
+    pub const DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO: Self = Self(1_000_174_000);
+    pub const PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES: Self = Self(1_000_388_000);
+    pub const QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES: Self = Self(1_000_388_001);
+    pub const PHYSICAL_DEVICE_SHADER_SUBGROUP_ROTATE_FEATURES: Self = Self(1_000_416_000);
+    pub const PHYSICAL_DEVICE_SHADER_FLOAT_CONTROLS_2_FEATURES: Self = Self(1_000_528_000);
+    pub const PHYSICAL_DEVICE_SHADER_EXPECT_ASSUME_FEATURES: Self = Self(1_000_544_000);
+    pub const PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES: Self = Self(1_000_259_000);
+    pub const PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO: Self = Self(1_000_259_001);
+    pub const PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES: Self = Self(1_000_259_002);
+    pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES: Self = Self(1_000_525_000);
+    pub const PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO: Self = Self(1_000_190_001);
+    pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES: Self = Self(1_000_190_002);
+    pub const PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES: Self = Self(1_000_265_000);
+    pub const MEMORY_MAP_INFO: Self = Self(1_000_271_000);
+    pub const MEMORY_UNMAP_INFO: Self = Self(1_000_271_001);
+    pub const PHYSICAL_DEVICE_MAINTENANCE_5_FEATURES: Self = Self(1_000_470_000);
+    pub const PHYSICAL_DEVICE_MAINTENANCE_5_PROPERTIES: Self = Self(1_000_470_001);
+    pub const RENDERING_AREA_INFO: Self = Self(1_000_470_003);
+    pub const DEVICE_IMAGE_SUBRESOURCE_INFO: Self = Self(1_000_470_004);
+    pub const SUBRESOURCE_LAYOUT_2: Self = Self(1_000_338_002);
+    pub const IMAGE_SUBRESOURCE_2: Self = Self(1_000_338_003);
+    pub const PIPELINE_CREATE_FLAGS_2_CREATE_INFO: Self = Self(1_000_470_005);
+    pub const BUFFER_USAGE_FLAGS_2_CREATE_INFO: Self = Self(1_000_470_006);
+    pub const PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES: Self = Self(1_000_080_000);
+    pub const PHYSICAL_DEVICE_DYNAMIC_RENDERING_LOCAL_READ_FEATURES: Self = Self(1_000_232_000);
+    pub const RENDERING_ATTACHMENT_LOCATION_INFO: Self = Self(1_000_232_001);
+    pub const RENDERING_INPUT_ATTACHMENT_INDEX_INFO: Self = Self(1_000_232_002);
+    pub const PHYSICAL_DEVICE_MAINTENANCE_6_FEATURES: Self = Self(1_000_545_000);
+    pub const PHYSICAL_DEVICE_MAINTENANCE_6_PROPERTIES: Self = Self(1_000_545_001);
+    pub const BIND_MEMORY_STATUS: Self = Self(1_000_545_002);
+    pub const BIND_DESCRIPTOR_SETS_INFO: Self = Self(1_000_545_003);
+    pub const PUSH_CONSTANTS_INFO: Self = Self(1_000_545_004);
+    pub const PUSH_DESCRIPTOR_SET_INFO: Self = Self(1_000_545_005);
+    pub const PUSH_DESCRIPTOR_SET_WITH_TEMPLATE_INFO: Self = Self(1_000_545_006);
+    pub const PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES: Self = Self(1_000_466_000);
+    pub const PIPELINE_ROBUSTNESS_CREATE_INFO: Self = Self(1_000_068_000);
+    pub const PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_FEATURES: Self = Self(1_000_068_001);
+    pub const PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_PROPERTIES: Self = Self(1_000_068_002);
+    pub const PHYSICAL_DEVICE_HOST_IMAGE_COPY_FEATURES: Self = Self(1_000_270_000);
+    pub const PHYSICAL_DEVICE_HOST_IMAGE_COPY_PROPERTIES: Self = Self(1_000_270_001);
+    pub const MEMORY_TO_IMAGE_COPY: Self = Self(1_000_270_002);
+    pub const IMAGE_TO_MEMORY_COPY: Self = Self(1_000_270_003);
+    pub const COPY_IMAGE_TO_MEMORY_INFO: Self = Self(1_000_270_004);
+    pub const COPY_MEMORY_TO_IMAGE_INFO: Self = Self(1_000_270_005);
+    pub const HOST_IMAGE_LAYOUT_TRANSITION_INFO: Self = Self(1_000_270_006);
+    pub const COPY_IMAGE_TO_IMAGE_INFO: Self = Self(1_000_270_007);
+    pub const SUBRESOURCE_HOST_MEMCPY_SIZE: Self = Self(1_000_270_008);
+    pub const HOST_IMAGE_COPY_DEVICE_PERFORMANCE_QUERY: Self = Self(1_000_270_009);
+}
+#[doc = "Generated from 'VK_VERSION_1_4'"]
+impl SubgroupFeatureFlags {
+    pub const ROTATE: Self = Self(0b10_0000_0000);
+    pub const ROTATE_CLUSTERED: Self = Self(0b100_0000_0000);
 }

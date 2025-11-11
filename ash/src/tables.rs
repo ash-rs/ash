@@ -114,16 +114,24 @@ impl EntryFnV1_0 {
 pub struct InstanceFnV1_0 {
     pub destroy_instance: PFN_vkDestroyInstance,
     pub enumerate_physical_devices: PFN_vkEnumeratePhysicalDevices,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-gpdp2>"]
     pub get_physical_device_features: PFN_vkGetPhysicalDeviceFeatures,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-gpdp2>"]
     pub get_physical_device_format_properties: PFN_vkGetPhysicalDeviceFormatProperties,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-gpdp2>"]
     pub get_physical_device_image_format_properties: PFN_vkGetPhysicalDeviceImageFormatProperties,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-gpdp2>"]
     pub get_physical_device_properties: PFN_vkGetPhysicalDeviceProperties,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-gpdp2>"]
     pub get_physical_device_queue_family_properties: PFN_vkGetPhysicalDeviceQueueFamilyProperties,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-gpdp2>"]
     pub get_physical_device_memory_properties: PFN_vkGetPhysicalDeviceMemoryProperties,
     pub get_device_proc_addr: PFN_vkGetDeviceProcAddr,
     pub create_device: PFN_vkCreateDevice,
     pub enumerate_device_extension_properties: PFN_vkEnumerateDeviceExtensionProperties,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-devicelayers>"]
     pub enumerate_device_layer_properties: PFN_vkEnumerateDeviceLayerProperties,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-gpdp2>"]
     pub get_physical_device_sparse_image_format_properties:
         PFN_vkGetPhysicalDeviceSparseImageFormatProperties,
 }
@@ -458,10 +466,15 @@ pub struct DeviceFnV1_0 {
     pub allocate_descriptor_sets: PFN_vkAllocateDescriptorSets,
     pub free_descriptor_sets: PFN_vkFreeDescriptorSets,
     pub update_descriptor_sets: PFN_vkUpdateDescriptorSets,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub create_framebuffer: PFN_vkCreateFramebuffer,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub destroy_framebuffer: PFN_vkDestroyFramebuffer,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-renderpass2>"]
     pub create_render_pass: PFN_vkCreateRenderPass,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub destroy_render_pass: PFN_vkDestroyRenderPass,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub get_render_area_granularity: PFN_vkGetRenderAreaGranularity,
     pub create_command_pool: PFN_vkCreateCommandPool,
     pub destroy_command_pool: PFN_vkDestroyCommandPool,
@@ -511,8 +524,11 @@ pub struct DeviceFnV1_0 {
     pub cmd_write_timestamp: PFN_vkCmdWriteTimestamp,
     pub cmd_copy_query_pool_results: PFN_vkCmdCopyQueryPoolResults,
     pub cmd_push_constants: PFN_vkCmdPushConstants,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-renderpass2>"]
     pub cmd_begin_render_pass: PFN_vkCmdBeginRenderPass,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-renderpass2>"]
     pub cmd_next_subpass: PFN_vkCmdNextSubpass,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-renderpass2>"]
     pub cmd_end_render_pass: PFN_vkCmdEndRenderPass,
     pub cmd_execute_commands: PFN_vkCmdExecuteCommands,
 }
@@ -3309,9 +3325,13 @@ pub struct InstanceFnV1_2;
 pub struct DeviceFnV1_2 {
     pub cmd_draw_indirect_count: PFN_vkCmdDrawIndirectCount,
     pub cmd_draw_indexed_indirect_count: PFN_vkCmdDrawIndexedIndirectCount,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub create_render_pass2: PFN_vkCreateRenderPass2,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub cmd_begin_render_pass2: PFN_vkCmdBeginRenderPass2,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub cmd_next_subpass2: PFN_vkCmdNextSubpass2,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-dynamicrendering>"]
     pub cmd_end_render_pass2: PFN_vkCmdEndRenderPass2,
     pub reset_query_pool: PFN_vkResetQueryPool,
     pub get_semaphore_counter_value: PFN_vkGetSemaphoreCounterValue,
@@ -4286,6 +4306,390 @@ impl DeviceFnV1_3 {
                 let val = _f(cname);
                 if val.is_null() {
                     get_device_image_sparse_memory_requirements
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.4 entry point function pointers"]
+pub struct EntryFnV1_4;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.4 instance-level function pointers"]
+pub struct InstanceFnV1_4;
+#[derive(Clone)]
+#[doc = "Raw Vulkan 1.4 device-level function pointers"]
+pub struct DeviceFnV1_4 {
+    pub cmd_set_line_stipple: PFN_vkCmdSetLineStipple,
+    pub map_memory2: PFN_vkMapMemory2,
+    pub unmap_memory2: PFN_vkUnmapMemory2,
+    pub cmd_bind_index_buffer2: PFN_vkCmdBindIndexBuffer2,
+    pub get_rendering_area_granularity: PFN_vkGetRenderingAreaGranularity,
+    pub get_device_image_subresource_layout: PFN_vkGetDeviceImageSubresourceLayout,
+    pub get_image_subresource_layout2: PFN_vkGetImageSubresourceLayout2,
+    pub cmd_push_descriptor_set: PFN_vkCmdPushDescriptorSet,
+    pub cmd_push_descriptor_set_with_template: PFN_vkCmdPushDescriptorSetWithTemplate,
+    pub cmd_set_rendering_attachment_locations: PFN_vkCmdSetRenderingAttachmentLocations,
+    pub cmd_set_rendering_input_attachment_indices: PFN_vkCmdSetRenderingInputAttachmentIndices,
+    pub cmd_bind_descriptor_sets2: PFN_vkCmdBindDescriptorSets2,
+    pub cmd_push_constants2: PFN_vkCmdPushConstants2,
+    pub cmd_push_descriptor_set2: PFN_vkCmdPushDescriptorSet2,
+    pub cmd_push_descriptor_set_with_template2: PFN_vkCmdPushDescriptorSetWithTemplate2,
+    pub copy_memory_to_image: PFN_vkCopyMemoryToImage,
+    pub copy_image_to_memory: PFN_vkCopyImageToMemory,
+    pub copy_image_to_image: PFN_vkCopyImageToImage,
+    pub transition_image_layout: PFN_vkTransitionImageLayout,
+}
+unsafe impl Send for DeviceFnV1_4 {}
+unsafe impl Sync for DeviceFnV1_4 {}
+impl DeviceFnV1_4 {
+    pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+        Self::load_erased(&mut f)
+    }
+    fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+        Self {
+            cmd_set_line_stipple: unsafe {
+                unsafe extern "system" fn cmd_set_line_stipple(
+                    _command_buffer: CommandBuffer,
+                    _line_stipple_factor: u32,
+                    _line_stipple_pattern: u16,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_line_stipple)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLineStipple\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_line_stipple
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            map_memory2: unsafe {
+                unsafe extern "system" fn map_memory2(
+                    _device: crate::vk::Device,
+                    _p_memory_map_info: *const MemoryMapInfo<'_>,
+                    _pp_data: *mut *mut c_void,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(map_memory2)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkMapMemory2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    map_memory2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            unmap_memory2: unsafe {
+                unsafe extern "system" fn unmap_memory2(
+                    _device: crate::vk::Device,
+                    _p_memory_unmap_info: *const MemoryUnmapInfo<'_>,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(unmap_memory2)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkUnmapMemory2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    unmap_memory2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_bind_index_buffer2: unsafe {
+                unsafe extern "system" fn cmd_bind_index_buffer2(
+                    _command_buffer: CommandBuffer,
+                    _buffer: Buffer,
+                    _offset: DeviceSize,
+                    _size: DeviceSize,
+                    _index_type: IndexType,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_bind_index_buffer2)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindIndexBuffer2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_bind_index_buffer2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            get_rendering_area_granularity: unsafe {
+                unsafe extern "system" fn get_rendering_area_granularity(
+                    _device: crate::vk::Device,
+                    _p_rendering_area_info: *const RenderingAreaInfo<'_>,
+                    _p_granularity: *mut Extent2D,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_rendering_area_granularity)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetRenderingAreaGranularity\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    get_rendering_area_granularity
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            get_device_image_subresource_layout: unsafe {
+                unsafe extern "system" fn get_device_image_subresource_layout(
+                    _device: crate::vk::Device,
+                    _p_info: *const DeviceImageSubresourceInfo<'_>,
+                    _p_layout: *mut SubresourceLayout2<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_image_subresource_layout)
+                    ))
+                }
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceImageSubresourceLayout\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    get_device_image_subresource_layout
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            get_image_subresource_layout2: unsafe {
+                unsafe extern "system" fn get_image_subresource_layout2(
+                    _device: crate::vk::Device,
+                    _image: Image,
+                    _p_subresource: *const ImageSubresource2<'_>,
+                    _p_layout: *mut SubresourceLayout2<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_image_subresource_layout2)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetImageSubresourceLayout2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    get_image_subresource_layout2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_push_descriptor_set: unsafe {
+                unsafe extern "system" fn cmd_push_descriptor_set(
+                    _command_buffer: CommandBuffer,
+                    _pipeline_bind_point: PipelineBindPoint,
+                    _layout: PipelineLayout,
+                    _set: u32,
+                    _descriptor_write_count: u32,
+                    _p_descriptor_writes: *const WriteDescriptorSet<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_push_descriptor_set)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPushDescriptorSet\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_push_descriptor_set
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_push_descriptor_set_with_template: unsafe {
+                unsafe extern "system" fn cmd_push_descriptor_set_with_template(
+                    _command_buffer: CommandBuffer,
+                    _descriptor_update_template: DescriptorUpdateTemplate,
+                    _layout: PipelineLayout,
+                    _set: u32,
+                    _p_data: *const c_void,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_push_descriptor_set_with_template)
+                    ))
+                }
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkCmdPushDescriptorSetWithTemplate\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_push_descriptor_set_with_template
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_set_rendering_attachment_locations: unsafe {
+                unsafe extern "system" fn cmd_set_rendering_attachment_locations(
+                    _command_buffer: CommandBuffer,
+                    _p_location_info: *const RenderingAttachmentLocationInfo<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_rendering_attachment_locations)
+                    ))
+                }
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkCmdSetRenderingAttachmentLocations\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_rendering_attachment_locations
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_set_rendering_input_attachment_indices: unsafe {
+                unsafe extern "system" fn cmd_set_rendering_input_attachment_indices(
+                    _command_buffer: CommandBuffer,
+                    _p_input_attachment_index_info: *const RenderingInputAttachmentIndexInfo<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_rendering_input_attachment_indices)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetRenderingInputAttachmentIndices\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_rendering_input_attachment_indices
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_bind_descriptor_sets2: unsafe {
+                unsafe extern "system" fn cmd_bind_descriptor_sets2(
+                    _command_buffer: CommandBuffer,
+                    _p_bind_descriptor_sets_info: *const BindDescriptorSetsInfo<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_bind_descriptor_sets2)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdBindDescriptorSets2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_bind_descriptor_sets2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_push_constants2: unsafe {
+                unsafe extern "system" fn cmd_push_constants2(
+                    _command_buffer: CommandBuffer,
+                    _p_push_constants_info: *const PushConstantsInfo<'_>,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_push_constants2)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPushConstants2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_push_constants2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_push_descriptor_set2: unsafe {
+                unsafe extern "system" fn cmd_push_descriptor_set2(
+                    _command_buffer: CommandBuffer,
+                    _p_push_descriptor_set_info: *const PushDescriptorSetInfo<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_push_descriptor_set2)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdPushDescriptorSet2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_push_descriptor_set2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            cmd_push_descriptor_set_with_template2: unsafe {
+                unsafe extern "system" fn cmd_push_descriptor_set_with_template2(
+                    _command_buffer: CommandBuffer,
+                    _p_push_descriptor_set_with_template_info : * const PushDescriptorSetWithTemplateInfo < '_ >,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_push_descriptor_set_with_template2)
+                    ))
+                }
+                let cname =
+                    CStr::from_bytes_with_nul_unchecked(b"vkCmdPushDescriptorSetWithTemplate2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_push_descriptor_set_with_template2
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            copy_memory_to_image: unsafe {
+                unsafe extern "system" fn copy_memory_to_image(
+                    _device: crate::vk::Device,
+                    _p_copy_memory_to_image_info: *const CopyMemoryToImageInfo<'_>,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(copy_memory_to_image)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCopyMemoryToImage\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    copy_memory_to_image
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            copy_image_to_memory: unsafe {
+                unsafe extern "system" fn copy_image_to_memory(
+                    _device: crate::vk::Device,
+                    _p_copy_image_to_memory_info: *const CopyImageToMemoryInfo<'_>,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(copy_image_to_memory)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCopyImageToMemory\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    copy_image_to_memory
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            copy_image_to_image: unsafe {
+                unsafe extern "system" fn copy_image_to_image(
+                    _device: crate::vk::Device,
+                    _p_copy_image_to_image_info: *const CopyImageToImageInfo<'_>,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(copy_image_to_image)))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkCopyImageToImage\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    copy_image_to_image
+                } else {
+                    ::core::mem::transmute(val)
+                }
+            },
+            transition_image_layout: unsafe {
+                unsafe extern "system" fn transition_image_layout(
+                    _device: crate::vk::Device,
+                    _transition_count: u32,
+                    _p_transitions: *const HostImageLayoutTransitionInfo<'_>,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(transition_image_layout)
+                    ))
+                }
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkTransitionImageLayout\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    transition_image_layout
                 } else {
                     ::core::mem::transmute(val)
                 }
