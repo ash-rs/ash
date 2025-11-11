@@ -9,7 +9,7 @@ publish = false
 # Pin version to have control over how ash/src/vk/native.rs
 # is generated (there is a CI check that validates that this
 # file is generated as currently checked in): 
-bindgen = "=0.69.4"
+bindgen = "=0.72.1"
 heck = "0.5"
 itertools = "0.14"
 nom = "8"
