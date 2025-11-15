@@ -49,6 +49,10 @@ jobs:
         run: cargo test --workspace --all-targets
       - name: Test docs
         run: cargo test --workspace --doc
+      - name: Test all targets
+        run: cargo test --workspace --all-targets -F provisional
+      - name: Test docs
+        run: cargo test --workspace --doc -F provisional
 
   fmt:
     name: Rustfmt

@@ -83,14 +83,15 @@ macro_rules! vk_bitflags_wrapped {
 }
 #[macro_export]
 macro_rules! handle_nondispatchable {
-    ($ name : ident , $ ty : ident) => {
-        handle_nondispatchable!($name, $ty, doc = "");
-    };
-    ($ name : ident , $ ty : ident , $ doc_link : meta) => {
+    ($ name : ident , $ ty : ident , $ feature_names : expr , $ doc_link : expr, $( $ cfgs : meta )?) => {
+        #[doc = $feature_names]
+        #[doc = ""]
+        #[doc = $doc_link]
+        $(#[$cfgs])?
         #[repr(transparent)]
         #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
-        #[$doc_link]
         pub struct $name(u64);
+        $(#[$cfgs])?
         impl Handle for $name {
             const TYPE: ObjectType = ObjectType::$ty;
             fn as_raw(self) -> u64 {
@@ -100,16 +101,19 @@ macro_rules! handle_nondispatchable {
                 Self(x)
             }
         }
+        $(#[$cfgs])?
         impl $name {
             pub const fn null() -> Self {
                 Self(0)
             }
         }
+        $(#[$cfgs])?
         impl fmt::Pointer for $name {
             fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
                 write!(f, "0x{:x}", self.0)
             }
         }
+        $(#[$cfgs])?
         impl fmt::Debug for $name {
             fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
                 write!(f, "0x{:x}", self.0)
@@ -119,19 +123,21 @@ macro_rules! handle_nondispatchable {
 }
 #[macro_export]
 macro_rules! define_handle {
-    ($ name : ident , $ ty : ident) => {
-        define_handle!($name, $ty, doc = "");
-    };
-    ($ name : ident , $ ty : ident , $ doc_link : meta) => {
+    ($ name : ident , $ ty : ident , $ feature_names : expr , $ doc_link : expr, $( $ cfgs : meta )?) => {
+        #[doc = $feature_names]
+        #[doc = ""]
+        #[doc = $doc_link]
+        $(#[$cfgs])?
         #[repr(transparent)]
         #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash)]
-        #[$doc_link]
         pub struct $name(*mut u8);
+        $(#[$cfgs])?
         impl Default for $name {
             fn default() -> Self {
                 Self::null()
             }
         }
+        $(#[$cfgs])?
         impl Handle for $name {
             const TYPE: ObjectType = ObjectType::$ty;
             fn as_raw(self) -> u64 {
@@ -141,18 +147,23 @@ macro_rules! define_handle {
                 Self(x as _)
             }
         }
+        $(#[$cfgs])?
         unsafe impl Send for $name {}
+        $(#[$cfgs])?
         unsafe impl Sync for $name {}
+        $(#[$cfgs])?
         impl $name {
             pub const fn null() -> Self {
                 Self(::core::ptr::null_mut())
             }
         }
+        $(#[$cfgs])?
         impl fmt::Pointer for $name {
             fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
                 fmt::Pointer::fmt(&self.0, f)
             }
         }
+        $(#[$cfgs])?
         impl fmt::Debug for $name {
             fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
                 fmt::Debug::fmt(&self.0, f)

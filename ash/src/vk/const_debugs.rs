@@ -608,6 +608,7 @@ impl fmt::Debug for BufferUsageFlags {
                 BufferUsageFlags::CONDITIONAL_RENDERING_EXT.0,
                 "CONDITIONAL_RENDERING_EXT",
             ),
+            #[cfg(feature = "provisional")]
             (
                 BufferUsageFlags::EXECUTION_GRAPH_SCRATCH_AMDX.0,
                 "EXECUTION_GRAPH_SCRATCH_AMDX",
@@ -678,6 +679,7 @@ impl fmt::Debug for BufferUsageFlags2KHR {
             (BufferUsageFlags2KHR::INDEX_BUFFER.0, "INDEX_BUFFER"),
             (BufferUsageFlags2KHR::VERTEX_BUFFER.0, "VERTEX_BUFFER"),
             (BufferUsageFlags2KHR::INDIRECT_BUFFER.0, "INDIRECT_BUFFER"),
+            #[cfg(feature = "provisional")]
             (
                 BufferUsageFlags2KHR::EXECUTION_GRAPH_SCRATCH_AMDX.0,
                 "EXECUTION_GRAPH_SCRATCH_AMDX",
@@ -784,6 +786,7 @@ impl fmt::Debug for BuildAccelerationStructureFlagsKHR {
                 BuildAccelerationStructureFlagsKHR::ALLOW_OPACITY_MICROMAP_DATA_UPDATE_EXT.0,
                 "ALLOW_OPACITY_MICROMAP_DATA_UPDATE_EXT",
             ),
+            #[cfg(feature = "provisional")]
             (
                 BuildAccelerationStructureFlagsKHR::ALLOW_DISPLACEMENT_MICROMAP_UPDATE_NV.0,
                 "ALLOW_DISPLACEMENT_MICROMAP_UPDATE_NV",
@@ -1221,7 +1224,9 @@ impl fmt::Debug for DebugReportObjectTypeEXT {
             Self::CU_FUNCTION_NVX => Some("CU_FUNCTION_NVX"),
             Self::ACCELERATION_STRUCTURE_KHR => Some("ACCELERATION_STRUCTURE_KHR"),
             Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
+            #[cfg(feature = "provisional")]
             Self::CUDA_MODULE_NV => Some("CUDA_MODULE_NV"),
+            #[cfg(feature = "provisional")]
             Self::CUDA_FUNCTION_NV => Some("CUDA_FUNCTION_NV"),
             Self::BUFFER_COLLECTION_FUCHSIA => Some("BUFFER_COLLECTION_FUCHSIA"),
             _ => None,
@@ -1626,6 +1631,7 @@ impl fmt::Debug for DiscardRectangleModeEXT {
         }
     }
 }
+#[cfg(feature = "provisional")]
 impl fmt::Debug for DisplacementMicromapFormatNV {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
@@ -3309,6 +3315,7 @@ impl fmt::Debug for MicromapTypeEXT {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
             Self::OPACITY_MICROMAP => Some("OPACITY_MICROMAP"),
+            #[cfg(feature = "provisional")]
             Self::DISPLACEMENT_MICROMAP_NV => Some("DISPLACEMENT_MICROMAP_NV"),
             _ => None,
         };
@@ -3651,6 +3658,7 @@ impl fmt::Debug for PipelineBindPoint {
         let name = match *self {
             Self::GRAPHICS => Some("GRAPHICS"),
             Self::COMPUTE => Some("COMPUTE"),
+            #[cfg(feature = "provisional")]
             Self::EXECUTION_GRAPH_AMDX => Some("EXECUTION_GRAPH_AMDX"),
             Self::RAY_TRACING_KHR => Some("RAY_TRACING_KHR"),
             Self::SUBPASS_SHADING_HUAWEI => Some("SUBPASS_SHADING_HUAWEI"),
@@ -3808,6 +3816,7 @@ impl fmt::Debug for PipelineCreateFlags {
                 PipelineCreateFlags::RAY_TRACING_OPACITY_MICROMAP_EXT.0,
                 "RAY_TRACING_OPACITY_MICROMAP_EXT",
             ),
+            #[cfg(feature = "provisional")]
             (
                 PipelineCreateFlags::RAY_TRACING_DISPLACEMENT_MICROMAP_NV.0,
                 "RAY_TRACING_DISPLACEMENT_MICROMAP_NV",
@@ -5520,18 +5529,23 @@ impl fmt::Debug for StructureType {
             Self::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_2_ANDROID => {
                 Some("ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_2_ANDROID")
             }
+            #[cfg(feature = "provisional")]
             Self::PHYSICAL_DEVICE_SHADER_ENQUEUE_FEATURES_AMDX => {
                 Some("PHYSICAL_DEVICE_SHADER_ENQUEUE_FEATURES_AMDX")
             }
+            #[cfg(feature = "provisional")]
             Self::PHYSICAL_DEVICE_SHADER_ENQUEUE_PROPERTIES_AMDX => {
                 Some("PHYSICAL_DEVICE_SHADER_ENQUEUE_PROPERTIES_AMDX")
             }
+            #[cfg(feature = "provisional")]
             Self::EXECUTION_GRAPH_PIPELINE_SCRATCH_SIZE_AMDX => {
                 Some("EXECUTION_GRAPH_PIPELINE_SCRATCH_SIZE_AMDX")
             }
+            #[cfg(feature = "provisional")]
             Self::EXECUTION_GRAPH_PIPELINE_CREATE_INFO_AMDX => {
                 Some("EXECUTION_GRAPH_PIPELINE_CREATE_INFO_AMDX")
             }
+            #[cfg(feature = "provisional")]
             Self::PIPELINE_SHADER_STAGE_NODE_CREATE_INFO_AMDX => {
                 Some("PIPELINE_SHADER_STAGE_NODE_CREATE_INFO_AMDX")
             }
@@ -5652,9 +5666,11 @@ impl fmt::Debug for StructureType {
             Self::SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT => {
                 Some("SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT")
             }
+            #[cfg(feature = "provisional")]
             Self::PHYSICAL_DEVICE_PORTABILITY_SUBSET_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_PORTABILITY_SUBSET_FEATURES_KHR")
             }
+            #[cfg(feature = "provisional")]
             Self::PHYSICAL_DEVICE_PORTABILITY_SUBSET_PROPERTIES_KHR => {
                 Some("PHYSICAL_DEVICE_PORTABILITY_SUBSET_PROPERTIES_KHR")
             }
@@ -6081,12 +6097,17 @@ impl fmt::Debug for StructureType {
             Self::DEVICE_DIAGNOSTICS_CONFIG_CREATE_INFO_NV => {
                 Some("DEVICE_DIAGNOSTICS_CONFIG_CREATE_INFO_NV")
             }
+            #[cfg(feature = "provisional")]
             Self::CUDA_MODULE_CREATE_INFO_NV => Some("CUDA_MODULE_CREATE_INFO_NV"),
+            #[cfg(feature = "provisional")]
             Self::CUDA_FUNCTION_CREATE_INFO_NV => Some("CUDA_FUNCTION_CREATE_INFO_NV"),
+            #[cfg(feature = "provisional")]
             Self::CUDA_LAUNCH_INFO_NV => Some("CUDA_LAUNCH_INFO_NV"),
+            #[cfg(feature = "provisional")]
             Self::PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_FEATURES_NV")
             }
+            #[cfg(feature = "provisional")]
             Self::PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_PROPERTIES_NV => {
                 Some("PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_PROPERTIES_NV")
             }
@@ -6368,12 +6389,15 @@ impl fmt::Debug for StructureType {
             Self::ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT => {
                 Some("ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT")
             }
+            #[cfg(feature = "provisional")]
             Self::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV")
             }
+            #[cfg(feature = "provisional")]
             Self::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_PROPERTIES_NV => {
                 Some("PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_PROPERTIES_NV")
             }
+            #[cfg(feature = "provisional")]
             Self::ACCELERATION_STRUCTURE_TRIANGLES_DISPLACEMENT_MICROMAP_NV => {
                 Some("ACCELERATION_STRUCTURE_TRIANGLES_DISPLACEMENT_MICROMAP_NV")
             }
