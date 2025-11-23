@@ -55,7 +55,6 @@ macro_rules! get_variant {
     };
 }
 
-pub trait ExtensionExt {}
 #[derive(Copy, Clone, Debug)]
 pub enum CType {
     USize,
@@ -323,7 +322,7 @@ impl ConstVal {
         }
     }
 }
-pub trait ConstantExt {
+trait ConstantExt {
     fn constant(&self, enum_name: &str) -> Constant;
     fn variant_ident(&self, enum_name: &str) -> Ident;
     fn notation(&self) -> Option<&str>;
@@ -345,21 +344,6 @@ pub trait ConstantExt {
     }
 }
 
-impl ConstantExt for vkxml::ExtensionEnum {
-    fn constant(&self, _enum_name: &str) -> Constant {
-        Constant::from_extension_enum(self).unwrap()
-    }
-    fn variant_ident(&self, enum_name: &str) -> Ident {
-        variant_ident(enum_name, &self.name)
-    }
-    fn notation(&self) -> Option<&str> {
-        self.notation.as_deref()
-    }
-    fn deprecated(&self) -> Option<&str> {
-        todo!()
-    }
-}
-
 impl ConstantExt for vk_parse::Enum {
     fn constant(&self, enum_name: &str) -> Constant {
         Constant::from_vk_parse_enum(self, Some(enum_name), None)
@@ -377,21 +361,6 @@ impl ConstantExt for vk_parse::Enum {
     }
     fn deprecated(&self) -> Option<&str> {
         self.deprecated.as_deref()
-    }
-}
-
-impl ConstantExt for vkxml::Constant {
-    fn constant(&self, _enum_name: &str) -> Constant {
-        Constant::from_constant(self)
-    }
-    fn variant_ident(&self, enum_name: &str) -> Ident {
-        variant_ident(enum_name, &self.name)
-    }
-    fn notation(&self) -> Option<&str> {
-        self.notation.as_deref()
-    }
-    fn deprecated(&self) -> Option<&str> {
-        todo!()
     }
 }
 
@@ -475,28 +444,6 @@ impl Constant {
         }
     }
 
-    pub fn from_extension_enum(constant: &vkxml::ExtensionEnum) -> Option<Self> {
-        let number = constant.number.map(Constant::Number);
-        assert!(constant.hex.is_none());
-        let bitpos = constant.bitpos.map(Constant::BitPos);
-        let expr = constant
-            .c_expression
-            .as_ref()
-            .map(|e| Self::CExpr(e.clone()));
-        number.or(bitpos).or(expr)
-    }
-
-    pub fn from_constant(constant: &vkxml::Constant) -> Self {
-        let number = constant.number.map(Constant::Number);
-        assert!(constant.hex.is_none());
-        let bitpos = constant.bitpos.map(Constant::BitPos);
-        let expr = constant
-            .c_expression
-            .as_ref()
-            .map(|e| Self::CExpr(e.clone()));
-        number.or(bitpos).or(expr).expect("")
-    }
-
     /// Returns (Constant, optional base type, is_alias)
     pub fn from_vk_parse_enum(
         enum_: &vk_parse::Enum,
@@ -550,7 +497,7 @@ impl Constant {
     }
 }
 
-pub trait FeatureExt {
+trait FeatureExt {
     fn version_string(&self) -> String;
     fn is_version(&self, major: u32, minor: u32) -> bool;
 }
@@ -576,7 +523,7 @@ pub enum FunctionType {
     Instance,
     Device,
 }
-pub trait CommandExt {
+trait CommandExt {
     fn function_type(&self) -> FunctionType;
 }
 
@@ -602,7 +549,7 @@ impl CommandExt for vk_parse::CommandDefinition {
     }
 }
 
-pub trait FieldExt {
+trait FieldExt {
     /// Returns the name of the parameter that doesn't clash with Rusts reserved
     /// keywords
     fn param_ident(&self) -> Ident;
@@ -636,7 +583,7 @@ pub trait FieldExt {
     fn is_pointer_to_static_sized_array(&self) -> bool;
 }
 
-pub trait ToTokens {
+trait ToTokens {
     fn to_tokens(&self, is_const: bool) -> TokenStream;
     /// Returns the topmost pointer as safe reference
     fn to_safe_tokens(&self, is_const: bool, lifetime: TokenStream) -> TokenStream;
@@ -1673,7 +1620,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     }
 }
 
-pub fn bitflags_impl_block(
+fn bitflags_impl_block(
     ident: Ident,
     enum_name: &str,
     constants: &[&impl ConstantExt],
