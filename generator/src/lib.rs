@@ -16,7 +16,7 @@ use nom::{
     character::complete::{
         char, digit1, hex_digit1, multispace0, multispace1, newline, none_of, one_of,
     },
-    combinator::{map, map_res, opt, value},
+    combinator::{map, map_res, opt, success, value},
     multi::{many1, separated_list1},
     sequence::{delimited, pair, preceded, separated_pair, terminated},
     IResult, Parser,
@@ -84,15 +84,20 @@ impl quote::ToTokens for CType {
 }
 
 fn parse_ctype(i: &str) -> IResult<&str, CType> {
-    (alt((value(CType::U64, tag("ULL")), value(CType::U32, tag("U"))))).parse(i)
+    (alt((
+        value(CType::U64, tag("ULL")),
+        value(CType::U32, tag("U")),
+        success(CType::U32), // Only for `0x1234` hexadecimals without type-suffix
+    )))
+    .parse(i)
 }
 
 fn parse_cexpr(i: &str) -> IResult<&str, (CType, String)> {
     (alt((
         map(parse_cfloat, |f| (CType::Float, format!("{f:.2}"))),
+        parse_hexadecimal_number,
         parse_inverse_number,
         parse_decimal_number,
-        parse_hexadecimal_number,
     )))
     .parse(i)
 }
@@ -156,10 +161,7 @@ fn parse_hexadecimal_number(i: &str) -> IResult<&str, (CType, String)> {
     (preceded(
         alt((tag("0x"), tag("0X"))),
         map(pair(hex_digit1, parse_ctype), |(num, typ)| {
-            (
-                typ,
-                format!("0x{}{}", num.to_ascii_lowercase(), typ.to_string()),
-            )
+            (typ, format!("0x{}", num.to_ascii_lowercase()))
         }),
     ))
     .parse(i)
@@ -396,11 +398,8 @@ impl ConstantExt for vkxml::Constant {
 #[derive(Clone, Debug)]
 pub enum Constant {
     Number(i32),
-    Hex(String),
     BitPos(u32),
-    /// A C expression, also used for floating point (`1000.0F`) and some integer representations (`(~0ULL)`).
-    ///
-    /// Hexadecimals could use this path, but are currently handled separately.
+    /// A C expression, also used for floating point (`1000.0F`), hexadecimals and some integer expressions (like `(~0ULL)`).
     CExpr(String),
     Text(String),
     Alias(Ident),
@@ -413,14 +412,10 @@ impl quote::ToTokens for Constant {
                 let number = interleave_number('_', 3, &n.to_string());
                 syn::LitInt::new(&number, Span::call_site()).to_tokens(tokens);
             }
-            Self::Hex(ref s) => {
-                let number = interleave_number('_', 4, s);
-                syn::LitInt::new(&format!("0x{number}"), Span::call_site()).to_tokens(tokens);
-            }
             Self::Text(ref text) => text.to_tokens(tokens),
             Self::CExpr(ref expr) => {
                 let (rem, (_, rexpr)) = parse_cexpr(expr).expect("Unable to parse cexpr");
-                assert!(rem.is_empty());
+                assert!(rem.is_empty(), "{rem}");
                 tokens.extend(rexpr.parse::<TokenStream>());
             }
             Self::BitPos(pos) => {
@@ -463,7 +458,6 @@ impl Constant {
     pub fn value(&self) -> Option<ConstVal> {
         match *self {
             Self::Number(n) => Some(ConstVal::U64(n as u64)),
-            Self::Hex(ref hex) => u64::from_str_radix(hex, 16).ok().map(ConstVal::U64),
             Self::BitPos(pos) => Some(ConstVal::U64(1u64 << pos)),
             _ => None,
         }
@@ -471,36 +465,36 @@ impl Constant {
 
     pub fn ty(&self) -> CType {
         match self {
-            Self::Number(_) | Self::Hex(_) => CType::USize,
+            Self::Number(_) => CType::USize,
             Self::CExpr(expr) => {
                 let (rem, (ty, _)) = parse_cexpr(expr).expect("Unable to parse cexpr");
-                assert!(rem.is_empty());
+                assert!(rem.is_empty(), "{rem}");
                 ty
             }
-            _ => unimplemented!(),
+            x => unimplemented!("{x:?}"),
         }
     }
 
     pub fn from_extension_enum(constant: &vkxml::ExtensionEnum) -> Option<Self> {
         let number = constant.number.map(Constant::Number);
-        let hex = constant.hex.as_ref().map(|hex| Self::Hex(hex.clone()));
+        assert!(constant.hex.is_none());
         let bitpos = constant.bitpos.map(Constant::BitPos);
         let expr = constant
             .c_expression
             .as_ref()
             .map(|e| Self::CExpr(e.clone()));
-        number.or(hex).or(bitpos).or(expr)
+        number.or(bitpos).or(expr)
     }
 
     pub fn from_constant(constant: &vkxml::Constant) -> Self {
         let number = constant.number.map(Constant::Number);
-        let hex = constant.hex.as_ref().map(|hex| Self::Hex(hex.clone()));
+        assert!(constant.hex.is_none());
         let bitpos = constant.bitpos.map(Constant::BitPos);
         let expr = constant
             .c_expression
             .as_ref()
             .map(|e| Self::CExpr(e.clone()));
-        number.or(hex).or(bitpos).or(expr).expect("")
+        number.or(bitpos).or(expr).expect("")
     }
 
     /// Returns (Constant, optional base type, is_alias)
@@ -533,8 +527,6 @@ impl Constant {
             EnumSpec::Value { value, extends } => {
                 let value = if let Ok(value) = value.parse::<i32>() {
                     Self::Number(value)
-                } else if let Some(hex) = value.strip_prefix("0x") {
-                    Self::Hex(hex.to_owned())
                 } else {
                     Self::CExpr(value.to_owned())
                 };

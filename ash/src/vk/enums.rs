@@ -1795,21 +1795,21 @@ impl VendorId {
 }
 impl VendorId {
     #[doc = "Khronos vendor ID"]
-    pub const KHRONOS: Self = Self(0x1_0000);
+    pub const KHRONOS: Self = Self(0x10000);
     #[doc = "Vivante vendor ID"]
-    pub const VIV: Self = Self(0x1_0001);
+    pub const VIV: Self = Self(0x10001);
     #[doc = "VeriSilicon vendor ID"]
-    pub const VSI: Self = Self(0x1_0002);
+    pub const VSI: Self = Self(0x10002);
     #[doc = "Kazan Software Renderer"]
-    pub const KAZAN: Self = Self(0x1_0003);
+    pub const KAZAN: Self = Self(0x10003);
     #[doc = "Codeplay Software Ltd. vendor ID"]
-    pub const CODEPLAY: Self = Self(0x1_0004);
+    pub const CODEPLAY: Self = Self(0x10004);
     #[doc = "Mesa vendor ID"]
-    pub const MESA: Self = Self(0x1_0005);
+    pub const MESA: Self = Self(0x10005);
     #[doc = "PoCL vendor ID"]
-    pub const POCL: Self = Self(0x1_0006);
+    pub const POCL: Self = Self(0x10006);
     #[doc = "Mobileye vendor ID"]
-    pub const MOBILEYE: Self = Self(0x1_0007);
+    pub const MOBILEYE: Self = Self(0x10007);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]

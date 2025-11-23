@@ -25,12 +25,12 @@ pub const fn version_major(version: u32) -> u32 {
 #[deprecated = "This define is deprecated. VK_API_VERSION_MINOR should be used instead."]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_VERSION_MINOR.html>"]
 pub const fn version_minor(version: u32) -> u32 {
-    ((version) >> 12) & 0x3ffu32
+    ((version) >> 12) & 0x3ff
 }
 #[deprecated = "This define is deprecated. VK_API_VERSION_PATCH should be used instead."]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_VERSION_PATCH.html>"]
 pub const fn version_patch(version: u32) -> u32 {
-    (version) & 0xfffu32
+    (version) & 0xfff
 }
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_MAKE_API_VERSION.html>"]
 pub const fn make_api_version(variant: u32, major: u32, minor: u32, patch: u32) -> u32 {
@@ -42,15 +42,15 @@ pub const fn api_version_variant(version: u32) -> u32 {
 }
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_MAJOR.html>"]
 pub const fn api_version_major(version: u32) -> u32 {
-    ((version) >> 22) & 0x7fu32
+    ((version) >> 22) & 0x7f
 }
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_MINOR.html>"]
 pub const fn api_version_minor(version: u32) -> u32 {
-    ((version) >> 12) & 0x3ffu32
+    ((version) >> 12) & 0x3ff
 }
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_PATCH.html>"]
 pub const fn api_version_patch(version: u32) -> u32 {
-    (version) & 0xfffu32
+    (version) & 0xfff
 }
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_0.html>"]
 pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
