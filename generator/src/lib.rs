@@ -1372,7 +1372,7 @@ pub fn generate_extension_commands<'a>(
             }
 
             impl Instance {
-                pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+                pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                     let handle = instance.handle;
                     let fp = InstanceFn::load(|name| unsafe {
                         core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -1417,7 +1417,7 @@ pub fn generate_extension_commands<'a>(
             }
 
             impl Device {
-                pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                     let handle = device.handle;
                     let fp = DeviceFn::load(|name| unsafe {
                         core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
