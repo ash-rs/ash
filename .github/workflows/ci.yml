@@ -7,14 +7,14 @@ jobs:
     name: Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: cargo check --workspace --all-targets --all-features
 
   check_msrv:
     name: Check ash, ash-window and ash-rewrite MSRV (1.69.0)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@1.69.0
       - name: Downgrade incompatible dependencies
         run: |
@@ -29,7 +29,7 @@ jobs:
     name: Generated
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Checkout submodule
         # Manually update submodules with --checkout because they are configured with update=none and will be skipped otherwise
         run: git submodule update --recursive --init --force --checkout
@@ -44,7 +44,7 @@ jobs:
     steps:
       - name: Install Vulkan loader
         run: sudo apt-get install libvulkan-dev
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Test all targets
         run: cargo test --workspace --all-targets
       - name: Test docs
@@ -54,7 +54,7 @@ jobs:
     name: Rustfmt
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: cargo fmt --all -- --check
 
   clippy:
@@ -68,7 +68,7 @@ jobs:
           - x86_64-apple-darwin
           - aarch64-apple-ios
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Add Rust target ${{ matrix.target }}
         run: rustup target add ${{ matrix.target }}
       - name: Clippy lint without features
@@ -89,7 +89,7 @@ jobs:
     name: Build-test docs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Document all crates
         env:
           RUSTDOCFLAGS: -Dwarnings
