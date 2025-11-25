@@ -49,7 +49,7 @@ pub unsafe fn create_surface(
                         .ok_or(vk::Result::ERROR_INITIALIZATION_FAILED)?
                         .get(),
                 );
-            let surface_fn = win32_surface::Instance::new(entry, instance);
+            let surface_fn = win32_surface::Instance::load(entry, instance);
             surface_fn.create_win32_surface(&surface_desc, allocation_callbacks)
         }
 
@@ -57,7 +57,7 @@ pub unsafe fn create_surface(
             let surface_desc = vk::WaylandSurfaceCreateInfoKHR::default()
                 .display(display.display.as_ptr())
                 .surface(window.surface.as_ptr());
-            let surface_fn = wayland_surface::Instance::new(entry, instance);
+            let surface_fn = wayland_surface::Instance::load(entry, instance);
             surface_fn.create_wayland_surface(&surface_desc, allocation_callbacks)
         }
 
@@ -70,7 +70,7 @@ pub unsafe fn create_surface(
                         .as_ptr(),
                 )
                 .window(window.window);
-            let surface_fn = xlib_surface::Instance::new(entry, instance);
+            let surface_fn = xlib_surface::Instance::load(entry, instance);
             surface_fn.create_xlib_surface(&surface_desc, allocation_callbacks)
         }
 
@@ -83,14 +83,14 @@ pub unsafe fn create_surface(
                         .as_ptr(),
                 )
                 .window(window.window.get());
-            let surface_fn = xcb_surface::Instance::new(entry, instance);
+            let surface_fn = xcb_surface::Instance::load(entry, instance);
             surface_fn.create_xcb_surface(&surface_desc, allocation_callbacks)
         }
 
         (RawDisplayHandle::Android(_), RawWindowHandle::AndroidNdk(window)) => {
             let surface_desc =
                 vk::AndroidSurfaceCreateInfoKHR::default().window(window.a_native_window.as_ptr());
-            let surface_fn = android_surface::Instance::new(entry, instance);
+            let surface_fn = android_surface::Instance::load(entry, instance);
             surface_fn.create_android_surface(&surface_desc, allocation_callbacks)
         }
 
@@ -103,7 +103,7 @@ pub unsafe fn create_surface(
             };
 
             let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(&*layer);
-            let surface_fn = metal_surface::Instance::new(entry, instance);
+            let surface_fn = metal_surface::Instance::load(entry, instance);
             surface_fn.create_metal_surface(&surface_desc, allocation_callbacks)
         }
 
@@ -116,7 +116,7 @@ pub unsafe fn create_surface(
             };
 
             let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(&*layer);
-            let surface_fn = metal_surface::Instance::new(entry, instance);
+            let surface_fn = metal_surface::Instance::load(entry, instance);
             surface_fn.create_metal_surface(&surface_desc, allocation_callbacks)
         }
 

@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All `Extends{Root}` traits have been replaced with a single `Extends<Root>` trait using generics. (#971)
 - Moved `push()` and `extend()` methods from individual Vulkan structs (builders) into the `TaggedStructure` trait. (#994)
   This trait must be imported in scope (`use ash::vk::TaggedStructure as _;`) to use the `push()` and `extend()` methods.
+- Renamed all extension `::new()` constructors to `::load()`, signifying they're only loading function pointers. (#1021)
 
 ### Removed
 

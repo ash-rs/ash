@@ -43,7 +43,7 @@ pub mod amd {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -169,7 +169,7 @@ pub mod amd {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -264,7 +264,7 @@ pub mod amd {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -355,7 +355,7 @@ pub mod amd {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -443,7 +443,7 @@ pub mod amd {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -509,7 +509,7 @@ pub mod amdx {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -717,7 +717,7 @@ pub mod android {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -858,7 +858,7 @@ pub mod android {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -999,7 +999,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -1124,7 +1124,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -1270,7 +1270,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -1501,7 +1501,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -1591,7 +1591,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -1654,7 +1654,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -1744,7 +1744,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -1814,7 +1814,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -1949,7 +1949,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -2081,7 +2081,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -2160,7 +2160,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -2265,7 +2265,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -2491,7 +2491,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -2552,7 +2552,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -2633,7 +2633,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -2703,7 +2703,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -2865,7 +2865,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -2937,7 +2937,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -2998,7 +2998,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -3089,7 +3089,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -3200,7 +3200,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -3267,7 +3267,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -3371,7 +3371,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -3433,7 +3433,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -3545,7 +3545,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -3614,7 +3614,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -3689,7 +3689,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -3761,7 +3761,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -4057,7 +4057,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -4228,7 +4228,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -4309,7 +4309,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -4382,7 +4382,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -4482,7 +4482,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -4617,7 +4617,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -4684,7 +4684,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -4990,7 +4990,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -5128,7 +5128,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -5212,7 +5212,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -5287,7 +5287,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -5379,7 +5379,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -5477,7 +5477,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -5566,7 +5566,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -5711,7 +5711,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -5800,7 +5800,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -5906,7 +5906,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -6253,7 +6253,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -6363,7 +6363,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -7072,7 +7072,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -7185,7 +7185,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -8389,7 +8389,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -8465,7 +8465,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -8718,7 +8718,7 @@ pub mod ext {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -8789,7 +8789,7 @@ pub mod fuchsia {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -8859,7 +8859,7 @@ pub mod fuchsia {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -8952,7 +8952,7 @@ pub mod fuchsia {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -9044,7 +9044,7 @@ pub mod fuchsia {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -9208,7 +9208,7 @@ pub mod ggp {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -9288,7 +9288,7 @@ pub mod google {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -9411,7 +9411,7 @@ pub mod huawei {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -9500,7 +9500,7 @@ pub mod huawei {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -9568,7 +9568,7 @@ pub mod huawei {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -9693,7 +9693,7 @@ pub mod intel {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -9934,7 +9934,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -10091,7 +10091,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -10153,7 +10153,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -10365,7 +10365,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -10572,7 +10572,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -10642,7 +10642,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -10735,7 +10735,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -10827,7 +10827,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -10919,7 +10919,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -10988,7 +10988,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -11086,7 +11086,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -11171,7 +11171,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -11434,7 +11434,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -11518,7 +11518,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -11610,7 +11610,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -11814,7 +11814,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -11876,7 +11876,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -12063,7 +12063,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -12130,7 +12130,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -12201,7 +12201,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -12278,7 +12278,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -12371,7 +12371,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -12464,7 +12464,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -12543,7 +12543,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -12632,7 +12632,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -12716,7 +12716,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -12833,7 +12833,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -12980,7 +12980,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -13110,7 +13110,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -13177,7 +13177,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -13254,7 +13254,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -13344,7 +13344,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -13424,7 +13424,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -13509,7 +13509,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -13602,7 +13602,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -13702,7 +13702,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -13861,7 +13861,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -13982,7 +13982,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -14403,7 +14403,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -14626,7 +14626,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -14718,7 +14718,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -14813,7 +14813,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -14882,7 +14882,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -15050,7 +15050,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -15165,7 +15165,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -15228,7 +15228,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -15297,7 +15297,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -15416,7 +15416,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -15488,7 +15488,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -15598,7 +15598,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -15750,7 +15750,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -15867,7 +15867,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -15975,7 +15975,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -16040,7 +16040,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -16127,7 +16127,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -16358,7 +16358,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -16519,7 +16519,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -16593,7 +16593,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -16722,7 +16722,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -16866,7 +16866,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -17018,7 +17018,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -17137,7 +17137,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -17205,7 +17205,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -17266,7 +17266,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -17343,7 +17343,7 @@ pub mod khr {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -17562,7 +17562,7 @@ pub mod mvk {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -17630,7 +17630,7 @@ pub mod mvk {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -17702,7 +17702,7 @@ pub mod nn {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -17791,7 +17791,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -17873,7 +17873,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -17949,7 +17949,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -18074,7 +18074,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -18187,7 +18187,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -18540,7 +18540,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -18670,7 +18670,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -18762,7 +18762,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -18856,7 +18856,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -18926,7 +18926,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -18993,7 +18993,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -19195,7 +19195,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -19375,7 +19375,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -19451,7 +19451,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -19535,7 +19535,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -19612,7 +19612,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -19707,7 +19707,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -19798,7 +19798,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -19918,7 +19918,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -19982,7 +19982,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -20131,7 +20131,7 @@ pub mod nv {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -20321,7 +20321,7 @@ pub mod nvx {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -20468,7 +20468,7 @@ pub mod nvx {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -20608,7 +20608,7 @@ pub mod qcom {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -20746,7 +20746,7 @@ pub mod qnx {
             pub(crate) handle: crate::vk::Instance,
         }
         impl Instance {
-            pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
                 let handle = instance.handle;
                 let fp = InstanceFn::load(|name| unsafe {
                     core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
@@ -20838,7 +20838,7 @@ pub mod qnx {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -20927,7 +20927,7 @@ pub mod valve {
             pub(crate) handle: crate::vk::Device,
         }
         impl Device {
-            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
                 let handle = device.handle;
                 let fp = DeviceFn::load(|name| unsafe {
                     core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
