@@ -232,7 +232,7 @@ impl ExampleBase {
                 .collect();
 
             let mut extension_names =
-                ash_window::enumerate_required_extensions(window.display_handle()?.as_raw())
+                ash_window::enumerate_required_extensions(event_loop.display_handle()?.as_raw())
                     .unwrap()
                     .to_vec();
             extension_names.push(debug_utils::NAME.as_ptr());
@@ -284,18 +284,21 @@ impl ExampleBase {
             let debug_call_back = debug_utils_loader
                 .create_debug_utils_messenger(&debug_info, None)
                 .unwrap();
-            let surface = ash_window::create_surface(
+
+            let surface_factory = ash_window::SurfaceFactory::new(
                 &entry,
                 &instance,
-                window.display_handle()?.as_raw(),
-                window.window_handle()?.as_raw(),
-                None,
+                event_loop.display_handle()?.as_raw(),
             )
             .unwrap();
+            let surface = surface_factory
+                .create_surface(window.window_handle()?.as_raw(), None)
+                .unwrap();
+            let surface_loader = surface::Instance::load(&entry, &instance);
+
             let pdevices = instance
                 .enumerate_physical_devices()
                 .expect("Physical device error");
-            let surface_loader = surface::Instance::load(&entry, &instance);
             let (pdevice, queue_family_index) = pdevices
                 .iter()
                 .find_map(|pdevice| {

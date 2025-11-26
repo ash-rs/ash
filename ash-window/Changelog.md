@@ -1,5 +1,7 @@
 # Changelog
 
+- Keep loaded `Surface` extensions around via a new `SurfaceFactory` object on which `create_surface()` is called (#1019)
+
 ## [0.13.0] - 2024-03-31
 
 - Bumped MSRV from 1.59 to 1.69 for `winit 0.28` and `raw-window-handle 0.5.1`, and `CStr::from_bytes_until_nul`. (#709, #716, #746)

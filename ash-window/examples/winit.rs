@@ -30,6 +30,13 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         let instance = entry.create_instance(&instance_desc, None)?;
 
+        let surface_factory = ash_window::SurfaceFactory::new(
+            &entry,
+            &instance,
+            event_loop.display_handle()?.as_raw(),
+        )
+        .unwrap();
+
         let window = WindowBuilder::new()
             .with_inner_size(PhysicalSize::<u32>::from((800, 600)))
             .build(&event_loop)?;
@@ -56,7 +63,8 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
             Event::LoopExiting => {
                 // This will be the last event before the loop terminates.
-                // TODO: How does this play with Suspended?
+                // TODO: Winit should issue Suspended consistently on all platforms, matching
+                // Resumed and creating a single uniform place to handle surface destruction.
                 // https://github.com/rust-windowing/winit/issues/3206
                 if let Some(surface) = surface.take() {
                     surface_fn.destroy_surface(surface, None);
@@ -64,14 +72,9 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
             Event::Resumed => {
                 // Create a surface from winit window.
-                let s = ash_window::create_surface(
-                    &entry,
-                    &instance,
-                    window.display_handle().unwrap().as_raw(),
-                    window.window_handle().unwrap().as_raw(),
-                    None,
-                )
-                .unwrap();
+                let s = surface_factory
+                    .create_surface(window.window_handle().unwrap().as_raw(), None)
+                    .unwrap();
                 println!("surface: {s:?}");
                 assert!(
                     surface.replace(s).is_none(),
