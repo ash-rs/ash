@@ -266,7 +266,7 @@ cargo run -p ash-examples --bin texture
 
 ### Libraries that use ash
 
-- [gfx-rs](https://github.com/gfx-rs/gfx) - gfx-rs is a low-level, cross-platform graphics abstraction library in Rust.
+- [wgpu](https://github.com/gfx-rs/wgpu) - A cross-platform, safe, pure-Rust graphics API.
 
 ## A thanks to
 
