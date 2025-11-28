@@ -5,6 +5,7 @@ use crate::vk;
 impl crate::khr::maintenance6::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets2KHR.html>
     #[inline]
+    #[doc(alias = "vkCmdBindDescriptorSets2KHR")]
     pub unsafe fn cmd_bind_descriptor_sets2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -15,6 +16,7 @@ impl crate::khr::maintenance6::Device {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushConstants2KHR.html>
     #[inline]
+    #[doc(alias = "vkCmdPushConstants2KHR")]
     pub unsafe fn cmd_push_constants2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -25,6 +27,7 @@ impl crate::khr::maintenance6::Device {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet2KHR.html>
     #[inline]
+    #[doc(alias = "vkCmdPushDescriptorSet2KHR")]
     pub unsafe fn cmd_push_descriptor_set2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -35,6 +38,7 @@ impl crate::khr::maintenance6::Device {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate2KHR.html>
     #[inline]
+    #[doc(alias = "vkCmdPushDescriptorSetWithTemplate2KHR")]
     pub unsafe fn cmd_push_descriptor_set_with_template2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -46,8 +50,11 @@ impl crate::khr::maintenance6::Device {
         )
     }
 
+    // XXX: The below two belong in a different extension!
+
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDescriptorBufferOffsets2EXT.html>
     #[inline]
+    #[doc(alias = "vkCmdSetDescriptorBufferOffsets2EXT")]
     pub unsafe fn cmd_set_descriptor_buffer_offsets2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -61,6 +68,7 @@ impl crate::khr::maintenance6::Device {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorBufferEmbeddedSamplers2EXT.html>
     #[inline]
+    #[doc(alias = "vkCmdBindDescriptorBufferEmbeddedSamplers2EXT")]
     pub unsafe fn cmd_bind_descriptor_buffer_embedded_samplers2(
         &self,
         command_buffer: vk::CommandBuffer,

@@ -8,6 +8,7 @@ use core::mem;
 impl crate::khr::maintenance5::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindIndexBuffer2KHR.html>
     #[inline]
+    #[doc(alias = "vkCmdBindIndexBuffer2KHR")]
     pub unsafe fn cmd_bind_index_buffer2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -21,6 +22,7 @@ impl crate::khr::maintenance5::Device {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRenderingAreaGranularityKHR.html>
     #[inline]
+    #[doc(alias = "vkGetRenderingAreaGranularityKHR")]
     pub unsafe fn get_rendering_area_granularity(
         &self,
         rendering_area_info: &vk::RenderingAreaInfoKHR<'_>,
@@ -36,6 +38,7 @@ impl crate::khr::maintenance5::Device {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSubresourceLayoutKHR.html>
     #[inline]
+    #[doc(alias = "vkGetDeviceImageSubresourceLayoutKHR")]
     pub unsafe fn get_device_image_subresource_layout(
         &self,
         info: &vk::DeviceImageSubresourceInfoKHR<'_>,
@@ -55,6 +58,7 @@ impl crate::khr::maintenance5::Device {
     /// [`VK_EXT_host_image_copy`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_host_image_copy.html
     /// [`VK_EXT_image_compression_control`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_image_compression_control.html
     #[inline]
+    #[doc(alias = "vkGetImageSubresourceLayout2KHR")]
     pub unsafe fn get_image_subresource_layout2(
         &self,
         image: vk::Image,
