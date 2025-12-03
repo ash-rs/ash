@@ -190,7 +190,7 @@ fn parse_c_define_header(i: &str) -> IResult<&str, (Option<&str>, (&str, Option<
     (pair(
         parse_comment_suffix,
         preceded(
-            tag("#define "),
+            preceded(opt(newline), tag("#define ")),
             pair(parse_c_identifier, opt(parse_parameter_names)),
         ),
     ))
@@ -288,6 +288,13 @@ fn khronos_link<S: Display + ?Sized>(name: &S) -> Literal {
     ))
 }
 
+fn deprecated_annotation<S: Display + ?Sized>(explanationlink: &S) -> TokenStream {
+    // TODO: Upstream uses `legacy-{}`, vk.xml uses `deprecated-{}`??
+    let comment =
+        format!("<https://docs.vulkan.org/spec/latest/appendices/legacy.html#{explanationlink}>");
+    quote!(#[deprecated = #comment])
+}
+
 fn is_opaque_type(ty: &str) -> bool {
     matches!(
         ty,
@@ -298,6 +305,7 @@ fn is_opaque_type(ty: &str) -> bool {
             | "xcb_connection_t"
             | "ANativeWindow"
             | "AHardwareBuffer"
+            | "OHNativeWindow"
             | "CAMetalLayer"
             | "IDirectFB"
             | "IDirectFBSurface"
@@ -881,6 +889,7 @@ pub type CommandMap<'a> = HashMap<vkxml::Identifier, &'a vk_parse::CommandDefini
 fn generate_function_pointers<'a>(
     ident: Ident,
     commands: &[&'a vk_parse::CommandDefinition],
+    deprecated_commands: &HashMap<&'a str, &'a str>,
     rename_commands: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
     has_lifetimes: &HashSet<Ident>,
@@ -903,6 +912,7 @@ fn generate_function_pointers<'a>(
         parameters_unused: TokenStream,
         returns: TokenStream,
         parameter_validstructs: Vec<(Ident, Vec<String>)>,
+        deprecated: Option<TokenStream>,
     }
 
     let commands = commands
@@ -964,6 +974,10 @@ fn generate_function_pointers<'a>(
             // must only emit a single definition.
             let define_pfn = fn_cache.insert(name.as_str());
 
+            let deprecated = deprecated_commands
+                .get(name.as_str())
+                .map(deprecated_annotation);
+
             Command {
                 define_pfn,
                 type_name,
@@ -979,6 +993,7 @@ fn generate_function_pointers<'a>(
                     quote!(-> #ret_ty_tokens)
                 },
                 parameter_validstructs,
+                deprecated,
             }
         })
         .collect::<Vec<_>>();
@@ -1023,7 +1038,9 @@ fn generate_function_pointers<'a>(
             let type_name = &self.0.pfn_type_name;
             let parameters = &self.0.parameters;
             let returns = &self.0.returns;
+            let deprecated = &self.0.deprecated;
             quote!(
+                #deprecated
                 #[allow(non_camel_case_types)]
                 pub type #type_name = unsafe extern "system" fn(#parameters) #returns;
             )
@@ -1036,7 +1053,8 @@ fn generate_function_pointers<'a>(
         fn to_tokens(&self, tokens: &mut TokenStream) {
             let type_name = &self.0.pfn_type_name;
             let function_name_rust = &self.0.function_name_rust;
-            quote!(pub #function_name_rust: #type_name).to_tokens(tokens)
+            let deprecated = &self.0.deprecated;
+            quote!(#deprecated pub #function_name_rust: #type_name).to_tokens(tokens)
         }
     }
 
@@ -1233,6 +1251,7 @@ pub struct ExtensionCommands<'a> {
 pub fn generate_extension_commands<'a>(
     full_extension_name: &'a str,
     items: &'a [vk_parse::ExtensionChild],
+    deprecated_commands: &HashMap<&'a str, &'a str>,
     cmd_map: &CommandMap<'a>,
     cmd_aliases: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
@@ -1303,6 +1322,7 @@ pub fn generate_extension_commands<'a>(
         let (fp, table) = generate_function_pointers(
             instance_ident,
             &instance_commands,
+            deprecated_commands,
             &rename_commands,
             fn_cache,
             has_lifetimes,
@@ -1350,6 +1370,7 @@ pub fn generate_extension_commands<'a>(
         let (fp, table) = generate_function_pointers(
             device_ident,
             &device_commands,
+            deprecated_commands,
             &rename_commands,
             fn_cache,
             has_lifetimes,
@@ -1428,6 +1449,7 @@ pub fn generate_extension_commands<'a>(
 pub fn generate_define(
     define: &vk_parse::Type,
     allowed_types: &HashSet<&str>,
+    deprecated_types: &HashMap<&str, &str>,
     identifier_renames: &mut BTreeMap<String, Ident>,
 ) -> TokenStream {
     let vk_parse::TypeSpec::Code(spec) = &define.spec else {
@@ -1452,9 +1474,15 @@ pub fn generate_define(
         let c_expr = convert_c_expression(&c_expr, identifier_renames);
         let c_expr = discard_outmost_delimiter(c_expr);
 
-        let deprecated = comment
-            .and_then(|c| c.trim().strip_prefix("DEPRECATED: "))
-            .map(|comment| quote!(#[deprecated = #comment]))
+        if let Some(c) = comment {
+            assert!(!c.starts_with("DEPRECATED:"), "{comment:?}");
+        }
+
+        assert!(define.deprecated.is_none()); // Unused
+
+        let deprecated = deprecated_types
+            .get(define_name.as_str())
+            .map(deprecated_annotation)
             .or_else(|| match define.deprecated.as_ref()?.as_str() {
                 "true" => Some(quote!(#[deprecated])),
                 x => panic!("Unknown deprecation reason {x}"),
@@ -2357,9 +2385,12 @@ pub fn generate_struct(
     if &struct_.name == "VkTransformMatrixKHR" {
         return quote! {
             #[repr(C)]
-            #[derive(Copy, Clone)]
+            #[cfg_attr(feature = "debug", derive(Debug))]
+            #[derive(Copy, Clone, Default)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTransformMatrixKHR.html>"]
+            #[must_use]
             pub struct TransformMatrixKHR {
-                pub matrix: [f32; 12],
+                pub matrix: [[f32; 3]; 4],
             }
         };
     }
@@ -2368,6 +2399,7 @@ pub fn generate_struct(
         return quote! {
             #[repr(C)]
             #[derive(Copy, Clone)]
+            #[must_use]
             pub union AccelerationStructureReferenceKHR {
                 pub device_handle: DeviceAddress,
                 pub host_handle: AccelerationStructureKHR,
@@ -2375,6 +2407,7 @@ pub fn generate_struct(
             #[repr(C)]
             #[derive(Copy, Clone)]
             #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureInstanceKHR.html>"]
+            #[must_use]
             pub struct AccelerationStructureInstanceKHR {
                 pub transform: TransformMatrixKHR,
                 /// Use [`Packed24_8::new(instance_custom_index, mask)`][Packed24_8::new()] to construct this field
@@ -2391,6 +2424,7 @@ pub fn generate_struct(
             #[repr(C)]
             #[derive(Copy, Clone)]
             #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureSRTMotionInstanceNV.html>"]
+            #[must_use]
             pub struct AccelerationStructureSRTMotionInstanceNV {
                 pub transform_t0: SRTDataNV,
                 pub transform_t1: SRTDataNV,
@@ -2407,7 +2441,8 @@ pub fn generate_struct(
         return quote! {
             #[repr(C)]
             #[derive(Copy, Clone)]
-            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/AccelerationStructureMatrixMotionInstanceNV.html>"]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureMatrixMotionInstanceNV.html>"]
+            #[must_use]
             pub struct AccelerationStructureMatrixMotionInstanceNV {
                 pub transform_t0: TransformMatrixKHR,
                 pub transform_t1: TransformMatrixKHR,
@@ -2416,6 +2451,52 @@ pub fn generate_struct(
                 /// Use [`Packed24_8::new(instance_shader_binding_table_record_offset, flags)`][Packed24_8::new()] to construct this field
                 pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
+            }
+        };
+    }
+
+    if &struct_.name == "VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV.html>"]
+            #[must_use]
+            pub struct ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV {
+                // TODO: Add bitfield helpers
+                pub geometry_index_and_flags: u32,
+            }
+        };
+    }
+    if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureBuildTriangleClusterInfoNV.html>"]
+            #[must_use]
+            pub struct ClusterAccelerationStructureBuildTriangleClusterInfoNV {
+                _todo_many_bitfields: [u8; 0],
+            }
+        };
+    }
+    if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV.html>"]
+            #[must_use]
+            pub struct ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV {
+                _todo_many_bitfields: [u8; 0],
+            }
+        };
+    }
+    if &struct_.name == "VkClusterAccelerationStructureInstantiateClusterInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureInstantiateClusterInfoNV.html>"]
+            #[must_use]
+            pub struct ClusterAccelerationStructureInstantiateClusterInfoNV {
+                _todo_bitfield_and_other_fields: [u8; 0],
             }
         };
     }
@@ -2593,6 +2674,7 @@ fn generate_union(union: &vkxml::Union, has_lifetimes: &HashSet<Ident>) -> Token
 pub fn generate_definition_vk_parse(
     definition: &vk_parse::Type,
     allowed_types: &HashSet<&str>,
+    deprecated_types: &HashMap<&str, &str>,
     identifier_renames: &mut BTreeMap<String, Ident>,
 ) -> Option<TokenStream> {
     if let Some(api) = &definition.api {
@@ -2605,6 +2687,7 @@ pub fn generate_definition_vk_parse(
         Some("define") => Some(generate_define(
             definition,
             allowed_types,
+            deprecated_types,
             identifier_renames,
         )),
         _ => None,
@@ -2660,6 +2743,7 @@ pub fn generate_definition(
 pub fn generate_feature<'a>(
     feature: &vkxml::Feature,
     commands: &CommandMap<'a>,
+    deprecated_commands: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
     has_lifetimes: &HashSet<Ident>,
 ) -> (TokenStream, TokenStream) {
@@ -2692,6 +2776,7 @@ pub fn generate_feature<'a>(
         generate_function_pointers(
             format_ident!("{}", "StaticFn"),
             &static_commands,
+            deprecated_commands,
             &HashMap::new(),
             fn_cache,
             has_lifetimes,
@@ -2703,6 +2788,7 @@ pub fn generate_feature<'a>(
     let (entry_fp, entry_table) = generate_function_pointers(
         format_ident!("EntryFnV{}", version),
         &entry_commands,
+        deprecated_commands,
         &HashMap::new(),
         fn_cache,
         has_lifetimes,
@@ -2714,6 +2800,7 @@ pub fn generate_feature<'a>(
     let (instance_fp, instance_table) = generate_function_pointers(
         format_ident!("InstanceFnV{}", version),
         &instance_commands,
+        deprecated_commands,
         &HashMap::new(),
         fn_cache,
         has_lifetimes,
@@ -2725,6 +2812,7 @@ pub fn generate_feature<'a>(
     let (device_fp, device_table) = generate_function_pointers(
         format_ident!("DeviceFnV{}", version),
         &device_commands,
+        deprecated_commands,
         &HashMap::new(),
         fn_cache,
         has_lifetimes,
@@ -3035,7 +3123,8 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let extension_children = extensions.iter().flat_map(|extension| &extension.children);
 
     let (required_types, required_commands) = features_children
-        .chain(extension_children)
+        .clone()
+        .chain(extension_children.clone())
         .filter_map(get_variant!(vk_parse::FeatureChild::Require { api, items }))
         .filter(|(api, _items)| matches!(api.as_deref(), None | Some(DESIRED_API)))
         .flat_map(|(_api, items)| items)
@@ -3047,10 +3136,45 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
                 vk_parse::InterfaceItem::Command { name, .. } => {
                     acc.1.insert(name.as_str());
                 }
-                _ => {}
+                vk_parse::InterfaceItem::Enum(vk_parse::Enum { name: _, .. }) => {
+                    // TODO: Filter, don't just generate them all
+                    // acc.1.insert(name.as_str());
+                }
+                vk_parse::InterfaceItem::Feature { .. } => {
+                    // Programmatically requires features to be set
+                }
+                vk_parse::InterfaceItem::Comment { .. } => {}
+                x => todo!("{x:?}"), // _ => {}
             };
             acc
         });
+
+    let (deprecated_types, deprecated_commands) = features_children
+        .chain(extension_children)
+        .filter_map(get_variant!(vk_parse::FeatureChild::Deprecate {
+            api,
+            explanationlink,
+            items
+        }))
+        .filter(|(api, _, _)| matches!(api.as_deref(), None | Some(DESIRED_API)))
+        .fold(
+            (HashMap::new(), HashMap::new()),
+            |mut acc, (_api, explanationlink, items)| {
+                for item in items {
+                    match item {
+                        vk_parse::InterfaceItem::Type { name, .. } => {
+                            // TODO: Also track (and include in the docs!) the surrounding feature or extension that caused the deprecation!
+                            acc.0.insert(name.as_str(), explanationlink.as_str());
+                        }
+                        vk_parse::InterfaceItem::Command { name, .. } => {
+                            acc.1.insert(name.as_str(), explanationlink.as_str());
+                        }
+                        x => todo!("{x:?}"),
+                    }
+                }
+                acc
+            },
+        );
 
     let commands: CommandMap<'_> = spec2
         .0
@@ -3183,6 +3307,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         let cmds = generate_extension_commands(
             &ext.name,
             &ext.children,
+            &deprecated_commands,
             &commands,
             &cmd_aliases,
             &mut fn_cache,
@@ -3218,7 +3343,12 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let vk_parse_definitions: Vec<_> = vk_parse_types
         .iter()
         .filter_map(|def| {
-            generate_definition_vk_parse(def, &required_types, &mut identifier_renames)
+            generate_definition_vk_parse(
+                def,
+                &required_types,
+                &deprecated_types,
+                &mut identifier_renames,
+            )
         })
         .collect();
 
@@ -3251,7 +3381,15 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let (feature_fp_code, feature_table_code): (Vec<_>, Vec<_>) = features
         .iter()
-        .map(|feature| generate_feature(feature, &commands, &mut fn_cache, &has_lifetimes))
+        .map(|feature| {
+            generate_feature(
+                feature,
+                &commands,
+                &deprecated_commands,
+                &mut fn_cache,
+                &has_lifetimes,
+            )
+        })
         .unzip();
     let feature_extensions_code =
         generate_feature_extension(&spec2, &mut const_cache, &mut const_values);
