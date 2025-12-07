@@ -1,6 +1,8 @@
 pub mod cdecl;
+pub mod item;
 pub mod xml;
 
+use item::Items;
 use std::{fs, path::Path};
 use tracing::{debug, error_span};
 
@@ -9,6 +11,7 @@ use tracing::{debug, error_span};
 pub struct Analysis {
     vk: Library,
     video: Library,
+    items: Items,
 }
 
 impl Analysis {
@@ -16,20 +19,26 @@ impl Analysis {
     /// [Vulkan-Headers](https://github.com/KhronosGroup/Vulkan-Headers) repo.
     pub fn new(vulkan_headers_path: impl AsRef<Path>) -> Analysis {
         let vulkan_headers_path = vulkan_headers_path.as_ref();
-        Analysis {
-            vk: Library::new(vulkan_headers_path.join("registry/vk.xml")),
-            video: Library::new(vulkan_headers_path.join("registry/video.xml")),
-        }
+        let vk = Library::new(vulkan_headers_path.join("registry/vk.xml"));
+        let video = Library::new(vulkan_headers_path.join("registry/video.xml"));
+
+        let mut items = Items::default();
+        items.collect(&vk);
+        items.collect(&video);
+
+        Analysis { vk, video, items }
     }
 
-    /// Get "raw" Vulkan XML registry.
     pub fn vk_xml(&self) -> &xml::Registry {
         &self.vk.xml
     }
 
-    /// Get "raw" Vulkan Video XML registry.
     pub fn video_xml(&self) -> &xml::Registry {
         &self.video.xml
+    }
+
+    pub fn items(&self) -> &Items {
+        &self.items
     }
 }
 

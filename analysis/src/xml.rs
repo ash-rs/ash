@@ -680,8 +680,9 @@ impl RequireCommand {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Version {
+    /// a string like "VK_COMPUTE", "VK_BASE", or "VK"
     pub api: &'static str,
     pub major: u32,
     pub minor: u32,

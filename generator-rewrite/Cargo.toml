@@ -8,3 +8,8 @@ publish = false
 analysis = { path = "../analysis" }
 tracing = "0.1"
 tracing-subscriber = "0.3"
+proc-macro2 = { version = "1", default-features = false }
+quote = { version = "1", default-features = false }
+syn = { version = "2", default-features = false, features = ["parsing"] }
+prettyplease = "0.2"
+indexmap = "2"
