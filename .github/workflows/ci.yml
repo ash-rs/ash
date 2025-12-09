@@ -45,6 +45,9 @@ jobs:
       - name: Install Vulkan loader
         run: sudo apt-get install libvulkan-dev
       - uses: actions/checkout@v6
+      - name: Checkout submodule
+        # Manually update submodules with --checkout because they are configured with update=none and will be skipped otherwise
+        run: git submodule update --recursive --init --force --checkout
       - name: Test all targets
         run: cargo test --workspace --all-targets
       - name: Test docs
