@@ -20,7 +20,7 @@ nom = "8"
 proc-macro2 = "1.0"
 quote = "1.0"
 regex = "1.4"
-vk-parse = { version = "0.17", features = ["vkxml-convert"] }
+vk-parse = { version = "0.18", features = ["vkxml-convert"] }
 vkxml = "0.3"
 
 [dependencies.syn]
