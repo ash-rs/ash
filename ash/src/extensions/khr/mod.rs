@@ -32,6 +32,7 @@ pub mod maintenance6;
 pub mod performance_query;
 pub mod pipeline_executable_properties;
 pub mod present_wait;
+pub mod present_wait2;
 pub mod push_descriptor;
 pub mod ray_tracing_maintenance1;
 pub mod ray_tracing_pipeline;
