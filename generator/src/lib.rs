@@ -187,13 +187,16 @@ fn parse_parameter_names(i: &str) -> IResult<&str, Vec<&str>> {
 /// containing parameter names. The expression is left in the remainder
 #[allow(clippy::type_complexity)]
 fn parse_c_define_header(i: &str) -> IResult<&str, (Option<&str>, (&str, Option<Vec<&str>>))> {
-    (pair(
-        parse_comment_suffix,
-        preceded(
-            tag("#define "),
-            pair(parse_c_identifier, opt(parse_parameter_names)),
+    preceded(
+        multispace0, // Consume leading whitespace (some XML defines have a newline before #define)
+        pair(
+            parse_comment_suffix,
+            preceded(
+                tag("#define "),
+                pair(parse_c_identifier, opt(parse_parameter_names)),
+            ),
         ),
-    ))
+    )
     .parse(i)
 }
 
@@ -305,6 +308,8 @@ fn is_opaque_type(ty: &str) -> bool {
             | "_screen_context"
             | "_screen_window"
             | "SECURITY_ATTRIBUTES"
+            | "OHNativeWindow"
+            | "OH_NativeBuffer"
     )
 }
 
@@ -501,17 +506,22 @@ trait FeatureExt {
     fn version_string(&self) -> String;
     fn is_version(&self, major: u32, minor: u32) -> bool;
 }
-impl FeatureExt for vkxml::Feature {
+impl FeatureExt for vk_parse::Feature {
     fn is_version(&self, major: u32, minor: u32) -> bool {
-        let self_major = self.version as u32;
-        let self_minor = (self.version * 10.0) as u32 - self_major * 10;
-        major == self_major && self_minor == minor
+        let mut iter = self.number.as_deref().unwrap_or_default().split('.');
+        let Some(major_str) = iter.next() else {
+            return false;
+        };
+        let Some(minor_str) = iter.next() else {
+            return false;
+        };
+        if iter.next().is_some() {
+            return false;
+        }
+        major_str.parse::<u32>() == Ok(major) && minor_str.parse::<u32>() == Ok(minor)
     }
     fn version_string(&self) -> String {
-        let mut version = format!("{}", self.version);
-        if version.len() == 1 {
-            version = format!("{version}_0")
-        }
+        let version = self.number.as_deref().unwrap_or("0.0");
 
         version.replace('.', "_")
     }
@@ -922,7 +932,12 @@ fn generate_function_pointers<'a>(
             let params = cmd
                 .params
                 .iter()
-                .filter(|param| matches!(param.api.as_deref(), None | Some(DESIRED_API)));
+                .filter(|param| {
+                    param
+                        .api
+                        .as_ref()
+                        .map_or(true, |api| contains_desired_api(api))
+                });
 
             let params_tokens: Vec<_> = params
                 .clone()
@@ -2357,7 +2372,8 @@ pub fn generate_struct(
     if &struct_.name == "VkTransformMatrixKHR" {
         return quote! {
             #[repr(C)]
-            #[derive(Copy, Clone)]
+            #[derive(Copy, Clone, Default)]
+            #[cfg_attr(feature = "debug", derive(Debug))]
             pub struct TransformMatrixKHR {
                 pub matrix: [f32; 12],
             }
@@ -2420,6 +2436,78 @@ pub fn generate_struct(
         };
     }
 
+    if &struct_.name == "VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/latest/man/html/VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV.html>"]
+            pub struct ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV(pub u32);
+        };
+    }
+
+    if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/latest/man/html/VkClusterAccelerationStructureBuildTriangleClusterInfoNV.html>"]
+            pub struct ClusterAccelerationStructureBuildTriangleClusterInfoNV {
+                pub cluster_id: u32,
+                pub cluster_flags: ClusterAccelerationStructureClusterFlagsNV,
+                pub packed_bitfield: u32,
+                pub base_geometry_index_and_geometry_flags: ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV,
+                pub index_buffer_stride: u16,
+                pub vertex_buffer_stride: u16,
+                pub geometry_index_and_flags_buffer_stride: u16,
+                pub opacity_micromap_index_buffer_stride: u16,
+                pub index_buffer: DeviceAddress,
+                pub vertex_buffer: DeviceAddress,
+                pub geometry_index_and_flags_buffer: DeviceAddress,
+                pub opacity_micromap_array: DeviceAddress,
+                pub opacity_micromap_index_buffer: DeviceAddress,
+            }
+        };
+    }
+
+    if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/latest/man/html/VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV.html>"]
+            pub struct ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV {
+                pub cluster_id: u32,
+                pub cluster_flags: ClusterAccelerationStructureClusterFlagsNV,
+                pub packed_bitfield: u32,
+                pub base_geometry_index_and_geometry_flags: ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV,
+                pub index_buffer_stride: u16,
+                pub vertex_buffer_stride: u16,
+                pub geometry_index_and_flags_buffer_stride: u16,
+                pub opacity_micromap_index_buffer_stride: u16,
+                pub index_buffer: DeviceAddress,
+                pub vertex_buffer: DeviceAddress,
+                pub geometry_index_and_flags_buffer: DeviceAddress,
+                pub opacity_micromap_array: DeviceAddress,
+                pub opacity_micromap_index_buffer: DeviceAddress,
+                pub instantiation_bounding_box_limit: DeviceAddress,
+            }
+        };
+    }
+
+    if &struct_.name == "VkClusterAccelerationStructureInstantiateClusterInfoNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/latest/man/html/VkClusterAccelerationStructureInstantiateClusterInfoNV.html>"]
+            pub struct ClusterAccelerationStructureInstantiateClusterInfoNV {
+                pub cluster_id_offset: u32,
+                /// Use [`Packed24_8::new(geometry_index_offset, reserved)`][Packed24_8::new()] to construct this field
+                pub geometry_index_offset_and_reserved: Packed24_8,
+                pub cluster_template_address: DeviceAddress,
+                pub vertex_buffer: StridedDeviceAddressNV,
+            }
+        };
+    }
+
+    assert_eq!(struct_.elements.len(), vk_parse_members.len());
     let members = struct_
         .elements
         .iter()
@@ -2430,7 +2518,9 @@ pub fn generate_struct(
                 .filter_map(get_variant!(vk_parse::TypeMember::Definition)),
         )
         .filter(|(_, vk_parse_field)| {
-            matches!(vk_parse_field.api.as_deref(), None | Some(DESIRED_API))
+            vk_parse_field.api
+                .as_ref()
+                .map_or(true, |api| contains_desired_api(api))
         })
         .map(|(field, vk_parse_field)| {
             let deprecated = vk_parse_field
@@ -2657,8 +2747,35 @@ pub fn generate_definition(
         _ => None,
     }
 }
+fn collect_feature_command_names<'a>(
+    feature_name: &str,
+    all_features: &'a HashMap<&str, &vk_parse::Feature>,
+    collected: &mut HashSet<&'a str>,
+) {
+    let Some(feature) = all_features.get(feature_name) else {
+        return;
+    };
+    // Resolve dependencies first
+    if let Some(depends) = &feature.depends {
+        for dep in depends.split(',') {
+            collect_feature_command_names(dep, all_features, collected);
+        }
+    }
+    // Collect command names from this feature
+    for name in feature
+        .children
+        .iter()
+        .filter_map(get_variant!(vk_parse::ExtensionChild::Require { items }))
+        .flat_map(|x| x.iter())
+        .filter_map(get_variant!(vk_parse::InterfaceItem::Command { name }))
+    {
+        collected.insert(name.as_str());
+    }
+}
+
 pub fn generate_feature<'a>(
-    feature: &vkxml::Feature,
+    feature: &vk_parse::Feature,
+    all_features: &HashMap<&str, &vk_parse::Feature>,
     commands: &CommandMap<'a>,
     fn_cache: &mut HashSet<&'a str>,
     has_lifetimes: &HashSet<Ident>,
@@ -2667,13 +2784,12 @@ pub fn generate_feature<'a>(
         return (quote!(), quote!());
     }
 
-    let (static_commands, entry_commands, device_commands, instance_commands) = feature
-        .elements
+    let mut cmd_names = HashSet::new();
+    collect_feature_command_names(&feature.name, all_features, &mut cmd_names);
+
+    let (static_commands, entry_commands, device_commands, instance_commands) = cmd_names
         .iter()
-        .filter_map(get_variant!(vkxml::FeatureElement::Require))
-        .flat_map(|spec| &spec.elements)
-        .filter_map(get_variant!(vkxml::FeatureReference::CommandReference))
-        .filter_map(|cmd_ref| commands.get(&cmd_ref.name))
+        .filter_map(|name| commands.get(*name))
         .fold(
             (Vec::new(), Vec::new(), Vec::new(), Vec::new()),
             |mut accs, &cmd_ref| {
@@ -2708,7 +2824,7 @@ pub fn generate_feature<'a>(
         has_lifetimes,
         &format!(
             "Raw Vulkan {} entry point function pointers",
-            feature.version
+            feature.number.as_deref().unwrap_or_default()
         ),
     );
     let (instance_fp, instance_table) = generate_function_pointers(
@@ -2719,7 +2835,7 @@ pub fn generate_feature<'a>(
         has_lifetimes,
         &format!(
             "Raw Vulkan {} instance-level function pointers",
-            feature.version
+            feature.number.as_deref().unwrap_or_default()
         ),
     );
     let (device_fp, device_table) = generate_function_pointers(
@@ -2730,7 +2846,7 @@ pub fn generate_feature<'a>(
         has_lifetimes,
         &format!(
             "Raw Vulkan {} device-level function pointers",
-            feature.version
+            feature.number.as_deref().unwrap_or_default()
         ),
     );
     (
@@ -3002,11 +3118,18 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let spec = vk_parse::parse_file_as_vkxml(&vk_xml).expect("Invalid xml file.");
 
-    let features: Vec<&vkxml::Feature> = spec
-        .elements
+    let all_features: HashMap<&str, &vk_parse::Feature> = spec2
+        .0
         .iter()
-        .filter_map(get_variant!(vkxml::RegistryElement::Features))
-        .flat_map(|features| &features.elements)
+        .filter_map(get_variant!(vk_parse::RegistryChild::Feature))
+        .filter(|f| contains_desired_api(&f.api))
+        .map(|f| (f.name.as_str(), f))
+        .collect();
+
+    let features: Vec<&vk_parse::Feature> = all_features
+        .values()
+        .filter(|f| f.apitype.as_deref() != Some("internal"))
+        .copied()
         .collect();
 
     let definitions: Vec<&vkxml::DefinitionsElement> = spec
@@ -3251,7 +3374,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let (feature_fp_code, feature_table_code): (Vec<_>, Vec<_>) = features
         .iter()
-        .map(|feature| generate_feature(feature, &commands, &mut fn_cache, &has_lifetimes))
+        .map(|feature| generate_feature(feature, &all_features, &commands, &mut fn_cache, &has_lifetimes))
         .unzip();
     let feature_extensions_code =
         generate_feature_extension(&spec2, &mut const_cache, &mut const_values);
