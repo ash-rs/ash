@@ -186,12 +186,12 @@ impl fmt::Debug for AccessFlags {
                 "FRAGMENT_SHADING_RATE_ATTACHMENT_READ_KHR",
             ),
             (
-                AccessFlags::COMMAND_PREPROCESS_READ_NV.0,
-                "COMMAND_PREPROCESS_READ_NV",
+                AccessFlags::COMMAND_PREPROCESS_READ_EXT.0,
+                "COMMAND_PREPROCESS_READ_EXT",
             ),
             (
-                AccessFlags::COMMAND_PREPROCESS_WRITE_NV.0,
-                "COMMAND_PREPROCESS_WRITE_NV",
+                AccessFlags::COMMAND_PREPROCESS_WRITE_EXT.0,
+                "COMMAND_PREPROCESS_WRITE_EXT",
             ),
             (AccessFlags::NONE.0, "NONE"),
         ];
@@ -252,12 +252,28 @@ impl fmt::Debug for AccessFlags2 {
                 "VIDEO_DECODE_WRITE_KHR",
             ),
             (
+                AccessFlags2::SAMPLER_HEAP_READ_EXT.0,
+                "SAMPLER_HEAP_READ_EXT",
+            ),
+            (
+                AccessFlags2::RESOURCE_HEAP_READ_EXT.0,
+                "RESOURCE_HEAP_READ_EXT",
+            ),
+            (
                 AccessFlags2::VIDEO_ENCODE_READ_KHR.0,
                 "VIDEO_ENCODE_READ_KHR",
             ),
             (
                 AccessFlags2::VIDEO_ENCODE_WRITE_KHR.0,
                 "VIDEO_ENCODE_WRITE_KHR",
+            ),
+            (
+                AccessFlags2::SHADER_TILE_ATTACHMENT_READ_QCOM.0,
+                "SHADER_TILE_ATTACHMENT_READ_QCOM",
+            ),
+            (
+                AccessFlags2::SHADER_TILE_ATTACHMENT_WRITE_QCOM.0,
+                "SHADER_TILE_ATTACHMENT_WRITE_QCOM",
             ),
             (
                 AccessFlags2::TRANSFORM_FEEDBACK_WRITE_EXT.0,
@@ -276,12 +292,12 @@ impl fmt::Debug for AccessFlags2 {
                 "CONDITIONAL_RENDERING_READ_EXT",
             ),
             (
-                AccessFlags2::COMMAND_PREPROCESS_READ_NV.0,
-                "COMMAND_PREPROCESS_READ_NV",
+                AccessFlags2::COMMAND_PREPROCESS_READ_EXT.0,
+                "COMMAND_PREPROCESS_READ_EXT",
             ),
             (
-                AccessFlags2::COMMAND_PREPROCESS_WRITE_NV.0,
-                "COMMAND_PREPROCESS_WRITE_NV",
+                AccessFlags2::COMMAND_PREPROCESS_WRITE_EXT.0,
+                "COMMAND_PREPROCESS_WRITE_EXT",
             ),
             (
                 AccessFlags2::FRAGMENT_SHADING_RATE_ATTACHMENT_READ_KHR.0,
@@ -322,13 +338,39 @@ impl fmt::Debug for AccessFlags2 {
                 AccessFlags2::OPTICAL_FLOW_WRITE_NV.0,
                 "OPTICAL_FLOW_WRITE_NV",
             ),
+            (AccessFlags2::DATA_GRAPH_READ_ARM.0, "DATA_GRAPH_READ_ARM"),
+            (AccessFlags2::DATA_GRAPH_WRITE_ARM.0, "DATA_GRAPH_WRITE_ARM"),
+            (
+                AccessFlags2::MEMORY_DECOMPRESSION_READ_EXT.0,
+                "MEMORY_DECOMPRESSION_READ_EXT",
+            ),
+            (
+                AccessFlags2::MEMORY_DECOMPRESSION_WRITE_EXT.0,
+                "MEMORY_DECOMPRESSION_WRITE_EXT",
+            ),
         ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for AccessFlags3KHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags64, &str)] = &[(AccessFlags3KHR::NONE.0, "NONE")];
         debug_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Debug for AcquireProfilingLockFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for AddressCopyFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (AddressCopyFlagsKHR::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
+            (AddressCopyFlagsKHR::SPARSE.0, "SPARSE"),
+            (AddressCopyFlagsKHR::PROTECTED.0, "PROTECTED"),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -369,7 +411,17 @@ impl fmt::Debug for AntiLagStageAMD {
 }
 impl fmt::Debug for AttachmentDescriptionFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(AttachmentDescriptionFlags::MAY_ALIAS.0, "MAY_ALIAS")];
+        const KNOWN: &[(Flags, &str)] = &[
+            (AttachmentDescriptionFlags::MAY_ALIAS.0, "MAY_ALIAS"),
+            (
+                AttachmentDescriptionFlags::RESOLVE_SKIP_TRANSFER_FUNCTION_KHR.0,
+                "RESOLVE_SKIP_TRANSFER_FUNCTION_KHR",
+            ),
+            (
+                AttachmentDescriptionFlags::RESOLVE_ENABLE_TRANSFER_FUNCTION_KHR.0,
+                "RESOLVE_ENABLE_TRANSFER_FUNCTION_KHR",
+            ),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -379,7 +431,7 @@ impl fmt::Debug for AttachmentLoadOp {
             Self::LOAD => Some("LOAD"),
             Self::CLEAR => Some("CLEAR"),
             Self::DONT_CARE => Some("DONT_CARE"),
-            Self::NONE_KHR => Some("NONE_KHR"),
+            Self::NONE => Some("NONE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -613,6 +665,10 @@ impl fmt::Debug for BufferUsageFlags {
                 "EXECUTION_GRAPH_SCRATCH_AMDX",
             ),
             (
+                BufferUsageFlags::DESCRIPTOR_HEAP_EXT.0,
+                "DESCRIPTOR_HEAP_EXT",
+            ),
+            (
                 BufferUsageFlags::ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_KHR.0,
                 "ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_KHR",
             ),
@@ -652,6 +708,7 @@ impl fmt::Debug for BufferUsageFlags {
                 BufferUsageFlags::MICROMAP_STORAGE_EXT.0,
                 "MICROMAP_STORAGE_EXT",
             ),
+            (BufferUsageFlags::TILE_MEMORY_QCOM.0, "TILE_MEMORY_QCOM"),
             (
                 BufferUsageFlags::SHADER_DEVICE_ADDRESS.0,
                 "SHADER_DEVICE_ADDRESS",
@@ -660,83 +717,112 @@ impl fmt::Debug for BufferUsageFlags {
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for BufferUsageFlags2KHR {
+impl fmt::Debug for BufferUsageFlags2 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags64, &str)] = &[
-            (BufferUsageFlags2KHR::TRANSFER_SRC.0, "TRANSFER_SRC"),
-            (BufferUsageFlags2KHR::TRANSFER_DST.0, "TRANSFER_DST"),
+            (BufferUsageFlags2::TRANSFER_SRC.0, "TRANSFER_SRC"),
+            (BufferUsageFlags2::TRANSFER_DST.0, "TRANSFER_DST"),
             (
-                BufferUsageFlags2KHR::UNIFORM_TEXEL_BUFFER.0,
+                BufferUsageFlags2::UNIFORM_TEXEL_BUFFER.0,
                 "UNIFORM_TEXEL_BUFFER",
             ),
             (
-                BufferUsageFlags2KHR::STORAGE_TEXEL_BUFFER.0,
+                BufferUsageFlags2::STORAGE_TEXEL_BUFFER.0,
                 "STORAGE_TEXEL_BUFFER",
             ),
-            (BufferUsageFlags2KHR::UNIFORM_BUFFER.0, "UNIFORM_BUFFER"),
-            (BufferUsageFlags2KHR::STORAGE_BUFFER.0, "STORAGE_BUFFER"),
-            (BufferUsageFlags2KHR::INDEX_BUFFER.0, "INDEX_BUFFER"),
-            (BufferUsageFlags2KHR::VERTEX_BUFFER.0, "VERTEX_BUFFER"),
-            (BufferUsageFlags2KHR::INDIRECT_BUFFER.0, "INDIRECT_BUFFER"),
+            (BufferUsageFlags2::UNIFORM_BUFFER.0, "UNIFORM_BUFFER"),
+            (BufferUsageFlags2::STORAGE_BUFFER.0, "STORAGE_BUFFER"),
+            (BufferUsageFlags2::INDEX_BUFFER.0, "INDEX_BUFFER"),
+            (BufferUsageFlags2::VERTEX_BUFFER.0, "VERTEX_BUFFER"),
+            (BufferUsageFlags2::INDIRECT_BUFFER.0, "INDIRECT_BUFFER"),
             (
-                BufferUsageFlags2KHR::EXECUTION_GRAPH_SCRATCH_AMDX.0,
+                BufferUsageFlags2::EXECUTION_GRAPH_SCRATCH_AMDX.0,
                 "EXECUTION_GRAPH_SCRATCH_AMDX",
             ),
             (
-                BufferUsageFlags2KHR::CONDITIONAL_RENDERING_EXT.0,
+                BufferUsageFlags2::DESCRIPTOR_HEAP_EXT.0,
+                "DESCRIPTOR_HEAP_EXT",
+            ),
+            (
+                BufferUsageFlags2::CONDITIONAL_RENDERING_EXT.0,
                 "CONDITIONAL_RENDERING_EXT",
             ),
             (
-                BufferUsageFlags2KHR::SHADER_BINDING_TABLE.0,
-                "SHADER_BINDING_TABLE",
+                BufferUsageFlags2::SHADER_BINDING_TABLE_KHR.0,
+                "SHADER_BINDING_TABLE_KHR",
             ),
             (
-                BufferUsageFlags2KHR::TRANSFORM_FEEDBACK_BUFFER_EXT.0,
+                BufferUsageFlags2::TRANSFORM_FEEDBACK_BUFFER_EXT.0,
                 "TRANSFORM_FEEDBACK_BUFFER_EXT",
             ),
             (
-                BufferUsageFlags2KHR::TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT.0,
+                BufferUsageFlags2::TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT.0,
                 "TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT",
             ),
-            (BufferUsageFlags2KHR::VIDEO_DECODE_SRC.0, "VIDEO_DECODE_SRC"),
-            (BufferUsageFlags2KHR::VIDEO_DECODE_DST.0, "VIDEO_DECODE_DST"),
-            (BufferUsageFlags2KHR::VIDEO_ENCODE_DST.0, "VIDEO_ENCODE_DST"),
-            (BufferUsageFlags2KHR::VIDEO_ENCODE_SRC.0, "VIDEO_ENCODE_SRC"),
             (
-                BufferUsageFlags2KHR::SHADER_DEVICE_ADDRESS.0,
-                "SHADER_DEVICE_ADDRESS",
+                BufferUsageFlags2::VIDEO_DECODE_SRC_KHR.0,
+                "VIDEO_DECODE_SRC_KHR",
             ),
             (
-                BufferUsageFlags2KHR::ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY.0,
-                "ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY",
+                BufferUsageFlags2::VIDEO_DECODE_DST_KHR.0,
+                "VIDEO_DECODE_DST_KHR",
             ),
             (
-                BufferUsageFlags2KHR::ACCELERATION_STRUCTURE_STORAGE.0,
-                "ACCELERATION_STRUCTURE_STORAGE",
+                BufferUsageFlags2::VIDEO_ENCODE_DST_KHR.0,
+                "VIDEO_ENCODE_DST_KHR",
             ),
             (
-                BufferUsageFlags2KHR::SAMPLER_DESCRIPTOR_BUFFER_EXT.0,
+                BufferUsageFlags2::VIDEO_ENCODE_SRC_KHR.0,
+                "VIDEO_ENCODE_SRC_KHR",
+            ),
+            (
+                BufferUsageFlags2::ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_KHR.0,
+                "ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_KHR",
+            ),
+            (
+                BufferUsageFlags2::ACCELERATION_STRUCTURE_STORAGE_KHR.0,
+                "ACCELERATION_STRUCTURE_STORAGE_KHR",
+            ),
+            (
+                BufferUsageFlags2::SAMPLER_DESCRIPTOR_BUFFER_EXT.0,
                 "SAMPLER_DESCRIPTOR_BUFFER_EXT",
             ),
             (
-                BufferUsageFlags2KHR::RESOURCE_DESCRIPTOR_BUFFER_EXT.0,
+                BufferUsageFlags2::RESOURCE_DESCRIPTOR_BUFFER_EXT.0,
                 "RESOURCE_DESCRIPTOR_BUFFER_EXT",
             ),
             (
-                BufferUsageFlags2KHR::PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER_EXT.0,
+                BufferUsageFlags2::PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER_EXT.0,
                 "PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER_EXT",
             ),
             (
-                BufferUsageFlags2KHR::MICROMAP_BUILD_INPUT_READ_ONLY_EXT.0,
+                BufferUsageFlags2::MICROMAP_BUILD_INPUT_READ_ONLY_EXT.0,
                 "MICROMAP_BUILD_INPUT_READ_ONLY_EXT",
             ),
             (
-                BufferUsageFlags2KHR::MICROMAP_STORAGE_EXT.0,
+                BufferUsageFlags2::MICROMAP_STORAGE_EXT.0,
                 "MICROMAP_STORAGE_EXT",
             ),
             (
-                BufferUsageFlags2KHR::PREPROCESS_BUFFER_EXT.0,
+                BufferUsageFlags2::COMPRESSED_DATA_DGF1_AMDX.0,
+                "COMPRESSED_DATA_DGF1_AMDX",
+            ),
+            (
+                BufferUsageFlags2::DATA_GRAPH_FOREIGN_DESCRIPTOR_ARM.0,
+                "DATA_GRAPH_FOREIGN_DESCRIPTOR_ARM",
+            ),
+            (BufferUsageFlags2::TILE_MEMORY_QCOM.0, "TILE_MEMORY_QCOM"),
+            (
+                BufferUsageFlags2::MEMORY_DECOMPRESSION_EXT.0,
+                "MEMORY_DECOMPRESSION_EXT",
+            ),
+            (
+                BufferUsageFlags2::PREPROCESS_BUFFER_EXT.0,
                 "PREPROCESS_BUFFER_EXT",
+            ),
+            (
+                BufferUsageFlags2::SHADER_DEVICE_ADDRESS.0,
+                "SHADER_DEVICE_ADDRESS",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -791,6 +877,10 @@ impl fmt::Debug for BuildAccelerationStructureFlagsKHR {
             (
                 BuildAccelerationStructureFlagsKHR::ALLOW_DATA_ACCESS.0,
                 "ALLOW_DATA_ACCESS",
+            ),
+            (
+                BuildAccelerationStructureFlagsKHR::ALLOW_CLUSTER_OPACITY_MICROMAPS_NV.0,
+                "ALLOW_CLUSTER_OPACITY_MICROMAPS_NV",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -847,6 +937,138 @@ impl fmt::Debug for ChromaLocation {
         let name = match *self {
             Self::COSITED_EVEN => Some("COSITED_EVEN"),
             Self::MIDPOINT => Some("MIDPOINT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for ClusterAccelerationStructureAddressResolutionFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ClusterAccelerationStructureAddressResolutionFlagsNV::NONE.0,
+                "NONE",
+            ),
+            (
+                ClusterAccelerationStructureAddressResolutionFlagsNV::INDIRECTED_DST_IMPLICIT_DATA
+                    .0,
+                "INDIRECTED_DST_IMPLICIT_DATA",
+            ),
+            (
+                ClusterAccelerationStructureAddressResolutionFlagsNV::INDIRECTED_SCRATCH_DATA.0,
+                "INDIRECTED_SCRATCH_DATA",
+            ),
+            (
+                ClusterAccelerationStructureAddressResolutionFlagsNV::INDIRECTED_DST_ADDRESS_ARRAY
+                    .0,
+                "INDIRECTED_DST_ADDRESS_ARRAY",
+            ),
+            (
+                ClusterAccelerationStructureAddressResolutionFlagsNV::INDIRECTED_DST_SIZES_ARRAY.0,
+                "INDIRECTED_DST_SIZES_ARRAY",
+            ),
+            (
+                ClusterAccelerationStructureAddressResolutionFlagsNV::INDIRECTED_SRC_INFOS_ARRAY.0,
+                "INDIRECTED_SRC_INFOS_ARRAY",
+            ),
+            (
+                ClusterAccelerationStructureAddressResolutionFlagsNV::INDIRECTED_SRC_INFOS_COUNT.0,
+                "INDIRECTED_SRC_INFOS_COUNT",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ClusterAccelerationStructureClusterFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            ClusterAccelerationStructureClusterFlagsNV::ALLOW_DISABLE_OPACITY_MICROMAPS.0,
+            "ALLOW_DISABLE_OPACITY_MICROMAPS",
+        )];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ClusterAccelerationStructureGeometryFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ClusterAccelerationStructureGeometryFlagsNV::CULL_DISABLE.0,
+                "CULL_DISABLE",
+            ),
+            (
+                ClusterAccelerationStructureGeometryFlagsNV::NO_DUPLICATE_ANYHIT_INVOCATION.0,
+                "NO_DUPLICATE_ANYHIT_INVOCATION",
+            ),
+            (
+                ClusterAccelerationStructureGeometryFlagsNV::OPAQUE.0,
+                "OPAQUE",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ClusterAccelerationStructureIndexFormatFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ClusterAccelerationStructureIndexFormatFlagsNV::TYPE_8BIT.0,
+                "TYPE_8BIT",
+            ),
+            (
+                ClusterAccelerationStructureIndexFormatFlagsNV::TYPE_16BIT.0,
+                "TYPE_16BIT",
+            ),
+            (
+                ClusterAccelerationStructureIndexFormatFlagsNV::TYPE_32BIT.0,
+                "TYPE_32BIT",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ClusterAccelerationStructureOpModeNV {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::IMPLICIT_DESTINATIONS => Some("IMPLICIT_DESTINATIONS"),
+            Self::EXPLICIT_DESTINATIONS => Some("EXPLICIT_DESTINATIONS"),
+            Self::COMPUTE_SIZES => Some("COMPUTE_SIZES"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for ClusterAccelerationStructureOpTypeNV {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::MOVE_OBJECTS => Some("MOVE_OBJECTS"),
+            Self::BUILD_CLUSTERS_BOTTOM_LEVEL => Some("BUILD_CLUSTERS_BOTTOM_LEVEL"),
+            Self::BUILD_TRIANGLE_CLUSTER => Some("BUILD_TRIANGLE_CLUSTER"),
+            Self::BUILD_TRIANGLE_CLUSTER_TEMPLATE => Some("BUILD_TRIANGLE_CLUSTER_TEMPLATE"),
+            Self::INSTANTIATE_TRIANGLE_CLUSTER => Some("INSTANTIATE_TRIANGLE_CLUSTER"),
+            Self::GET_CLUSTER_TEMPLATE_INDICES => Some("GET_CLUSTER_TEMPLATE_INDICES"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for ClusterAccelerationStructureTypeNV {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::CLUSTERS_BOTTOM_LEVEL => Some("CLUSTERS_BOTTOM_LEVEL"),
+            Self::TRIANGLE_CLUSTER => Some("TRIANGLE_CLUSTER"),
+            Self::TRIANGLE_CLUSTER_TEMPLATE => Some("TRIANGLE_CLUSTER_TEMPLATE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -1035,6 +1257,11 @@ impl fmt::Debug for ComponentTypeKHR {
             Self::UINT16 => Some("UINT16"),
             Self::UINT32 => Some("UINT32"),
             Self::UINT64 => Some("UINT64"),
+            Self::BFLOAT16 => Some("BFLOAT16"),
+            Self::SINT8_PACKED_NV => Some("SINT8_PACKED_NV"),
+            Self::UINT8_PACKED_NV => Some("UINT8_PACKED_NV"),
+            Self::FLOAT8_E4M3_EXT => Some("FLOAT8_E4M3_EXT"),
+            Self::FLOAT8_E5M2_EXT => Some("FLOAT8_E5M2_EXT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -1055,6 +1282,19 @@ impl fmt::Debug for CompositeAlphaFlagsKHR {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for CompressedTriangleFormatAMDX {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::DGF1 => Some("DGF1"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for ConditionalRenderingFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(ConditionalRenderingFlagsEXT::INVERTED.0, "INVERTED")];
@@ -1067,6 +1307,22 @@ impl fmt::Debug for ConservativeRasterizationModeEXT {
             Self::DISABLED => Some("DISABLED"),
             Self::OVERESTIMATE => Some("OVERESTIMATE"),
             Self::UNDERESTIMATE => Some("UNDERESTIMATE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for CooperativeVectorMatrixLayoutNV {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::ROW_MAJOR => Some("ROW_MAJOR"),
+            Self::COLUMN_MAJOR => Some("COLUMN_MAJOR"),
+            Self::INFERENCING_OPTIMAL => Some("INFERENCING_OPTIMAL"),
+            Self::TRAINING_OPTIMAL => Some("TRAINING_OPTIMAL"),
             _ => None,
         };
         if let Some(x) = name {
@@ -1162,6 +1418,74 @@ impl fmt::Debug for CullModeFlags {
             (CullModeFlags::BACK.0, "BACK"),
             (CullModeFlags::FRONT_AND_BACK.0, "FRONT_AND_BACK"),
         ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for DataGraphModelCacheTypeQCOM {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::GENERIC_BINARY => Some("GENERIC_BINARY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for DataGraphPipelineDispatchFlagsARM {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags64, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for DataGraphPipelinePropertyARM {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::CREATION_LOG => Some("CREATION_LOG"),
+            Self::IDENTIFIER => Some("IDENTIFIER"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for DataGraphPipelineSessionBindPointARM {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::TRANSIENT => Some("TRANSIENT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for DataGraphPipelineSessionBindPointTypeARM {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::MEMORY => Some("MEMORY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for DataGraphPipelineSessionCreateFlagsARM {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags64, &str)] = &[(
+            DataGraphPipelineSessionCreateFlagsARM::PROTECTED.0,
+            "PROTECTED",
+        )];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -1270,11 +1594,33 @@ impl fmt::Debug for DebugUtilsMessengerCreateFlagsEXT {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for DefaultVertexAttributeValueKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::ZERO_ZERO_ZERO_ZERO => Some("ZERO_ZERO_ZERO_ZERO"),
+            Self::ZERO_ZERO_ZERO_ONE => Some("ZERO_ZERO_ZERO_ONE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for DependencyFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (DependencyFlags::BY_REGION.0, "BY_REGION"),
             (DependencyFlags::FEEDBACK_LOOP_EXT.0, "FEEDBACK_LOOP_EXT"),
+            (
+                DependencyFlags::QUEUE_FAMILY_OWNERSHIP_TRANSFER_USE_ALL_STAGES_KHR.0,
+                "QUEUE_FAMILY_OWNERSHIP_TRANSFER_USE_ALL_STAGES_KHR",
+            ),
+            (
+                DependencyFlags::ASYMMETRIC_EVENT_KHR.0,
+                "ASYMMETRIC_EVENT_KHR",
+            ),
             (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
             (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
         ];
@@ -1332,6 +1678,29 @@ impl fmt::Debug for DescriptorBindingFlags {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for DescriptorMappingSourceEXT {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::HEAP_WITH_CONSTANT_OFFSET => Some("HEAP_WITH_CONSTANT_OFFSET"),
+            Self::HEAP_WITH_PUSH_INDEX => Some("HEAP_WITH_PUSH_INDEX"),
+            Self::HEAP_WITH_INDIRECT_INDEX => Some("HEAP_WITH_INDIRECT_INDEX"),
+            Self::HEAP_WITH_INDIRECT_INDEX_ARRAY => Some("HEAP_WITH_INDIRECT_INDEX_ARRAY"),
+            Self::RESOURCE_HEAP_DATA => Some("RESOURCE_HEAP_DATA"),
+            Self::PUSH_DATA => Some("PUSH_DATA"),
+            Self::PUSH_ADDRESS => Some("PUSH_ADDRESS"),
+            Self::INDIRECT_ADDRESS => Some("INDIRECT_ADDRESS"),
+            Self::HEAP_WITH_SHADER_RECORD_INDEX => Some("HEAP_WITH_SHADER_RECORD_INDEX"),
+            Self::SHADER_RECORD_DATA => Some("SHADER_RECORD_DATA"),
+            Self::SHADER_RECORD_ADDRESS => Some("SHADER_RECORD_ADDRESS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for DescriptorPoolCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -1366,10 +1735,6 @@ impl fmt::Debug for DescriptorSetLayoutCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
-                "PUSH_DESCRIPTOR_KHR",
-            ),
-            (
                 DescriptorSetLayoutCreateFlags::DESCRIPTOR_BUFFER_EXT.0,
                 "DESCRIPTOR_BUFFER_EXT",
             ),
@@ -1393,6 +1758,10 @@ impl fmt::Debug for DescriptorSetLayoutCreateFlags {
                 DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL.0,
                 "UPDATE_AFTER_BIND_POOL",
             ),
+            (
+                DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR.0,
+                "PUSH_DESCRIPTOR",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -1415,7 +1784,11 @@ impl fmt::Debug for DescriptorType {
             Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
             Self::SAMPLE_WEIGHT_IMAGE_QCOM => Some("SAMPLE_WEIGHT_IMAGE_QCOM"),
             Self::BLOCK_MATCH_IMAGE_QCOM => Some("BLOCK_MATCH_IMAGE_QCOM"),
+            Self::TENSOR_ARM => Some("TENSOR_ARM"),
             Self::MUTABLE_EXT => Some("MUTABLE_EXT"),
+            Self::PARTITIONED_ACCELERATION_STRUCTURE_NV => {
+                Some("PARTITIONED_ACCELERATION_STRUCTURE_NV")
+            }
             Self::INLINE_UNIFORM_BLOCK => Some("INLINE_UNIFORM_BLOCK"),
             _ => None,
         };
@@ -1436,7 +1809,7 @@ impl fmt::Debug for DescriptorUpdateTemplateType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
             Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::PUSH_DESCRIPTORS_KHR => Some("PUSH_DESCRIPTORS_KHR"),
+            Self::PUSH_DESCRIPTORS => Some("PUSH_DESCRIPTORS"),
             _ => None,
         };
         if let Some(x) = name {
@@ -1582,7 +1955,13 @@ impl fmt::Debug for DeviceMemoryReportFlagsEXT {
 }
 impl fmt::Debug for DeviceQueueCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(DeviceQueueCreateFlags::PROTECTED.0, "PROTECTED")];
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                DeviceQueueCreateFlags::INTERNALLY_SYNCHRONIZED_KHR.0,
+                "INTERNALLY_SYNCHRONIZED_KHR",
+            ),
+            (DeviceQueueCreateFlags::PROTECTED.0, "PROTECTED"),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -1695,6 +2074,22 @@ impl fmt::Debug for DisplaySurfaceCreateFlagsKHR {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for DisplaySurfaceStereoTypeNV {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::NONE => Some("NONE"),
+            Self::ONBOARD_DIN => Some("ONBOARD_DIN"),
+            Self::HDMI_3D => Some("HDMI_3D"),
+            Self::INBAND_DISPLAYPORT => Some("INBAND_DISPLAYPORT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for DriverId {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
@@ -1724,7 +2119,8 @@ impl fmt::Debug for DriverId {
             Self::MESA_NVK => Some("MESA_NVK"),
             Self::IMAGINATION_OPEN_SOURCE_MESA => Some("IMAGINATION_OPEN_SOURCE_MESA"),
             Self::MESA_HONEYKRISP => Some("MESA_HONEYKRISP"),
-            Self::RESERVED_27 => Some("RESERVED_27"),
+            Self::VULKAN_SC_EMULATION_ON_VULKAN => Some("VULKAN_SC_EMULATION_ON_VULKAN"),
+            Self::MESA_KOSMICKRISP => Some("MESA_KOSMICKRISP"),
             _ => None,
         };
         if let Some(x) = name {
@@ -1805,7 +2201,6 @@ impl fmt::Debug for DynamicState {
             Self::ATTACHMENT_FEEDBACK_LOOP_ENABLE_EXT => {
                 Some("ATTACHMENT_FEEDBACK_LOOP_ENABLE_EXT")
             }
-            Self::LINE_STIPPLE_KHR => Some("LINE_STIPPLE_KHR"),
             Self::DEPTH_CLAMP_RANGE_EXT => Some("DEPTH_CLAMP_RANGE_EXT"),
             Self::CULL_MODE => Some("CULL_MODE"),
             Self::FRONT_FACE => Some("FRONT_FACE"),
@@ -1822,6 +2217,7 @@ impl fmt::Debug for DynamicState {
             Self::RASTERIZER_DISCARD_ENABLE => Some("RASTERIZER_DISCARD_ENABLE"),
             Self::DEPTH_BIAS_ENABLE => Some("DEPTH_BIAS_ENABLE"),
             Self::PRIMITIVE_RESTART_ENABLE => Some("PRIMITIVE_RESTART_ENABLE"),
+            Self::LINE_STIPPLE => Some("LINE_STIPPLE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -1964,9 +2360,22 @@ impl fmt::Debug for ExternalMemoryHandleTypeFlags {
                 "RDMA_ADDRESS_NV",
             ),
             (
+                ExternalMemoryHandleTypeFlags::OH_NATIVE_BUFFER_OHOS.0,
+                "OH_NATIVE_BUFFER_OHOS",
+            ),
+            (
                 ExternalMemoryHandleTypeFlags::SCREEN_BUFFER_QNX.0,
                 "SCREEN_BUFFER_QNX",
             ),
+            (
+                ExternalMemoryHandleTypeFlags::MTLBUFFER_EXT.0,
+                "MTLBUFFER_EXT",
+            ),
+            (
+                ExternalMemoryHandleTypeFlags::MTLTEXTURE_EXT.0,
+                "MTLTEXTURE_EXT",
+            ),
+            (ExternalMemoryHandleTypeFlags::MTLHEAP_EXT.0, "MTLHEAP_EXT"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -2251,9 +2660,64 @@ impl fmt::Debug for Format {
             Self::PVRTC1_4BPP_SRGB_BLOCK_IMG => Some("PVRTC1_4BPP_SRGB_BLOCK_IMG"),
             Self::PVRTC2_2BPP_SRGB_BLOCK_IMG => Some("PVRTC2_2BPP_SRGB_BLOCK_IMG"),
             Self::PVRTC2_4BPP_SRGB_BLOCK_IMG => Some("PVRTC2_4BPP_SRGB_BLOCK_IMG"),
+            Self::ASTC_3X3X3_UNORM_BLOCK_EXT => Some("ASTC_3X3X3_UNORM_BLOCK_EXT"),
+            Self::ASTC_3X3X3_SRGB_BLOCK_EXT => Some("ASTC_3X3X3_SRGB_BLOCK_EXT"),
+            Self::ASTC_3X3X3_SFLOAT_BLOCK_EXT => Some("ASTC_3X3X3_SFLOAT_BLOCK_EXT"),
+            Self::ASTC_4X3X3_UNORM_BLOCK_EXT => Some("ASTC_4X3X3_UNORM_BLOCK_EXT"),
+            Self::ASTC_4X3X3_SRGB_BLOCK_EXT => Some("ASTC_4X3X3_SRGB_BLOCK_EXT"),
+            Self::ASTC_4X3X3_SFLOAT_BLOCK_EXT => Some("ASTC_4X3X3_SFLOAT_BLOCK_EXT"),
+            Self::ASTC_4X4X3_UNORM_BLOCK_EXT => Some("ASTC_4X4X3_UNORM_BLOCK_EXT"),
+            Self::ASTC_4X4X3_SRGB_BLOCK_EXT => Some("ASTC_4X4X3_SRGB_BLOCK_EXT"),
+            Self::ASTC_4X4X3_SFLOAT_BLOCK_EXT => Some("ASTC_4X4X3_SFLOAT_BLOCK_EXT"),
+            Self::ASTC_4X4X4_UNORM_BLOCK_EXT => Some("ASTC_4X4X4_UNORM_BLOCK_EXT"),
+            Self::ASTC_4X4X4_SRGB_BLOCK_EXT => Some("ASTC_4X4X4_SRGB_BLOCK_EXT"),
+            Self::ASTC_4X4X4_SFLOAT_BLOCK_EXT => Some("ASTC_4X4X4_SFLOAT_BLOCK_EXT"),
+            Self::ASTC_5X4X4_UNORM_BLOCK_EXT => Some("ASTC_5X4X4_UNORM_BLOCK_EXT"),
+            Self::ASTC_5X4X4_SRGB_BLOCK_EXT => Some("ASTC_5X4X4_SRGB_BLOCK_EXT"),
+            Self::ASTC_5X4X4_SFLOAT_BLOCK_EXT => Some("ASTC_5X4X4_SFLOAT_BLOCK_EXT"),
+            Self::ASTC_5X5X4_UNORM_BLOCK_EXT => Some("ASTC_5X5X4_UNORM_BLOCK_EXT"),
+            Self::ASTC_5X5X4_SRGB_BLOCK_EXT => Some("ASTC_5X5X4_SRGB_BLOCK_EXT"),
+            Self::ASTC_5X5X4_SFLOAT_BLOCK_EXT => Some("ASTC_5X5X4_SFLOAT_BLOCK_EXT"),
+            Self::ASTC_5X5X5_UNORM_BLOCK_EXT => Some("ASTC_5X5X5_UNORM_BLOCK_EXT"),
+            Self::ASTC_5X5X5_SRGB_BLOCK_EXT => Some("ASTC_5X5X5_SRGB_BLOCK_EXT"),
+            Self::ASTC_5X5X5_SFLOAT_BLOCK_EXT => Some("ASTC_5X5X5_SFLOAT_BLOCK_EXT"),
+            Self::ASTC_6X5X5_UNORM_BLOCK_EXT => Some("ASTC_6X5X5_UNORM_BLOCK_EXT"),
+            Self::ASTC_6X5X5_SRGB_BLOCK_EXT => Some("ASTC_6X5X5_SRGB_BLOCK_EXT"),
+            Self::ASTC_6X5X5_SFLOAT_BLOCK_EXT => Some("ASTC_6X5X5_SFLOAT_BLOCK_EXT"),
+            Self::ASTC_6X6X5_UNORM_BLOCK_EXT => Some("ASTC_6X6X5_UNORM_BLOCK_EXT"),
+            Self::ASTC_6X6X5_SRGB_BLOCK_EXT => Some("ASTC_6X6X5_SRGB_BLOCK_EXT"),
+            Self::ASTC_6X6X5_SFLOAT_BLOCK_EXT => Some("ASTC_6X6X5_SFLOAT_BLOCK_EXT"),
+            Self::ASTC_6X6X6_UNORM_BLOCK_EXT => Some("ASTC_6X6X6_UNORM_BLOCK_EXT"),
+            Self::ASTC_6X6X6_SRGB_BLOCK_EXT => Some("ASTC_6X6X6_SRGB_BLOCK_EXT"),
+            Self::ASTC_6X6X6_SFLOAT_BLOCK_EXT => Some("ASTC_6X6X6_SFLOAT_BLOCK_EXT"),
+            Self::R8_BOOL_ARM => Some("R8_BOOL_ARM"),
             Self::R16G16_SFIXED5_NV => Some("R16G16_SFIXED5_NV"),
-            Self::A1B5G5R5_UNORM_PACK16_KHR => Some("A1B5G5R5_UNORM_PACK16_KHR"),
-            Self::A8_UNORM_KHR => Some("A8_UNORM_KHR"),
+            Self::R10X6_UINT_PACK16_ARM => Some("R10X6_UINT_PACK16_ARM"),
+            Self::R10X6G10X6_UINT_2PACK16_ARM => Some("R10X6G10X6_UINT_2PACK16_ARM"),
+            Self::R10X6G10X6B10X6A10X6_UINT_4PACK16_ARM => {
+                Some("R10X6G10X6B10X6A10X6_UINT_4PACK16_ARM")
+            }
+            Self::R12X4_UINT_PACK16_ARM => Some("R12X4_UINT_PACK16_ARM"),
+            Self::R12X4G12X4_UINT_2PACK16_ARM => Some("R12X4G12X4_UINT_2PACK16_ARM"),
+            Self::R12X4G12X4B12X4A12X4_UINT_4PACK16_ARM => {
+                Some("R12X4G12X4B12X4A12X4_UINT_4PACK16_ARM")
+            }
+            Self::R14X2_UINT_PACK16_ARM => Some("R14X2_UINT_PACK16_ARM"),
+            Self::R14X2G14X2_UINT_2PACK16_ARM => Some("R14X2G14X2_UINT_2PACK16_ARM"),
+            Self::R14X2G14X2B14X2A14X2_UINT_4PACK16_ARM => {
+                Some("R14X2G14X2B14X2A14X2_UINT_4PACK16_ARM")
+            }
+            Self::R14X2_UNORM_PACK16_ARM => Some("R14X2_UNORM_PACK16_ARM"),
+            Self::R14X2G14X2_UNORM_2PACK16_ARM => Some("R14X2G14X2_UNORM_2PACK16_ARM"),
+            Self::R14X2G14X2B14X2A14X2_UNORM_4PACK16_ARM => {
+                Some("R14X2G14X2B14X2A14X2_UNORM_4PACK16_ARM")
+            }
+            Self::G14X2_B14X2R14X2_2PLANE_420_UNORM_3PACK16_ARM => {
+                Some("G14X2_B14X2R14X2_2PLANE_420_UNORM_3PACK16_ARM")
+            }
+            Self::G14X2_B14X2R14X2_2PLANE_422_UNORM_3PACK16_ARM => {
+                Some("G14X2_B14X2R14X2_2PLANE_422_UNORM_3PACK16_ARM")
+            }
             Self::G8B8G8R8_422_UNORM => Some("G8B8G8R8_422_UNORM"),
             Self::B8G8R8G8_422_UNORM => Some("B8G8R8G8_422_UNORM"),
             Self::G8_B8_R8_3PLANE_420_UNORM => Some("G8_B8_R8_3PLANE_420_UNORM"),
@@ -2340,6 +2804,8 @@ impl fmt::Debug for Format {
             Self::ASTC_10X10_SFLOAT_BLOCK => Some("ASTC_10X10_SFLOAT_BLOCK"),
             Self::ASTC_12X10_SFLOAT_BLOCK => Some("ASTC_12X10_SFLOAT_BLOCK"),
             Self::ASTC_12X12_SFLOAT_BLOCK => Some("ASTC_12X12_SFLOAT_BLOCK"),
+            Self::A1B5G5R5_UNORM_PACK16 => Some("A1B5G5R5_UNORM_PACK16"),
+            Self::A8_UNORM => Some("A8_UNORM"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2357,7 +2823,7 @@ impl fmt::Debug for FormatFeatureFlags {
 }
 impl fmt::Debug for FormatFeatureFlags2 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN : & [(Flags64 , & str)] = & [(FormatFeatureFlags2 :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE") , (FormatFeatureFlags2 :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE") , (FormatFeatureFlags2 :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC") , (FormatFeatureFlags2 :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER") , (FormatFeatureFlags2 :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER") , (FormatFeatureFlags2 :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC") , (FormatFeatureFlags2 :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER") , (FormatFeatureFlags2 :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT") , (FormatFeatureFlags2 :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND") , (FormatFeatureFlags2 :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT") , (FormatFeatureFlags2 :: BLIT_SRC . 0 , "BLIT_SRC") , (FormatFeatureFlags2 :: BLIT_DST . 0 , "BLIT_DST") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_CUBIC . 0 , "SAMPLED_IMAGE_FILTER_CUBIC") , (FormatFeatureFlags2 :: TRANSFER_SRC . 0 , "TRANSFER_SRC") , (FormatFeatureFlags2 :: TRANSFER_DST . 0 , "TRANSFER_DST") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_MINMAX . 0 , "SAMPLED_IMAGE_FILTER_MINMAX") , (FormatFeatureFlags2 :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE") , (FormatFeatureFlags2 :: DISJOINT . 0 , "DISJOINT") , (FormatFeatureFlags2 :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES") , (FormatFeatureFlags2 :: STORAGE_READ_WITHOUT_FORMAT . 0 , "STORAGE_READ_WITHOUT_FORMAT") , (FormatFeatureFlags2 :: STORAGE_WRITE_WITHOUT_FORMAT . 0 , "STORAGE_WRITE_WITHOUT_FORMAT") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_DEPTH_COMPARISON . 0 , "SAMPLED_IMAGE_DEPTH_COMPARISON") , (FormatFeatureFlags2 :: VIDEO_DECODE_OUTPUT_KHR . 0 , "VIDEO_DECODE_OUTPUT_KHR") , (FormatFeatureFlags2 :: VIDEO_DECODE_DPB_KHR . 0 , "VIDEO_DECODE_DPB_KHR") , (FormatFeatureFlags2 :: ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR . 0 , "ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR") , (FormatFeatureFlags2 :: FRAGMENT_DENSITY_MAP_EXT . 0 , "FRAGMENT_DENSITY_MAP_EXT") , (FormatFeatureFlags2 :: FRAGMENT_SHADING_RATE_ATTACHMENT_KHR . 0 , "FRAGMENT_SHADING_RATE_ATTACHMENT_KHR") , (FormatFeatureFlags2 :: HOST_IMAGE_TRANSFER_EXT . 0 , "HOST_IMAGE_TRANSFER_EXT") , (FormatFeatureFlags2 :: VIDEO_ENCODE_INPUT_KHR . 0 , "VIDEO_ENCODE_INPUT_KHR") , (FormatFeatureFlags2 :: VIDEO_ENCODE_DPB_KHR . 0 , "VIDEO_ENCODE_DPB_KHR") , (FormatFeatureFlags2 :: LINEAR_COLOR_ATTACHMENT_NV . 0 , "LINEAR_COLOR_ATTACHMENT_NV") , (FormatFeatureFlags2 :: WEIGHT_IMAGE_QCOM . 0 , "WEIGHT_IMAGE_QCOM") , (FormatFeatureFlags2 :: WEIGHT_SAMPLED_IMAGE_QCOM . 0 , "WEIGHT_SAMPLED_IMAGE_QCOM") , (FormatFeatureFlags2 :: BLOCK_MATCHING_QCOM . 0 , "BLOCK_MATCHING_QCOM") , (FormatFeatureFlags2 :: BOX_FILTER_SAMPLED_QCOM . 0 , "BOX_FILTER_SAMPLED_QCOM") , (FormatFeatureFlags2 :: OPTICAL_FLOW_IMAGE_NV . 0 , "OPTICAL_FLOW_IMAGE_NV") , (FormatFeatureFlags2 :: OPTICAL_FLOW_VECTOR_NV . 0 , "OPTICAL_FLOW_VECTOR_NV") , (FormatFeatureFlags2 :: OPTICAL_FLOW_COST_NV . 0 , "OPTICAL_FLOW_COST_NV")] ;
+        const KNOWN : & [(Flags64 , & str)] = & [(FormatFeatureFlags2 :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE") , (FormatFeatureFlags2 :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE") , (FormatFeatureFlags2 :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC") , (FormatFeatureFlags2 :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER") , (FormatFeatureFlags2 :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER") , (FormatFeatureFlags2 :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC") , (FormatFeatureFlags2 :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER") , (FormatFeatureFlags2 :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT") , (FormatFeatureFlags2 :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND") , (FormatFeatureFlags2 :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT") , (FormatFeatureFlags2 :: BLIT_SRC . 0 , "BLIT_SRC") , (FormatFeatureFlags2 :: BLIT_DST . 0 , "BLIT_DST") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR") , (FormatFeatureFlags2 :: TRANSFER_SRC . 0 , "TRANSFER_SRC") , (FormatFeatureFlags2 :: TRANSFER_DST . 0 , "TRANSFER_DST") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_MINMAX . 0 , "SAMPLED_IMAGE_FILTER_MINMAX") , (FormatFeatureFlags2 :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE") , (FormatFeatureFlags2 :: DISJOINT . 0 , "DISJOINT") , (FormatFeatureFlags2 :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES") , (FormatFeatureFlags2 :: STORAGE_READ_WITHOUT_FORMAT . 0 , "STORAGE_READ_WITHOUT_FORMAT") , (FormatFeatureFlags2 :: STORAGE_WRITE_WITHOUT_FORMAT . 0 , "STORAGE_WRITE_WITHOUT_FORMAT") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_DEPTH_COMPARISON . 0 , "SAMPLED_IMAGE_DEPTH_COMPARISON") , (FormatFeatureFlags2 :: VIDEO_DECODE_OUTPUT_KHR . 0 , "VIDEO_DECODE_OUTPUT_KHR") , (FormatFeatureFlags2 :: VIDEO_DECODE_DPB_KHR . 0 , "VIDEO_DECODE_DPB_KHR") , (FormatFeatureFlags2 :: ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR . 0 , "ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR") , (FormatFeatureFlags2 :: FRAGMENT_DENSITY_MAP_EXT . 0 , "FRAGMENT_DENSITY_MAP_EXT") , (FormatFeatureFlags2 :: FRAGMENT_SHADING_RATE_ATTACHMENT_KHR . 0 , "FRAGMENT_SHADING_RATE_ATTACHMENT_KHR") , (FormatFeatureFlags2 :: VIDEO_ENCODE_INPUT_KHR . 0 , "VIDEO_ENCODE_INPUT_KHR") , (FormatFeatureFlags2 :: VIDEO_ENCODE_DPB_KHR . 0 , "VIDEO_ENCODE_DPB_KHR") , (FormatFeatureFlags2 :: ACCELERATION_STRUCTURE_RADIUS_BUFFER_NV . 0 , "ACCELERATION_STRUCTURE_RADIUS_BUFFER_NV") , (FormatFeatureFlags2 :: LINEAR_COLOR_ATTACHMENT_NV . 0 , "LINEAR_COLOR_ATTACHMENT_NV") , (FormatFeatureFlags2 :: WEIGHT_IMAGE_QCOM . 0 , "WEIGHT_IMAGE_QCOM") , (FormatFeatureFlags2 :: WEIGHT_SAMPLED_IMAGE_QCOM . 0 , "WEIGHT_SAMPLED_IMAGE_QCOM") , (FormatFeatureFlags2 :: BLOCK_MATCHING_QCOM . 0 , "BLOCK_MATCHING_QCOM") , (FormatFeatureFlags2 :: BOX_FILTER_SAMPLED_QCOM . 0 , "BOX_FILTER_SAMPLED_QCOM") , (FormatFeatureFlags2 :: TENSOR_SHADER_ARM . 0 , "TENSOR_SHADER_ARM") , (FormatFeatureFlags2 :: TENSOR_IMAGE_ALIASING_ARM . 0 , "TENSOR_IMAGE_ALIASING_ARM") , (FormatFeatureFlags2 :: OPTICAL_FLOW_IMAGE_NV . 0 , "OPTICAL_FLOW_IMAGE_NV") , (FormatFeatureFlags2 :: OPTICAL_FLOW_VECTOR_NV . 0 , "OPTICAL_FLOW_VECTOR_NV") , (FormatFeatureFlags2 :: OPTICAL_FLOW_COST_NV . 0 , "OPTICAL_FLOW_COST_NV") , (FormatFeatureFlags2 :: TENSOR_DATA_GRAPH_ARM . 0 , "TENSOR_DATA_GRAPH_ARM") , (FormatFeatureFlags2 :: COPY_IMAGE_INDIRECT_DST_KHR . 0 , "COPY_IMAGE_INDIRECT_DST_KHR") , (FormatFeatureFlags2 :: VIDEO_ENCODE_QUANTIZATION_DELTA_MAP_KHR . 0 , "VIDEO_ENCODE_QUANTIZATION_DELTA_MAP_KHR") , (FormatFeatureFlags2 :: VIDEO_ENCODE_EMPHASIS_MAP_KHR . 0 , "VIDEO_ENCODE_EMPHASIS_MAP_KHR") , (FormatFeatureFlags2 :: DEPTH_COPY_ON_COMPUTE_QUEUE_KHR . 0 , "DEPTH_COPY_ON_COMPUTE_QUEUE_KHR") , (FormatFeatureFlags2 :: DEPTH_COPY_ON_TRANSFER_QUEUE_KHR . 0 , "DEPTH_COPY_ON_TRANSFER_QUEUE_KHR") , (FormatFeatureFlags2 :: STENCIL_COPY_ON_COMPUTE_QUEUE_KHR . 0 , "STENCIL_COPY_ON_COMPUTE_QUEUE_KHR") , (FormatFeatureFlags2 :: STENCIL_COPY_ON_TRANSFER_QUEUE_KHR . 0 , "STENCIL_COPY_ON_TRANSFER_QUEUE_KHR") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_CUBIC . 0 , "SAMPLED_IMAGE_FILTER_CUBIC") , (FormatFeatureFlags2 :: HOST_IMAGE_TRANSFER . 0 , "HOST_IMAGE_TRANSFER")] ;
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -2504,6 +2970,11 @@ impl fmt::Debug for GeometryTypeKHR {
             Self::TRIANGLES => Some("TRIANGLES"),
             Self::AABBS => Some("AABBS"),
             Self::INSTANCES => Some("INSTANCES"),
+            Self::SPHERES_NV => Some("SPHERES_NV"),
+            Self::LINEAR_SWEPT_SPHERES_NV => Some("LINEAR_SWEPT_SPHERES_NV"),
+            Self::DENSE_GEOMETRY_FORMAT_TRIANGLES_AMDX => {
+                Some("DENSE_GEOMETRY_FORMAT_TRIANGLES_AMDX")
+            }
             _ => None,
         };
         if let Some(x) = name {
@@ -2542,9 +3013,9 @@ impl fmt::Debug for HeadlessSurfaceCreateFlagsEXT {
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for HostImageCopyFlagsEXT {
+impl fmt::Debug for HostImageCopyFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(HostImageCopyFlagsEXT::MEMCPY.0, "MEMCPY")];
+        const KNOWN: &[(Flags, &str)] = &[(HostImageCopyFlags::MEMCPY.0, "MEMCPY")];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -2704,14 +3175,14 @@ impl fmt::Debug for ImageCreateFlags {
             (ImageCreateFlags::CUBE_COMPATIBLE.0, "CUBE_COMPATIBLE"),
             (ImageCreateFlags::CORNER_SAMPLED_NV.0, "CORNER_SAMPLED_NV"),
             (
+                ImageCreateFlags::DESCRIPTOR_HEAP_CAPTURE_REPLAY_EXT.0,
+                "DESCRIPTOR_HEAP_CAPTURE_REPLAY_EXT",
+            ),
+            (
                 ImageCreateFlags::SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT.0,
                 "SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT",
             ),
             (ImageCreateFlags::SUBSAMPLED_EXT.0, "SUBSAMPLED_EXT"),
-            (
-                ImageCreateFlags::DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT.0,
-                "DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT",
-            ),
             (
                 ImageCreateFlags::MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_EXT.0,
                 "MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_EXT",
@@ -2721,12 +3192,12 @@ impl fmt::Debug for ImageCreateFlags {
                 "TYPE_2D_VIEW_COMPATIBLE_EXT",
             ),
             (
-                ImageCreateFlags::FRAGMENT_DENSITY_MAP_OFFSET_QCOM.0,
-                "FRAGMENT_DENSITY_MAP_OFFSET_QCOM",
-            ),
-            (
                 ImageCreateFlags::VIDEO_PROFILE_INDEPENDENT_KHR.0,
                 "VIDEO_PROFILE_INDEPENDENT_KHR",
+            ),
+            (
+                ImageCreateFlags::FRAGMENT_DENSITY_MAP_OFFSET_EXT.0,
+                "FRAGMENT_DENSITY_MAP_OFFSET_EXT",
             ),
             (ImageCreateFlags::ALIAS.0, "ALIAS"),
             (
@@ -2775,13 +3246,15 @@ impl fmt::Debug for ImageLayout {
             Self::FRAGMENT_SHADING_RATE_ATTACHMENT_OPTIMAL_KHR => {
                 Some("FRAGMENT_SHADING_RATE_ATTACHMENT_OPTIMAL_KHR")
             }
-            Self::RENDERING_LOCAL_READ_KHR => Some("RENDERING_LOCAL_READ_KHR"),
             Self::VIDEO_ENCODE_DST_KHR => Some("VIDEO_ENCODE_DST_KHR"),
             Self::VIDEO_ENCODE_SRC_KHR => Some("VIDEO_ENCODE_SRC_KHR"),
             Self::VIDEO_ENCODE_DPB_KHR => Some("VIDEO_ENCODE_DPB_KHR"),
             Self::ATTACHMENT_FEEDBACK_LOOP_OPTIMAL_EXT => {
                 Some("ATTACHMENT_FEEDBACK_LOOP_OPTIMAL_EXT")
             }
+            Self::TENSOR_ALIASING_ARM => Some("TENSOR_ALIASING_ARM"),
+            Self::VIDEO_ENCODE_QUANTIZATION_MAP_KHR => Some("VIDEO_ENCODE_QUANTIZATION_MAP_KHR"),
+            Self::ZERO_INITIALIZED_EXT => Some("ZERO_INITIALIZED_EXT"),
             Self::DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL => {
                 Some("DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL")
             }
@@ -2794,6 +3267,7 @@ impl fmt::Debug for ImageLayout {
             Self::STENCIL_READ_ONLY_OPTIMAL => Some("STENCIL_READ_ONLY_OPTIMAL"),
             Self::READ_ONLY_OPTIMAL => Some("READ_ONLY_OPTIMAL"),
             Self::ATTACHMENT_OPTIMAL => Some("ATTACHMENT_OPTIMAL"),
+            Self::RENDERING_LOCAL_READ => Some("RENDERING_LOCAL_READ"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2876,7 +3350,6 @@ impl fmt::Debug for ImageUsageFlags {
                 ImageUsageFlags::FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
                 "FRAGMENT_SHADING_RATE_ATTACHMENT_KHR",
             ),
-            (ImageUsageFlags::HOST_TRANSFER_EXT.0, "HOST_TRANSFER_EXT"),
             (
                 ImageUsageFlags::VIDEO_ENCODE_DST_KHR.0,
                 "VIDEO_ENCODE_DST_KHR",
@@ -2902,6 +3375,20 @@ impl fmt::Debug for ImageUsageFlags {
                 ImageUsageFlags::SAMPLE_BLOCK_MATCH_QCOM.0,
                 "SAMPLE_BLOCK_MATCH_QCOM",
             ),
+            (
+                ImageUsageFlags::TENSOR_ALIASING_ARM.0,
+                "TENSOR_ALIASING_ARM",
+            ),
+            (ImageUsageFlags::TILE_MEMORY_QCOM.0, "TILE_MEMORY_QCOM"),
+            (
+                ImageUsageFlags::VIDEO_ENCODE_QUANTIZATION_DELTA_MAP_KHR.0,
+                "VIDEO_ENCODE_QUANTIZATION_DELTA_MAP_KHR",
+            ),
+            (
+                ImageUsageFlags::VIDEO_ENCODE_EMPHASIS_MAP_KHR.0,
+                "VIDEO_ENCODE_EMPHASIS_MAP_KHR",
+            ),
+            (ImageUsageFlags::HOST_TRANSFER.0, "HOST_TRANSFER"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -2950,7 +3437,7 @@ impl fmt::Debug for IndexType {
             Self::UINT16 => Some("UINT16"),
             Self::UINT32 => Some("UINT32"),
             Self::NONE_KHR => Some("NONE_KHR"),
-            Self::UINT8_KHR => Some("UINT8_KHR"),
+            Self::UINT8 => Some("UINT8"),
             _ => None,
         };
         if let Some(x) = name {
@@ -3022,6 +3509,8 @@ impl fmt::Debug for IndirectCommandsTokenTypeEXT {
             Self::DRAW_INDEXED_COUNT => Some("DRAW_INDEXED_COUNT"),
             Self::DRAW_COUNT => Some("DRAW_COUNT"),
             Self::DISPATCH => Some("DISPATCH"),
+            Self::PUSH_DATA => Some("PUSH_DATA"),
+            Self::PUSH_DATA_SEQUENCE_INDEX => Some("PUSH_DATA_SEQUENCE_INDEX"),
             Self::DRAW_MESH_TASKS_NV => Some("DRAW_MESH_TASKS_NV"),
             Self::DRAW_MESH_TASKS_COUNT_NV => Some("DRAW_MESH_TASKS_COUNT_NV"),
             Self::DRAW_MESH_TASKS => Some("DRAW_MESH_TASKS"),
@@ -3047,6 +3536,7 @@ impl fmt::Debug for IndirectCommandsTokenTypeNV {
             Self::DRAW_INDEXED => Some("DRAW_INDEXED"),
             Self::DRAW => Some("DRAW"),
             Self::DRAW_TASKS => Some("DRAW_TASKS"),
+            Self::PUSH_DATA => Some("PUSH_DATA"),
             Self::DRAW_MESH_TASKS => Some("DRAW_MESH_TASKS"),
             Self::PIPELINE => Some("PIPELINE"),
             Self::DISPATCH => Some("DISPATCH"),
@@ -3160,7 +3650,7 @@ impl fmt::Debug for LayeredDriverUnderlyingApiMSFT {
         }
     }
 }
-impl fmt::Debug for LineRasterizationModeKHR {
+impl fmt::Debug for LineRasterizationMode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
             Self::DEFAULT => Some("DEFAULT"),
@@ -3214,6 +3704,10 @@ impl fmt::Debug for MemoryAllocateFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (MemoryAllocateFlags::DEVICE_MASK.0, "DEVICE_MASK"),
+            (
+                MemoryAllocateFlags::ZERO_INITIALIZE_EXT.0,
+                "ZERO_INITIALIZE_EXT",
+            ),
             (MemoryAllocateFlags::DEVICE_ADDRESS.0, "DEVICE_ADDRESS"),
             (
                 MemoryAllocateFlags::DEVICE_ADDRESS_CAPTURE_REPLAY.0,
@@ -3223,10 +3717,10 @@ impl fmt::Debug for MemoryAllocateFlags {
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for MemoryDecompressionMethodFlagsNV {
+impl fmt::Debug for MemoryDecompressionMethodFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags64, &str)] = &[(
-            MemoryDecompressionMethodFlagsNV::GDEFLATE_1_0.0,
+            MemoryDecompressionMethodFlagsEXT::GDEFLATE_1_0.0,
             "GDEFLATE_1_0",
         )];
         debug_flags(f, KNOWN, self.0)
@@ -3236,6 +3730,7 @@ impl fmt::Debug for MemoryHeapFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (MemoryHeapFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
+            (MemoryHeapFlags::TILE_MEMORY_QCOM.0, "TILE_MEMORY_QCOM"),
             (MemoryHeapFlags::MULTI_INSTANCE.0, "MULTI_INSTANCE"),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -3284,9 +3779,9 @@ impl fmt::Debug for MemoryPropertyFlags {
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for MemoryUnmapFlagsKHR {
+impl fmt::Debug for MemoryUnmapFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(MemoryUnmapFlagsKHR::RESERVE_EXT.0, "RESERVE_EXT")];
+        const KNOWN: &[(Flags, &str)] = &[(MemoryUnmapFlags::RESERVE_EXT.0, "RESERVE_EXT")];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -3340,6 +3835,9 @@ impl fmt::Debug for OpacityMicromapSpecialIndexEXT {
             Self::FULLY_OPAQUE => Some("FULLY_OPAQUE"),
             Self::FULLY_UNKNOWN_TRANSPARENT => Some("FULLY_UNKNOWN_TRANSPARENT"),
             Self::FULLY_UNKNOWN_OPAQUE => Some("FULLY_UNKNOWN_OPAQUE"),
+            Self::CLUSTER_GEOMETRY_DISABLE_OPACITY_MICROMAP_NV => {
+                Some("CLUSTER_GEOMETRY_DISABLE_OPACITY_MICROMAP_NV")
+            }
             _ => None,
         };
         if let Some(x) = name {
@@ -3461,6 +3959,65 @@ impl fmt::Debug for OutOfBandQueueTypeNV {
         }
     }
 }
+impl fmt::Debug for PartitionedAccelerationStructureInstanceFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                PartitionedAccelerationStructureInstanceFlagsNV::FLAG_TRIANGLE_FACING_CULL_DISABLE
+                    .0,
+                "FLAG_TRIANGLE_FACING_CULL_DISABLE",
+            ),
+            (
+                PartitionedAccelerationStructureInstanceFlagsNV::FLAG_TRIANGLE_FLIP_FACING.0,
+                "FLAG_TRIANGLE_FLIP_FACING",
+            ),
+            (
+                PartitionedAccelerationStructureInstanceFlagsNV::FLAG_FORCE_OPAQUE.0,
+                "FLAG_FORCE_OPAQUE",
+            ),
+            (
+                PartitionedAccelerationStructureInstanceFlagsNV::FLAG_FORCE_NO_OPAQUE.0,
+                "FLAG_FORCE_NO_OPAQUE",
+            ),
+            (
+                PartitionedAccelerationStructureInstanceFlagsNV::FLAG_ENABLE_EXPLICIT_BOUNDING_BOX
+                    .0,
+                "FLAG_ENABLE_EXPLICIT_BOUNDING_BOX",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PartitionedAccelerationStructureOpTypeNV {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::WRITE_INSTANCE => Some("WRITE_INSTANCE"),
+            Self::UPDATE_INSTANCE => Some("UPDATE_INSTANCE"),
+            Self::WRITE_PARTITION_TRANSLATION => Some("WRITE_PARTITION_TRANSLATION"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for PastPresentationTimingFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                PastPresentationTimingFlagsEXT::ALLOW_PARTIAL_RESULTS.0,
+                "ALLOW_PARTIAL_RESULTS",
+            ),
+            (
+                PastPresentationTimingFlagsEXT::ALLOW_OUT_OF_ORDER_RESULTS.0,
+                "ALLOW_OUT_OF_ORDER_RESULTS",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for PeerMemoryFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -3485,6 +4042,12 @@ impl fmt::Debug for PerformanceConfigurationTypeINTEL {
         } else {
             self.0.fmt(f)
         }
+    }
+}
+impl fmt::Debug for PerformanceCounterDescriptionFlagsARM {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Debug for PerformanceCounterDescriptionFlagsKHR {
@@ -3603,6 +4166,36 @@ impl fmt::Debug for PerformanceValueTypeINTEL {
         }
     }
 }
+impl fmt::Debug for PhysicalDeviceDataGraphOperationTypeARM {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::SPIRV_EXTENDED_INSTRUCTION_SET => Some("SPIRV_EXTENDED_INSTRUCTION_SET"),
+            Self::NEURAL_MODEL_QCOM => Some("NEURAL_MODEL_QCOM"),
+            Self::BUILTIN_MODEL_QCOM => Some("BUILTIN_MODEL_QCOM"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for PhysicalDeviceDataGraphProcessingEngineTypeARM {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::DEFAULT => Some("DEFAULT"),
+            Self::NEURAL_QCOM => Some("NEURAL_QCOM"),
+            Self::COMPUTE_QCOM => Some("COMPUTE_QCOM"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for PhysicalDeviceLayeredApiKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
@@ -3654,6 +4247,7 @@ impl fmt::Debug for PipelineBindPoint {
             Self::EXECUTION_GRAPH_AMDX => Some("EXECUTION_GRAPH_AMDX"),
             Self::RAY_TRACING_KHR => Some("RAY_TRACING_KHR"),
             Self::SUBPASS_SHADING_HUAWEI => Some("SUBPASS_SHADING_HUAWEI"),
+            Self::DATA_GRAPH_ARM => Some("DATA_GRAPH_ARM"),
             _ => None,
         };
         if let Some(x) = name {
@@ -3665,10 +4259,16 @@ impl fmt::Debug for PipelineBindPoint {
 }
 impl fmt::Debug for PipelineCacheCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            PipelineCacheCreateFlags::EXTERNALLY_SYNCHRONIZED.0,
-            "EXTERNALLY_SYNCHRONIZED",
-        )];
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                PipelineCacheCreateFlags::INTERNALLY_SYNCHRONIZED_MERGE_KHR.0,
+                "INTERNALLY_SYNCHRONIZED_MERGE_KHR",
+            ),
+            (
+                PipelineCacheCreateFlags::EXTERNALLY_SYNCHRONIZED.0,
+                "EXTERNALLY_SYNCHRONIZED",
+            ),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -3676,6 +4276,7 @@ impl fmt::Debug for PipelineCacheHeaderVersion {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
             Self::ONE => Some("ONE"),
+            Self::DATA_GRAPH_QCOM => Some("DATA_GRAPH_QCOM"),
             _ => None,
         };
         if let Some(x) = name {
@@ -3731,14 +4332,6 @@ impl fmt::Debug for PipelineCreateFlags {
             ),
             (PipelineCreateFlags::DERIVATIVE.0, "DERIVATIVE"),
             (
-                PipelineCreateFlags::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
-                "RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR",
-            ),
-            (
-                PipelineCreateFlags::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT.0,
-                "RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT",
-            ),
-            (
                 PipelineCreateFlags::RAY_TRACING_NO_NULL_ANY_HIT_SHADERS_KHR.0,
                 "RAY_TRACING_NO_NULL_ANY_HIT_SHADERS_KHR",
             ),
@@ -3767,6 +4360,14 @@ impl fmt::Debug for PipelineCreateFlags {
                 "RAY_TRACING_SHADER_GROUP_HANDLE_CAPTURE_REPLAY_KHR",
             ),
             (PipelineCreateFlags::DEFER_COMPILE_NV.0, "DEFER_COMPILE_NV"),
+            (
+                PipelineCreateFlags::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT.0,
+                "RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT",
+            ),
+            (
+                PipelineCreateFlags::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
+                "RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR",
+            ),
             (
                 PipelineCreateFlags::CAPTURE_STATISTICS_KHR.0,
                 "CAPTURE_STATISTICS_KHR",
@@ -3812,19 +4413,11 @@ impl fmt::Debug for PipelineCreateFlags {
                 PipelineCreateFlags::RAY_TRACING_DISPLACEMENT_MICROMAP_NV.0,
                 "RAY_TRACING_DISPLACEMENT_MICROMAP_NV",
             ),
-            (
-                PipelineCreateFlags::NO_PROTECTED_ACCESS_EXT.0,
-                "NO_PROTECTED_ACCESS_EXT",
-            ),
-            (
-                PipelineCreateFlags::PROTECTED_ACCESS_ONLY_EXT.0,
-                "PROTECTED_ACCESS_ONLY_EXT",
-            ),
+            (PipelineCreateFlags::DISPATCH_BASE.0, "DISPATCH_BASE"),
             (
                 PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
                 "VIEW_INDEX_FROM_DEVICE_INDEX",
             ),
-            (PipelineCreateFlags::DISPATCH_BASE.0, "DISPATCH_BASE"),
             (
                 PipelineCreateFlags::FAIL_ON_PIPELINE_COMPILE_REQUIRED.0,
                 "FAIL_ON_PIPELINE_COMPILE_REQUIRED",
@@ -3833,136 +4426,165 @@ impl fmt::Debug for PipelineCreateFlags {
                 PipelineCreateFlags::EARLY_RETURN_ON_FAILURE.0,
                 "EARLY_RETURN_ON_FAILURE",
             ),
+            (
+                PipelineCreateFlags::NO_PROTECTED_ACCESS.0,
+                "NO_PROTECTED_ACCESS",
+            ),
+            (
+                PipelineCreateFlags::PROTECTED_ACCESS_ONLY.0,
+                "PROTECTED_ACCESS_ONLY",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for PipelineCreateFlags2KHR {
+impl fmt::Debug for PipelineCreateFlags2 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags64, &str)] = &[
             (
-                PipelineCreateFlags2KHR::DISABLE_OPTIMIZATION.0,
+                PipelineCreateFlags2::DISABLE_OPTIMIZATION.0,
                 "DISABLE_OPTIMIZATION",
             ),
             (
-                PipelineCreateFlags2KHR::ALLOW_DERIVATIVES.0,
+                PipelineCreateFlags2::ALLOW_DERIVATIVES.0,
                 "ALLOW_DERIVATIVES",
             ),
-            (PipelineCreateFlags2KHR::DERIVATIVE.0, "DERIVATIVE"),
+            (PipelineCreateFlags2::DERIVATIVE.0, "DERIVATIVE"),
             (
-                PipelineCreateFlags2KHR::ENABLE_LEGACY_DITHERING_EXT.0,
-                "ENABLE_LEGACY_DITHERING_EXT",
-            ),
-            (
-                PipelineCreateFlags2KHR::VIEW_INDEX_FROM_DEVICE_INDEX.0,
+                PipelineCreateFlags2::VIEW_INDEX_FROM_DEVICE_INDEX.0,
                 "VIEW_INDEX_FROM_DEVICE_INDEX",
             ),
-            (PipelineCreateFlags2KHR::DISPATCH_BASE.0, "DISPATCH_BASE"),
+            (PipelineCreateFlags2::DISPATCH_BASE.0, "DISPATCH_BASE"),
             (
-                PipelineCreateFlags2KHR::DEFER_COMPILE_NV.0,
-                "DEFER_COMPILE_NV",
-            ),
-            (
-                PipelineCreateFlags2KHR::CAPTURE_STATISTICS.0,
-                "CAPTURE_STATISTICS",
-            ),
-            (
-                PipelineCreateFlags2KHR::CAPTURE_INTERNAL_REPRESENTATIONS.0,
-                "CAPTURE_INTERNAL_REPRESENTATIONS",
-            ),
-            (
-                PipelineCreateFlags2KHR::FAIL_ON_PIPELINE_COMPILE_REQUIRED.0,
+                PipelineCreateFlags2::FAIL_ON_PIPELINE_COMPILE_REQUIRED.0,
                 "FAIL_ON_PIPELINE_COMPILE_REQUIRED",
             ),
             (
-                PipelineCreateFlags2KHR::EARLY_RETURN_ON_FAILURE.0,
+                PipelineCreateFlags2::EARLY_RETURN_ON_FAILURE.0,
                 "EARLY_RETURN_ON_FAILURE",
             ),
             (
-                PipelineCreateFlags2KHR::LINK_TIME_OPTIMIZATION_EXT.0,
+                PipelineCreateFlags2::NO_PROTECTED_ACCESS.0,
+                "NO_PROTECTED_ACCESS",
+            ),
+            (
+                PipelineCreateFlags2::PROTECTED_ACCESS_ONLY.0,
+                "PROTECTED_ACCESS_ONLY",
+            ),
+            (
+                PipelineCreateFlags2::EXECUTION_GRAPH_AMDX.0,
+                "EXECUTION_GRAPH_AMDX",
+            ),
+            (
+                PipelineCreateFlags2::DESCRIPTOR_HEAP_EXT.0,
+                "DESCRIPTOR_HEAP_EXT",
+            ),
+            (
+                PipelineCreateFlags2::RAY_TRACING_ALLOW_SPHERES_AND_LINEAR_SWEPT_SPHERES_NV.0,
+                "RAY_TRACING_ALLOW_SPHERES_AND_LINEAR_SWEPT_SPHERES_NV",
+            ),
+            (
+                PipelineCreateFlags2::ENABLE_LEGACY_DITHERING_EXT.0,
+                "ENABLE_LEGACY_DITHERING_EXT",
+            ),
+            (PipelineCreateFlags2::DEFER_COMPILE_NV.0, "DEFER_COMPILE_NV"),
+            (
+                PipelineCreateFlags2::CAPTURE_STATISTICS_KHR.0,
+                "CAPTURE_STATISTICS_KHR",
+            ),
+            (
+                PipelineCreateFlags2::CAPTURE_INTERNAL_REPRESENTATIONS_KHR.0,
+                "CAPTURE_INTERNAL_REPRESENTATIONS_KHR",
+            ),
+            (
+                PipelineCreateFlags2::LINK_TIME_OPTIMIZATION_EXT.0,
                 "LINK_TIME_OPTIMIZATION_EXT",
             ),
             (
-                PipelineCreateFlags2KHR::RETAIN_LINK_TIME_OPTIMIZATION_INFO_EXT.0,
+                PipelineCreateFlags2::RETAIN_LINK_TIME_OPTIMIZATION_INFO_EXT.0,
                 "RETAIN_LINK_TIME_OPTIMIZATION_INFO_EXT",
             ),
-            (PipelineCreateFlags2KHR::LIBRARY.0, "LIBRARY"),
+            (PipelineCreateFlags2::LIBRARY_KHR.0, "LIBRARY_KHR"),
             (
-                PipelineCreateFlags2KHR::RAY_TRACING_SKIP_TRIANGLES.0,
-                "RAY_TRACING_SKIP_TRIANGLES",
+                PipelineCreateFlags2::RAY_TRACING_SKIP_TRIANGLES_KHR.0,
+                "RAY_TRACING_SKIP_TRIANGLES_KHR",
             ),
             (
-                PipelineCreateFlags2KHR::RAY_TRACING_SKIP_AABBS.0,
-                "RAY_TRACING_SKIP_AABBS",
+                PipelineCreateFlags2::RAY_TRACING_SKIP_AABBS_KHR.0,
+                "RAY_TRACING_SKIP_AABBS_KHR",
             ),
             (
-                PipelineCreateFlags2KHR::RAY_TRACING_NO_NULL_ANY_HIT_SHADERS.0,
-                "RAY_TRACING_NO_NULL_ANY_HIT_SHADERS",
+                PipelineCreateFlags2::RAY_TRACING_NO_NULL_ANY_HIT_SHADERS_KHR.0,
+                "RAY_TRACING_NO_NULL_ANY_HIT_SHADERS_KHR",
             ),
             (
-                PipelineCreateFlags2KHR::RAY_TRACING_NO_NULL_CLOSEST_HIT_SHADERS.0,
-                "RAY_TRACING_NO_NULL_CLOSEST_HIT_SHADERS",
+                PipelineCreateFlags2::RAY_TRACING_NO_NULL_CLOSEST_HIT_SHADERS_KHR.0,
+                "RAY_TRACING_NO_NULL_CLOSEST_HIT_SHADERS_KHR",
             ),
             (
-                PipelineCreateFlags2KHR::RAY_TRACING_NO_NULL_MISS_SHADERS.0,
-                "RAY_TRACING_NO_NULL_MISS_SHADERS",
+                PipelineCreateFlags2::RAY_TRACING_NO_NULL_MISS_SHADERS_KHR.0,
+                "RAY_TRACING_NO_NULL_MISS_SHADERS_KHR",
             ),
             (
-                PipelineCreateFlags2KHR::RAY_TRACING_NO_NULL_INTERSECTION_SHADERS.0,
-                "RAY_TRACING_NO_NULL_INTERSECTION_SHADERS",
+                PipelineCreateFlags2::RAY_TRACING_NO_NULL_INTERSECTION_SHADERS_KHR.0,
+                "RAY_TRACING_NO_NULL_INTERSECTION_SHADERS_KHR",
             ),
             (
-                PipelineCreateFlags2KHR::RAY_TRACING_SHADER_GROUP_HANDLE_CAPTURE_REPLAY.0,
-                "RAY_TRACING_SHADER_GROUP_HANDLE_CAPTURE_REPLAY",
+                PipelineCreateFlags2::RAY_TRACING_SHADER_GROUP_HANDLE_CAPTURE_REPLAY_KHR.0,
+                "RAY_TRACING_SHADER_GROUP_HANDLE_CAPTURE_REPLAY_KHR",
             ),
             (
-                PipelineCreateFlags2KHR::INDIRECT_BINDABLE_NV.0,
+                PipelineCreateFlags2::INDIRECT_BINDABLE_NV.0,
                 "INDIRECT_BINDABLE_NV",
             ),
             (
-                PipelineCreateFlags2KHR::RAY_TRACING_ALLOW_MOTION_NV.0,
+                PipelineCreateFlags2::RAY_TRACING_ALLOW_MOTION_NV.0,
                 "RAY_TRACING_ALLOW_MOTION_NV",
             ),
             (
-                PipelineCreateFlags2KHR::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT.0,
-                "RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT",
+                PipelineCreateFlags2::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
+                "RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR",
             ),
             (
-                PipelineCreateFlags2KHR::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT.0,
+                PipelineCreateFlags2::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT.0,
                 "RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT",
             ),
             (
-                PipelineCreateFlags2KHR::RAY_TRACING_OPACITY_MICROMAP_EXT.0,
+                PipelineCreateFlags2::RAY_TRACING_OPACITY_MICROMAP_EXT.0,
                 "RAY_TRACING_OPACITY_MICROMAP_EXT",
             ),
             (
-                PipelineCreateFlags2KHR::COLOR_ATTACHMENT_FEEDBACK_LOOP_EXT.0,
+                PipelineCreateFlags2::COLOR_ATTACHMENT_FEEDBACK_LOOP_EXT.0,
                 "COLOR_ATTACHMENT_FEEDBACK_LOOP_EXT",
             ),
             (
-                PipelineCreateFlags2KHR::DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP_EXT.0,
+                PipelineCreateFlags2::DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP_EXT.0,
                 "DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP_EXT",
             ),
             (
-                PipelineCreateFlags2KHR::NO_PROTECTED_ACCESS_EXT.0,
-                "NO_PROTECTED_ACCESS_EXT",
-            ),
-            (
-                PipelineCreateFlags2KHR::PROTECTED_ACCESS_ONLY_EXT.0,
-                "PROTECTED_ACCESS_ONLY_EXT",
-            ),
-            (
-                PipelineCreateFlags2KHR::RAY_TRACING_DISPLACEMENT_MICROMAP_NV.0,
+                PipelineCreateFlags2::RAY_TRACING_DISPLACEMENT_MICROMAP_NV.0,
                 "RAY_TRACING_DISPLACEMENT_MICROMAP_NV",
             ),
             (
-                PipelineCreateFlags2KHR::DESCRIPTOR_BUFFER_EXT.0,
+                PipelineCreateFlags2::DESCRIPTOR_BUFFER_EXT.0,
                 "DESCRIPTOR_BUFFER_EXT",
             ),
-            (PipelineCreateFlags2KHR::CAPTURE_DATA.0, "CAPTURE_DATA"),
             (
-                PipelineCreateFlags2KHR::INDIRECT_BINDABLE_EXT.0,
+                PipelineCreateFlags2::DISALLOW_OPACITY_MICROMAP_ARM.0,
+                "DISALLOW_OPACITY_MICROMAP_ARM",
+            ),
+            (PipelineCreateFlags2::CAPTURE_DATA_KHR.0, "CAPTURE_DATA_KHR"),
+            (
+                PipelineCreateFlags2::INDIRECT_BINDABLE_EXT.0,
                 "INDIRECT_BINDABLE_EXT",
+            ),
+            (
+                PipelineCreateFlags2::PER_LAYER_FRAGMENT_DENSITY_VALVE.0,
+                "PER_LAYER_FRAGMENT_DENSITY_VALVE",
+            ),
+            (
+                PipelineCreateFlags2::TYPE_64_INDEXING_EXT.0,
+                "TYPE_64_INDEXING_EXT",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -4063,7 +4685,7 @@ impl fmt::Debug for PipelineRasterizationStateStreamCreateFlagsEXT {
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for PipelineRobustnessBufferBehaviorEXT {
+impl fmt::Debug for PipelineRobustnessBufferBehavior {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
             Self::DEVICE_DEFAULT => Some("DEVICE_DEFAULT"),
@@ -4079,7 +4701,7 @@ impl fmt::Debug for PipelineRobustnessBufferBehaviorEXT {
         }
     }
 }
-impl fmt::Debug for PipelineRobustnessImageBehaviorEXT {
+impl fmt::Debug for PipelineRobustnessImageBehavior {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
             Self::DEVICE_DEFAULT => Some("DEVICE_DEFAULT"),
@@ -4169,12 +4791,12 @@ impl fmt::Debug for PipelineStageFlags {
                 PipelineStageFlags::FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
                 "FRAGMENT_SHADING_RATE_ATTACHMENT_KHR",
             ),
-            (
-                PipelineStageFlags::COMMAND_PREPROCESS_NV.0,
-                "COMMAND_PREPROCESS_NV",
-            ),
             (PipelineStageFlags::TASK_SHADER_EXT.0, "TASK_SHADER_EXT"),
             (PipelineStageFlags::MESH_SHADER_EXT.0, "MESH_SHADER_EXT"),
+            (
+                PipelineStageFlags::COMMAND_PREPROCESS_EXT.0,
+                "COMMAND_PREPROCESS_EXT",
+            ),
             (PipelineStageFlags::NONE.0, "NONE"),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -4240,8 +4862,8 @@ impl fmt::Debug for PipelineStageFlags2 {
                 "CONDITIONAL_RENDERING_EXT",
             ),
             (
-                PipelineStageFlags2::COMMAND_PREPROCESS_NV.0,
-                "COMMAND_PREPROCESS_NV",
+                PipelineStageFlags2::COMMAND_PREPROCESS_EXT.0,
+                "COMMAND_PREPROCESS_EXT",
             ),
             (
                 PipelineStageFlags2::FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
@@ -4282,6 +4904,19 @@ impl fmt::Debug for PipelineStageFlags2 {
                 "CLUSTER_CULLING_SHADER_HUAWEI",
             ),
             (PipelineStageFlags2::OPTICAL_FLOW_NV.0, "OPTICAL_FLOW_NV"),
+            (
+                PipelineStageFlags2::CONVERT_COOPERATIVE_VECTOR_MATRIX_NV.0,
+                "CONVERT_COOPERATIVE_VECTOR_MATRIX_NV",
+            ),
+            (PipelineStageFlags2::DATA_GRAPH_ARM.0, "DATA_GRAPH_ARM"),
+            (
+                PipelineStageFlags2::COPY_INDIRECT_KHR.0,
+                "COPY_INDIRECT_KHR",
+            ),
+            (
+                PipelineStageFlags2::MEMORY_DECOMPRESSION_EXT.0,
+                "MEMORY_DECOMPRESSION_EXT",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -4340,12 +4975,12 @@ impl fmt::Debug for PolygonMode {
         }
     }
 }
-impl fmt::Debug for PresentGravityFlagsEXT {
+impl fmt::Debug for PresentGravityFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (PresentGravityFlagsEXT::MIN.0, "MIN"),
-            (PresentGravityFlagsEXT::MAX.0, "MAX"),
-            (PresentGravityFlagsEXT::CENTERED.0, "CENTERED"),
+            (PresentGravityFlagsKHR::MIN.0, "MIN"),
+            (PresentGravityFlagsKHR::MAX.0, "MAX"),
+            (PresentGravityFlagsKHR::CENTERED.0, "CENTERED"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -4359,6 +4994,7 @@ impl fmt::Debug for PresentModeKHR {
             Self::FIFO_RELAXED => Some("FIFO_RELAXED"),
             Self::SHARED_DEMAND_REFRESH => Some("SHARED_DEMAND_REFRESH"),
             Self::SHARED_CONTINUOUS_REFRESH => Some("SHARED_CONTINUOUS_REFRESH"),
+            Self::FIFO_LATEST_READY => Some("FIFO_LATEST_READY"),
             _ => None,
         };
         if let Some(x) = name {
@@ -4368,15 +5004,50 @@ impl fmt::Debug for PresentModeKHR {
         }
     }
 }
-impl fmt::Debug for PresentScalingFlagsEXT {
+impl fmt::Debug for PresentScalingFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (PresentScalingFlagsEXT::ONE_TO_ONE.0, "ONE_TO_ONE"),
+            (PresentScalingFlagsKHR::ONE_TO_ONE.0, "ONE_TO_ONE"),
             (
-                PresentScalingFlagsEXT::ASPECT_RATIO_STRETCH.0,
+                PresentScalingFlagsKHR::ASPECT_RATIO_STRETCH.0,
                 "ASPECT_RATIO_STRETCH",
             ),
-            (PresentScalingFlagsEXT::STRETCH.0, "STRETCH"),
+            (PresentScalingFlagsKHR::STRETCH.0, "STRETCH"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PresentStageFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                PresentStageFlagsEXT::QUEUE_OPERATIONS_END.0,
+                "QUEUE_OPERATIONS_END",
+            ),
+            (PresentStageFlagsEXT::REQUEST_DEQUEUED.0, "REQUEST_DEQUEUED"),
+            (
+                PresentStageFlagsEXT::IMAGE_FIRST_PIXEL_OUT.0,
+                "IMAGE_FIRST_PIXEL_OUT",
+            ),
+            (
+                PresentStageFlagsEXT::IMAGE_FIRST_PIXEL_VISIBLE.0,
+                "IMAGE_FIRST_PIXEL_VISIBLE",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PresentTimingInfoFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                PresentTimingInfoFlagsEXT::PRESENT_AT_RELATIVE_TIME.0,
+                "PRESENT_AT_RELATIVE_TIME",
+            ),
+            (
+                PresentTimingInfoFlagsEXT::PRESENT_AT_NEAREST_REFRESH_CYCLE.0,
+                "PRESENT_AT_NEAREST_REFRESH_CYCLE",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -4495,7 +5166,7 @@ impl fmt::Debug for QueryPipelineStatisticFlags {
 }
 impl fmt::Debug for QueryPoolCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[];
+        const KNOWN: &[(Flags, &str)] = &[(QueryPoolCreateFlags::RESET_KHR.0, "RESET_KHR")];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -4587,12 +5258,13 @@ impl fmt::Debug for QueueFlags {
             (QueueFlags::VIDEO_DECODE_KHR.0, "VIDEO_DECODE_KHR"),
             (QueueFlags::VIDEO_ENCODE_KHR.0, "VIDEO_ENCODE_KHR"),
             (QueueFlags::OPTICAL_FLOW_NV.0, "OPTICAL_FLOW_NV"),
+            (QueueFlags::DATA_GRAPH_ARM.0, "DATA_GRAPH_ARM"),
             (QueueFlags::PROTECTED.0, "PROTECTED"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for QueueGlobalPriorityKHR {
+impl fmt::Debug for QueueGlobalPriority {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
             Self::LOW => Some("LOW"),
@@ -4622,11 +5294,39 @@ impl fmt::Debug for RasterizationOrderAMD {
         }
     }
 }
-impl fmt::Debug for RayTracingInvocationReorderModeNV {
+impl fmt::Debug for RayTracingInvocationReorderModeEXT {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
             Self::NONE => Some("NONE"),
             Self::REORDER => Some("REORDER"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for RayTracingLssIndexingModeNV {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::LIST => Some("LIST"),
+            Self::SUCCESSIVE => Some("SUCCESSIVE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for RayTracingLssPrimitiveEndCapsModeNV {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::NONE => Some("NONE"),
+            Self::CHAINED => Some("CHAINED"),
             _ => None,
         };
         if let Some(x) = name {
@@ -4653,8 +5353,32 @@ impl fmt::Debug for RayTracingShaderGroupTypeKHR {
 }
 impl fmt::Debug for RenderPassCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] =
-            &[(RenderPassCreateFlags::TRANSFORM_QCOM.0, "TRANSFORM_QCOM")];
+        const KNOWN: &[(Flags, &str)] = &[
+            (RenderPassCreateFlags::TRANSFORM_QCOM.0, "TRANSFORM_QCOM"),
+            (
+                RenderPassCreateFlags::PER_LAYER_FRAGMENT_DENSITY_VALVE.0,
+                "PER_LAYER_FRAGMENT_DENSITY_VALVE",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for RenderingAttachmentFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                RenderingAttachmentFlagsKHR::INPUT_ATTACHMENT_FEEDBACK.0,
+                "INPUT_ATTACHMENT_FEEDBACK",
+            ),
+            (
+                RenderingAttachmentFlagsKHR::RESOLVE_SKIP_TRANSFER_FUNCTION.0,
+                "RESOLVE_SKIP_TRANSFER_FUNCTION",
+            ),
+            (
+                RenderingAttachmentFlagsKHR::RESOLVE_ENABLE_TRANSFER_FUNCTION.0,
+                "RESOLVE_ENABLE_TRANSFER_FUNCTION",
+            ),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -4672,6 +5396,31 @@ impl fmt::Debug for RenderingFlags {
                 "ENABLE_LEGACY_DITHERING_EXT",
             ),
             (RenderingFlags::CONTENTS_INLINE_KHR.0, "CONTENTS_INLINE_KHR"),
+            (
+                RenderingFlags::PER_LAYER_FRAGMENT_DENSITY_VALVE.0,
+                "PER_LAYER_FRAGMENT_DENSITY_VALVE",
+            ),
+            (RenderingFlags::FRAGMENT_REGION_EXT.0, "FRAGMENT_REGION_EXT"),
+            (RenderingFlags::CUSTOM_RESOLVE_EXT.0, "CUSTOM_RESOLVE_EXT"),
+            (
+                RenderingFlags::LOCAL_READ_CONCURRENT_ACCESS_CONTROL_KHR.0,
+                "LOCAL_READ_CONCURRENT_ACCESS_CONTROL_KHR",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ResolveImageFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ResolveImageFlagsKHR::SKIP_TRANSFER_FUNCTION.0,
+                "SKIP_TRANSFER_FUNCTION",
+            ),
+            (
+                ResolveImageFlagsKHR::ENABLE_TRANSFER_FUNCTION.0,
+                "ENABLE_TRANSFER_FUNCTION",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -4688,6 +5437,7 @@ impl fmt::Debug for ResolveModeFlags {
                 ResolveModeFlags::EXTERNAL_FORMAT_DOWNSAMPLE_ANDROID.0,
                 "EXTERNAL_FORMAT_DOWNSAMPLE_ANDROID",
             ),
+            (ResolveModeFlags::CUSTOM_EXT.0, "CUSTOM_EXT"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -4886,6 +5636,7 @@ impl fmt::Debug for ShaderCreateFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (ShaderCreateFlagsEXT::LINK_STAGE.0, "LINK_STAGE"),
+            (ShaderCreateFlagsEXT::DESCRIPTOR_HEAP.0, "DESCRIPTOR_HEAP"),
             (
                 ShaderCreateFlagsEXT::ALLOW_VARYING_SUBGROUP_SIZE.0,
                 "ALLOW_VARYING_SUBGROUP_SIZE",
@@ -4908,6 +5659,7 @@ impl fmt::Debug for ShaderCreateFlagsEXT {
                 ShaderCreateFlagsEXT::INDIRECT_BINDABLE.0,
                 "INDIRECT_BINDABLE",
             ),
+            (ShaderCreateFlagsEXT::TYPE_64_INDEXING.0, "TYPE_64_INDEXING"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -5058,6 +5810,45 @@ impl fmt::Debug for SparseImageFormatFlags {
 impl fmt::Debug for SparseMemoryBindFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(SparseMemoryBindFlags::METADATA.0, "METADATA")];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for SpirvResourceTypeFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (SpirvResourceTypeFlagsEXT::ALL.0, "ALL"),
+            (SpirvResourceTypeFlagsEXT::SAMPLER.0, "SAMPLER"),
+            (SpirvResourceTypeFlagsEXT::SAMPLED_IMAGE.0, "SAMPLED_IMAGE"),
+            (
+                SpirvResourceTypeFlagsEXT::READ_ONLY_IMAGE.0,
+                "READ_ONLY_IMAGE",
+            ),
+            (
+                SpirvResourceTypeFlagsEXT::READ_WRITE_IMAGE.0,
+                "READ_WRITE_IMAGE",
+            ),
+            (
+                SpirvResourceTypeFlagsEXT::COMBINED_SAMPLED_IMAGE.0,
+                "COMBINED_SAMPLED_IMAGE",
+            ),
+            (
+                SpirvResourceTypeFlagsEXT::UNIFORM_BUFFER.0,
+                "UNIFORM_BUFFER",
+            ),
+            (
+                SpirvResourceTypeFlagsEXT::READ_ONLY_STORAGE_BUFFER.0,
+                "READ_ONLY_STORAGE_BUFFER",
+            ),
+            (
+                SpirvResourceTypeFlagsEXT::READ_WRITE_STORAGE_BUFFER.0,
+                "READ_WRITE_STORAGE_BUFFER",
+            ),
+            (
+                SpirvResourceTypeFlagsEXT::ACCELERATION_STRUCTURE.0,
+                "ACCELERATION_STRUCTURE",
+            ),
+            (SpirvResourceTypeFlagsEXT::TENSOR_ARM.0, "TENSOR_ARM"),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -5254,6 +6045,9 @@ impl fmt::Debug for StructureType {
             Self::CU_MODULE_CREATE_INFO_NVX => Some("CU_MODULE_CREATE_INFO_NVX"),
             Self::CU_FUNCTION_CREATE_INFO_NVX => Some("CU_FUNCTION_CREATE_INFO_NVX"),
             Self::CU_LAUNCH_INFO_NVX => Some("CU_LAUNCH_INFO_NVX"),
+            Self::CU_MODULE_TEXTURING_MODE_CREATE_INFO_NVX => {
+                Some("CU_MODULE_TEXTURING_MODE_CREATE_INFO_NVX")
+            }
             Self::IMAGE_VIEW_HANDLE_INFO_NVX => Some("IMAGE_VIEW_HANDLE_INFO_NVX"),
             Self::IMAGE_VIEW_ADDRESS_PROPERTIES_NVX => Some("IMAGE_VIEW_ADDRESS_PROPERTIES_NVX"),
             Self::VIDEO_ENCODE_H264_CAPABILITIES_KHR => Some("VIDEO_ENCODE_H264_CAPABILITIES_KHR"),
@@ -5343,16 +6137,6 @@ impl fmt::Debug for StructureType {
             Self::TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD => {
                 Some("TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD")
             }
-            Self::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR => {
-                Some("RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR")
-            }
-            Self::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_INFO_EXT => {
-                Some("RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_INFO_EXT")
-            }
-            Self::ATTACHMENT_SAMPLE_COUNT_INFO_AMD => Some("ATTACHMENT_SAMPLE_COUNT_INFO_AMD"),
-            Self::MULTIVIEW_PER_VIEW_ATTRIBUTES_INFO_NVX => {
-                Some("MULTIVIEW_PER_VIEW_ATTRIBUTES_INFO_NVX")
-            }
             Self::STREAM_DESCRIPTOR_SURFACE_CREATE_INFO_GGP => {
                 Some("STREAM_DESCRIPTOR_SURFACE_CREATE_INFO_GGP")
             }
@@ -5373,15 +6157,6 @@ impl fmt::Debug for StructureType {
             Self::IMAGE_VIEW_ASTC_DECODE_MODE_EXT => Some("IMAGE_VIEW_ASTC_DECODE_MODE_EXT"),
             Self::PHYSICAL_DEVICE_ASTC_DECODE_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_ASTC_DECODE_FEATURES_EXT")
-            }
-            Self::PIPELINE_ROBUSTNESS_CREATE_INFO_EXT => {
-                Some("PIPELINE_ROBUSTNESS_CREATE_INFO_EXT")
-            }
-            Self::PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_FEATURES_EXT => {
-                Some("PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_FEATURES_EXT")
-            }
-            Self::PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_PROPERTIES_EXT => {
-                Some("PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_PROPERTIES_EXT")
             }
             Self::IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR => {
                 Some("IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR")
@@ -5409,9 +6184,6 @@ impl fmt::Debug for StructureType {
             }
             Self::IMPORT_SEMAPHORE_FD_INFO_KHR => Some("IMPORT_SEMAPHORE_FD_INFO_KHR"),
             Self::SEMAPHORE_GET_FD_INFO_KHR => Some("SEMAPHORE_GET_FD_INFO_KHR"),
-            Self::PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR => {
-                Some("PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR")
-            }
             Self::COMMAND_BUFFER_INHERITANCE_CONDITIONAL_RENDERING_INFO_EXT => {
                 Some("COMMAND_BUFFER_INHERITANCE_CONDITIONAL_RENDERING_INFO_EXT")
             }
@@ -5433,6 +6205,9 @@ impl fmt::Debug for StructureType {
             Self::PRESENT_TIMES_INFO_GOOGLE => Some("PRESENT_TIMES_INFO_GOOGLE"),
             Self::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX => {
                 Some("PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX")
+            }
+            Self::MULTIVIEW_PER_VIEW_ATTRIBUTES_INFO_NVX => {
+                Some("MULTIVIEW_PER_VIEW_ATTRIBUTES_INFO_NVX")
             }
             Self::PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV => {
                 Some("PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV")
@@ -5534,6 +6309,45 @@ impl fmt::Debug for StructureType {
             }
             Self::PIPELINE_SHADER_STAGE_NODE_CREATE_INFO_AMDX => {
                 Some("PIPELINE_SHADER_STAGE_NODE_CREATE_INFO_AMDX")
+            }
+            Self::TEXEL_BUFFER_DESCRIPTOR_INFO_EXT => Some("TEXEL_BUFFER_DESCRIPTOR_INFO_EXT"),
+            Self::IMAGE_DESCRIPTOR_INFO_EXT => Some("IMAGE_DESCRIPTOR_INFO_EXT"),
+            Self::RESOURCE_DESCRIPTOR_INFO_EXT => Some("RESOURCE_DESCRIPTOR_INFO_EXT"),
+            Self::BIND_HEAP_INFO_EXT => Some("BIND_HEAP_INFO_EXT"),
+            Self::PUSH_DATA_INFO_EXT => Some("PUSH_DATA_INFO_EXT"),
+            Self::DESCRIPTOR_SET_AND_BINDING_MAPPING_EXT => {
+                Some("DESCRIPTOR_SET_AND_BINDING_MAPPING_EXT")
+            }
+            Self::SHADER_DESCRIPTOR_SET_AND_BINDING_MAPPING_INFO_EXT => {
+                Some("SHADER_DESCRIPTOR_SET_AND_BINDING_MAPPING_INFO_EXT")
+            }
+            Self::OPAQUE_CAPTURE_DATA_CREATE_INFO_EXT => {
+                Some("OPAQUE_CAPTURE_DATA_CREATE_INFO_EXT")
+            }
+            Self::PHYSICAL_DEVICE_DESCRIPTOR_HEAP_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_DESCRIPTOR_HEAP_PROPERTIES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_DESCRIPTOR_HEAP_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_DESCRIPTOR_HEAP_FEATURES_EXT")
+            }
+            Self::COMMAND_BUFFER_INHERITANCE_DESCRIPTOR_HEAP_INFO_EXT => {
+                Some("COMMAND_BUFFER_INHERITANCE_DESCRIPTOR_HEAP_INFO_EXT")
+            }
+            Self::SAMPLER_CUSTOM_BORDER_COLOR_INDEX_CREATE_INFO_EXT => {
+                Some("SAMPLER_CUSTOM_BORDER_COLOR_INDEX_CREATE_INFO_EXT")
+            }
+            Self::INDIRECT_COMMANDS_LAYOUT_PUSH_DATA_TOKEN_NV => {
+                Some("INDIRECT_COMMANDS_LAYOUT_PUSH_DATA_TOKEN_NV")
+            }
+            Self::SUBSAMPLED_IMAGE_FORMAT_PROPERTIES_EXT => {
+                Some("SUBSAMPLED_IMAGE_FORMAT_PROPERTIES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_DESCRIPTOR_HEAP_TENSOR_PROPERTIES_ARM => {
+                Some("PHYSICAL_DEVICE_DESCRIPTOR_HEAP_TENSOR_PROPERTIES_ARM")
+            }
+            Self::ATTACHMENT_SAMPLE_COUNT_INFO_AMD => Some("ATTACHMENT_SAMPLE_COUNT_INFO_AMD"),
+            Self::PHYSICAL_DEVICE_SHADER_BFLOAT16_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_BFLOAT16_FEATURES_KHR")
             }
             Self::SAMPLE_LOCATIONS_INFO_EXT => Some("SAMPLE_LOCATIONS_INFO_EXT"),
             Self::RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT => {
@@ -5735,15 +6549,6 @@ impl fmt::Debug for StructureType {
             Self::VIDEO_DECODE_H265_DPB_SLOT_INFO_KHR => {
                 Some("VIDEO_DECODE_H265_DPB_SLOT_INFO_KHR")
             }
-            Self::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_KHR => {
-                Some("DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_KHR")
-            }
-            Self::PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_KHR => {
-                Some("PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_KHR")
-            }
-            Self::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_KHR => {
-                Some("QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_KHR")
-            }
             Self::DEVICE_MEMORY_OVERALLOCATION_CREATE_INFO_AMD => {
                 Some("DEVICE_MEMORY_OVERALLOCATION_CREATE_INFO_AMD")
             }
@@ -5769,6 +6574,30 @@ impl fmt::Debug for StructureType {
             Self::CHECKPOINT_DATA_NV => Some("CHECKPOINT_DATA_NV"),
             Self::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV => {
                 Some("QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV")
+            }
+            Self::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV => {
+                Some("QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV")
+            }
+            Self::CHECKPOINT_DATA_2_NV => Some("CHECKPOINT_DATA_2_NV"),
+            Self::PHYSICAL_DEVICE_PRESENT_TIMING_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_PRESENT_TIMING_FEATURES_EXT")
+            }
+            Self::SWAPCHAIN_TIMING_PROPERTIES_EXT => Some("SWAPCHAIN_TIMING_PROPERTIES_EXT"),
+            Self::SWAPCHAIN_TIME_DOMAIN_PROPERTIES_EXT => {
+                Some("SWAPCHAIN_TIME_DOMAIN_PROPERTIES_EXT")
+            }
+            Self::PRESENT_TIMINGS_INFO_EXT => Some("PRESENT_TIMINGS_INFO_EXT"),
+            Self::PRESENT_TIMING_INFO_EXT => Some("PRESENT_TIMING_INFO_EXT"),
+            Self::PAST_PRESENTATION_TIMING_INFO_EXT => Some("PAST_PRESENTATION_TIMING_INFO_EXT"),
+            Self::PAST_PRESENTATION_TIMING_PROPERTIES_EXT => {
+                Some("PAST_PRESENTATION_TIMING_PROPERTIES_EXT")
+            }
+            Self::PAST_PRESENTATION_TIMING_EXT => Some("PAST_PRESENTATION_TIMING_EXT"),
+            Self::PRESENT_TIMING_SURFACE_CAPABILITIES_EXT => {
+                Some("PRESENT_TIMING_SURFACE_CAPABILITIES_EXT")
+            }
+            Self::SWAPCHAIN_CALIBRATED_TIMESTAMP_INFO_EXT => {
+                Some("SWAPCHAIN_CALIBRATED_TIMESTAMP_INFO_EXT")
             }
             Self::PHYSICAL_DEVICE_SHADER_INTEGER_FUNCTIONS_2_FEATURES_INTEL => {
                 Some("PHYSICAL_DEVICE_SHADER_INTEGER_FUNCTIONS_2_FEATURES_INTEL")
@@ -5809,6 +6638,9 @@ impl fmt::Debug for StructureType {
             Self::RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT => {
                 Some("RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT")
             }
+            Self::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_INFO_EXT => {
+                Some("RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_INFO_EXT")
+            }
             Self::FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR => {
                 Some("FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR")
             }
@@ -5824,20 +6656,14 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_KHR => {
                 Some("PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_KHR")
             }
+            Self::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR => {
+                Some("RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR")
+            }
             Self::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_2_AMD => {
                 Some("PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_2_AMD")
             }
             Self::PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD => {
                 Some("PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD")
-            }
-            Self::PHYSICAL_DEVICE_DYNAMIC_RENDERING_LOCAL_READ_FEATURES_KHR => {
-                Some("PHYSICAL_DEVICE_DYNAMIC_RENDERING_LOCAL_READ_FEATURES_KHR")
-            }
-            Self::RENDERING_ATTACHMENT_LOCATION_INFO_KHR => {
-                Some("RENDERING_ATTACHMENT_LOCATION_INFO_KHR")
-            }
-            Self::RENDERING_INPUT_ATTACHMENT_INDEX_INFO_KHR => {
-                Some("RENDERING_INPUT_ATTACHMENT_INDEX_INFO_KHR")
             }
             Self::PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT")
@@ -5923,26 +6749,6 @@ impl fmt::Debug for StructureType {
             Self::PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR => {
                 Some("PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR")
             }
-            Self::PHYSICAL_DEVICE_HOST_IMAGE_COPY_FEATURES_EXT => {
-                Some("PHYSICAL_DEVICE_HOST_IMAGE_COPY_FEATURES_EXT")
-            }
-            Self::PHYSICAL_DEVICE_HOST_IMAGE_COPY_PROPERTIES_EXT => {
-                Some("PHYSICAL_DEVICE_HOST_IMAGE_COPY_PROPERTIES_EXT")
-            }
-            Self::MEMORY_TO_IMAGE_COPY_EXT => Some("MEMORY_TO_IMAGE_COPY_EXT"),
-            Self::IMAGE_TO_MEMORY_COPY_EXT => Some("IMAGE_TO_MEMORY_COPY_EXT"),
-            Self::COPY_IMAGE_TO_MEMORY_INFO_EXT => Some("COPY_IMAGE_TO_MEMORY_INFO_EXT"),
-            Self::COPY_MEMORY_TO_IMAGE_INFO_EXT => Some("COPY_MEMORY_TO_IMAGE_INFO_EXT"),
-            Self::HOST_IMAGE_LAYOUT_TRANSITION_INFO_EXT => {
-                Some("HOST_IMAGE_LAYOUT_TRANSITION_INFO_EXT")
-            }
-            Self::COPY_IMAGE_TO_IMAGE_INFO_EXT => Some("COPY_IMAGE_TO_IMAGE_INFO_EXT"),
-            Self::SUBRESOURCE_HOST_MEMCPY_SIZE_EXT => Some("SUBRESOURCE_HOST_MEMCPY_SIZE_EXT"),
-            Self::HOST_IMAGE_COPY_DEVICE_PERFORMANCE_QUERY_EXT => {
-                Some("HOST_IMAGE_COPY_DEVICE_PERFORMANCE_QUERY_EXT")
-            }
-            Self::MEMORY_MAP_INFO_KHR => Some("MEMORY_MAP_INFO_KHR"),
-            Self::MEMORY_UNMAP_INFO_KHR => Some("MEMORY_UNMAP_INFO_KHR"),
             Self::PHYSICAL_DEVICE_MAP_MEMORY_PLACED_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_MAP_MEMORY_PLACED_FEATURES_EXT")
             }
@@ -5953,25 +6759,6 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT")
             }
-            Self::SURFACE_PRESENT_MODE_EXT => Some("SURFACE_PRESENT_MODE_EXT"),
-            Self::SURFACE_PRESENT_SCALING_CAPABILITIES_EXT => {
-                Some("SURFACE_PRESENT_SCALING_CAPABILITIES_EXT")
-            }
-            Self::SURFACE_PRESENT_MODE_COMPATIBILITY_EXT => {
-                Some("SURFACE_PRESENT_MODE_COMPATIBILITY_EXT")
-            }
-            Self::PHYSICAL_DEVICE_SWAPCHAIN_MAINTENANCE_1_FEATURES_EXT => {
-                Some("PHYSICAL_DEVICE_SWAPCHAIN_MAINTENANCE_1_FEATURES_EXT")
-            }
-            Self::SWAPCHAIN_PRESENT_FENCE_INFO_EXT => Some("SWAPCHAIN_PRESENT_FENCE_INFO_EXT"),
-            Self::SWAPCHAIN_PRESENT_MODES_CREATE_INFO_EXT => {
-                Some("SWAPCHAIN_PRESENT_MODES_CREATE_INFO_EXT")
-            }
-            Self::SWAPCHAIN_PRESENT_MODE_INFO_EXT => Some("SWAPCHAIN_PRESENT_MODE_INFO_EXT"),
-            Self::SWAPCHAIN_PRESENT_SCALING_CREATE_INFO_EXT => {
-                Some("SWAPCHAIN_PRESENT_SCALING_CREATE_INFO_EXT")
-            }
-            Self::RELEASE_SWAPCHAIN_IMAGES_INFO_EXT => Some("RELEASE_SWAPCHAIN_IMAGES_INFO_EXT"),
             Self::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_PROPERTIES_NV => {
                 Some("PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_PROPERTIES_NV")
             }
@@ -6021,12 +6808,6 @@ impl fmt::Debug for StructureType {
             Self::DEVICE_MEMORY_REPORT_CALLBACK_DATA_EXT => {
                 Some("DEVICE_MEMORY_REPORT_CALLBACK_DATA_EXT")
             }
-            Self::PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_EXT => {
-                Some("PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_EXT")
-            }
-            Self::PHYSICAL_DEVICE_ROBUSTNESS_2_PROPERTIES_EXT => {
-                Some("PHYSICAL_DEVICE_ROBUSTNESS_2_PROPERTIES_EXT")
-            }
             Self::SAMPLER_CUSTOM_BORDER_COLOR_CREATE_INFO_EXT => {
                 Some("SAMPLER_CUSTOM_BORDER_COLOR_CREATE_INFO_EXT")
             }
@@ -6035,6 +6816,9 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_3D_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_3D_FEATURES_EXT")
             }
             Self::PIPELINE_LIBRARY_CREATE_INFO_KHR => Some("PIPELINE_LIBRARY_CREATE_INFO_KHR"),
             Self::PHYSICAL_DEVICE_PRESENT_BARRIER_FEATURES_NV => {
@@ -6090,6 +6874,18 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_PROPERTIES_NV => {
                 Some("PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_PROPERTIES_NV")
             }
+            Self::PHYSICAL_DEVICE_TILE_SHADING_FEATURES_QCOM => {
+                Some("PHYSICAL_DEVICE_TILE_SHADING_FEATURES_QCOM")
+            }
+            Self::PHYSICAL_DEVICE_TILE_SHADING_PROPERTIES_QCOM => {
+                Some("PHYSICAL_DEVICE_TILE_SHADING_PROPERTIES_QCOM")
+            }
+            Self::RENDER_PASS_TILE_SHADING_CREATE_INFO_QCOM => {
+                Some("RENDER_PASS_TILE_SHADING_CREATE_INFO_QCOM")
+            }
+            Self::PER_TILE_BEGIN_INFO_QCOM => Some("PER_TILE_BEGIN_INFO_QCOM"),
+            Self::PER_TILE_END_INFO_QCOM => Some("PER_TILE_END_INFO_QCOM"),
+            Self::DISPATCH_TILE_INFO_QCOM => Some("DISPATCH_TILE_INFO_QCOM"),
             Self::QUERY_LOW_LATENCY_SUPPORT_NV => Some("QUERY_LOW_LATENCY_SUPPORT_NV"),
             Self::EXPORT_METAL_OBJECT_CREATE_INFO_EXT => {
                 Some("EXPORT_METAL_OBJECT_CREATE_INFO_EXT")
@@ -6107,10 +6903,6 @@ impl fmt::Debug for StructureType {
             Self::IMPORT_METAL_IO_SURFACE_INFO_EXT => Some("IMPORT_METAL_IO_SURFACE_INFO_EXT"),
             Self::EXPORT_METAL_SHARED_EVENT_INFO_EXT => Some("EXPORT_METAL_SHARED_EVENT_INFO_EXT"),
             Self::IMPORT_METAL_SHARED_EVENT_INFO_EXT => Some("IMPORT_METAL_SHARED_EVENT_INFO_EXT"),
-            Self::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV => {
-                Some("QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV")
-            }
-            Self::CHECKPOINT_DATA_2_NV => Some("CHECKPOINT_DATA_2_NV"),
             Self::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_PROPERTIES_EXT => {
                 Some("PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_PROPERTIES_EXT")
             }
@@ -6333,6 +7125,21 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_RAY_TRACING_MAINTENANCE_1_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_RAY_TRACING_MAINTENANCE_1_FEATURES_KHR")
             }
+            Self::PHYSICAL_DEVICE_SHADER_UNTYPED_POINTERS_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_UNTYPED_POINTERS_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_VIDEO_ENCODE_RGB_CONVERSION_FEATURES_VALVE => {
+                Some("PHYSICAL_DEVICE_VIDEO_ENCODE_RGB_CONVERSION_FEATURES_VALVE")
+            }
+            Self::VIDEO_ENCODE_RGB_CONVERSION_CAPABILITIES_VALVE => {
+                Some("VIDEO_ENCODE_RGB_CONVERSION_CAPABILITIES_VALVE")
+            }
+            Self::VIDEO_ENCODE_PROFILE_RGB_CONVERSION_INFO_VALVE => {
+                Some("VIDEO_ENCODE_PROFILE_RGB_CONVERSION_INFO_VALVE")
+            }
+            Self::VIDEO_ENCODE_SESSION_RGB_CONVERSION_CREATE_INFO_VALVE => {
+                Some("VIDEO_ENCODE_SESSION_RGB_CONVERSION_CREATE_INFO_VALVE")
+            }
             Self::PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT")
             }
@@ -6398,9 +7205,6 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM => {
                 Some("PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM")
             }
-            Self::PHYSICAL_DEVICE_SHADER_SUBGROUP_ROTATE_FEATURES_KHR => {
-                Some("PHYSICAL_DEVICE_SHADER_SUBGROUP_ROTATE_FEATURES_KHR")
-            }
             Self::DEVICE_QUEUE_SHADER_CORE_CONTROL_CREATE_INFO_ARM => {
                 Some("DEVICE_QUEUE_SHADER_CORE_CONTROL_CREATE_INFO_ARM")
             }
@@ -6423,9 +7227,6 @@ impl fmt::Debug for StructureType {
             Self::DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE => {
                 Some("DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE")
             }
-            Self::PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_EXT => {
-                Some("PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_EXT")
-            }
             Self::PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT")
             }
@@ -6438,26 +7239,8 @@ impl fmt::Debug for StructureType {
             Self::RENDER_PASS_STRIPE_BEGIN_INFO_ARM => Some("RENDER_PASS_STRIPE_BEGIN_INFO_ARM"),
             Self::RENDER_PASS_STRIPE_INFO_ARM => Some("RENDER_PASS_STRIPE_INFO_ARM"),
             Self::RENDER_PASS_STRIPE_SUBMIT_INFO_ARM => Some("RENDER_PASS_STRIPE_SUBMIT_INFO_ARM"),
-            Self::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_QCOM => {
-                Some("PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_QCOM")
-            }
-            Self::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_PROPERTIES_QCOM => {
-                Some("PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_PROPERTIES_QCOM")
-            }
-            Self::SUBPASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_QCOM => {
-                Some("SUBPASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_QCOM")
-            }
             Self::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_NV")
-            }
-            Self::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_NV => {
-                Some("PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_NV")
-            }
-            Self::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV => {
-                Some("PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV")
-            }
-            Self::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV => {
-                Some("PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV")
             }
             Self::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_COMPUTE_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_COMPUTE_FEATURES_NV")
@@ -6467,6 +7250,15 @@ impl fmt::Debug for StructureType {
             }
             Self::PIPELINE_INDIRECT_DEVICE_ADDRESS_INFO_NV => {
                 Some("PIPELINE_INDIRECT_DEVICE_ADDRESS_INFO_NV")
+            }
+            Self::PHYSICAL_DEVICE_RAY_TRACING_LINEAR_SWEPT_SPHERES_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_RAY_TRACING_LINEAR_SWEPT_SPHERES_FEATURES_NV")
+            }
+            Self::ACCELERATION_STRUCTURE_GEOMETRY_LINEAR_SWEPT_SPHERES_DATA_NV => {
+                Some("ACCELERATION_STRUCTURE_GEOMETRY_LINEAR_SWEPT_SPHERES_DATA_NV")
+            }
+            Self::ACCELERATION_STRUCTURE_GEOMETRY_SPHERES_DATA_NV => {
+                Some("ACCELERATION_STRUCTURE_GEOMETRY_SPHERES_DATA_NV")
             }
             Self::PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV")
@@ -6492,6 +7284,14 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_PROPERTIES_EXT => {
                 Some("PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_PROPERTIES_EXT")
             }
+            Self::NATIVE_BUFFER_USAGE_OHOS => Some("NATIVE_BUFFER_USAGE_OHOS"),
+            Self::NATIVE_BUFFER_PROPERTIES_OHOS => Some("NATIVE_BUFFER_PROPERTIES_OHOS"),
+            Self::NATIVE_BUFFER_FORMAT_PROPERTIES_OHOS => {
+                Some("NATIVE_BUFFER_FORMAT_PROPERTIES_OHOS")
+            }
+            Self::IMPORT_NATIVE_BUFFER_INFO_OHOS => Some("IMPORT_NATIVE_BUFFER_INFO_OHOS"),
+            Self::MEMORY_GET_NATIVE_BUFFER_INFO_OHOS => Some("MEMORY_GET_NATIVE_BUFFER_INFO_OHOS"),
+            Self::EXTERNAL_FORMAT_OHOS => Some("EXTERNAL_FORMAT_OHOS"),
             Self::EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_EXT => {
                 Some("EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_EXT")
             }
@@ -6513,6 +7313,52 @@ impl fmt::Debug for StructureType {
             }
             Self::DIRECT_DRIVER_LOADING_INFO_LUNARG => Some("DIRECT_DRIVER_LOADING_INFO_LUNARG"),
             Self::DIRECT_DRIVER_LOADING_LIST_LUNARG => Some("DIRECT_DRIVER_LOADING_LIST_LUNARG"),
+            Self::TENSOR_CREATE_INFO_ARM => Some("TENSOR_CREATE_INFO_ARM"),
+            Self::TENSOR_VIEW_CREATE_INFO_ARM => Some("TENSOR_VIEW_CREATE_INFO_ARM"),
+            Self::BIND_TENSOR_MEMORY_INFO_ARM => Some("BIND_TENSOR_MEMORY_INFO_ARM"),
+            Self::WRITE_DESCRIPTOR_SET_TENSOR_ARM => Some("WRITE_DESCRIPTOR_SET_TENSOR_ARM"),
+            Self::PHYSICAL_DEVICE_TENSOR_PROPERTIES_ARM => {
+                Some("PHYSICAL_DEVICE_TENSOR_PROPERTIES_ARM")
+            }
+            Self::TENSOR_FORMAT_PROPERTIES_ARM => Some("TENSOR_FORMAT_PROPERTIES_ARM"),
+            Self::TENSOR_DESCRIPTION_ARM => Some("TENSOR_DESCRIPTION_ARM"),
+            Self::TENSOR_MEMORY_REQUIREMENTS_INFO_ARM => {
+                Some("TENSOR_MEMORY_REQUIREMENTS_INFO_ARM")
+            }
+            Self::TENSOR_MEMORY_BARRIER_ARM => Some("TENSOR_MEMORY_BARRIER_ARM"),
+            Self::PHYSICAL_DEVICE_TENSOR_FEATURES_ARM => {
+                Some("PHYSICAL_DEVICE_TENSOR_FEATURES_ARM")
+            }
+            Self::DEVICE_TENSOR_MEMORY_REQUIREMENTS_ARM => {
+                Some("DEVICE_TENSOR_MEMORY_REQUIREMENTS_ARM")
+            }
+            Self::COPY_TENSOR_INFO_ARM => Some("COPY_TENSOR_INFO_ARM"),
+            Self::TENSOR_COPY_ARM => Some("TENSOR_COPY_ARM"),
+            Self::TENSOR_DEPENDENCY_INFO_ARM => Some("TENSOR_DEPENDENCY_INFO_ARM"),
+            Self::MEMORY_DEDICATED_ALLOCATE_INFO_TENSOR_ARM => {
+                Some("MEMORY_DEDICATED_ALLOCATE_INFO_TENSOR_ARM")
+            }
+            Self::PHYSICAL_DEVICE_EXTERNAL_TENSOR_INFO_ARM => {
+                Some("PHYSICAL_DEVICE_EXTERNAL_TENSOR_INFO_ARM")
+            }
+            Self::EXTERNAL_TENSOR_PROPERTIES_ARM => Some("EXTERNAL_TENSOR_PROPERTIES_ARM"),
+            Self::EXTERNAL_MEMORY_TENSOR_CREATE_INFO_ARM => {
+                Some("EXTERNAL_MEMORY_TENSOR_CREATE_INFO_ARM")
+            }
+            Self::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_TENSOR_FEATURES_ARM => {
+                Some("PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_TENSOR_FEATURES_ARM")
+            }
+            Self::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_TENSOR_PROPERTIES_ARM => {
+                Some("PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_TENSOR_PROPERTIES_ARM")
+            }
+            Self::DESCRIPTOR_GET_TENSOR_INFO_ARM => Some("DESCRIPTOR_GET_TENSOR_INFO_ARM"),
+            Self::TENSOR_CAPTURE_DESCRIPTOR_DATA_INFO_ARM => {
+                Some("TENSOR_CAPTURE_DESCRIPTOR_DATA_INFO_ARM")
+            }
+            Self::TENSOR_VIEW_CAPTURE_DESCRIPTOR_DATA_INFO_ARM => {
+                Some("TENSOR_VIEW_CAPTURE_DESCRIPTOR_DATA_INFO_ARM")
+            }
+            Self::FRAME_BOUNDARY_TENSORS_ARM => Some("FRAME_BOUNDARY_TENSORS_ARM"),
             Self::PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_FEATURES_EXT")
             }
@@ -6546,9 +7392,6 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_LEGACY_DITHERING_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_LEGACY_DITHERING_FEATURES_EXT")
             }
-            Self::PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT => {
-                Some("PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT")
-            }
             Self::PHYSICAL_DEVICE_EXTERNAL_FORMAT_RESOLVE_FEATURES_ANDROID => {
                 Some("PHYSICAL_DEVICE_EXTERNAL_FORMAT_RESOLVE_FEATURES_ANDROID")
             }
@@ -6558,27 +7401,31 @@ impl fmt::Debug for StructureType {
             Self::ANDROID_HARDWARE_BUFFER_FORMAT_RESOLVE_PROPERTIES_ANDROID => {
                 Some("ANDROID_HARDWARE_BUFFER_FORMAT_RESOLVE_PROPERTIES_ANDROID")
             }
-            Self::PHYSICAL_DEVICE_MAINTENANCE_5_FEATURES_KHR => {
-                Some("PHYSICAL_DEVICE_MAINTENANCE_5_FEATURES_KHR")
-            }
-            Self::PHYSICAL_DEVICE_MAINTENANCE_5_PROPERTIES_KHR => {
-                Some("PHYSICAL_DEVICE_MAINTENANCE_5_PROPERTIES_KHR")
-            }
-            Self::RENDERING_AREA_INFO_KHR => Some("RENDERING_AREA_INFO_KHR"),
-            Self::DEVICE_IMAGE_SUBRESOURCE_INFO_KHR => Some("DEVICE_IMAGE_SUBRESOURCE_INFO_KHR"),
-            Self::SUBRESOURCE_LAYOUT_2_KHR => Some("SUBRESOURCE_LAYOUT_2_KHR"),
-            Self::IMAGE_SUBRESOURCE_2_KHR => Some("IMAGE_SUBRESOURCE_2_KHR"),
-            Self::PIPELINE_CREATE_FLAGS_2_CREATE_INFO_KHR => {
-                Some("PIPELINE_CREATE_FLAGS_2_CREATE_INFO_KHR")
-            }
-            Self::BUFFER_USAGE_FLAGS_2_CREATE_INFO_KHR => {
-                Some("BUFFER_USAGE_FLAGS_2_CREATE_INFO_KHR")
-            }
             Self::PHYSICAL_DEVICE_ANTI_LAG_FEATURES_AMD => {
                 Some("PHYSICAL_DEVICE_ANTI_LAG_FEATURES_AMD")
             }
             Self::ANTI_LAG_DATA_AMD => Some("ANTI_LAG_DATA_AMD"),
             Self::ANTI_LAG_PRESENTATION_INFO_AMD => Some("ANTI_LAG_PRESENTATION_INFO_AMD"),
+            Self::PHYSICAL_DEVICE_DENSE_GEOMETRY_FORMAT_FEATURES_AMDX => {
+                Some("PHYSICAL_DEVICE_DENSE_GEOMETRY_FORMAT_FEATURES_AMDX")
+            }
+            Self::ACCELERATION_STRUCTURE_DENSE_GEOMETRY_FORMAT_TRIANGLES_DATA_AMDX => {
+                Some("ACCELERATION_STRUCTURE_DENSE_GEOMETRY_FORMAT_TRIANGLES_DATA_AMDX")
+            }
+            Self::SURFACE_CAPABILITIES_PRESENT_ID_2_KHR => {
+                Some("SURFACE_CAPABILITIES_PRESENT_ID_2_KHR")
+            }
+            Self::PRESENT_ID_2_KHR => Some("PRESENT_ID_2_KHR"),
+            Self::PHYSICAL_DEVICE_PRESENT_ID_2_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_PRESENT_ID_2_FEATURES_KHR")
+            }
+            Self::SURFACE_CAPABILITIES_PRESENT_WAIT_2_KHR => {
+                Some("SURFACE_CAPABILITIES_PRESENT_WAIT_2_KHR")
+            }
+            Self::PHYSICAL_DEVICE_PRESENT_WAIT_2_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_PRESENT_WAIT_2_FEATURES_KHR")
+            }
+            Self::PRESENT_WAIT_2_INFO_KHR => Some("PRESENT_WAIT_2_INFO_KHR"),
             Self::PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR")
             }
@@ -6615,6 +7462,25 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_AMIGO_PROFILING_FEATURES_SEC")
             }
             Self::AMIGO_PROFILING_SUBMIT_INFO_SEC => Some("AMIGO_PROFILING_SUBMIT_INFO_SEC"),
+            Self::SURFACE_PRESENT_MODE_KHR => Some("SURFACE_PRESENT_MODE_KHR"),
+            Self::SURFACE_PRESENT_SCALING_CAPABILITIES_KHR => {
+                Some("SURFACE_PRESENT_SCALING_CAPABILITIES_KHR")
+            }
+            Self::SURFACE_PRESENT_MODE_COMPATIBILITY_KHR => {
+                Some("SURFACE_PRESENT_MODE_COMPATIBILITY_KHR")
+            }
+            Self::PHYSICAL_DEVICE_SWAPCHAIN_MAINTENANCE_1_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SWAPCHAIN_MAINTENANCE_1_FEATURES_KHR")
+            }
+            Self::SWAPCHAIN_PRESENT_FENCE_INFO_KHR => Some("SWAPCHAIN_PRESENT_FENCE_INFO_KHR"),
+            Self::SWAPCHAIN_PRESENT_MODES_CREATE_INFO_KHR => {
+                Some("SWAPCHAIN_PRESENT_MODES_CREATE_INFO_KHR")
+            }
+            Self::SWAPCHAIN_PRESENT_MODE_INFO_KHR => Some("SWAPCHAIN_PRESENT_MODE_INFO_KHR"),
+            Self::SWAPCHAIN_PRESENT_SCALING_CREATE_INFO_KHR => {
+                Some("SWAPCHAIN_PRESENT_SCALING_CREATE_INFO_KHR")
+            }
+            Self::RELEASE_SWAPCHAIN_IMAGES_INFO_KHR => Some("RELEASE_SWAPCHAIN_IMAGES_INFO_KHR"),
             Self::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_VIEWPORTS_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_VIEWPORTS_FEATURES_QCOM")
             }
@@ -6623,6 +7489,16 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV => {
                 Some("PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV")
+            }
+            Self::PHYSICAL_DEVICE_COOPERATIVE_VECTOR_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_COOPERATIVE_VECTOR_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_COOPERATIVE_VECTOR_PROPERTIES_NV => {
+                Some("PHYSICAL_DEVICE_COOPERATIVE_VECTOR_PROPERTIES_NV")
+            }
+            Self::COOPERATIVE_VECTOR_PROPERTIES_NV => Some("COOPERATIVE_VECTOR_PROPERTIES_NV"),
+            Self::CONVERT_COOPERATIVE_VECTOR_MATRIX_INFO_NV => {
+                Some("CONVERT_COOPERATIVE_VECTOR_MATRIX_INFO_NV")
             }
             Self::PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_FEATURES_NV")
@@ -6655,6 +7531,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_INTERNALLY_SYNCHRONIZED_QUEUES_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_INTERNALLY_SYNCHRONIZED_QUEUES_FEATURES_KHR")
+            }
             Self::LATENCY_SLEEP_MODE_INFO_NV => Some("LATENCY_SLEEP_MODE_INFO_NV"),
             Self::LATENCY_SLEEP_INFO_NV => Some("LATENCY_SLEEP_INFO_NV"),
             Self::SET_LATENCY_MARKER_INFO_NV => Some("SET_LATENCY_MARKER_INFO_NV"),
@@ -6670,6 +7549,62 @@ impl fmt::Debug for StructureType {
             Self::COOPERATIVE_MATRIX_PROPERTIES_KHR => Some("COOPERATIVE_MATRIX_PROPERTIES_KHR"),
             Self::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_KHR => {
                 Some("PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_KHR")
+            }
+            Self::DATA_GRAPH_PIPELINE_CREATE_INFO_ARM => {
+                Some("DATA_GRAPH_PIPELINE_CREATE_INFO_ARM")
+            }
+            Self::DATA_GRAPH_PIPELINE_SESSION_CREATE_INFO_ARM => {
+                Some("DATA_GRAPH_PIPELINE_SESSION_CREATE_INFO_ARM")
+            }
+            Self::DATA_GRAPH_PIPELINE_RESOURCE_INFO_ARM => {
+                Some("DATA_GRAPH_PIPELINE_RESOURCE_INFO_ARM")
+            }
+            Self::DATA_GRAPH_PIPELINE_CONSTANT_ARM => Some("DATA_GRAPH_PIPELINE_CONSTANT_ARM"),
+            Self::DATA_GRAPH_PIPELINE_SESSION_MEMORY_REQUIREMENTS_INFO_ARM => {
+                Some("DATA_GRAPH_PIPELINE_SESSION_MEMORY_REQUIREMENTS_INFO_ARM")
+            }
+            Self::BIND_DATA_GRAPH_PIPELINE_SESSION_MEMORY_INFO_ARM => {
+                Some("BIND_DATA_GRAPH_PIPELINE_SESSION_MEMORY_INFO_ARM")
+            }
+            Self::PHYSICAL_DEVICE_DATA_GRAPH_FEATURES_ARM => {
+                Some("PHYSICAL_DEVICE_DATA_GRAPH_FEATURES_ARM")
+            }
+            Self::DATA_GRAPH_PIPELINE_SHADER_MODULE_CREATE_INFO_ARM => {
+                Some("DATA_GRAPH_PIPELINE_SHADER_MODULE_CREATE_INFO_ARM")
+            }
+            Self::DATA_GRAPH_PIPELINE_PROPERTY_QUERY_RESULT_ARM => {
+                Some("DATA_GRAPH_PIPELINE_PROPERTY_QUERY_RESULT_ARM")
+            }
+            Self::DATA_GRAPH_PIPELINE_INFO_ARM => Some("DATA_GRAPH_PIPELINE_INFO_ARM"),
+            Self::DATA_GRAPH_PIPELINE_COMPILER_CONTROL_CREATE_INFO_ARM => {
+                Some("DATA_GRAPH_PIPELINE_COMPILER_CONTROL_CREATE_INFO_ARM")
+            }
+            Self::DATA_GRAPH_PIPELINE_SESSION_BIND_POINT_REQUIREMENTS_INFO_ARM => {
+                Some("DATA_GRAPH_PIPELINE_SESSION_BIND_POINT_REQUIREMENTS_INFO_ARM")
+            }
+            Self::DATA_GRAPH_PIPELINE_SESSION_BIND_POINT_REQUIREMENT_ARM => {
+                Some("DATA_GRAPH_PIPELINE_SESSION_BIND_POINT_REQUIREMENT_ARM")
+            }
+            Self::DATA_GRAPH_PIPELINE_IDENTIFIER_CREATE_INFO_ARM => {
+                Some("DATA_GRAPH_PIPELINE_IDENTIFIER_CREATE_INFO_ARM")
+            }
+            Self::DATA_GRAPH_PIPELINE_DISPATCH_INFO_ARM => {
+                Some("DATA_GRAPH_PIPELINE_DISPATCH_INFO_ARM")
+            }
+            Self::DATA_GRAPH_PROCESSING_ENGINE_CREATE_INFO_ARM => {
+                Some("DATA_GRAPH_PROCESSING_ENGINE_CREATE_INFO_ARM")
+            }
+            Self::QUEUE_FAMILY_DATA_GRAPH_PROCESSING_ENGINE_PROPERTIES_ARM => {
+                Some("QUEUE_FAMILY_DATA_GRAPH_PROCESSING_ENGINE_PROPERTIES_ARM")
+            }
+            Self::QUEUE_FAMILY_DATA_GRAPH_PROPERTIES_ARM => {
+                Some("QUEUE_FAMILY_DATA_GRAPH_PROPERTIES_ARM")
+            }
+            Self::PHYSICAL_DEVICE_QUEUE_FAMILY_DATA_GRAPH_PROCESSING_ENGINE_INFO_ARM => {
+                Some("PHYSICAL_DEVICE_QUEUE_FAMILY_DATA_GRAPH_PROCESSING_ENGINE_INFO_ARM")
+            }
+            Self::DATA_GRAPH_PIPELINE_CONSTANT_TENSOR_SEMI_STRUCTURED_SPARSITY_INFO_ARM => {
+                Some("DATA_GRAPH_PIPELINE_CONSTANT_TENSOR_SEMI_STRUCTURED_SPARSITY_INFO_ARM")
             }
             Self::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_RENDER_AREAS_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_RENDER_AREAS_FEATURES_QCOM")
@@ -6690,6 +7625,37 @@ impl fmt::Debug for StructureType {
                 Some("VIDEO_DECODE_AV1_SESSION_PARAMETERS_CREATE_INFO_KHR")
             }
             Self::VIDEO_DECODE_AV1_DPB_SLOT_INFO_KHR => Some("VIDEO_DECODE_AV1_DPB_SLOT_INFO_KHR"),
+            Self::VIDEO_ENCODE_AV1_CAPABILITIES_KHR => Some("VIDEO_ENCODE_AV1_CAPABILITIES_KHR"),
+            Self::VIDEO_ENCODE_AV1_SESSION_PARAMETERS_CREATE_INFO_KHR => {
+                Some("VIDEO_ENCODE_AV1_SESSION_PARAMETERS_CREATE_INFO_KHR")
+            }
+            Self::VIDEO_ENCODE_AV1_PICTURE_INFO_KHR => Some("VIDEO_ENCODE_AV1_PICTURE_INFO_KHR"),
+            Self::VIDEO_ENCODE_AV1_DPB_SLOT_INFO_KHR => Some("VIDEO_ENCODE_AV1_DPB_SLOT_INFO_KHR"),
+            Self::PHYSICAL_DEVICE_VIDEO_ENCODE_AV1_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_VIDEO_ENCODE_AV1_FEATURES_KHR")
+            }
+            Self::VIDEO_ENCODE_AV1_PROFILE_INFO_KHR => Some("VIDEO_ENCODE_AV1_PROFILE_INFO_KHR"),
+            Self::VIDEO_ENCODE_AV1_RATE_CONTROL_INFO_KHR => {
+                Some("VIDEO_ENCODE_AV1_RATE_CONTROL_INFO_KHR")
+            }
+            Self::VIDEO_ENCODE_AV1_RATE_CONTROL_LAYER_INFO_KHR => {
+                Some("VIDEO_ENCODE_AV1_RATE_CONTROL_LAYER_INFO_KHR")
+            }
+            Self::VIDEO_ENCODE_AV1_QUALITY_LEVEL_PROPERTIES_KHR => {
+                Some("VIDEO_ENCODE_AV1_QUALITY_LEVEL_PROPERTIES_KHR")
+            }
+            Self::VIDEO_ENCODE_AV1_SESSION_CREATE_INFO_KHR => {
+                Some("VIDEO_ENCODE_AV1_SESSION_CREATE_INFO_KHR")
+            }
+            Self::VIDEO_ENCODE_AV1_GOP_REMAINING_FRAME_INFO_KHR => {
+                Some("VIDEO_ENCODE_AV1_GOP_REMAINING_FRAME_INFO_KHR")
+            }
+            Self::PHYSICAL_DEVICE_VIDEO_DECODE_VP9_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_VIDEO_DECODE_VP9_FEATURES_KHR")
+            }
+            Self::VIDEO_DECODE_VP9_CAPABILITIES_KHR => Some("VIDEO_DECODE_VP9_CAPABILITIES_KHR"),
+            Self::VIDEO_DECODE_VP9_PICTURE_INFO_KHR => Some("VIDEO_DECODE_VP9_PICTURE_INFO_KHR"),
+            Self::VIDEO_DECODE_VP9_PROFILE_INFO_KHR => Some("VIDEO_DECODE_VP9_PROFILE_INFO_KHR"),
             Self::PHYSICAL_DEVICE_VIDEO_MAINTENANCE_1_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_VIDEO_MAINTENANCE_1_FEATURES_KHR")
             }
@@ -6725,18 +7691,10 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT")
             }
-            Self::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_KHR => {
-                Some("PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_KHR")
+            Self::PHYSICAL_DEVICE_UNIFIED_IMAGE_LAYOUTS_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_UNIFIED_IMAGE_LAYOUTS_FEATURES_KHR")
             }
-            Self::PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_KHR => {
-                Some("PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_KHR")
-            }
-            Self::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_KHR => {
-                Some("PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_KHR")
-            }
-            Self::PHYSICAL_DEVICE_SHADER_FLOAT_CONTROLS_2_FEATURES_KHR => {
-                Some("PHYSICAL_DEVICE_SHADER_FLOAT_CONTROLS_2_FEATURES_KHR")
-            }
+            Self::ATTACHMENT_FEEDBACK_LOOP_INFO_EXT => Some("ATTACHMENT_FEEDBACK_LOOP_INFO_EXT"),
             Self::SCREEN_BUFFER_PROPERTIES_QNX => Some("SCREEN_BUFFER_PROPERTIES_QNX"),
             Self::SCREEN_BUFFER_FORMAT_PROPERTIES_QNX => {
                 Some("SCREEN_BUFFER_FORMAT_PROPERTIES_QNX")
@@ -6749,35 +7707,7 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT => {
                 Some("PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT")
             }
-            Self::PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_KHR => {
-                Some("PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_KHR")
-            }
-            Self::PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_KHR => {
-                Some("PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_KHR")
-            }
-            Self::PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_KHR => {
-                Some("PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_KHR")
-            }
-            Self::PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_KHR => {
-                Some("PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_KHR")
-            }
             Self::CALIBRATED_TIMESTAMP_INFO_KHR => Some("CALIBRATED_TIMESTAMP_INFO_KHR"),
-            Self::PHYSICAL_DEVICE_SHADER_EXPECT_ASSUME_FEATURES_KHR => {
-                Some("PHYSICAL_DEVICE_SHADER_EXPECT_ASSUME_FEATURES_KHR")
-            }
-            Self::PHYSICAL_DEVICE_MAINTENANCE_6_FEATURES_KHR => {
-                Some("PHYSICAL_DEVICE_MAINTENANCE_6_FEATURES_KHR")
-            }
-            Self::PHYSICAL_DEVICE_MAINTENANCE_6_PROPERTIES_KHR => {
-                Some("PHYSICAL_DEVICE_MAINTENANCE_6_PROPERTIES_KHR")
-            }
-            Self::BIND_MEMORY_STATUS_KHR => Some("BIND_MEMORY_STATUS_KHR"),
-            Self::BIND_DESCRIPTOR_SETS_INFO_KHR => Some("BIND_DESCRIPTOR_SETS_INFO_KHR"),
-            Self::PUSH_CONSTANTS_INFO_KHR => Some("PUSH_CONSTANTS_INFO_KHR"),
-            Self::PUSH_DESCRIPTOR_SET_INFO_KHR => Some("PUSH_DESCRIPTOR_SET_INFO_KHR"),
-            Self::PUSH_DESCRIPTOR_SET_WITH_TEMPLATE_INFO_KHR => {
-                Some("PUSH_DESCRIPTOR_SET_WITH_TEMPLATE_INFO_KHR")
-            }
             Self::SET_DESCRIPTOR_BUFFER_OFFSETS_INFO_EXT => {
                 Some("SET_DESCRIPTOR_BUFFER_OFFSETS_INFO_EXT")
             }
@@ -6787,8 +7717,95 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV")
             }
+            Self::PHYSICAL_DEVICE_TILE_MEMORY_HEAP_FEATURES_QCOM => {
+                Some("PHYSICAL_DEVICE_TILE_MEMORY_HEAP_FEATURES_QCOM")
+            }
+            Self::PHYSICAL_DEVICE_TILE_MEMORY_HEAP_PROPERTIES_QCOM => {
+                Some("PHYSICAL_DEVICE_TILE_MEMORY_HEAP_PROPERTIES_QCOM")
+            }
+            Self::TILE_MEMORY_REQUIREMENTS_QCOM => Some("TILE_MEMORY_REQUIREMENTS_QCOM"),
+            Self::TILE_MEMORY_BIND_INFO_QCOM => Some("TILE_MEMORY_BIND_INFO_QCOM"),
+            Self::TILE_MEMORY_SIZE_INFO_QCOM => Some("TILE_MEMORY_SIZE_INFO_QCOM"),
+            Self::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_KHR")
+            }
+            Self::COPY_MEMORY_INDIRECT_INFO_KHR => Some("COPY_MEMORY_INDIRECT_INFO_KHR"),
+            Self::COPY_MEMORY_TO_IMAGE_INDIRECT_INFO_KHR => {
+                Some("COPY_MEMORY_TO_IMAGE_INDIRECT_INFO_KHR")
+            }
+            Self::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_EXT")
+            }
+            Self::DECOMPRESS_MEMORY_INFO_EXT => Some("DECOMPRESS_MEMORY_INFO_EXT"),
+            Self::DISPLAY_SURFACE_STEREO_CREATE_INFO_NV => {
+                Some("DISPLAY_SURFACE_STEREO_CREATE_INFO_NV")
+            }
+            Self::DISPLAY_MODE_STEREO_PROPERTIES_NV => Some("DISPLAY_MODE_STEREO_PROPERTIES_NV"),
+            Self::VIDEO_ENCODE_INTRA_REFRESH_CAPABILITIES_KHR => {
+                Some("VIDEO_ENCODE_INTRA_REFRESH_CAPABILITIES_KHR")
+            }
+            Self::VIDEO_ENCODE_SESSION_INTRA_REFRESH_CREATE_INFO_KHR => {
+                Some("VIDEO_ENCODE_SESSION_INTRA_REFRESH_CREATE_INFO_KHR")
+            }
+            Self::VIDEO_ENCODE_INTRA_REFRESH_INFO_KHR => {
+                Some("VIDEO_ENCODE_INTRA_REFRESH_INFO_KHR")
+            }
+            Self::VIDEO_REFERENCE_INTRA_REFRESH_INFO_KHR => {
+                Some("VIDEO_REFERENCE_INTRA_REFRESH_INFO_KHR")
+            }
+            Self::PHYSICAL_DEVICE_VIDEO_ENCODE_INTRA_REFRESH_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_VIDEO_ENCODE_INTRA_REFRESH_FEATURES_KHR")
+            }
+            Self::VIDEO_ENCODE_QUANTIZATION_MAP_CAPABILITIES_KHR => {
+                Some("VIDEO_ENCODE_QUANTIZATION_MAP_CAPABILITIES_KHR")
+            }
+            Self::VIDEO_FORMAT_QUANTIZATION_MAP_PROPERTIES_KHR => {
+                Some("VIDEO_FORMAT_QUANTIZATION_MAP_PROPERTIES_KHR")
+            }
+            Self::VIDEO_ENCODE_QUANTIZATION_MAP_INFO_KHR => {
+                Some("VIDEO_ENCODE_QUANTIZATION_MAP_INFO_KHR")
+            }
+            Self::VIDEO_ENCODE_QUANTIZATION_MAP_SESSION_PARAMETERS_CREATE_INFO_KHR => {
+                Some("VIDEO_ENCODE_QUANTIZATION_MAP_SESSION_PARAMETERS_CREATE_INFO_KHR")
+            }
+            Self::PHYSICAL_DEVICE_VIDEO_ENCODE_QUANTIZATION_MAP_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_VIDEO_ENCODE_QUANTIZATION_MAP_FEATURES_KHR")
+            }
+            Self::VIDEO_ENCODE_H264_QUANTIZATION_MAP_CAPABILITIES_KHR => {
+                Some("VIDEO_ENCODE_H264_QUANTIZATION_MAP_CAPABILITIES_KHR")
+            }
+            Self::VIDEO_ENCODE_H265_QUANTIZATION_MAP_CAPABILITIES_KHR => {
+                Some("VIDEO_ENCODE_H265_QUANTIZATION_MAP_CAPABILITIES_KHR")
+            }
+            Self::VIDEO_FORMAT_H265_QUANTIZATION_MAP_PROPERTIES_KHR => {
+                Some("VIDEO_FORMAT_H265_QUANTIZATION_MAP_PROPERTIES_KHR")
+            }
+            Self::VIDEO_ENCODE_AV1_QUANTIZATION_MAP_CAPABILITIES_KHR => {
+                Some("VIDEO_ENCODE_AV1_QUANTIZATION_MAP_CAPABILITIES_KHR")
+            }
+            Self::VIDEO_FORMAT_AV1_QUANTIZATION_MAP_PROPERTIES_KHR => {
+                Some("VIDEO_FORMAT_AV1_QUANTIZATION_MAP_PROPERTIES_KHR")
+            }
             Self::PHYSICAL_DEVICE_RAW_ACCESS_CHAINS_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_RAW_ACCESS_CHAINS_FEATURES_NV")
+            }
+            Self::EXTERNAL_COMPUTE_QUEUE_DEVICE_CREATE_INFO_NV => {
+                Some("EXTERNAL_COMPUTE_QUEUE_DEVICE_CREATE_INFO_NV")
+            }
+            Self::EXTERNAL_COMPUTE_QUEUE_CREATE_INFO_NV => {
+                Some("EXTERNAL_COMPUTE_QUEUE_CREATE_INFO_NV")
+            }
+            Self::EXTERNAL_COMPUTE_QUEUE_DATA_PARAMS_NV => {
+                Some("EXTERNAL_COMPUTE_QUEUE_DATA_PARAMS_NV")
+            }
+            Self::PHYSICAL_DEVICE_EXTERNAL_COMPUTE_QUEUE_PROPERTIES_NV => {
+                Some("PHYSICAL_DEVICE_EXTERNAL_COMPUTE_QUEUE_PROPERTIES_NV")
             }
             Self::PHYSICAL_DEVICE_SHADER_RELAXED_EXTENDED_INSTRUCTION_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_SHADER_RELAXED_EXTENDED_INSTRUCTION_FEATURES_KHR")
@@ -6817,8 +7834,53 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_SHADER_REPLICATED_COMPOSITES_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_REPLICATED_COMPOSITES_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_SHADER_FLOAT8_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_FLOAT8_FEATURES_EXT")
+            }
             Self::PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_CLUSTER_ACCELERATION_STRUCTURE_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_CLUSTER_ACCELERATION_STRUCTURE_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_CLUSTER_ACCELERATION_STRUCTURE_PROPERTIES_NV => {
+                Some("PHYSICAL_DEVICE_CLUSTER_ACCELERATION_STRUCTURE_PROPERTIES_NV")
+            }
+            Self::CLUSTER_ACCELERATION_STRUCTURE_CLUSTERS_BOTTOM_LEVEL_INPUT_NV => {
+                Some("CLUSTER_ACCELERATION_STRUCTURE_CLUSTERS_BOTTOM_LEVEL_INPUT_NV")
+            }
+            Self::CLUSTER_ACCELERATION_STRUCTURE_TRIANGLE_CLUSTER_INPUT_NV => {
+                Some("CLUSTER_ACCELERATION_STRUCTURE_TRIANGLE_CLUSTER_INPUT_NV")
+            }
+            Self::CLUSTER_ACCELERATION_STRUCTURE_MOVE_OBJECTS_INPUT_NV => {
+                Some("CLUSTER_ACCELERATION_STRUCTURE_MOVE_OBJECTS_INPUT_NV")
+            }
+            Self::CLUSTER_ACCELERATION_STRUCTURE_INPUT_INFO_NV => {
+                Some("CLUSTER_ACCELERATION_STRUCTURE_INPUT_INFO_NV")
+            }
+            Self::CLUSTER_ACCELERATION_STRUCTURE_COMMANDS_INFO_NV => {
+                Some("CLUSTER_ACCELERATION_STRUCTURE_COMMANDS_INFO_NV")
+            }
+            Self::RAY_TRACING_PIPELINE_CLUSTER_ACCELERATION_STRUCTURE_CREATE_INFO_NV => {
+                Some("RAY_TRACING_PIPELINE_CLUSTER_ACCELERATION_STRUCTURE_CREATE_INFO_NV")
+            }
+            Self::PHYSICAL_DEVICE_PARTITIONED_ACCELERATION_STRUCTURE_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_PARTITIONED_ACCELERATION_STRUCTURE_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_PARTITIONED_ACCELERATION_STRUCTURE_PROPERTIES_NV => {
+                Some("PHYSICAL_DEVICE_PARTITIONED_ACCELERATION_STRUCTURE_PROPERTIES_NV")
+            }
+            Self::WRITE_DESCRIPTOR_SET_PARTITIONED_ACCELERATION_STRUCTURE_NV => {
+                Some("WRITE_DESCRIPTOR_SET_PARTITIONED_ACCELERATION_STRUCTURE_NV")
+            }
+            Self::PARTITIONED_ACCELERATION_STRUCTURE_INSTANCES_INPUT_NV => {
+                Some("PARTITIONED_ACCELERATION_STRUCTURE_INSTANCES_INPUT_NV")
+            }
+            Self::BUILD_PARTITIONED_ACCELERATION_STRUCTURE_INFO_NV => {
+                Some("BUILD_PARTITIONED_ACCELERATION_STRUCTURE_INFO_NV")
+            }
+            Self::PARTITIONED_ACCELERATION_STRUCTURE_FLAGS_NV => {
+                Some("PARTITIONED_ACCELERATION_STRUCTURE_FLAGS_NV")
             }
             Self::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_FEATURES_EXT")
@@ -6856,6 +7918,10 @@ impl fmt::Debug for StructureType {
                 Some("GENERATED_COMMANDS_PIPELINE_INFO_EXT")
             }
             Self::GENERATED_COMMANDS_SHADER_INFO_EXT => Some("GENERATED_COMMANDS_SHADER_INFO_EXT"),
+            Self::PHYSICAL_DEVICE_MAINTENANCE_8_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_8_FEATURES_KHR")
+            }
+            Self::MEMORY_BARRIER_ACCESS_FLAGS_3_KHR => Some("MEMORY_BARRIER_ACCESS_FLAGS_3_KHR"),
             Self::PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_FEATURES_MESA => {
                 Some("PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_FEATURES_MESA")
             }
@@ -6865,26 +7931,178 @@ impl fmt::Debug for StructureType {
             Self::IMAGE_ALIGNMENT_CONTROL_CREATE_INFO_MESA => {
                 Some("IMAGE_ALIGNMENT_CONTROL_CREATE_INFO_MESA")
             }
+            Self::PHYSICAL_DEVICE_SHADER_FMA_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_FMA_FEATURES_KHR")
+            }
+            Self::PUSH_CONSTANT_BANK_INFO_NV => Some("PUSH_CONSTANT_BANK_INFO_NV"),
+            Self::PHYSICAL_DEVICE_PUSH_CONSTANT_BANK_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_PUSH_CONSTANT_BANK_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_PUSH_CONSTANT_BANK_PROPERTIES_NV => {
+                Some("PHYSICAL_DEVICE_PUSH_CONSTANT_BANK_PROPERTIES_NV")
+            }
+            Self::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_EXT")
+            }
             Self::PHYSICAL_DEVICE_DEPTH_CLAMP_CONTROL_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_DEPTH_CLAMP_CONTROL_FEATURES_EXT")
             }
             Self::PIPELINE_VIEWPORT_DEPTH_CLAMP_CONTROL_CREATE_INFO_EXT => {
                 Some("PIPELINE_VIEWPORT_DEPTH_CLAMP_CONTROL_CREATE_INFO_EXT")
             }
-            Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
-                Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
+            Self::PHYSICAL_DEVICE_MAINTENANCE_9_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_9_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_9_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_9_PROPERTIES_KHR")
+            }
+            Self::QUEUE_FAMILY_OWNERSHIP_TRANSFER_PROPERTIES_KHR => {
+                Some("QUEUE_FAMILY_OWNERSHIP_TRANSFER_PROPERTIES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_VIDEO_MAINTENANCE_2_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_VIDEO_MAINTENANCE_2_FEATURES_KHR")
+            }
+            Self::VIDEO_DECODE_H264_INLINE_SESSION_PARAMETERS_INFO_KHR => {
+                Some("VIDEO_DECODE_H264_INLINE_SESSION_PARAMETERS_INFO_KHR")
+            }
+            Self::VIDEO_DECODE_H265_INLINE_SESSION_PARAMETERS_INFO_KHR => {
+                Some("VIDEO_DECODE_H265_INLINE_SESSION_PARAMETERS_INFO_KHR")
+            }
+            Self::VIDEO_DECODE_AV1_INLINE_SESSION_PARAMETERS_INFO_KHR => {
+                Some("VIDEO_DECODE_AV1_INLINE_SESSION_PARAMETERS_INFO_KHR")
+            }
+            Self::SURFACE_CREATE_INFO_OHOS => Some("SURFACE_CREATE_INFO_OHOS"),
+            Self::PHYSICAL_DEVICE_HDR_VIVID_FEATURES_HUAWEI => {
+                Some("PHYSICAL_DEVICE_HDR_VIVID_FEATURES_HUAWEI")
+            }
+            Self::HDR_VIVID_DYNAMIC_METADATA_HUAWEI => Some("HDR_VIVID_DYNAMIC_METADATA_HUAWEI"),
+            Self::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_2_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_COOPERATIVE_MATRIX_2_FEATURES_NV")
+            }
+            Self::COOPERATIVE_MATRIX_FLEXIBLE_DIMENSIONS_PROPERTIES_NV => {
+                Some("COOPERATIVE_MATRIX_FLEXIBLE_DIMENSIONS_PROPERTIES_NV")
+            }
+            Self::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_2_PROPERTIES_NV => {
+                Some("PHYSICAL_DEVICE_COOPERATIVE_MATRIX_2_PROPERTIES_NV")
+            }
+            Self::PHYSICAL_DEVICE_PIPELINE_OPACITY_MICROMAP_FEATURES_ARM => {
+                Some("PHYSICAL_DEVICE_PIPELINE_OPACITY_MICROMAP_FEATURES_ARM")
+            }
+            Self::IMPORT_MEMORY_METAL_HANDLE_INFO_EXT => {
+                Some("IMPORT_MEMORY_METAL_HANDLE_INFO_EXT")
+            }
+            Self::MEMORY_METAL_HANDLE_PROPERTIES_EXT => Some("MEMORY_METAL_HANDLE_PROPERTIES_EXT"),
+            Self::MEMORY_GET_METAL_HANDLE_INFO_EXT => Some("MEMORY_GET_METAL_HANDLE_INFO_EXT"),
+            Self::PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_PERFORMANCE_COUNTERS_BY_REGION_FEATURES_ARM => {
+                Some("PHYSICAL_DEVICE_PERFORMANCE_COUNTERS_BY_REGION_FEATURES_ARM")
+            }
+            Self::PHYSICAL_DEVICE_PERFORMANCE_COUNTERS_BY_REGION_PROPERTIES_ARM => {
+                Some("PHYSICAL_DEVICE_PERFORMANCE_COUNTERS_BY_REGION_PROPERTIES_ARM")
+            }
+            Self::PERFORMANCE_COUNTER_ARM => Some("PERFORMANCE_COUNTER_ARM"),
+            Self::PERFORMANCE_COUNTER_DESCRIPTION_ARM => {
+                Some("PERFORMANCE_COUNTER_DESCRIPTION_ARM")
+            }
+            Self::RENDER_PASS_PERFORMANCE_COUNTERS_BY_REGION_BEGIN_INFO_ARM => {
+                Some("RENDER_PASS_PERFORMANCE_COUNTERS_BY_REGION_BEGIN_INFO_ARM")
+            }
+            Self::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_ROBUSTNESS_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_ROBUSTNESS_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_FORMAT_PACK_FEATURES_ARM => {
+                Some("PHYSICAL_DEVICE_FORMAT_PACK_FEATURES_ARM")
+            }
+            Self::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_LAYERED_FEATURES_VALVE => {
+                Some("PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_LAYERED_FEATURES_VALVE")
+            }
+            Self::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_LAYERED_PROPERTIES_VALVE => {
+                Some("PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_LAYERED_PROPERTIES_VALVE")
+            }
+            Self::PIPELINE_FRAGMENT_DENSITY_MAP_LAYERED_CREATE_INFO_VALVE => {
+                Some("PIPELINE_FRAGMENT_DENSITY_MAP_LAYERED_CREATE_INFO_VALVE")
+            }
+            Self::PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_ROBUSTNESS_2_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_ROBUSTNESS_2_PROPERTIES_KHR")
+            }
+            Self::SET_PRESENT_CONFIG_NV => Some("SET_PRESENT_CONFIG_NV"),
+            Self::PHYSICAL_DEVICE_PRESENT_METERING_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_PRESENT_METERING_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_PROPERTIES_EXT")
+            }
+            Self::RENDER_PASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_EXT => {
+                Some("RENDER_PASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_EXT")
+            }
+            Self::PHYSICAL_DEVICE_ZERO_INITIALIZE_DEVICE_MEMORY_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_ZERO_INITIALIZE_DEVICE_MEMORY_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_PRESENT_MODE_FIFO_LATEST_READY_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_PRESENT_MODE_FIFO_LATEST_READY_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_64_INDEXING_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_64_INDEXING_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_CUSTOM_RESOLVE_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_CUSTOM_RESOLVE_FEATURES_EXT")
+            }
+            Self::BEGIN_CUSTOM_RESOLVE_INFO_EXT => Some("BEGIN_CUSTOM_RESOLVE_INFO_EXT"),
+            Self::CUSTOM_RESOLVE_CREATE_INFO_EXT => Some("CUSTOM_RESOLVE_CREATE_INFO_EXT"),
+            Self::PHYSICAL_DEVICE_DATA_GRAPH_MODEL_FEATURES_QCOM => {
+                Some("PHYSICAL_DEVICE_DATA_GRAPH_MODEL_FEATURES_QCOM")
+            }
+            Self::DATA_GRAPH_PIPELINE_BUILTIN_MODEL_CREATE_INFO_QCOM => {
+                Some("DATA_GRAPH_PIPELINE_BUILTIN_MODEL_CREATE_INFO_QCOM")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_10_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_10_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_10_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_10_PROPERTIES_KHR")
+            }
+            Self::RENDERING_ATTACHMENT_FLAGS_INFO_KHR => {
+                Some("RENDERING_ATTACHMENT_FLAGS_INFO_KHR")
+            }
+            Self::RENDERING_END_INFO_KHR => Some("RENDERING_END_INFO_KHR"),
+            Self::RESOLVE_IMAGE_MODE_INFO_KHR => Some("RESOLVE_IMAGE_MODE_INFO_KHR"),
+            Self::PHYSICAL_DEVICE_SHADER_LONG_VECTOR_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_LONG_VECTOR_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_LONG_VECTOR_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_LONG_VECTOR_PROPERTIES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_PIPELINE_CACHE_INCREMENTAL_MODE_FEATURES_SEC => {
+                Some("PHYSICAL_DEVICE_PIPELINE_CACHE_INCREMENTAL_MODE_FEATURES_SEC")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_UNIFORM_BUFFER_UNSIZED_ARRAY_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_UNIFORM_BUFFER_UNSIZED_ARRAY_FEATURES_EXT")
+            }
+            Self::COMPUTE_OCCUPANCY_PRIORITY_PARAMETERS_NV => {
+                Some("COMPUTE_OCCUPANCY_PRIORITY_PARAMETERS_NV")
+            }
+            Self::PHYSICAL_DEVICE_COMPUTE_OCCUPANCY_PRIORITY_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_COMPUTE_OCCUPANCY_PRIORITY_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_SUBGROUP_PARTITIONED_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_SUBGROUP_PARTITIONED_FEATURES_EXT")
             }
             Self::BIND_BUFFER_MEMORY_INFO => Some("BIND_BUFFER_MEMORY_INFO"),
             Self::BIND_IMAGE_MEMORY_INFO => Some("BIND_IMAGE_MEMORY_INFO"),
-            Self::PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES => {
-                Some("PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES")
-            }
             Self::MEMORY_DEDICATED_REQUIREMENTS => Some("MEMORY_DEDICATED_REQUIREMENTS"),
             Self::MEMORY_DEDICATED_ALLOCATE_INFO => Some("MEMORY_DEDICATED_ALLOCATE_INFO"),
             Self::MEMORY_ALLOCATE_FLAGS_INFO => Some("MEMORY_ALLOCATE_FLAGS_INFO"),
-            Self::DEVICE_GROUP_RENDER_PASS_BEGIN_INFO => {
-                Some("DEVICE_GROUP_RENDER_PASS_BEGIN_INFO")
-            }
             Self::DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO => {
                 Some("DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO")
             }
@@ -6920,24 +8138,7 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2 => {
                 Some("PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2")
             }
-            Self::PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES => {
-                Some("PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES")
-            }
-            Self::RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO => {
-                Some("RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO")
-            }
             Self::IMAGE_VIEW_USAGE_CREATE_INFO => Some("IMAGE_VIEW_USAGE_CREATE_INFO"),
-            Self::PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO => {
-                Some("PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO")
-            }
-            Self::RENDER_PASS_MULTIVIEW_CREATE_INFO => Some("RENDER_PASS_MULTIVIEW_CREATE_INFO"),
-            Self::PHYSICAL_DEVICE_MULTIVIEW_FEATURES => Some("PHYSICAL_DEVICE_MULTIVIEW_FEATURES"),
-            Self::PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES => {
-                Some("PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES")
-            }
-            Self::PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES => {
-                Some("PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES")
-            }
             Self::PROTECTED_SUBMIT_INFO => Some("PROTECTED_SUBMIT_INFO"),
             Self::PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES => {
                 Some("PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES")
@@ -6946,23 +8147,6 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES")
             }
             Self::DEVICE_QUEUE_INFO_2 => Some("DEVICE_QUEUE_INFO_2"),
-            Self::SAMPLER_YCBCR_CONVERSION_CREATE_INFO => {
-                Some("SAMPLER_YCBCR_CONVERSION_CREATE_INFO")
-            }
-            Self::SAMPLER_YCBCR_CONVERSION_INFO => Some("SAMPLER_YCBCR_CONVERSION_INFO"),
-            Self::BIND_IMAGE_PLANE_MEMORY_INFO => Some("BIND_IMAGE_PLANE_MEMORY_INFO"),
-            Self::IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO => {
-                Some("IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO")
-            }
-            Self::PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES => {
-                Some("PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES")
-            }
-            Self::SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES => {
-                Some("SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES")
-            }
-            Self::DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO => {
-                Some("DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO")
-            }
             Self::PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO => {
                 Some("PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO")
             }
@@ -6985,10 +8169,53 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO")
             }
             Self::EXTERNAL_SEMAPHORE_PROPERTIES => Some("EXTERNAL_SEMAPHORE_PROPERTIES"),
+            Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
+            }
+            Self::PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES => {
+                Some("PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES => {
+                Some("PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES")
+            }
+            Self::DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO => {
+                Some("DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO")
+            }
             Self::PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES")
             }
             Self::DESCRIPTOR_SET_LAYOUT_SUPPORT => Some("DESCRIPTOR_SET_LAYOUT_SUPPORT"),
+            Self::SAMPLER_YCBCR_CONVERSION_CREATE_INFO => {
+                Some("SAMPLER_YCBCR_CONVERSION_CREATE_INFO")
+            }
+            Self::SAMPLER_YCBCR_CONVERSION_INFO => Some("SAMPLER_YCBCR_CONVERSION_INFO"),
+            Self::BIND_IMAGE_PLANE_MEMORY_INFO => Some("BIND_IMAGE_PLANE_MEMORY_INFO"),
+            Self::IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO => {
+                Some("IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO")
+            }
+            Self::PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES => {
+                Some("PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES")
+            }
+            Self::SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES => {
+                Some("SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES")
+            }
+            Self::DEVICE_GROUP_RENDER_PASS_BEGIN_INFO => {
+                Some("DEVICE_GROUP_RENDER_PASS_BEGIN_INFO")
+            }
+            Self::PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES")
+            }
+            Self::RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO => {
+                Some("RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO")
+            }
+            Self::PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO => {
+                Some("PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO")
+            }
+            Self::RENDER_PASS_MULTIVIEW_CREATE_INFO => Some("RENDER_PASS_MULTIVIEW_CREATE_INFO"),
+            Self::PHYSICAL_DEVICE_MULTIVIEW_FEATURES => Some("PHYSICAL_DEVICE_MULTIVIEW_FEATURES"),
+            Self::PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES")
+            }
             Self::PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES => {
                 Some("PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES")
             }
@@ -7005,80 +8232,9 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_VULKAN_1_2_PROPERTIES")
             }
             Self::IMAGE_FORMAT_LIST_CREATE_INFO => Some("IMAGE_FORMAT_LIST_CREATE_INFO"),
-            Self::ATTACHMENT_DESCRIPTION_2 => Some("ATTACHMENT_DESCRIPTION_2"),
-            Self::ATTACHMENT_REFERENCE_2 => Some("ATTACHMENT_REFERENCE_2"),
-            Self::SUBPASS_DESCRIPTION_2 => Some("SUBPASS_DESCRIPTION_2"),
-            Self::SUBPASS_DEPENDENCY_2 => Some("SUBPASS_DEPENDENCY_2"),
-            Self::RENDER_PASS_CREATE_INFO_2 => Some("RENDER_PASS_CREATE_INFO_2"),
-            Self::SUBPASS_BEGIN_INFO => Some("SUBPASS_BEGIN_INFO"),
-            Self::SUBPASS_END_INFO => Some("SUBPASS_END_INFO"),
-            Self::PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES => {
-                Some("PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES")
-            }
             Self::PHYSICAL_DEVICE_DRIVER_PROPERTIES => Some("PHYSICAL_DEVICE_DRIVER_PROPERTIES"),
-            Self::PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES => {
-                Some("PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES")
-            }
-            Self::PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES => {
-                Some("PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES")
-            }
-            Self::PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES => {
-                Some("PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES")
-            }
-            Self::DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO => {
-                Some("DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO")
-            }
-            Self::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES => {
-                Some("PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES")
-            }
-            Self::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES => {
-                Some("PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES")
-            }
-            Self::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO => {
-                Some("DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO")
-            }
-            Self::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT => {
-                Some("DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT")
-            }
-            Self::PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES => {
-                Some("PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES")
-            }
-            Self::SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE => {
-                Some("SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE")
-            }
-            Self::PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES => {
-                Some("PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES")
-            }
-            Self::IMAGE_STENCIL_USAGE_CREATE_INFO => Some("IMAGE_STENCIL_USAGE_CREATE_INFO"),
-            Self::PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES => {
-                Some("PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES")
-            }
-            Self::SAMPLER_REDUCTION_MODE_CREATE_INFO => Some("SAMPLER_REDUCTION_MODE_CREATE_INFO"),
             Self::PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES => {
                 Some("PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES")
-            }
-            Self::PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES => {
-                Some("PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES")
-            }
-            Self::FRAMEBUFFER_ATTACHMENTS_CREATE_INFO => {
-                Some("FRAMEBUFFER_ATTACHMENTS_CREATE_INFO")
-            }
-            Self::FRAMEBUFFER_ATTACHMENT_IMAGE_INFO => Some("FRAMEBUFFER_ATTACHMENT_IMAGE_INFO"),
-            Self::RENDER_PASS_ATTACHMENT_BEGIN_INFO => Some("RENDER_PASS_ATTACHMENT_BEGIN_INFO"),
-            Self::PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES => {
-                Some("PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES")
-            }
-            Self::PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES => {
-                Some("PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES")
-            }
-            Self::PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES => {
-                Some("PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES")
-            }
-            Self::ATTACHMENT_REFERENCE_STENCIL_LAYOUT => {
-                Some("ATTACHMENT_REFERENCE_STENCIL_LAYOUT")
-            }
-            Self::ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT => {
-                Some("ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT")
             }
             Self::PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES => {
                 Some("PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES")
@@ -7106,30 +8262,89 @@ impl fmt::Debug for StructureType {
             Self::DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO => {
                 Some("DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO")
             }
+            Self::PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES => {
+                Some("PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES => {
+                Some("PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES => {
+                Some("PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES")
+            }
+            Self::DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO => {
+                Some("DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO")
+            }
+            Self::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES => {
+                Some("PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES")
+            }
+            Self::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO => {
+                Some("DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO")
+            }
+            Self::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT => {
+                Some("DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT")
+            }
+            Self::PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES => {
+                Some("PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES")
+            }
+            Self::SAMPLER_REDUCTION_MODE_CREATE_INFO => Some("SAMPLER_REDUCTION_MODE_CREATE_INFO"),
+            Self::PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES => {
+                Some("PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES => {
+                Some("PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES")
+            }
+            Self::ATTACHMENT_DESCRIPTION_2 => Some("ATTACHMENT_DESCRIPTION_2"),
+            Self::ATTACHMENT_REFERENCE_2 => Some("ATTACHMENT_REFERENCE_2"),
+            Self::SUBPASS_DESCRIPTION_2 => Some("SUBPASS_DESCRIPTION_2"),
+            Self::SUBPASS_DEPENDENCY_2 => Some("SUBPASS_DEPENDENCY_2"),
+            Self::RENDER_PASS_CREATE_INFO_2 => Some("RENDER_PASS_CREATE_INFO_2"),
+            Self::SUBPASS_BEGIN_INFO => Some("SUBPASS_BEGIN_INFO"),
+            Self::SUBPASS_END_INFO => Some("SUBPASS_END_INFO"),
+            Self::PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES")
+            }
+            Self::SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE => {
+                Some("SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE")
+            }
+            Self::IMAGE_STENCIL_USAGE_CREATE_INFO => Some("IMAGE_STENCIL_USAGE_CREATE_INFO"),
+            Self::PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES => {
+                Some("PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES")
+            }
+            Self::FRAMEBUFFER_ATTACHMENTS_CREATE_INFO => {
+                Some("FRAMEBUFFER_ATTACHMENTS_CREATE_INFO")
+            }
+            Self::FRAMEBUFFER_ATTACHMENT_IMAGE_INFO => Some("FRAMEBUFFER_ATTACHMENT_IMAGE_INFO"),
+            Self::RENDER_PASS_ATTACHMENT_BEGIN_INFO => Some("RENDER_PASS_ATTACHMENT_BEGIN_INFO"),
+            Self::PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES => {
+                Some("PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES")
+            }
+            Self::ATTACHMENT_REFERENCE_STENCIL_LAYOUT => {
+                Some("ATTACHMENT_REFERENCE_STENCIL_LAYOUT")
+            }
+            Self::ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT => {
+                Some("ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT")
+            }
             Self::PHYSICAL_DEVICE_VULKAN_1_3_FEATURES => {
                 Some("PHYSICAL_DEVICE_VULKAN_1_3_FEATURES")
             }
             Self::PHYSICAL_DEVICE_VULKAN_1_3_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_VULKAN_1_3_PROPERTIES")
             }
-            Self::PIPELINE_CREATION_FEEDBACK_CREATE_INFO => {
-                Some("PIPELINE_CREATION_FEEDBACK_CREATE_INFO")
-            }
-            Self::PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES => {
-                Some("PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES")
-            }
             Self::PHYSICAL_DEVICE_TOOL_PROPERTIES => Some("PHYSICAL_DEVICE_TOOL_PROPERTIES"),
-            Self::PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES => {
-                Some("PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES")
-            }
             Self::PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES => {
                 Some("PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES")
             }
             Self::DEVICE_PRIVATE_DATA_CREATE_INFO => Some("DEVICE_PRIVATE_DATA_CREATE_INFO"),
             Self::PRIVATE_DATA_SLOT_CREATE_INFO => Some("PRIVATE_DATA_SLOT_CREATE_INFO"),
-            Self::PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES => {
-                Some("PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES")
-            }
             Self::MEMORY_BARRIER_2 => Some("MEMORY_BARRIER_2"),
             Self::BUFFER_MEMORY_BARRIER_2 => Some("BUFFER_MEMORY_BARRIER_2"),
             Self::IMAGE_MEMORY_BARRIER_2 => Some("IMAGE_MEMORY_BARRIER_2"),
@@ -7140,23 +8355,43 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES => {
                 Some("PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES")
             }
+            Self::COPY_BUFFER_INFO_2 => Some("COPY_BUFFER_INFO_2"),
+            Self::COPY_IMAGE_INFO_2 => Some("COPY_IMAGE_INFO_2"),
+            Self::COPY_BUFFER_TO_IMAGE_INFO_2 => Some("COPY_BUFFER_TO_IMAGE_INFO_2"),
+            Self::COPY_IMAGE_TO_BUFFER_INFO_2 => Some("COPY_IMAGE_TO_BUFFER_INFO_2"),
+            Self::BUFFER_COPY_2 => Some("BUFFER_COPY_2"),
+            Self::IMAGE_COPY_2 => Some("IMAGE_COPY_2"),
+            Self::BUFFER_IMAGE_COPY_2 => Some("BUFFER_IMAGE_COPY_2"),
+            Self::PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES => {
+                Some("PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES")
+            }
+            Self::FORMAT_PROPERTIES_3 => Some("FORMAT_PROPERTIES_3"),
+            Self::PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES")
+            }
+            Self::DEVICE_BUFFER_MEMORY_REQUIREMENTS => Some("DEVICE_BUFFER_MEMORY_REQUIREMENTS"),
+            Self::DEVICE_IMAGE_MEMORY_REQUIREMENTS => Some("DEVICE_IMAGE_MEMORY_REQUIREMENTS"),
+            Self::PIPELINE_CREATION_FEEDBACK_CREATE_INFO => {
+                Some("PIPELINE_CREATION_FEEDBACK_CREATE_INFO")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES => {
+                Some("PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES => {
+                Some("PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES => {
+                Some("PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES")
+            }
             Self::PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES => {
                 Some("PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES")
             }
             Self::PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES => {
                 Some("PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES")
             }
-            Self::COPY_BUFFER_INFO_2 => Some("COPY_BUFFER_INFO_2"),
-            Self::COPY_IMAGE_INFO_2 => Some("COPY_IMAGE_INFO_2"),
-            Self::COPY_BUFFER_TO_IMAGE_INFO_2 => Some("COPY_BUFFER_TO_IMAGE_INFO_2"),
-            Self::COPY_IMAGE_TO_BUFFER_INFO_2 => Some("COPY_IMAGE_TO_BUFFER_INFO_2"),
-            Self::BLIT_IMAGE_INFO_2 => Some("BLIT_IMAGE_INFO_2"),
-            Self::RESOLVE_IMAGE_INFO_2 => Some("RESOLVE_IMAGE_INFO_2"),
-            Self::BUFFER_COPY_2 => Some("BUFFER_COPY_2"),
-            Self::IMAGE_COPY_2 => Some("IMAGE_COPY_2"),
-            Self::IMAGE_BLIT_2 => Some("IMAGE_BLIT_2"),
-            Self::BUFFER_IMAGE_COPY_2 => Some("BUFFER_IMAGE_COPY_2"),
-            Self::IMAGE_RESOLVE_2 => Some("IMAGE_RESOLVE_2"),
             Self::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_PROPERTIES")
             }
@@ -7178,18 +8413,6 @@ impl fmt::Debug for StructureType {
             Self::DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO => {
                 Some("DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO")
             }
-            Self::PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES => {
-                Some("PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES")
-            }
-            Self::RENDERING_INFO => Some("RENDERING_INFO"),
-            Self::RENDERING_ATTACHMENT_INFO => Some("RENDERING_ATTACHMENT_INFO"),
-            Self::PIPELINE_RENDERING_CREATE_INFO => Some("PIPELINE_RENDERING_CREATE_INFO"),
-            Self::PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES => {
-                Some("PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES")
-            }
-            Self::COMMAND_BUFFER_INHERITANCE_RENDERING_INFO => {
-                Some("COMMAND_BUFFER_INHERITANCE_RENDERING_INFO")
-            }
             Self::PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_FEATURES => {
                 Some("PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_FEATURES")
             }
@@ -7199,15 +8422,129 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES")
             }
-            Self::FORMAT_PROPERTIES_3 => Some("FORMAT_PROPERTIES_3"),
-            Self::PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES => {
-                Some("PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES")
+            Self::BLIT_IMAGE_INFO_2 => Some("BLIT_IMAGE_INFO_2"),
+            Self::RESOLVE_IMAGE_INFO_2 => Some("RESOLVE_IMAGE_INFO_2"),
+            Self::IMAGE_BLIT_2 => Some("IMAGE_BLIT_2"),
+            Self::IMAGE_RESOLVE_2 => Some("IMAGE_RESOLVE_2"),
+            Self::RENDERING_INFO => Some("RENDERING_INFO"),
+            Self::RENDERING_ATTACHMENT_INFO => Some("RENDERING_ATTACHMENT_INFO"),
+            Self::PIPELINE_RENDERING_CREATE_INFO => Some("PIPELINE_RENDERING_CREATE_INFO"),
+            Self::PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES => {
+                Some("PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES")
             }
-            Self::PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES => {
-                Some("PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES")
+            Self::COMMAND_BUFFER_INHERITANCE_RENDERING_INFO => {
+                Some("COMMAND_BUFFER_INHERITANCE_RENDERING_INFO")
             }
-            Self::DEVICE_BUFFER_MEMORY_REQUIREMENTS => Some("DEVICE_BUFFER_MEMORY_REQUIREMENTS"),
-            Self::DEVICE_IMAGE_MEMORY_REQUIREMENTS => Some("DEVICE_IMAGE_MEMORY_REQUIREMENTS"),
+            Self::PHYSICAL_DEVICE_VULKAN_1_4_FEATURES => {
+                Some("PHYSICAL_DEVICE_VULKAN_1_4_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_VULKAN_1_4_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_VULKAN_1_4_PROPERTIES")
+            }
+            Self::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO => {
+                Some("DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO")
+            }
+            Self::PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES => {
+                Some("PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES")
+            }
+            Self::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES => {
+                Some("QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES")
+            }
+            Self::PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES => {
+                Some("PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES")
+            }
+            Self::MEMORY_MAP_INFO => Some("MEMORY_MAP_INFO"),
+            Self::MEMORY_UNMAP_INFO => Some("MEMORY_UNMAP_INFO"),
+            Self::PHYSICAL_DEVICE_MAINTENANCE_5_FEATURES => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_5_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_5_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_5_PROPERTIES")
+            }
+            Self::DEVICE_IMAGE_SUBRESOURCE_INFO => Some("DEVICE_IMAGE_SUBRESOURCE_INFO"),
+            Self::SUBRESOURCE_LAYOUT_2 => Some("SUBRESOURCE_LAYOUT_2"),
+            Self::IMAGE_SUBRESOURCE_2 => Some("IMAGE_SUBRESOURCE_2"),
+            Self::BUFFER_USAGE_FLAGS_2_CREATE_INFO => Some("BUFFER_USAGE_FLAGS_2_CREATE_INFO"),
+            Self::PHYSICAL_DEVICE_MAINTENANCE_6_FEATURES => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_6_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_6_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_6_PROPERTIES")
+            }
+            Self::BIND_MEMORY_STATUS => Some("BIND_MEMORY_STATUS"),
+            Self::PHYSICAL_DEVICE_HOST_IMAGE_COPY_FEATURES => {
+                Some("PHYSICAL_DEVICE_HOST_IMAGE_COPY_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_HOST_IMAGE_COPY_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_HOST_IMAGE_COPY_PROPERTIES")
+            }
+            Self::MEMORY_TO_IMAGE_COPY => Some("MEMORY_TO_IMAGE_COPY"),
+            Self::IMAGE_TO_MEMORY_COPY => Some("IMAGE_TO_MEMORY_COPY"),
+            Self::COPY_IMAGE_TO_MEMORY_INFO => Some("COPY_IMAGE_TO_MEMORY_INFO"),
+            Self::COPY_MEMORY_TO_IMAGE_INFO => Some("COPY_MEMORY_TO_IMAGE_INFO"),
+            Self::HOST_IMAGE_LAYOUT_TRANSITION_INFO => Some("HOST_IMAGE_LAYOUT_TRANSITION_INFO"),
+            Self::COPY_IMAGE_TO_IMAGE_INFO => Some("COPY_IMAGE_TO_IMAGE_INFO"),
+            Self::SUBRESOURCE_HOST_MEMCPY_SIZE => Some("SUBRESOURCE_HOST_MEMCPY_SIZE"),
+            Self::HOST_IMAGE_COPY_DEVICE_PERFORMANCE_QUERY => {
+                Some("HOST_IMAGE_COPY_DEVICE_PERFORMANCE_QUERY")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_SUBGROUP_ROTATE_FEATURES => {
+                Some("PHYSICAL_DEVICE_SHADER_SUBGROUP_ROTATE_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_FLOAT_CONTROLS_2_FEATURES => {
+                Some("PHYSICAL_DEVICE_SHADER_FLOAT_CONTROLS_2_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_EXPECT_ASSUME_FEATURES => {
+                Some("PHYSICAL_DEVICE_SHADER_EXPECT_ASSUME_FEATURES")
+            }
+            Self::PIPELINE_CREATE_FLAGS_2_CREATE_INFO => {
+                Some("PIPELINE_CREATE_FLAGS_2_CREATE_INFO")
+            }
+            Self::PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES")
+            }
+            Self::BIND_DESCRIPTOR_SETS_INFO => Some("BIND_DESCRIPTOR_SETS_INFO"),
+            Self::PUSH_CONSTANTS_INFO => Some("PUSH_CONSTANTS_INFO"),
+            Self::PUSH_DESCRIPTOR_SET_INFO => Some("PUSH_DESCRIPTOR_SET_INFO"),
+            Self::PUSH_DESCRIPTOR_SET_WITH_TEMPLATE_INFO => {
+                Some("PUSH_DESCRIPTOR_SET_WITH_TEMPLATE_INFO")
+            }
+            Self::PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES => {
+                Some("PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES")
+            }
+            Self::PIPELINE_ROBUSTNESS_CREATE_INFO => Some("PIPELINE_ROBUSTNESS_CREATE_INFO"),
+            Self::PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_FEATURES => {
+                Some("PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_PROPERTIES")
+            }
+            Self::PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES => {
+                Some("PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES")
+            }
+            Self::PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO => {
+                Some("PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO")
+            }
+            Self::PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES")
+            }
+            Self::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES")
+            }
+            Self::PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO => {
+                Some("PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO")
+            }
+            Self::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES => {
+                Some("PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES")
+            }
+            Self::RENDERING_AREA_INFO => Some("RENDERING_AREA_INFO"),
+            Self::PHYSICAL_DEVICE_DYNAMIC_RENDERING_LOCAL_READ_FEATURES => {
+                Some("PHYSICAL_DEVICE_DYNAMIC_RENDERING_LOCAL_READ_FEATURES")
+            }
+            Self::RENDERING_ATTACHMENT_LOCATION_INFO => Some("RENDERING_ATTACHMENT_LOCATION_INFO"),
+            Self::RENDERING_INPUT_ATTACHMENT_INDEX_INFO => {
+                Some("RENDERING_INPUT_ATTACHMENT_INDEX_INFO")
+            }
             _ => None,
         };
         if let Some(x) = name {
@@ -7228,12 +8565,9 @@ impl fmt::Debug for SubgroupFeatureFlags {
             (SubgroupFeatureFlags::SHUFFLE_RELATIVE.0, "SHUFFLE_RELATIVE"),
             (SubgroupFeatureFlags::CLUSTERED.0, "CLUSTERED"),
             (SubgroupFeatureFlags::QUAD.0, "QUAD"),
-            (SubgroupFeatureFlags::PARTITIONED_NV.0, "PARTITIONED_NV"),
-            (SubgroupFeatureFlags::ROTATE_KHR.0, "ROTATE_KHR"),
-            (
-                SubgroupFeatureFlags::ROTATE_CLUSTERED_KHR.0,
-                "ROTATE_CLUSTERED_KHR",
-            ),
+            (SubgroupFeatureFlags::PARTITIONED_EXT.0, "PARTITIONED_EXT"),
+            (SubgroupFeatureFlags::ROTATE.0, "ROTATE"),
+            (SubgroupFeatureFlags::ROTATE_CLUSTERED.0, "ROTATE_CLUSTERED"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -7273,12 +8607,8 @@ impl fmt::Debug for SubpassDescriptionFlags {
                 "PER_VIEW_POSITION_X_ONLY_NVX",
             ),
             (
-                SubpassDescriptionFlags::FRAGMENT_REGION_QCOM.0,
-                "FRAGMENT_REGION_QCOM",
-            ),
-            (
-                SubpassDescriptionFlags::SHADER_RESOLVE_QCOM.0,
-                "SHADER_RESOLVE_QCOM",
+                SubpassDescriptionFlags::TILE_SHADING_APRON_QCOM.0,
+                "TILE_SHADING_APRON_QCOM",
             ),
             (
                 SubpassDescriptionFlags::RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_EXT.0,
@@ -7295,6 +8625,14 @@ impl fmt::Debug for SubpassDescriptionFlags {
             (
                 SubpassDescriptionFlags::ENABLE_LEGACY_DITHERING_EXT.0,
                 "ENABLE_LEGACY_DITHERING_EXT",
+            ),
+            (
+                SubpassDescriptionFlags::FRAGMENT_REGION_EXT.0,
+                "FRAGMENT_REGION_EXT",
+            ),
+            (
+                SubpassDescriptionFlags::CUSTOM_RESOLVE_EXT.0,
+                "CUSTOM_RESOLVE_EXT",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -7336,6 +8674,12 @@ impl fmt::Debug for SurfaceCounterFlagsEXT {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for SurfaceCreateFlagsOHOS {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for SurfaceTransformFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -7374,8 +8718,14 @@ impl fmt::Debug for SwapchainCreateFlagsKHR {
             (SwapchainCreateFlagsKHR::PROTECTED.0, "PROTECTED"),
             (SwapchainCreateFlagsKHR::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
             (
-                SwapchainCreateFlagsKHR::DEFERRED_MEMORY_ALLOCATION_EXT.0,
-                "DEFERRED_MEMORY_ALLOCATION_EXT",
+                SwapchainCreateFlagsKHR::PRESENT_TIMING_EXT.0,
+                "PRESENT_TIMING_EXT",
+            ),
+            (SwapchainCreateFlagsKHR::PRESENT_ID_2.0, "PRESENT_ID_2"),
+            (SwapchainCreateFlagsKHR::PRESENT_WAIT_2.0, "PRESENT_WAIT_2"),
+            (
+                SwapchainCreateFlagsKHR::DEFERRED_MEMORY_ALLOCATION.0,
+                "DEFERRED_MEMORY_ALLOCATION",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -7404,6 +8754,58 @@ impl fmt::Debug for SystemAllocationScope {
         }
     }
 }
+impl fmt::Debug for TensorCreateFlagsARM {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags64, &str)] = &[
+            (TensorCreateFlagsARM::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
+            (TensorCreateFlagsARM::PROTECTED.0, "PROTECTED"),
+            (
+                TensorCreateFlagsARM::DESCRIPTOR_HEAP_CAPTURE_REPLAY.0,
+                "DESCRIPTOR_HEAP_CAPTURE_REPLAY",
+            ),
+            (
+                TensorCreateFlagsARM::DESCRIPTOR_BUFFER_CAPTURE_REPLAY.0,
+                "DESCRIPTOR_BUFFER_CAPTURE_REPLAY",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for TensorTilingARM {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::OPTIMAL => Some("OPTIMAL"),
+            Self::LINEAR => Some("LINEAR"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for TensorUsageFlagsARM {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags64, &str)] = &[
+            (TensorUsageFlagsARM::SHADER.0, "SHADER"),
+            (TensorUsageFlagsARM::TRANSFER_SRC.0, "TRANSFER_SRC"),
+            (TensorUsageFlagsARM::TRANSFER_DST.0, "TRANSFER_DST"),
+            (TensorUsageFlagsARM::IMAGE_ALIASING.0, "IMAGE_ALIASING"),
+            (TensorUsageFlagsARM::DATA_GRAPH.0, "DATA_GRAPH"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for TensorViewCreateFlagsARM {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags64, &str)] = &[(
+            TensorViewCreateFlagsARM::DESCRIPTOR_BUFFER_CAPTURE_REPLAY.0,
+            "DESCRIPTOR_BUFFER_CAPTURE_REPLAY",
+        )];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for TessellationDomainOrigin {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
@@ -7418,6 +8820,18 @@ impl fmt::Debug for TessellationDomainOrigin {
         }
     }
 }
+impl fmt::Debug for TileShadingRenderPassFlagsQCOM {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (TileShadingRenderPassFlagsQCOM::ENABLE.0, "ENABLE"),
+            (
+                TileShadingRenderPassFlagsQCOM::PER_TILE_EXECUTION.0,
+                "PER_TILE_EXECUTION",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for TimeDomainKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
@@ -7425,6 +8839,8 @@ impl fmt::Debug for TimeDomainKHR {
             Self::CLOCK_MONOTONIC => Some("CLOCK_MONOTONIC"),
             Self::CLOCK_MONOTONIC_RAW => Some("CLOCK_MONOTONIC_RAW"),
             Self::QUERY_PERFORMANCE_COUNTER => Some("QUERY_PERFORMANCE_COUNTER"),
+            Self::PRESENT_STAGE_LOCAL_EXT => Some("PRESENT_STAGE_LOCAL_EXT"),
+            Self::SWAPCHAIN_LOCAL_EXT => Some("SWAPCHAIN_LOCAL_EXT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -7606,6 +9022,8 @@ impl fmt::Debug for VideoCodecOperationFlagsKHR {
             (VideoCodecOperationFlagsKHR::DECODE_H264.0, "DECODE_H264"),
             (VideoCodecOperationFlagsKHR::DECODE_H265.0, "DECODE_H265"),
             (VideoCodecOperationFlagsKHR::DECODE_AV1.0, "DECODE_AV1"),
+            (VideoCodecOperationFlagsKHR::ENCODE_AV1.0, "ENCODE_AV1"),
+            (VideoCodecOperationFlagsKHR::DECODE_VP9.0, "DECODE_VP9"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -7688,6 +9106,120 @@ impl fmt::Debug for VideoDecodeUsageFlagsKHR {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for VideoEncodeAV1CapabilityFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                VideoEncodeAV1CapabilityFlagsKHR::PER_RATE_CONTROL_GROUP_MIN_MAX_Q_INDEX.0,
+                "PER_RATE_CONTROL_GROUP_MIN_MAX_Q_INDEX",
+            ),
+            (
+                VideoEncodeAV1CapabilityFlagsKHR::GENERATE_OBU_EXTENSION_HEADER.0,
+                "GENERATE_OBU_EXTENSION_HEADER",
+            ),
+            (
+                VideoEncodeAV1CapabilityFlagsKHR::PRIMARY_REFERENCE_CDF_ONLY.0,
+                "PRIMARY_REFERENCE_CDF_ONLY",
+            ),
+            (
+                VideoEncodeAV1CapabilityFlagsKHR::FRAME_SIZE_OVERRIDE.0,
+                "FRAME_SIZE_OVERRIDE",
+            ),
+            (
+                VideoEncodeAV1CapabilityFlagsKHR::MOTION_VECTOR_SCALING.0,
+                "MOTION_VECTOR_SCALING",
+            ),
+            (
+                VideoEncodeAV1CapabilityFlagsKHR::COMPOUND_PREDICTION_INTRA_REFRESH.0,
+                "COMPOUND_PREDICTION_INTRA_REFRESH",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodeAV1PredictionModeKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::INTRA_ONLY => Some("INTRA_ONLY"),
+            Self::SINGLE_REFERENCE => Some("SINGLE_REFERENCE"),
+            Self::UNIDIRECTIONAL_COMPOUND => Some("UNIDIRECTIONAL_COMPOUND"),
+            Self::BIDIRECTIONAL_COMPOUND => Some("BIDIRECTIONAL_COMPOUND"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for VideoEncodeAV1RateControlFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                VideoEncodeAV1RateControlFlagsKHR::REGULAR_GOP.0,
+                "REGULAR_GOP",
+            ),
+            (
+                VideoEncodeAV1RateControlFlagsKHR::TEMPORAL_LAYER_PATTERN_DYADIC.0,
+                "TEMPORAL_LAYER_PATTERN_DYADIC",
+            ),
+            (
+                VideoEncodeAV1RateControlFlagsKHR::REFERENCE_PATTERN_FLAT.0,
+                "REFERENCE_PATTERN_FLAT",
+            ),
+            (
+                VideoEncodeAV1RateControlFlagsKHR::REFERENCE_PATTERN_DYADIC.0,
+                "REFERENCE_PATTERN_DYADIC",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodeAV1RateControlGroupKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::INTRA => Some("INTRA"),
+            Self::PREDICTIVE => Some("PREDICTIVE"),
+            Self::BIPREDICTIVE => Some("BIPREDICTIVE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for VideoEncodeAV1StdFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                VideoEncodeAV1StdFlagsKHR::UNIFORM_TILE_SPACING_FLAG_SET.0,
+                "UNIFORM_TILE_SPACING_FLAG_SET",
+            ),
+            (
+                VideoEncodeAV1StdFlagsKHR::SKIP_MODE_PRESENT_UNSET.0,
+                "SKIP_MODE_PRESENT_UNSET",
+            ),
+            (
+                VideoEncodeAV1StdFlagsKHR::PRIMARY_REF_FRAME.0,
+                "PRIMARY_REF_FRAME",
+            ),
+            (VideoEncodeAV1StdFlagsKHR::DELTA_Q.0, "DELTA_Q"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodeAV1SuperblockSizeFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (VideoEncodeAV1SuperblockSizeFlagsKHR::TYPE_64.0, "TYPE_64"),
+            (VideoEncodeAV1SuperblockSizeFlagsKHR::TYPE_128.0, "TYPE_128"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for VideoEncodeCapabilityFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -7698,6 +9230,14 @@ impl fmt::Debug for VideoEncodeCapabilityFlagsKHR {
             (
                 VideoEncodeCapabilityFlagsKHR::INSUFFICIENTSTREAM_BUFFER_RANGE_DETECTION.0,
                 "INSUFFICIENTSTREAM_BUFFER_RANGE_DETECTION",
+            ),
+            (
+                VideoEncodeCapabilityFlagsKHR::QUANTIZATION_DELTA_MAP.0,
+                "QUANTIZATION_DELTA_MAP",
+            ),
+            (
+                VideoEncodeCapabilityFlagsKHR::EMPHASIS_MAP.0,
+                "EMPHASIS_MAP",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -7735,7 +9275,17 @@ impl fmt::Debug for VideoEncodeFeedbackFlagsKHR {
 }
 impl fmt::Debug for VideoEncodeFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[];
+        const KNOWN: &[(Flags, &str)] = &[
+            (VideoEncodeFlagsKHR::INTRA_REFRESH.0, "INTRA_REFRESH"),
+            (
+                VideoEncodeFlagsKHR::WITH_QUANTIZATION_DELTA_MAP.0,
+                "WITH_QUANTIZATION_DELTA_MAP",
+            ),
+            (
+                VideoEncodeFlagsKHR::WITH_EMPHASIS_MAP.0,
+                "WITH_EMPHASIS_MAP",
+            ),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -7777,6 +9327,14 @@ impl fmt::Debug for VideoEncodeH264CapabilityFlagsKHR {
             (
                 VideoEncodeH264CapabilityFlagsKHR::GENERATE_PREFIX_NALU.0,
                 "GENERATE_PREFIX_NALU",
+            ),
+            (
+                VideoEncodeH264CapabilityFlagsKHR::B_PICTURE_INTRA_REFRESH.0,
+                "B_PICTURE_INTRA_REFRESH",
+            ),
+            (
+                VideoEncodeH264CapabilityFlagsKHR::MB_QP_DIFF_WRAPAROUND.0,
+                "MB_QP_DIFF_WRAPAROUND",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -7939,6 +9497,14 @@ impl fmt::Debug for VideoEncodeH265CapabilityFlagsKHR {
                 VideoEncodeH265CapabilityFlagsKHR::MULTIPLE_SLICE_SEGMENTS_PER_TILE.0,
                 "MULTIPLE_SLICE_SEGMENTS_PER_TILE",
             ),
+            (
+                VideoEncodeH265CapabilityFlagsKHR::B_PICTURE_INTRA_REFRESH.0,
+                "B_PICTURE_INTRA_REFRESH",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsKHR::CU_QP_DIFF_WRAPAROUND.0,
+                "CU_QP_DIFF_WRAPAROUND",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -8094,6 +9660,30 @@ impl fmt::Debug for VideoEncodeH265TransformBlockSizeFlagsKHR {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for VideoEncodeIntraRefreshModeFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (VideoEncodeIntraRefreshModeFlagsKHR::NONE.0, "NONE"),
+            (
+                VideoEncodeIntraRefreshModeFlagsKHR::PER_PICTURE_PARTITION.0,
+                "PER_PICTURE_PARTITION",
+            ),
+            (
+                VideoEncodeIntraRefreshModeFlagsKHR::BLOCK_BASED.0,
+                "BLOCK_BASED",
+            ),
+            (
+                VideoEncodeIntraRefreshModeFlagsKHR::BLOCK_ROW_BASED.0,
+                "BLOCK_ROW_BASED",
+            ),
+            (
+                VideoEncodeIntraRefreshModeFlagsKHR::BLOCK_COLUMN_BASED.0,
+                "BLOCK_COLUMN_BASED",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for VideoEncodeRateControlFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[];
@@ -8107,6 +9697,60 @@ impl fmt::Debug for VideoEncodeRateControlModeFlagsKHR {
             (VideoEncodeRateControlModeFlagsKHR::DISABLED.0, "DISABLED"),
             (VideoEncodeRateControlModeFlagsKHR::CBR.0, "CBR"),
             (VideoEncodeRateControlModeFlagsKHR::VBR.0, "VBR"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodeRgbChromaOffsetFlagsVALVE {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                VideoEncodeRgbChromaOffsetFlagsVALVE::COSITED_EVEN.0,
+                "COSITED_EVEN",
+            ),
+            (VideoEncodeRgbChromaOffsetFlagsVALVE::MIDPOINT.0, "MIDPOINT"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodeRgbModelConversionFlagsVALVE {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                VideoEncodeRgbModelConversionFlagsVALVE::RGB_IDENTITY.0,
+                "RGB_IDENTITY",
+            ),
+            (
+                VideoEncodeRgbModelConversionFlagsVALVE::YCBCR_IDENTITY.0,
+                "YCBCR_IDENTITY",
+            ),
+            (
+                VideoEncodeRgbModelConversionFlagsVALVE::YCBCR_709.0,
+                "YCBCR_709",
+            ),
+            (
+                VideoEncodeRgbModelConversionFlagsVALVE::YCBCR_601.0,
+                "YCBCR_601",
+            ),
+            (
+                VideoEncodeRgbModelConversionFlagsVALVE::YCBCR_2020.0,
+                "YCBCR_2020",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodeRgbRangeCompressionFlagsVALVE {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                VideoEncodeRgbRangeCompressionFlagsVALVE::FULL_RANGE.0,
+                "FULL_RANGE",
+            ),
+            (
+                VideoEncodeRgbRangeCompressionFlagsVALVE::NARROW_RANGE.0,
+                "NARROW_RANGE",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -8161,13 +9805,28 @@ impl fmt::Debug for VideoSessionCreateFlagsKHR {
                 VideoSessionCreateFlagsKHR::INLINE_QUERIES.0,
                 "INLINE_QUERIES",
             ),
+            (
+                VideoSessionCreateFlagsKHR::ALLOW_ENCODE_QUANTIZATION_DELTA_MAP.0,
+                "ALLOW_ENCODE_QUANTIZATION_DELTA_MAP",
+            ),
+            (
+                VideoSessionCreateFlagsKHR::ALLOW_ENCODE_EMPHASIS_MAP.0,
+                "ALLOW_ENCODE_EMPHASIS_MAP",
+            ),
+            (
+                VideoSessionCreateFlagsKHR::INLINE_SESSION_PARAMETERS.0,
+                "INLINE_SESSION_PARAMETERS",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Debug for VideoSessionParametersCreateFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[];
+        const KNOWN: &[(Flags, &str)] = &[(
+            VideoSessionParametersCreateFlagsKHR::QUANTIZATION_MAP_COMPATIBLE.0,
+            "QUANTIZATION_MAP_COMPATIBLE",
+        )];
         debug_flags(f, KNOWN, self.0)
     }
 }
