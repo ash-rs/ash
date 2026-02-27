@@ -2,3 +2,6 @@
 	path = generator/Vulkan-Headers
 	url = https://github.com/KhronosGroup/Vulkan-Headers
 	update = none
+[submodule "generator-rewrite/Vulkan-Headers"]
+	path = generator-rewrite/Vulkan-Headers
+	url = https://github.com/KhronosGroup/Vulkan-Headers.git
