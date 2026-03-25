@@ -4,7 +4,7 @@ use crate::vk;
 use crate::RawPtr;
 use crate::VkResult;
 use alloc::vec::Vec;
-use core::mem;
+use core::{mem, ptr};
 
 impl crate::khr::acceleration_structure::Device {
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateAccelerationStructureKHR.html>
@@ -46,7 +46,7 @@ impl crate::khr::acceleration_structure::Device {
         &self,
         command_buffer: vk::CommandBuffer,
         infos: &[vk::AccelerationStructureBuildGeometryInfoKHR<'_>],
-        build_range_infos: &[&[vk::AccelerationStructureBuildRangeInfoKHR]],
+        build_range_infos: &[Option<&[vk::AccelerationStructureBuildRangeInfoKHR]>],
     ) {
         assert_eq!(infos.len(), build_range_infos.len());
 
@@ -54,8 +54,13 @@ impl crate::khr::acceleration_structure::Device {
             .iter()
             .zip(infos.iter())
             .map(|(range_info, info)| {
-                assert_eq!(range_info.len(), info.geometry_count as usize);
-                range_info.as_ptr()
+                if let Some(range_info) = range_info {
+                    assert_eq!(range_info.len(), info.geometry_count as usize);
+                    range_info.as_ptr()
+                } else {
+                    // Must be NULL for at least VUID-vkCmdBuildAccelerationStructuresKHR-ppBuildRangeInfos-11544
+                    ptr::null()
+                }
             })
             .collect::<Vec<_>>();
 
@@ -262,19 +267,22 @@ impl crate::khr::acceleration_structure::Device {
         &self,
         build_type: vk::AccelerationStructureBuildTypeKHR,
         build_info: &vk::AccelerationStructureBuildGeometryInfoKHR<'_>,
-        max_primitive_counts: &[u32],
+        max_primitive_counts: Option<&[u32]>,
         size_info: &mut vk::AccelerationStructureBuildSizesInfoKHR<'_>,
     ) {
-        assert_eq!(
-            max_primitive_counts.len(),
-            build_info.geometry_count as usize
-        );
+        let max_primitive_counts = if let Some(c) = max_primitive_counts {
+            assert_eq!(c.len(), build_info.geometry_count as usize);
+            c.as_ptr()
+        } else {
+            // Must be NULL for at least VUID-vkGetAccelerationStructureBuildSizesKHR-pMaxPrimitiveCounts-11613
+            ptr::null()
+        };
 
         (self.fp.get_acceleration_structure_build_sizes_khr)(
             self.handle,
             build_type,
             build_info,
-            max_primitive_counts.as_ptr(),
+            max_primitive_counts,
             size_info,
         )
     }
