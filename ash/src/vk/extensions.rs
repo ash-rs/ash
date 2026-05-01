@@ -1014,6 +1014,75 @@ impl StructureType {
     pub const EXECUTION_GRAPH_PIPELINE_CREATE_INFO_AMDX: Self = Self(1_000_134_003);
     pub const PIPELINE_SHADER_STAGE_NODE_CREATE_INFO_AMDX: Self = Self(1_000_134_004);
 }
+#[doc = "Generated from 'VK_EXT_descriptor_heap'"]
+impl AccessFlags2 {
+    pub const SAMPLER_HEAP_READ_EXT: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const RESOURCE_HEAP_READ_EXT: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_descriptor_heap'"]
+impl BufferUsageFlags {
+    pub const DESCRIPTOR_HEAP_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_descriptor_heap'"]
+impl BufferUsageFlags2 {
+    pub const DESCRIPTOR_HEAP_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_descriptor_heap'"]
+impl DescriptorMappingSourceEXT {
+    pub const HEAP_WITH_SHADER_RECORD_INDEX: Self = Self(8);
+    pub const SHADER_RECORD_DATA: Self = Self(9);
+    pub const SHADER_RECORD_ADDRESS: Self = Self(10);
+}
+#[doc = "Generated from 'VK_EXT_descriptor_heap'"]
+impl ImageCreateFlags {
+    pub const DESCRIPTOR_HEAP_CAPTURE_REPLAY_EXT: Self = Self(0b1_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_descriptor_heap'"]
+impl IndirectCommandsTokenTypeEXT {
+    pub const PUSH_DATA: Self = Self(1_000_135_000);
+    pub const PUSH_DATA_SEQUENCE_INDEX: Self = Self(1_000_135_001);
+}
+#[doc = "Generated from 'VK_EXT_descriptor_heap'"]
+impl IndirectCommandsTokenTypeNV {
+    pub const PUSH_DATA: Self = Self(1_000_135_000);
+}
+#[doc = "Generated from 'VK_EXT_descriptor_heap'"]
+impl PipelineCreateFlags2 {
+    pub const DESCRIPTOR_HEAP_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_descriptor_heap'"]
+impl ShaderCreateFlagsEXT {
+    pub const DESCRIPTOR_HEAP: Self = Self(0b100_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_descriptor_heap'"]
+impl SpirvResourceTypeFlagsEXT {
+    pub const ACCELERATION_STRUCTURE: Self = Self(0b1_0000_0000);
+    pub const TENSOR_ARM: Self = Self(0b10_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_descriptor_heap'"]
+impl StructureType {
+    pub const TEXEL_BUFFER_DESCRIPTOR_INFO_EXT: Self = Self(1_000_135_000);
+    pub const IMAGE_DESCRIPTOR_INFO_EXT: Self = Self(1_000_135_001);
+    pub const RESOURCE_DESCRIPTOR_INFO_EXT: Self = Self(1_000_135_002);
+    pub const BIND_HEAP_INFO_EXT: Self = Self(1_000_135_003);
+    pub const PUSH_DATA_INFO_EXT: Self = Self(1_000_135_004);
+    pub const DESCRIPTOR_SET_AND_BINDING_MAPPING_EXT: Self = Self(1_000_135_005);
+    pub const SHADER_DESCRIPTOR_SET_AND_BINDING_MAPPING_INFO_EXT: Self = Self(1_000_135_006);
+    pub const OPAQUE_CAPTURE_DATA_CREATE_INFO_EXT: Self = Self(1_000_135_007);
+    pub const PHYSICAL_DEVICE_DESCRIPTOR_HEAP_PROPERTIES_EXT: Self = Self(1_000_135_008);
+    pub const PHYSICAL_DEVICE_DESCRIPTOR_HEAP_FEATURES_EXT: Self = Self(1_000_135_009);
+    pub const COMMAND_BUFFER_INHERITANCE_DESCRIPTOR_HEAP_INFO_EXT: Self = Self(1_000_135_010);
+    pub const SAMPLER_CUSTOM_BORDER_COLOR_INDEX_CREATE_INFO_EXT: Self = Self(1_000_135_011);
+    pub const INDIRECT_COMMANDS_LAYOUT_PUSH_DATA_TOKEN_NV: Self = Self(1_000_135_012);
+    pub const SUBSAMPLED_IMAGE_FORMAT_PROPERTIES_EXT: Self = Self(1_000_135_013);
+    pub const PHYSICAL_DEVICE_DESCRIPTOR_HEAP_TENSOR_PROPERTIES_ARM: Self = Self(1_000_135_014);
+}
+#[doc = "Generated from 'VK_EXT_descriptor_heap'"]
+impl TensorCreateFlagsARM {
+    pub const DESCRIPTOR_HEAP_CAPTURE_REPLAY: Self = Self(0b1000);
+}
 #[doc = "Generated from 'VK_AMD_mixed_attachment_samples'"]
 impl StructureType {
     pub const ATTACHMENT_SAMPLE_COUNT_INFO_AMD: Self = Self(1_000_044_008);
@@ -1627,8 +1696,13 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_QCOM_render_pass_shader_resolve'"]
 impl SubpassDescriptionFlags {
-    pub const FRAGMENT_REGION_QCOM: Self = Self(0b100);
-    pub const SHADER_RESOLVE_QCOM: Self = Self(0b1000);
+    pub const FRAGMENT_REGION_QCOM: Self = Self::FRAGMENT_REGION_EXT;
+    pub const SHADER_RESOLVE_QCOM: Self = Self::CUSTOM_RESOLVE_EXT;
+}
+#[doc = "Generated from 'VK_QCOM_cooperative_matrix_conversion'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_CONVERSION_FEATURES_QCOM: Self =
+        Self(1_000_172_000);
 }
 #[doc = "Generated from 'VK_EXT_global_priority'"]
 impl QueueGlobalPriority {
@@ -1787,7 +1861,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_NV_shader_subgroup_partitioned'"]
 impl SubgroupFeatureFlags {
-    pub const PARTITIONED_NV: Self = Self(0b1_0000_0000);
+    pub const PARTITIONED_NV: Self = Self::PARTITIONED_EXT;
 }
 #[doc = "Generated from 'VK_KHR_depth_stencil_resolve'"]
 impl ResolveModeFlags {
@@ -1878,6 +1952,32 @@ impl StructureType {
     pub const TIMELINE_SEMAPHORE_SUBMIT_INFO_KHR: Self = Self::TIMELINE_SEMAPHORE_SUBMIT_INFO;
     pub const SEMAPHORE_WAIT_INFO_KHR: Self = Self::SEMAPHORE_WAIT_INFO;
     pub const SEMAPHORE_SIGNAL_INFO_KHR: Self = Self::SEMAPHORE_SIGNAL_INFO;
+}
+#[doc = "Generated from 'VK_EXT_present_timing'"]
+impl Result {
+    pub const ERROR_PRESENT_TIMING_QUEUE_FULL_EXT: Self = Self(-1_000_208_000);
+}
+#[doc = "Generated from 'VK_EXT_present_timing'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PRESENT_TIMING_FEATURES_EXT: Self = Self(1_000_208_000);
+    pub const SWAPCHAIN_TIMING_PROPERTIES_EXT: Self = Self(1_000_208_001);
+    pub const SWAPCHAIN_TIME_DOMAIN_PROPERTIES_EXT: Self = Self(1_000_208_002);
+    pub const PRESENT_TIMINGS_INFO_EXT: Self = Self(1_000_208_003);
+    pub const PRESENT_TIMING_INFO_EXT: Self = Self(1_000_208_004);
+    pub const PAST_PRESENTATION_TIMING_INFO_EXT: Self = Self(1_000_208_005);
+    pub const PAST_PRESENTATION_TIMING_PROPERTIES_EXT: Self = Self(1_000_208_006);
+    pub const PAST_PRESENTATION_TIMING_EXT: Self = Self(1_000_208_007);
+    pub const PRESENT_TIMING_SURFACE_CAPABILITIES_EXT: Self = Self(1_000_208_008);
+    pub const SWAPCHAIN_CALIBRATED_TIMESTAMP_INFO_EXT: Self = Self(1_000_208_009);
+}
+#[doc = "Generated from 'VK_EXT_present_timing'"]
+impl SwapchainCreateFlagsKHR {
+    pub const PRESENT_TIMING_EXT: Self = Self(0b10_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_present_timing'"]
+impl TimeDomainKHR {
+    pub const PRESENT_STAGE_LOCAL_EXT: Self = Self(1_000_208_000);
+    pub const SWAPCHAIN_LOCAL_EXT: Self = Self(1_000_208_001);
 }
 #[doc = "Generated from 'VK_INTEL_shader_integer_functions2'"]
 impl StructureType {
@@ -2057,6 +2157,10 @@ impl MemoryPropertyFlags {
 impl StructureType {
     pub const PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD: Self = Self(1_000_229_000);
 }
+#[doc = "Generated from 'VK_KHR_shader_constant_data'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_CONSTANT_DATA_FEATURES_KHR: Self = Self(1_000_231_000);
+}
 #[doc = "Generated from 'VK_KHR_dynamic_rendering_local_read'"]
 impl ImageLayout {
     pub const RENDERING_LOCAL_READ_KHR: Self = Self::RENDERING_LOCAL_READ;
@@ -2069,6 +2173,12 @@ impl StructureType {
         Self::RENDERING_ATTACHMENT_LOCATION_INFO;
     pub const RENDERING_INPUT_ATTACHMENT_INDEX_INFO_KHR: Self =
         Self::RENDERING_INPUT_ATTACHMENT_INDEX_INFO;
+}
+#[doc = "Generated from 'VK_KHR_shader_abort'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_ABORT_FEATURES_KHR: Self = Self(1_000_233_000);
+    pub const DEVICE_FAULT_SHADER_ABORT_MESSAGE_INFO_KHR: Self = Self(1_000_233_001);
+    pub const PHYSICAL_DEVICE_SHADER_ABORT_PROPERTIES_KHR: Self = Self(1_000_233_002);
 }
 #[doc = "Generated from 'VK_EXT_shader_image_atomic_int64'"]
 impl StructureType {
@@ -2508,6 +2618,43 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_PROPERTIES_EXT: Self = Self(1_000_287_001);
     pub const PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT: Self = Self(1_000_287_002);
 }
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_3d'"]
+impl Format {
+    pub const ASTC_3X3X3_UNORM_BLOCK_EXT: Self = Self(1_000_288_000);
+    pub const ASTC_3X3X3_SRGB_BLOCK_EXT: Self = Self(1_000_288_001);
+    pub const ASTC_3X3X3_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_002);
+    pub const ASTC_4X3X3_UNORM_BLOCK_EXT: Self = Self(1_000_288_003);
+    pub const ASTC_4X3X3_SRGB_BLOCK_EXT: Self = Self(1_000_288_004);
+    pub const ASTC_4X3X3_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_005);
+    pub const ASTC_4X4X3_UNORM_BLOCK_EXT: Self = Self(1_000_288_006);
+    pub const ASTC_4X4X3_SRGB_BLOCK_EXT: Self = Self(1_000_288_007);
+    pub const ASTC_4X4X3_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_008);
+    pub const ASTC_4X4X4_UNORM_BLOCK_EXT: Self = Self(1_000_288_009);
+    pub const ASTC_4X4X4_SRGB_BLOCK_EXT: Self = Self(1_000_288_010);
+    pub const ASTC_4X4X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_011);
+    pub const ASTC_5X4X4_UNORM_BLOCK_EXT: Self = Self(1_000_288_012);
+    pub const ASTC_5X4X4_SRGB_BLOCK_EXT: Self = Self(1_000_288_013);
+    pub const ASTC_5X4X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_014);
+    pub const ASTC_5X5X4_UNORM_BLOCK_EXT: Self = Self(1_000_288_015);
+    pub const ASTC_5X5X4_SRGB_BLOCK_EXT: Self = Self(1_000_288_016);
+    pub const ASTC_5X5X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_017);
+    pub const ASTC_5X5X5_UNORM_BLOCK_EXT: Self = Self(1_000_288_018);
+    pub const ASTC_5X5X5_SRGB_BLOCK_EXT: Self = Self(1_000_288_019);
+    pub const ASTC_5X5X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_020);
+    pub const ASTC_6X5X5_UNORM_BLOCK_EXT: Self = Self(1_000_288_021);
+    pub const ASTC_6X5X5_SRGB_BLOCK_EXT: Self = Self(1_000_288_022);
+    pub const ASTC_6X5X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_023);
+    pub const ASTC_6X6X5_UNORM_BLOCK_EXT: Self = Self(1_000_288_024);
+    pub const ASTC_6X6X5_SRGB_BLOCK_EXT: Self = Self(1_000_288_025);
+    pub const ASTC_6X6X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_026);
+    pub const ASTC_6X6X6_UNORM_BLOCK_EXT: Self = Self(1_000_288_027);
+    pub const ASTC_6X6X6_SRGB_BLOCK_EXT: Self = Self(1_000_288_028);
+    pub const ASTC_6X6X6_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_029);
+}
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_3d'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_3D_FEATURES_EXT: Self = Self(1_000_288_000);
+}
 #[doc = "Generated from 'VK_KHR_pipeline_library'"]
 impl PipelineCreateFlags {
     pub const LIBRARY_KHR: Self = Self(0b1000_0000_0000);
@@ -2641,6 +2788,12 @@ impl StructureType {
 #[doc = "Generated from 'VK_QCOM_render_pass_store_ops'"]
 impl AttachmentStoreOp {
     pub const NONE_QCOM: Self = Self::NONE;
+}
+#[doc = "Generated from 'VK_QCOM_queue_perf_hint'"]
+impl StructureType {
+    pub const PERF_HINT_INFO_QCOM: Self = Self(1_000_302_000);
+    pub const PHYSICAL_DEVICE_QUEUE_PERF_HINT_FEATURES_QCOM: Self = Self(1_000_302_001);
+    pub const PHYSICAL_DEVICE_QUEUE_PERF_HINT_PROPERTIES_QCOM: Self = Self(1_000_302_002);
 }
 #[doc = "Generated from 'VK_NV_cuda_kernel_launch'"]
 #[cfg(feature = "provisional")]
@@ -2850,7 +3003,7 @@ impl DescriptorSetLayoutCreateFlags {
 }
 #[doc = "Generated from 'VK_EXT_descriptor_buffer'"]
 impl ImageCreateFlags {
-    pub const DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT: Self = Self(0b1_0000_0000_0000_0000);
+    pub const DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT: Self = Self::DESCRIPTOR_HEAP_CAPTURE_REPLAY_EXT;
 }
 #[doc = "Generated from 'VK_EXT_descriptor_buffer'"]
 impl ImageViewCreateFlags {
@@ -2881,6 +3034,30 @@ impl StructureType {
     pub const DESCRIPTOR_BUFFER_BINDING_PUSH_DESCRIPTOR_BUFFER_HANDLE_EXT: Self =
         Self(1_000_316_012);
     pub const ACCELERATION_STRUCTURE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT: Self = Self(1_000_316_009);
+}
+#[doc = "Generated from 'VK_KHR_device_address_commands'"]
+impl AddressCommandFlagsKHR {
+    pub const TRANSFORM_FEEDBACK_BUFFER_USAGE: Self = Self(0b1_0000);
+    pub const UNKNOWN_TRANSFORM_FEEDBACK_BUFFER_USAGE: Self = Self(0b10_0000);
+}
+#[doc = "Generated from 'VK_KHR_device_address_commands'"]
+impl StructureType {
+    pub const DEVICE_MEMORY_COPY_KHR: Self = Self(1_000_318_000);
+    pub const COPY_DEVICE_MEMORY_INFO_KHR: Self = Self(1_000_318_001);
+    pub const DEVICE_MEMORY_IMAGE_COPY_KHR: Self = Self(1_000_318_002);
+    pub const COPY_DEVICE_MEMORY_IMAGE_INFO_KHR: Self = Self(1_000_318_003);
+    pub const MEMORY_RANGE_BARRIERS_INFO_KHR: Self = Self(1_000_318_004);
+    pub const MEMORY_RANGE_BARRIER_KHR: Self = Self(1_000_318_005);
+    pub const PHYSICAL_DEVICE_DEVICE_ADDRESS_COMMANDS_FEATURES_KHR: Self = Self(1_000_318_006);
+    pub const BIND_INDEX_BUFFER_3_INFO_KHR: Self = Self(1_000_318_007);
+    pub const BIND_VERTEX_BUFFER_3_INFO_KHR: Self = Self(1_000_318_008);
+    pub const DRAW_INDIRECT_2_INFO_KHR: Self = Self(1_000_318_009);
+    pub const DRAW_INDIRECT_COUNT_2_INFO_KHR: Self = Self(1_000_318_010);
+    pub const DISPATCH_INDIRECT_2_INFO_KHR: Self = Self(1_000_318_011);
+    pub const CONDITIONAL_RENDERING_BEGIN_INFO_2_EXT: Self = Self(1_000_318_012);
+    pub const BIND_TRANSFORM_FEEDBACK_BUFFER_2_INFO_EXT: Self = Self(1_000_318_013);
+    pub const MEMORY_MARKER_INFO_AMD: Self = Self(1_000_318_014);
+    pub const ACCELERATION_STRUCTURE_CREATE_INFO_2_KHR: Self = Self(1_000_318_015);
 }
 #[doc = "Generated from 'VK_EXT_graphics_pipeline_library'"]
 impl PipelineCreateFlags {
@@ -3069,6 +3246,16 @@ impl Format {
 #[doc = "Generated from 'VK_EXT_4444_formats'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT: Self = Self(1_000_340_000);
+}
+#[doc = "Generated from 'VK_EXT_device_fault'"]
+impl DeviceFaultAddressTypeKHR {
+    pub const NONE_EXT: Self = Self::NONE;
+    pub const READ_INVALID_EXT: Self = Self::READ_INVALID;
+    pub const WRITE_INVALID_EXT: Self = Self::WRITE_INVALID;
+    pub const EXECUTE_INVALID_EXT: Self = Self::EXECUTE_INVALID;
+    pub const INSTRUCTION_POINTER_UNKNOWN_EXT: Self = Self::INSTRUCTION_POINTER_UNKNOWN;
+    pub const INSTRUCTION_POINTER_INVALID_EXT: Self = Self::INSTRUCTION_POINTER_INVALID;
+    pub const INSTRUCTION_POINTER_FAULT_EXT: Self = Self::INSTRUCTION_POINTER_FAULT;
 }
 #[doc = "Generated from 'VK_EXT_device_fault'"]
 impl StructureType {
@@ -3573,6 +3760,9 @@ impl StructureType {
     pub const DEVICE_QUEUE_SHADER_CORE_CONTROL_CREATE_INFO_ARM: Self = Self(1_000_417_000);
     pub const PHYSICAL_DEVICE_SCHEDULING_CONTROLS_FEATURES_ARM: Self = Self(1_000_417_001);
     pub const PHYSICAL_DEVICE_SCHEDULING_CONTROLS_PROPERTIES_ARM: Self = Self(1_000_417_002);
+    pub const DISPATCH_PARAMETERS_ARM: Self = Self(1_000_417_003);
+    pub const PHYSICAL_DEVICE_SCHEDULING_CONTROLS_DISPATCH_PARAMETERS_PROPERTIES_ARM: Self =
+        Self(1_000_417_004);
 }
 #[doc = "Generated from 'VK_EXT_image_sliced_view_of_3d'"]
 impl StructureType {
@@ -3734,6 +3924,19 @@ impl SubpassContents {
     pub const INLINE_AND_SECONDARY_COMMAND_BUFFERS_EXT: Self =
         Self::INLINE_AND_SECONDARY_COMMAND_BUFFERS_KHR;
 }
+#[doc = "Generated from 'VK_OHOS_external_memory'"]
+impl ExternalMemoryHandleTypeFlags {
+    pub const OH_NATIVE_BUFFER_OHOS: Self = Self(0b1000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_OHOS_external_memory'"]
+impl StructureType {
+    pub const NATIVE_BUFFER_USAGE_OHOS: Self = Self(1_000_452_000);
+    pub const NATIVE_BUFFER_PROPERTIES_OHOS: Self = Self(1_000_452_001);
+    pub const NATIVE_BUFFER_FORMAT_PROPERTIES_OHOS: Self = Self(1_000_452_002);
+    pub const IMPORT_NATIVE_BUFFER_INFO_OHOS: Self = Self(1_000_452_003);
+    pub const MEMORY_GET_NATIVE_BUFFER_INFO_OHOS: Self = Self(1_000_452_004);
+    pub const EXTERNAL_FORMAT_OHOS: Self = Self(1_000_452_005);
+}
 #[doc = "Generated from 'VK_EXT_external_memory_acquire_unmodified'"]
 impl StructureType {
     pub const EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_EXT: Self = Self(1_000_453_000);
@@ -3796,6 +3999,9 @@ impl DescriptorType {
 #[doc = "Generated from 'VK_ARM_tensors'"]
 impl Format {
     pub const R8_BOOL_ARM: Self = Self(1_000_460_000);
+    pub const R16_SFLOAT_FPENCODING_BFLOAT16_ARM: Self = Self(1_000_460_001);
+    pub const R8_SFLOAT_FPENCODING_FLOAT8E4M3_ARM: Self = Self(1_000_460_002);
+    pub const R8_SFLOAT_FPENCODING_FLOAT8E5M2_ARM: Self = Self(1_000_460_003);
 }
 #[doc = "Generated from 'VK_ARM_tensors'"]
 impl FormatFeatureFlags2 {
@@ -4033,6 +4239,12 @@ impl PipelineCreateFlags2 {
     pub const DESCRIPTOR_BUFFER_EXT: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000);
     pub const DISALLOW_OPACITY_MICROMAP_ARM: Self =
         Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const INSTRUMENT_SHADERS_ARM: Self =
+        Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance5'"]
+impl ShaderCreateFlagsEXT {
+    pub const INSTRUMENT_SHADER_ARM: Self = Self(0b1000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_maintenance5'"]
 impl StructureType {
@@ -4187,6 +4399,11 @@ impl StructureType {
         Self(1_000_488_000);
 }
 #[doc = "Generated from 'VK_NV_ray_tracing_invocation_reorder'"]
+impl RayTracingInvocationReorderModeEXT {
+    pub const NONE_NV: Self = Self::NONE;
+    pub const REORDER_NV: Self = Self::REORDER;
+}
+#[doc = "Generated from 'VK_NV_ray_tracing_invocation_reorder'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_FEATURES_NV: Self =
         Self(1_000_490_000);
@@ -4258,6 +4475,15 @@ impl StructureType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT: Self =
         Self(1_000_499_000);
+}
+#[doc = "Generated from 'VK_KHR_internally_synchronized_queues'"]
+impl DeviceQueueCreateFlags {
+    pub const INTERNALLY_SYNCHRONIZED_KHR: Self = Self(0b100);
+}
+#[doc = "Generated from 'VK_KHR_internally_synchronized_queues'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_INTERNALLY_SYNCHRONIZED_QUEUES_FEATURES_KHR: Self =
+        Self(1_000_504_000);
 }
 #[doc = "Generated from 'VK_NV_low_latency2'"]
 impl StructureType {
@@ -4339,6 +4565,10 @@ impl StructureType {
 #[doc = "Generated from 'VK_ARM_data_graph'"]
 impl TensorUsageFlagsARM {
     pub const DATA_GRAPH: Self = Self(0b10_0000);
+}
+#[doc = "Generated from 'VK_ARM_data_graph_instruction_set_tosa'"]
+impl StructureType {
+    pub const QUEUE_FAMILY_DATA_GRAPH_TOSA_PROPERTIES_ARM: Self = Self(1_000_508_000);
 }
 #[doc = "Generated from 'VK_QCOM_multiview_per_view_render_areas'"]
 impl StructureType {
@@ -4851,6 +5081,13 @@ impl StructureType {
     pub const GENERATED_COMMANDS_PIPELINE_INFO_EXT: Self = Self(1_000_572_013);
     pub const GENERATED_COMMANDS_SHADER_INFO_EXT: Self = Self(1_000_572_014);
 }
+#[doc = "Generated from 'VK_KHR_device_fault'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FAULT_FEATURES_KHR: Self = Self(1_000_573_000);
+    pub const PHYSICAL_DEVICE_FAULT_PROPERTIES_KHR: Self = Self(1_000_573_001);
+    pub const DEVICE_FAULT_INFO_KHR: Self = Self(1_000_573_002);
+    pub const DEVICE_FAULT_DEBUG_INFO_KHR: Self = Self(1_000_573_003);
+}
 #[doc = "Generated from 'VK_KHR_maintenance8'"]
 impl DependencyFlags {
     pub const QUEUE_FAMILY_OWNERSHIP_TRANSFER_USE_ALL_STAGES_KHR: Self = Self(0b10_0000);
@@ -4873,6 +5110,19 @@ impl StructureType {
 #[doc = "Generated from 'VK_KHR_shader_fma'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_FMA_FEATURES_KHR: Self = Self(1_000_579_000);
+}
+#[doc = "Generated from 'VK_NV_push_constant_bank'"]
+impl StructureType {
+    pub const PUSH_CONSTANT_BANK_INFO_NV: Self = Self(1_000_580_000);
+    pub const PHYSICAL_DEVICE_PUSH_CONSTANT_BANK_FEATURES_NV: Self = Self(1_000_580_001);
+    pub const PHYSICAL_DEVICE_PUSH_CONSTANT_BANK_PROPERTIES_NV: Self = Self(1_000_580_002);
+}
+#[doc = "Generated from 'VK_EXT_ray_tracing_invocation_reorder'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_FEATURES_EXT: Self =
+        Self(1_000_581_000);
+    pub const PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_EXT: Self =
+        Self(1_000_581_001);
 }
 #[doc = "Generated from 'VK_EXT_depth_clamp_control'"]
 impl DynamicState {
@@ -4912,12 +5162,6 @@ impl VideoSessionCreateFlagsKHR {
 impl StructureType {
     pub const SURFACE_CREATE_INFO_OHOS: Self = Self(1_000_685_000);
 }
-#[doc = "Generated from 'VK_OHOS_native_buffer'"]
-impl StructureType {
-    pub const NATIVE_BUFFER_OHOS: Self = Self(1_000_453_001);
-    pub const SWAPCHAIN_IMAGE_CREATE_INFO_OHOS: Self = Self(1_000_453_002);
-    pub const PHYSICAL_DEVICE_PRESENTATION_PROPERTIES_OHOS: Self = Self(1_000_453_003);
-}
 #[doc = "Generated from 'VK_HUAWEI_hdr_vivid'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_HDR_VIVID_FEATURES_HUAWEI: Self = Self(1_000_590_000);
@@ -4948,6 +5192,27 @@ impl StructureType {
 #[doc = "Generated from 'VK_KHR_depth_clamp_zero_one'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_KHR: Self = Self(1_000_421_000);
+}
+#[doc = "Generated from 'VK_ARM_performance_counters_by_region'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PERFORMANCE_COUNTERS_BY_REGION_FEATURES_ARM: Self =
+        Self(1_000_605_000);
+    pub const PHYSICAL_DEVICE_PERFORMANCE_COUNTERS_BY_REGION_PROPERTIES_ARM: Self =
+        Self(1_000_605_001);
+    pub const PERFORMANCE_COUNTER_ARM: Self = Self(1_000_605_002);
+    pub const PERFORMANCE_COUNTER_DESCRIPTION_ARM: Self = Self(1_000_605_003);
+    pub const RENDER_PASS_PERFORMANCE_COUNTERS_BY_REGION_BEGIN_INFO_ARM: Self = Self(1_000_605_004);
+}
+#[doc = "Generated from 'VK_ARM_shader_instrumentation'"]
+impl ObjectType {
+    pub const SHADER_INSTRUMENTATION_ARM: Self = Self(1_000_607_000);
+}
+#[doc = "Generated from 'VK_ARM_shader_instrumentation'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_INSTRUMENTATION_FEATURES_ARM: Self = Self(1_000_607_000);
+    pub const PHYSICAL_DEVICE_SHADER_INSTRUMENTATION_PROPERTIES_ARM: Self = Self(1_000_607_001);
+    pub const SHADER_INSTRUMENTATION_CREATE_INFO_ARM: Self = Self(1_000_607_002);
+    pub const SHADER_INSTRUMENTATION_METRIC_DESCRIPTION_ARM: Self = Self(1_000_607_003);
 }
 #[doc = "Generated from 'VK_EXT_vertex_attribute_robustness'"]
 impl StructureType {
@@ -5001,7 +5266,6 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_ROBUSTNESS_2_PROPERTIES_KHR: Self = Self(1_000_286_001);
 }
 #[doc = "Generated from 'VK_NV_present_metering'"]
-#[cfg(feature = "provisional")]
 impl StructureType {
     pub const SET_PRESENT_CONFIG_NV: Self = Self(1_000_613_000);
     pub const PHYSICAL_DEVICE_PRESENT_METERING_FEATURES_NV: Self = Self(1_000_613_001);
@@ -5053,6 +5317,45 @@ impl ShaderCreateFlagsEXT {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_64_INDEXING_FEATURES_EXT: Self = Self(1_000_627_000);
 }
+#[doc = "Generated from 'VK_EXT_custom_resolve'"]
+impl RenderingFlags {
+    pub const FRAGMENT_REGION_EXT: Self = Self(0b100_0000);
+    pub const CUSTOM_RESOLVE_EXT: Self = Self(0b1000_0000);
+}
+#[doc = "Generated from 'VK_EXT_custom_resolve'"]
+impl ResolveModeFlags {
+    pub const CUSTOM_EXT: Self = Self(0b10_0000);
+}
+#[doc = "Generated from 'VK_EXT_custom_resolve'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_CUSTOM_RESOLVE_FEATURES_EXT: Self = Self(1_000_628_000);
+    pub const BEGIN_CUSTOM_RESOLVE_INFO_EXT: Self = Self(1_000_628_001);
+    pub const CUSTOM_RESOLVE_CREATE_INFO_EXT: Self = Self(1_000_628_002);
+}
+#[doc = "Generated from 'VK_EXT_custom_resolve'"]
+impl SubpassDescriptionFlags {
+    pub const FRAGMENT_REGION_EXT: Self = Self(0b100);
+    pub const CUSTOM_RESOLVE_EXT: Self = Self(0b1000);
+}
+#[doc = "Generated from 'VK_QCOM_data_graph_model'"]
+impl PhysicalDeviceDataGraphOperationTypeARM {
+    pub const NEURAL_MODEL_QCOM: Self = Self(1_000_629_000);
+    pub const BUILTIN_MODEL_QCOM: Self = Self(1_000_629_001);
+}
+#[doc = "Generated from 'VK_QCOM_data_graph_model'"]
+impl PhysicalDeviceDataGraphProcessingEngineTypeARM {
+    pub const NEURAL_QCOM: Self = Self(1_000_629_000);
+    pub const COMPUTE_QCOM: Self = Self(1_000_629_001);
+}
+#[doc = "Generated from 'VK_QCOM_data_graph_model'"]
+impl PipelineCacheHeaderVersion {
+    pub const DATA_GRAPH_QCOM: Self = Self(1_000_629_000);
+}
+#[doc = "Generated from 'VK_QCOM_data_graph_model'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DATA_GRAPH_MODEL_FEATURES_QCOM: Self = Self(1_000_629_000);
+    pub const DATA_GRAPH_PIPELINE_BUILTIN_MODEL_CREATE_INFO_QCOM: Self = Self(1_000_629_001);
+}
 #[doc = "Generated from 'VK_KHR_maintenance10'"]
 impl AttachmentDescriptionFlags {
     pub const RESOLVE_SKIP_TRANSFER_FUNCTION_KHR: Self = Self(0b10);
@@ -5092,6 +5395,56 @@ impl StructureType {
     pub const RENDERING_END_INFO_KHR: Self = Self(1_000_619_003);
     pub const RESOLVE_IMAGE_MODE_INFO_KHR: Self = Self(1_000_630_004);
 }
+#[doc = "Generated from 'VK_ARM_data_graph_optical_flow'"]
+impl DataGraphPipelineNodeConnectionTypeARM {
+    pub const OPTICAL_FLOW_INPUT: Self = Self(1_000_631_000);
+    pub const OPTICAL_FLOW_REFERENCE: Self = Self(1_000_631_001);
+    pub const OPTICAL_FLOW_HINT: Self = Self(1_000_631_002);
+    pub const OPTICAL_FLOW_FLOW_VECTOR: Self = Self(1_000_631_003);
+    pub const OPTICAL_FLOW_COST: Self = Self(1_000_631_004);
+}
+#[doc = "Generated from 'VK_ARM_data_graph_optical_flow'"]
+impl DataGraphPipelineNodeTypeARM {
+    pub const OPTICAL_FLOW: Self = Self(1_000_631_000);
+}
+#[doc = "Generated from 'VK_ARM_data_graph_optical_flow'"]
+impl DataGraphPipelineSessionBindPointARM {
+    pub const OPTICAL_FLOW_CACHE: Self = Self(1_000_631_001);
+}
+#[doc = "Generated from 'VK_ARM_data_graph_optical_flow'"]
+impl DataGraphPipelineSessionCreateFlagsARM {
+    pub const OPTICAL_FLOW_CACHE: Self = Self(0b10);
+}
+#[doc = "Generated from 'VK_ARM_data_graph_optical_flow'"]
+impl FormatFeatureFlags2 {
+    pub const DATA_GRAPH_OPTICAL_FLOW_IMAGE_ARM: Self =
+        Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const DATA_GRAPH_OPTICAL_FLOW_VECTOR_ARM: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const DATA_GRAPH_OPTICAL_FLOW_COST_ARM: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_ARM_data_graph_optical_flow'"]
+impl PhysicalDeviceDataGraphOperationTypeARM {
+    pub const OPTICAL_FLOW: Self = Self(1_000_631_000);
+}
+#[doc = "Generated from 'VK_ARM_data_graph_optical_flow'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DATA_GRAPH_OPTICAL_FLOW_FEATURES_ARM: Self = Self(1_000_631_000);
+    pub const QUEUE_FAMILY_DATA_GRAPH_OPTICAL_FLOW_PROPERTIES_ARM: Self = Self(1_000_631_001);
+    pub const DATA_GRAPH_OPTICAL_FLOW_IMAGE_FORMAT_INFO_ARM: Self = Self(1_000_631_003);
+    pub const DATA_GRAPH_OPTICAL_FLOW_IMAGE_FORMAT_PROPERTIES_ARM: Self = Self(1_000_631_004);
+    pub const DATA_GRAPH_PIPELINE_OPTICAL_FLOW_DISPATCH_INFO_ARM: Self = Self(1_000_631_005);
+    pub const DATA_GRAPH_PIPELINE_OPTICAL_FLOW_CREATE_INFO_ARM: Self = Self(1_000_631_002);
+    pub const DATA_GRAPH_PIPELINE_RESOURCE_INFO_IMAGE_LAYOUT_ARM: Self = Self(1_000_631_006);
+    pub const DATA_GRAPH_PIPELINE_SINGLE_NODE_CREATE_INFO_ARM: Self = Self(1_000_631_007);
+    pub const DATA_GRAPH_PIPELINE_SINGLE_NODE_CONNECTION_ARM: Self = Self(1_000_631_008);
+}
+#[doc = "Generated from 'VK_EXT_shader_long_vector'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_LONG_VECTOR_FEATURES_EXT: Self = Self(1_000_635_000);
+    pub const PHYSICAL_DEVICE_SHADER_LONG_VECTOR_PROPERTIES_EXT: Self = Self(1_000_635_001);
+}
 #[doc = "Generated from 'VK_SEC_pipeline_cache_incremental_mode'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_CACHE_INCREMENTAL_MODE_FEATURES_SEC: Self =
@@ -5101,6 +5454,72 @@ impl StructureType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_UNIFORM_BUFFER_UNSIZED_ARRAY_FEATURES_EXT: Self =
         Self(1_000_642_000);
+}
+#[doc = "Generated from 'VK_NV_compute_occupancy_priority'"]
+impl StructureType {
+    pub const COMPUTE_OCCUPANCY_PRIORITY_PARAMETERS_NV: Self = Self(1_000_645_000);
+    pub const PHYSICAL_DEVICE_COMPUTE_OCCUPANCY_PRIORITY_FEATURES_NV: Self = Self(1_000_645_001);
+}
+#[doc = "Generated from 'VK_KHR_maintenance11'"]
+impl ImageCreateFlags {
+    pub const ALIAS_SINGLE_LAYER_DESCRIPTOR_KHR: Self = Self(0b100_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance11'"]
+impl PipelineLayoutCreateFlags {
+    pub const NO_TASK_SHADER_KHR: Self = Self(0b100);
+}
+#[doc = "Generated from 'VK_KHR_maintenance11'"]
+impl ShaderCreateFlagsEXT {
+    pub const INDEPENDENT_SETS_KHR: Self = Self(0b100_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance11'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MAINTENANCE_11_FEATURES_KHR: Self = Self(1_000_657_000);
+    pub const QUEUE_FAMILY_OPTIMAL_IMAGE_TRANSFER_GRANULARITY_PROPERTIES_KHR: Self =
+        Self(1_000_657_001);
+}
+#[doc = "Generated from 'VK_EXT_shader_subgroup_partitioned'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_SUBGROUP_PARTITIONED_FEATURES_EXT: Self = Self(1_000_662_000);
+}
+#[doc = "Generated from 'VK_EXT_shader_subgroup_partitioned'"]
+impl SubgroupFeatureFlags {
+    pub const PARTITIONED_EXT: Self = Self(0b1_0000_0000);
+}
+#[doc = "Generated from 'VK_SEC_ubm_surface'"]
+impl StructureType {
+    pub const UBM_SURFACE_CREATE_INFO_SEC: Self = Self(1_000_664_000);
+}
+#[doc = "Generated from 'VK_VALVE_shader_mixed_float_dot_product'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_MIXED_FLOAT_DOT_PRODUCT_FEATURES_VALVE: Self =
+        Self(1_000_673_000);
+}
+#[doc = "Generated from 'VK_SEC_throttle_hint'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_THROTTLE_HINT_FEATURES_SEC: Self = Self(1_000_674_000);
+    pub const THROTTLE_HINT_SUBMIT_INFO_SEC: Self = Self(1_000_674_001);
+}
+#[doc = "Generated from 'VK_ARM_data_graph_neural_accelerator_statistics'"]
+impl DataGraphPipelinePropertyARM {
+    pub const NEURAL_ACCELERATOR_DEBUG_DATABASE: Self = Self(1_000_676_000);
+    pub const NEURAL_ACCELERATOR_STATISTICS_INFO: Self = Self(1_000_676_001);
+}
+#[doc = "Generated from 'VK_ARM_data_graph_neural_accelerator_statistics'"]
+impl DataGraphPipelineSessionBindPointARM {
+    pub const NEURAL_ACCELERATOR_STATISTICS: Self = Self(1_000_676_000);
+}
+#[doc = "Generated from 'VK_ARM_data_graph_neural_accelerator_statistics'"]
+impl StructureType {
+    pub const DATA_GRAPH_PIPELINE_NEURAL_STATISTICS_CREATE_INFO_ARM: Self = Self(1_000_676_000);
+    pub const DATA_GRAPH_PIPELINE_SESSION_NEURAL_STATISTICS_CREATE_INFO_ARM: Self =
+        Self(1_000_676_001);
+    pub const PHYSICAL_DEVICE_DATA_GRAPH_NEURAL_ACCELERATOR_STATISTICS_FEATURES_ARM: Self =
+        Self(1_000_676_002);
+}
+#[doc = "Generated from 'VK_EXT_primitive_restart_index'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PRIMITIVE_RESTART_INDEX_FEATURES_EXT: Self = Self(1_000_678_000);
 }
 pub const KHR_SURFACE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_surface\0") };
@@ -5535,6 +5954,7 @@ pub const NV_DEDICATED_ALLOCATION_SPEC_VERSION: u32 = 1u32;
 pub const EXT_TRANSFORM_FEEDBACK_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_transform_feedback\0") };
 pub const EXT_TRANSFORM_FEEDBACK_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindTransformFeedbackBuffersEXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -5544,6 +5964,7 @@ pub type PFN_vkCmdBindTransformFeedbackBuffersEXT = unsafe extern "system" fn(
     p_offsets: *const DeviceSize,
     p_sizes: *const DeviceSize,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginTransformFeedbackEXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -5552,6 +5973,7 @@ pub type PFN_vkCmdBeginTransformFeedbackEXT = unsafe extern "system" fn(
     p_counter_buffers: *const Buffer,
     p_counter_buffer_offsets: *const DeviceSize,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEndTransformFeedbackEXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -5575,6 +5997,7 @@ pub type PFN_vkCmdEndQueryIndexedEXT = unsafe extern "system" fn(
     query: u32,
     index: u32,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawIndirectByteCountEXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -5621,7 +6044,7 @@ pub type PFN_vkCmdCuLaunchKernelNVX = unsafe extern "system" fn(
 );
 pub const NVX_IMAGE_VIEW_HANDLE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NVX_image_view_handle\0") };
-pub const NVX_IMAGE_VIEW_HANDLE_SPEC_VERSION: u32 = 3u32;
+pub const NVX_IMAGE_VIEW_HANDLE_SPEC_VERSION: u32 = 4u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageViewHandleNVX = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -5638,9 +6061,16 @@ pub type PFN_vkGetImageViewAddressNVX = unsafe extern "system" fn(
     image_view: ImageView,
     p_properties: *mut ImageViewAddressPropertiesNVX<'_>,
 ) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceCombinedImageSamplerIndexNVX = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    image_view_index: u64,
+    sampler_index: u64,
+) -> u64;
 pub const AMD_DRAW_INDIRECT_COUNT_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_draw_indirect_count\0") };
 pub const AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION: u32 = 2u32;
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawIndirectCount = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -5651,6 +6081,7 @@ pub type PFN_vkCmdDrawIndirectCount = unsafe extern "system" fn(
     max_draw_count: u32,
     stride: u32,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawIndexedIndirectCount = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -5983,6 +6414,7 @@ pub type PFN_vkCmdPushDescriptorSetWithTemplate = unsafe extern "system" fn(
 pub const EXT_CONDITIONAL_RENDERING_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_conditional_rendering\0") };
 pub const EXT_CONDITIONAL_RENDERING_SPEC_VERSION: u32 = 2u32;
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginConditionalRenderingEXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -6491,6 +6923,67 @@ pub type PFN_vkCmdDispatchGraphIndirectCountAMDX = unsafe extern "system" fn(
     scratch_size: DeviceSize,
     count_info: DeviceAddress,
 );
+pub const EXT_DESCRIPTOR_HEAP_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_descriptor_heap\0") };
+pub const EXT_DESCRIPTOR_HEAP_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceDescriptorSizeEXT = unsafe extern "system" fn(
+    physical_device: PhysicalDevice,
+    descriptor_type: DescriptorType,
+) -> DeviceSize;
+#[allow(non_camel_case_types)]
+pub type PFN_vkWriteSamplerDescriptorsEXT = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    sampler_count: u32,
+    p_samplers: *const SamplerCreateInfo<'_>,
+    p_descriptors: *const HostAddressRangeEXT<'_>,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkWriteResourceDescriptorsEXT = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    resource_count: u32,
+    p_resources: *const ResourceDescriptorInfoEXT<'_>,
+    p_descriptors: *const HostAddressRangeEXT<'_>,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindSamplerHeapEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_bind_info: *const BindHeapInfoEXT<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindResourceHeapEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_bind_info: *const BindHeapInfoEXT<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdPushDataEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_push_data_info: *const PushDataInfoEXT<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetImageOpaqueCaptureDataEXT = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    image_count: u32,
+    p_images: *const Image,
+    p_datas: *mut HostAddressRangeEXT<'_>,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkRegisterCustomBorderColorEXT = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_border_color: *const SamplerCustomBorderColorCreateInfoEXT<'_>,
+    request_index: Bool32,
+    p_index: *mut u32,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkUnregisterCustomBorderColorEXT =
+    unsafe extern "system" fn(device: crate::vk::Device, index: u32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetTensorOpaqueCaptureDataARM = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    tensor_count: u32,
+    p_tensors: *const TensorARM,
+    p_datas: *mut HostAddressRangeEXT<'_>,
+) -> Result;
 pub const AMD_MIXED_ATTACHMENT_SAMPLES_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_mixed_attachment_samples\0") };
 pub const AMD_MIXED_ATTACHMENT_SAMPLES_SPEC_VERSION: u32 = 1u32;
@@ -6557,6 +7050,7 @@ pub const NV_FRAGMENT_COVERAGE_TO_COLOR_SPEC_VERSION: u32 = 1u32;
 pub const KHR_ACCELERATION_STRUCTURE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_acceleration_structure\0") };
 pub const KHR_ACCELERATION_STRUCTURE_SPEC_VERSION: u32 = 13u32;
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateAccelerationStructureKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -6867,7 +7361,7 @@ pub type PFN_vkDestroyAccelerationStructureNV = unsafe extern "system" fn(
 pub type PFN_vkGetAccelerationStructureMemoryRequirementsNV = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_info: *const AccelerationStructureMemoryRequirementsInfoNV<'_>,
-    p_memory_requirements: *mut MemoryRequirements2KHR<'_>,
+    p_memory_requirements: *mut MemoryRequirements2<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkBindAccelerationStructureMemoryNV = unsafe extern "system" fn(
@@ -6961,6 +7455,9 @@ pub const EXT_FILTER_CUBIC_SPEC_VERSION: u32 = 3u32;
 pub const QCOM_RENDER_PASS_SHADER_RESOLVE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_shader_resolve\0") };
 pub const QCOM_RENDER_PASS_SHADER_RESOLVE_SPEC_VERSION: u32 = 4u32;
+pub const QCOM_COOPERATIVE_MATRIX_CONVERSION_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_cooperative_matrix_conversion\0") };
+pub const QCOM_COOPERATIVE_MATRIX_CONVERSION_SPEC_VERSION: u32 = 1u32;
 pub const EXT_GLOBAL_PRIORITY_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_global_priority\0") };
 pub const EXT_GLOBAL_PRIORITY_SPEC_VERSION: u32 = 2u32;
@@ -6991,6 +7488,7 @@ pub type PFN_vkCmdWriteBufferMarkerAMD = unsafe extern "system" fn(
     dst_offset: DeviceSize,
     marker: u32,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdWriteBufferMarker2AMD = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -7149,6 +7647,35 @@ pub type PFN_vkSignalSemaphore = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_signal_info: *const SemaphoreSignalInfo<'_>,
 ) -> Result;
+pub const EXT_PRESENT_TIMING_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_present_timing\0") };
+pub const EXT_PRESENT_TIMING_SPEC_VERSION: u32 = 3u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkSetSwapchainPresentTimingQueueSizeEXT = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    swapchain: SwapchainKHR,
+    size: u32,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetSwapchainTimingPropertiesEXT = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    swapchain: SwapchainKHR,
+    p_swapchain_timing_properties: *mut SwapchainTimingPropertiesEXT<'_>,
+    p_swapchain_timing_properties_counter: *mut u64,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetSwapchainTimeDomainPropertiesEXT = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    swapchain: SwapchainKHR,
+    p_swapchain_time_domain_properties: *mut SwapchainTimeDomainPropertiesEXT<'_>,
+    p_time_domains_counter: *mut u64,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPastPresentationTimingEXT = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_past_presentation_timing_info: *const PastPresentationTimingInfoEXT<'_>,
+    p_past_presentation_timing_properties: *mut PastPresentationTimingPropertiesEXT<'_>,
+) -> Result;
 pub const INTEL_SHADER_INTEGER_FUNCTIONS2_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_shader_integer_functions2\0") };
 pub const INTEL_SHADER_INTEGER_FUNCTIONS2_SPEC_VERSION: u32 = 1u32;
@@ -7238,7 +7765,7 @@ pub type PFN_vkCreateMetalSurfaceEXT = unsafe extern "system" fn(
 ) -> Result;
 pub const EXT_FRAGMENT_DENSITY_MAP_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_density_map\0") };
-pub const EXT_FRAGMENT_DENSITY_MAP_SPEC_VERSION: u32 = 2u32;
+pub const EXT_FRAGMENT_DENSITY_MAP_SPEC_VERSION: u32 = 3u32;
 pub const EXT_SCALAR_BLOCK_LAYOUT_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_scalar_block_layout\0") };
 pub const EXT_SCALAR_BLOCK_LAYOUT_SPEC_VERSION: u32 = 1u32;
@@ -7272,6 +7799,9 @@ pub const AMD_SHADER_CORE_PROPERTIES2_SPEC_VERSION: u32 = 1u32;
 pub const AMD_DEVICE_COHERENT_MEMORY_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_device_coherent_memory\0") };
 pub const AMD_DEVICE_COHERENT_MEMORY_SPEC_VERSION: u32 = 1u32;
+pub const KHR_SHADER_CONSTANT_DATA_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_constant_data\0") };
+pub const KHR_SHADER_CONSTANT_DATA_SPEC_VERSION: u32 = 1u32;
 pub const KHR_DYNAMIC_RENDERING_LOCAL_READ_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_dynamic_rendering_local_read\0") };
 pub const KHR_DYNAMIC_RENDERING_LOCAL_READ_SPEC_VERSION: u32 = 1u32;
@@ -7285,6 +7815,9 @@ pub type PFN_vkCmdSetRenderingInputAttachmentIndices = unsafe extern "system" fn
     command_buffer: CommandBuffer,
     p_input_attachment_index_info: *const RenderingInputAttachmentIndexInfo<'_>,
 );
+pub const KHR_SHADER_ABORT_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_abort\0") };
+pub const KHR_SHADER_ABORT_SPEC_VERSION: u32 = 1u32;
 pub const EXT_SHADER_IMAGE_ATOMIC_INT64_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_image_atomic_int64\0") };
 pub const EXT_SHADER_IMAGE_ATOMIC_INT64_SPEC_VERSION: u32 = 1u32;
@@ -7701,6 +8234,9 @@ pub const EXT_ROBUSTNESS2_SPEC_VERSION: u32 = 1u32;
 pub const EXT_CUSTOM_BORDER_COLOR_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_custom_border_color\0") };
 pub const EXT_CUSTOM_BORDER_COLOR_SPEC_VERSION: u32 = 12u32;
+pub const EXT_TEXTURE_COMPRESSION_ASTC_3D_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_texture_compression_astc_3d\0") };
+pub const EXT_TEXTURE_COMPRESSION_ASTC_3D_SPEC_VERSION: u32 = 1u32;
 pub const GOOGLE_USER_TYPE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_user_type\0") };
 pub const GOOGLE_USER_TYPE_SPEC_VERSION: u32 = 1u32;
@@ -7780,6 +8316,14 @@ pub const NV_DEVICE_DIAGNOSTICS_CONFIG_SPEC_VERSION: u32 = 2u32;
 pub const QCOM_RENDER_PASS_STORE_OPS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_store_ops\0") };
 pub const QCOM_RENDER_PASS_STORE_OPS_SPEC_VERSION: u32 = 2u32;
+pub const QCOM_QUEUE_PERF_HINT_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_queue_perf_hint\0") };
+pub const QCOM_QUEUE_PERF_HINT_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkQueueSetPerfHintQCOM = unsafe extern "system" fn(
+    queue: Queue,
+    p_perf_hint_info: *const PerfHintInfoQCOM<'_>,
+) -> Result;
 #[cfg(feature = "provisional")]
 pub const NV_CUDA_KERNEL_LAUNCH_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_cuda_kernel_launch\0") };
@@ -7902,12 +8446,14 @@ pub type PFN_vkQueueSubmit2 = unsafe extern "system" fn(
 pub const EXT_DESCRIPTOR_BUFFER_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_descriptor_buffer\0") };
 pub const EXT_DESCRIPTOR_BUFFER_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDescriptorSetLayoutSizeEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     layout: DescriptorSetLayout,
     p_layout_size_in_bytes: *mut DeviceSize,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDescriptorSetLayoutBindingOffsetEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -7915,6 +8461,7 @@ pub type PFN_vkGetDescriptorSetLayoutBindingOffsetEXT = unsafe extern "system" f
     binding: u32,
     p_offset: *mut DeviceSize,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDescriptorEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -7922,12 +8469,14 @@ pub type PFN_vkGetDescriptorEXT = unsafe extern "system" fn(
     data_size: usize,
     p_descriptor: *mut c_void,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindDescriptorBuffersEXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     buffer_count: u32,
     p_binding_infos: *const DescriptorBufferBindingInfoEXT<'_>,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDescriptorBufferOffsetsEXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -7938,6 +8487,7 @@ pub type PFN_vkCmdSetDescriptorBufferOffsetsEXT = unsafe extern "system" fn(
     p_buffer_indices: *const u32,
     p_offsets: *const DeviceSize,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindDescriptorBufferEmbeddedSamplersEXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -7945,30 +8495,35 @@ pub type PFN_vkCmdBindDescriptorBufferEmbeddedSamplersEXT = unsafe extern "syste
     layout: PipelineLayout,
     set: u32,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetBufferOpaqueCaptureDescriptorDataEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_info: *const BufferCaptureDescriptorDataInfoEXT<'_>,
     p_data: *mut c_void,
 ) -> Result;
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageOpaqueCaptureDescriptorDataEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_info: *const ImageCaptureDescriptorDataInfoEXT<'_>,
     p_data: *mut c_void,
 ) -> Result;
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageViewOpaqueCaptureDescriptorDataEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_info: *const ImageViewCaptureDescriptorDataInfoEXT<'_>,
     p_data: *mut c_void,
 ) -> Result;
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetSamplerOpaqueCaptureDescriptorDataEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_info: *const SamplerCaptureDescriptorDataInfoEXT<'_>,
     p_data: *mut c_void,
 ) -> Result;
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT =
     unsafe extern "system" fn(
@@ -7976,6 +8531,143 @@ pub type PFN_vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT =
         p_info: *const AccelerationStructureCaptureDescriptorDataInfoEXT<'_>,
         p_data: *mut c_void,
     ) -> Result;
+pub const KHR_DEVICE_ADDRESS_COMMANDS_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_device_address_commands\0") };
+pub const KHR_DEVICE_ADDRESS_COMMANDS_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindIndexBuffer3KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const BindIndexBuffer3InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindVertexBuffers3KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    first_binding: u32,
+    binding_count: u32,
+    p_binding_infos: *const BindVertexBuffer3InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawIndirect2KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const DrawIndirect2InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawIndexedIndirect2KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const DrawIndirect2InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDispatchIndirect2KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const DispatchIndirect2InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyMemoryKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_copy_memory_info: *const CopyDeviceMemoryInfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyMemoryToImageKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_copy_memory_info: *const CopyDeviceMemoryImageInfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyImageToMemoryKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_copy_memory_info: *const CopyDeviceMemoryImageInfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdUpdateMemoryKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_dst_range: *const DeviceAddressRangeKHR,
+    dst_flags: AddressCommandFlagsKHR,
+    data_size: DeviceSize,
+    p_data: *const c_void,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdFillMemoryKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_dst_range: *const DeviceAddressRangeKHR,
+    dst_flags: AddressCommandFlagsKHR,
+    data: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyQueryPoolResultsToMemoryKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    query_pool: QueryPool,
+    first_query: u32,
+    query_count: u32,
+    p_dst_range: *const StridedDeviceAddressRangeKHR,
+    dst_flags: AddressCommandFlagsKHR,
+    query_result_flags: QueryResultFlags,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawIndirectCount2KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const DrawIndirectCount2InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawIndexedIndirectCount2KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const DrawIndirectCount2InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBeginConditionalRendering2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_conditional_rendering_begin: *const ConditionalRenderingBeginInfo2EXT<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindTransformFeedbackBuffers2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    first_binding: u32,
+    binding_count: u32,
+    p_binding_infos: *const BindTransformFeedbackBuffer2InfoEXT<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBeginTransformFeedback2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    first_counter_range: u32,
+    counter_range_count: u32,
+    p_counter_infos: *const BindTransformFeedbackBuffer2InfoEXT<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdEndTransformFeedback2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    first_counter_range: u32,
+    counter_range_count: u32,
+    p_counter_infos: *const BindTransformFeedbackBuffer2InfoEXT<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawIndirectByteCount2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    instance_count: u32,
+    first_instance: u32,
+    p_counter_info: *const BindTransformFeedbackBuffer2InfoEXT<'_>,
+    counter_offset: u32,
+    vertex_stride: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawMeshTasksIndirect2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const DrawIndirect2InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawMeshTasksIndirectCount2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const DrawIndirectCount2InfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdWriteMarkerToMemoryAMD = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const MemoryMarkerInfoAMD<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateAccelerationStructure2KHR = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_create_info: *const AccelerationStructureCreateInfo2KHR<'_>,
+    p_allocator: *const AllocationCallbacks,
+    p_acceleration_structure: *mut AccelerationStructureKHR,
+) -> Result;
 pub const EXT_GRAPHICS_PIPELINE_LIBRARY_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_graphics_pipeline_library\0") };
 pub const EXT_GRAPHICS_PIPELINE_LIBRARY_SPEC_VERSION: u32 = 1u32;
@@ -8015,6 +8707,7 @@ pub type PFN_vkCmdDrawMeshTasksEXT = unsafe extern "system" fn(
     group_count_y: u32,
     group_count_z: u32,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawMeshTasksIndirectEXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -8023,6 +8716,7 @@ pub type PFN_vkCmdDrawMeshTasksIndirectEXT = unsafe extern "system" fn(
     draw_count: u32,
     stride: u32,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawMeshTasksIndirectCountEXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -8051,6 +8745,7 @@ pub const KHR_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_SPEC_VERSION: u32 = 1u32;
 pub const KHR_COPY_COMMANDS2_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_copy_commands2\0") };
 pub const KHR_COPY_COMMANDS2_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyBuffer2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -8061,11 +8756,13 @@ pub type PFN_vkCmdCopyImage2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_copy_image_info: *const CopyImageInfo2<'_>,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyBufferToImage2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2<'_>,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyImageToBuffer2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -8266,7 +8963,7 @@ pub const EXT_PIPELINE_PROPERTIES_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPipelinePropertiesEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
-    p_pipeline_info: *const PipelineInfoEXT<'_>,
+    p_pipeline_info: *const PipelineInfoKHR<'_>,
     p_pipeline_properties: *mut BaseOutStructure<'_>,
 ) -> Result;
 pub const EXT_FRAME_BOUNDARY_NAME: &CStr =
@@ -8527,7 +9224,12 @@ pub const KHR_SHADER_SUBGROUP_ROTATE_NAME: &CStr =
 pub const KHR_SHADER_SUBGROUP_ROTATE_SPEC_VERSION: u32 = 2u32;
 pub const ARM_SCHEDULING_CONTROLS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_scheduling_controls\0") };
-pub const ARM_SCHEDULING_CONTROLS_SPEC_VERSION: u32 = 1u32;
+pub const ARM_SCHEDULING_CONTROLS_SPEC_VERSION: u32 = 2u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetDispatchParametersARM = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_dispatch_parameters: *const DispatchParametersARM<'_>,
+);
 pub const EXT_IMAGE_SLICED_VIEW_OF_3D_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_sliced_view_of_3d\0") };
 pub const EXT_IMAGE_SLICED_VIEW_OF_3D_SPEC_VERSION: u32 = 1u32;
@@ -8635,6 +9337,21 @@ pub const QCOM_IMAGE_PROCESSING_SPEC_VERSION: u32 = 1u32;
 pub const EXT_NESTED_COMMAND_BUFFER_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_nested_command_buffer\0") };
 pub const EXT_NESTED_COMMAND_BUFFER_SPEC_VERSION: u32 = 1u32;
+pub const OHOS_EXTERNAL_MEMORY_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_OHOS_external_memory\0") };
+pub const OHOS_EXTERNAL_MEMORY_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetNativeBufferPropertiesOHOS = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    buffer: *const OH_NativeBuffer,
+    p_properties: *mut NativeBufferPropertiesOHOS<'_>,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetMemoryNativeBufferOHOS = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_info: *const MemoryGetNativeBufferInfoOHOS<'_>,
+    p_buffer: *mut *mut OH_NativeBuffer,
+) -> Result;
 pub const EXT_EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_external_memory_acquire_unmodified\0") };
 pub const EXT_EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_SPEC_VERSION: u32 = 1u32;
@@ -8788,7 +9505,7 @@ pub const LUNARG_DIRECT_DRIVER_LOADING_NAME: &CStr =
 pub const LUNARG_DIRECT_DRIVER_LOADING_SPEC_VERSION: u32 = 1u32;
 pub const ARM_TENSORS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_tensors\0") };
-pub const ARM_TENSORS_SPEC_VERSION: u32 = 1u32;
+pub const ARM_TENSORS_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceExternalTensorPropertiesARM = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
@@ -8924,6 +9641,7 @@ pub const ANDROID_EXTERNAL_FORMAT_RESOLVE_SPEC_VERSION: u32 = 1u32;
 pub const KHR_MAINTENANCE5_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance5\0") };
 pub const KHR_MAINTENANCE5_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindIndexBuffer2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -9117,6 +9835,9 @@ pub const EXT_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_NAME: &CStr = unsafe {
     CStr::from_bytes_with_nul_unchecked(b"VK_EXT_dynamic_rendering_unused_attachments\0")
 };
 pub const EXT_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_SPEC_VERSION: u32 = 1u32;
+pub const KHR_INTERNALLY_SYNCHRONIZED_QUEUES_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_internally_synchronized_queues\0") };
+pub const KHR_INTERNALLY_SYNCHRONIZED_QUEUES_SPEC_VERSION: u32 = 1u32;
 pub const NV_LOW_LATENCY2_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_low_latency2\0") };
 pub const NV_LOW_LATENCY2_SPEC_VERSION: u32 = 2u32;
@@ -9233,6 +9954,17 @@ pub type PFN_vkGetDataGraphPipelinePropertiesARM = unsafe extern "system" fn(
     properties_count: u32,
     p_properties: *mut DataGraphPipelinePropertyQueryResultARM<'_>,
 ) -> Result;
+pub const ARM_DATA_GRAPH_INSTRUCTION_SET_TOSA_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_data_graph_instruction_set_tosa\0") };
+pub const ARM_DATA_GRAPH_INSTRUCTION_SET_TOSA_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceQueueFamilyDataGraphEngineOperationPropertiesARM =
+    unsafe extern "system" fn(
+        physical_device: PhysicalDevice,
+        queue_family_index: u32,
+        p_queue_family_data_graph_properties: *const QueueFamilyDataGraphPropertiesARM<'_>,
+        p_properties: *mut BaseOutStructure<'_>,
+    ) -> Result;
 pub const QCOM_MULTIVIEW_PER_VIEW_RENDER_AREAS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_multiview_per_view_render_areas\0") };
 pub const QCOM_MULTIVIEW_PER_VIEW_RENDER_AREAS_SPEC_VERSION: u32 = 1u32;
@@ -9312,11 +10044,13 @@ pub const KHR_SHADER_EXPECT_ASSUME_SPEC_VERSION: u32 = 1u32;
 pub const KHR_MAINTENANCE6_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance6\0") };
 pub const KHR_MAINTENANCE6_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindDescriptorSets2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_bind_descriptor_sets_info: *const BindDescriptorSetsInfo<'_>,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdPushConstants2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -9332,11 +10066,13 @@ pub type PFN_vkCmdPushDescriptorSetWithTemplate2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_push_descriptor_set_with_template_info: *const PushDescriptorSetWithTemplateInfo<'_>,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDescriptorBufferOffsets2EXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_set_descriptor_buffer_offsets_info: *const SetDescriptorBufferOffsetsInfoEXT<'_>,
 );
+#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindDescriptorBufferEmbeddedSamplers2EXT = unsafe extern "system" fn (command_buffer : CommandBuffer , p_bind_descriptor_buffer_embedded_samplers_info : * const BindDescriptorBufferEmbeddedSamplersInfoEXT < '_ > ,) ;
 pub const NV_DESCRIPTOR_POOL_OVERALLOCATION_NAME: &CStr =
@@ -9524,6 +10260,21 @@ pub type PFN_vkUpdateIndirectExecutionSetShaderEXT = unsafe extern "system" fn(
     execution_set_write_count: u32,
     p_execution_set_writes: *const WriteIndirectExecutionSetShaderEXT<'_>,
 );
+pub const KHR_DEVICE_FAULT_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_device_fault\0") };
+pub const KHR_DEVICE_FAULT_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceFaultReportsKHR = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    timeout: u64,
+    p_fault_counts: *mut u32,
+    p_fault_info: *mut DeviceFaultInfoKHR<'_>,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceFaultDebugInfoKHR = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_debug_info: *mut DeviceFaultDebugInfoKHR<'_>,
+) -> Result;
 pub const KHR_MAINTENANCE8_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance8\0") };
 pub const KHR_MAINTENANCE8_SPEC_VERSION: u32 = 1u32;
@@ -9533,6 +10284,12 @@ pub const MESA_IMAGE_ALIGNMENT_CONTROL_SPEC_VERSION: u32 = 1u32;
 pub const KHR_SHADER_FMA_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_fma\0") };
 pub const KHR_SHADER_FMA_SPEC_VERSION: u32 = 1u32;
+pub const NV_PUSH_CONSTANT_BANK_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_push_constant_bank\0") };
+pub const NV_PUSH_CONSTANT_BANK_SPEC_VERSION: u32 = 1u32;
+pub const EXT_RAY_TRACING_INVOCATION_REORDER_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_ray_tracing_invocation_reorder\0") };
+pub const EXT_RAY_TRACING_INVOCATION_REORDER_SPEC_VERSION: u32 = 2u32;
 pub const EXT_DEPTH_CLAMP_CONTROL_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clamp_control\0") };
 pub const EXT_DEPTH_CLAMP_CONTROL_SPEC_VERSION: u32 = 1u32;
@@ -9551,32 +10308,6 @@ pub type PFN_vkCreateSurfaceOHOS = unsafe extern "system" fn(
     p_create_info: *const SurfaceCreateInfoOHOS<'_>,
     p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
-) -> Result;
-pub const OHOS_NATIVE_BUFFER_NAME: &CStr =
-    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_OHOS_native_buffer\0") };
-pub const OHOS_NATIVE_BUFFER_SPEC_VERSION: u32 = 1u32;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetSwapchainGrallocUsageOHOS = unsafe extern "system" fn(
-    device: crate::vk::Device,
-    format: Format,
-    image_usage: ImageUsageFlags,
-    gralloc_usage: *mut u64,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkAcquireImageOHOS = unsafe extern "system" fn(
-    device: crate::vk::Device,
-    image: Image,
-    native_fence_fd: i32,
-    semaphore: Semaphore,
-    fence: Fence,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkQueueSignalReleaseImageOHOS = unsafe extern "system" fn(
-    queue: Queue,
-    wait_semaphore_count: u32,
-    p_wait_semaphores: *const Semaphore,
-    image: Image,
-    p_native_fence_fd: *mut i32,
 ) -> Result;
 pub const HUAWEI_HDR_VIVID_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_hdr_vivid\0") };
@@ -9613,6 +10344,60 @@ pub type PFN_vkGetMemoryMetalHandlePropertiesEXT = unsafe extern "system" fn(
 pub const KHR_DEPTH_CLAMP_ZERO_ONE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_depth_clamp_zero_one\0") };
 pub const KHR_DEPTH_CLAMP_ZERO_ONE_SPEC_VERSION: u32 = 1u32;
+pub const ARM_PERFORMANCE_COUNTERS_BY_REGION_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_performance_counters_by_region\0") };
+pub const ARM_PERFORMANCE_COUNTERS_BY_REGION_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM =
+    unsafe extern "system" fn(
+        physical_device: PhysicalDevice,
+        queue_family_index: u32,
+        p_counter_count: *mut u32,
+        p_counters: *mut PerformanceCounterARM<'_>,
+        p_counter_descriptions: *mut PerformanceCounterDescriptionARM<'_>,
+    ) -> Result;
+pub const ARM_SHADER_INSTRUMENTATION_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_shader_instrumentation\0") };
+pub const ARM_SHADER_INSTRUMENTATION_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkEnumeratePhysicalDeviceShaderInstrumentationMetricsARM =
+    unsafe extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_description_count: *mut u32,
+        p_descriptions: *mut ShaderInstrumentationMetricDescriptionARM<'_>,
+    ) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateShaderInstrumentationARM = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_create_info: *const ShaderInstrumentationCreateInfoARM<'_>,
+    p_allocator: *const AllocationCallbacks,
+    p_instrumentation: *mut ShaderInstrumentationARM,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyShaderInstrumentationARM = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    instrumentation: ShaderInstrumentationARM,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBeginShaderInstrumentationARM = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    instrumentation: ShaderInstrumentationARM,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdEndShaderInstrumentationARM =
+    unsafe extern "system" fn(command_buffer: CommandBuffer);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetShaderInstrumentationValuesARM = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    instrumentation: ShaderInstrumentationARM,
+    p_metric_block_count: *mut u32,
+    p_metric_values: *mut c_void,
+    flags: ShaderInstrumentationValuesFlagsARM,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkClearShaderInstrumentationMetricsARM =
+    unsafe extern "system" fn(device: crate::vk::Device, instrumentation: ShaderInstrumentationARM);
 pub const EXT_VERTEX_ATTRIBUTE_ROBUSTNESS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_vertex_attribute_robustness\0") };
 pub const EXT_VERTEX_ATTRIBUTE_ROBUSTNESS_SPEC_VERSION: u32 = 1u32;
@@ -9625,10 +10410,8 @@ pub const VALVE_FRAGMENT_DENSITY_MAP_LAYERED_SPEC_VERSION: u32 = 1u32;
 pub const KHR_ROBUSTNESS2_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_robustness2\0") };
 pub const KHR_ROBUSTNESS2_SPEC_VERSION: u32 = 1u32;
-#[cfg(feature = "provisional")]
 pub const NV_PRESENT_METERING_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_present_metering\0") };
-#[cfg(feature = "provisional")]
 pub const NV_PRESENT_METERING_SPEC_VERSION: u32 = 1u32;
 pub const EXT_FRAGMENT_DENSITY_MAP_OFFSET_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_density_map_offset\0") };
@@ -9647,12 +10430,85 @@ pub const KHR_PRESENT_MODE_FIFO_LATEST_READY_SPEC_VERSION: u32 = 1u32;
 pub const EXT_SHADER_64BIT_INDEXING_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_64bit_indexing\0") };
 pub const EXT_SHADER_64BIT_INDEXING_SPEC_VERSION: u32 = 1u32;
+pub const EXT_CUSTOM_RESOLVE_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_custom_resolve\0") };
+pub const EXT_CUSTOM_RESOLVE_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBeginCustomResolveEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_begin_custom_resolve_info: *const BeginCustomResolveInfoEXT<'_>,
+);
+pub const QCOM_DATA_GRAPH_MODEL_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_data_graph_model\0") };
+pub const QCOM_DATA_GRAPH_MODEL_SPEC_VERSION: u32 = 1u32;
 pub const KHR_MAINTENANCE10_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance10\0") };
 pub const KHR_MAINTENANCE10_SPEC_VERSION: u32 = 1u32;
+pub const ARM_DATA_GRAPH_OPTICAL_FLOW_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_data_graph_optical_flow\0") };
+pub const ARM_DATA_GRAPH_OPTICAL_FLOW_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceQueueFamilyDataGraphOpticalFlowImageFormatsARM =
+    unsafe extern "system" fn(
+        physical_device: PhysicalDevice,
+        queue_family_index: u32,
+        p_queue_family_data_graph_properties: *const QueueFamilyDataGraphPropertiesARM<'_>,
+        p_optical_flow_image_format_info: *const DataGraphOpticalFlowImageFormatInfoARM<'_>,
+        p_format_count: *mut u32,
+        p_image_format_properties: *mut DataGraphOpticalFlowImageFormatPropertiesARM<'_>,
+    ) -> Result;
+pub const EXT_SHADER_LONG_VECTOR_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_long_vector\0") };
+pub const EXT_SHADER_LONG_VECTOR_SPEC_VERSION: u32 = 1u32;
 pub const SEC_PIPELINE_CACHE_INCREMENTAL_MODE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_SEC_pipeline_cache_incremental_mode\0") };
 pub const SEC_PIPELINE_CACHE_INCREMENTAL_MODE_SPEC_VERSION: u32 = 1u32;
 pub const EXT_SHADER_UNIFORM_BUFFER_UNSIZED_ARRAY_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_uniform_buffer_unsized_array\0") };
 pub const EXT_SHADER_UNIFORM_BUFFER_UNSIZED_ARRAY_SPEC_VERSION: u32 = 1u32;
+pub const NV_COMPUTE_OCCUPANCY_PRIORITY_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_compute_occupancy_priority\0") };
+pub const NV_COMPUTE_OCCUPANCY_PRIORITY_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetComputeOccupancyPriorityNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_parameters: *const ComputeOccupancyPriorityParametersNV<'_>,
+);
+pub const KHR_MAINTENANCE11_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance11\0") };
+pub const KHR_MAINTENANCE11_SPEC_VERSION: u32 = 1u32;
+pub const EXT_SHADER_SUBGROUP_PARTITIONED_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_partitioned\0") };
+pub const EXT_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION: u32 = 1u32;
+pub const SEC_UBM_SURFACE_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_SEC_ubm_surface\0") };
+pub const SEC_UBM_SURFACE_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateUbmSurfaceSEC = unsafe extern "system" fn(
+    instance: crate::vk::Instance,
+    p_create_info: *const UbmSurfaceCreateInfoSEC<'_>,
+    p_allocator: *const AllocationCallbacks,
+    p_surface: *mut SurfaceKHR,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceUbmPresentationSupportSEC = unsafe extern "system" fn(
+    physical_device: PhysicalDevice,
+    queue_family_index: u32,
+    device: *mut ubm_device,
+) -> Bool32;
+pub const VALVE_SHADER_MIXED_FLOAT_DOT_PRODUCT_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_VALVE_shader_mixed_float_dot_product\0") };
+pub const VALVE_SHADER_MIXED_FLOAT_DOT_PRODUCT_SPEC_VERSION: u32 = 1u32;
+pub const SEC_THROTTLE_HINT_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_SEC_throttle_hint\0") };
+pub const SEC_THROTTLE_HINT_SPEC_VERSION: u32 = 1u32;
+pub const ARM_DATA_GRAPH_NEURAL_ACCELERATOR_STATISTICS_NAME: &CStr = unsafe {
+    CStr::from_bytes_with_nul_unchecked(b"VK_ARM_data_graph_neural_accelerator_statistics\0")
+};
+pub const ARM_DATA_GRAPH_NEURAL_ACCELERATOR_STATISTICS_SPEC_VERSION: u32 = 1u32;
+pub const EXT_PRIMITIVE_RESTART_INDEX_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_primitive_restart_index\0") };
+pub const EXT_PRIMITIVE_RESTART_INDEX_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetPrimitiveRestartIndexEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, primitive_restart_index: u32);

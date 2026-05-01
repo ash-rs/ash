@@ -244,12 +244,12 @@ impl Result {
 }
 #[doc = "Generated from 'VK_BASE_VERSION_1_2'"]
 impl StructureType {
+    pub const PHYSICAL_DEVICE_DRIVER_PROPERTIES: Self = Self(1_000_196_000);
     pub const PHYSICAL_DEVICE_VULKAN_1_1_FEATURES: Self = Self(49);
     pub const PHYSICAL_DEVICE_VULKAN_1_1_PROPERTIES: Self = Self(50);
     pub const PHYSICAL_DEVICE_VULKAN_1_2_FEATURES: Self = Self(51);
     pub const PHYSICAL_DEVICE_VULKAN_1_2_PROPERTIES: Self = Self(52);
     pub const IMAGE_FORMAT_LIST_CREATE_INFO: Self = Self(1_000_147_000);
-    pub const PHYSICAL_DEVICE_DRIVER_PROPERTIES: Self = Self(1_000_196_000);
     pub const PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES: Self = Self(1_000_211_000);
     pub const PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES: Self = Self(1_000_261_000);
     pub const PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_FEATURES: Self = Self(1_000_207_000);

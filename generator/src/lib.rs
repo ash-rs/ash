@@ -311,9 +311,12 @@ fn is_opaque_type(ty: &str) -> bool {
             | "AHardwareBuffer"
             | "OHNativeWindow"
             | "OHBufferHandle"
+            | "OH_NativeBuffer"
             | "CAMetalLayer"
             | "IDirectFB"
             | "IDirectFBSurface"
+            | "ubm_device"
+            | "ubm_surface"
             | "_screen_buffer"
             | "_screen_context"
             | "_screen_window"
@@ -2636,7 +2639,7 @@ pub fn generate_struct(
                 .as_ref()
                 .map(|deprecated| match deprecated.as_str() {
                     "true" => quote!(#[deprecated]),
-                    "ignored" => {
+                    "unused" => {
                         quote!(#[deprecated = "functionality described by this member no longer operates"])
                     }
                     x => panic!("Unknown deprecation reason {x}"),

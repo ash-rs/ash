@@ -1225,6 +1225,36 @@ pub struct PhysicalDeviceSchedulingControlsFlagsARM(pub(crate) Flags64);
 vk_bitflags_wrapped!(PhysicalDeviceSchedulingControlsFlagsARM, Flags64);
 impl PhysicalDeviceSchedulingControlsFlagsARM {
     pub const SHADER_CORE_COUNT: Self = Self(0b1);
+    pub const DISPATCH_PARAMETERS: Self = Self(0b10);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPresentStageFlagBitsEXT.html>"]
+pub struct PresentStageFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(PresentStageFlagsEXT, Flags);
+impl PresentStageFlagsEXT {
+    pub const QUEUE_OPERATIONS_END: Self = Self(0b1);
+    pub const REQUEST_DEQUEUED: Self = Self(0b10);
+    pub const IMAGE_FIRST_PIXEL_OUT: Self = Self(0b100);
+    pub const IMAGE_FIRST_PIXEL_VISIBLE: Self = Self(0b1000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPastPresentationTimingFlagBitsEXT.html>"]
+pub struct PastPresentationTimingFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(PastPresentationTimingFlagsEXT, Flags);
+impl PastPresentationTimingFlagsEXT {
+    pub const ALLOW_PARTIAL_RESULTS: Self = Self(0b1);
+    pub const ALLOW_OUT_OF_ORDER_RESULTS: Self = Self(0b10);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPresentTimingInfoFlagBitsEXT.html>"]
+pub struct PresentTimingInfoFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(PresentTimingInfoFlagsEXT, Flags);
+impl PresentTimingInfoFlagsEXT {
+    pub const PRESENT_AT_RELATIVE_TIME: Self = Self(0b1);
+    pub const PRESENT_AT_NEAREST_REFRESH_CYCLE: Self = Self(0b10);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1778,6 +1808,19 @@ impl MicromapCreateFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultFlagBitsKHR.html>"]
+pub struct DeviceFaultFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(DeviceFaultFlagsKHR, Flags);
+impl DeviceFaultFlagsKHR {
+    pub const FLAG_DEVICE_LOST: Self = Self(0b1);
+    pub const FLAG_MEMORY_ADDRESS: Self = Self(0b10);
+    pub const FLAG_INSTRUCTION_ADDRESS: Self = Self(0b100);
+    pub const FLAG_VENDOR: Self = Self(0b1000);
+    pub const FLAG_WATCHDOG_TIMEOUT: Self = Self(0b1_0000);
+    pub const FLAG_OVERFLOW: Self = Self(0b10_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsLayoutUsageFlagBitsEXT.html>"]
 pub struct IndirectCommandsLayoutUsageFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(IndirectCommandsLayoutUsageFlagsEXT, Flags);
@@ -1917,9 +1960,85 @@ impl VideoEncodeRgbChromaOffsetFlagsVALVE {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSwapchainImageUsageFlagBitsOHOS.html>"]
-pub struct SwapchainImageUsageFlagsOHOS(pub(crate) Flags);
-vk_bitflags_wrapped!(SwapchainImageUsageFlagsOHOS, Flags);
-impl SwapchainImageUsageFlagsOHOS {
-    pub const SHARED: Self = Self(0b1);
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSpirvResourceTypeFlagBitsEXT.html>"]
+pub struct SpirvResourceTypeFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(SpirvResourceTypeFlagsEXT, Flags);
+impl SpirvResourceTypeFlagsEXT {
+    pub const ALL: Self = Self(0x7fffffff);
+    pub const SAMPLER: Self = Self(0b1);
+    pub const SAMPLED_IMAGE: Self = Self(0b10);
+    pub const READ_ONLY_IMAGE: Self = Self(0b100);
+    pub const READ_WRITE_IMAGE: Self = Self(0b1000);
+    pub const COMBINED_SAMPLED_IMAGE: Self = Self(0b1_0000);
+    pub const UNIFORM_BUFFER: Self = Self(0b10_0000);
+    pub const READ_ONLY_STORAGE_BUFFER: Self = Self(0b100_0000);
+    pub const READ_WRITE_STORAGE_BUFFER: Self = Self(0b1000_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAddressCommandFlagBitsKHR.html>"]
+pub struct AddressCommandFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(AddressCommandFlagsKHR, Flags);
+impl AddressCommandFlagsKHR {
+    pub const PROTECTED: Self = Self(0b1);
+    pub const FULLY_BOUND: Self = Self(0b10);
+    pub const STORAGE_BUFFER_USAGE: Self = Self(0b100);
+    pub const UNKNOWN_STORAGE_BUFFER_USAGE: Self = Self(0b1000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDataGraphTOSAQualityFlagBitsARM.html>"]
+pub struct DataGraphTOSAQualityFlagsARM(pub(crate) Flags);
+vk_bitflags_wrapped!(DataGraphTOSAQualityFlagsARM, Flags);
+impl DataGraphTOSAQualityFlagsARM {
+    pub const ACCELERATED: Self = Self(0b1);
+    pub const CONFORMANT: Self = Self(0b10);
+    pub const EXPERIMENTAL: Self = Self(0b100);
+    pub const DEPRECATED: Self = Self(0b1000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDataGraphOpticalFlowGridSizeFlagBitsARM.html>"]
+pub struct DataGraphOpticalFlowGridSizeFlagsARM(pub(crate) Flags);
+vk_bitflags_wrapped!(DataGraphOpticalFlowGridSizeFlagsARM, Flags);
+impl DataGraphOpticalFlowGridSizeFlagsARM {
+    pub const UNKNOWN: Self = Self(0);
+    pub const TYPE_1X1: Self = Self(0b1);
+    pub const TYPE_2X2: Self = Self(0b10);
+    pub const TYPE_4X4: Self = Self(0b100);
+    pub const TYPE_8X8: Self = Self(0b1000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDataGraphOpticalFlowImageUsageFlagBitsARM.html>"]
+pub struct DataGraphOpticalFlowImageUsageFlagsARM(pub(crate) Flags);
+vk_bitflags_wrapped!(DataGraphOpticalFlowImageUsageFlagsARM, Flags);
+impl DataGraphOpticalFlowImageUsageFlagsARM {
+    pub const UNKNOWN: Self = Self(0);
+    pub const INPUT: Self = Self(0b1);
+    pub const OUTPUT: Self = Self(0b10);
+    pub const HINT: Self = Self(0b100);
+    pub const COST: Self = Self(0b1000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDataGraphOpticalFlowCreateFlagBitsARM.html>"]
+pub struct DataGraphOpticalFlowCreateFlagsARM(pub(crate) Flags);
+vk_bitflags_wrapped!(DataGraphOpticalFlowCreateFlagsARM, Flags);
+impl DataGraphOpticalFlowCreateFlagsARM {
+    pub const ENABLE_HINT: Self = Self(0b1);
+    pub const ENABLE_COST: Self = Self(0b10);
+    pub const RESERVED_30: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDataGraphOpticalFlowExecuteFlagBitsARM.html>"]
+pub struct DataGraphOpticalFlowExecuteFlagsARM(pub(crate) Flags);
+vk_bitflags_wrapped!(DataGraphOpticalFlowExecuteFlagsARM, Flags);
+impl DataGraphOpticalFlowExecuteFlagsARM {
+    pub const DISABLE_TEMPORAL_HINTS: Self = Self(0b1);
+    pub const INPUT_UNCHANGED: Self = Self(0b10);
+    pub const REFERENCE_UNCHANGED: Self = Self(0b100);
+    pub const INPUT_IS_PREVIOUS_REFERENCE: Self = Self(0b1000);
+    pub const REFERENCE_IS_PREVIOUS_INPUT: Self = Self(0b1_0000);
 }
