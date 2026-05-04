@@ -78,6 +78,7 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(
             .command_buffers(&command_buffers)
             .signal_semaphores(signal_semaphores);
 
+        #[allow(deprecated)]
         device
             .queue_submit(submit_queue, &[submit_info], command_buffer_reuse_fence)
             .expect("queue submit failed.");
@@ -510,6 +511,7 @@ impl ExampleBase {
                                 .level_count(1),
                         );
 
+                    #[allow(deprecated)]
                     device.cmd_pipeline_barrier(
                         setup_command_buffer,
                         vk::PipelineStageFlags::BOTTOM_OF_PIPE,

@@ -1,4 +1,6 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_copy_commands2.html>
+#![deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+#![allow(deprecated)]
 
 use crate::vk;
 

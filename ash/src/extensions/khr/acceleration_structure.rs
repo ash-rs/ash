@@ -8,6 +8,7 @@ use core::mem;
 
 impl crate::khr::acceleration_structure::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateAccelerationStructureKHR.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
     #[inline]
     pub unsafe fn create_acceleration_structure(
         &self,
@@ -15,6 +16,7 @@ impl crate::khr::acceleration_structure::Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::AccelerationStructureKHR> {
         let mut accel_struct = mem::MaybeUninit::uninit();
+        #[allow(deprecated)]
         (self.fp.create_acceleration_structure_khr)(
             self.handle,
             create_info,

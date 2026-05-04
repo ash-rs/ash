@@ -1,4 +1,6 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_descriptor_buffer.html>
+#![deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+#![allow(deprecated)]
 
 use crate::vk;
 use crate::VkResult;

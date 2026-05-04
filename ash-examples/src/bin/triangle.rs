@@ -226,6 +226,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         let layout_create_info = vk::PipelineLayoutCreateInfo::default();
 
+        #[allow(deprecated)]
         let pipeline_layout = base
             .device
             .create_pipeline_layout(&layout_create_info, None)
@@ -455,6 +456,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         for pipeline in graphics_pipelines {
             base.device.destroy_pipeline(pipeline, None);
         }
+        #[allow(deprecated)]
         base.device.destroy_pipeline_layout(pipeline_layout, None);
         base.device
             .destroy_shader_module(vertex_shader_module, None);

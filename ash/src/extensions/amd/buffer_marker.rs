@@ -23,6 +23,7 @@ impl crate::amd::buffer_marker::Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteBufferMarker2AMD.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
     #[inline]
     pub unsafe fn cmd_write_buffer_marker2(
         &self,
@@ -32,6 +33,7 @@ impl crate::amd::buffer_marker::Device {
         dst_offset: vk::DeviceSize,
         marker: u32,
     ) {
+        #[allow(deprecated)]
         (self.fp.cmd_write_buffer_marker2_amd)(
             command_buffer,
             stage,

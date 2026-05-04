@@ -4,22 +4,26 @@ use crate::vk;
 
 impl crate::khr::maintenance6::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets2KHR.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     #[inline]
     pub unsafe fn cmd_bind_descriptor_sets2(
         &self,
         command_buffer: vk::CommandBuffer,
         bind_descriptor_sets_info: &vk::BindDescriptorSetsInfoKHR<'_>,
     ) {
+        #[allow(deprecated)]
         (self.fp.cmd_bind_descriptor_sets2_khr)(command_buffer, bind_descriptor_sets_info)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushConstants2KHR.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     #[inline]
     pub unsafe fn cmd_push_constants2(
         &self,
         command_buffer: vk::CommandBuffer,
         push_constants_info: &vk::PushConstantsInfoKHR<'_>,
     ) {
+        #[allow(deprecated)]
         (self.fp.cmd_push_constants2_khr)(command_buffer, push_constants_info)
     }
 
@@ -47,12 +51,14 @@ impl crate::khr::maintenance6::Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDescriptorBufferOffsets2EXT.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     #[inline]
     pub unsafe fn cmd_set_descriptor_buffer_offsets2(
         &self,
         command_buffer: vk::CommandBuffer,
         set_descriptor_buffer_offsets_info: &vk::SetDescriptorBufferOffsetsInfoEXT<'_>,
     ) {
+        #[allow(deprecated)]
         (self.fp.cmd_set_descriptor_buffer_offsets2_ext)(
             command_buffer,
             set_descriptor_buffer_offsets_info,
@@ -60,12 +66,14 @@ impl crate::khr::maintenance6::Device {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorBufferEmbeddedSamplers2EXT.html>
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     #[inline]
     pub unsafe fn cmd_bind_descriptor_buffer_embedded_samplers2(
         &self,
         command_buffer: vk::CommandBuffer,
         bind_descriptor_buffer_embedded_samplers_info: &vk::BindDescriptorBufferEmbeddedSamplersInfoEXT<'_>,
     ) {
+        #[allow(deprecated)]
         (self.fp.cmd_bind_descriptor_buffer_embedded_samplers2_ext)(
             command_buffer,
             bind_descriptor_buffer_embedded_samplers_info,
