@@ -8,6 +8,7 @@ pub mod debug_report;
 pub mod debug_utils;
 pub mod depth_clamp_control;
 pub mod descriptor_buffer;
+pub mod descriptor_heap;
 pub mod device_generated_commands;
 pub mod display_control;
 pub mod display_surface_counter;
