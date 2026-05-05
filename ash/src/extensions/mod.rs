@@ -7,3 +7,4 @@ pub mod khr;
 pub mod mvk;
 pub mod nn;
 pub mod nv;
+pub mod ohos;
