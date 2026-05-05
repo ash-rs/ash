@@ -1,4 +1,4 @@
-//! <https://registry.https://docs.vulkan.org/refpages/latest/refpages/source/VK_NV_cooperative_vector.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_NV_cooperative_vector.html>
 
 use crate::vk;
 use crate::VkResult;

@@ -1,3 +1,4 @@
+pub mod cluster_acceleration_structure;
 pub mod cooperative_vector;
 pub mod copy_memory_indirect;
 pub mod coverage_reduction_mode;
