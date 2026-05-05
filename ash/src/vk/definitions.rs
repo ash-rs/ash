@@ -10812,6 +10812,7 @@ impl<'a> RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {
     }
 }
 #[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV.html>"]
 #[must_use]
@@ -10877,6 +10878,7 @@ impl ClusterAccelerationStructureGetTemplateIndicesInfoNV {
     }
 }
 #[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkClusterAccelerationStructureBuildTriangleClusterInfoNV.html>"]
 #[must_use]
@@ -10898,6 +10900,7 @@ pub struct ClusterAccelerationStructureBuildTriangleClusterInfoNV {
     pub opacity_micromap_index_buffer: DeviceAddress,
 }
 #[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV.html>"]
 #[must_use]
@@ -10920,6 +10923,7 @@ pub struct ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV {
     pub instantiation_bounding_box_limit: DeviceAddress,
 }
 #[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkClusterAccelerationStructureInstantiateClusterInfoNV.html>"]
 #[must_use]
@@ -37135,7 +37139,7 @@ impl AabbPositionsKHR {
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkTransformMatrixKHR.html>"]
 #[must_use]
 pub struct TransformMatrixKHR {
-    pub matrix: [[f32; 3]; 4],
+    pub matrix: [f32; 12],
 }
 #[repr(C)]
 #[derive(Copy, Clone)]

@@ -2062,11 +2062,7 @@ fn derive_getters_and_setters(
     provisional: &Option<TokenStream>,
     allowed_types: &HashMap<&str, ProvidedBy<'_>>,
 ) -> Option<TokenStream> {
-    if &struct_.name == "VkBaseInStructure"
-        || &struct_.name == "VkBaseOutStructure"
-        || &struct_.name == "VkTransformMatrixKHR"
-        || &struct_.name == "VkAccelerationStructureInstanceKHR"
-    {
+    if &struct_.name == "VkBaseInStructure" || &struct_.name == "VkBaseOutStructure" {
         return None;
     }
 
@@ -2476,7 +2472,7 @@ pub fn generate_struct(
             #[doc = #khronos_link]
             #[must_use]
             pub struct TransformMatrixKHR {
-                pub matrix: [[f32; 3]; 4],
+                pub matrix: [f32; 12],
             }
         };
     }
@@ -2548,7 +2544,9 @@ pub fn generate_struct(
 
     if &struct_.name == "VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV" {
         return quote! {
+            #provisional
             #[repr(C)]
+            #[cfg_attr(feature = "debug", derive(Debug))]
             #[derive(Copy, Clone)]
             #[doc = #khronos_link]
             #[must_use]
@@ -2560,7 +2558,9 @@ pub fn generate_struct(
     }
     if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterInfoNV" {
         return quote! {
+            #provisional
             #[repr(C)]
+            #[cfg_attr(feature = "debug", derive(Debug))]
             #[derive(Copy, Clone)]
             #[doc = #khronos_link]
             #[must_use]
@@ -2584,7 +2584,9 @@ pub fn generate_struct(
     }
     if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV" {
         return quote! {
+            #provisional
             #[repr(C)]
+            #[cfg_attr(feature = "debug", derive(Debug))]
             #[derive(Copy, Clone)]
             #[doc = #khronos_link]
             #[must_use]
@@ -2609,7 +2611,9 @@ pub fn generate_struct(
     }
     if &struct_.name == "VkClusterAccelerationStructureInstantiateClusterInfoNV" {
         return quote! {
+            #provisional
             #[repr(C)]
+            #[cfg_attr(feature = "debug", derive(Debug))]
             #[derive(Copy, Clone)]
             #[doc = #khronos_link]
             #[must_use]
