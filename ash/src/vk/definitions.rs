@@ -126,6 +126,8 @@ vk_bitflags_wrapped!(DeviceCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDescriptorPoolResetFlags.html>"]
+#[doc = ""]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 pub struct DescriptorPoolResetFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(DescriptorPoolResetFlags, Flags);
 #[repr(transparent)]
@@ -368,11 +370,7 @@ handle_nondispatchable!(
     BUFFER,
     doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkBuffer.html>"
 );
-handle_nondispatchable!(
-    BufferView,
-    BUFFER_VIEW,
-    doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkBufferView.html>"
-);
+handle_nondispatchable ! (BufferView , BUFFER_VIEW , doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkBufferView.html>\n\nDeprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>") ;
 handle_nondispatchable!(
     Image,
     IMAGE,
@@ -393,31 +391,11 @@ handle_nondispatchable!(
     PIPELINE,
     doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPipeline.html>"
 );
-handle_nondispatchable!(
-    PipelineLayout,
-    PIPELINE_LAYOUT,
-    doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPipelineLayout.html>"
-);
-handle_nondispatchable!(
-    Sampler,
-    SAMPLER,
-    doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampler.html>"
-);
-handle_nondispatchable!(
-    DescriptorSet,
-    DESCRIPTOR_SET,
-    doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDescriptorSet.html>"
-);
-handle_nondispatchable!(
-    DescriptorSetLayout,
-    DESCRIPTOR_SET_LAYOUT,
-    doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDescriptorSetLayout.html>"
-);
-handle_nondispatchable!(
-    DescriptorPool,
-    DESCRIPTOR_POOL,
-    doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDescriptorPool.html>"
-);
+handle_nondispatchable ! (PipelineLayout , PIPELINE_LAYOUT , doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPipelineLayout.html>\n\nDeprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>") ;
+handle_nondispatchable ! (Sampler , SAMPLER , doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampler.html>\n\nDeprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>") ;
+handle_nondispatchable ! (DescriptorSet , DESCRIPTOR_SET , doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDescriptorSet.html>\n\nDeprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>") ;
+handle_nondispatchable ! (DescriptorSetLayout , DESCRIPTOR_SET_LAYOUT , doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDescriptorSetLayout.html>\n\nDeprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>") ;
+handle_nondispatchable ! (DescriptorPool , DESCRIPTOR_POOL , doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDescriptorPool.html>\n\nDeprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>") ;
 handle_nondispatchable!(
     Fence,
     FENCE,
@@ -438,16 +416,8 @@ handle_nondispatchable!(
     QUERY_POOL,
     doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkQueryPool.html>"
 );
-handle_nondispatchable!(
-    Framebuffer,
-    FRAMEBUFFER,
-    doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkFramebuffer.html>"
-);
-handle_nondispatchable!(
-    RenderPass,
-    RENDER_PASS,
-    doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkRenderPass.html>"
-);
+handle_nondispatchable ! (Framebuffer , FRAMEBUFFER , doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkFramebuffer.html>\n\nDeprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>") ;
+handle_nondispatchable ! (RenderPass , RENDER_PASS , doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkRenderPass.html>\n\nDeprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>") ;
 handle_nondispatchable!(
     PipelineCache,
     PIPELINE_CACHE,
@@ -51823,6 +51793,8 @@ impl<'a> DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
 #[repr(C)]
 #[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDescriptorDataEXT.html>"]
+#[doc = ""]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 pub union DescriptorDataEXT<'a> {
     pub p_sampler: *const Sampler,
     pub p_combined_image_sampler: *const DescriptorImageInfo,

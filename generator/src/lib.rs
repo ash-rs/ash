@@ -287,10 +287,8 @@ fn parse_c_parameter(i: &str) -> IResult<&str, CParameter<'_>> {
     .parse(i)
 }
 
-fn khronos_link<S: Display + ?Sized>(name: &S) -> Literal {
-    Literal::string(&format!(
-        "<https://docs.vulkan.org/refpages/latest/refpages/source/{name}.html>"
-    ))
+fn khronos_link<S: Display + ?Sized>(name: &S) -> String {
+    format!("<https://docs.vulkan.org/refpages/latest/refpages/source/{name}.html>")
 }
 
 fn deprecated_link<S: Display + ?Sized>(explanationlink: &S) -> String {
@@ -1557,6 +1555,7 @@ pub fn generate_define(
 pub fn generate_typedef(
     typedef: &vkxml::Typedef,
     provided_by: &ProvidedBy<'_>,
+    deprecated_by: Option<&str>,
 ) -> Option<TokenStream> {
     if typedef.basetype.is_empty() {
         // Ignore forward declarations
@@ -1568,15 +1567,21 @@ pub fn generate_typedef(
     let provisional = provided_by
         .provisional
         .then(|| quote!(#[cfg(feature = "provisional")]));
+    let deprecated = deprecated_by.map(deprecated_link).map(|d| {
+        let d = format!("Deprecated: {d}");
+        quote!(#[doc = ""] #[doc = #d])
+    });
     Some(quote! {
         #provisional
         #[doc = #khronos_link]
+        #deprecated
         pub type #typedef_name = #typedef_ty;
     })
 }
 pub fn generate_bitmask(
     bitmask: &vkxml::Bitmask,
     provided_by: &ProvidedBy<'_>,
+    deprecated_by: Option<&str>,
     bitflags_cache: &mut HashSet<Ident>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
 ) -> Option<TokenStream> {
@@ -1600,11 +1605,16 @@ pub fn generate_bitmask(
     let provisional = provided_by
         .provisional
         .then(|| quote!(#[cfg(feature = "provisional")]));
+    let deprecated = deprecated_by.map(deprecated_link).map(|d| {
+        let d = format!("Deprecated: {d}");
+        quote!(#[doc = ""] #[doc = #d])
+    });
     Some(quote! {
         #provisional
         #[repr(transparent)]
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
         #[doc = #khronos_link]
+        #deprecated
         pub struct #ident(pub(crate) #type_);
         vk_bitflags_wrapped!(#ident, #type_);
     })
@@ -2446,6 +2456,7 @@ struct PreprocessedMember<'a> {
 pub fn generate_struct(
     struct_: &vkxml::Struct,
     provided_by: &ProvidedBy<'_>,
+    deprecated_by: Option<&str>,
     allowed_types: &HashMap<&str, ProvidedBy<'_>>,
     vk_parse_types: &HashMap<String, &vk_parse::Type>,
     union_types: &HashSet<&str>,
@@ -2461,6 +2472,10 @@ pub fn generate_struct(
     let provisional = provided_by
         .provisional
         .then(|| quote!(#[cfg(feature = "provisional")]));
+    let deprecated = deprecated_by.map(deprecated_link).map(|d| {
+        let d = format!("Deprecated: {d}");
+        quote!(#[doc = ""] #[doc = #d])
+    });
 
     if &struct_.name == "VkTransformMatrixKHR" {
         return quote! {
@@ -2469,6 +2484,7 @@ pub fn generate_struct(
             #[cfg_attr(feature = "debug", derive(Debug))]
             #[derive(Copy, Clone, Default)]
             #[doc = #khronos_link]
+            #deprecated
             #[must_use]
             pub struct TransformMatrixKHR {
                 pub matrix: [f32; 12],
@@ -2725,29 +2741,34 @@ pub fn generate_struct(
 pub fn generate_handle(
     handle: &vkxml::Handle,
     provided_by: &ProvidedBy<'_>,
+    deprecated_by: Option<&str>,
 ) -> Option<TokenStream> {
     if handle.name.is_empty() {
         return None;
     }
-    let khronos_link = khronos_link(&handle.name);
+    let mut doc = khronos_link(&handle.name);
     let name = handle.name.strip_prefix("Vk").unwrap();
     let ty = format_ident!("{}", name.to_shouty_snake_case());
     let name = format_ident!("{}", name);
     let provisional = provided_by
         .provisional
         .then(|| quote!(, cfg(feature = "provisional")));
+    if let Some(d) = deprecated_by {
+        doc += &format!("\n\nDeprecated: {}", deprecated_link(d));
+    }
     Some(match handle.ty {
         vkxml::HandleType::Dispatch => {
-            quote!(define_handle!(#name, #ty, doc = #khronos_link #provisional);)
+            quote!(define_handle!(#name, #ty, doc = #doc #provisional);)
         }
         vkxml::HandleType::NoDispatch => {
-            quote!(handle_nondispatchable!(#name, #ty, doc = #khronos_link #provisional);)
+            quote!(handle_nondispatchable!(#name, #ty, doc = #doc #provisional);)
         }
     })
 }
 fn generate_funcptr(
     fnptr: &vkxml::FunctionPointer,
     provided_by: &ProvidedBy<'_>,
+    deprecated_by: Option<&str>,
     has_lifetimes: &HashSet<Ident>,
 ) -> Option<TokenStream> {
     let name = format_ident!("{}", fnptr.name);
@@ -2771,10 +2792,15 @@ fn generate_funcptr(
     let provisional = provided_by
         .provisional
         .then(|| quote!(#[cfg(feature = "provisional")]));
+    let deprecated = deprecated_by.map(deprecated_link).map(|d| {
+        let d = format!("Deprecated: {d}");
+        quote!(#[doc = ""] #[doc = #d])
+    });
     Some(quote! {
         #provisional
         #[allow(non_camel_case_types)]
         #[doc = #khronos_link]
+        #deprecated
         pub type #name = Option<unsafe extern "system" fn(#(#params),*) #ret_ty_tokens>;
     })
 }
@@ -2782,6 +2808,7 @@ fn generate_funcptr(
 fn generate_union(
     union: &vkxml::Union,
     provided_by: &ProvidedBy<'_>,
+    deprecated_by: Option<&str>,
     has_lifetimes: &HashSet<Ident>,
 ) -> Option<TokenStream> {
     let name = name_to_tokens(&union.name);
@@ -2799,12 +2826,17 @@ fn generate_union(
     let provisional = provided_by
         .provisional
         .then(|| quote!(#[cfg(feature = "provisional")]));
+    let deprecated = deprecated_by.map(deprecated_link).map(|d| {
+        let d = format!("Deprecated: {d}");
+        quote!(#[doc = ""] #[doc = #d])
+    });
     let lifetime = has_lifetimes.contains(&name).then(|| quote!(<'a>));
     Some(quote! {
         #provisional
         #[repr(C)]
         #[derive(Copy, Clone)]
         #[doc = #khronos_link]
+        #deprecated
         pub union #name #lifetime {
             #(#fields),*
         }
@@ -2841,6 +2873,7 @@ pub fn generate_definition_vk_parse(
 pub fn generate_definition(
     definition: &vkxml::DefinitionsElement,
     allowed_types: &HashMap<&str, ProvidedBy<'_>>,
+    deprecated_types: &HashMap<&str, &str>,
     union_types: &HashSet<&str>,
     has_lifetimes: &HashSet<Ident>,
     vk_parse_types: &HashMap<String, &vk_parse::Type>,
@@ -2850,14 +2883,17 @@ pub fn generate_definition(
     match *definition {
         vkxml::DefinitionsElement::Typedef(ref typedef) => {
             let provided_by = allowed_types.get(typedef.name.as_str())?;
-            generate_typedef(typedef, provided_by)
+            let deprecated_by = deprecated_types.get(typedef.name.as_str()).copied();
+            generate_typedef(typedef, provided_by, deprecated_by)
         }
         vkxml::DefinitionsElement::Struct(ref struct_) => {
             let provided_by = allowed_types.get(struct_.name.as_str())?;
+            let deprecated_by = deprecated_types.get(struct_.name.as_str()).copied();
 
             Some(generate_struct(
                 struct_,
                 provided_by,
+                deprecated_by,
                 allowed_types,
                 vk_parse_types,
                 union_types,
@@ -2866,19 +2902,29 @@ pub fn generate_definition(
         }
         vkxml::DefinitionsElement::Bitmask(ref mask) => {
             let provided_by = allowed_types.get(mask.name.as_str())?;
-            generate_bitmask(mask, provided_by, bitflags_cache, const_values)
+            let deprecated_by = deprecated_types.get(mask.name.as_str()).copied();
+            generate_bitmask(
+                mask,
+                provided_by,
+                deprecated_by,
+                bitflags_cache,
+                const_values,
+            )
         }
         vkxml::DefinitionsElement::Handle(ref handle) => {
             let provided_by = allowed_types.get(handle.name.as_str())?;
-            generate_handle(handle, provided_by)
+            let deprecated_by = deprecated_types.get(handle.name.as_str()).copied();
+            generate_handle(handle, provided_by, deprecated_by)
         }
         vkxml::DefinitionsElement::FuncPtr(ref fp) => {
             let provided_by = allowed_types.get(fp.name.as_str())?;
-            generate_funcptr(fp, provided_by, has_lifetimes)
+            let deprecated_by = deprecated_types.get(fp.name.as_str()).copied();
+            generate_funcptr(fp, provided_by, deprecated_by, has_lifetimes)
         }
         vkxml::DefinitionsElement::Union(ref union) => {
             let provided_by = allowed_types.get(union.name.as_str())?;
-            generate_union(union, provided_by, has_lifetimes)
+            let deprecated_by = deprecated_types.get(union.name.as_str()).copied();
+            generate_union(union, provided_by, deprecated_by, has_lifetimes)
         }
         _ => None,
     }
@@ -3563,6 +3609,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
             generate_definition(
                 def,
                 &required_types,
+                &deprecated_types,
                 &union_types,
                 &has_lifetimes,
                 &vk_parse_types,
