@@ -293,10 +293,8 @@ fn khronos_link<S: Display + ?Sized>(name: &S) -> Literal {
     ))
 }
 
-fn deprecated_annotation<S: Display + ?Sized>(explanationlink: &S) -> TokenStream {
-    let comment =
-        format!("<https://docs.vulkan.org/spec/latest/appendices/legacy.html#{explanationlink}>");
-    quote!(#[deprecated = #comment])
+fn deprecated_link<S: Display + ?Sized>(explanationlink: &S) -> String {
+    format!("<https://docs.vulkan.org/spec/latest/appendices/legacy.html#{explanationlink}>")
 }
 
 fn is_opaque_type(ty: &str) -> bool {
@@ -978,7 +976,11 @@ fn generate_function_pointers<'a>(
 
             let deprecated = deprecated_commands
                 .get(name.as_str())
-                .map(deprecated_annotation);
+                .map(deprecated_link)
+                .map(|d| {
+                    let d = format!("Deprecated: {d}");
+                    quote!(#[doc = #d])
+                });
 
             Command {
                 define_pfn,
@@ -1521,11 +1523,8 @@ pub fn generate_define(
 
     let deprecated = deprecated_types
         .get(define_name.as_str())
-        .map(deprecated_annotation)
-        .or_else(|| match define.deprecated.as_ref()?.as_str() {
-            "true" => Some(quote!(#[deprecated])),
-            x => panic!("Unknown deprecation reason {}", x),
-        });
+        .map(deprecated_link)
+        .map(|d| quote!(#[deprecated = #d]));
 
     let (code, ident) = if let Some(parameters) = parameters {
         let params = parameters
@@ -3723,13 +3722,11 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let high_level_extensions = quote! {
-        #![allow(deprecated)] // For a few deprecated commands like VK_KHR_create_renderpass2. Realistically the entire extension/module should be marked as deprecated and annotated with a local allow.
         #(#high_level_extension_cmds)*
     };
 
     let tables = quote! {
         #![allow(unused_qualifications)] // For simplicity, we always generate absolute paths for `Device`/`Instance`
-        #![allow(deprecated)] // For a few deprecated commands like VK_KHR_create_renderpass2. Realistically the entire extension/module should be marked as deprecated and annotated with a local allow.
 
         use core::ffi::*;
 

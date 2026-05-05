@@ -1,4 +1,3 @@
-#![allow(deprecated)]
 #[doc = "Extensions tagged AMD"]
 pub mod amd {
     #[doc = "VK_AMD_rasterization_order"]
@@ -63,9 +62,9 @@ pub mod amd {
         #[derive(Clone)]
         #[doc = "Raw VK_AMD_draw_indirect_count device-level function pointers"]
         pub struct DeviceFn {
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_draw_indirect_count_amd: PFN_vkCmdDrawIndirectCount,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_draw_indexed_indirect_count_amd: PFN_vkCmdDrawIndexedIndirectCount,
         }
         unsafe impl Send for DeviceFn {}
@@ -287,7 +286,7 @@ pub mod amd {
         #[doc = "Raw VK_AMD_buffer_marker device-level function pointers"]
         pub struct DeviceFn {
             pub cmd_write_buffer_marker_amd: PFN_vkCmdWriteBufferMarkerAMD,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_write_buffer_marker2_amd: PFN_vkCmdWriteBufferMarker2AMD,
         }
         unsafe impl Send for DeviceFn {}
@@ -2530,15 +2529,15 @@ pub mod ext {
         #[derive(Clone)]
         #[doc = "Raw VK_EXT_transform_feedback device-level function pointers"]
         pub struct DeviceFn {
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_bind_transform_feedback_buffers_ext: PFN_vkCmdBindTransformFeedbackBuffersEXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_begin_transform_feedback_ext: PFN_vkCmdBeginTransformFeedbackEXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_end_transform_feedback_ext: PFN_vkCmdEndTransformFeedbackEXT,
             pub cmd_begin_query_indexed_ext: PFN_vkCmdBeginQueryIndexedEXT,
             pub cmd_end_query_indexed_ext: PFN_vkCmdEndQueryIndexedEXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_draw_indirect_byte_count_ext: PFN_vkCmdDrawIndirectByteCountEXT,
         }
         unsafe impl Send for DeviceFn {}
@@ -2765,7 +2764,7 @@ pub mod ext {
         #[derive(Clone)]
         #[doc = "Raw VK_EXT_conditional_rendering device-level function pointers"]
         pub struct DeviceFn {
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_begin_conditional_rendering_ext: PFN_vkCmdBeginConditionalRenderingEXT,
             pub cmd_end_conditional_rendering_ext: PFN_vkCmdEndConditionalRenderingEXT,
         }
@@ -6392,33 +6391,33 @@ pub mod ext {
         #[derive(Clone)]
         #[doc = "Raw VK_EXT_descriptor_buffer device-level function pointers"]
         pub struct DeviceFn {
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
             pub get_descriptor_set_layout_size_ext: PFN_vkGetDescriptorSetLayoutSizeEXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
             pub get_descriptor_set_layout_binding_offset_ext:
                 PFN_vkGetDescriptorSetLayoutBindingOffsetEXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
             pub get_descriptor_ext: PFN_vkGetDescriptorEXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
             pub cmd_bind_descriptor_buffers_ext: PFN_vkCmdBindDescriptorBuffersEXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
             pub cmd_set_descriptor_buffer_offsets_ext: PFN_vkCmdSetDescriptorBufferOffsetsEXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
             pub cmd_bind_descriptor_buffer_embedded_samplers_ext:
                 PFN_vkCmdBindDescriptorBufferEmbeddedSamplersEXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
             pub get_buffer_opaque_capture_descriptor_data_ext:
                 PFN_vkGetBufferOpaqueCaptureDescriptorDataEXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
             pub get_image_opaque_capture_descriptor_data_ext:
                 PFN_vkGetImageOpaqueCaptureDescriptorDataEXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
             pub get_image_view_opaque_capture_descriptor_data_ext:
                 PFN_vkGetImageViewOpaqueCaptureDescriptorDataEXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
             pub get_sampler_opaque_capture_descriptor_data_ext:
                 PFN_vkGetSamplerOpaqueCaptureDescriptorDataEXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
             pub get_acceleration_structure_opaque_capture_descriptor_data_ext:
                 PFN_vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT,
         }
@@ -6710,9 +6709,9 @@ pub mod ext {
         #[doc = "Raw VK_EXT_mesh_shader device-level function pointers"]
         pub struct DeviceFn {
             pub cmd_draw_mesh_tasks_ext: PFN_vkCmdDrawMeshTasksEXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_draw_mesh_tasks_indirect_ext: PFN_vkCmdDrawMeshTasksIndirectEXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_draw_mesh_tasks_indirect_count_ext: PFN_vkCmdDrawMeshTasksIndirectCountEXT,
         }
         unsafe impl Send for DeviceFn {}
@@ -15155,13 +15154,13 @@ pub mod khr {
         #[derive(Clone)]
         #[doc = "Raw VK_KHR_create_renderpass2 device-level function pointers"]
         pub struct DeviceFn {
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
             pub create_render_pass2_khr: PFN_vkCreateRenderPass2,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
             pub cmd_begin_render_pass2_khr: PFN_vkCmdBeginRenderPass2,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
             pub cmd_next_subpass2_khr: PFN_vkCmdNextSubpass2,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
             pub cmd_end_render_pass2_khr: PFN_vkCmdEndRenderPass2,
         }
         unsafe impl Send for DeviceFn {}
@@ -16168,7 +16167,7 @@ pub mod khr {
         #[derive(Clone)]
         #[doc = "Raw VK_KHR_acceleration_structure device-level function pointers"]
         pub struct DeviceFn {
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub create_acceleration_structure_khr: PFN_vkCreateAccelerationStructureKHR,
             pub destroy_acceleration_structure_khr: PFN_vkDestroyAccelerationStructureKHR,
             pub cmd_build_acceleration_structures_khr: PFN_vkCmdBuildAccelerationStructuresKHR,
@@ -17070,9 +17069,9 @@ pub mod khr {
         #[derive(Clone)]
         #[doc = "Raw VK_KHR_draw_indirect_count device-level function pointers"]
         pub struct DeviceFn {
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_draw_indirect_count_khr: PFN_vkCmdDrawIndirectCount,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_draw_indexed_indirect_count_khr: PFN_vkCmdDrawIndexedIndirectCount,
         }
         unsafe impl Send for DeviceFn {}
@@ -19028,12 +19027,12 @@ pub mod khr {
         #[derive(Clone)]
         #[doc = "Raw VK_KHR_copy_commands2 device-level function pointers"]
         pub struct DeviceFn {
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_copy_buffer2_khr: PFN_vkCmdCopyBuffer2,
             pub cmd_copy_image2_khr: PFN_vkCmdCopyImage2,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_copy_buffer_to_image2_khr: PFN_vkCmdCopyBufferToImage2,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_copy_image_to_buffer2_khr: PFN_vkCmdCopyImageToBuffer2,
             pub cmd_blit_image2_khr: PFN_vkCmdBlitImage2,
             pub cmd_resolve_image2_khr: PFN_vkCmdResolveImage2,
@@ -19402,7 +19401,7 @@ pub mod khr {
         #[derive(Clone)]
         #[doc = "Raw VK_KHR_maintenance5 device-level function pointers"]
         pub struct DeviceFn {
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
             pub cmd_bind_index_buffer2_khr: PFN_vkCmdBindIndexBuffer2,
             pub get_rendering_area_granularity_khr: PFN_vkGetRenderingAreaGranularity,
             pub get_device_image_subresource_layout_khr: PFN_vkGetDeviceImageSubresourceLayout,
@@ -20200,15 +20199,15 @@ pub mod khr {
         #[derive(Clone)]
         #[doc = "Raw VK_KHR_maintenance6 device-level function pointers"]
         pub struct DeviceFn {
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
             pub cmd_bind_descriptor_sets2_khr: PFN_vkCmdBindDescriptorSets2,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
             pub cmd_push_constants2_khr: PFN_vkCmdPushConstants2,
             pub cmd_push_descriptor_set2_khr: PFN_vkCmdPushDescriptorSet2,
             pub cmd_push_descriptor_set_with_template2_khr: PFN_vkCmdPushDescriptorSetWithTemplate2,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
             pub cmd_set_descriptor_buffer_offsets2_ext: PFN_vkCmdSetDescriptorBufferOffsets2EXT,
-            #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
             pub cmd_bind_descriptor_buffer_embedded_samplers2_ext:
                 PFN_vkCmdBindDescriptorBufferEmbeddedSamplers2EXT,
         }

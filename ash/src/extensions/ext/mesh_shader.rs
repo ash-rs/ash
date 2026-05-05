@@ -23,7 +23,8 @@ impl crate::ext::mesh_shader::Device {
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDrawMeshTasksIndirectEXT.html>
     ///
     /// `buffer` contains `draw_count` [`vk::DrawMeshTasksIndirectCommandEXT`] structures starting at `offset` in bytes, holding the draw parameters.
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     pub unsafe fn cmd_draw_mesh_tasks_indirect(
         &self,
@@ -33,7 +34,6 @@ impl crate::ext::mesh_shader::Device {
         draw_count: u32,
         stride: u32,
     ) {
-        #[allow(deprecated)]
         (self.fp.cmd_draw_mesh_tasks_indirect_ext)(
             command_buffer,
             buffer,
@@ -48,7 +48,8 @@ impl crate::ext::mesh_shader::Device {
     /// `buffer` contains a maximum of `max_draw_count` [`vk::DrawMeshTasksIndirectCommandEXT`] structures starting at `offset` in bytes, holding the draw parameters.
     /// `count_buffer` is the buffer containing the draw count, starting at `count_buffer_offset` in bytes.
     /// The actual number of executed draw calls is the minimum of the count specified in `count_buffer` and `max_draw_count`.
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     pub unsafe fn cmd_draw_mesh_tasks_indirect_count(
         &self,
@@ -60,7 +61,6 @@ impl crate::ext::mesh_shader::Device {
         max_draw_count: u32,
         stride: u32,
     ) {
-        #[allow(deprecated)]
         (self.fp.cmd_draw_mesh_tasks_indirect_count_ext)(
             command_buffer,
             buffer,

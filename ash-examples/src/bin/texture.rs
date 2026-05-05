@@ -74,7 +74,6 @@ fn main() -> Result<(), Box<dyn Error>> {
             .subpasses(std::slice::from_ref(&subpass))
             .dependencies(&dependencies);
 
-        #[allow(deprecated)]
         let renderpass = base
             .device
             .create_render_pass(&renderpass_create_info, None)
@@ -92,7 +91,6 @@ fn main() -> Result<(), Box<dyn Error>> {
                     .height(base.surface_resolution.height)
                     .layers(1);
 
-                #[allow(deprecated)]
                 base.device
                     .create_framebuffer(&frame_buffer_create_info, None)
                     .unwrap()
@@ -373,7 +371,6 @@ fn main() -> Result<(), Box<dyn Error>> {
                     },
                     ..Default::default()
                 };
-                #[allow(deprecated)]
                 device.cmd_pipeline_barrier(
                     texture_command_buffer,
                     vk::PipelineStageFlags::BOTTOM_OF_PIPE,
@@ -412,7 +409,6 @@ fn main() -> Result<(), Box<dyn Error>> {
                     },
                     ..Default::default()
                 };
-                #[allow(deprecated)]
                 device.cmd_pipeline_barrier(
                     texture_command_buffer,
                     vk::PipelineStageFlags::TRANSFER,
@@ -438,7 +434,6 @@ fn main() -> Result<(), Box<dyn Error>> {
             ..Default::default()
         };
 
-        #[allow(deprecated)]
         let sampler = base.device.create_sampler(&sampler_info, None).unwrap();
 
         let tex_image_view_info = vk::ImageViewCreateInfo {
@@ -477,7 +472,6 @@ fn main() -> Result<(), Box<dyn Error>> {
             .pool_sizes(&descriptor_sizes)
             .max_sets(1);
 
-        #[allow(deprecated)]
         let descriptor_pool = base
             .device
             .create_descriptor_pool(&descriptor_pool_info, None)
@@ -500,7 +494,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         let descriptor_info =
             vk::DescriptorSetLayoutCreateInfo::default().bindings(&desc_layout_bindings);
 
-        #[allow(deprecated)]
         let desc_set_layouts = [base
             .device
             .create_descriptor_set_layout(&descriptor_info, None)
@@ -509,7 +502,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         let desc_alloc_info = vk::DescriptorSetAllocateInfo::default()
             .descriptor_pool(descriptor_pool)
             .set_layouts(&desc_set_layouts);
-        #[allow(deprecated)]
         let descriptor_sets = base
             .device
             .allocate_descriptor_sets(&desc_alloc_info)
@@ -544,7 +536,6 @@ fn main() -> Result<(), Box<dyn Error>> {
                 ..Default::default()
             },
         ];
-        #[allow(deprecated)]
         base.device.update_descriptor_sets(&write_desc_sets, &[]);
 
         let mut vertex_spv_file = Cursor::new(&include_bytes!("../../shader/texture/vert.spv")[..]);
@@ -571,7 +562,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         let layout_create_info =
             vk::PipelineLayoutCreateInfo::default().set_layouts(&desc_set_layouts);
 
-        #[allow(deprecated)]
         let pipeline_layout = base
             .device
             .create_pipeline_layout(&layout_create_info, None)
@@ -745,13 +735,11 @@ fn main() -> Result<(), Box<dyn Error>> {
                 &[present_complete_semaphore],
                 &[rendering_complete_semaphore],
                 |device, draw_command_buffer| {
-                    #[allow(deprecated)]
                     device.cmd_begin_render_pass(
                         draw_command_buffer,
                         &render_pass_begin_info,
                         vk::SubpassContents::INLINE,
                     );
-                    #[allow(deprecated)]
                     device.cmd_bind_descriptor_sets(
                         draw_command_buffer,
                         vk::PipelineBindPoint::GRAPHICS,
@@ -789,7 +777,6 @@ fn main() -> Result<(), Box<dyn Error>> {
                     );
                     // Or draw without the index buffer
                     // device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
-                    #[allow(deprecated)]
                     device.cmd_end_render_pass(draw_command_buffer);
                 },
             );
@@ -810,7 +797,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         for pipeline in graphics_pipelines {
             base.device.destroy_pipeline(pipeline, None);
         }
-        #[allow(deprecated)]
         base.device.destroy_pipeline_layout(pipeline_layout, None);
         base.device
             .destroy_shader_module(vertex_shader_module, None);
@@ -828,19 +814,14 @@ fn main() -> Result<(), Box<dyn Error>> {
         base.device.free_memory(vertex_input_buffer_memory, None);
         base.device.destroy_buffer(vertex_input_buffer, None);
         for &descriptor_set_layout in desc_set_layouts.iter() {
-            #[allow(deprecated)]
             base.device
                 .destroy_descriptor_set_layout(descriptor_set_layout, None);
         }
-        #[allow(deprecated)]
         base.device.destroy_descriptor_pool(descriptor_pool, None);
-        #[allow(deprecated)]
         base.device.destroy_sampler(sampler, None);
         for framebuffer in framebuffers {
-            #[allow(deprecated)]
             base.device.destroy_framebuffer(framebuffer, None);
         }
-        #[allow(deprecated)]
         base.device.destroy_render_pass(renderpass, None);
 
         Ok(())

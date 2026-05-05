@@ -4,7 +4,8 @@ use crate::vk;
 
 impl crate::khr::maintenance6::Device {
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBindDescriptorSets2KHR.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     #[doc(alias = "vkCmdBindDescriptorSets2KHR")]
     pub unsafe fn cmd_bind_descriptor_sets2(
@@ -12,12 +13,12 @@ impl crate::khr::maintenance6::Device {
         command_buffer: vk::CommandBuffer,
         bind_descriptor_sets_info: &vk::BindDescriptorSetsInfoKHR<'_>,
     ) {
-        #[allow(deprecated)]
         (self.fp.cmd_bind_descriptor_sets2_khr)(command_buffer, bind_descriptor_sets_info)
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdPushConstants2KHR.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     #[doc(alias = "vkCmdPushConstants2KHR")]
     pub unsafe fn cmd_push_constants2(
@@ -25,7 +26,6 @@ impl crate::khr::maintenance6::Device {
         command_buffer: vk::CommandBuffer,
         push_constants_info: &vk::PushConstantsInfoKHR<'_>,
     ) {
-        #[allow(deprecated)]
         (self.fp.cmd_push_constants2_khr)(command_buffer, push_constants_info)
     }
 
@@ -55,7 +55,8 @@ impl crate::khr::maintenance6::Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetDescriptorBufferOffsets2EXT.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     #[doc(alias = "vkCmdSetDescriptorBufferOffsets2EXT")]
     pub unsafe fn cmd_set_descriptor_buffer_offsets2(
@@ -63,7 +64,6 @@ impl crate::khr::maintenance6::Device {
         command_buffer: vk::CommandBuffer,
         set_descriptor_buffer_offsets_info: &vk::SetDescriptorBufferOffsetsInfoEXT<'_>,
     ) {
-        #[allow(deprecated)]
         (self.fp.cmd_set_descriptor_buffer_offsets2_ext)(
             command_buffer,
             set_descriptor_buffer_offsets_info,
@@ -71,7 +71,8 @@ impl crate::khr::maintenance6::Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBindDescriptorBufferEmbeddedSamplers2EXT.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     #[doc(alias = "vkCmdBindDescriptorBufferEmbeddedSamplers2EXT")]
     pub unsafe fn cmd_bind_descriptor_buffer_embedded_samplers2(
@@ -79,7 +80,6 @@ impl crate::khr::maintenance6::Device {
         command_buffer: vk::CommandBuffer,
         bind_descriptor_buffer_embedded_samplers_info: &vk::BindDescriptorBufferEmbeddedSamplersInfoEXT<'_>,
     ) {
-        #[allow(deprecated)]
         (self.fp.cmd_bind_descriptor_buffer_embedded_samplers2_ext)(
             command_buffer,
             bind_descriptor_buffer_embedded_samplers_info,

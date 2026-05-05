@@ -1,6 +1,6 @@
 //! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_draw_indirect_count.html>
-#![deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
-#![allow(deprecated)]
+//!
+//! Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
 
 use crate::vk;
 

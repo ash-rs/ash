@@ -35,20 +35,20 @@ pub type PFN_vkEnumeratePhysicalDevices = unsafe extern "system" fn(
     p_physical_device_count: *mut u32,
     p_physical_devices: *mut PhysicalDevice,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceFeatures = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_features: *mut PhysicalDeviceFeatures,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceFormatProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     format: Format,
     p_format_properties: *mut FormatProperties,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceImageFormatProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
@@ -59,20 +59,20 @@ pub type PFN_vkGetPhysicalDeviceImageFormatProperties = unsafe extern "system" f
     flags: ImageCreateFlags,
     p_image_format_properties: *mut ImageFormatProperties,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_properties: *mut PhysicalDeviceProperties,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceQueueFamilyProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_queue_family_property_count: *mut u32,
     p_queue_family_properties: *mut QueueFamilyProperties,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceMemoryProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
@@ -97,14 +97,14 @@ pub type PFN_vkEnumerateDeviceExtensionProperties = unsafe extern "system" fn(
     p_property_count: *mut u32,
     p_properties: *mut ExtensionProperties,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-devicelayers>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-devicelayers>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumerateDeviceLayerProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_property_count: *mut u32,
     p_properties: *mut LayerProperties,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
@@ -126,7 +126,7 @@ pub type PFN_vkGetDeviceQueue = unsafe extern "system" fn(
     queue_index: u32,
     p_queue: *mut Queue,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkQueueSubmit = unsafe extern "system" fn(
     queue: Queue,
@@ -415,7 +415,7 @@ pub type PFN_vkCmdCopyImageToBuffer = unsafe extern "system" fn(
     region_count: u32,
     p_regions: *const BufferImageCopy,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdUpdateBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -424,7 +424,7 @@ pub type PFN_vkCmdUpdateBuffer = unsafe extern "system" fn(
     data_size: DeviceSize,
     p_data: *const c_void,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdFillBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -433,7 +433,7 @@ pub type PFN_vkCmdFillBuffer = unsafe extern "system" fn(
     size: DeviceSize,
     data: u32,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdPipelineBarrier = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -464,7 +464,7 @@ pub type PFN_vkCmdResetQueryPool = unsafe extern "system" fn(
     first_query: u32,
     query_count: u32,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdWriteTimestamp = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -472,7 +472,7 @@ pub type PFN_vkCmdWriteTimestamp = unsafe extern "system" fn(
     query_pool: QueryPool,
     query: u32,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyQueryPoolResults = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -512,7 +512,7 @@ pub type PFN_vkSetEvent =
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetEvent =
     unsafe extern "system" fn(device: crate::vk::Device, event: Event) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateBufferView = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -520,7 +520,7 @@ pub type PFN_vkCreateBufferView = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_view: *mut BufferView,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyBufferView = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -582,7 +582,7 @@ pub type PFN_vkDestroyPipeline = unsafe extern "system" fn(
     pipeline: Pipeline,
     p_allocator: *const AllocationCallbacks,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreatePipelineLayout = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -590,14 +590,14 @@ pub type PFN_vkCreatePipelineLayout = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_pipeline_layout: *mut PipelineLayout,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyPipelineLayout = unsafe extern "system" fn(
     device: crate::vk::Device,
     pipeline_layout: PipelineLayout,
     p_allocator: *const AllocationCallbacks,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateSampler = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -605,14 +605,14 @@ pub type PFN_vkCreateSampler = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_sampler: *mut Sampler,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroySampler = unsafe extern "system" fn(
     device: crate::vk::Device,
     sampler: Sampler,
     p_allocator: *const AllocationCallbacks,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDescriptorSetLayout = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -620,14 +620,14 @@ pub type PFN_vkCreateDescriptorSetLayout = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_set_layout: *mut DescriptorSetLayout,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDescriptorSetLayout = unsafe extern "system" fn(
     device: crate::vk::Device,
     descriptor_set_layout: DescriptorSetLayout,
     p_allocator: *const AllocationCallbacks,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDescriptorPool = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -635,28 +635,28 @@ pub type PFN_vkCreateDescriptorPool = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_descriptor_pool: *mut DescriptorPool,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDescriptorPool = unsafe extern "system" fn(
     device: crate::vk::Device,
     descriptor_pool: DescriptorPool,
     p_allocator: *const AllocationCallbacks,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetDescriptorPool = unsafe extern "system" fn(
     device: crate::vk::Device,
     descriptor_pool: DescriptorPool,
     flags: DescriptorPoolResetFlags,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkAllocateDescriptorSets = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_allocate_info: *const DescriptorSetAllocateInfo<'_>,
     p_descriptor_sets: *mut DescriptorSet,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkFreeDescriptorSets = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -664,7 +664,7 @@ pub type PFN_vkFreeDescriptorSets = unsafe extern "system" fn(
     descriptor_set_count: u32,
     p_descriptor_sets: *const DescriptorSet,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkUpdateDescriptorSets = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -679,7 +679,7 @@ pub type PFN_vkCmdBindPipeline = unsafe extern "system" fn(
     pipeline_bind_point: PipelineBindPoint,
     pipeline: Pipeline,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindDescriptorSets = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -707,25 +707,25 @@ pub type PFN_vkCmdDispatch = unsafe extern "system" fn(
     group_count_y: u32,
     group_count_z: u32,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDispatchIndirect =
     unsafe extern "system" fn(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize);
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetEvent = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     event: Event,
     stage_mask: PipelineStageFlags,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdResetEvent = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     event: Event,
     stage_mask: PipelineStageFlags,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdWaitEvents = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -740,7 +740,7 @@ pub type PFN_vkCmdWaitEvents = unsafe extern "system" fn(
     image_memory_barrier_count: u32,
     p_image_memory_barriers: *const ImageMemoryBarrier<'_>,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdPushConstants = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -759,7 +759,7 @@ pub type PFN_vkCreateGraphicsPipelines = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_pipelines: *mut Pipeline,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateFramebuffer = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -767,14 +767,14 @@ pub type PFN_vkCreateFramebuffer = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_framebuffer: *mut Framebuffer,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyFramebuffer = unsafe extern "system" fn(
     device: crate::vk::Device,
     framebuffer: Framebuffer,
     p_allocator: *const AllocationCallbacks,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateRenderPass = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -782,14 +782,14 @@ pub type PFN_vkCreateRenderPass = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_render_pass: *mut RenderPass,
 ) -> Result;
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyRenderPass = unsafe extern "system" fn(
     device: crate::vk::Device,
     render_pass: RenderPass,
     p_allocator: *const AllocationCallbacks,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetRenderAreaGranularity = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -879,7 +879,7 @@ pub type PFN_vkCmdDrawIndexed = unsafe extern "system" fn(
     vertex_offset: i32,
     first_instance: u32,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawIndirect = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -888,7 +888,7 @@ pub type PFN_vkCmdDrawIndirect = unsafe extern "system" fn(
     draw_count: u32,
     stride: u32,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawIndexedIndirect = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -935,18 +935,18 @@ pub type PFN_vkCmdResolveImage = unsafe extern "system" fn(
     region_count: u32,
     p_regions: *const ImageResolve,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginRenderPass = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_render_pass_begin: *const RenderPassBeginInfo<'_>,
     contents: SubpassContents,
 );
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdNextSubpass =
     unsafe extern "system" fn(command_buffer: CommandBuffer, contents: SubpassContents);
-#[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEndRenderPass = unsafe extern "system" fn(command_buffer: CommandBuffer);
 #[allow(non_camel_case_types)]

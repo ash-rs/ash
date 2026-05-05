@@ -115,7 +115,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBindIndexBuffer2.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     #[doc(alias = "vkCmdBindIndexBuffer2")]
     pub unsafe fn cmd_bind_index_buffer2(
@@ -126,7 +127,6 @@ impl Device {
         size: vk::DeviceSize,
         index_type: vk::IndexType,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_4.cmd_bind_index_buffer2)(
             command_buffer,
             buffer,
@@ -247,7 +247,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBindDescriptorSets2.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     #[doc(alias = "vkCmdBindDescriptorSets2")]
     pub unsafe fn cmd_bind_descriptor_sets2(
@@ -255,7 +256,6 @@ impl Device {
         command_buffer: vk::CommandBuffer,
         bind_descriptor_sets_info: &vk::BindDescriptorSetsInfo<'_>,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_4.cmd_bind_descriptor_sets2)(command_buffer, bind_descriptor_sets_info)
     }
 
@@ -267,12 +267,12 @@ impl Device {
         command_buffer: vk::CommandBuffer,
         push_constants_info: &vk::PushConstantsInfo<'_>,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_4.cmd_push_constants2)(command_buffer, push_constants_info)
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdPushDescriptorSet2.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     #[doc(alias = "vkCmdPushDescriptorSet2")]
     pub unsafe fn cmd_push_descriptor_set2(
@@ -491,14 +491,14 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdCopyBuffer2.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     pub unsafe fn cmd_copy_buffer2(
         &self,
         command_buffer: vk::CommandBuffer,
         copy_buffer_info: &vk::CopyBufferInfo2<'_>,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_3.cmd_copy_buffer2)(command_buffer, copy_buffer_info)
     }
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdCopyImage2.html>
@@ -511,25 +511,25 @@ impl Device {
         (self.device_fn_1_3.cmd_copy_image2)(command_buffer, copy_image_info)
     }
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdCopyBufferToImage2.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     pub unsafe fn cmd_copy_buffer_to_image2(
         &self,
         command_buffer: vk::CommandBuffer,
         copy_buffer_to_image_info: &vk::CopyBufferToImageInfo2<'_>,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_3.cmd_copy_buffer_to_image2)(command_buffer, copy_buffer_to_image_info)
     }
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdCopyImageToBuffer2.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     pub unsafe fn cmd_copy_image_to_buffer2(
         &self,
         command_buffer: vk::CommandBuffer,
         copy_image_to_buffer_info: &vk::CopyImageToBufferInfo2<'_>,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_3.cmd_copy_image_to_buffer2)(command_buffer, copy_image_to_buffer_info)
     }
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBlitImage2.html>
@@ -847,7 +847,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDrawIndirectCount.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     pub unsafe fn cmd_draw_indirect_count(
         &self,
@@ -859,7 +860,6 @@ impl Device {
         max_draw_count: u32,
         stride: u32,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_2.cmd_draw_indirect_count)(
             command_buffer,
             buffer,
@@ -872,7 +872,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDrawIndexedIndirectCount.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     pub unsafe fn cmd_draw_indexed_indirect_count(
         &self,
@@ -884,7 +885,6 @@ impl Device {
         max_draw_count: u32,
         stride: u32,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_2.cmd_draw_indexed_indirect_count)(
             command_buffer,
             buffer,
@@ -897,7 +897,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateRenderPass2.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>
     #[inline]
     pub unsafe fn create_render_pass2(
         &self,
@@ -905,7 +906,6 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::RenderPass> {
         let mut renderpass = mem::MaybeUninit::uninit();
-        #[allow(deprecated)]
         (self.device_fn_1_2.create_render_pass2)(
             self.handle,
             create_info,
@@ -916,7 +916,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBeginRenderPass2.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>
     #[inline]
     pub unsafe fn cmd_begin_render_pass2(
         &self,
@@ -924,7 +925,6 @@ impl Device {
         render_pass_begin_info: &vk::RenderPassBeginInfo<'_>,
         subpass_begin_info: &vk::SubpassBeginInfo<'_>,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_2.cmd_begin_render_pass2)(
             command_buffer,
             render_pass_begin_info,
@@ -933,7 +933,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdNextSubpass2.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>
     #[inline]
     pub unsafe fn cmd_next_subpass2(
         &self,
@@ -941,19 +942,18 @@ impl Device {
         subpass_begin_info: &vk::SubpassBeginInfo<'_>,
         subpass_end_info: &vk::SubpassEndInfo<'_>,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_2.cmd_next_subpass2)(command_buffer, subpass_begin_info, subpass_end_info)
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdEndRenderPass2.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>
     #[inline]
     pub unsafe fn cmd_end_render_pass2(
         &self,
         command_buffer: vk::CommandBuffer,
         subpass_end_info: &vk::SubpassEndInfo<'_>,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_2.cmd_end_render_pass2)(command_buffer, subpass_end_info)
     }
 
@@ -1283,14 +1283,14 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroySampler.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>
     #[inline]
     pub unsafe fn destroy_sampler(
         &self,
         sampler: vk::Sampler,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.destroy_sampler)(
             self.handle,
             sampler,
@@ -1367,7 +1367,8 @@ impl Device {
         (self.device_fn_1_0.reset_event)(self.handle, event).result()
     }
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetEvent.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>
     #[inline]
     pub unsafe fn cmd_set_event(
         &self,
@@ -1375,11 +1376,11 @@ impl Device {
         event: vk::Event,
         stage_mask: vk::PipelineStageFlags,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_set_event)(command_buffer, event, stage_mask)
     }
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdResetEvent.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>
     #[inline]
     pub unsafe fn cmd_reset_event(
         &self,
@@ -1387,12 +1388,12 @@ impl Device {
         event: vk::Event,
         stage_mask: vk::PipelineStageFlags,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_reset_event)(command_buffer, event, stage_mask)
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdWaitEvents.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>
     #[inline]
     pub unsafe fn cmd_wait_events(
         &self,
@@ -1404,7 +1405,6 @@ impl Device {
         buffer_memory_barriers: &[vk::BufferMemoryBarrier<'_>],
         image_memory_barriers: &[vk::ImageMemoryBarrier<'_>],
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_wait_events)(
             command_buffer,
             events.len() as _,
@@ -1479,14 +1479,14 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyRenderPass.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>
     #[inline]
     pub unsafe fn destroy_render_pass(
         &self,
         renderpass: vk::RenderPass,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.destroy_render_pass)(
             self.handle,
             renderpass,
@@ -1495,14 +1495,14 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyFramebuffer.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>
     #[inline]
     pub unsafe fn destroy_framebuffer(
         &self,
         framebuffer: vk::Framebuffer,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.destroy_framebuffer)(
             self.handle,
             framebuffer,
@@ -1511,14 +1511,14 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyPipelineLayout.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     pub unsafe fn destroy_pipeline_layout(
         &self,
         pipeline_layout: vk::PipelineLayout,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.destroy_pipeline_layout)(
             self.handle,
             pipeline_layout,
@@ -1593,14 +1593,14 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyDescriptorPool.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     pub unsafe fn destroy_descriptor_pool(
         &self,
         pool: vk::DescriptorPool,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.destroy_descriptor_pool)(
             self.handle,
             pool,
@@ -1623,14 +1623,14 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyDescriptorSetLayout.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     pub unsafe fn destroy_descriptor_set_layout(
         &self,
         layout: vk::DescriptorSetLayout,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.destroy_descriptor_set_layout)(
             self.handle,
             layout,
@@ -1639,14 +1639,14 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkFreeDescriptorSets.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     pub unsafe fn free_descriptor_sets(
         &self,
         pool: vk::DescriptorPool,
         descriptor_sets: &[vk::DescriptorSet],
     ) -> VkResult<()> {
-        #[allow(deprecated)]
         (self.device_fn_1_0.free_descriptor_sets)(
             self.handle,
             pool,
@@ -1657,14 +1657,14 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkUpdateDescriptorSets.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     pub unsafe fn update_descriptor_sets(
         &self,
         descriptor_writes: &[vk::WriteDescriptorSet<'_>],
         descriptor_copies: &[vk::CopyDescriptorSet<'_>],
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.update_descriptor_sets)(
             self.handle,
             descriptor_writes.len() as u32,
@@ -1675,7 +1675,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateSampler.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>
     #[inline]
     pub unsafe fn create_sampler(
         &self,
@@ -1683,7 +1684,6 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Sampler> {
         let mut sampler = mem::MaybeUninit::uninit();
-        #[allow(deprecated)]
         (self.device_fn_1_0.create_sampler)(
             self.handle,
             create_info,
@@ -1740,7 +1740,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdFillBuffer.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     pub unsafe fn cmd_fill_buffer(
         &self,
@@ -1750,12 +1751,12 @@ impl Device {
         size: vk::DeviceSize,
         data: u32,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_fill_buffer)(command_buffer, buffer, offset, size, data)
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdUpdateBuffer.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     pub unsafe fn cmd_update_buffer(
         &self,
@@ -1764,7 +1765,6 @@ impl Device {
         offset: vk::DeviceSize,
         data: &[u8],
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_update_buffer)(
             command_buffer,
             buffer,
@@ -1855,14 +1855,14 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkAllocateDescriptorSets.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     pub unsafe fn allocate_descriptor_sets(
         &self,
         allocate_info: &vk::DescriptorSetAllocateInfo<'_>,
     ) -> VkResult<Vec<vk::DescriptorSet>> {
         let mut desc_set = Vec::with_capacity(allocate_info.descriptor_set_count as usize);
-        #[allow(deprecated)]
         (self.device_fn_1_0.allocate_descriptor_sets)(
             self.handle,
             allocate_info,
@@ -1872,7 +1872,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateDescriptorSetLayout.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     pub unsafe fn create_descriptor_set_layout(
         &self,
@@ -1880,7 +1881,6 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DescriptorSetLayout> {
         let mut layout = mem::MaybeUninit::uninit();
-        #[allow(deprecated)]
         (self.device_fn_1_0.create_descriptor_set_layout)(
             self.handle,
             create_info,
@@ -1897,7 +1897,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateDescriptorPool.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     pub unsafe fn create_descriptor_pool(
         &self,
@@ -1905,7 +1906,6 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DescriptorPool> {
         let mut pool = mem::MaybeUninit::uninit();
-        #[allow(deprecated)]
         (self.device_fn_1_0.create_descriptor_pool)(
             self.handle,
             create_info,
@@ -1916,14 +1916,14 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkResetDescriptorPool.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     pub unsafe fn reset_descriptor_pool(
         &self,
         pool: vk::DescriptorPool,
         flags: vk::DescriptorPoolResetFlags,
     ) -> VkResult<()> {
-        #[allow(deprecated)]
         (self.device_fn_1_0.reset_descriptor_pool)(self.handle, pool, flags).result()
     }
 
@@ -2045,7 +2045,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDrawIndexedIndirect.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     pub unsafe fn cmd_draw_indexed_indirect(
         &self,
@@ -2055,7 +2056,6 @@ impl Device {
         draw_count: u32,
         stride: u32,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_draw_indexed_indirect)(
             command_buffer,
             buffer,
@@ -2080,7 +2080,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBindDescriptorSets.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     pub unsafe fn cmd_bind_descriptor_sets(
         &self,
@@ -2091,7 +2092,6 @@ impl Device {
         descriptor_sets: &[vk::DescriptorSet],
         dynamic_offsets: &[u32],
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_bind_descriptor_sets)(
             command_buffer,
             pipeline_bind_point,
@@ -2105,7 +2105,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdCopyQueryPoolResults.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     pub unsafe fn cmd_copy_query_pool_results(
         &self,
@@ -2118,7 +2119,6 @@ impl Device {
         stride: vk::DeviceSize,
         flags: vk::QueryResultFlags,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_copy_query_pool_results)(
             command_buffer,
             query_pool,
@@ -2132,7 +2132,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdPushConstants.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     pub unsafe fn cmd_push_constants(
         &self,
@@ -2142,7 +2143,6 @@ impl Device {
         offset: u32,
         constants: &[u8],
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_push_constants)(
             command_buffer,
             layout,
@@ -2154,7 +2154,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBeginRenderPass.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>
     #[inline]
     pub unsafe fn cmd_begin_render_pass(
         &self,
@@ -2162,19 +2163,18 @@ impl Device {
         render_pass_begin: &vk::RenderPassBeginInfo<'_>,
         contents: vk::SubpassContents,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_begin_render_pass)(command_buffer, render_pass_begin, contents)
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdNextSubpass.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>
     #[inline]
     pub unsafe fn cmd_next_subpass(
         &self,
         command_buffer: vk::CommandBuffer,
         contents: vk::SubpassContents,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_next_subpass)(command_buffer, contents)
     }
 
@@ -2231,10 +2231,10 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdEndRenderPass.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>
     #[inline]
     pub unsafe fn cmd_end_render_pass(&self, command_buffer: vk::CommandBuffer) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_end_render_pass)(command_buffer)
     }
 
@@ -2258,7 +2258,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDrawIndirect.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     pub unsafe fn cmd_draw_indirect(
         &self,
@@ -2268,7 +2269,6 @@ impl Device {
         draw_count: u32,
         stride: u32,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_draw_indirect)(command_buffer, buffer, offset, draw_count, stride)
     }
 
@@ -2290,7 +2290,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDispatchIndirect.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     pub unsafe fn cmd_dispatch_indirect(
         &self,
@@ -2298,7 +2299,6 @@ impl Device {
         buffer: vk::Buffer,
         offset: vk::DeviceSize,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_dispatch_indirect)(command_buffer, buffer, offset)
     }
 
@@ -2452,7 +2452,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdWriteTimestamp.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>
     #[inline]
     pub unsafe fn cmd_write_timestamp(
         &self,
@@ -2461,7 +2462,6 @@ impl Device {
         query_pool: vk::QueryPool,
         query: u32,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_write_timestamp)(command_buffer, pipeline_stage, query_pool, query)
     }
 
@@ -2556,7 +2556,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreatePipelineLayout.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
     #[inline]
     pub unsafe fn create_pipeline_layout(
         &self,
@@ -2564,7 +2565,6 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::PipelineLayout> {
         let mut pipeline_layout = mem::MaybeUninit::uninit();
-        #[allow(deprecated)]
         (self.device_fn_1_0.create_pipeline_layout)(
             self.handle,
             create_info,
@@ -2672,7 +2672,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateFramebuffer.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>
     #[inline]
     pub unsafe fn create_framebuffer(
         &self,
@@ -2680,7 +2681,6 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Framebuffer> {
         let mut framebuffer = mem::MaybeUninit::uninit();
-        #[allow(deprecated)]
         (self.device_fn_1_0.create_framebuffer)(
             self.handle,
             create_info,
@@ -2704,7 +2704,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdPipelineBarrier.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>
     #[inline]
     pub unsafe fn cmd_pipeline_barrier(
         &self,
@@ -2716,7 +2717,6 @@ impl Device {
         buffer_memory_barriers: &[vk::BufferMemoryBarrier<'_>],
         image_memory_barriers: &[vk::ImageMemoryBarrier<'_>],
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.cmd_pipeline_barrier)(
             command_buffer,
             src_stage_mask,
@@ -2732,7 +2732,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateRenderPass.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>
     #[inline]
     pub unsafe fn create_render_pass(
         &self,
@@ -2740,7 +2741,6 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::RenderPass> {
         let mut renderpass = mem::MaybeUninit::uninit();
-        #[allow(deprecated)]
         (self.device_fn_1_0.create_render_pass)(
             self.handle,
             create_info,
@@ -2806,7 +2806,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkQueueSubmit.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>
     #[inline]
     pub unsafe fn queue_submit(
         &self,
@@ -2814,7 +2815,6 @@ impl Device {
         submits: &[vk::SubmitInfo<'_>],
         fence: vk::Fence,
     ) -> VkResult<()> {
-        #[allow(deprecated)]
         (self.device_fn_1_0.queue_submit)(queue, submits.len() as u32, submits.as_ptr(), fence)
             .result()
     }
@@ -2837,7 +2837,8 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateBufferView.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>
     #[inline]
     pub unsafe fn create_buffer_view(
         &self,
@@ -2845,7 +2846,6 @@ impl Device {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::BufferView> {
         let mut buffer_view = mem::MaybeUninit::uninit();
-        #[allow(deprecated)]
         (self.device_fn_1_0.create_buffer_view)(
             self.handle,
             create_info,
@@ -2856,14 +2856,14 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyBufferView.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>
     #[inline]
     pub unsafe fn destroy_buffer_view(
         &self,
         buffer_view: vk::BufferView,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        #[allow(deprecated)]
         (self.device_fn_1_0.destroy_buffer_view)(
             self.handle,
             buffer_view,
@@ -3072,11 +3072,11 @@ impl Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetRenderAreaGranularity.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>
     #[inline]
     pub unsafe fn get_render_area_granularity(&self, render_pass: vk::RenderPass) -> vk::Extent2D {
         let mut granularity = mem::MaybeUninit::uninit();
-        #[allow(deprecated)]
         (self.device_fn_1_0.get_render_area_granularity)(
             self.handle,
             render_pass,

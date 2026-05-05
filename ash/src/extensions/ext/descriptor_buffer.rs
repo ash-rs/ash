@@ -1,6 +1,6 @@
 //! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_descriptor_buffer.html>
-#![deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
-#![allow(deprecated)]
+//!
+//! Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>
 
 use crate::vk;
 use crate::VkResult;

@@ -1,5 +1,4 @@
 #![allow(unused_qualifications)]
-#![allow(deprecated)]
 use crate::vk::*;
 use core::ffi::*;
 #[derive(Clone)]
@@ -115,24 +114,24 @@ impl EntryFnV1_0 {
 pub struct InstanceFnV1_0 {
     pub destroy_instance: PFN_vkDestroyInstance,
     pub enumerate_physical_devices: PFN_vkEnumeratePhysicalDevices,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
     pub get_physical_device_features: PFN_vkGetPhysicalDeviceFeatures,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
     pub get_physical_device_format_properties: PFN_vkGetPhysicalDeviceFormatProperties,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
     pub get_physical_device_image_format_properties: PFN_vkGetPhysicalDeviceImageFormatProperties,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
     pub get_physical_device_properties: PFN_vkGetPhysicalDeviceProperties,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
     pub get_physical_device_queue_family_properties: PFN_vkGetPhysicalDeviceQueueFamilyProperties,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
     pub get_physical_device_memory_properties: PFN_vkGetPhysicalDeviceMemoryProperties,
     pub get_device_proc_addr: PFN_vkGetDeviceProcAddr,
     pub create_device: PFN_vkCreateDevice,
     pub enumerate_device_extension_properties: PFN_vkEnumerateDeviceExtensionProperties,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-devicelayers>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-devicelayers>"]
     pub enumerate_device_layer_properties: PFN_vkEnumerateDeviceLayerProperties,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdp2>"]
     pub get_physical_device_sparse_image_format_properties:
         PFN_vkGetPhysicalDeviceSparseImageFormatProperties,
 }
@@ -406,7 +405,7 @@ impl InstanceFnV1_0 {
 pub struct DeviceFnV1_0 {
     pub destroy_device: PFN_vkDestroyDevice,
     pub get_device_queue: PFN_vkGetDeviceQueue,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
     pub queue_submit: PFN_vkQueueSubmit,
     pub queue_wait_idle: PFN_vkQueueWaitIdle,
     pub device_wait_idle: PFN_vkDeviceWaitIdle,
@@ -452,18 +451,18 @@ pub struct DeviceFnV1_0 {
     pub cmd_copy_image: PFN_vkCmdCopyImage,
     pub cmd_copy_buffer_to_image: PFN_vkCmdCopyBufferToImage,
     pub cmd_copy_image_to_buffer: PFN_vkCmdCopyImageToBuffer,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
     pub cmd_update_buffer: PFN_vkCmdUpdateBuffer,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
     pub cmd_fill_buffer: PFN_vkCmdFillBuffer,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
     pub cmd_pipeline_barrier: PFN_vkCmdPipelineBarrier,
     pub cmd_begin_query: PFN_vkCmdBeginQuery,
     pub cmd_end_query: PFN_vkCmdEndQuery,
     pub cmd_reset_query_pool: PFN_vkCmdResetQueryPool,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
     pub cmd_write_timestamp: PFN_vkCmdWriteTimestamp,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
     pub cmd_copy_query_pool_results: PFN_vkCmdCopyQueryPoolResults,
     pub cmd_execute_commands: PFN_vkCmdExecuteCommands,
     pub create_event: PFN_vkCreateEvent,
@@ -471,9 +470,9 @@ pub struct DeviceFnV1_0 {
     pub get_event_status: PFN_vkGetEventStatus,
     pub set_event: PFN_vkSetEvent,
     pub reset_event: PFN_vkResetEvent,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
     pub create_buffer_view: PFN_vkCreateBufferView,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
     pub destroy_buffer_view: PFN_vkDestroyBufferView,
     pub create_shader_module: PFN_vkCreateShaderModule,
     pub destroy_shader_module: PFN_vkDestroyShaderModule,
@@ -483,55 +482,55 @@ pub struct DeviceFnV1_0 {
     pub merge_pipeline_caches: PFN_vkMergePipelineCaches,
     pub create_compute_pipelines: PFN_vkCreateComputePipelines,
     pub destroy_pipeline: PFN_vkDestroyPipeline,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     pub create_pipeline_layout: PFN_vkCreatePipelineLayout,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     pub destroy_pipeline_layout: PFN_vkDestroyPipelineLayout,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
     pub create_sampler: PFN_vkCreateSampler,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-resource-objects>"]
     pub destroy_sampler: PFN_vkDestroySampler,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     pub create_descriptor_set_layout: PFN_vkCreateDescriptorSetLayout,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     pub destroy_descriptor_set_layout: PFN_vkDestroyDescriptorSetLayout,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     pub create_descriptor_pool: PFN_vkCreateDescriptorPool,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     pub destroy_descriptor_pool: PFN_vkDestroyDescriptorPool,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     pub reset_descriptor_pool: PFN_vkResetDescriptorPool,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     pub allocate_descriptor_sets: PFN_vkAllocateDescriptorSets,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     pub free_descriptor_sets: PFN_vkFreeDescriptorSets,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     pub update_descriptor_sets: PFN_vkUpdateDescriptorSets,
     pub cmd_bind_pipeline: PFN_vkCmdBindPipeline,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     pub cmd_bind_descriptor_sets: PFN_vkCmdBindDescriptorSets,
     pub cmd_clear_color_image: PFN_vkCmdClearColorImage,
     pub cmd_dispatch: PFN_vkCmdDispatch,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
     pub cmd_dispatch_indirect: PFN_vkCmdDispatchIndirect,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
     pub cmd_set_event: PFN_vkCmdSetEvent,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
     pub cmd_reset_event: PFN_vkCmdResetEvent,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#deprecation-sync2>"]
     pub cmd_wait_events: PFN_vkCmdWaitEvents,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     pub cmd_push_constants: PFN_vkCmdPushConstants,
     pub create_graphics_pipelines: PFN_vkCreateGraphicsPipelines,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     pub create_framebuffer: PFN_vkCreateFramebuffer,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     pub destroy_framebuffer: PFN_vkDestroyFramebuffer,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
     pub create_render_pass: PFN_vkCreateRenderPass,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     pub destroy_render_pass: PFN_vkDestroyRenderPass,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     pub get_render_area_granularity: PFN_vkGetRenderAreaGranularity,
     pub cmd_set_viewport: PFN_vkCmdSetViewport,
     pub cmd_set_scissor: PFN_vkCmdSetScissor,
@@ -546,19 +545,19 @@ pub struct DeviceFnV1_0 {
     pub cmd_bind_vertex_buffers: PFN_vkCmdBindVertexBuffers,
     pub cmd_draw: PFN_vkCmdDraw,
     pub cmd_draw_indexed: PFN_vkCmdDrawIndexed,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
     pub cmd_draw_indirect: PFN_vkCmdDrawIndirect,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
     pub cmd_draw_indexed_indirect: PFN_vkCmdDrawIndexedIndirect,
     pub cmd_blit_image: PFN_vkCmdBlitImage,
     pub cmd_clear_depth_stencil_image: PFN_vkCmdClearDepthStencilImage,
     pub cmd_clear_attachments: PFN_vkCmdClearAttachments,
     pub cmd_resolve_image: PFN_vkCmdResolveImage,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
     pub cmd_begin_render_pass: PFN_vkCmdBeginRenderPass,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
     pub cmd_next_subpass: PFN_vkCmdNextSubpass,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-renderpass2>"]
     pub cmd_end_render_pass: PFN_vkCmdEndRenderPass,
 }
 unsafe impl Send for DeviceFnV1_0 {}
@@ -3359,17 +3358,17 @@ pub struct DeviceFnV1_2 {
     pub get_buffer_device_address: PFN_vkGetBufferDeviceAddress,
     pub get_buffer_opaque_capture_address: PFN_vkGetBufferOpaqueCaptureAddress,
     pub get_device_memory_opaque_capture_address: PFN_vkGetDeviceMemoryOpaqueCaptureAddress,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
     pub cmd_draw_indirect_count: PFN_vkCmdDrawIndirectCount,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
     pub cmd_draw_indexed_indirect_count: PFN_vkCmdDrawIndexedIndirectCount,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     pub create_render_pass2: PFN_vkCreateRenderPass2,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     pub cmd_begin_render_pass2: PFN_vkCmdBeginRenderPass2,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     pub cmd_next_subpass2: PFN_vkCmdNextSubpass2,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-dynamicrendering>"]
     pub cmd_end_render_pass2: PFN_vkCmdEndRenderPass2,
 }
 unsafe impl Send for DeviceFnV1_2 {}
@@ -3668,12 +3667,12 @@ pub struct DeviceFnV1_3 {
     pub cmd_pipeline_barrier2: PFN_vkCmdPipelineBarrier2,
     pub cmd_write_timestamp2: PFN_vkCmdWriteTimestamp2,
     pub queue_submit2: PFN_vkQueueSubmit2,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
     pub cmd_copy_buffer2: PFN_vkCmdCopyBuffer2,
     pub cmd_copy_image2: PFN_vkCmdCopyImage2,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
     pub cmd_copy_buffer_to_image2: PFN_vkCmdCopyBufferToImage2,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
     pub cmd_copy_image_to_buffer2: PFN_vkCmdCopyImageToBuffer2,
     pub get_device_buffer_memory_requirements: PFN_vkGetDeviceBufferMemoryRequirements,
     pub get_device_image_memory_requirements: PFN_vkGetDeviceImageMemoryRequirements,
@@ -4366,14 +4365,14 @@ pub struct DeviceFnV1_4 {
     pub transition_image_layout: PFN_vkTransitionImageLayout,
     pub cmd_push_descriptor_set: PFN_vkCmdPushDescriptorSet,
     pub cmd_push_descriptor_set_with_template: PFN_vkCmdPushDescriptorSetWithTemplate,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     pub cmd_bind_descriptor_sets2: PFN_vkCmdBindDescriptorSets2,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
     pub cmd_push_constants2: PFN_vkCmdPushConstants2,
     pub cmd_push_descriptor_set2: PFN_vkCmdPushDescriptorSet2,
     pub cmd_push_descriptor_set_with_template2: PFN_vkCmdPushDescriptorSetWithTemplate2,
     pub cmd_set_line_stipple: PFN_vkCmdSetLineStipple,
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
     pub cmd_bind_index_buffer2: PFN_vkCmdBindIndexBuffer2,
     pub get_rendering_area_granularity: PFN_vkGetRenderingAreaGranularity,
     pub cmd_set_rendering_attachment_locations: PFN_vkCmdSetRenderingAttachmentLocations,

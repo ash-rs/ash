@@ -23,7 +23,8 @@ impl crate::amd::buffer_marker::Device {
     }
 
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdWriteBufferMarker2AMD.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    // Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     pub unsafe fn cmd_write_buffer_marker2(
         &self,

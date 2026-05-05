@@ -7,7 +7,8 @@ use core::mem;
 
 impl crate::khr::maintenance5::Device {
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBindIndexBuffer2KHR.html>
-    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+    ///
+    /// Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>
     #[inline]
     #[doc(alias = "vkCmdBindIndexBuffer2KHR")]
     pub unsafe fn cmd_bind_index_buffer2(
@@ -18,7 +19,6 @@ impl crate::khr::maintenance5::Device {
         size: vk::DeviceSize,
         index_type: vk::IndexType,
     ) {
-        #[allow(deprecated)]
         (self.fp.cmd_bind_index_buffer2_khr)(command_buffer, buffer, offset, size, index_type)
     }
 
