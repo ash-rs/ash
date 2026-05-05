@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_device_group_creation.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_device_group_creation.html>
 
 use crate::vk;
 use crate::VkResult;
@@ -19,7 +19,7 @@ impl crate::khr::device_group_creation::Instance {
         .map(|c| c as usize)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDeviceGroupsKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkEnumeratePhysicalDeviceGroupsKHR.html>
     ///
     /// Call [`enumerate_physical_device_groups_len()`][Self::enumerate_physical_device_groups_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.

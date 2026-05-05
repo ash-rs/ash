@@ -1,10 +1,10 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_swapchain_maintenance1.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_swapchain_maintenance1.html>
 
 use crate::vk;
 use crate::VkResult;
 
 impl crate::ext::swapchain_maintenance1::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkReleaseSwapchainImagesEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkReleaseSwapchainImagesEXT.html>
     #[inline]
     pub unsafe fn release_swapchain_images(
         &self,

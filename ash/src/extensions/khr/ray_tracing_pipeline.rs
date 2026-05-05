@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_ray_tracing_pipeline.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_ray_tracing_pipeline.html>
 
 use crate::vk;
 use crate::RawPtr;
@@ -6,7 +6,7 @@ use crate::VkResult;
 use alloc::vec::Vec;
 
 impl crate::khr::ray_tracing_pipeline::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdTraceRaysKHR.html>
     #[inline]
     pub unsafe fn cmd_trace_rays(
         &self,
@@ -31,11 +31,11 @@ impl crate::khr::ray_tracing_pipeline::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateRayTracingPipelinesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateRayTracingPipelinesKHR.html>
     ///
     /// Pipelines are created and returned as described for [Multiple Pipeline Creation].
     ///
-    /// [Multiple Pipeline Creation]: https://registry.khronos.org/vulkan/specs/1.3-extensions/html/vkspec.html#pipelines-multiple
+    /// [Multiple Pipeline Creation]: https://docs.vulkan.org/spec/latest/chapters/pipelines.html#pipelines-multiple
     #[inline]
     pub unsafe fn create_ray_tracing_pipelines(
         &self,
@@ -61,7 +61,7 @@ impl crate::khr::ray_tracing_pipeline::Device {
         }
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupHandlesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetRayTracingShaderGroupHandlesKHR.html>
     #[inline]
     pub unsafe fn get_ray_tracing_shader_group_handles(
         &self,
@@ -82,7 +82,7 @@ impl crate::khr::ray_tracing_pipeline::Device {
         .set_vec_len_on_success(data, data_size)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingCaptureReplayShaderGroupHandlesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetRayTracingCaptureReplayShaderGroupHandlesKHR.html>
     #[inline]
     pub unsafe fn get_ray_tracing_capture_replay_shader_group_handles(
         &self,
@@ -105,7 +105,7 @@ impl crate::khr::ray_tracing_pipeline::Device {
         .set_vec_len_on_success(data, data_size)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysIndirectKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdTraceRaysIndirectKHR.html>
     ///
     /// `indirect_device_address` is a buffer device address which is a pointer to a [`vk::TraceRaysIndirectCommandKHR`] structure containing the trace ray parameters.
     #[inline]
@@ -128,7 +128,7 @@ impl crate::khr::ray_tracing_pipeline::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupStackSizeKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetRayTracingShaderGroupStackSizeKHR.html>
     #[inline]
     pub unsafe fn get_ray_tracing_shader_group_stack_size(
         &self,
@@ -144,7 +144,7 @@ impl crate::khr::ray_tracing_pipeline::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRayTracingPipelineStackSizeKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetRayTracingPipelineStackSizeKHR.html>
     #[inline]
     pub unsafe fn cmd_set_ray_tracing_pipeline_stack_size(
         &self,

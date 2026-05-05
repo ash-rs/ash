@@ -1,9 +1,9 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_metal_objects.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_metal_objects.html>
 
 use crate::vk;
 
 impl crate::ext::metal_objects::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkExportMetalObjectsEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkExportMetalObjectsEXT.html>
     #[inline]
     #[doc(alias = "vkExportMetalObjectsEXT")]
     pub unsafe fn export_metal_objects(

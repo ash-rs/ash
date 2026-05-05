@@ -1,9 +1,9 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_dynamic_rendering.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_dynamic_rendering.html>
 
 use crate::vk;
 
 impl crate::khr::dynamic_rendering::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRenderingKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBeginRenderingKHR.html>
     #[inline]
     pub unsafe fn cmd_begin_rendering(
         &self,
@@ -13,7 +13,7 @@ impl crate::khr::dynamic_rendering::Device {
         (self.fp.cmd_begin_rendering_khr)(command_buffer, rendering_info)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderingKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdEndRenderingKHR.html>
     #[inline]
     pub unsafe fn cmd_end_rendering(&self, command_buffer: vk::CommandBuffer) {
         (self.fp.cmd_end_rendering_khr)(command_buffer)

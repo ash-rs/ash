@@ -1,11 +1,11 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_acquire_drm_display.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_acquire_drm_display.html>
 
 use crate::vk;
 use crate::VkResult;
 use core::mem;
 
 impl crate::ext::acquire_drm_display::Instance {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireDrmDisplayEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkAcquireDrmDisplayEXT.html>
     #[inline]
     pub unsafe fn acquire_drm_display(
         &self,
@@ -16,7 +16,7 @@ impl crate::ext::acquire_drm_display::Instance {
         (self.fp.acquire_drm_display_ext)(physical_device, drm_fd, display).result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDrmDisplayEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetDrmDisplayEXT.html>
     #[inline]
     pub unsafe fn get_drm_display(
         &self,

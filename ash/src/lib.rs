@@ -20,7 +20,7 @@
 
 //! # Vulkan API
 //!
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/html/index.html>
+//! <https://docs.vulkan.org/spec/latest/chapters/introduction.html>
 //!
 //! ## Examples
 //!
@@ -246,7 +246,7 @@ impl vk::Result {
 /// change between calls; [`vk::Result::INCOMPLETE`] is returned when the count increased (and the
 /// vector is not large enough after querying the initial size), requiring Ash to try again.
 ///
-/// [`vkEnumerateInstanceExtensionProperties`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html
+/// [`vkEnumerateInstanceExtensionProperties`]: https://docs.vulkan.org/refpages/latest/refpages/source/vkEnumerateInstanceExtensionProperties.html
 pub(crate) unsafe fn read_into_uninitialized_vector<N: Copy + Default + TryInto<usize>, T>(
     f: impl Fn(&mut N, *mut T) -> vk::Result,
 ) -> VkResult<Vec<T>>

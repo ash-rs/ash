@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMD_shader_info.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_AMD_shader_info.html>
 
 use crate::read_into_uninitialized_vector;
 use crate::vk;
@@ -8,7 +8,7 @@ use core::mem;
 use core::mem::size_of_val; // TODO: Remove when bumping MSRV to 1.80
 
 impl crate::amd::shader_info::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetShaderInfoAMD.html> with [`vk::ShaderInfoTypeAMD::STATISTICS`]
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetShaderInfoAMD.html> with [`vk::ShaderInfoTypeAMD::STATISTICS`]
     #[inline]
     pub unsafe fn get_shader_info_statistics(
         &self,
@@ -30,7 +30,7 @@ impl crate::amd::shader_info::Device {
         Ok(info.assume_init())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetShaderInfoAMD.html> with [`vk::ShaderInfoTypeAMD::BINARY`]
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetShaderInfoAMD.html> with [`vk::ShaderInfoTypeAMD::BINARY`]
     #[inline]
     pub unsafe fn get_shader_info_binary(
         &self,
@@ -49,7 +49,7 @@ impl crate::amd::shader_info::Device {
         })
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetShaderInfoAMD.html> with [`vk::ShaderInfoTypeAMD::DISASSEMBLY`]
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetShaderInfoAMD.html> with [`vk::ShaderInfoTypeAMD::DISASSEMBLY`]
     #[inline]
     pub unsafe fn get_shader_info_disassembly(
         &self,

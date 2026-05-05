@@ -19,7 +19,7 @@ A very lightweight wrapper around Vulkan
 - [x] No validation, everything is **unsafe**
 - [x] Lifetime-safety on structs created with the builder pattern
 - [x] Generated from `vk.xml`
-- [x] Support for Vulkan `1.1`, `1.2`, `1.3`
+- [x] Support for Vulkan `1.1`, `1.2`, `1.3`, `1.4`
 - [x] `no_std` support
 
 ## ⚠️ Semver compatibility warning

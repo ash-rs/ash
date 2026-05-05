@@ -1,9 +1,9 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_extended_dynamic_state2.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_extended_dynamic_state2.html>
 
 use crate::vk;
 
 impl crate::ext::extended_dynamic_state2::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPatchControlPointsEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetPatchControlPointsEXT.html>
     #[inline]
     pub unsafe fn cmd_set_patch_control_points(
         &self,
@@ -13,7 +13,7 @@ impl crate::ext::extended_dynamic_state2::Device {
         (self.fp.cmd_set_patch_control_points_ext)(command_buffer, patch_control_points)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizerDiscardEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetRasterizerDiscardEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_rasterizer_discard_enable(
         &self,
@@ -26,7 +26,7 @@ impl crate::ext::extended_dynamic_state2::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBiasEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetDepthBiasEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_bias_enable(
         &self,
@@ -36,7 +36,7 @@ impl crate::ext::extended_dynamic_state2::Device {
         (self.fp.cmd_set_depth_bias_enable_ext)(command_buffer, depth_bias_enable.into())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLogicOpEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetLogicOpEXT.html>
     #[inline]
     pub unsafe fn cmd_set_logic_op(
         &self,
@@ -46,7 +46,7 @@ impl crate::ext::extended_dynamic_state2::Device {
         (self.fp.cmd_set_logic_op_ext)(command_buffer, logic_op)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveRestartEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetPrimitiveRestartEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_primitive_restart_enable(
         &self,

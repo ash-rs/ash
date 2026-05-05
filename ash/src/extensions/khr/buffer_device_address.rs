@@ -1,9 +1,9 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_buffer_device_address.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_buffer_device_address.html>
 
 use crate::vk;
 
 impl crate::khr::buffer_device_address::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferDeviceAddressKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetBufferDeviceAddressKHR.html>
     #[inline]
     pub unsafe fn get_buffer_device_address(
         &self,
@@ -12,7 +12,7 @@ impl crate::khr::buffer_device_address::Device {
         (self.fp.get_buffer_device_address_khr)(self.handle, info)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferOpaqueCaptureAddressKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetBufferOpaqueCaptureAddressKHR.html>
     #[inline]
     pub unsafe fn get_buffer_opaque_capture_address(
         &self,
@@ -21,7 +21,7 @@ impl crate::khr::buffer_device_address::Device {
         (self.fp.get_buffer_opaque_capture_address_khr)(self.handle, info)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceMemoryOpaqueCaptureAddressKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetDeviceMemoryOpaqueCaptureAddressKHR.html>
     #[inline]
     pub unsafe fn get_device_memory_opaque_capture_address(
         &self,

@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_private_data.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_private_data.html>
 
 use crate::vk;
 use crate::RawPtr;
@@ -6,7 +6,7 @@ use crate::VkResult;
 use core::mem;
 
 impl crate::ext::private_data::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreatePrivateDataSlotEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreatePrivateDataSlotEXT.html>
     #[inline]
     pub unsafe fn create_private_data_slot(
         &self,
@@ -23,7 +23,7 @@ impl crate::ext::private_data::Device {
         .assume_init_on_success(private_data_slot)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyPrivateDataSlotEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyPrivateDataSlotEXT.html>
     #[inline]
     pub unsafe fn destroy_private_data_slot(
         &self,
@@ -37,7 +37,7 @@ impl crate::ext::private_data::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetPrivateDataEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkSetPrivateDataEXT.html>
     #[inline]
     pub unsafe fn set_private_data<T: vk::Handle>(
         &self,
@@ -55,7 +55,7 @@ impl crate::ext::private_data::Device {
         .result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPrivateDataEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPrivateDataEXT.html>
     #[inline]
     pub unsafe fn get_private_data<T: vk::Handle>(
         &self,

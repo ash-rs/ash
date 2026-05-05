@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_video_encode_queue.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_video_encode_queue.html>
 
 use crate::vk;
 use crate::RawMutPtr;
@@ -7,7 +7,7 @@ use core::mem;
 use core::ptr;
 
 impl crate::khr::video_encode_queue::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEncodeVideoKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdEncodeVideoKHR.html>
     #[inline]
     #[doc(alias = "vkCmdEncodeVideoKHR")]
     pub unsafe fn cmd_encode_video(
@@ -36,7 +36,7 @@ impl crate::khr::video_encode_queue::Device {
         .assume_init_on_success(size)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetEncodedVideoSessionParametersKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetEncodedVideoSessionParametersKHR.html>
     ///
     /// Call [`get_encoded_video_session_parameters_len()`][Self::get_encoded_video_session_parameters_len()] to query the length of the byte slice to pass to `out`.
     #[inline]
@@ -62,7 +62,7 @@ impl crate::khr::video_encode_queue::Device {
 }
 
 impl crate::khr::video_encode_queue::Instance {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR.html>
     #[inline]
     #[doc(alias = "vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR")]
     pub unsafe fn get_physical_device_video_encode_quality_level_properties(

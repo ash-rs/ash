@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_headless_surface.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_headless_surface.html>
 
 use crate::vk;
 use crate::RawPtr;
@@ -6,7 +6,7 @@ use crate::VkResult;
 use core::mem;
 
 impl crate::ext::headless_surface::Instance {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateHeadlessSurfaceEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateHeadlessSurfaceEXT.html>
     #[inline]
     pub unsafe fn create_headless_surface(
         &self,

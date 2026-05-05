@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_pipeline_executable_properties.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_pipeline_executable_properties.html>
 
 use crate::vk;
 use crate::VkResult;
@@ -23,7 +23,7 @@ impl crate::khr::pipeline_executable_properties::Device {
         .map(|c| c as usize)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutableInternalRepresentationsKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPipelineExecutableInternalRepresentationsKHR.html>
     ///
     /// Call [`get_pipeline_executable_internal_representations_len()`][Self::get_pipeline_executable_internal_representations_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
@@ -63,7 +63,7 @@ impl crate::khr::pipeline_executable_properties::Device {
         .map(|c| c as usize)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutablePropertiesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPipelineExecutablePropertiesKHR.html>
     ///
     /// Call [`get_pipeline_executable_properties_len()`][Self::get_pipeline_executable_properties_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
@@ -103,7 +103,7 @@ impl crate::khr::pipeline_executable_properties::Device {
         .map(|c| c as usize)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutableStatisticsKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPipelineExecutableStatisticsKHR.html>
     ///
     /// Call [`get_pipeline_executable_statistics_len()`][Self::get_pipeline_executable_statistics_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.

@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_debug_report.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_debug_report.html>
 
 use crate::vk;
 use crate::RawPtr;
@@ -6,7 +6,7 @@ use crate::VkResult;
 use core::mem;
 
 impl crate::ext::debug_report::Instance {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDebugReportCallbackEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyDebugReportCallbackEXT.html>
     #[inline]
     pub unsafe fn destroy_debug_report_callback(
         &self,
@@ -20,7 +20,7 @@ impl crate::ext::debug_report::Instance {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDebugReportCallbackEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateDebugReportCallbackEXT.html>
     #[inline]
     pub unsafe fn create_debug_report_callback(
         &self,

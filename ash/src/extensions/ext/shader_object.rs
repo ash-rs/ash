@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_shader_object.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_shader_object.html>
 
 use crate::read_into_uninitialized_vector;
 use crate::vk;
@@ -8,7 +8,7 @@ use alloc::vec::Vec;
 use core::ptr;
 
 impl crate::ext::shader_object::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateShadersEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateShadersEXT.html>
     ///
     /// When this function returns, whether or not it succeeds, it is guaranteed that every returned
     /// element is either [`vk::ShaderEXT::null()`] or a valid [`vk::ShaderEXT`] handle.
@@ -39,7 +39,7 @@ impl crate::ext::shader_object::Device {
         }
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyShaderEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyShaderEXT.html>
     #[inline]
     pub unsafe fn destroy_shader(
         &self,
@@ -49,7 +49,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.destroy_shader_ext)(self.handle, shader, allocator.to_raw_ptr())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetShaderBinaryDataEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetShaderBinaryDataEXT.html>
     #[inline]
     pub unsafe fn get_shader_binary_data(&self, shader: vk::ShaderEXT) -> VkResult<Vec<u8>> {
         read_into_uninitialized_vector(|count, data: *mut u8| {
@@ -57,7 +57,7 @@ impl crate::ext::shader_object::Device {
         })
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindShadersEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBindShadersEXT.html>
     #[inline]
     pub unsafe fn cmd_bind_shaders(
         &self,
@@ -74,7 +74,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetVertexInputEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetVertexInputEXT.html>
     #[inline]
     pub unsafe fn cmd_set_vertex_input(
         &self,
@@ -93,7 +93,7 @@ impl crate::ext::shader_object::Device {
 
     // --- extended_dynamic_state functions ---
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCullModeEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetCullModeEXT.html>
     #[inline]
     pub unsafe fn cmd_set_cull_mode(
         &self,
@@ -103,7 +103,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_cull_mode_ext)(command_buffer, cull_mode)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetFrontFaceEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetFrontFaceEXT.html>
     #[inline]
     pub unsafe fn cmd_set_front_face(
         &self,
@@ -113,7 +113,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_front_face_ext)(command_buffer, front_face)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveTopologyEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetPrimitiveTopologyEXT.html>
     #[inline]
     pub unsafe fn cmd_set_primitive_topology(
         &self,
@@ -123,7 +123,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_primitive_topology_ext)(command_buffer, primitive_topology)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportWithCountEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetViewportWithCountEXT.html>
     #[inline]
     pub unsafe fn cmd_set_viewport_with_count(
         &self,
@@ -137,7 +137,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetScissorWithCountEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetScissorWithCountEXT.html>
     #[inline]
     pub unsafe fn cmd_set_scissor_with_count(
         &self,
@@ -151,7 +151,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindVertexBuffers2EXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBindVertexBuffers2EXT.html>
     #[inline]
     pub unsafe fn cmd_bind_vertex_buffers2(
         &self,
@@ -186,7 +186,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthTestEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetDepthTestEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_test_enable(
         &self,
@@ -196,7 +196,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_depth_test_enable_ext)(command_buffer, depth_test_enable.into())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthWriteEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetDepthWriteEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_write_enable(
         &self,
@@ -206,7 +206,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_depth_write_enable_ext)(command_buffer, depth_write_enable.into())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthCompareOpEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetDepthCompareOpEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_compare_op(
         &self,
@@ -216,7 +216,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_depth_compare_op_ext)(command_buffer, depth_compare_op)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBoundsTestEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetDepthBoundsTestEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_bounds_test_enable(
         &self,
@@ -229,7 +229,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilTestEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetStencilTestEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_stencil_test_enable(
         &self,
@@ -239,7 +239,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_stencil_test_enable_ext)(command_buffer, stencil_test_enable.into())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilOpEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetStencilOpEXT.html>
     #[inline]
     pub unsafe fn cmd_set_stencil_op(
         &self,
@@ -262,7 +262,7 @@ impl crate::ext::shader_object::Device {
 
     // --- extended_dynamic_state2 functions ---
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPatchControlPointsEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetPatchControlPointsEXT.html>
     #[inline]
     pub unsafe fn cmd_set_patch_control_points(
         &self,
@@ -272,7 +272,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_patch_control_points_ext)(command_buffer, patch_control_points)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizerDiscardEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetRasterizerDiscardEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_rasterizer_discard_enable(
         &self,
@@ -285,7 +285,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBiasEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetDepthBiasEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_bias_enable(
         &self,
@@ -295,7 +295,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_depth_bias_enable_ext)(command_buffer, depth_bias_enable.into())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLogicOpEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetLogicOpEXT.html>
     #[inline]
     pub unsafe fn cmd_set_logic_op(
         &self,
@@ -305,7 +305,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_logic_op_ext)(command_buffer, logic_op)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveRestartEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetPrimitiveRestartEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_primitive_restart_enable(
         &self,
@@ -320,7 +320,7 @@ impl crate::ext::shader_object::Device {
 
     // --- extended_dynamic_state3 functions ---
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetTessellationDomainOriginEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetTessellationDomainOriginEXT.html>
     #[inline]
     pub unsafe fn cmd_set_tessellation_domain_origin(
         &self,
@@ -330,7 +330,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_tessellation_domain_origin_ext)(command_buffer, domain_origin)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClampEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetDepthClampEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_clamp_enable(
         &self,
@@ -340,7 +340,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_depth_clamp_enable_ext)(command_buffer, depth_clamp_enable.into())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPolygonModeEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetPolygonModeEXT.html>
     #[inline]
     pub unsafe fn cmd_set_polygon_mode(
         &self,
@@ -350,7 +350,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_polygon_mode_ext)(command_buffer, polygon_mode)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizationSamplesEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetRasterizationSamplesEXT.html>
     #[inline]
     pub unsafe fn cmd_set_rasterization_samples(
         &self,
@@ -360,7 +360,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_rasterization_samples_ext)(command_buffer, rasterization_samples)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleMaskEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetSampleMaskEXT.html>
     #[inline]
     pub unsafe fn cmd_set_sample_mask(
         &self,
@@ -376,7 +376,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_sample_mask_ext)(command_buffer, samples, sample_mask.as_ptr())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetAlphaToCoverageEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetAlphaToCoverageEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_alpha_to_coverage_enable(
         &self,
@@ -389,7 +389,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetAlphaToOneEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetAlphaToOneEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_alpha_to_one_enable(
         &self,
@@ -399,7 +399,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_alpha_to_one_enable_ext)(command_buffer, alpha_to_one_enable.into())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLogicOpEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetLogicOpEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_logic_op_enable(
         &self,
@@ -409,7 +409,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_logic_op_enable_ext)(command_buffer, logic_op_enable.into())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorBlendEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetColorBlendEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_color_blend_enable(
         &self,
@@ -425,7 +425,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorBlendEquationEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetColorBlendEquationEXT.html>
     #[inline]
     pub unsafe fn cmd_set_color_blend_equation(
         &self,
@@ -441,7 +441,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorWriteMaskEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetColorWriteMaskEXT.html>
     #[inline]
     pub unsafe fn cmd_set_color_write_mask(
         &self,
@@ -457,7 +457,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizationStreamEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetRasterizationStreamEXT.html>
     #[inline]
     pub unsafe fn cmd_set_rasterization_stream(
         &self,
@@ -467,7 +467,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_rasterization_stream_ext)(command_buffer, rasterization_stream)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetConservativeRasterizationModeEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetConservativeRasterizationModeEXT.html>
     #[inline]
     pub unsafe fn cmd_set_conservative_rasterization_mode(
         &self,
@@ -480,7 +480,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetExtraPrimitiveOverestimationSizeEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetExtraPrimitiveOverestimationSizeEXT.html>
     #[inline]
     pub unsafe fn cmd_set_extra_primitive_overestimation_size(
         &self,
@@ -493,7 +493,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClipEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetDepthClipEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_clip_enable(
         &self,
@@ -503,7 +503,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_depth_clip_enable_ext)(command_buffer, depth_clip_enable.into())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetSampleLocationsEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_sample_locations_enable(
         &self,
@@ -516,7 +516,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorBlendAdvancedEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetColorBlendAdvancedEXT.html>
     #[inline]
     pub unsafe fn cmd_set_color_blend_advanced(
         &self,
@@ -532,7 +532,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetProvokingVertexModeEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetProvokingVertexModeEXT.html>
     #[inline]
     pub unsafe fn cmd_set_provoking_vertex_mode(
         &self,
@@ -542,7 +542,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_provoking_vertex_mode_ext)(command_buffer, provoking_vertex_mode)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineRasterizationModeEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetLineRasterizationModeEXT.html>
     #[inline]
     pub unsafe fn cmd_set_line_rasterization_mode(
         &self,
@@ -552,7 +552,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_line_rasterization_mode_ext)(command_buffer, line_rasterization_mode)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleEnableEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetLineStippleEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_line_stipple_enable(
         &self,
@@ -562,7 +562,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_line_stipple_enable_ext)(command_buffer, stippled_line_enable.into())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClipNegativeOneToOneEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetDepthClipNegativeOneToOneEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_clip_negative_one_to_one(
         &self,
@@ -575,7 +575,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportWScalingEnableNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetViewportWScalingEnableNV.html>
     #[inline]
     pub unsafe fn cmd_set_viewport_w_scaling_enable_nv(
         &self,
@@ -588,7 +588,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportSwizzleNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetViewportSwizzleNV.html>
     #[inline]
     pub unsafe fn cmd_set_viewport_swizzle_nv(
         &self,
@@ -604,7 +604,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageToColorEnableNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetCoverageToColorEnableNV.html>
     #[inline]
     pub unsafe fn cmd_set_coverage_to_color_enable_nv(
         &self,
@@ -617,7 +617,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageToColorLocationNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetCoverageToColorLocationNV.html>
     #[inline]
     pub unsafe fn cmd_set_coverage_to_color_location_nv(
         &self,
@@ -627,7 +627,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_coverage_to_color_location_nv)(command_buffer, coverage_to_color_location)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageModulationModeNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetCoverageModulationModeNV.html>
     #[inline]
     pub unsafe fn cmd_set_coverage_modulation_mode_nv(
         &self,
@@ -637,7 +637,7 @@ impl crate::ext::shader_object::Device {
         (self.fp.cmd_set_coverage_modulation_mode_nv)(command_buffer, coverage_modulation_mode)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageModulationTableEnableNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetCoverageModulationTableEnableNV.html>
     #[inline]
     pub unsafe fn cmd_set_coverage_modulation_table_enable_nv(
         &self,
@@ -650,7 +650,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageModulationTableNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetCoverageModulationTableNV.html>
     #[inline]
     pub unsafe fn cmd_set_coverage_modulation_table_nv(
         &self,
@@ -664,7 +664,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetShadingRateImageEnableNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetShadingRateImageEnableNV.html>
     #[inline]
     pub unsafe fn cmd_set_shading_rate_image_enable_nv(
         &self,
@@ -677,7 +677,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRepresentativeFragmentTestEnableNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetRepresentativeFragmentTestEnableNV.html>
     #[inline]
     pub unsafe fn cmd_set_representative_fragment_test_enable_nv(
         &self,
@@ -690,7 +690,7 @@ impl crate::ext::shader_object::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageReductionModeNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetCoverageReductionModeNV.html>
     #[inline]
     pub unsafe fn cmd_set_coverage_reduction_mode_nv(
         &self,

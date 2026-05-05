@@ -1,11 +1,13 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_descriptor_buffer.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_descriptor_buffer.html>
+#![deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
+#![allow(deprecated)]
 
 use crate::vk;
 use crate::VkResult;
 use core::mem;
 
 impl crate::ext::descriptor_buffer::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutSizeEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetDescriptorSetLayoutSizeEXT.html>
     #[inline]
     pub unsafe fn get_descriptor_set_layout_size(
         &self,
@@ -16,7 +18,7 @@ impl crate::ext::descriptor_buffer::Device {
         count.assume_init()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutBindingOffsetEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetDescriptorSetLayoutBindingOffsetEXT.html>
     #[inline]
     pub unsafe fn get_descriptor_set_layout_binding_offset(
         &self,
@@ -33,7 +35,7 @@ impl crate::ext::descriptor_buffer::Device {
         offset.assume_init()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetDescriptorEXT.html>
     #[inline]
     pub unsafe fn get_descriptor(
         &self,
@@ -48,7 +50,7 @@ impl crate::ext::descriptor_buffer::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorBuffersEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBindDescriptorBuffersEXT.html>
     #[inline]
     pub unsafe fn cmd_bind_descriptor_buffers(
         &self,
@@ -62,7 +64,7 @@ impl crate::ext::descriptor_buffer::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDescriptorBufferOffsetsEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetDescriptorBufferOffsetsEXT.html>
     #[inline]
     pub unsafe fn cmd_set_descriptor_buffer_offsets(
         &self,
@@ -85,7 +87,7 @@ impl crate::ext::descriptor_buffer::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorBufferEmbeddedSamplersEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBindDescriptorBufferEmbeddedSamplersEXT.html>
     #[inline]
     pub unsafe fn cmd_bind_descriptor_buffer_embedded_samplers(
         &self,
@@ -102,7 +104,7 @@ impl crate::ext::descriptor_buffer::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferOpaqueCaptureDescriptorDataEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetBufferOpaqueCaptureDescriptorDataEXT.html>
     #[inline]
     pub unsafe fn get_buffer_opaque_capture_descriptor_data(
         &self,
@@ -117,7 +119,7 @@ impl crate::ext::descriptor_buffer::Device {
         .result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageOpaqueCaptureDescriptorDataEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetImageOpaqueCaptureDescriptorDataEXT.html>
     #[inline]
     pub unsafe fn get_image_opaque_capture_descriptor_data(
         &self,
@@ -132,7 +134,7 @@ impl crate::ext::descriptor_buffer::Device {
         .result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageViewOpaqueCaptureDescriptorDataEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetImageViewOpaqueCaptureDescriptorDataEXT.html>
     #[inline]
     pub unsafe fn get_image_view_opaque_capture_descriptor_data(
         &self,
@@ -147,7 +149,7 @@ impl crate::ext::descriptor_buffer::Device {
         .result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSamplerOpaqueCaptureDescriptorDataEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetSamplerOpaqueCaptureDescriptorDataEXT.html>
     #[inline]
     pub unsafe fn get_sampler_opaque_capture_descriptor_data(
         &self,
@@ -162,7 +164,7 @@ impl crate::ext::descriptor_buffer::Device {
         .result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT.html>
     #[inline]
     pub unsafe fn get_acceleration_structure_opaque_capture_descriptor_data(
         &self,

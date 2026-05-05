@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_debug_utils.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_debug_utils.html>
 
 use crate::vk;
 use crate::RawPtr;
@@ -6,7 +6,7 @@ use crate::VkResult;
 use core::mem;
 
 impl crate::ext::debug_utils::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetDebugUtilsObjectNameEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkSetDebugUtilsObjectNameEXT.html>
     #[inline]
     pub unsafe fn set_debug_utils_object_name(
         &self,
@@ -15,7 +15,7 @@ impl crate::ext::debug_utils::Device {
         (self.fp.set_debug_utils_object_name_ext)(self.handle, name_info).result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetDebugUtilsObjectTagEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkSetDebugUtilsObjectTagEXT.html>
     #[inline]
     pub unsafe fn set_debug_utils_object_tag(
         &self,
@@ -24,7 +24,7 @@ impl crate::ext::debug_utils::Device {
         (self.fp.set_debug_utils_object_tag_ext)(self.handle, tag_info).result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginDebugUtilsLabelEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBeginDebugUtilsLabelEXT.html>
     #[inline]
     pub unsafe fn cmd_begin_debug_utils_label(
         &self,
@@ -34,13 +34,13 @@ impl crate::ext::debug_utils::Device {
         (self.fp.cmd_begin_debug_utils_label_ext)(command_buffer, label)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndDebugUtilsLabelEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdEndDebugUtilsLabelEXT.html>
     #[inline]
     pub unsafe fn cmd_end_debug_utils_label(&self, command_buffer: vk::CommandBuffer) {
         (self.fp.cmd_end_debug_utils_label_ext)(command_buffer)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdInsertDebugUtilsLabelEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdInsertDebugUtilsLabelEXT.html>
     #[inline]
     pub unsafe fn cmd_insert_debug_utils_label(
         &self,
@@ -50,7 +50,7 @@ impl crate::ext::debug_utils::Device {
         (self.fp.cmd_insert_debug_utils_label_ext)(command_buffer, label)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueBeginDebugUtilsLabelEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkQueueBeginDebugUtilsLabelEXT.html>
     #[inline]
     pub unsafe fn queue_begin_debug_utils_label(
         &self,
@@ -60,13 +60,13 @@ impl crate::ext::debug_utils::Device {
         (self.fp.queue_begin_debug_utils_label_ext)(queue, label)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueEndDebugUtilsLabelEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkQueueEndDebugUtilsLabelEXT.html>
     #[inline]
     pub unsafe fn queue_end_debug_utils_label(&self, queue: vk::Queue) {
         (self.fp.queue_end_debug_utils_label_ext)(queue)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueInsertDebugUtilsLabelEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkQueueInsertDebugUtilsLabelEXT.html>
     #[inline]
     pub unsafe fn queue_insert_debug_utils_label(
         &self,
@@ -78,7 +78,7 @@ impl crate::ext::debug_utils::Device {
 }
 
 impl crate::ext::debug_utils::Instance {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDebugUtilsMessengerEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateDebugUtilsMessengerEXT.html>
     #[inline]
     pub unsafe fn create_debug_utils_messenger(
         &self,
@@ -95,7 +95,7 @@ impl crate::ext::debug_utils::Instance {
         .assume_init_on_success(messenger)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDebugUtilsMessengerEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyDebugUtilsMessengerEXT.html>
     #[inline]
     pub unsafe fn destroy_debug_utils_messenger(
         &self,
@@ -105,7 +105,7 @@ impl crate::ext::debug_utils::Instance {
         (self.fp.destroy_debug_utils_messenger_ext)(self.handle, messenger, allocator.to_raw_ptr())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSubmitDebugUtilsMessageEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkSubmitDebugUtilsMessageEXT.html>
     #[inline]
     pub unsafe fn submit_debug_utils_message(
         &self,

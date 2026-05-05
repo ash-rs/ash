@@ -1,10 +1,10 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_present_wait.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_present_wait.html>
 
 use crate::vk;
 use crate::VkResult;
 
 impl crate::khr::present_wait::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWaitForPresentKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkWaitForPresentKHR.html>
     #[inline]
     pub unsafe fn wait_for_present(
         &self,

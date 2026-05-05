@@ -1,11 +1,11 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_get_memory_requirements2.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_get_memory_requirements2.html>
 
 use crate::vk;
 use core::mem;
 use core::ptr;
 
 impl crate::khr::get_memory_requirements2::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferMemoryRequirements2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetBufferMemoryRequirements2KHR.html>
     #[inline]
     pub unsafe fn get_buffer_memory_requirements2(
         &self,
@@ -15,7 +15,7 @@ impl crate::khr::get_memory_requirements2::Device {
         (self.fp.get_buffer_memory_requirements2_khr)(self.handle, info, memory_requirements)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageMemoryRequirements2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetImageMemoryRequirements2KHR.html>
     #[inline]
     pub unsafe fn get_image_memory_requirements2(
         &self,
@@ -41,7 +41,7 @@ impl crate::khr::get_memory_requirements2::Device {
         count.assume_init() as usize
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSparseMemoryRequirements2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetImageSparseMemoryRequirements2KHR.html>
     ///
     /// Call [`get_image_sparse_memory_requirements2_len()`][Self::get_image_sparse_memory_requirements2_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.

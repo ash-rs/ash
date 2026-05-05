@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_get_display_properties2.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_get_display_properties2.html>
 
 use crate::vk;
 use crate::VkResult;
@@ -22,7 +22,7 @@ impl crate::khr::get_display_properties2::Instance {
         .map(|c| c as usize)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayProperties2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceDisplayProperties2KHR.html>
     ///
     /// Call [`get_physical_device_display_properties2_len()`][Self::get_physical_device_display_properties2_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
@@ -60,7 +60,7 @@ impl crate::khr::get_display_properties2::Instance {
         .map(|c| c as usize)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPlaneProperties2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceDisplayPlaneProperties2KHR.html>
     ///
     /// Call [`get_physical_device_display_plane_properties2_len()`][Self::get_physical_device_display_plane_properties2_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
@@ -100,7 +100,7 @@ impl crate::khr::get_display_properties2::Instance {
         .map(|c| c as usize)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDisplayModeProperties2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetDisplayModeProperties2KHR.html>
     ///
     /// Call [`get_display_mode_properties2_len()`][Self::get_display_mode_properties2_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
@@ -124,7 +124,7 @@ impl crate::khr::get_display_properties2::Instance {
         Ok(())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneCapabilities2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetDisplayPlaneCapabilities2KHR.html>
     #[inline]
     #[doc(alias = "vkGetDisplayPlaneCapabilities2KHR")]
     pub unsafe fn get_display_plane_capabilities2(

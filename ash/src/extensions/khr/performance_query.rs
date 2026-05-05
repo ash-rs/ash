@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_performance_query.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_performance_query.html>
 
 use crate::vk;
 use crate::VkResult;
@@ -6,7 +6,7 @@ use core::mem;
 use core::ptr;
 
 impl crate::khr::performance_query::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireProfilingLockKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkAcquireProfilingLockKHR.html>
     #[inline]
     pub unsafe fn acquire_profiling_lock(
         &self,
@@ -15,7 +15,7 @@ impl crate::khr::performance_query::Device {
         (self.fp.acquire_profiling_lock_khr)(self.handle, info).result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkReleaseProfilingLockKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkReleaseProfilingLockKHR.html>
     #[inline]
     pub unsafe fn release_profiling_lock(&self) {
         (self.fp.release_profiling_lock_khr)(self.handle)
@@ -44,7 +44,7 @@ impl crate::khr::performance_query::Instance {
         .map(|c| c as usize)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR.html>
     ///
     /// Call [`enumerate_physical_device_queue_family_performance_query_counters_len()`][Self::enumerate_physical_device_queue_family_performance_query_counters_len()] to query the number of elements to pass to `out_counters` and `out_counter_descriptions`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
@@ -73,7 +73,7 @@ impl crate::khr::performance_query::Instance {
         Ok(())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_queue_family_performance_query_passes(
         &self,

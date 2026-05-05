@@ -1,11 +1,11 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_image_compression_control.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_image_compression_control.html>
 
 use crate::vk;
 #[cfg(doc)]
 use crate::{ext, khr};
 
 impl crate::ext::image_compression_control::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2EXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetImageSubresourceLayout2EXT.html>
     ///
     /// Also available as [`khr::maintenance5::Device::get_image_subresource_layout2()`]
     /// when [`VK_KHR_maintenance5`] is enabled.
@@ -13,8 +13,8 @@ impl crate::ext::image_compression_control::Device {
     /// Also available as [`ext::host_image_copy::Device::get_image_subresource_layout2()`]
     /// when [`VK_EXT_host_image_copy`] is enabled.
     ///
-    /// [`VK_KHR_maintenance5`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance5.html
-    /// [`VK_EXT_host_image_copy`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_host_image_copy.html
+    /// [`VK_KHR_maintenance5`]: https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_maintenance5.html
+    /// [`VK_EXT_host_image_copy`]: https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_host_image_copy.html
     #[inline]
     pub unsafe fn get_image_subresource_layout2(
         &self,

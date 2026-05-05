@@ -1,9 +1,9 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_line_rasterization.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_line_rasterization.html>
 
 use crate::vk;
 
 impl crate::khr::line_rasterization::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetLineStippleKHR.html>
     #[inline]
     pub unsafe fn cmd_set_line_stipple(
         &self,

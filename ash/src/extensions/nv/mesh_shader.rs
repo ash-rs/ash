@@ -1,9 +1,9 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_mesh_shader.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_NV_mesh_shader.html>
 
 use crate::vk;
 
 impl crate::nv::mesh_shader::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDrawMeshTasksNV.html>
     #[inline]
     pub unsafe fn cmd_draw_mesh_tasks(
         &self,
@@ -14,7 +14,7 @@ impl crate::nv::mesh_shader::Device {
         (self.fp.cmd_draw_mesh_tasks_nv)(command_buffer, task_count, first_task)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDrawMeshTasksIndirectNV.html>
     #[inline]
     pub unsafe fn cmd_draw_mesh_tasks_indirect(
         &self,
@@ -33,7 +33,7 @@ impl crate::nv::mesh_shader::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectCountNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDrawMeshTasksIndirectCountNV.html>
     #[inline]
     pub unsafe fn cmd_draw_mesh_tasks_indirect_count(
         &self,

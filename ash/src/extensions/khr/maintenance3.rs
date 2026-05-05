@@ -1,9 +1,9 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance3.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_maintenance3.html>
 
 use crate::vk;
 
 impl crate::khr::maintenance3::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutSupportKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetDescriptorSetLayoutSupportKHR.html>
     #[inline]
     pub unsafe fn get_descriptor_set_layout_support(
         &self,

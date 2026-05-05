@@ -1,11 +1,11 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_ANDROID_external_memory_android_hardware_buffer.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_ANDROID_external_memory_android_hardware_buffer.html>
 
 use crate::vk;
 use crate::VkResult;
 use core::mem;
 
 impl crate::android::external_memory_android_hardware_buffer::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAndroidHardwareBufferPropertiesANDROID.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetAndroidHardwareBufferPropertiesANDROID.html>
     #[inline]
     pub unsafe fn get_android_hardware_buffer_properties(
         &self,
@@ -16,7 +16,7 @@ impl crate::android::external_memory_android_hardware_buffer::Device {
             .result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryAndroidHardwareBufferANDROID.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetMemoryAndroidHardwareBufferANDROID.html>
     #[inline]
     pub unsafe fn get_memory_android_hardware_buffer(
         &self,

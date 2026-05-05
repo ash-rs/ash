@@ -1,9 +1,9 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_device_generated_commands_compute.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_NV_device_generated_commands_compute.html>
 
 use crate::vk;
 
 impl crate::nv::device_generated_commands_compute::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineIndirectMemoryRequirementsNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPipelineIndirectMemoryRequirementsNV.html>
     #[inline]
     pub unsafe fn get_pipeline_indirect_memory_requirements(
         &self,
@@ -17,7 +17,7 @@ impl crate::nv::device_generated_commands_compute::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdUpdatePipelineIndirectBufferNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdUpdatePipelineIndirectBufferNV.html>
     #[inline]
     pub unsafe fn cmd_update_pipeline_indirect_buffer(
         &self,
@@ -32,7 +32,7 @@ impl crate::nv::device_generated_commands_compute::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineIndirectDeviceAddressNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPipelineIndirectDeviceAddressNV.html>
     #[inline]
     pub unsafe fn get_pipeline_indirect_device_address(
         &self,

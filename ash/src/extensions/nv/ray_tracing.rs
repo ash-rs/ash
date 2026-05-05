@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_ray_tracing.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_NV_ray_tracing.html>
 
 use crate::vk;
 use crate::RawPtr;
@@ -8,7 +8,7 @@ use core::mem;
 use core::mem::size_of_val; // TODO: Remove when bumping MSRV to 1.80
 
 impl crate::nv::ray_tracing::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateAccelerationStructureNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateAccelerationStructureNV.html>
     #[inline]
     pub unsafe fn create_acceleration_structure(
         &self,
@@ -25,7 +25,7 @@ impl crate::nv::ray_tracing::Device {
         .assume_init_on_success(accel_struct)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyAccelerationStructureNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyAccelerationStructureNV.html>
     #[inline]
     pub unsafe fn destroy_acceleration_structure(
         &self,
@@ -39,7 +39,7 @@ impl crate::nv::ray_tracing::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureMemoryRequirementsNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetAccelerationStructureMemoryRequirementsNV.html>
     #[inline]
     pub unsafe fn get_acceleration_structure_memory_requirements(
         &self,
@@ -54,7 +54,7 @@ impl crate::nv::ray_tracing::Device {
         requirements
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindAccelerationStructureMemoryNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkBindAccelerationStructureMemoryNV.html>
     #[inline]
     pub unsafe fn bind_acceleration_structure_memory(
         &self,
@@ -68,7 +68,7 @@ impl crate::nv::ray_tracing::Device {
         .result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildAccelerationStructureNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBuildAccelerationStructureNV.html>
     #[inline]
     pub unsafe fn cmd_build_acceleration_structure(
         &self,
@@ -95,7 +95,7 @@ impl crate::nv::ray_tracing::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdCopyAccelerationStructureNV.html>
     #[inline]
     pub unsafe fn cmd_copy_acceleration_structure(
         &self,
@@ -107,7 +107,7 @@ impl crate::nv::ray_tracing::Device {
         (self.fp.cmd_copy_acceleration_structure_nv)(command_buffer, dst, src, mode)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdTraceRaysNV.html>
     #[inline]
     pub unsafe fn cmd_trace_rays(
         &self,
@@ -146,11 +146,11 @@ impl crate::nv::ray_tracing::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateRayTracingPipelinesNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateRayTracingPipelinesNV.html>
     ///
     /// Pipelines are created and returned as described for [Multiple Pipeline Creation].
     ///
-    /// [Multiple Pipeline Creation]: https://registry.khronos.org/vulkan/specs/1.3-extensions/html/vkspec.html#pipelines-multiple
+    /// [Multiple Pipeline Creation]: https://docs.vulkan.org/spec/latest/chapters/pipelines.html#pipelines-multiple
     #[inline]
     pub unsafe fn create_ray_tracing_pipelines(
         &self,
@@ -174,7 +174,7 @@ impl crate::nv::ray_tracing::Device {
         }
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupHandlesNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetRayTracingShaderGroupHandlesNV.html>
     #[inline]
     pub unsafe fn get_ray_tracing_shader_group_handles(
         &self,
@@ -194,7 +194,7 @@ impl crate::nv::ray_tracing::Device {
         .result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureHandleNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetAccelerationStructureHandleNV.html>
     #[inline]
     pub unsafe fn get_acceleration_structure_handle(
         &self,
@@ -210,7 +210,7 @@ impl crate::nv::ray_tracing::Device {
         .assume_init_on_success(handle)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteAccelerationStructuresPropertiesNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdWriteAccelerationStructuresPropertiesNV.html>
     #[inline]
     pub unsafe fn cmd_write_acceleration_structures_properties(
         &self,
@@ -230,7 +230,7 @@ impl crate::nv::ray_tracing::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCompileDeferredNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCompileDeferredNV.html>
     #[inline]
     pub unsafe fn compile_deferred(&self, pipeline: vk::Pipeline, shader: u32) -> VkResult<()> {
         (self.fp.compile_deferred_nv)(self.handle, pipeline, shader).result()

@@ -10,12 +10,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added `push()` method to all root structs to insert a single extension-struct in the pointer chain. (#909)
-- Update Vulkan-Headers to 1.3.296 (#910)
+- Update Vulkan-Headers to 1.4.350 (#910, #951)
 - Added `VK_KHR_get_display_properties2` instance extension (#932)
+- Added `VK_EXT_display_surface_counter` instance extension (#933)
+- Added `VK_EXT_display_control` display extension (#934)
 - Added `VK_EXT_metal_objects` device extension (#942)
 - Added `VK_AMD_anti_lag` device extension (#943)
+- Added `VK_EXT_device_generated_commands` device extension (#946)
+- Added `VK_EXT_depth_clamp_control` device extension (#947)
 - Added `VK_KHR_video_queue`, `VK_KHR_video_encode_queue`, and `VK_KHR_video_decode_queue` device extensions (#965)
+- Added helper wrappers for Vulkan core 1.4 `Device` functions (#1000)
+- Added `VK_NV_cooperative_vector` device extension (#1007)
+- Added `VK_OHOS_surface` instance extension (#1016)
 - Added (typically vendor-suffixed) aliases for global constants (#1018)
+- Added `VK_NV_cluster_acceleration_structure` device extension (#1033)
+- Added `VK_KHR_device_address_commands` device extension (#1034)
 
 ### Changed
 
@@ -34,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Moved `push()` and `extend()` methods from individual Vulkan structs (builders) into the `TaggedStructure` trait. (#994)
   This trait must be imported in scope (`use ash::vk::TaggedStructure as _;`) to use the `push()` and `extend()` methods.
 - Renamed all extension `::new()` constructors to `::load()`, signifying they're only loading function pointers. (#1021)
+- Replace `specs/1.3-extensions` registry links with new `refpages/latest` documentation links
 
 ### Removed
 
