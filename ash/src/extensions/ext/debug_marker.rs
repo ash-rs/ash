@@ -1,10 +1,10 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_debug_marker.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_debug_marker.html>
 
 use crate::vk;
 use crate::VkResult;
 
 impl crate::ext::debug_marker::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDebugMarkerSetObjectNameEXT.html>
     #[inline]
     pub unsafe fn debug_marker_set_object_name(
         &self,
@@ -13,7 +13,7 @@ impl crate::ext::debug_marker::Device {
         (self.fp.debug_marker_set_object_name_ext)(self.handle, name_info).result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDebugMarkerBeginEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDebugMarkerBeginEXT.html>
     #[inline]
     pub unsafe fn cmd_debug_marker_begin(
         &self,
@@ -23,13 +23,13 @@ impl crate::ext::debug_marker::Device {
         (self.fp.cmd_debug_marker_begin_ext)(command_buffer, marker_info)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDebugMarkerEndEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDebugMarkerEndEXT.html>
     #[inline]
     pub unsafe fn cmd_debug_marker_end(&self, command_buffer: vk::CommandBuffer) {
         (self.fp.cmd_debug_marker_end_ext)(command_buffer)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDebugMarkerInsertEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDebugMarkerInsertEXT.html>
     #[inline]
     pub unsafe fn cmd_debug_marker_insert(
         &self,

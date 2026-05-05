@@ -1,11 +1,8 @@
 [workspace]
 resolver = "2"
 members = [
-    "analysis",
     "ash",
     "ash-examples",
-    "ash-rewrite",
     "ash-window",
     "generator",
-    "generator-rewrite",
 ]

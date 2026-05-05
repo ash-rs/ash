@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_video_queue.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_video_queue.html>
 
 use crate::vk;
 use crate::RawPtr;
@@ -7,7 +7,7 @@ use core::mem;
 use core::ptr;
 
 impl crate::khr::video_queue::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindVideoSessionMemoryKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkBindVideoSessionMemoryKHR.html>
     #[inline]
     #[doc(alias = "vkBindVideoSessionMemoryKHR")]
     pub unsafe fn bind_video_session_memory(
@@ -24,7 +24,7 @@ impl crate::khr::video_queue::Device {
         .result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginVideoCodingKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBeginVideoCodingKHR.html>
     #[inline]
     #[doc(alias = "vkCmdBeginVideoCodingKHR")]
     pub unsafe fn cmd_begin_video_coding(
@@ -35,7 +35,7 @@ impl crate::khr::video_queue::Device {
         (self.fp.cmd_begin_video_coding_khr)(command_buffer, begin_info)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdControlVideoCodingKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdControlVideoCodingKHR.html>
     #[inline]
     #[doc(alias = "vkCmdControlVideoCodingKHR")]
     pub unsafe fn cmd_control_video_coding(
@@ -46,7 +46,7 @@ impl crate::khr::video_queue::Device {
         (self.fp.cmd_control_video_coding_khr)(command_buffer, coding_control_info)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndVideoCodingKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdEndVideoCodingKHR.html>
     #[inline]
     #[doc(alias = "vkCmdEndVideoCodingKHR")]
     pub unsafe fn cmd_end_video_coding(
@@ -57,7 +57,7 @@ impl crate::khr::video_queue::Device {
         (self.fp.cmd_end_video_coding_khr)(command_buffer, end_coding_info)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateVideoSessionKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateVideoSessionKHR.html>
     #[inline]
     #[doc(alias = "vkCreateVideoSessionKHR")]
     pub unsafe fn create_video_session(
@@ -75,7 +75,7 @@ impl crate::khr::video_queue::Device {
         .assume_init_on_success(video_session)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateVideoSessionParametersKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateVideoSessionParametersKHR.html>
     #[inline]
     #[doc(alias = "vkCreateVideoSessionParametersKHR")]
     pub unsafe fn create_video_session_parameters(
@@ -93,7 +93,7 @@ impl crate::khr::video_queue::Device {
         .assume_init_on_success(video_session_parameters)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyVideoSessionKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyVideoSessionKHR.html>
     #[inline]
     #[doc(alias = "vkDestroyVideoSessionKHR")]
     pub unsafe fn destroy_video_session(
@@ -108,7 +108,7 @@ impl crate::khr::video_queue::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyVideoSessionParametersKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyVideoSessionParametersKHR.html>
     #[inline]
     #[doc(alias = "vkDestroyVideoSessionParametersKHR")]
     pub unsafe fn destroy_video_session_parameters(
@@ -140,7 +140,7 @@ impl crate::khr::video_queue::Device {
         .map(|c| c as usize)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetVideoSessionMemoryRequirementsKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetVideoSessionMemoryRequirementsKHR.html>
     ///
     /// Call [`get_video_session_memory_requirements_len()`][Self::get_video_session_memory_requirements_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
@@ -163,7 +163,7 @@ impl crate::khr::video_queue::Device {
         Ok(())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUpdateVideoSessionParametersKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkUpdateVideoSessionParametersKHR.html>
     #[inline]
     #[doc(alias = "vkUpdateVideoSessionParametersKHR")]
     pub unsafe fn update_video_session_parameters(
@@ -181,7 +181,7 @@ impl crate::khr::video_queue::Device {
 }
 
 impl crate::khr::video_queue::Instance {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceVideoCapabilitiesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceVideoCapabilitiesKHR.html>
     #[inline]
     #[doc(alias = "vkGetPhysicalDeviceVideoCapabilitiesKHR")]
     pub unsafe fn get_physical_device_video_capabilities(
@@ -216,7 +216,7 @@ impl crate::khr::video_queue::Instance {
         .map(|c| c as usize)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceVideoFormatPropertiesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceVideoFormatPropertiesKHR.html>
     ///
     /// Call [`get_physical_device_video_format_properties_len()`][Self::get_physical_device_video_format_properties_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.

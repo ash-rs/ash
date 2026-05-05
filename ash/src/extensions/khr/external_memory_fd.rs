@@ -1,11 +1,11 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_memory_fd.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_external_memory_fd.html>
 
 use crate::vk;
 use crate::VkResult;
 use core::mem;
 
 impl crate::khr::external_memory_fd::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryFdKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetMemoryFdKHR.html>
     #[inline]
     pub unsafe fn get_memory_fd(&self, get_fd_info: &vk::MemoryGetFdInfoKHR<'_>) -> VkResult<i32> {
         let mut fd = mem::MaybeUninit::uninit();
@@ -13,7 +13,7 @@ impl crate::khr::external_memory_fd::Device {
             .assume_init_on_success(fd)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryFdPropertiesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetMemoryFdPropertiesKHR.html>
     #[inline]
     pub unsafe fn get_memory_fd_properties(
         &self,

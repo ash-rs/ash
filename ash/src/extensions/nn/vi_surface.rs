@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NN_vi_surface.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_NN_vi_surface.html>
 
 use crate::vk;
 use crate::RawPtr;
@@ -6,7 +6,7 @@ use crate::VkResult;
 use core::mem;
 
 impl crate::nn::vi_surface::Instance {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateViSurfaceNN.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateViSurfaceNN.html>
     #[inline]
     pub unsafe fn create_vi_surface(
         &self,

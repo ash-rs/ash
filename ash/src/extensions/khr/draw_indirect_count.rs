@@ -1,9 +1,11 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_draw_indirect_count.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_draw_indirect_count.html>
+#![deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+#![allow(deprecated)]
 
 use crate::vk;
 
 impl crate::khr::draw_indirect_count::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndexedIndirectCountKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDrawIndexedIndirectCountKHR.html>
     #[inline]
     pub unsafe fn cmd_draw_indexed_indirect_count(
         &self,
@@ -26,7 +28,7 @@ impl crate::khr::draw_indirect_count::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndirectCountKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDrawIndirectCountKHR.html>
     #[inline]
     pub unsafe fn cmd_draw_indirect_count(
         &self,

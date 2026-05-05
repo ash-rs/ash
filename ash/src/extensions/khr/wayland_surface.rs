@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_wayland_surface.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_wayland_surface.html>
 
 use crate::vk;
 use crate::RawPtr;
@@ -6,7 +6,7 @@ use crate::VkResult;
 use core::mem;
 
 impl crate::khr::wayland_surface::Instance {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateWaylandSurfaceKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateWaylandSurfaceKHR.html>
     #[inline]
     pub unsafe fn create_wayland_surface(
         &self,
@@ -23,7 +23,7 @@ impl crate::khr::wayland_surface::Instance {
         .assume_init_on_success(surface)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_wayland_presentation_support(
         &self,

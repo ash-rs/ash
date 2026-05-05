@@ -1,11 +1,11 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_low_latency2.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_NV_low_latency2.html>
 
 use crate::vk;
 use crate::RawPtr;
 use crate::VkResult;
 
 impl crate::nv::low_latency2::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetLatencySleepModeNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkSetLatencySleepModeNV.html>
     #[inline]
     pub unsafe fn set_latency_sleep_mode(
         &self,
@@ -16,7 +16,7 @@ impl crate::nv::low_latency2::Device {
             .result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkLatencySleepNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkLatencySleepNV.html>
     #[inline]
     pub unsafe fn latency_sleep(
         &self,
@@ -26,7 +26,7 @@ impl crate::nv::low_latency2::Device {
         (self.fp.latency_sleep_nv)(self.handle, swapchain, sleep_info).result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetLatencyMarkerNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkSetLatencyMarkerNV.html>
     #[inline]
     pub unsafe fn set_latency_marker(
         &self,
@@ -36,7 +36,7 @@ impl crate::nv::low_latency2::Device {
         (self.fp.set_latency_marker_nv)(self.handle, swapchain, latency_marker_info)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetLatencyTimingsNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetLatencyTimingsNV.html>
     #[inline]
     pub unsafe fn get_latency_timings(
         &self,
@@ -46,7 +46,7 @@ impl crate::nv::low_latency2::Device {
         (self.fp.get_latency_timings_nv)(self.handle, swapchain, latency_marker_info)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueNotifyOutOfBandNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkQueueNotifyOutOfBandNV.html>
     #[inline]
     pub unsafe fn queue_notify_out_of_band(
         &self,

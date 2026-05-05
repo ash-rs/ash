@@ -1,11 +1,11 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_semaphore_win32.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_external_semaphore_win32.html>
 
 use crate::vk;
 use crate::VkResult;
 use core::mem;
 
 impl crate::khr::external_semaphore_win32::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportSemaphoreWin32HandleKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkImportSemaphoreWin32HandleKHR.html>
     #[inline]
     pub unsafe fn import_semaphore_win32_handle(
         &self,
@@ -14,7 +14,7 @@ impl crate::khr::external_semaphore_win32::Device {
         (self.fp.import_semaphore_win32_handle_khr)(self.handle, import_info).result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreWin32HandleKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetSemaphoreWin32HandleKHR.html>
     #[inline]
     pub unsafe fn get_semaphore_win32_handle(
         &self,

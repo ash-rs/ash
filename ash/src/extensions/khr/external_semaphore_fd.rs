@@ -1,11 +1,11 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_semaphore_fd.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_external_semaphore_fd.html>
 
 use crate::vk;
 use crate::VkResult;
 use core::mem;
 
 impl crate::khr::external_semaphore_fd::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportSemaphoreFdKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkImportSemaphoreFdKHR.html>
     #[inline]
     pub unsafe fn import_semaphore_fd(
         &self,
@@ -14,7 +14,7 @@ impl crate::khr::external_semaphore_fd::Device {
         (self.fp.import_semaphore_fd_khr)(self.handle, import_info).result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreFdKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetSemaphoreFdKHR.html>
     #[inline]
     pub unsafe fn get_semaphore_fd(
         &self,

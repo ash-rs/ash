@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_get_physical_device_properties2.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_get_physical_device_properties2.html>
 
 use crate::vk;
 use crate::VkResult;
@@ -6,7 +6,7 @@ use core::mem;
 use core::ptr;
 
 impl crate::khr::get_physical_device_properties2::Instance {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFeatures2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceFeatures2KHR.html>
     #[inline]
     pub unsafe fn get_physical_device_features2(
         &self,
@@ -16,7 +16,7 @@ impl crate::khr::get_physical_device_properties2::Instance {
         (self.fp.get_physical_device_features2_khr)(physical_device, features)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFormatProperties2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceFormatProperties2KHR.html>
     #[inline]
     pub unsafe fn get_physical_device_format_properties2(
         &self,
@@ -31,7 +31,7 @@ impl crate::khr::get_physical_device_properties2::Instance {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceImageFormatProperties2KHR.html>
     #[inline]
     pub unsafe fn get_physical_device_image_format_properties2(
         &self,
@@ -47,7 +47,7 @@ impl crate::khr::get_physical_device_properties2::Instance {
         .result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMemoryProperties2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceMemoryProperties2KHR.html>
     #[inline]
     pub unsafe fn get_physical_device_memory_properties2(
         &self,
@@ -57,7 +57,7 @@ impl crate::khr::get_physical_device_properties2::Instance {
         (self.fp.get_physical_device_memory_properties2_khr)(physical_device, memory_properties)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceProperties2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceProperties2KHR.html>
     #[inline]
     pub unsafe fn get_physical_device_properties2(
         &self,
@@ -82,7 +82,7 @@ impl crate::khr::get_physical_device_properties2::Instance {
         count.assume_init() as usize
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceQueueFamilyProperties2KHR.html>
     ///
     /// Call [`get_physical_device_queue_family_properties2_len()`][Self::get_physical_device_queue_family_properties2_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
@@ -120,7 +120,7 @@ impl crate::khr::get_physical_device_properties2::Instance {
         count.assume_init() as usize
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceSparseImageFormatProperties2KHR.html>
     ///
     /// Call [`get_physical_device_sparse_image_format_properties2_len()`][Self::get_physical_device_sparse_image_format_properties2_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.

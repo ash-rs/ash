@@ -6,8 +6,12 @@ pub mod debug_marker;
 #[deprecated(note = "Please use the [DebugUtils](struct.DebugUtils.html) extension instead.")]
 pub mod debug_report;
 pub mod debug_utils;
+pub mod depth_clamp_control;
 pub mod descriptor_buffer;
 pub mod descriptor_heap;
+pub mod device_generated_commands;
+pub mod display_control;
+pub mod display_surface_counter;
 pub mod extended_dynamic_state;
 pub mod extended_dynamic_state2;
 pub mod extended_dynamic_state3;

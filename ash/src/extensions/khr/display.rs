@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_display.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_display.html>
 
 use crate::read_into_uninitialized_vector;
 use crate::vk;
@@ -8,7 +8,7 @@ use alloc::vec::Vec;
 use core::mem;
 
 impl crate::khr::display::Instance {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPropertiesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceDisplayPropertiesKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_display_properties(
         &self,
@@ -19,7 +19,7 @@ impl crate::khr::display::Instance {
         })
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPlanePropertiesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceDisplayPlanePropertiesKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_display_plane_properties(
         &self,
@@ -30,7 +30,7 @@ impl crate::khr::display::Instance {
         })
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneSupportedDisplaysKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetDisplayPlaneSupportedDisplaysKHR.html>
     #[inline]
     pub unsafe fn get_display_plane_supported_displays(
         &self,
@@ -47,7 +47,7 @@ impl crate::khr::display::Instance {
         })
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDisplayModePropertiesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetDisplayModePropertiesKHR.html>
     #[inline]
     pub unsafe fn get_display_mode_properties(
         &self,
@@ -59,7 +59,7 @@ impl crate::khr::display::Instance {
         })
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDisplayModeKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateDisplayModeKHR.html>
     #[inline]
     pub unsafe fn create_display_mode(
         &self,
@@ -79,7 +79,7 @@ impl crate::khr::display::Instance {
         .assume_init_on_success(display_mode)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneCapabilitiesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetDisplayPlaneCapabilitiesKHR.html>
     #[inline]
     pub unsafe fn get_display_plane_capabilities(
         &self,
@@ -97,7 +97,7 @@ impl crate::khr::display::Instance {
         .assume_init_on_success(display_plane_capabilities)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDisplayPlaneSurfaceKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateDisplayPlaneSurfaceKHR.html>
     #[inline]
     pub unsafe fn create_display_plane_surface(
         &self,

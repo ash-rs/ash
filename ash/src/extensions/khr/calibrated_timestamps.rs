@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org//vulkan/specs/1.3-extensions/man/html/VK_KHR_calibrated_timestamps.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_calibrated_timestamps.html>
 
 use crate::read_into_uninitialized_vector;
 use crate::vk;
@@ -7,7 +7,7 @@ use alloc::vec::Vec;
 use core::mem;
 
 impl crate::khr::calibrated_timestamps::Device {
-    /// <https://registry.khronos.org//vulkan/specs/1.3-extensions/man/html/vkGetCalibratedTimestampsKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetCalibratedTimestampsKHR.html>
     ///
     /// Returns a tuple containing `(timestamps, max_deviation)`
     #[inline]
@@ -31,7 +31,7 @@ impl crate::khr::calibrated_timestamps::Device {
 }
 
 impl crate::khr::calibrated_timestamps::Instance {
-    /// <https://registry.khronos.org//vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCalibrateableTimeDomainsKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceCalibrateableTimeDomainsKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_calibrateable_time_domains(
         &self,

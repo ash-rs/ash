@@ -1,10 +1,10 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_pipeline_properties.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_pipeline_properties.html>
 
 use crate::vk;
 use crate::VkResult;
 
 impl crate::ext::pipeline_properties::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelinePropertiesEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPipelinePropertiesEXT.html>
     #[inline]
     pub unsafe fn get_pipeline_properties(
         &self,

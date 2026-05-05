@@ -1,9 +1,9 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_memory_decompression.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_NV_memory_decompression.html>
 
 use crate::vk;
 
 impl crate::nv::memory_decompression::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDecompressMemoryNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDecompressMemoryNV.html>
     pub unsafe fn cmd_decompress_memory(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -16,7 +16,7 @@ impl crate::nv::memory_decompression::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDecompressMemoryIndirectCountNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdDecompressMemoryIndirectCountNV.html>
     pub unsafe fn cmd_decompress_memory_indirect_count(
         &self,
         command_buffer: vk::CommandBuffer,

@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_get_surface_capabilities2.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_get_surface_capabilities2.html>
 
 use crate::vk;
 use crate::VkResult;
@@ -6,7 +6,7 @@ use core::mem;
 use core::ptr;
 
 impl crate::khr::get_surface_capabilities2::Instance {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_capabilities2(
         &self,
@@ -39,7 +39,7 @@ impl crate::khr::get_surface_capabilities2::Instance {
         err_code.assume_init_on_success(count).map(|c| c as usize)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceSurfaceFormats2KHR.html>
     ///
     /// Call [`get_physical_device_surface_formats2_len()`][Self::get_physical_device_surface_formats2_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.

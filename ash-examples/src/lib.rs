@@ -78,6 +78,7 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(
             .command_buffers(&command_buffers)
             .signal_semaphores(signal_semaphores);
 
+        #[allow(deprecated)]
         device
             .queue_submit(submit_queue, &[submit_info], command_buffer_reuse_fence)
             .expect("queue submit failed.");
@@ -302,6 +303,7 @@ impl ExampleBase {
             let (pdevice, queue_family_index) = pdevices
                 .iter()
                 .find_map(|pdevice| {
+                    #[allow(deprecated)]
                     instance
                         .get_physical_device_queue_family_properties(*pdevice)
                         .iter()
@@ -451,6 +453,7 @@ impl ExampleBase {
                     device.create_image_view(&create_view_info, None).unwrap()
                 })
                 .collect();
+            #[allow(deprecated)]
             let device_memory_properties = instance.get_physical_device_memory_properties(pdevice);
             let depth_image_create_info = vk::ImageCreateInfo::default()
                 .image_type(vk::ImageType::TYPE_2D)
@@ -508,6 +511,7 @@ impl ExampleBase {
                                 .level_count(1),
                         );
 
+                    #[allow(deprecated)]
                     device.cmd_pipeline_barrier(
                         setup_command_buffer,
                         vk::PipelineStageFlags::BOTTOM_OF_PIPE,

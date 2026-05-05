@@ -5,6 +5,7 @@ use std::os::raw::c_char;
 use ash::{
     ext::metal_surface,
     khr::{android_surface, surface, wayland_surface, win32_surface, xcb_surface, xlib_surface},
+    ohos::surface as ohos_surface,
     vk, Entry, Instance, VkResult,
 };
 use raw_window_handle::{RawDisplayHandle, RawWindowHandle};
@@ -19,6 +20,7 @@ enum SurfaceExtension {
     Xlib(raw_window_handle::XlibDisplayHandle, xlib_surface::Instance),
     Xcb(raw_window_handle::XcbDisplayHandle, xcb_surface::Instance),
     Android(android_surface::Instance),
+    Ohos(ohos_surface::Instance),
     #[cfg(target_os = "macos")]
     AppKit(metal_surface::Instance),
     #[cfg(target_os = "ios")]
@@ -64,6 +66,10 @@ impl SurfaceFactory {
                 SurfaceExtension::Android(android_surface::Instance::load(entry, instance))
             }
 
+            RawDisplayHandle::Ohos(_) => {
+                SurfaceExtension::Ohos(ohos_surface::Instance::load(entry, instance))
+            }
+
             #[cfg(target_os = "macos")]
             RawDisplayHandle::AppKit(_) => {
                 SurfaceExtension::AppKit(metal_surface::Instance::load(entry, instance))
@@ -99,7 +105,7 @@ impl SurfaceFactory {
     /// `window_handle` and `display_handle` must be associated with a valid window and display
     /// connection, which must not be destroyed for the lifetime of the returned [`vk::SurfaceKHR`].
     ///
-    /// [parent/child relation]: https://registry.khronos.org/vulkan/specs/1.3-extensions/html/vkspec.html#fundamentals-objectmodel-lifetime
+    /// [parent/child relation]: https://docs.vulkan.org/spec/latest/chapters/fundamentals.html#fundamentals-objectmodel-lifetime
     pub unsafe fn create_surface(
         &self,
         window_handle: RawWindowHandle,
@@ -153,6 +159,12 @@ impl SurfaceFactory {
                 let surface_desc = vk::AndroidSurfaceCreateInfoKHR::default()
                     .window(window.a_native_window.as_ptr());
                 surface_fn.create_android_surface(&surface_desc, allocation_callbacks)
+            }
+
+            (SurfaceExtension::Ohos(surface_fn), RawWindowHandle::OhosNdk(window)) => {
+                let surface_desc =
+                    vk::SurfaceCreateInfoOHOS::default().window(window.native_window.as_ptr());
+                surface_fn.create_surface(&surface_desc, allocation_callbacks)
             }
 
             #[cfg(target_os = "macos")]
@@ -223,6 +235,12 @@ pub fn enumerate_required_extensions(
             const ANDROID_EXTS: [*const c_char; 2] =
                 [surface::NAME.as_ptr(), android_surface::NAME.as_ptr()];
             &ANDROID_EXTS
+        }
+
+        RawDisplayHandle::Ohos(_) => {
+            const OHOS_EXTS: [*const c_char; 2] =
+                [surface::NAME.as_ptr(), ohos_surface::NAME.as_ptr()];
+            &OHOS_EXTS
         }
 
         RawDisplayHandle::AppKit(_) | RawDisplayHandle::UiKit(_) => {

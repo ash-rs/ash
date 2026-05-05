@@ -28,6 +28,6 @@ fn assert_ffi_array_param_is_pointer() {
     unsafe fn dummy(device: &ash::Device, cmd_buffer: ash::vk::CommandBuffer) {
         let blend_constants: [f32; 4] = [0.0, 0.0, 0.0, 0.0];
 
-        device.cmd_set_blend_constants(cmd_buffer, &blend_constants);
+        device.cmd_set_blend_constants(cmd_buffer, &blend_constants)
     }
 }

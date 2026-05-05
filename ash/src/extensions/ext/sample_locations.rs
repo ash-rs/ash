@@ -1,9 +1,9 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_sample_locations.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_sample_locations.html>
 
 use crate::vk;
 
 impl crate::ext::sample_locations::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetSampleLocationsEXT.html>
     #[inline]
     pub unsafe fn cmd_set_sample_locations(
         &self,
@@ -15,7 +15,7 @@ impl crate::ext::sample_locations::Device {
 }
 
 impl crate::ext::sample_locations::Instance {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceMultisamplePropertiesEXT.html>
     #[inline]
     pub unsafe fn get_physical_device_multisample_properties(
         &self,

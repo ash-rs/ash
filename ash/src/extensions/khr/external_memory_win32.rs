@@ -1,11 +1,11 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_memory_win32.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_external_memory_win32.html>
 
 use crate::vk;
 use crate::VkResult;
 use core::mem;
 
 impl crate::khr::external_memory_win32::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryWin32HandleKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetMemoryWin32HandleKHR.html>
     #[inline]
     pub unsafe fn get_memory_win32_handle(
         &self,
@@ -16,7 +16,7 @@ impl crate::khr::external_memory_win32::Device {
             .assume_init_on_success(handle)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryWin32HandlePropertiesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetMemoryWin32HandlePropertiesKHR.html>
     #[inline]
     pub unsafe fn get_memory_win32_handle_properties(
         &self,

@@ -1,4 +1,5 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_cuda_kernel_launch.html>
+#![cfg(feature = "provisional")]
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_NV_cuda_kernel_launch.html>
 
 use crate::read_into_uninitialized_vector;
 use crate::vk;
@@ -8,7 +9,7 @@ use alloc::vec::Vec;
 use core::mem;
 
 impl crate::nv::cuda_kernel_launch::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateCudaModuleNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateCudaModuleNV.html>
     #[inline]
     pub unsafe fn create_cuda_module(
         &self,
@@ -25,7 +26,7 @@ impl crate::nv::cuda_kernel_launch::Device {
         .assume_init_on_success(module)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetCudaModuleCacheNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetCudaModuleCacheNV.html>
     #[inline]
     pub unsafe fn get_cuda_module_cache(&self, module: vk::CudaModuleNV) -> VkResult<Vec<u8>> {
         read_into_uninitialized_vector(|cache_size, cache_data: *mut u8| {
@@ -33,7 +34,7 @@ impl crate::nv::cuda_kernel_launch::Device {
         })
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateCudaFunctionNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateCudaFunctionNV.html>
     #[inline]
     pub unsafe fn create_cuda_function(
         &self,
@@ -50,7 +51,7 @@ impl crate::nv::cuda_kernel_launch::Device {
         .assume_init_on_success(function)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyCudaModuleNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyCudaModuleNV.html>
     #[inline]
     pub unsafe fn destroy_cuda_module(
         &self,
@@ -60,7 +61,7 @@ impl crate::nv::cuda_kernel_launch::Device {
         (self.fp.destroy_cuda_module_nv)(self.handle, module, allocator.to_raw_ptr())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyCudaFunctionNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyCudaFunctionNV.html>
     #[inline]
     pub unsafe fn destroy_cuda_function(
         &self,
@@ -70,7 +71,7 @@ impl crate::nv::cuda_kernel_launch::Device {
         (self.fp.destroy_cuda_function_nv)(self.handle, function, allocator.to_raw_ptr())
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCudaLaunchKernelNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdCudaLaunchKernelNV.html>
     #[inline]
     pub unsafe fn cmd_cuda_launch_kernel(
         &self,

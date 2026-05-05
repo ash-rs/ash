@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_metal_surface.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_metal_surface.html>
 
 use crate::vk;
 use crate::RawPtr;
@@ -6,7 +6,7 @@ use crate::VkResult;
 use core::mem;
 
 impl crate::ext::metal_surface::Instance {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateMetalSurfaceEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateMetalSurfaceEXT.html>
     #[inline]
     pub unsafe fn create_metal_surface(
         &self,

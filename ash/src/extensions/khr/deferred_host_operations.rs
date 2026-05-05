@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_deferred_host_operations.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_deferred_host_operations.html>
 
 use crate::vk;
 use crate::RawPtr;
@@ -6,7 +6,7 @@ use crate::VkResult;
 use core::mem;
 
 impl crate::khr::deferred_host_operations::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDeferredOperationKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateDeferredOperationKHR.html>
     #[inline]
     pub unsafe fn create_deferred_operation(
         &self,
@@ -21,7 +21,7 @@ impl crate::khr::deferred_host_operations::Device {
         .assume_init_on_success(operation)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDeferredOperationJoinKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDeferredOperationJoinKHR.html>
     #[inline]
     pub unsafe fn deferred_operation_join(
         &self,
@@ -30,7 +30,7 @@ impl crate::khr::deferred_host_operations::Device {
         (self.fp.deferred_operation_join_khr)(self.handle, operation).result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDeferredOperationKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroyDeferredOperationKHR.html>
     #[inline]
     pub unsafe fn destroy_deferred_operation(
         &self,
@@ -44,7 +44,7 @@ impl crate::khr::deferred_host_operations::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeferredOperationMaxConcurrencyKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetDeferredOperationMaxConcurrencyKHR.html>
     #[inline]
     pub unsafe fn get_deferred_operation_max_concurrency(
         &self,
@@ -53,7 +53,7 @@ impl crate::khr::deferred_host_operations::Device {
         (self.fp.get_deferred_operation_max_concurrency_khr)(self.handle, operation)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeferredOperationResultKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetDeferredOperationResultKHR.html>
     #[inline]
     pub unsafe fn get_deferred_operation_result(
         &self,

@@ -1,9 +1,9 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_copy_memory_indirect.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_NV_copy_memory_indirect.html>
 
 use crate::vk;
 
 impl crate::nv::copy_memory_indirect::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryIndirectNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdCopyMemoryIndirectNV.html>
     ///
     /// `copy_buffer_address` is a buffer device address which is a pointer to an array of
     /// `copy_count` number of [`vk::CopyMemoryIndirectCommandNV`] structures containing the copy
@@ -24,7 +24,7 @@ impl crate::nv::copy_memory_indirect::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryToImageIndirectNV.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdCopyMemoryToImageIndirectNV.html>
     ///
     /// `copy_buffer_address` is a buffer device address which is a pointer to an array of
     /// `image_subresources.len()` number of [`vk::CopyMemoryToImageIndirectCommandNV`] structures

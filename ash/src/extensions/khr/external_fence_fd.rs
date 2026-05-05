@@ -1,11 +1,11 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_fence_fd.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_external_fence_fd.html>
 
 use crate::vk;
 use crate::VkResult;
 use core::mem;
 
 impl crate::khr::external_fence_fd::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportFenceFdKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkImportFenceFdKHR.html>
     #[inline]
     pub unsafe fn import_fence_fd(
         &self,
@@ -14,7 +14,7 @@ impl crate::khr::external_fence_fd::Device {
         (self.fp.import_fence_fd_khr)(self.handle, import_info).result()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetFenceFdKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetFenceFdKHR.html>
     #[inline]
     pub unsafe fn get_fence_fd(&self, get_info: &vk::FenceGetFdInfoKHR<'_>) -> VkResult<i32> {
         let mut fd = mem::MaybeUninit::uninit();

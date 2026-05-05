@@ -1,9 +1,11 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_copy_commands2.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_copy_commands2.html>
+#![deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-buffer-commands>"]
+#![allow(deprecated)]
 
 use crate::vk;
 
 impl crate::khr::copy_commands2::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyBuffer2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdCopyBuffer2KHR.html>
     #[inline]
     pub unsafe fn cmd_copy_buffer2(
         &self,
@@ -12,7 +14,7 @@ impl crate::khr::copy_commands2::Device {
     ) {
         (self.fp.cmd_copy_buffer2_khr)(command_buffer, copy_buffer_info)
     }
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyImage2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdCopyImage2KHR.html>
     #[inline]
     pub unsafe fn cmd_copy_image2(
         &self,
@@ -21,7 +23,7 @@ impl crate::khr::copy_commands2::Device {
     ) {
         (self.fp.cmd_copy_image2_khr)(command_buffer, copy_image_info)
     }
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyBufferToImage2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdCopyBufferToImage2KHR.html>
     #[inline]
     pub unsafe fn cmd_copy_buffer_to_image2(
         &self,
@@ -30,7 +32,7 @@ impl crate::khr::copy_commands2::Device {
     ) {
         (self.fp.cmd_copy_buffer_to_image2_khr)(command_buffer, copy_buffer_to_image_info)
     }
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyImageToBuffer2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdCopyImageToBuffer2KHR.html>
     #[inline]
     pub unsafe fn cmd_copy_image_to_buffer2(
         &self,
@@ -39,7 +41,7 @@ impl crate::khr::copy_commands2::Device {
     ) {
         (self.fp.cmd_copy_image_to_buffer2_khr)(command_buffer, copy_image_to_buffer_info)
     }
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBlitImage2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdBlitImage2KHR.html>
     #[inline]
     pub unsafe fn cmd_blit_image2(
         &self,
@@ -48,7 +50,7 @@ impl crate::khr::copy_commands2::Device {
     ) {
         (self.fp.cmd_blit_image2_khr)(command_buffer, blit_image_info)
     }
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdResolveImage2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdResolveImage2KHR.html>
     #[inline]
     pub unsafe fn cmd_resolve_image2(
         &self,

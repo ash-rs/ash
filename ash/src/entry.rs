@@ -200,7 +200,7 @@ impl Entry {
         &self.static_fn
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceVersion.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkEnumerateInstanceVersion.html>
     ///
     /// # Example
     ///
@@ -239,7 +239,7 @@ impl Entry {
         }
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateInstance.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCreateInstance.html>
     ///
     /// # Safety
     ///
@@ -266,7 +266,7 @@ impl Entry {
         Ok(Instance::load(&self.static_fn, instance))
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceLayerProperties.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkEnumerateInstanceLayerProperties.html>
     #[inline]
     pub unsafe fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         read_into_uninitialized_vector(|count, data| {
@@ -274,7 +274,7 @@ impl Entry {
         })
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkEnumerateInstanceExtensionProperties.html>
     #[inline]
     pub unsafe fn enumerate_instance_extension_properties(
         &self,
@@ -289,7 +289,7 @@ impl Entry {
         })
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetInstanceProcAddr.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetInstanceProcAddr.html>
     #[inline]
     pub unsafe fn get_instance_proc_addr(
         &self,
@@ -308,7 +308,7 @@ impl Entry {
     }
 
     #[deprecated = "This function is unavailable and therefore panics on Vulkan 1.0, please use `try_enumerate_instance_version()` instead"]
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceVersion.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkEnumerateInstanceVersion.html>
     ///
     /// Please use [`try_enumerate_instance_version()`][Self::try_enumerate_instance_version()] instead.
     #[inline]

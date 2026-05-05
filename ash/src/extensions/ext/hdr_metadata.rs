@@ -1,9 +1,9 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_hdr_metadata.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_EXT_hdr_metadata.html>
 
 use crate::vk;
 
 impl crate::ext::hdr_metadata::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetHdrMetadataEXT.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkSetHdrMetadataEXT.html>
     #[inline]
     pub unsafe fn set_hdr_metadata(
         &self,

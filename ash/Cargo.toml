@@ -1,6 +1,6 @@
 [package]
 name = "ash"
-version = "0.38.0+1.3.296"
+version = "0.38.0+1.4.350"
 authors = [
     "Maik Klein <maikklein@googlemail.com>",
     "Benjamin Saunders <ben.e.saunders@gmail.com>",
@@ -37,6 +37,8 @@ loaded = ["libloading", "std"]
 debug = []
 # Whether the standard library should be required
 std = []
+# Enable provisional Vulkan extensions. May see *semver-breaking* code changes in non-breaking releases!
+provisional = []
 
 [package.metadata.release]
 no-dev-version = true

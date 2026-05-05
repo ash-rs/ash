@@ -1,10 +1,10 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_synchronization2.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_synchronization2.html>
 
 use crate::vk;
 use crate::VkResult;
 
 impl crate::khr::synchronization2::Device {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPipelineBarrier2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdPipelineBarrier2KHR.html>
     #[inline]
     pub unsafe fn cmd_pipeline_barrier2(
         &self,
@@ -14,7 +14,7 @@ impl crate::khr::synchronization2::Device {
         (self.fp.cmd_pipeline_barrier2_khr)(command_buffer, dependency_info)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdResetEvent2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdResetEvent2KHR.html>
     #[inline]
     pub unsafe fn cmd_reset_event2(
         &self,
@@ -25,7 +25,7 @@ impl crate::khr::synchronization2::Device {
         (self.fp.cmd_reset_event2_khr)(command_buffer, event, stage_mask)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetEvent2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdSetEvent2KHR.html>
     #[inline]
     pub unsafe fn cmd_set_event2(
         &self,
@@ -36,7 +36,7 @@ impl crate::khr::synchronization2::Device {
         (self.fp.cmd_set_event2_khr)(command_buffer, event, dependency_info)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWaitEvents2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdWaitEvents2KHR.html>
     #[inline]
     pub unsafe fn cmd_wait_events2(
         &self,
@@ -53,7 +53,7 @@ impl crate::khr::synchronization2::Device {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteTimestamp2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkCmdWriteTimestamp2KHR.html>
     #[inline]
     pub unsafe fn cmd_write_timestamp2(
         &self,
@@ -65,7 +65,7 @@ impl crate::khr::synchronization2::Device {
         (self.fp.cmd_write_timestamp2_khr)(command_buffer, stage, query_pool, query)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueSubmit2KHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkQueueSubmit2KHR.html>
     #[inline]
     pub unsafe fn queue_submit2(
         &self,

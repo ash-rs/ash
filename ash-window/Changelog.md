@@ -1,5 +1,6 @@
 # Changelog
 
+- Added support for `VK_OHOS_surface` (#1016)
 - Keep loaded `Surface` extensions around via a new `SurfaceFactory` object on which `create_surface()` is called (#1019)
 
 ## [0.13.0] - 2024-03-31

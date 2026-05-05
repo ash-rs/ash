@@ -1,4 +1,4 @@
-//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html>
+//! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_surface.html>
 
 use crate::read_into_uninitialized_vector;
 use crate::vk;
@@ -8,7 +8,7 @@ use alloc::vec::Vec;
 use core::mem;
 
 impl crate::khr::surface::Instance {
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceSupportKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceSurfaceSupportKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_support(
         &self,
@@ -27,7 +27,7 @@ impl crate::khr::surface::Instance {
         Ok(b.assume_init() > 0)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceSurfacePresentModesKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_present_modes(
         &self,
@@ -44,7 +44,7 @@ impl crate::khr::surface::Instance {
         })
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilitiesKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceSurfaceCapabilitiesKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_capabilities(
         &self,
@@ -60,7 +60,7 @@ impl crate::khr::surface::Instance {
         .assume_init_on_success(surface_capabilities)
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceFormatsKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkGetPhysicalDeviceSurfaceFormatsKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_formats(
         &self,
@@ -72,7 +72,7 @@ impl crate::khr::surface::Instance {
         })
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroySurfaceKHR.html>
+    /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkDestroySurfaceKHR.html>
     #[inline]
     pub unsafe fn destroy_surface(
         &self,
