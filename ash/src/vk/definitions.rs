@@ -37135,7 +37135,7 @@ impl AabbPositionsKHR {
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkTransformMatrixKHR.html>"]
 #[must_use]
 pub struct TransformMatrixKHR {
-    pub matrix: [[f32; 3]; 4],
+    pub matrix: [[f32; 4]; 3],
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
