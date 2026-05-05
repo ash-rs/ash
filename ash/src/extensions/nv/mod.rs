@@ -8,4 +8,5 @@ pub mod device_generated_commands_compute;
 pub mod low_latency2;
 pub mod memory_decompression;
 pub mod mesh_shader;
+pub mod partitioned_acceleration_structure;
 pub mod ray_tracing;
