@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_OHOS_surface` instance extension (#1016)
 - Added (typically vendor-suffixed) aliases for global constants (#1018)
 - Added `VK_NV_cluster_acceleration_structure` device extension (#1033)
+- Added `VK_KHR_device_address_commands` device extension (#1034)
 
 ### Changed
 
