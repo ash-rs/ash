@@ -1,7 +1,7 @@
 //! <https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_present_wait2.html>
 
-use crate::VkResult;
 use crate::vk;
+use crate::VkResult;
 
 impl crate::khr::present_wait2::Device {
     /// <https://docs.vulkan.org/refpages/latest/refpages/source/vkWaitForPresent2KHR.html>
@@ -11,8 +11,6 @@ impl crate::khr::present_wait2::Device {
         swapchain: vk::SwapchainKHR,
         present_wait2_info: &vk::PresentWait2InfoKHR<'_>,
     ) -> VkResult<()> {
-        unsafe {
-            (self.fp.wait_for_present2_khr)(self.handle, swapchain, present_wait2_info).result()
-        }
+        (self.fp.wait_for_present2_khr)(self.handle, swapchain, present_wait2_info).result()
     }
 }
