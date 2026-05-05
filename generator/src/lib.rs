@@ -1308,14 +1308,12 @@ pub fn generate_extension_commands<'a>(
         .flatten()
         .filter_map(get_variant!(vk_parse::InterfaceItem::Enum))
         .find(|e| e.name.contains("SPEC_VERSION"))
-        .and_then(|e| {
-            if let vk_parse::EnumSpec::Value { value, .. } = &e.spec {
-                let v: u32 = str::parse(value).unwrap();
-                Some(quote!(pub const #spec_version_ident: u32 = #v;))
-            } else {
-                None
-            }
-        });
+        .unwrap();
+    let vk_parse::EnumSpec::Value { value, .. } = &spec_version.spec else {
+        panic!("SPEC_VERSION is not a value");
+    };
+    let v: u32 = str::parse(value).unwrap();
+    let spec_version = quote!(pub const #spec_version_ident: u32 = #v;);
 
     let mut instance_commands = Vec::new();
     let mut device_commands = Vec::new();
@@ -1460,13 +1458,27 @@ pub fn generate_extension_commands<'a>(
         .provisional
         .then(|| quote!(#[cfg(feature = "provisional")]));
 
+    let deprecatedby = extension.deprecatedby.as_ref().map(|e| {
+        let e = format!("Deprecated by {e}");
+        quote!(#[deprecated = #e])
+    });
+    // TODO: Include `promotedto`?
+    let obsoletedby = extension.obsoletedby.as_ref().map(|e| {
+        let e = format!("Obsoleted by {e}");
+        quote!(#[deprecated = #e])
+    });
+
     ExtensionCommands {
         vendor,
         raw: quote! {
                 #provisional
+                #deprecatedby
+                #obsoletedby
                 pub const #name_ident: &CStr = unsafe {
                     CStr::from_bytes_with_nul_unchecked(#byte_name_ident)
                 };
+                #deprecatedby
+                #obsoletedby
                 #provisional
                 #spec_version
                 #raw_instance_fp
@@ -1475,6 +1487,8 @@ pub fn generate_extension_commands<'a>(
         high_level: quote! {
             #[doc = #full_extension_name]
             #provisional
+            #deprecatedby
+            #obsoletedby
             pub mod #extension_ident {
                 #hl_imports
 
