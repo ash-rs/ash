@@ -2476,7 +2476,7 @@ pub fn generate_struct(
             #[doc = #khronos_link]
             #[must_use]
             pub struct TransformMatrixKHR {
-                pub matrix: [[f32; 3]; 4],
+                pub matrix: [[f32; 4]; 3],
             }
         };
     }
