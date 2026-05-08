@@ -2616,9 +2616,9 @@ impl BuildMicromapModeEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkOpacityMicromapFormatEXT.html>"]
-pub struct OpacityMicromapFormatEXT(pub(crate) i32);
-impl OpacityMicromapFormatEXT {
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkOpacityMicromapFormatKHR.html>"]
+pub struct OpacityMicromapFormatKHR(pub(crate) i32);
+impl OpacityMicromapFormatKHR {
     #[inline]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
@@ -2632,9 +2632,9 @@ impl OpacityMicromapFormatEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkOpacityMicromapSpecialIndexEXT.html>"]
-pub struct OpacityMicromapSpecialIndexEXT(pub(crate) i32);
-impl OpacityMicromapSpecialIndexEXT {
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkOpacityMicromapSpecialIndexKHR.html>"]
+pub struct OpacityMicromapSpecialIndexKHR(pub(crate) i32);
+impl OpacityMicromapSpecialIndexKHR {
     #[inline]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
@@ -2647,6 +2647,21 @@ impl OpacityMicromapSpecialIndexEXT {
     pub const FULLY_OPAQUE: Self = Self(-2);
     pub const FULLY_UNKNOWN_TRANSPARENT: Self = Self(-3);
     pub const FULLY_UNKNOWN_OPAQUE: Self = Self(-4);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkAccelerationStructureSerializedBlockTypeKHR.html>"]
+pub struct AccelerationStructureSerializedBlockTypeKHR(pub(crate) i32);
+impl AccelerationStructureSerializedBlockTypeKHR {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+    pub const OPACITY_MICROMAP: Self = Self(0);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
@@ -3165,6 +3180,116 @@ impl DescriptorMappingSourceEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkGpaPerfBlockAMD.html>"]
+pub struct GpaPerfBlockAMD(pub(crate) i32);
+impl GpaPerfBlockAMD {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+    pub const CPF: Self = Self(0);
+    pub const IA: Self = Self(1);
+    pub const VGT: Self = Self(2);
+    pub const PA: Self = Self(3);
+    pub const SC: Self = Self(4);
+    pub const SPI: Self = Self(5);
+    pub const SQ: Self = Self(6);
+    pub const SX: Self = Self(7);
+    pub const TA: Self = Self(8);
+    pub const TD: Self = Self(9);
+    pub const TCP: Self = Self(10);
+    pub const TCC: Self = Self(11);
+    pub const TCA: Self = Self(12);
+    pub const DB: Self = Self(13);
+    pub const CB: Self = Self(14);
+    pub const GDS: Self = Self(15);
+    pub const SRBM: Self = Self(16);
+    pub const GRBM: Self = Self(17);
+    pub const GRBM_SE: Self = Self(18);
+    pub const RLC: Self = Self(19);
+    pub const DMA: Self = Self(20);
+    pub const MC: Self = Self(21);
+    pub const CPG: Self = Self(22);
+    pub const CPC: Self = Self(23);
+    pub const WD: Self = Self(24);
+    pub const TCS: Self = Self(25);
+    pub const ATC: Self = Self(26);
+    pub const ATC_L2: Self = Self(27);
+    pub const MC_VM_L2: Self = Self(28);
+    pub const EA: Self = Self(29);
+    pub const RPB: Self = Self(30);
+    pub const RMI: Self = Self(31);
+    pub const UMCCH: Self = Self(32);
+    pub const GE: Self = Self(33);
+    pub const GL1A: Self = Self(34);
+    pub const GL1C: Self = Self(35);
+    pub const GL1CG: Self = Self(36);
+    pub const GL2A: Self = Self(37);
+    pub const GL2C: Self = Self(38);
+    pub const CHA: Self = Self(39);
+    pub const CHC: Self = Self(40);
+    pub const CHCG: Self = Self(41);
+    pub const GUS: Self = Self(42);
+    pub const GCR: Self = Self(43);
+    pub const PH: Self = Self(44);
+    pub const UTCL1: Self = Self(45);
+    pub const GE1: Self = Self::GE;
+    pub const GE_DIST: Self = Self(46);
+    pub const GE_SE: Self = Self(47);
+    pub const DF_MALL: Self = Self(48);
+    pub const SQ_WGP: Self = Self(49);
+    pub const PC: Self = Self(50);
+    pub const GL1XA: Self = Self(51);
+    pub const GL1XC: Self = Self(52);
+    pub const WGS: Self = Self(53);
+    pub const EACPWD: Self = Self(54);
+    pub const EASE: Self = Self(55);
+    pub const RLCUSER: Self = Self(56);
+    pub const RLCLOCAL: Self = Self::RLCUSER;
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkGpaSampleTypeAMD.html>"]
+pub struct GpaSampleTypeAMD(pub(crate) i32);
+impl GpaSampleTypeAMD {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+    pub const CUMULATIVE: Self = Self(0);
+    pub const TRACE: Self = Self(1);
+    pub const TIMING: Self = Self(2);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkGpaDeviceClockModeAMD.html>"]
+pub struct GpaDeviceClockModeAMD(pub(crate) i32);
+impl GpaDeviceClockModeAMD {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+    pub const DEFAULT: Self = Self(0);
+    pub const QUERY: Self = Self(1);
+    pub const PROFILING: Self = Self(2);
+    pub const MIN_MEMORY: Self = Self(3);
+    pub const MIN_ENGINE: Self = Self(4);
+    pub const PEAK: Self = Self(5);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDataGraphTOSALevelARM.html>"]
 pub struct DataGraphTOSALevelARM(pub(crate) i32);
 impl DataGraphTOSALevelARM {
@@ -3281,6 +3406,7 @@ impl fmt::Debug for ObjectType {
             Self::CU_MODULE_NVX => Some("CU_MODULE_NVX"),
             Self::CU_FUNCTION_NVX => Some("CU_FUNCTION_NVX"),
             Self::DEBUG_UTILS_MESSENGER_EXT => Some("DEBUG_UTILS_MESSENGER_EXT"),
+            Self::GPA_SESSION_AMD => Some("GPA_SESSION_AMD"),
             Self::ACCELERATION_STRUCTURE_KHR => Some("ACCELERATION_STRUCTURE_KHR"),
             Self::VALIDATION_CACHE_EXT => Some("VALIDATION_CACHE_EXT"),
             Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),

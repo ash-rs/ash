@@ -985,6 +985,20 @@ impl StructureType {
     pub const SAMPLER_REDUCTION_MODE_CREATE_INFO_EXT: Self =
         Self::SAMPLER_REDUCTION_MODE_CREATE_INFO;
 }
+#[doc = "Generated from 'VK_AMD_gpa_interface'"]
+impl ObjectType {
+    pub const GPA_SESSION_AMD: Self = Self(1_000_133_000);
+}
+#[doc = "Generated from 'VK_AMD_gpa_interface'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_GPA_FEATURES_AMD: Self = Self(1_000_133_000);
+    pub const PHYSICAL_DEVICE_GPA_PROPERTIES_AMD: Self = Self(1_000_133_001);
+    pub const GPA_SAMPLE_BEGIN_INFO_AMD: Self = Self(1_000_133_002);
+    pub const GPA_SESSION_CREATE_INFO_AMD: Self = Self(1_000_133_003);
+    pub const GPA_DEVICE_CLOCK_MODE_INFO_AMD: Self = Self(1_000_133_004);
+    pub const PHYSICAL_DEVICE_GPA_PROPERTIES_2_AMD: Self = Self(1_000_133_005);
+    pub const GPA_DEVICE_GET_CLOCK_INFO_AMD: Self = Self(1_000_133_006);
+}
 #[doc = "Generated from 'VK_AMDX_shader_enqueue'"]
 #[cfg(feature = "provisional")]
 impl BufferUsageFlags {
@@ -1703,6 +1717,14 @@ impl SubpassDescriptionFlags {
 impl StructureType {
     pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_CONVERSION_FEATURES_QCOM: Self =
         Self(1_000_172_000);
+}
+#[doc = "Generated from 'VK_QCOM_elapsed_timer_query'"]
+impl QueryType {
+    pub const TIME_ELAPSED_QCOM: Self = Self(1_000_173_000);
+}
+#[doc = "Generated from 'VK_QCOM_elapsed_timer_query'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_ELAPSED_TIMER_QUERY_FEATURES_QCOM: Self = Self(1_000_173_000);
 }
 #[doc = "Generated from 'VK_EXT_global_priority'"]
 impl QueueGlobalPriority {
@@ -2795,6 +2817,26 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_QUEUE_PERF_HINT_FEATURES_QCOM: Self = Self(1_000_302_001);
     pub const PHYSICAL_DEVICE_QUEUE_PERF_HINT_PROPERTIES_QCOM: Self = Self(1_000_302_002);
 }
+#[doc = "Generated from 'VK_QCOM_image_processing3'"]
+impl FormatFeatureFlags2 {
+    pub const BLOCK_MATCHING_SXD_QCOM: Self =
+        Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_QCOM_image_processing3'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_IMAGE_PROCESSING_3_FEATURES_QCOM: Self = Self(1_000_303_000);
+}
+#[doc = "Generated from 'VK_QCOM_shader_multiple_wait_queues'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_MULTIPLE_WAIT_QUEUES_FEATURES_QCOM: Self = Self(1_000_304_000);
+    pub const PHYSICAL_DEVICE_SHADER_MULTIPLE_WAIT_QUEUES_PROPERTIES_QCOM: Self =
+        Self(1_000_304_001);
+}
+#[doc = "Generated from 'VK_EXT_shader_split_barrier'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_SPLIT_BARRIER_FEATURES_EXT: Self = Self(1_000_305_000);
+    pub const PHYSICAL_DEVICE_SHADER_SPLIT_BARRIER_PROPERTIES_EXT: Self = Self(1_000_305_001);
+}
 #[doc = "Generated from 'VK_NV_cuda_kernel_launch'"]
 #[cfg(feature = "provisional")]
 impl DebugReportObjectTypeEXT {
@@ -3628,23 +3670,44 @@ impl BufferUsageFlags {
     pub const MICROMAP_STORAGE_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_EXT_opacity_micromap'"]
+impl BufferUsageFlags2 {
+    pub const MICROMAP_BUILD_INPUT_READ_ONLY_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000);
+    pub const MICROMAP_STORAGE_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_opacity_micromap'"]
 impl BuildAccelerationStructureFlagsKHR {
-    pub const ALLOW_OPACITY_MICROMAP_UPDATE_EXT: Self = Self(0b100_0000);
-    pub const ALLOW_DISABLE_OPACITY_MICROMAPS_EXT: Self = Self(0b1000_0000);
+    pub const ALLOW_OPACITY_MICROMAP_UPDATE_EXT: Self = Self::ALLOW_OPACITY_MICROMAP_UPDATE;
+    pub const ALLOW_DISABLE_OPACITY_MICROMAPS_EXT: Self = Self::ALLOW_DISABLE_OPACITY_MICROMAPS;
     pub const ALLOW_OPACITY_MICROMAP_DATA_UPDATE_EXT: Self = Self(0b1_0000_0000);
 }
 #[doc = "Generated from 'VK_EXT_opacity_micromap'"]
 impl GeometryInstanceFlagsKHR {
-    pub const FORCE_OPACITY_MICROMAP_2_STATE_EXT: Self = Self(0b1_0000);
-    pub const DISABLE_OPACITY_MICROMAPS_EXT: Self = Self(0b10_0000);
+    pub const FORCE_OPACITY_MICROMAP_2_STATE_EXT: Self = Self::FORCE_OPACITY_MICROMAP_2_STATE;
+    pub const DISABLE_OPACITY_MICROMAPS_EXT: Self = Self::DISABLE_OPACITY_MICROMAPS;
 }
 #[doc = "Generated from 'VK_EXT_opacity_micromap'"]
 impl ObjectType {
     pub const MICROMAP_EXT: Self = Self(1_000_396_000);
 }
 #[doc = "Generated from 'VK_EXT_opacity_micromap'"]
+impl OpacityMicromapFormatKHR {
+    pub const TYPE_2_STATE_EXT: Self = Self::TYPE_2_STATE;
+    pub const TYPE_4_STATE_EXT: Self = Self::TYPE_4_STATE;
+}
+#[doc = "Generated from 'VK_EXT_opacity_micromap'"]
+impl OpacityMicromapSpecialIndexKHR {
+    pub const FULLY_TRANSPARENT_EXT: Self = Self::FULLY_TRANSPARENT;
+    pub const FULLY_OPAQUE_EXT: Self = Self::FULLY_OPAQUE;
+    pub const FULLY_UNKNOWN_TRANSPARENT_EXT: Self = Self::FULLY_UNKNOWN_TRANSPARENT;
+    pub const FULLY_UNKNOWN_OPAQUE_EXT: Self = Self::FULLY_UNKNOWN_OPAQUE;
+}
+#[doc = "Generated from 'VK_EXT_opacity_micromap'"]
 impl PipelineCreateFlags {
-    pub const RAY_TRACING_OPACITY_MICROMAP_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
+    pub const RAY_TRACING_OPACITY_MICROMAP_EXT: Self = Self::RAY_TRACING_OPACITY_MICROMAP_KHR;
+}
+#[doc = "Generated from 'VK_EXT_opacity_micromap'"]
+impl PipelineCreateFlags2 {
+    pub const RAY_TRACING_OPACITY_MICROMAP_EXT: Self = Self::RAY_TRACING_OPACITY_MICROMAP_KHR;
 }
 #[doc = "Generated from 'VK_EXT_opacity_micromap'"]
 impl PipelineStageFlags2 {
@@ -4192,8 +4255,6 @@ impl BufferUsageFlags2 {
     pub const RESOURCE_DESCRIPTOR_BUFFER_EXT: Self = Self(0b100_0000_0000_0000_0000_0000);
     pub const PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER_EXT: Self =
         Self(0b100_0000_0000_0000_0000_0000_0000);
-    pub const MICROMAP_BUILD_INPUT_READ_ONLY_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000);
-    pub const MICROMAP_STORAGE_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_maintenance5'"]
 impl Format {
@@ -4228,7 +4289,6 @@ impl PipelineCreateFlags2 {
         Self(0b10_0000_0000_0000_0000_0000);
     pub const RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT: Self =
         Self(0b100_0000_0000_0000_0000_0000);
-    pub const RAY_TRACING_OPACITY_MICROMAP_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
     pub const COLOR_ATTACHMENT_FEEDBACK_LOOP_EXT: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
     pub const DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP_EXT: Self =
         Self(0b100_0000_0000_0000_0000_0000_0000);
@@ -5003,7 +5063,7 @@ impl BuildAccelerationStructureFlagsKHR {
     pub const ALLOW_CLUSTER_OPACITY_MICROMAPS_NV: Self = Self(0b1_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_NV_cluster_acceleration_structure'"]
-impl OpacityMicromapSpecialIndexEXT {
+impl OpacityMicromapSpecialIndexKHR {
     pub const CLUSTER_GEOMETRY_DISABLE_OPACITY_MICROMAP_NV: Self = Self(-5);
 }
 #[doc = "Generated from 'VK_NV_cluster_acceleration_structure'"]
@@ -5303,6 +5363,46 @@ impl PresentModeKHR {
 impl StructureType {
     pub const PHYSICAL_DEVICE_PRESENT_MODE_FIFO_LATEST_READY_FEATURES_KHR: Self =
         Self(1_000_361_000);
+}
+#[doc = "Generated from 'VK_KHR_opacity_micromap'"]
+impl AccelerationStructureTypeKHR {
+    pub const OPACITY_MICROMAP: Self = Self(1_000_623_000);
+}
+#[doc = "Generated from 'VK_KHR_opacity_micromap'"]
+impl BuildAccelerationStructureFlagsKHR {
+    pub const ALLOW_OPACITY_MICROMAP_UPDATE: Self = Self(0b100_0000);
+    pub const ALLOW_DISABLE_OPACITY_MICROMAPS: Self = Self(0b1000_0000);
+    pub const MICROMAP_LOSSY: Self = Self(0b100_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_opacity_micromap'"]
+impl GeometryInstanceFlagsKHR {
+    pub const FORCE_OPACITY_MICROMAP_2_STATE: Self = Self(0b1_0000);
+    pub const DISABLE_OPACITY_MICROMAPS: Self = Self(0b10_0000);
+}
+#[doc = "Generated from 'VK_KHR_opacity_micromap'"]
+impl GeometryTypeKHR {
+    pub const MICROMAP: Self = Self(1_000_623_000);
+}
+#[doc = "Generated from 'VK_KHR_opacity_micromap'"]
+impl PipelineCreateFlags {
+    pub const RAY_TRACING_OPACITY_MICROMAP_KHR: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_opacity_micromap'"]
+impl PipelineCreateFlags2 {
+    pub const RAY_TRACING_OPACITY_MICROMAP_KHR: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
+    pub const OPACITY_MICROMAP_DISALLOW_MIXED_SPECIAL_INDEX_KHR: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_opacity_micromap'"]
+impl ShaderCreateFlagsEXT {
+    pub const OPACITY_MICROMAP_DISALLOW_MIXED_SPECIAL_INDEX: Self = Self(0b1_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_opacity_micromap'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_OPACITY_MICROMAP_FEATURES_KHR: Self = Self(1_000_623_000);
+    pub const PHYSICAL_DEVICE_OPACITY_MICROMAP_PROPERTIES_KHR: Self = Self(1_000_623_001);
+    pub const ACCELERATION_STRUCTURE_GEOMETRY_MICROMAP_DATA_KHR: Self = Self(1_000_623_002);
+    pub const ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_KHR: Self = Self(1_000_623_003);
 }
 #[doc = "Generated from 'VK_EXT_shader_64bit_indexing'"]
 impl PipelineCreateFlags2 {
@@ -6861,6 +6961,68 @@ pub const KHR_STORAGE_BUFFER_STORAGE_CLASS_SPEC_VERSION: u32 = 1u32;
 pub const AMD_GPU_SHADER_INT16_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_int16\0") };
 pub const AMD_GPU_SHADER_INT16_SPEC_VERSION: u32 = 2u32;
+pub const AMD_GPA_INTERFACE_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpa_interface\0") };
+pub const AMD_GPA_INTERFACE_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateGpaSessionAMD = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_create_info: *const GpaSessionCreateInfoAMD<'_>,
+    p_allocator: *const AllocationCallbacks,
+    p_gpa_session: *mut GpaSessionAMD,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyGpaSessionAMD = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    gpa_session: GpaSessionAMD,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkSetGpaDeviceClockModeAMD = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_info: *mut GpaDeviceClockModeInfoAMD<'_>,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetGpaDeviceClockInfoAMD = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_info: *mut GpaDeviceGetClockInfoAMD<'_>,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBeginGpaSessionAMD =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, gpa_session: GpaSessionAMD) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdEndGpaSessionAMD =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, gpa_session: GpaSessionAMD) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBeginGpaSampleAMD = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    gpa_session: GpaSessionAMD,
+    p_gpa_sample_begin_info: *const GpaSampleBeginInfoAMD<'_>,
+    p_sample_id: *mut u32,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdEndGpaSampleAMD = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    gpa_session: GpaSessionAMD,
+    sample_id: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetGpaSessionStatusAMD =
+    unsafe extern "system" fn(device: crate::vk::Device, gpa_session: GpaSessionAMD) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetGpaSessionResultsAMD = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    gpa_session: GpaSessionAMD,
+    sample_id: u32,
+    p_size_in_bytes: *mut usize,
+    p_data: *mut c_void,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkResetGpaSessionAMD =
+    unsafe extern "system" fn(device: crate::vk::Device, gpa_session: GpaSessionAMD) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyGpaSessionResultsAMD =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, gpa_session: GpaSessionAMD);
 #[cfg(feature = "provisional")]
 pub const AMDX_SHADER_ENQUEUE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMDX_shader_enqueue\0") };
@@ -7458,6 +7620,9 @@ pub const QCOM_RENDER_PASS_SHADER_RESOLVE_SPEC_VERSION: u32 = 4u32;
 pub const QCOM_COOPERATIVE_MATRIX_CONVERSION_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_cooperative_matrix_conversion\0") };
 pub const QCOM_COOPERATIVE_MATRIX_CONVERSION_SPEC_VERSION: u32 = 1u32;
+pub const QCOM_ELAPSED_TIMER_QUERY_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_elapsed_timer_query\0") };
+pub const QCOM_ELAPSED_TIMER_QUERY_SPEC_VERSION: u32 = 1u32;
 pub const EXT_GLOBAL_PRIORITY_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_global_priority\0") };
 pub const EXT_GLOBAL_PRIORITY_SPEC_VERSION: u32 = 2u32;
@@ -8324,6 +8489,15 @@ pub type PFN_vkQueueSetPerfHintQCOM = unsafe extern "system" fn(
     queue: Queue,
     p_perf_hint_info: *const PerfHintInfoQCOM<'_>,
 ) -> Result;
+pub const QCOM_IMAGE_PROCESSING3_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_image_processing3\0") };
+pub const QCOM_IMAGE_PROCESSING3_SPEC_VERSION: u32 = 1u32;
+pub const QCOM_SHADER_MULTIPLE_WAIT_QUEUES_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_shader_multiple_wait_queues\0") };
+pub const QCOM_SHADER_MULTIPLE_WAIT_QUEUES_SPEC_VERSION: u32 = 1u32;
+pub const EXT_SHADER_SPLIT_BARRIER_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_split_barrier\0") };
+pub const EXT_SHADER_SPLIT_BARRIER_SPEC_VERSION: u32 = 1u32;
 #[cfg(feature = "provisional")]
 pub const NV_CUDA_KERNEL_LAUNCH_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_cuda_kernel_launch\0") };
@@ -10427,6 +10601,9 @@ pub const EXT_ZERO_INITIALIZE_DEVICE_MEMORY_SPEC_VERSION: u32 = 1u32;
 pub const KHR_PRESENT_MODE_FIFO_LATEST_READY_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_present_mode_fifo_latest_ready\0") };
 pub const KHR_PRESENT_MODE_FIFO_LATEST_READY_SPEC_VERSION: u32 = 1u32;
+pub const KHR_OPACITY_MICROMAP_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_opacity_micromap\0") };
+pub const KHR_OPACITY_MICROMAP_SPEC_VERSION: u32 = 1u32;
 pub const EXT_SHADER_64BIT_INDEXING_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_64bit_indexing\0") };
 pub const EXT_SHADER_64BIT_INDEXING_SPEC_VERSION: u32 = 1u32;

@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added `push()` method to all root structs to insert a single extension-struct in the pointer chain. (#909)
-- Update Vulkan-Headers to 1.4.350 (#910, #951)
+- Update Vulkan-Headers to 1.4.351 (#910, #951, #1040)
 - Added `VK_KHR_get_display_properties2` instance extension (#932)
 - Added `VK_EXT_display_surface_counter` instance extension (#933)
 - Added `VK_EXT_display_control` display extension (#934)

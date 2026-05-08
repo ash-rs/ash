@@ -52,6 +52,8 @@ pub type LineRasterizationModeKHR = LineRasterizationMode;
 pub type LineRasterizationModeEXT = LineRasterizationMode;
 pub type PipelineRobustnessBufferBehaviorEXT = PipelineRobustnessBufferBehavior;
 pub type PipelineRobustnessImageBehaviorEXT = PipelineRobustnessImageBehavior;
+pub type OpacityMicromapFormatEXT = OpacityMicromapFormatKHR;
+pub type OpacityMicromapSpecialIndexEXT = OpacityMicromapSpecialIndexKHR;
 pub type DeviceFaultVendorBinaryHeaderVersionEXT = DeviceFaultVendorBinaryHeaderVersionKHR;
 pub type ScopeNV = ScopeKHR;
 pub type ComponentTypeNV = ComponentTypeKHR;
@@ -361,6 +363,7 @@ pub type ImageSubresource2KHR<'a> = ImageSubresource2<'a>;
 pub type ImageSubresource2EXT<'a> = ImageSubresource2<'a>;
 pub type SubresourceLayout2KHR<'a> = SubresourceLayout2<'a>;
 pub type SubresourceLayout2EXT<'a> = SubresourceLayout2<'a>;
+pub type MicromapTriangleEXT = MicromapTriangleKHR;
 pub type PhysicalDevicePipelineRobustnessFeaturesEXT<'a> =
     PhysicalDevicePipelineRobustnessFeatures<'a>;
 pub type PipelineRobustnessCreateInfoEXT<'a> = PipelineRobustnessCreateInfo<'a>;
