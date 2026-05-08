@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_EXT_descriptor_heap` device extension (#1027)
 - Added `VK_NV_cluster_acceleration_structure` device extension (#1033)
 - Added `VK_KHR_device_address_commands` device extension (#1034)
+- Added `VK_NV_partitioned_acceleration_structure` device extension (#1035)
 
 ### Changed
 
