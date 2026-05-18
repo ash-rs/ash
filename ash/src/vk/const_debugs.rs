@@ -2345,6 +2345,7 @@ impl fmt::Debug for DriverId {
             Self::MESA_HONEYKRISP => Some("MESA_HONEYKRISP"),
             Self::VULKAN_SC_EMULATION_ON_VULKAN => Some("VULKAN_SC_EMULATION_ON_VULKAN"),
             Self::MESA_KOSMICKRISP => Some("MESA_KOSMICKRISP"),
+            Self::MESA_GFXSTREAM => Some("MESA_GFXSTREAM"),
             _ => None,
         };
         if let Some(x) = name {
@@ -8717,6 +8718,9 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_PRIMITIVE_RESTART_INDEX_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PRIMITIVE_RESTART_INDEX_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_DECODE_VECTOR_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_COOPERATIVE_MATRIX_DECODE_VECTOR_FEATURES_NV")
             }
             Self::BIND_BUFFER_MEMORY_INFO => Some("BIND_BUFFER_MEMORY_INFO"),
             Self::BIND_IMAGE_MEMORY_INFO => Some("BIND_IMAGE_MEMORY_INFO"),

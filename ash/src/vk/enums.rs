@@ -1836,6 +1836,8 @@ impl DriverId {
     pub const VULKAN_SC_EMULATION_ON_VULKAN: Self = Self(27);
     #[doc = "Mesa open source project"]
     pub const MESA_KOSMICKRISP: Self = Self(28);
+    #[doc = "Mesa open source project"]
+    pub const MESA_GFXSTREAM: Self = Self(29);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]

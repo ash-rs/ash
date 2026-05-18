@@ -63,7 +63,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 351;
+pub const HEADER_VERSION: u32 = 352;
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampleMask.html>"]
@@ -67182,6 +67182,52 @@ impl<'a> CooperativeMatrixFlexibleDimensionsPropertiesNV<'a> {
     #[inline]
     pub fn workgroup_invocations(mut self, workgroup_invocations: u32) -> Self {
         self.workgroup_invocations = workgroup_invocations;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV.html>"]
+#[must_use]
+pub struct PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub cooperative_matrix_decode_vector: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {}
+impl ::core::default::Default for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            cooperative_matrix_decode_vector: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_DECODE_VECTOR_FEATURES_NV;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>>
+    for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_>
+{
+}
+impl<'a> PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'a> {
+    #[inline]
+    pub fn cooperative_matrix_decode_vector(
+        mut self,
+        cooperative_matrix_decode_vector: bool,
+    ) -> Self {
+        self.cooperative_matrix_decode_vector = cooperative_matrix_decode_vector.into();
         self
     }
 }

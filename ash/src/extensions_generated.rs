@@ -24435,6 +24435,13 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_cooperative_matrix_decode_vector"]
+    pub mod cooperative_matrix_decode_vector {
+        pub use {
+            crate::vk::NV_COOPERATIVE_MATRIX_DECODE_VECTOR_NAME as NAME,
+            crate::vk::NV_COOPERATIVE_MATRIX_DECODE_VECTOR_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged NVX"]
 pub mod nvx {
