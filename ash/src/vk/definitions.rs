@@ -63,7 +63,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 350;
+pub const HEADER_VERSION: u32 = 352;
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampleMask.html>"]
@@ -148,6 +148,16 @@ vk_bitflags_wrapped!(AccelerationStructureMotionInstanceFlagsNV, Flags);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDirectDriverLoadingFlagsLUNARG.html>"]
 pub struct DirectDriverLoadingFlagsLUNARG(pub(crate) Flags);
 vk_bitflags_wrapped!(DirectDriverLoadingFlagsLUNARG, Flags);
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkGpaPerfBlockPropertiesFlagsAMD.html>"]
+pub struct GpaPerfBlockPropertiesFlagsAMD(pub(crate) Flags);
+vk_bitflags_wrapped!(GpaPerfBlockPropertiesFlagsAMD, Flags);
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceGpaPropertiesFlagsAMD.html>"]
+pub struct PhysicalDeviceGpaPropertiesFlagsAMD(pub(crate) Flags);
+vk_bitflags_wrapped!(PhysicalDeviceGpaPropertiesFlagsAMD, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDisplayModeCreateFlagsKHR.html>"]
@@ -557,6 +567,11 @@ handle_nondispatchable!(
     SHADER_INSTRUMENTATION_ARM,
     doc =
         "<https://docs.vulkan.org/refpages/latest/refpages/source/VkShaderInstrumentationARM.html>"
+);
+handle_nondispatchable!(
+    GpaSessionAMD,
+    GPA_SESSION_AMD,
+    doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkGpaSessionAMD.html>"
 );
 handle_nondispatchable!(
     DisplayKHR,
@@ -21663,6 +21678,46 @@ impl ShaderStatisticsInfoAMD {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceElapsedTimerQueryFeaturesQCOM.html>"]
+#[must_use]
+pub struct PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub elapsed_timer_query: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {}
+impl ::core::default::Default for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            elapsed_timer_query: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_ELAPSED_TIMER_QUERY_FEATURES_QCOM;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {}
+impl<'a> PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'a> {
+    #[inline]
+    pub fn elapsed_timer_query(mut self, elapsed_timer_query: bool) -> Self {
+        self.elapsed_timer_query = elapsed_timer_query.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDeviceQueueGlobalPriorityCreateInfo.html>"]
 #[must_use]
 pub struct DeviceQueueGlobalPriorityCreateInfo<'a> {
@@ -35982,6 +36037,509 @@ impl<'a> PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
     #[inline]
     pub fn device_coherent_memory(mut self, device_coherent_memory: bool) -> Self {
         self.device_coherent_memory = device_coherent_memory.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkGpaPerfBlockPropertiesAMD.html>"]
+#[must_use]
+pub struct GpaPerfBlockPropertiesAMD {
+    pub block_type: GpaPerfBlockAMD,
+    pub flags: GpaPerfBlockPropertiesFlagsAMD,
+    pub instance_count: u32,
+    pub max_event_id: u32,
+    pub max_global_only_counters: u32,
+    pub max_global_shared_counters: u32,
+    pub max_streaming_counters: u32,
+}
+impl GpaPerfBlockPropertiesAMD {
+    #[inline]
+    pub fn block_type(mut self, block_type: GpaPerfBlockAMD) -> Self {
+        self.block_type = block_type;
+        self
+    }
+    #[inline]
+    pub fn flags(mut self, flags: GpaPerfBlockPropertiesFlagsAMD) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn instance_count(mut self, instance_count: u32) -> Self {
+        self.instance_count = instance_count;
+        self
+    }
+    #[inline]
+    pub fn max_event_id(mut self, max_event_id: u32) -> Self {
+        self.max_event_id = max_event_id;
+        self
+    }
+    #[inline]
+    pub fn max_global_only_counters(mut self, max_global_only_counters: u32) -> Self {
+        self.max_global_only_counters = max_global_only_counters;
+        self
+    }
+    #[inline]
+    pub fn max_global_shared_counters(mut self, max_global_shared_counters: u32) -> Self {
+        self.max_global_shared_counters = max_global_shared_counters;
+        self
+    }
+    #[inline]
+    pub fn max_streaming_counters(mut self, max_streaming_counters: u32) -> Self {
+        self.max_streaming_counters = max_streaming_counters;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceGpaFeaturesAMD.html>"]
+#[must_use]
+pub struct PhysicalDeviceGpaFeaturesAMD<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub perf_counters: Bool32,
+    pub streaming_perf_counters: Bool32,
+    pub sq_thread_tracing: Bool32,
+    pub clock_modes: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceGpaFeaturesAMD<'_> {}
+unsafe impl Sync for PhysicalDeviceGpaFeaturesAMD<'_> {}
+impl ::core::default::Default for PhysicalDeviceGpaFeaturesAMD<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            perf_counters: Bool32::default(),
+            streaming_perf_counters: Bool32::default(),
+            sq_thread_tracing: Bool32::default(),
+            clock_modes: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaFeaturesAMD<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_GPA_FEATURES_AMD;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceGpaFeaturesAMD<'_> {}
+unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceGpaFeaturesAMD<'_> {}
+impl<'a> PhysicalDeviceGpaFeaturesAMD<'a> {
+    #[inline]
+    pub fn perf_counters(mut self, perf_counters: bool) -> Self {
+        self.perf_counters = perf_counters.into();
+        self
+    }
+    #[inline]
+    pub fn streaming_perf_counters(mut self, streaming_perf_counters: bool) -> Self {
+        self.streaming_perf_counters = streaming_perf_counters.into();
+        self
+    }
+    #[inline]
+    pub fn sq_thread_tracing(mut self, sq_thread_tracing: bool) -> Self {
+        self.sq_thread_tracing = sq_thread_tracing.into();
+        self
+    }
+    #[inline]
+    pub fn clock_modes(mut self, clock_modes: bool) -> Self {
+        self.clock_modes = clock_modes.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceGpaPropertiesAMD.html>"]
+#[must_use]
+pub struct PhysicalDeviceGpaPropertiesAMD<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub flags: PhysicalDeviceGpaPropertiesFlagsAMD,
+    pub max_sqtt_se_buffer_size: DeviceSize,
+    pub shader_engine_count: u32,
+    pub perf_block_count: u32,
+    pub p_perf_blocks: *mut GpaPerfBlockPropertiesAMD,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceGpaPropertiesAMD<'_> {}
+unsafe impl Sync for PhysicalDeviceGpaPropertiesAMD<'_> {}
+impl ::core::default::Default for PhysicalDeviceGpaPropertiesAMD<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            flags: PhysicalDeviceGpaPropertiesFlagsAMD::default(),
+            max_sqtt_se_buffer_size: DeviceSize::default(),
+            shader_engine_count: u32::default(),
+            perf_block_count: u32::default(),
+            p_perf_blocks: ::core::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaPropertiesAMD<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_GPA_PROPERTIES_AMD;
+}
+unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceGpaPropertiesAMD<'_> {}
+impl<'a> PhysicalDeviceGpaPropertiesAMD<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: PhysicalDeviceGpaPropertiesFlagsAMD) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn max_sqtt_se_buffer_size(mut self, max_sqtt_se_buffer_size: DeviceSize) -> Self {
+        self.max_sqtt_se_buffer_size = max_sqtt_se_buffer_size;
+        self
+    }
+    #[inline]
+    pub fn shader_engine_count(mut self, shader_engine_count: u32) -> Self {
+        self.shader_engine_count = shader_engine_count;
+        self
+    }
+    #[inline]
+    pub fn perf_blocks(mut self, perf_blocks: &'a mut [GpaPerfBlockPropertiesAMD]) -> Self {
+        self.perf_block_count = perf_blocks.len() as _;
+        self.p_perf_blocks = perf_blocks.as_mut_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceGpaProperties2AMD.html>"]
+#[must_use]
+pub struct PhysicalDeviceGpaProperties2AMD<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub revision_id: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceGpaProperties2AMD<'_> {}
+unsafe impl Sync for PhysicalDeviceGpaProperties2AMD<'_> {}
+impl ::core::default::Default for PhysicalDeviceGpaProperties2AMD<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            revision_id: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaProperties2AMD<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_GPA_PROPERTIES_2_AMD;
+}
+unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceGpaProperties2AMD<'_> {}
+impl<'a> PhysicalDeviceGpaProperties2AMD<'a> {
+    #[inline]
+    pub fn revision_id(mut self, revision_id: u32) -> Self {
+        self.revision_id = revision_id;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkGpaPerfCounterAMD.html>"]
+#[must_use]
+pub struct GpaPerfCounterAMD {
+    pub block_type: GpaPerfBlockAMD,
+    pub block_instance: u32,
+    pub event_id: u32,
+}
+impl GpaPerfCounterAMD {
+    #[inline]
+    pub fn block_type(mut self, block_type: GpaPerfBlockAMD) -> Self {
+        self.block_type = block_type;
+        self
+    }
+    #[inline]
+    pub fn block_instance(mut self, block_instance: u32) -> Self {
+        self.block_instance = block_instance;
+        self
+    }
+    #[inline]
+    pub fn event_id(mut self, event_id: u32) -> Self {
+        self.event_id = event_id;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkGpaSampleBeginInfoAMD.html>"]
+#[must_use]
+pub struct GpaSampleBeginInfoAMD<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub sample_type: GpaSampleTypeAMD,
+    pub sample_internal_operations: Bool32,
+    pub cache_flush_on_counter_collection: Bool32,
+    pub sq_shader_mask_enable: Bool32,
+    pub sq_shader_mask: GpaSqShaderStageFlagsAMD,
+    pub perf_counter_count: u32,
+    pub p_perf_counters: *const GpaPerfCounterAMD,
+    pub streaming_perf_trace_sample_interval: u32,
+    pub perf_counter_device_memory_limit: DeviceSize,
+    pub sq_thread_trace_enable: Bool32,
+    pub sq_thread_trace_suppress_instruction_tokens: Bool32,
+    pub sq_thread_trace_device_memory_limit: DeviceSize,
+    pub timing_pre_sample: PipelineStageFlags,
+    pub timing_post_sample: PipelineStageFlags,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for GpaSampleBeginInfoAMD<'_> {}
+unsafe impl Sync for GpaSampleBeginInfoAMD<'_> {}
+impl ::core::default::Default for GpaSampleBeginInfoAMD<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            sample_type: GpaSampleTypeAMD::default(),
+            sample_internal_operations: Bool32::default(),
+            cache_flush_on_counter_collection: Bool32::default(),
+            sq_shader_mask_enable: Bool32::default(),
+            sq_shader_mask: GpaSqShaderStageFlagsAMD::default(),
+            perf_counter_count: u32::default(),
+            p_perf_counters: ::core::ptr::null(),
+            streaming_perf_trace_sample_interval: u32::default(),
+            perf_counter_device_memory_limit: DeviceSize::default(),
+            sq_thread_trace_enable: Bool32::default(),
+            sq_thread_trace_suppress_instruction_tokens: Bool32::default(),
+            sq_thread_trace_device_memory_limit: DeviceSize::default(),
+            timing_pre_sample: PipelineStageFlags::default(),
+            timing_post_sample: PipelineStageFlags::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for GpaSampleBeginInfoAMD<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::GPA_SAMPLE_BEGIN_INFO_AMD;
+}
+impl<'a> GpaSampleBeginInfoAMD<'a> {
+    #[inline]
+    pub fn sample_type(mut self, sample_type: GpaSampleTypeAMD) -> Self {
+        self.sample_type = sample_type;
+        self
+    }
+    #[inline]
+    pub fn sample_internal_operations(mut self, sample_internal_operations: bool) -> Self {
+        self.sample_internal_operations = sample_internal_operations.into();
+        self
+    }
+    #[inline]
+    pub fn cache_flush_on_counter_collection(
+        mut self,
+        cache_flush_on_counter_collection: bool,
+    ) -> Self {
+        self.cache_flush_on_counter_collection = cache_flush_on_counter_collection.into();
+        self
+    }
+    #[inline]
+    pub fn sq_shader_mask_enable(mut self, sq_shader_mask_enable: bool) -> Self {
+        self.sq_shader_mask_enable = sq_shader_mask_enable.into();
+        self
+    }
+    #[inline]
+    pub fn sq_shader_mask(mut self, sq_shader_mask: GpaSqShaderStageFlagsAMD) -> Self {
+        self.sq_shader_mask = sq_shader_mask;
+        self
+    }
+    #[inline]
+    pub fn perf_counters(mut self, perf_counters: &'a [GpaPerfCounterAMD]) -> Self {
+        self.perf_counter_count = perf_counters.len() as _;
+        self.p_perf_counters = perf_counters.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn streaming_perf_trace_sample_interval(
+        mut self,
+        streaming_perf_trace_sample_interval: u32,
+    ) -> Self {
+        self.streaming_perf_trace_sample_interval = streaming_perf_trace_sample_interval;
+        self
+    }
+    #[inline]
+    pub fn perf_counter_device_memory_limit(
+        mut self,
+        perf_counter_device_memory_limit: DeviceSize,
+    ) -> Self {
+        self.perf_counter_device_memory_limit = perf_counter_device_memory_limit;
+        self
+    }
+    #[inline]
+    pub fn sq_thread_trace_enable(mut self, sq_thread_trace_enable: bool) -> Self {
+        self.sq_thread_trace_enable = sq_thread_trace_enable.into();
+        self
+    }
+    #[inline]
+    pub fn sq_thread_trace_suppress_instruction_tokens(
+        mut self,
+        sq_thread_trace_suppress_instruction_tokens: bool,
+    ) -> Self {
+        self.sq_thread_trace_suppress_instruction_tokens =
+            sq_thread_trace_suppress_instruction_tokens.into();
+        self
+    }
+    #[inline]
+    pub fn sq_thread_trace_device_memory_limit(
+        mut self,
+        sq_thread_trace_device_memory_limit: DeviceSize,
+    ) -> Self {
+        self.sq_thread_trace_device_memory_limit = sq_thread_trace_device_memory_limit;
+        self
+    }
+    #[inline]
+    pub fn timing_pre_sample(mut self, timing_pre_sample: PipelineStageFlags) -> Self {
+        self.timing_pre_sample = timing_pre_sample;
+        self
+    }
+    #[inline]
+    pub fn timing_post_sample(mut self, timing_post_sample: PipelineStageFlags) -> Self {
+        self.timing_post_sample = timing_post_sample;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkGpaDeviceClockModeInfoAMD.html>"]
+#[must_use]
+pub struct GpaDeviceClockModeInfoAMD<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub clock_mode: GpaDeviceClockModeAMD,
+    pub memory_clock_ratio_to_peak: f32,
+    pub engine_clock_ratio_to_peak: f32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for GpaDeviceClockModeInfoAMD<'_> {}
+unsafe impl Sync for GpaDeviceClockModeInfoAMD<'_> {}
+impl ::core::default::Default for GpaDeviceClockModeInfoAMD<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            clock_mode: GpaDeviceClockModeAMD::default(),
+            memory_clock_ratio_to_peak: f32::default(),
+            engine_clock_ratio_to_peak: f32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for GpaDeviceClockModeInfoAMD<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::GPA_DEVICE_CLOCK_MODE_INFO_AMD;
+}
+impl<'a> GpaDeviceClockModeInfoAMD<'a> {
+    #[inline]
+    pub fn clock_mode(mut self, clock_mode: GpaDeviceClockModeAMD) -> Self {
+        self.clock_mode = clock_mode;
+        self
+    }
+    #[inline]
+    pub fn memory_clock_ratio_to_peak(mut self, memory_clock_ratio_to_peak: f32) -> Self {
+        self.memory_clock_ratio_to_peak = memory_clock_ratio_to_peak;
+        self
+    }
+    #[inline]
+    pub fn engine_clock_ratio_to_peak(mut self, engine_clock_ratio_to_peak: f32) -> Self {
+        self.engine_clock_ratio_to_peak = engine_clock_ratio_to_peak;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkGpaDeviceGetClockInfoAMD.html>"]
+#[must_use]
+pub struct GpaDeviceGetClockInfoAMD<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub memory_clock_ratio_to_peak: f32,
+    pub engine_clock_ratio_to_peak: f32,
+    pub memory_clock_frequency: u32,
+    pub engine_clock_frequency: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for GpaDeviceGetClockInfoAMD<'_> {}
+unsafe impl Sync for GpaDeviceGetClockInfoAMD<'_> {}
+impl ::core::default::Default for GpaDeviceGetClockInfoAMD<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            memory_clock_ratio_to_peak: f32::default(),
+            engine_clock_ratio_to_peak: f32::default(),
+            memory_clock_frequency: u32::default(),
+            engine_clock_frequency: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for GpaDeviceGetClockInfoAMD<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::GPA_DEVICE_GET_CLOCK_INFO_AMD;
+}
+impl<'a> GpaDeviceGetClockInfoAMD<'a> {
+    #[inline]
+    pub fn memory_clock_ratio_to_peak(mut self, memory_clock_ratio_to_peak: f32) -> Self {
+        self.memory_clock_ratio_to_peak = memory_clock_ratio_to_peak;
+        self
+    }
+    #[inline]
+    pub fn engine_clock_ratio_to_peak(mut self, engine_clock_ratio_to_peak: f32) -> Self {
+        self.engine_clock_ratio_to_peak = engine_clock_ratio_to_peak;
+        self
+    }
+    #[inline]
+    pub fn memory_clock_frequency(mut self, memory_clock_frequency: u32) -> Self {
+        self.memory_clock_frequency = memory_clock_frequency;
+        self
+    }
+    #[inline]
+    pub fn engine_clock_frequency(mut self, engine_clock_frequency: u32) -> Self {
+        self.engine_clock_frequency = engine_clock_frequency;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkGpaSessionCreateInfoAMD.html>"]
+#[must_use]
+pub struct GpaSessionCreateInfoAMD<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub secondary_copy_source: GpaSessionAMD,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for GpaSessionCreateInfoAMD<'_> {}
+unsafe impl Sync for GpaSessionCreateInfoAMD<'_> {}
+impl ::core::default::Default for GpaSessionCreateInfoAMD<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            secondary_copy_source: GpaSessionAMD::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for GpaSessionCreateInfoAMD<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::GPA_SESSION_CREATE_INFO_AMD;
+}
+impl<'a> GpaSessionCreateInfoAMD<'a> {
+    #[inline]
+    pub fn secondary_copy_source(mut self, secondary_copy_source: GpaSessionAMD) -> Self {
+        self.secondary_copy_source = secondary_copy_source;
         self
     }
 }
@@ -56367,6 +56925,77 @@ impl<'a> MicromapBuildInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkAccelerationStructureGeometryMicromapDataKHR.html>"]
+#[must_use]
+pub struct AccelerationStructureGeometryMicromapDataKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub usage_counts_count: u32,
+    pub p_usage_counts: *const MicromapUsageKHR,
+    pub pp_usage_counts: *const *const MicromapUsageKHR,
+    pub data: DeviceAddress,
+    pub triangle_array: DeviceAddress,
+    pub triangle_array_stride: DeviceSize,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for AccelerationStructureGeometryMicromapDataKHR<'_> {}
+unsafe impl Sync for AccelerationStructureGeometryMicromapDataKHR<'_> {}
+impl ::core::default::Default for AccelerationStructureGeometryMicromapDataKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            usage_counts_count: u32::default(),
+            p_usage_counts: ::core::ptr::null(),
+            pp_usage_counts: ::core::ptr::null(),
+            data: DeviceAddress::default(),
+            triangle_array: DeviceAddress::default(),
+            triangle_array_stride: DeviceSize::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryMicromapDataKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::ACCELERATION_STRUCTURE_GEOMETRY_MICROMAP_DATA_KHR;
+}
+unsafe impl Extends<AccelerationStructureGeometryKHR<'_>>
+    for AccelerationStructureGeometryMicromapDataKHR<'_>
+{
+}
+impl<'a> AccelerationStructureGeometryMicromapDataKHR<'a> {
+    #[inline]
+    pub fn usage_counts(mut self, usage_counts: &'a [MicromapUsageKHR]) -> Self {
+        self.usage_counts_count = usage_counts.len() as _;
+        self.p_usage_counts = usage_counts.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn usage_counts_ptrs(mut self, usage_counts_ptrs: &'a [&'a MicromapUsageKHR]) -> Self {
+        self.usage_counts_count = usage_counts_ptrs.len() as _;
+        self.pp_usage_counts = usage_counts_ptrs.as_ptr().cast();
+        self
+    }
+    #[inline]
+    pub fn data(mut self, data: DeviceAddress) -> Self {
+        self.data = data;
+        self
+    }
+    #[inline]
+    pub fn triangle_array(mut self, triangle_array: DeviceAddress) -> Self {
+        self.triangle_array = triangle_array;
+        self
+    }
+    #[inline]
+    pub fn triangle_array_stride(mut self, triangle_array_stride: DeviceSize) -> Self {
+        self.triangle_array_stride = triangle_array_stride;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkMicromapCreateInfoEXT.html>"]
 #[must_use]
 pub struct MicromapCreateInfoEXT<'a> {
@@ -56684,6 +57313,33 @@ impl<'a> MicromapBuildSizesInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkMicromapUsageKHR.html>"]
+#[must_use]
+pub struct MicromapUsageKHR {
+    pub count: u32,
+    pub subdivision_level: u32,
+    pub format: OpacityMicromapFormatKHR,
+}
+impl MicromapUsageKHR {
+    #[inline]
+    pub fn count(mut self, count: u32) -> Self {
+        self.count = count;
+        self
+    }
+    #[inline]
+    pub fn subdivision_level(mut self, subdivision_level: u32) -> Self {
+        self.subdivision_level = subdivision_level;
+        self
+    }
+    #[inline]
+    pub fn format(mut self, format: OpacityMicromapFormatKHR) -> Self {
+        self.format = format;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkMicromapUsageEXT.html>"]
 #[must_use]
 pub struct MicromapUsageEXT {
@@ -56711,14 +57367,14 @@ impl MicromapUsageEXT {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
-#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkMicromapTriangleEXT.html>"]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkMicromapTriangleKHR.html>"]
 #[must_use]
-pub struct MicromapTriangleEXT {
+pub struct MicromapTriangleKHR {
     pub data_offset: u32,
     pub subdivision_level: u16,
     pub format: u16,
 }
-impl MicromapTriangleEXT {
+impl MicromapTriangleKHR {
     #[inline]
     pub fn data_offset(mut self, data_offset: u32) -> Self {
         self.data_offset = data_offset;
@@ -56732,6 +57388,43 @@ impl MicromapTriangleEXT {
     #[inline]
     pub fn format(mut self, format: u16) -> Self {
         self.format = format;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceOpacityMicromapFeaturesKHR.html>"]
+#[must_use]
+pub struct PhysicalDeviceOpacityMicromapFeaturesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub micromap: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {}
+impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            micromap: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapFeaturesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_OPACITY_MICROMAP_FEATURES_KHR;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {}
+unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {}
+impl<'a> PhysicalDeviceOpacityMicromapFeaturesKHR<'a> {
+    #[inline]
+    pub fn micromap(mut self, micromap: bool) -> Self {
+        self.micromap = micromap.into();
         self
     }
 }
@@ -56789,6 +57482,76 @@ impl<'a> PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceOpacityMicromapPropertiesKHR.html>"]
+#[must_use]
+pub struct PhysicalDeviceOpacityMicromapPropertiesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_opacity2_state_subdivision_level: u32,
+    pub max_opacity4_state_subdivision_level: u32,
+    pub max_opacity_lossy4_state_subdivision_level: u32,
+    pub max_micromap_triangles: u64,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {}
+impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            max_opacity2_state_subdivision_level: u32::default(),
+            max_opacity4_state_subdivision_level: u32::default(),
+            max_opacity_lossy4_state_subdivision_level: u32::default(),
+            max_micromap_triangles: u64::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapPropertiesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_OPACITY_MICROMAP_PROPERTIES_KHR;
+}
+unsafe impl Extends<PhysicalDeviceProperties2<'_>>
+    for PhysicalDeviceOpacityMicromapPropertiesKHR<'_>
+{
+}
+impl<'a> PhysicalDeviceOpacityMicromapPropertiesKHR<'a> {
+    #[inline]
+    pub fn max_opacity2_state_subdivision_level(
+        mut self,
+        max_opacity2_state_subdivision_level: u32,
+    ) -> Self {
+        self.max_opacity2_state_subdivision_level = max_opacity2_state_subdivision_level;
+        self
+    }
+    #[inline]
+    pub fn max_opacity4_state_subdivision_level(
+        mut self,
+        max_opacity4_state_subdivision_level: u32,
+    ) -> Self {
+        self.max_opacity4_state_subdivision_level = max_opacity4_state_subdivision_level;
+        self
+    }
+    #[inline]
+    pub fn max_opacity_lossy4_state_subdivision_level(
+        mut self,
+        max_opacity_lossy4_state_subdivision_level: u32,
+    ) -> Self {
+        self.max_opacity_lossy4_state_subdivision_level =
+            max_opacity_lossy4_state_subdivision_level;
+        self
+    }
+    #[inline]
+    pub fn max_micromap_triangles(mut self, max_micromap_triangles: u64) -> Self {
+        self.max_micromap_triangles = max_micromap_triangles;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceOpacityMicromapPropertiesEXT.html>"]
 #[must_use]
 pub struct PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
@@ -56835,6 +57598,78 @@ impl<'a> PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
         max_opacity4_state_subdivision_level: u32,
     ) -> Self {
         self.max_opacity4_state_subdivision_level = max_opacity4_state_subdivision_level;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkAccelerationStructureTrianglesOpacityMicromapKHR.html>"]
+#[must_use]
+pub struct AccelerationStructureTrianglesOpacityMicromapKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub index_type: IndexType,
+    pub index_buffer: DeviceAddress,
+    pub index_stride: DeviceSize,
+    pub base_triangle: u32,
+    pub micromap: AccelerationStructureKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for AccelerationStructureTrianglesOpacityMicromapKHR<'_> {}
+unsafe impl Sync for AccelerationStructureTrianglesOpacityMicromapKHR<'_> {}
+impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            index_type: IndexType::default(),
+            index_buffer: DeviceAddress::default(),
+            index_stride: DeviceSize::default(),
+            base_triangle: u32::default(),
+            micromap: AccelerationStructureKHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesOpacityMicromapKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_KHR;
+}
+unsafe impl Extends<AccelerationStructureGeometryTrianglesDataKHR<'_>>
+    for AccelerationStructureTrianglesOpacityMicromapKHR<'_>
+{
+}
+#[cfg(feature = "provisional")]
+unsafe impl Extends<AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'_>>
+    for AccelerationStructureTrianglesOpacityMicromapKHR<'_>
+{
+}
+impl<'a> AccelerationStructureTrianglesOpacityMicromapKHR<'a> {
+    #[inline]
+    pub fn index_type(mut self, index_type: IndexType) -> Self {
+        self.index_type = index_type;
+        self
+    }
+    #[inline]
+    pub fn index_buffer(mut self, index_buffer: DeviceAddress) -> Self {
+        self.index_buffer = index_buffer;
+        self
+    }
+    #[inline]
+    pub fn index_stride(mut self, index_stride: DeviceSize) -> Self {
+        self.index_stride = index_stride;
+        self
+    }
+    #[inline]
+    pub fn base_triangle(mut self, base_triangle: u32) -> Self {
+        self.base_triangle = base_triangle;
+        self
+    }
+    #[inline]
+    pub fn micromap(mut self, micromap: AccelerationStructureKHR) -> Self {
+        self.micromap = micromap;
         self
     }
 }
@@ -58150,6 +58985,88 @@ impl<'a> ImageViewSampleWeightCreateInfoQCOM<'a> {
     #[inline]
     pub fn num_phases(mut self, num_phases: u32) -> Self {
         self.num_phases = num_phases;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM.html>"]
+#[must_use]
+pub struct PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_multiple_wait_queues: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {}
+impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            shader_multiple_wait_queues: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_MULTIPLE_WAIT_QUEUES_FEATURES_QCOM;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>>
+    for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_>
+{
+}
+impl<'a> PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'a> {
+    #[inline]
+    pub fn shader_multiple_wait_queues(mut self, shader_multiple_wait_queues: bool) -> Self {
+        self.shader_multiple_wait_queues = shader_multiple_wait_queues.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM.html>"]
+#[must_use]
+pub struct PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_shader_wait_queues: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {}
+impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            max_shader_wait_queues: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_MULTIPLE_WAIT_QUEUES_PROPERTIES_QCOM;
+}
+unsafe impl Extends<PhysicalDeviceProperties2<'_>>
+    for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_>
+{
+}
+impl<'a> PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'a> {
+    #[inline]
+    pub fn max_shader_wait_queues(mut self, max_shader_wait_queues: u32) -> Self {
+        self.max_shader_wait_queues = max_shader_wait_queues;
         self
     }
 }
@@ -63757,6 +64674,63 @@ impl<'a> SamplerBlockMatchWindowCreateInfoQCOM<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceImageProcessing3FeaturesQCOM.html>"]
+#[must_use]
+pub struct PhysicalDeviceImageProcessing3FeaturesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub image_gather_linear: Bool32,
+    pub image_gather_extended_modes: Bool32,
+    pub block_match_extended_clamp_to_edge: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {}
+impl ::core::default::Default for PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            image_gather_linear: Bool32::default(),
+            image_gather_extended_modes: Bool32::default(),
+            block_match_extended_clamp_to_edge: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing3FeaturesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_3_FEATURES_QCOM;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceImageProcessing3FeaturesQCOM<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {}
+impl<'a> PhysicalDeviceImageProcessing3FeaturesQCOM<'a> {
+    #[inline]
+    pub fn image_gather_linear(mut self, image_gather_linear: bool) -> Self {
+        self.image_gather_linear = image_gather_linear.into();
+        self
+    }
+    #[inline]
+    pub fn image_gather_extended_modes(mut self, image_gather_extended_modes: bool) -> Self {
+        self.image_gather_extended_modes = image_gather_extended_modes.into();
+        self
+    }
+    #[inline]
+    pub fn block_match_extended_clamp_to_edge(
+        mut self,
+        block_match_extended_clamp_to_edge: bool,
+    ) -> Self {
+        self.block_match_extended_clamp_to_edge = block_match_extended_clamp_to_edge.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceDescriptorPoolOverallocationFeaturesNV.html>"]
 #[must_use]
 pub struct PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
@@ -66208,6 +67182,52 @@ impl<'a> CooperativeMatrixFlexibleDimensionsPropertiesNV<'a> {
     #[inline]
     pub fn workgroup_invocations(mut self, workgroup_invocations: u32) -> Self {
         self.workgroup_invocations = workgroup_invocations;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV.html>"]
+#[must_use]
+pub struct PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub cooperative_matrix_decode_vector: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {}
+impl ::core::default::Default for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            cooperative_matrix_decode_vector: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_DECODE_VECTOR_FEATURES_NV;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>>
+    for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_>
+{
+}
+impl<'a> PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'a> {
+    #[inline]
+    pub fn cooperative_matrix_decode_vector(
+        mut self,
+        cooperative_matrix_decode_vector: bool,
+    ) -> Self {
+        self.cooperative_matrix_decode_vector = cooperative_matrix_decode_vector.into();
         self
     }
 }
@@ -72534,6 +73554,88 @@ impl<'a> SubsampledImageFormatPropertiesEXT<'a> {
         subsampled_image_descriptor_count: u32,
     ) -> Self {
         self.subsampled_image_descriptor_count = subsampled_image_descriptor_count;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceShaderSplitBarrierFeaturesEXT.html>"]
+#[must_use]
+pub struct PhysicalDeviceShaderSplitBarrierFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_split_barrier: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {}
+impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            shader_split_barrier: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_SPLIT_BARRIER_FEATURES_EXT;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceShaderSplitBarrierFeaturesEXT<'a> {
+    #[inline]
+    pub fn shader_split_barrier(mut self, shader_split_barrier: bool) -> Self {
+        self.shader_split_barrier = shader_split_barrier.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceShaderSplitBarrierPropertiesEXT.html>"]
+#[must_use]
+pub struct PhysicalDeviceShaderSplitBarrierPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub split_barrier_reserved_shared_memory: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {}
+impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            split_barrier_reserved_shared_memory: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_SPLIT_BARRIER_PROPERTIES_EXT;
+}
+unsafe impl Extends<PhysicalDeviceProperties2<'_>>
+    for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceShaderSplitBarrierPropertiesEXT<'a> {
+    #[inline]
+    pub fn split_barrier_reserved_shared_memory(
+        mut self,
+        split_barrier_reserved_shared_memory: u32,
+    ) -> Self {
+        self.split_barrier_reserved_shared_memory = split_barrier_reserved_shared_memory;
         self
     }
 }

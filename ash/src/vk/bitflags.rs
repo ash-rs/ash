@@ -1976,6 +1976,20 @@ impl SpirvResourceTypeFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkGpaSqShaderStageFlagBitsAMD.html>"]
+pub struct GpaSqShaderStageFlagsAMD(pub(crate) Flags);
+vk_bitflags_wrapped!(GpaSqShaderStageFlagsAMD, Flags);
+impl GpaSqShaderStageFlagsAMD {
+    pub const PS: Self = Self(0b1);
+    pub const VS: Self = Self(0b10);
+    pub const GS: Self = Self(0b100);
+    pub const ES: Self = Self(0b1000);
+    pub const HS: Self = Self(0b1_0000);
+    pub const LS: Self = Self(0b10_0000);
+    pub const CS: Self = Self(0b100_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkAddressCommandFlagBitsKHR.html>"]
 pub struct AddressCommandFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(AddressCommandFlagsKHR, Flags);
