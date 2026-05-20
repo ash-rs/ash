@@ -47,6 +47,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   This trait must be imported in scope (`use ash::vk::TaggedStructure as _;`) to use the `push()` and `extend()` methods.
 - Renamed all extension `::new()` constructors to `::load()`, signifying they're only loading function pointers. (#1021)
 - Replace `specs/1.3-extensions` registry links with new `refpages/latest` documentation links
+- `extensions::khr::acceleration_structure` now takes `Option`al references in the following arguments (#1041):
+  - `max_primitive_counts` in `get_acceleration_structure_build_sizes_khr()`;
+  - `build_range_infos` in `cmd_build_acceleration_structures()`.
 
 ### Removed
 
