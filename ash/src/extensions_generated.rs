@@ -129,6 +129,7 @@ pub mod amd {
         }
     }
     #[doc = "VK_AMD_negative_viewport_height"]
+    #[deprecated = "Obsoleted by VK_KHR_maintenance1"]
     pub mod negative_viewport_height {
         pub use {
             crate::vk::AMD_NEGATIVE_VIEWPORT_HEIGHT_NAME as NAME,
@@ -136,6 +137,7 @@ pub mod amd {
         };
     }
     #[doc = "VK_AMD_gpu_shader_half_float"]
+    #[deprecated = "Deprecated by VK_KHR_shader_float16_int8"]
     pub mod gpu_shader_half_float {
         pub use {
             crate::vk::AMD_GPU_SHADER_HALF_FLOAT_NAME as NAME,
@@ -231,6 +233,7 @@ pub mod amd {
         };
     }
     #[doc = "VK_AMD_gpu_shader_int16"]
+    #[deprecated = "Deprecated by VK_KHR_shader_float16_int8"]
     pub mod gpu_shader_int16 {
         pub use {
             crate::vk::AMD_GPU_SHADER_INT16_NAME as NAME,
@@ -2517,6 +2520,7 @@ pub mod arm {
 #[doc = "Extensions tagged EXT"]
 pub mod ext {
     #[doc = "VK_EXT_debug_report"]
+    #[deprecated = "Deprecated by VK_EXT_debug_utils"]
     pub mod debug_report {
         use crate::vk::*;
         use core::ffi::*;
@@ -2981,6 +2985,7 @@ pub mod ext {
         }
     }
     #[doc = "VK_EXT_validation_flags"]
+    #[deprecated = "Deprecated by VK_EXT_layer_settings"]
     pub mod validation_flags {
         pub use {
             crate::vk::EXT_VALIDATION_FLAGS_NAME as NAME,
@@ -2988,6 +2993,7 @@ pub mod ext {
         };
     }
     #[doc = "VK_EXT_shader_subgroup_ballot"]
+    #[deprecated = "Deprecated by VK_VERSION_1_2"]
     pub mod shader_subgroup_ballot {
         pub use {
             crate::vk::EXT_SHADER_SUBGROUP_BALLOT_NAME as NAME,
@@ -2995,6 +3001,7 @@ pub mod ext {
         };
     }
     #[doc = "VK_EXT_shader_subgroup_vote"]
+    #[deprecated = "Deprecated by VK_VERSION_1_1"]
     pub mod shader_subgroup_vote {
         pub use {
             crate::vk::EXT_SHADER_SUBGROUP_VOTE_NAME as NAME,
@@ -5159,6 +5166,7 @@ pub mod ext {
         };
     }
     #[doc = "VK_EXT_buffer_device_address"]
+    #[deprecated = "Deprecated by VK_KHR_buffer_device_address"]
     pub mod buffer_device_address {
         use crate::vk::*;
         use core::ffi::*;
@@ -5302,6 +5310,7 @@ pub mod ext {
         };
     }
     #[doc = "VK_EXT_validation_features"]
+    #[deprecated = "Deprecated by VK_EXT_layer_settings"]
     pub mod validation_features {
         pub use {
             crate::vk::EXT_VALIDATION_FEATURES_NAME as NAME,
@@ -6657,6 +6666,7 @@ pub mod ext {
         }
     }
     #[doc = "VK_EXT_descriptor_buffer"]
+    #[deprecated = "Deprecated by VK_EXT_descriptor_heap"]
     pub mod descriptor_buffer {
         use crate::vk::*;
         use core::ffi::*;
@@ -12111,6 +12121,7 @@ pub mod img {
         };
     }
     #[doc = "VK_IMG_format_pvrtc"]
+    #[deprecated = "Deprecated by "]
     pub mod format_pvrtc {
         pub use {
             crate::vk::IMG_FORMAT_PVRTC_NAME as NAME,
@@ -21007,6 +21018,7 @@ pub mod msft {
 #[doc = "Extensions tagged MVK"]
 pub mod mvk {
     #[doc = "VK_MVK_ios_surface"]
+    #[deprecated = "Deprecated by VK_EXT_metal_surface"]
     pub mod ios_surface {
         use crate::vk::*;
         use core::ffi::*;
@@ -21075,6 +21087,7 @@ pub mod mvk {
         }
     }
     #[doc = "VK_MVK_macos_surface"]
+    #[deprecated = "Deprecated by VK_EXT_metal_surface"]
     pub mod macos_surface {
         use crate::vk::*;
         use core::ffi::*;
@@ -21215,6 +21228,7 @@ pub mod nn {
 #[doc = "Extensions tagged NV"]
 pub mod nv {
     #[doc = "VK_NV_glsl_shader"]
+    #[deprecated = "Deprecated by "]
     pub mod glsl_shader {
         pub use {
             crate::vk::NV_GLSL_SHADER_NAME as NAME,
@@ -21222,6 +21236,7 @@ pub mod nv {
         };
     }
     #[doc = "VK_NV_dedicated_allocation"]
+    #[deprecated = "Deprecated by VK_KHR_dedicated_allocation"]
     pub mod dedicated_allocation {
         pub use {
             crate::vk::NV_DEDICATED_ALLOCATION_NAME as NAME,
@@ -21236,6 +21251,7 @@ pub mod nv {
         };
     }
     #[doc = "VK_NV_external_memory_capabilities"]
+    #[deprecated = "Deprecated by VK_KHR_external_memory_capabilities"]
     pub mod external_memory_capabilities {
         use crate::vk::*;
         use core::ffi::*;
@@ -21311,6 +21327,7 @@ pub mod nv {
         }
     }
     #[doc = "VK_NV_external_memory"]
+    #[deprecated = "Deprecated by VK_KHR_external_memory"]
     pub mod external_memory {
         pub use {
             crate::vk::NV_EXTERNAL_MEMORY_NAME as NAME,
@@ -21318,6 +21335,7 @@ pub mod nv {
         };
     }
     #[doc = "VK_NV_external_memory_win32"]
+    #[deprecated = "Deprecated by VK_KHR_external_memory_win32"]
     pub mod external_memory_win32 {
         use crate::vk::*;
         use core::ffi::*;
@@ -21632,6 +21650,7 @@ pub mod nv {
         }
     }
     #[doc = "VK_NV_ray_tracing"]
+    #[deprecated = "Deprecated by VK_KHR_ray_tracing_pipeline"]
     pub mod ray_tracing {
         use crate::vk::*;
         use core::ffi::*;
@@ -23073,6 +23092,7 @@ pub mod nv {
     }
     #[doc = "VK_NV_displacement_micromap"]
     #[cfg(feature = "provisional")]
+    #[deprecated = "Deprecated by VK_NV_cluster_acceleration_structure"]
     pub mod displacement_micromap {
         pub use {
             crate::vk::NV_DISPLACEMENT_MICROMAP_NAME as NAME,
@@ -23902,6 +23922,7 @@ pub mod nv {
         }
     }
     #[doc = "VK_NV_per_stage_descriptor_set"]
+    #[deprecated = "Deprecated by VK_EXT_descriptor_heap"]
     pub mod per_stage_descriptor_set {
         pub use {
             crate::vk::NV_PER_STAGE_DESCRIPTOR_SET_NAME as NAME,

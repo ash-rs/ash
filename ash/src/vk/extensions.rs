@@ -5892,8 +5892,10 @@ pub type PFN_vkGetSwapchainGrallocUsage2ANDROID = unsafe extern "system" fn(
     gralloc_consumer_usage: *mut u64,
     gralloc_producer_usage: *mut u64,
 ) -> Result;
+#[deprecated = "Deprecated by VK_EXT_debug_utils"]
 pub const EXT_DEBUG_REPORT_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_report\0") };
+#[deprecated = "Deprecated by VK_EXT_debug_utils"]
 pub const EXT_DEBUG_REPORT_SPEC_VERSION: u32 = 10u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDebugReportCallbackEXT = unsafe extern "system" fn(
@@ -5919,8 +5921,10 @@ pub type PFN_vkDebugReportMessageEXT = unsafe extern "system" fn(
     p_layer_prefix: *const c_char,
     p_message: *const c_char,
 );
+#[deprecated = "Deprecated by "]
 pub const NV_GLSL_SHADER_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_glsl_shader\0") };
+#[deprecated = "Deprecated by "]
 pub const NV_GLSL_SHADER_SPEC_VERSION: u32 = 1u32;
 pub const EXT_DEPTH_RANGE_UNRESTRICTED_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_range_unrestricted\0") };
@@ -6053,8 +6057,10 @@ pub type PFN_vkCmdDecodeVideoKHR = unsafe extern "system" fn(
 pub const AMD_GCN_SHADER_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gcn_shader\0") };
 pub const AMD_GCN_SHADER_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "Deprecated by VK_KHR_dedicated_allocation"]
 pub const NV_DEDICATED_ALLOCATION_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_dedicated_allocation\0") };
+#[deprecated = "Deprecated by VK_KHR_dedicated_allocation"]
 pub const NV_DEDICATED_ALLOCATION_SPEC_VERSION: u32 = 1u32;
 pub const EXT_TRANSFORM_FEEDBACK_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_transform_feedback\0") };
@@ -6197,11 +6203,15 @@ pub type PFN_vkCmdDrawIndexedIndirectCount = unsafe extern "system" fn(
     max_draw_count: u32,
     stride: u32,
 );
+#[deprecated = "Obsoleted by VK_KHR_maintenance1"]
 pub const AMD_NEGATIVE_VIEWPORT_HEIGHT_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_negative_viewport_height\0") };
+#[deprecated = "Obsoleted by VK_KHR_maintenance1"]
 pub const AMD_NEGATIVE_VIEWPORT_HEIGHT_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "Deprecated by VK_KHR_shader_float16_int8"]
 pub const AMD_GPU_SHADER_HALF_FLOAT_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_half_float\0") };
+#[deprecated = "Deprecated by VK_KHR_shader_float16_int8"]
 pub const AMD_GPU_SHADER_HALF_FLOAT_SPEC_VERSION: u32 = 2u32;
 pub const AMD_SHADER_BALLOT_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_ballot\0") };
@@ -6259,11 +6269,15 @@ pub const NV_CORNER_SAMPLED_IMAGE_SPEC_VERSION: u32 = 2u32;
 pub const KHR_MULTIVIEW_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_multiview\0") };
 pub const KHR_MULTIVIEW_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "Deprecated by "]
 pub const IMG_FORMAT_PVRTC_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_IMG_format_pvrtc\0") };
+#[deprecated = "Deprecated by "]
 pub const IMG_FORMAT_PVRTC_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "Deprecated by VK_KHR_external_memory_capabilities"]
 pub const NV_EXTERNAL_MEMORY_CAPABILITIES_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_capabilities\0") };
+#[deprecated = "Deprecated by VK_KHR_external_memory_capabilities"]
 pub const NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV =
@@ -6277,11 +6291,15 @@ pub type PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV =
         external_handle_type: ExternalMemoryHandleTypeFlagsNV,
         p_external_image_format_properties: *mut ExternalImageFormatPropertiesNV,
     ) -> Result;
+#[deprecated = "Deprecated by VK_KHR_external_memory"]
 pub const NV_EXTERNAL_MEMORY_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory\0") };
+#[deprecated = "Deprecated by VK_KHR_external_memory"]
 pub const NV_EXTERNAL_MEMORY_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "Deprecated by VK_KHR_external_memory_win32"]
 pub const NV_EXTERNAL_MEMORY_WIN32_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_win32\0") };
+#[deprecated = "Deprecated by VK_KHR_external_memory_win32"]
 pub const NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetMemoryWin32HandleNV = unsafe extern "system" fn(
@@ -6360,8 +6378,10 @@ pub type PFN_vkCmdDispatchBase = unsafe extern "system" fn(
     group_count_y: u32,
     group_count_z: u32,
 );
+#[deprecated = "Deprecated by VK_EXT_layer_settings"]
 pub const EXT_VALIDATION_FLAGS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_flags\0") };
+#[deprecated = "Deprecated by VK_EXT_layer_settings"]
 pub const EXT_VALIDATION_FLAGS_SPEC_VERSION: u32 = 3u32;
 pub const NN_VI_SURFACE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NN_vi_surface\0") };
@@ -6376,11 +6396,15 @@ pub type PFN_vkCreateViSurfaceNN = unsafe extern "system" fn(
 pub const KHR_SHADER_DRAW_PARAMETERS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_draw_parameters\0") };
 pub const KHR_SHADER_DRAW_PARAMETERS_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "Deprecated by VK_VERSION_1_2"]
 pub const EXT_SHADER_SUBGROUP_BALLOT_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_ballot\0") };
+#[deprecated = "Deprecated by VK_VERSION_1_2"]
 pub const EXT_SHADER_SUBGROUP_BALLOT_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "Deprecated by VK_VERSION_1_1"]
 pub const EXT_SHADER_SUBGROUP_VOTE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_vote\0") };
+#[deprecated = "Deprecated by VK_VERSION_1_1"]
 pub const EXT_SHADER_SUBGROUP_VOTE_SPEC_VERSION: u32 = 1u32;
 pub const EXT_TEXTURE_COMPRESSION_ASTC_HDR_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_texture_compression_astc_hdr\0") };
@@ -6859,8 +6883,10 @@ pub type PFN_vkGetDisplayPlaneCapabilities2KHR = unsafe extern "system" fn(
     p_display_plane_info: *const DisplayPlaneInfo2KHR<'_>,
     p_capabilities: *mut DisplayPlaneCapabilities2KHR<'_>,
 ) -> Result;
+#[deprecated = "Deprecated by VK_EXT_metal_surface"]
 pub const MVK_IOS_SURFACE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_MVK_ios_surface\0") };
+#[deprecated = "Deprecated by VK_EXT_metal_surface"]
 pub const MVK_IOS_SURFACE_SPEC_VERSION: u32 = 3u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateIOSSurfaceMVK = unsafe extern "system" fn(
@@ -6869,8 +6895,10 @@ pub type PFN_vkCreateIOSSurfaceMVK = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
+#[deprecated = "Deprecated by VK_EXT_metal_surface"]
 pub const MVK_MACOS_SURFACE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_MVK_macos_surface\0") };
+#[deprecated = "Deprecated by VK_EXT_metal_surface"]
 pub const MVK_MACOS_SURFACE_SPEC_VERSION: u32 = 3u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateMacOSSurfaceMVK = unsafe extern "system" fn(
@@ -6963,8 +6991,10 @@ pub const EXT_SAMPLER_FILTER_MINMAX_SPEC_VERSION: u32 = 2u32;
 pub const KHR_STORAGE_BUFFER_STORAGE_CLASS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_storage_buffer_storage_class\0") };
 pub const KHR_STORAGE_BUFFER_STORAGE_CLASS_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "Deprecated by VK_KHR_shader_float16_int8"]
 pub const AMD_GPU_SHADER_INT16_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_int16\0") };
+#[deprecated = "Deprecated by VK_KHR_shader_float16_int8"]
 pub const AMD_GPU_SHADER_INT16_SPEC_VERSION: u32 = 2u32;
 pub const AMD_GPA_INTERFACE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpa_interface\0") };
@@ -7508,8 +7538,10 @@ pub type PFN_vkCmdSetCoarseSampleOrderNV = unsafe extern "system" fn(
     custom_sample_order_count: u32,
     p_custom_sample_orders: *const CoarseSampleOrderCustomNV<'_>,
 );
+#[deprecated = "Deprecated by VK_KHR_ray_tracing_pipeline"]
 pub const NV_RAY_TRACING_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing\0") };
+#[deprecated = "Deprecated by VK_KHR_ray_tracing_pipeline"]
 pub const NV_RAY_TRACING_SPEC_VERSION: u32 = 3u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateAccelerationStructureNV = unsafe extern "system" fn(
@@ -8012,8 +8044,10 @@ pub const NV_DEDICATED_ALLOCATION_IMAGE_ALIASING_SPEC_VERSION: u32 = 1u32;
 pub const KHR_SEPARATE_DEPTH_STENCIL_LAYOUTS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_separate_depth_stencil_layouts\0") };
 pub const KHR_SEPARATE_DEPTH_STENCIL_LAYOUTS_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "Deprecated by VK_KHR_buffer_device_address"]
 pub const EXT_BUFFER_DEVICE_ADDRESS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_buffer_device_address\0") };
+#[deprecated = "Deprecated by VK_KHR_buffer_device_address"]
 pub const EXT_BUFFER_DEVICE_ADDRESS_SPEC_VERSION: u32 = 2u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetBufferDeviceAddress = unsafe extern "system" fn(
@@ -8032,8 +8066,10 @@ pub type PFN_vkGetPhysicalDeviceToolProperties = unsafe extern "system" fn(
 pub const EXT_SEPARATE_STENCIL_USAGE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_separate_stencil_usage\0") };
 pub const EXT_SEPARATE_STENCIL_USAGE_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "Deprecated by VK_EXT_layer_settings"]
 pub const EXT_VALIDATION_FEATURES_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_features\0") };
+#[deprecated = "Deprecated by VK_EXT_layer_settings"]
 pub const EXT_VALIDATION_FEATURES_SPEC_VERSION: u32 = 6u32;
 pub const KHR_PRESENT_WAIT_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_present_wait\0") };
@@ -8622,8 +8658,10 @@ pub type PFN_vkQueueSubmit2 = unsafe extern "system" fn(
     p_submits: *const SubmitInfo2<'_>,
     fence: Fence,
 ) -> Result;
+#[deprecated = "Deprecated by VK_EXT_descriptor_heap"]
 pub const EXT_DESCRIPTOR_BUFFER_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_descriptor_buffer\0") };
+#[deprecated = "Deprecated by VK_EXT_descriptor_heap"]
 pub const EXT_DESCRIPTOR_BUFFER_SPEC_VERSION: u32 = 1u32;
 #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-descriptor-sets>"]
 #[allow(non_camel_case_types)]
@@ -9344,8 +9382,10 @@ pub type PFN_vkGetMicromapBuildSizesEXT = unsafe extern "system" fn(
     p_size_info: *mut MicromapBuildSizesInfoEXT<'_>,
 );
 #[cfg(feature = "provisional")]
+#[deprecated = "Deprecated by VK_NV_cluster_acceleration_structure"]
 pub const NV_DISPLACEMENT_MICROMAP_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_displacement_micromap\0") };
+#[deprecated = "Deprecated by VK_NV_cluster_acceleration_structure"]
 #[cfg(feature = "provisional")]
 pub const NV_DISPLACEMENT_MICROMAP_SPEC_VERSION: u32 = 2u32;
 pub const EXT_LOAD_STORE_OP_NONE_NAME: &CStr =
@@ -10162,8 +10202,10 @@ pub const KHR_VIDEO_DECODE_VP9_SPEC_VERSION: u32 = 1u32;
 pub const KHR_VIDEO_MAINTENANCE1_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_maintenance1\0") };
 pub const KHR_VIDEO_MAINTENANCE1_SPEC_VERSION: u32 = 1u32;
+#[deprecated = "Deprecated by VK_EXT_descriptor_heap"]
 pub const NV_PER_STAGE_DESCRIPTOR_SET_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_per_stage_descriptor_set\0") };
+#[deprecated = "Deprecated by VK_EXT_descriptor_heap"]
 pub const NV_PER_STAGE_DESCRIPTOR_SET_SPEC_VERSION: u32 = 1u32;
 pub const QCOM_IMAGE_PROCESSING2_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_image_processing2\0") };
