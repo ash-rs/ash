@@ -63,7 +63,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 352;
+pub const HEADER_VERSION: u32 = 353;
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampleMask.html>"]
@@ -2697,6 +2697,89 @@ impl<'a> ImageCreateInfo<'a> {
     #[inline]
     pub fn initial_layout(mut self, initial_layout: ImageLayout) -> Self {
         self.initial_layout = initial_layout;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkImageCreateFlags2CreateInfoKHR.html>"]
+#[must_use]
+pub struct ImageCreateFlags2CreateInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub flags: ImageCreateFlags2KHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for ImageCreateFlags2CreateInfoKHR<'_> {}
+unsafe impl Sync for ImageCreateFlags2CreateInfoKHR<'_> {}
+impl ::core::default::Default for ImageCreateFlags2CreateInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            flags: ImageCreateFlags2KHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for ImageCreateFlags2CreateInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CREATE_FLAGS_2_CREATE_INFO_KHR;
+}
+unsafe impl Extends<ImageCreateInfo<'_>> for ImageCreateFlags2CreateInfoKHR<'_> {}
+unsafe impl Extends<PhysicalDeviceImageFormatInfo2<'_>> for ImageCreateFlags2CreateInfoKHR<'_> {}
+unsafe impl Extends<FramebufferAttachmentImageInfo<'_>> for ImageCreateFlags2CreateInfoKHR<'_> {}
+unsafe impl Extends<VideoFormatPropertiesKHR<'_>> for ImageCreateFlags2CreateInfoKHR<'_> {}
+impl<'a> ImageCreateFlags2CreateInfoKHR<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: ImageCreateFlags2KHR) -> Self {
+        self.flags = flags;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkImageUsageFlags2CreateInfoKHR.html>"]
+#[must_use]
+pub struct ImageUsageFlags2CreateInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub usage: ImageUsageFlags2KHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for ImageUsageFlags2CreateInfoKHR<'_> {}
+unsafe impl Sync for ImageUsageFlags2CreateInfoKHR<'_> {}
+impl ::core::default::Default for ImageUsageFlags2CreateInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            usage: ImageUsageFlags2KHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for ImageUsageFlags2CreateInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_USAGE_FLAGS_2_CREATE_INFO_KHR;
+}
+unsafe impl Extends<FramebufferAttachmentImageInfo<'_>> for ImageUsageFlags2CreateInfoKHR<'_> {}
+unsafe impl Extends<ImageCreateInfo<'_>> for ImageUsageFlags2CreateInfoKHR<'_> {}
+unsafe impl Extends<PhysicalDeviceImageFormatInfo2<'_>> for ImageUsageFlags2CreateInfoKHR<'_> {}
+unsafe impl Extends<PhysicalDeviceSparseImageFormatInfo2<'_>>
+    for ImageUsageFlags2CreateInfoKHR<'_>
+{
+}
+unsafe impl Extends<PhysicalDeviceVideoFormatInfoKHR<'_>> for ImageUsageFlags2CreateInfoKHR<'_> {}
+unsafe impl Extends<SurfaceCapabilities2KHR<'_>> for ImageUsageFlags2CreateInfoKHR<'_> {}
+unsafe impl Extends<SwapchainCreateInfoKHR<'_>> for ImageUsageFlags2CreateInfoKHR<'_> {}
+unsafe impl Extends<VideoFormatPropertiesKHR<'_>> for ImageUsageFlags2CreateInfoKHR<'_> {}
+impl<'a> ImageUsageFlags2CreateInfoKHR<'a> {
+    #[inline]
+    pub fn usage(mut self, usage: ImageUsageFlags2KHR) -> Self {
+        self.usage = usage;
         self
     }
 }
@@ -17762,6 +17845,82 @@ impl<'a> SharedPresentSurfaceCapabilitiesKHR<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSwapchainFlagsSurfaceCapabilitiesEXT.html>"]
+#[must_use]
+pub struct SwapchainFlagsSurfaceCapabilitiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub swapchain_supported_flags: SwapchainCreateFlagsKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for SwapchainFlagsSurfaceCapabilitiesEXT<'_> {}
+unsafe impl Sync for SwapchainFlagsSurfaceCapabilitiesEXT<'_> {}
+impl ::core::default::Default for SwapchainFlagsSurfaceCapabilitiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            swapchain_supported_flags: SwapchainCreateFlagsKHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for SwapchainFlagsSurfaceCapabilitiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_FLAGS_SURFACE_CAPABILITIES_EXT;
+}
+unsafe impl Extends<SurfaceCapabilities2KHR<'_>> for SwapchainFlagsSurfaceCapabilitiesEXT<'_> {}
+impl<'a> SwapchainFlagsSurfaceCapabilitiesEXT<'a> {
+    #[inline]
+    pub fn swapchain_supported_flags(
+        mut self,
+        swapchain_supported_flags: SwapchainCreateFlagsKHR,
+    ) -> Self {
+        self.swapchain_supported_flags = swapchain_supported_flags;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSharedPresentSurfaceCapabilities2KHR.html>"]
+#[must_use]
+pub struct SharedPresentSurfaceCapabilities2KHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shared_present_supported_usage_flags: ImageUsageFlags2KHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for SharedPresentSurfaceCapabilities2KHR<'_> {}
+unsafe impl Sync for SharedPresentSurfaceCapabilities2KHR<'_> {}
+impl ::core::default::Default for SharedPresentSurfaceCapabilities2KHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            shared_present_supported_usage_flags: ImageUsageFlags2KHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for SharedPresentSurfaceCapabilities2KHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SHARED_PRESENT_SURFACE_CAPABILITIES_2_KHR;
+}
+unsafe impl Extends<SurfaceCapabilities2KHR<'_>> for SharedPresentSurfaceCapabilities2KHR<'_> {}
+impl<'a> SharedPresentSurfaceCapabilities2KHR<'a> {
+    #[inline]
+    pub fn shared_present_supported_usage_flags(
+        mut self,
+        shared_present_supported_usage_flags: ImageUsageFlags2KHR,
+    ) -> Self {
+        self.shared_present_supported_usage_flags = shared_present_supported_usage_flags;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDevice16BitStorageFeatures.html>"]
 #[must_use]
 pub struct PhysicalDevice16BitStorageFeatures<'a> {
@@ -18320,6 +18479,41 @@ unsafe impl Extends<ImageViewCreateInfo<'_>> for ImageViewUsageCreateInfo<'_> {}
 impl<'a> ImageViewUsageCreateInfo<'a> {
     #[inline]
     pub fn usage(mut self, usage: ImageUsageFlags) -> Self {
+        self.usage = usage;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkImageViewUsage2CreateInfoKHR.html>"]
+#[must_use]
+pub struct ImageViewUsage2CreateInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub usage: ImageUsageFlags2KHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for ImageViewUsage2CreateInfoKHR<'_> {}
+unsafe impl Sync for ImageViewUsage2CreateInfoKHR<'_> {}
+impl ::core::default::Default for ImageViewUsage2CreateInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            usage: ImageUsageFlags2KHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for ImageViewUsage2CreateInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_USAGE_2_CREATE_INFO_KHR;
+}
+unsafe impl Extends<ImageViewCreateInfo<'_>> for ImageViewUsage2CreateInfoKHR<'_> {}
+impl<'a> ImageViewUsage2CreateInfoKHR<'a> {
+    #[inline]
+    pub fn usage(mut self, usage: ImageUsageFlags2KHR) -> Self {
         self.usage = usage;
         self
     }
@@ -29116,6 +29310,42 @@ impl<'a> ImageStencilUsageCreateInfo<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkImageStencilUsage2CreateInfoKHR.html>"]
+#[must_use]
+pub struct ImageStencilUsage2CreateInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub stencil_usage: ImageUsageFlags2KHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for ImageStencilUsage2CreateInfoKHR<'_> {}
+unsafe impl Sync for ImageStencilUsage2CreateInfoKHR<'_> {}
+impl ::core::default::Default for ImageStencilUsage2CreateInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            stencil_usage: ImageUsageFlags2KHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for ImageStencilUsage2CreateInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_STENCIL_USAGE_2_CREATE_INFO_KHR;
+}
+unsafe impl Extends<ImageCreateInfo<'_>> for ImageStencilUsage2CreateInfoKHR<'_> {}
+unsafe impl Extends<PhysicalDeviceImageFormatInfo2<'_>> for ImageStencilUsage2CreateInfoKHR<'_> {}
+impl<'a> ImageStencilUsage2CreateInfoKHR<'a> {
+    #[inline]
+    pub fn stencil_usage(mut self, stencil_usage: ImageUsageFlags2KHR) -> Self {
+        self.stencil_usage = stencil_usage;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDeviceMemoryOverallocationCreateInfoAMD.html>"]
 #[must_use]
 pub struct DeviceMemoryOverallocationCreateInfoAMD<'a> {
@@ -38560,6 +38790,43 @@ impl<'a> PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceExtendedFlagsFeaturesKHR.html>"]
+#[must_use]
+pub struct PhysicalDeviceExtendedFlagsFeaturesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub extended_flags: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceExtendedFlagsFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceExtendedFlagsFeaturesKHR<'_> {}
+impl ::core::default::Default for PhysicalDeviceExtendedFlagsFeaturesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            extended_flags: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedFlagsFeaturesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_EXTENDED_FLAGS_FEATURES_KHR;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceExtendedFlagsFeaturesKHR<'_> {}
+unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceExtendedFlagsFeaturesKHR<'_> {}
+impl<'a> PhysicalDeviceExtendedFlagsFeaturesKHR<'a> {
+    #[inline]
+    pub fn extended_flags(mut self, extended_flags: bool) -> Self {
+        self.extended_flags = extended_flags.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkColorBlendEquationEXT.html>"]
 #[must_use]
@@ -44915,6 +45182,52 @@ impl<'a> MultisampledRenderToSingleSampledInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceMultisampledRenderToSwapchainFeaturesEXT.html>"]
+#[must_use]
+pub struct PhysicalDeviceMultisampledRenderToSwapchainFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub multisampled_render_to_swapchain: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceMultisampledRenderToSwapchainFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceMultisampledRenderToSwapchainFeaturesEXT<'_> {}
+impl ::core::default::Default for PhysicalDeviceMultisampledRenderToSwapchainFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            multisampled_render_to_swapchain: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultisampledRenderToSwapchainFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_MULTISAMPLED_RENDER_TO_SWAPCHAIN_FEATURES_EXT;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceMultisampledRenderToSwapchainFeaturesEXT<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>>
+    for PhysicalDeviceMultisampledRenderToSwapchainFeaturesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceMultisampledRenderToSwapchainFeaturesEXT<'a> {
+    #[inline]
+    pub fn multisampled_render_to_swapchain(
+        mut self,
+        multisampled_render_to_swapchain: bool,
+    ) -> Self {
+        self.multisampled_render_to_swapchain = multisampled_render_to_swapchain.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDevicePipelineProtectedAccessFeatures.html>"]
 #[must_use]
 pub struct PhysicalDevicePipelineProtectedAccessFeatures<'a> {
@@ -48215,6 +48528,148 @@ impl<'a> VideoEncodeCapabilitiesKHR<'a> {
         supported_encode_feedback_flags: VideoEncodeFeedbackFlagsKHR,
     ) -> Self {
         self.supported_encode_feedback_flags = supported_encode_feedback_flags;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceVideoEncodeFeedback2FeaturesKHR.html>"]
+#[must_use]
+pub struct PhysicalDeviceVideoEncodeFeedback2FeaturesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub video_encode_feedback2: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceVideoEncodeFeedback2FeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceVideoEncodeFeedback2FeaturesKHR<'_> {}
+impl ::core::default::Default for PhysicalDeviceVideoEncodeFeedback2FeaturesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            video_encode_feedback2: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeFeedback2FeaturesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_VIDEO_ENCODE_FEEDBACK_2_FEATURES_KHR;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceVideoEncodeFeedback2FeaturesKHR<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceVideoEncodeFeedback2FeaturesKHR<'_> {}
+impl<'a> PhysicalDeviceVideoEncodeFeedback2FeaturesKHR<'a> {
+    #[inline]
+    pub fn video_encode_feedback2(mut self, video_encode_feedback2: bool) -> Self {
+        self.video_encode_feedback2 = video_encode_feedback2.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkVideoEncodeFeedback2CapabilitiesKHR.html>"]
+#[must_use]
+pub struct VideoEncodeFeedback2CapabilitiesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_per_partition_feedback_entries: u32,
+    pub supported_per_partition_encode_feedback_flags: VideoEncodePerPartitionFeedbackFlagsKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for VideoEncodeFeedback2CapabilitiesKHR<'_> {}
+unsafe impl Sync for VideoEncodeFeedback2CapabilitiesKHR<'_> {}
+impl ::core::default::Default for VideoEncodeFeedback2CapabilitiesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            max_per_partition_feedback_entries: u32::default(),
+            supported_per_partition_encode_feedback_flags:
+                VideoEncodePerPartitionFeedbackFlagsKHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for VideoEncodeFeedback2CapabilitiesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_FEEDBACK_2_CAPABILITIES_KHR;
+}
+unsafe impl Extends<VideoCapabilitiesKHR<'_>> for VideoEncodeFeedback2CapabilitiesKHR<'_> {}
+impl<'a> VideoEncodeFeedback2CapabilitiesKHR<'a> {
+    #[inline]
+    pub fn max_per_partition_feedback_entries(
+        mut self,
+        max_per_partition_feedback_entries: u32,
+    ) -> Self {
+        self.max_per_partition_feedback_entries = max_per_partition_feedback_entries;
+        self
+    }
+    #[inline]
+    pub fn supported_per_partition_encode_feedback_flags(
+        mut self,
+        supported_per_partition_encode_feedback_flags: VideoEncodePerPartitionFeedbackFlagsKHR,
+    ) -> Self {
+        self.supported_per_partition_encode_feedback_flags =
+            supported_per_partition_encode_feedback_flags;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkQueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR.html>"]
+#[must_use]
+pub struct QueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub max_per_partition_feedback_entries: u32,
+    pub per_partition_encode_feedback_flags: VideoEncodePerPartitionFeedbackFlagsKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for QueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR<'_> {}
+unsafe impl Sync for QueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR<'_> {}
+impl ::core::default::Default for QueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            max_per_partition_feedback_entries: u32::default(),
+            per_partition_encode_feedback_flags: VideoEncodePerPartitionFeedbackFlagsKHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for QueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::QUERY_POOL_VIDEO_ENCODE_PER_PARTITION_FEEDBACK_CREATE_INFO_KHR;
+}
+unsafe impl Extends<QueryPoolCreateInfo<'_>>
+    for QueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR<'_>
+{
+}
+impl<'a> QueryPoolVideoEncodePerPartitionFeedbackCreateInfoKHR<'a> {
+    #[inline]
+    pub fn max_per_partition_feedback_entries(
+        mut self,
+        max_per_partition_feedback_entries: u32,
+    ) -> Self {
+        self.max_per_partition_feedback_entries = max_per_partition_feedback_entries;
+        self
+    }
+    #[inline]
+    pub fn per_partition_encode_feedback_flags(
+        mut self,
+        per_partition_encode_feedback_flags: VideoEncodePerPartitionFeedbackFlagsKHR,
+    ) -> Self {
+        self.per_partition_encode_feedback_flags = per_partition_encode_feedback_flags;
         self
     }
 }
@@ -54584,6 +55039,61 @@ impl<'a> FormatProperties3<'a> {
     }
     #[inline]
     pub fn buffer_features(mut self, buffer_features: FormatFeatureFlags2) -> Self {
+        self.buffer_features = buffer_features;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkFormatProperties4KHR.html>"]
+#[must_use]
+pub struct FormatProperties4KHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub linear_tiling_features: FormatFeatureFlags4KHR,
+    pub optimal_tiling_features: FormatFeatureFlags4KHR,
+    pub buffer_features: FormatFeatureFlags4KHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for FormatProperties4KHR<'_> {}
+unsafe impl Sync for FormatProperties4KHR<'_> {}
+impl ::core::default::Default for FormatProperties4KHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            linear_tiling_features: FormatFeatureFlags4KHR::default(),
+            optimal_tiling_features: FormatFeatureFlags4KHR::default(),
+            buffer_features: FormatFeatureFlags4KHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for FormatProperties4KHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::FORMAT_PROPERTIES_4_KHR;
+}
+unsafe impl Extends<FormatProperties2<'_>> for FormatProperties4KHR<'_> {}
+impl<'a> FormatProperties4KHR<'a> {
+    #[inline]
+    pub fn linear_tiling_features(
+        mut self,
+        linear_tiling_features: FormatFeatureFlags4KHR,
+    ) -> Self {
+        self.linear_tiling_features = linear_tiling_features;
+        self
+    }
+    #[inline]
+    pub fn optimal_tiling_features(
+        mut self,
+        optimal_tiling_features: FormatFeatureFlags4KHR,
+    ) -> Self {
+        self.optimal_tiling_features = optimal_tiling_features;
+        self
+    }
+    #[inline]
+    pub fn buffer_features(mut self, buffer_features: FormatFeatureFlags4KHR) -> Self {
         self.buffer_features = buffer_features;
         self
     }

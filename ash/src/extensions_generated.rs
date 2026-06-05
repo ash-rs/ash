@@ -10984,6 +10984,13 @@ pub mod ext {
             crate::vk::EXT_VERTEX_ATTRIBUTE_ROBUSTNESS_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_EXT_multisampled_render_to_swapchain"]
+    pub mod multisampled_render_to_swapchain {
+        pub use {
+            crate::vk::EXT_MULTISAMPLED_RENDER_TO_SWAPCHAIN_NAME as NAME,
+            crate::vk::EXT_MULTISAMPLED_RENDER_TO_SWAPCHAIN_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_EXT_fragment_density_map_offset"]
     pub mod fragment_density_map_offset {
         use crate::vk::*;
@@ -20872,6 +20879,13 @@ pub mod khr {
             crate::vk::KHR_VIDEO_MAINTENANCE2_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_KHR_video_encode_feedback2"]
+    pub mod video_encode_feedback2 {
+        pub use {
+            crate::vk::KHR_VIDEO_ENCODE_FEEDBACK2_NAME as NAME,
+            crate::vk::KHR_VIDEO_ENCODE_FEEDBACK2_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_KHR_depth_clamp_zero_one"]
     pub mod depth_clamp_zero_one {
         pub use {
@@ -20971,6 +20985,13 @@ pub mod khr {
         pub use {
             crate::vk::KHR_MAINTENANCE11_NAME as NAME,
             crate::vk::KHR_MAINTENANCE11_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_extended_flags"]
+    pub mod extended_flags {
+        pub use {
+            crate::vk::KHR_EXTENDED_FLAGS_NAME as NAME,
+            crate::vk::KHR_EXTENDED_FLAGS_SPEC_VERSION as SPEC_VERSION,
         };
     }
 }

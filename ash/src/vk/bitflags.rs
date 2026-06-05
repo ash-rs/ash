@@ -204,6 +204,21 @@ impl ImageUsageFlags {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkImageUsageFlagBits2KHR.html>"]
+pub struct ImageUsageFlags2KHR(pub(crate) Flags64);
+vk_bitflags_wrapped!(ImageUsageFlags2KHR, Flags64);
+impl ImageUsageFlags2KHR {
+    pub const TRANSFER_SRC: Self = Self(0b1);
+    pub const TRANSFER_DST: Self = Self(0b10);
+    pub const SAMPLED: Self = Self(0b100);
+    pub const STORAGE: Self = Self(0b1000);
+    pub const COLOR_ATTACHMENT: Self = Self(0b1_0000);
+    pub const DEPTH_STENCIL_ATTACHMENT: Self = Self(0b10_0000);
+    pub const TRANSIENT_ATTACHMENT: Self = Self(0b100_0000);
+    pub const INPUT_ATTACHMENT: Self = Self(0b1000_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkImageCreateFlagBits.html>"]
 pub struct ImageCreateFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(ImageCreateFlags, Flags);
@@ -217,6 +232,18 @@ impl ImageCreateFlags {
     #[doc = "Allows image views to have different format than the base image"]
     pub const MUTABLE_FORMAT: Self = Self(0b1000);
     #[doc = "Allows creating image views with cube type from the created image"]
+    pub const CUBE_COMPATIBLE: Self = Self(0b1_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkImageCreateFlagBits2KHR.html>"]
+pub struct ImageCreateFlags2KHR(pub(crate) Flags64);
+vk_bitflags_wrapped!(ImageCreateFlags2KHR, Flags64);
+impl ImageCreateFlags2KHR {
+    pub const SPARSE_BINDING: Self = Self(0b1);
+    pub const SPARSE_RESIDENCY: Self = Self(0b10);
+    pub const SPARSE_ALIASED: Self = Self(0b100);
+    pub const MUTABLE_FORMAT: Self = Self(0b1000);
     pub const CUBE_COMPATIBLE: Self = Self(0b1_0000);
 }
 #[repr(transparent)]
@@ -1398,6 +1425,16 @@ impl VideoEncodeFeedbackFlagsKHR {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkVideoEncodePerPartitionFeedbackFlagBitsKHR.html>"]
+pub struct VideoEncodePerPartitionFeedbackFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodePerPartitionFeedbackFlagsKHR, Flags);
+impl VideoEncodePerPartitionFeedbackFlagsKHR {
+    pub const STATUS: Self = Self(0b1);
+    pub const BITSTREAM_BUFFER_OFFSET: Self = Self(0b10);
+    pub const BITSTREAM_BYTES_WRITTEN: Self = Self(0b100);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkVideoEncodeRateControlModeFlagBitsKHR.html>"]
 pub struct VideoEncodeRateControlModeFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEncodeRateControlModeFlagsKHR, Flags);
@@ -1550,6 +1587,12 @@ impl FormatFeatureFlags2 {
     pub const SAMPLED_IMAGE_DEPTH_COMPARISON: Self =
         Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000);
 }
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkFormatFeatureFlagBits4KHR.html>"]
+pub struct FormatFeatureFlags4KHR(pub(crate) Flags64);
+vk_bitflags_wrapped!(FormatFeatureFlags4KHR, Flags64);
+impl FormatFeatureFlags4KHR {}
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkRenderingFlagBits.html>"]

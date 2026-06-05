@@ -3059,6 +3059,12 @@ impl fmt::Debug for FormatFeatureFlags2 {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for FormatFeatureFlags4KHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags64, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for FragmentShadingRateCombinerOpKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
@@ -3579,6 +3585,67 @@ impl fmt::Debug for ImageCreateFlags {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for ImageCreateFlags2KHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags64, &str)] = &[
+            (ImageCreateFlags2KHR::SPARSE_BINDING.0, "SPARSE_BINDING"),
+            (ImageCreateFlags2KHR::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
+            (ImageCreateFlags2KHR::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
+            (ImageCreateFlags2KHR::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
+            (ImageCreateFlags2KHR::CUBE_COMPATIBLE.0, "CUBE_COMPATIBLE"),
+            (
+                ImageCreateFlags2KHR::ALIAS_SINGLE_LAYER_DESCRIPTOR.0,
+                "ALIAS_SINGLE_LAYER_DESCRIPTOR",
+            ),
+            (
+                ImageCreateFlags2KHR::TYPE_2D_ARRAY_COMPATIBLE.0,
+                "TYPE_2D_ARRAY_COMPATIBLE",
+            ),
+            (
+                ImageCreateFlags2KHR::SPLIT_INSTANCE_BIND_REGIONS.0,
+                "SPLIT_INSTANCE_BIND_REGIONS",
+            ),
+            (
+                ImageCreateFlags2KHR::BLOCK_TEXEL_VIEW_COMPATIBLE.0,
+                "BLOCK_TEXEL_VIEW_COMPATIBLE",
+            ),
+            (ImageCreateFlags2KHR::EXTENDED_USAGE.0, "EXTENDED_USAGE"),
+            (ImageCreateFlags2KHR::DISJOINT.0, "DISJOINT"),
+            (ImageCreateFlags2KHR::ALIAS.0, "ALIAS"),
+            (ImageCreateFlags2KHR::PROTECTED.0, "PROTECTED"),
+            (
+                ImageCreateFlags2KHR::SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT.0,
+                "SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT",
+            ),
+            (
+                ImageCreateFlags2KHR::CORNER_SAMPLED_NV.0,
+                "CORNER_SAMPLED_NV",
+            ),
+            (ImageCreateFlags2KHR::SUBSAMPLED_EXT.0, "SUBSAMPLED_EXT"),
+            (
+                ImageCreateFlags2KHR::FRAGMENT_DENSITY_MAP_OFFSET_EXT.0,
+                "FRAGMENT_DENSITY_MAP_OFFSET_EXT",
+            ),
+            (
+                ImageCreateFlags2KHR::DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT.0,
+                "DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT",
+            ),
+            (
+                ImageCreateFlags2KHR::TYPE_2D_VIEW_COMPATIBLE_EXT.0,
+                "TYPE_2D_VIEW_COMPATIBLE_EXT",
+            ),
+            (
+                ImageCreateFlags2KHR::MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_EXT.0,
+                "MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_EXT",
+            ),
+            (
+                ImageCreateFlags2KHR::VIDEO_PROFILE_INDEPENDENT.0,
+                "VIDEO_PROFILE_INDEPENDENT",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for ImageFormatConstraintsFlagsFUCHSIA {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[];
@@ -3749,6 +3816,71 @@ impl fmt::Debug for ImageUsageFlags {
                 "VIDEO_ENCODE_EMPHASIS_MAP_KHR",
             ),
             (ImageUsageFlags::HOST_TRANSFER.0, "HOST_TRANSFER"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ImageUsageFlags2KHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags64, &str)] = &[
+            (ImageUsageFlags2KHR::TRANSFER_SRC.0, "TRANSFER_SRC"),
+            (ImageUsageFlags2KHR::TRANSFER_DST.0, "TRANSFER_DST"),
+            (ImageUsageFlags2KHR::SAMPLED.0, "SAMPLED"),
+            (ImageUsageFlags2KHR::STORAGE.0, "STORAGE"),
+            (ImageUsageFlags2KHR::COLOR_ATTACHMENT.0, "COLOR_ATTACHMENT"),
+            (
+                ImageUsageFlags2KHR::DEPTH_STENCIL_ATTACHMENT.0,
+                "DEPTH_STENCIL_ATTACHMENT",
+            ),
+            (
+                ImageUsageFlags2KHR::TRANSIENT_ATTACHMENT.0,
+                "TRANSIENT_ATTACHMENT",
+            ),
+            (ImageUsageFlags2KHR::INPUT_ATTACHMENT.0, "INPUT_ATTACHMENT"),
+            (
+                ImageUsageFlags2KHR::FRAGMENT_SHADING_RATE_ATTACHMENT.0,
+                "FRAGMENT_SHADING_RATE_ATTACHMENT",
+            ),
+            (
+                ImageUsageFlags2KHR::FRAGMENT_DENSITY_MAP_EXT.0,
+                "FRAGMENT_DENSITY_MAP_EXT",
+            ),
+            (ImageUsageFlags2KHR::VIDEO_DECODE_DST.0, "VIDEO_DECODE_DST"),
+            (ImageUsageFlags2KHR::VIDEO_DECODE_SRC.0, "VIDEO_DECODE_SRC"),
+            (ImageUsageFlags2KHR::VIDEO_DECODE_DPB.0, "VIDEO_DECODE_DPB"),
+            (ImageUsageFlags2KHR::VIDEO_ENCODE_DST.0, "VIDEO_ENCODE_DST"),
+            (ImageUsageFlags2KHR::VIDEO_ENCODE_SRC.0, "VIDEO_ENCODE_SRC"),
+            (ImageUsageFlags2KHR::VIDEO_ENCODE_DPB.0, "VIDEO_ENCODE_DPB"),
+            (
+                ImageUsageFlags2KHR::INVOCATION_MASK_HUAWEI.0,
+                "INVOCATION_MASK_HUAWEI",
+            ),
+            (
+                ImageUsageFlags2KHR::ATTACHMENT_FEEDBACK_LOOP_EXT.0,
+                "ATTACHMENT_FEEDBACK_LOOP_EXT",
+            ),
+            (
+                ImageUsageFlags2KHR::SAMPLE_WEIGHT_QCOM.0,
+                "SAMPLE_WEIGHT_QCOM",
+            ),
+            (
+                ImageUsageFlags2KHR::SAMPLE_BLOCK_MATCH_QCOM.0,
+                "SAMPLE_BLOCK_MATCH_QCOM",
+            ),
+            (ImageUsageFlags2KHR::HOST_TRANSFER.0, "HOST_TRANSFER"),
+            (
+                ImageUsageFlags2KHR::TENSOR_ALIASING_ARM.0,
+                "TENSOR_ALIASING_ARM",
+            ),
+            (
+                ImageUsageFlags2KHR::VIDEO_ENCODE_QUANTIZATION_DELTA_MAP.0,
+                "VIDEO_ENCODE_QUANTIZATION_DELTA_MAP",
+            ),
+            (
+                ImageUsageFlags2KHR::VIDEO_ENCODE_EMPHASIS_MAP.0,
+                "VIDEO_ENCODE_EMPHASIS_MAP",
+            ),
+            (ImageUsageFlags2KHR::TILE_MEMORY_QCOM.0, "TILE_MEMORY_QCOM"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -8535,6 +8667,15 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_PIPELINE_OPACITY_MICROMAP_FEATURES_ARM => {
                 Some("PHYSICAL_DEVICE_PIPELINE_OPACITY_MICROMAP_FEATURES_ARM")
             }
+            Self::PHYSICAL_DEVICE_VIDEO_ENCODE_FEEDBACK_2_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_VIDEO_ENCODE_FEEDBACK_2_FEATURES_KHR")
+            }
+            Self::VIDEO_ENCODE_FEEDBACK_2_CAPABILITIES_KHR => {
+                Some("VIDEO_ENCODE_FEEDBACK_2_CAPABILITIES_KHR")
+            }
+            Self::QUERY_POOL_VIDEO_ENCODE_PER_PARTITION_FEEDBACK_CREATE_INFO_KHR => {
+                Some("QUERY_POOL_VIDEO_ENCODE_PER_PARTITION_FEEDBACK_CREATE_INFO_KHR")
+            }
             Self::IMPORT_MEMORY_METAL_HANDLE_INFO_EXT => {
                 Some("IMPORT_MEMORY_METAL_HANDLE_INFO_EXT")
             }
@@ -8592,6 +8733,12 @@ impl fmt::Debug for StructureType {
             Self::SET_PRESENT_CONFIG_NV => Some("SET_PRESENT_CONFIG_NV"),
             Self::PHYSICAL_DEVICE_PRESENT_METERING_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_PRESENT_METERING_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_MULTISAMPLED_RENDER_TO_SWAPCHAIN_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_MULTISAMPLED_RENDER_TO_SWAPCHAIN_FEATURES_EXT")
+            }
+            Self::SWAPCHAIN_FLAGS_SURFACE_CAPABILITIES_EXT => {
+                Some("SWAPCHAIN_FLAGS_SURFACE_CAPABILITIES_EXT")
             }
             Self::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_EXT")
@@ -8700,6 +8847,23 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_SHADER_SUBGROUP_PARTITIONED_FEATURES_EXT")
             }
             Self::UBM_SURFACE_CREATE_INFO_SEC => Some("UBM_SURFACE_CREATE_INFO_SEC"),
+            Self::FORMAT_PROPERTIES_4_KHR => Some("FORMAT_PROPERTIES_4_KHR"),
+            Self::IMAGE_CREATE_FLAGS_2_CREATE_INFO_KHR => {
+                Some("IMAGE_CREATE_FLAGS_2_CREATE_INFO_KHR")
+            }
+            Self::IMAGE_USAGE_FLAGS_2_CREATE_INFO_KHR => {
+                Some("IMAGE_USAGE_FLAGS_2_CREATE_INFO_KHR")
+            }
+            Self::IMAGE_VIEW_USAGE_2_CREATE_INFO_KHR => Some("IMAGE_VIEW_USAGE_2_CREATE_INFO_KHR"),
+            Self::PHYSICAL_DEVICE_EXTENDED_FLAGS_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_EXTENDED_FLAGS_FEATURES_KHR")
+            }
+            Self::IMAGE_STENCIL_USAGE_2_CREATE_INFO_KHR => {
+                Some("IMAGE_STENCIL_USAGE_2_CREATE_INFO_KHR")
+            }
+            Self::SHARED_PRESENT_SURFACE_CAPABILITIES_2_KHR => {
+                Some("SHARED_PRESENT_SURFACE_CAPABILITIES_2_KHR")
+            }
             Self::PHYSICAL_DEVICE_SHADER_MIXED_FLOAT_DOT_PRODUCT_FEATURES_VALVE => {
                 Some("PHYSICAL_DEVICE_SHADER_MIXED_FLOAT_DOT_PRODUCT_FEATURES_VALVE")
             }
@@ -9351,6 +9515,10 @@ impl fmt::Debug for SwapchainCreateFlagsKHR {
                 SwapchainCreateFlagsKHR::DEFERRED_MEMORY_ALLOCATION.0,
                 "DEFERRED_MEMORY_ALLOCATION",
             ),
+            (
+                SwapchainCreateFlagsKHR::MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_EXT.0,
+                "MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_EXT",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -9914,6 +10082,28 @@ impl fmt::Debug for VideoEncodeFeedbackFlagsKHR {
                 VideoEncodeFeedbackFlagsKHR::BITSTREAM_HAS_OVERRIDES.0,
                 "BITSTREAM_HAS_OVERRIDES",
             ),
+            (
+                VideoEncodeFeedbackFlagsKHR::AVERAGE_QUANTIZATION.0,
+                "AVERAGE_QUANTIZATION",
+            ),
+            (
+                VideoEncodeFeedbackFlagsKHR::MIN_QUANTIZATION.0,
+                "MIN_QUANTIZATION",
+            ),
+            (
+                VideoEncodeFeedbackFlagsKHR::MAX_QUANTIZATION.0,
+                "MAX_QUANTIZATION",
+            ),
+            (VideoEncodeFeedbackFlagsKHR::INTRA_PIXELS.0, "INTRA_PIXELS"),
+            (VideoEncodeFeedbackFlagsKHR::INTER_PIXELS.0, "INTER_PIXELS"),
+            (
+                VideoEncodeFeedbackFlagsKHR::SKIPPED_PIXELS.0,
+                "SKIPPED_PIXELS",
+            ),
+            (
+                VideoEncodeFeedbackFlagsKHR::PICTURE_PARTITION_COUNT.0,
+                "PICTURE_PARTITION_COUNT",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -10324,6 +10514,22 @@ impl fmt::Debug for VideoEncodeIntraRefreshModeFlagsKHR {
             (
                 VideoEncodeIntraRefreshModeFlagsKHR::BLOCK_COLUMN_BASED.0,
                 "BLOCK_COLUMN_BASED",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodePerPartitionFeedbackFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (VideoEncodePerPartitionFeedbackFlagsKHR::STATUS.0, "STATUS"),
+            (
+                VideoEncodePerPartitionFeedbackFlagsKHR::BITSTREAM_BUFFER_OFFSET.0,
+                "BITSTREAM_BUFFER_OFFSET",
+            ),
+            (
+                VideoEncodePerPartitionFeedbackFlagsKHR::BITSTREAM_BYTES_WRITTEN.0,
+                "BITSTREAM_BYTES_WRITTEN",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
