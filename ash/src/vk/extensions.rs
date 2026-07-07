@@ -5045,6 +5045,19 @@ impl StructureType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_REPLICATED_COMPOSITES_FEATURES_EXT: Self = Self(1_000_564_000);
 }
+#[doc = "Generated from 'VK_ARM_tensor_controls'"]
+impl StructureType {
+    pub const TENSOR_EXPLICIT_TILING_FORMAT_PROPERTIES_ARM: Self = Self(1_000_565_000);
+    pub const TENSOR_ROLLING_BACKING_CREATE_INFO_ARM: Self = Self(1_000_565_001);
+}
+#[doc = "Generated from 'VK_ARM_tensor_controls'"]
+impl TensorTilingARM {
+    pub const BRICK_16_WIDE: Self = Self(1_000_565_000);
+    pub const BRICK_8_WIDE: Self = Self(1_000_565_001);
+    pub const BRICK_4_WIDE: Self = Self(1_000_565_002);
+    pub const BLOCK_U_INTERLEAVED: Self = Self(1_000_565_003);
+    pub const BLOCK_U_INTERLEAVED_64K: Self = Self(1_000_565_004);
+}
 #[doc = "Generated from 'VK_EXT_shader_float8'"]
 impl ComponentTypeKHR {
     pub const FLOAT8_E4M3_EXT: Self = Self(1_000_491_002);
@@ -5253,6 +5266,11 @@ impl VideoEncodeFeedbackFlagsKHR {
     pub const INTER_PIXELS: Self = Self(0b1000_0000);
     pub const SKIPPED_PIXELS: Self = Self(0b1_0000_0000);
     pub const PICTURE_PARTITION_COUNT: Self = Self(0b10_0000_0000);
+}
+#[doc = "Generated from 'VK_IMG_filter_linear_2d'"]
+impl FormatFeatureFlags2 {
+    pub const SAMPLED_IMAGE_FILTER_LINEAR_2D_IMG: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_EXT_external_memory_metal'"]
 impl ExternalMemoryHandleTypeFlags {
@@ -5669,6 +5687,19 @@ impl StructureType {
     pub const IMAGE_STENCIL_USAGE_2_CREATE_INFO_KHR: Self = Self(1_000_668_005);
     pub const SHARED_PRESENT_SURFACE_CAPABILITIES_2_KHR: Self = Self(1_000_668_006);
 }
+#[doc = "Generated from 'VK_EXT_shader_ocp_microscaling_types'"]
+impl ComponentTypeKHR {
+    pub const FLOAT6_E2M3_EXT: Self = Self(1_000_672_000);
+    pub const FLOAT6_E3M2_EXT: Self = Self(1_000_672_001);
+    pub const FLOAT4_E2M1_EXT: Self = Self(1_000_672_002);
+    pub const FLOAT8_UNSIGNED_E8M0_EXT: Self = Self(1_000_672_003);
+    pub const MXINT8_EXT: Self = Self(1_000_672_004);
+}
+#[doc = "Generated from 'VK_EXT_shader_ocp_microscaling_types'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_OCP_MICROSCALING_TYPES_FEATURES_EXT: Self =
+        Self(1_000_672_000);
+}
 #[doc = "Generated from 'VK_VALVE_shader_mixed_float_dot_product'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_MIXED_FLOAT_DOT_PRODUCT_FEATURES_VALVE: Self =
@@ -5721,12 +5752,14 @@ pub type PFN_vkGetPhysicalDeviceSurfaceSupportKHR = unsafe extern "system" fn(
     surface: SurfaceKHR,
     p_supported: *mut Bool32,
 ) -> Result;
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdsc2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     surface: SurfaceKHR,
     p_surface_capabilities: *mut SurfaceCapabilitiesKHR,
 ) -> Result;
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdsc2>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceSurfaceFormatsKHR = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
@@ -7326,6 +7359,7 @@ pub type PFN_vkCmdBuildAccelerationStructuresIndirectKHR = unsafe extern "system
     p_indirect_strides: *const u32,
     pp_max_primitive_counts: *const *const u32,
 );
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkBuildAccelerationStructuresKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -7334,24 +7368,28 @@ pub type PFN_vkBuildAccelerationStructuresKHR = unsafe extern "system" fn(
     p_infos: *const AccelerationStructureBuildGeometryInfoKHR<'_>,
     pp_build_range_infos: *const *const AccelerationStructureBuildRangeInfoKHR,
 ) -> Result;
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCopyAccelerationStructureKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     deferred_operation: DeferredOperationKHR,
     p_info: *const CopyAccelerationStructureInfoKHR<'_>,
 ) -> Result;
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCopyAccelerationStructureToMemoryKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     deferred_operation: DeferredOperationKHR,
     p_info: *const CopyAccelerationStructureToMemoryInfoKHR<'_>,
 ) -> Result;
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCopyMemoryToAccelerationStructureKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
     deferred_operation: DeferredOperationKHR,
     p_info: *const CopyMemoryToAccelerationStructureInfoKHR<'_>,
 ) -> Result;
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkWriteAccelerationStructuresPropertiesKHR = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -9350,6 +9388,7 @@ pub type PFN_vkCmdBuildMicromapsEXT = unsafe extern "system" fn(
     info_count: u32,
     p_infos: *const MicromapBuildInfoEXT<'_>,
 );
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkBuildMicromapsEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -9357,24 +9396,28 @@ pub type PFN_vkBuildMicromapsEXT = unsafe extern "system" fn(
     info_count: u32,
     p_infos: *const MicromapBuildInfoEXT<'_>,
 ) -> Result;
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCopyMicromapEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     deferred_operation: DeferredOperationKHR,
     p_info: *const CopyMicromapInfoEXT<'_>,
 ) -> Result;
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCopyMicromapToMemoryEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     deferred_operation: DeferredOperationKHR,
     p_info: *const CopyMicromapToMemoryInfoEXT<'_>,
 ) -> Result;
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkCopyMemoryToMicromapEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
     deferred_operation: DeferredOperationKHR,
     p_info: *const CopyMemoryToMicromapInfoEXT<'_>,
 ) -> Result;
+#[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
 #[allow(non_camel_case_types)]
 pub type PFN_vkWriteMicromapsPropertiesEXT = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -10423,6 +10466,9 @@ pub const NV_SHADER_ATOMIC_FLOAT16_VECTOR_SPEC_VERSION: u32 = 1u32;
 pub const EXT_SHADER_REPLICATED_COMPOSITES_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_replicated_composites\0") };
 pub const EXT_SHADER_REPLICATED_COMPOSITES_SPEC_VERSION: u32 = 1u32;
+pub const ARM_TENSOR_CONTROLS_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_tensor_controls\0") };
+pub const ARM_TENSOR_CONTROLS_SPEC_VERSION: u32 = 1u32;
 pub const EXT_SHADER_FLOAT8_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_float8\0") };
 pub const EXT_SHADER_FLOAT8_SPEC_VERSION: u32 = 1u32;
@@ -10586,6 +10632,9 @@ pub const ARM_PIPELINE_OPACITY_MICROMAP_SPEC_VERSION: u32 = 1u32;
 pub const KHR_VIDEO_ENCODE_FEEDBACK2_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_feedback2\0") };
 pub const KHR_VIDEO_ENCODE_FEEDBACK2_SPEC_VERSION: u32 = 1u32;
+pub const IMG_FILTER_LINEAR_2D_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_IMG_filter_linear_2d\0") };
+pub const IMG_FILTER_LINEAR_2D_SPEC_VERSION: u32 = 1u32;
 pub const EXT_EXTERNAL_MEMORY_METAL_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_external_memory_metal\0") };
 pub const EXT_EXTERNAL_MEMORY_METAL_SPEC_VERSION: u32 = 1u32;
@@ -10766,6 +10815,9 @@ pub type PFN_vkGetPhysicalDeviceUbmPresentationSupportSEC = unsafe extern "syste
 pub const KHR_EXTENDED_FLAGS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extended_flags\0") };
 pub const KHR_EXTENDED_FLAGS_SPEC_VERSION: u32 = 1u32;
+pub const EXT_SHADER_OCP_MICROSCALING_TYPES_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_ocp_microscaling_types\0") };
+pub const EXT_SHADER_OCP_MICROSCALING_TYPES_SPEC_VERSION: u32 = 1u32;
 pub const VALVE_SHADER_MIXED_FLOAT_DOT_PRODUCT_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_VALVE_shader_mixed_float_dot_product\0") };
 pub const VALVE_SHADER_MIXED_FLOAT_DOT_PRODUCT_SPEC_VERSION: u32 = 1u32;

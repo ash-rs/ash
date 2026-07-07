@@ -1766,6 +1766,8 @@ impl VendorId {
     pub const POCL: Self = Self(0x10006);
     #[doc = "Mobileye vendor ID"]
     pub const MOBILEYE: Self = Self(0x10007);
+    #[doc = "Ape vendor ID"]
+    pub const APE: Self = Self(0x10008);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
@@ -1838,6 +1840,8 @@ impl DriverId {
     pub const MESA_KOSMICKRISP: Self = Self(28);
     #[doc = "Mesa open source project"]
     pub const MESA_GFXSTREAM: Self = Self(29);
+    #[doc = "Ape open source project"]
+    pub const APE_SOFT: Self = Self(30);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]

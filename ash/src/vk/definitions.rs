@@ -63,7 +63,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 353;
+pub const HEADER_VERSION: u32 = 356;
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampleMask.html>"]
@@ -56435,6 +56435,123 @@ impl<'a> DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkTensorExplicitTilingFormatPropertiesARM.html>"]
+#[must_use]
+pub struct TensorExplicitTilingFormatPropertiesARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub brick16_tiling_tensor_features: FormatFeatureFlags2,
+    pub brick8_tiling_tensor_features: FormatFeatureFlags2,
+    pub brick4_tiling_tensor_features: FormatFeatureFlags2,
+    pub block_u_tiling_tensor_features: FormatFeatureFlags2,
+    pub block_u64k_tiling_tensor_features: FormatFeatureFlags2,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for TensorExplicitTilingFormatPropertiesARM<'_> {}
+unsafe impl Sync for TensorExplicitTilingFormatPropertiesARM<'_> {}
+impl ::core::default::Default for TensorExplicitTilingFormatPropertiesARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            brick16_tiling_tensor_features: FormatFeatureFlags2::default(),
+            brick8_tiling_tensor_features: FormatFeatureFlags2::default(),
+            brick4_tiling_tensor_features: FormatFeatureFlags2::default(),
+            block_u_tiling_tensor_features: FormatFeatureFlags2::default(),
+            block_u64k_tiling_tensor_features: FormatFeatureFlags2::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for TensorExplicitTilingFormatPropertiesARM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::TENSOR_EXPLICIT_TILING_FORMAT_PROPERTIES_ARM;
+}
+unsafe impl Extends<FormatProperties2<'_>> for TensorExplicitTilingFormatPropertiesARM<'_> {}
+impl<'a> TensorExplicitTilingFormatPropertiesARM<'a> {
+    #[inline]
+    pub fn brick16_tiling_tensor_features(
+        mut self,
+        brick16_tiling_tensor_features: FormatFeatureFlags2,
+    ) -> Self {
+        self.brick16_tiling_tensor_features = brick16_tiling_tensor_features;
+        self
+    }
+    #[inline]
+    pub fn brick8_tiling_tensor_features(
+        mut self,
+        brick8_tiling_tensor_features: FormatFeatureFlags2,
+    ) -> Self {
+        self.brick8_tiling_tensor_features = brick8_tiling_tensor_features;
+        self
+    }
+    #[inline]
+    pub fn brick4_tiling_tensor_features(
+        mut self,
+        brick4_tiling_tensor_features: FormatFeatureFlags2,
+    ) -> Self {
+        self.brick4_tiling_tensor_features = brick4_tiling_tensor_features;
+        self
+    }
+    #[inline]
+    pub fn block_u_tiling_tensor_features(
+        mut self,
+        block_u_tiling_tensor_features: FormatFeatureFlags2,
+    ) -> Self {
+        self.block_u_tiling_tensor_features = block_u_tiling_tensor_features;
+        self
+    }
+    #[inline]
+    pub fn block_u64k_tiling_tensor_features(
+        mut self,
+        block_u64k_tiling_tensor_features: FormatFeatureFlags2,
+    ) -> Self {
+        self.block_u64k_tiling_tensor_features = block_u64k_tiling_tensor_features;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkTensorRollingBackingCreateInfoARM.html>"]
+#[must_use]
+pub struct TensorRollingBackingCreateInfoARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub wraps: [u32; MAX_TENSOR_CREATE_INFO_ROLLING_BACKING_WRAP_COUNT_ARM],
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for TensorRollingBackingCreateInfoARM<'_> {}
+unsafe impl Sync for TensorRollingBackingCreateInfoARM<'_> {}
+impl ::core::default::Default for TensorRollingBackingCreateInfoARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            wraps: unsafe { ::core::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for TensorRollingBackingCreateInfoARM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_ROLLING_BACKING_CREATE_INFO_ARM;
+}
+unsafe impl Extends<TensorCreateInfoARM<'_>> for TensorRollingBackingCreateInfoARM<'_> {}
+impl<'a> TensorRollingBackingCreateInfoARM<'a> {
+    #[inline]
+    pub fn wraps(
+        mut self,
+        wraps: [u32; MAX_TENSOR_CREATE_INFO_ROLLING_BACKING_WRAP_COUNT_ARM],
+    ) -> Self {
+        self.wraps = wraps;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceDescriptorSetHostMappingFeaturesVALVE.html>"]
 #[must_use]
 pub struct PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
@@ -76237,6 +76354,70 @@ impl<'a> DataGraphPipelineOpticalFlowDispatchInfoARM<'a> {
     #[inline]
     pub fn mean_flow_l1_norm_hint(mut self, mean_flow_l1_norm_hint: u32) -> Self {
         self.mean_flow_l1_norm_hint = mean_flow_l1_norm_hint;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT.html>"]
+#[must_use]
+pub struct PhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_float4: Bool32,
+    pub shader_float6: Bool32,
+    pub shader_float8_unsigned_e8m0: Bool32,
+    pub shader_mx_int8: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT<'_> {}
+impl ::core::default::Default for PhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            shader_float4: Bool32::default(),
+            shader_float6: Bool32::default(),
+            shader_float8_unsigned_e8m0: Bool32::default(),
+            shader_mx_int8: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_OCP_MICROSCALING_TYPES_FEATURES_EXT;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>>
+    for PhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT<'a> {
+    #[inline]
+    pub fn shader_float4(mut self, shader_float4: bool) -> Self {
+        self.shader_float4 = shader_float4.into();
+        self
+    }
+    #[inline]
+    pub fn shader_float6(mut self, shader_float6: bool) -> Self {
+        self.shader_float6 = shader_float6.into();
+        self
+    }
+    #[inline]
+    pub fn shader_float8_unsigned_e8m0(mut self, shader_float8_unsigned_e8m0: bool) -> Self {
+        self.shader_float8_unsigned_e8m0 = shader_float8_unsigned_e8m0.into();
+        self
+    }
+    #[inline]
+    pub fn shader_mx_int8(mut self, shader_mx_int8: bool) -> Self {
+        self.shader_mx_int8 = shader_mx_int8.into();
         self
     }
 }

@@ -2092,6 +2092,13 @@ pub mod arm {
             }
         }
     }
+    #[doc = "VK_ARM_tensor_controls"]
+    pub mod tensor_controls {
+        pub use {
+            crate::vk::ARM_TENSOR_CONTROLS_NAME as NAME,
+            crate::vk::ARM_TENSOR_CONTROLS_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_ARM_pipeline_opacity_micromap"]
     pub mod pipeline_opacity_micromap {
         pub use {
@@ -7935,10 +7942,15 @@ pub mod ext {
             pub create_micromap_ext: PFN_vkCreateMicromapEXT,
             pub destroy_micromap_ext: PFN_vkDestroyMicromapEXT,
             pub cmd_build_micromaps_ext: PFN_vkCmdBuildMicromapsEXT,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub build_micromaps_ext: PFN_vkBuildMicromapsEXT,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub copy_micromap_ext: PFN_vkCopyMicromapEXT,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub copy_micromap_to_memory_ext: PFN_vkCopyMicromapToMemoryEXT,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub copy_memory_to_micromap_ext: PFN_vkCopyMemoryToMicromapEXT,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub write_micromaps_properties_ext: PFN_vkWriteMicromapsPropertiesEXT,
             pub cmd_copy_micromap_ext: PFN_vkCmdCopyMicromapEXT,
             pub cmd_copy_micromap_to_memory_ext: PFN_vkCmdCopyMicromapToMemoryEXT,
@@ -11159,6 +11171,13 @@ pub mod ext {
             crate::vk::EXT_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_EXT_shader_ocp_microscaling_types"]
+    pub mod shader_ocp_microscaling_types {
+        pub use {
+            crate::vk::EXT_SHADER_OCP_MICROSCALING_TYPES_NAME as NAME,
+            crate::vk::EXT_SHADER_OCP_MICROSCALING_TYPES_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_EXT_primitive_restart_index"]
     pub mod primitive_restart_index {
         use crate::vk::*;
@@ -12131,6 +12150,13 @@ pub mod img {
             crate::vk::IMG_RELAXED_LINE_RASTERIZATION_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_IMG_filter_linear_2d"]
+    pub mod filter_linear_2d {
+        pub use {
+            crate::vk::IMG_FILTER_LINEAR_2D_NAME as NAME,
+            crate::vk::IMG_FILTER_LINEAR_2D_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged INTEL"]
 pub mod intel {
@@ -12418,8 +12444,10 @@ pub mod khr {
         pub struct InstanceFn {
             pub destroy_surface_khr: PFN_vkDestroySurfaceKHR,
             pub get_physical_device_surface_support_khr: PFN_vkGetPhysicalDeviceSurfaceSupportKHR,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdsc2>"]
             pub get_physical_device_surface_capabilities_khr:
                 PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdsc2>"]
             pub get_physical_device_surface_formats_khr: PFN_vkGetPhysicalDeviceSurfaceFormatsKHR,
             pub get_physical_device_surface_present_modes_khr:
                 PFN_vkGetPhysicalDeviceSurfacePresentModesKHR,
@@ -16479,12 +16507,17 @@ pub mod khr {
             pub cmd_build_acceleration_structures_khr: PFN_vkCmdBuildAccelerationStructuresKHR,
             pub cmd_build_acceleration_structures_indirect_khr:
                 PFN_vkCmdBuildAccelerationStructuresIndirectKHR,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub build_acceleration_structures_khr: PFN_vkBuildAccelerationStructuresKHR,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub copy_acceleration_structure_khr: PFN_vkCopyAccelerationStructureKHR,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub copy_acceleration_structure_to_memory_khr:
                 PFN_vkCopyAccelerationStructureToMemoryKHR,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub copy_memory_to_acceleration_structure_khr:
                 PFN_vkCopyMemoryToAccelerationStructureKHR,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub write_acceleration_structures_properties_khr:
                 PFN_vkWriteAccelerationStructuresPropertiesKHR,
             pub cmd_copy_acceleration_structure_khr: PFN_vkCmdCopyAccelerationStructureKHR,
