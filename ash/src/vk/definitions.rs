@@ -28318,6 +28318,7 @@ pub struct PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
     pub acceleration_structure: Bool32,
     pub acceleration_structure_capture_replay: Bool32,
     pub acceleration_structure_indirect_build: Bool32,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
     pub acceleration_structure_host_commands: Bool32,
     pub descriptor_binding_acceleration_structure_update_after_bind: Bool32,
     pub _marker: PhantomData<&'a ()>,
@@ -28327,6 +28328,7 @@ unsafe impl Sync for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
+        #[allow(deprecated)]
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::core::ptr::null_mut(),
@@ -28370,6 +28372,8 @@ impl<'a> PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
         self.acceleration_structure_indirect_build = acceleration_structure_indirect_build.into();
         self
     }
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
+    #[allow(deprecated)]
     #[inline]
     pub fn acceleration_structure_host_commands(
         mut self,
@@ -58065,6 +58069,7 @@ pub struct PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
     pub p_next: *mut c_void,
     pub micromap: Bool32,
     pub micromap_capture_replay: Bool32,
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
     pub micromap_host_commands: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -58073,6 +58078,7 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
+        #[allow(deprecated)]
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::core::ptr::null_mut(),
@@ -58100,6 +58106,8 @@ impl<'a> PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
         self.micromap_capture_replay = micromap_capture_replay.into();
         self
     }
+    #[deprecated = "<https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
+    #[allow(deprecated)]
     #[inline]
     pub fn micromap_host_commands(mut self, micromap_host_commands: bool) -> Self {
         self.micromap_host_commands = micromap_host_commands.into();
