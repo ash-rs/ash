@@ -63,7 +63,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 356;
+pub const HEADER_VERSION: u32 = 357;
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampleMask.html>"]
@@ -9529,6 +9529,10 @@ unsafe impl<'a> TaggedStructure<'a> for ValidationFeaturesEXT<'a> {
 unsafe impl Extends<InstanceCreateInfo<'_>> for ValidationFeaturesEXT<'_> {}
 unsafe impl Extends<ShaderModuleCreateInfo<'_>> for ValidationFeaturesEXT<'_> {}
 unsafe impl Extends<ShaderCreateInfoEXT<'_>> for ValidationFeaturesEXT<'_> {}
+unsafe impl Extends<PipelineShaderStageCreateInfo<'_>> for ValidationFeaturesEXT<'_> {}
+unsafe impl Extends<GraphicsPipelineCreateInfo<'_>> for ValidationFeaturesEXT<'_> {}
+unsafe impl Extends<ComputePipelineCreateInfo<'_>> for ValidationFeaturesEXT<'_> {}
+unsafe impl Extends<RayTracingPipelineCreateInfoKHR<'_>> for ValidationFeaturesEXT<'_> {}
 impl<'a> ValidationFeaturesEXT<'a> {
     #[inline]
     pub fn enabled_validation_features(

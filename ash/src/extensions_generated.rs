@@ -22890,10 +22890,195 @@ pub mod nv {
     }
     #[doc = "VK_NV_low_latency"]
     pub mod low_latency {
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_LOW_LATENCY_NAME as NAME,
             crate::vk::NV_LOW_LATENCY_SPEC_VERSION as SPEC_VERSION,
         };
+        #[doc = "VK_NV_low_latency device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_NV_low_latency device-level function pointers"]
+        pub struct DeviceFn {
+            pub set_latency_sleep_mode_legacy_nv: PFN_vkSetLatencySleepModeLegacyNV,
+            pub latency_sleep_legacy_nv: PFN_vkLatencySleepLegacyNV,
+            pub set_latency_marker_legacy_nv: PFN_vkSetLatencyMarkerLegacyNV,
+            pub get_latency_timings_legacy_nv: PFN_vkGetLatencyTimingsLegacyNV,
+            pub queue_notify_out_of_band_legacy_nv: PFN_vkQueueNotifyOutOfBandLegacyNV,
+            pub get_sleep_status_legacy_nv: PFN_vkGetSleepStatusLegacyNV,
+            pub shutdown_latency_device_legacy_nv: PFN_vkShutdownLatencyDeviceLegacyNV,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    set_latency_sleep_mode_legacy_nv: unsafe {
+                        unsafe extern "system" fn set_latency_sleep_mode_legacy_nv(
+                            _device: crate::vk::Device,
+                            _low_latency_mode: Bool32,
+                            _low_latency_boost: Bool32,
+                            _minimum_interval_us: u32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(set_latency_sleep_mode_legacy_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkSetLatencySleepModeLegacyNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            set_latency_sleep_mode_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    latency_sleep_legacy_nv: unsafe {
+                        unsafe extern "system" fn latency_sleep_legacy_nv(
+                            _device: crate::vk::Device,
+                            _signal_semaphore: Semaphore,
+                            _value: u64,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(latency_sleep_legacy_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkLatencySleepLegacyNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            latency_sleep_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    set_latency_marker_legacy_nv: unsafe {
+                        unsafe extern "system" fn set_latency_marker_legacy_nv(
+                            _device: crate::vk::Device,
+                            _frame_id: u64,
+                            _marker: u32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(set_latency_marker_legacy_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkSetLatencyMarkerLegacyNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            set_latency_marker_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_latency_timings_legacy_nv: unsafe {
+                        unsafe extern "system" fn get_latency_timings_legacy_nv(
+                            _device: crate::vk::Device,
+                            _p_timings: *mut c_void,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_latency_timings_legacy_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetLatencyTimingsLegacyNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_latency_timings_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    queue_notify_out_of_band_legacy_nv: unsafe {
+                        unsafe extern "system" fn queue_notify_out_of_band_legacy_nv(
+                            _queue: Queue,
+                            _queue_type: u32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(queue_notify_out_of_band_legacy_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkQueueNotifyOutOfBandLegacyNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            queue_notify_out_of_band_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_sleep_status_legacy_nv: unsafe {
+                        unsafe extern "system" fn get_sleep_status_legacy_nv(
+                            _device: crate::vk::Device,
+                            _p_low_latency_mode: *mut Bool32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_sleep_status_legacy_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetSleepStatusLegacyNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_sleep_status_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    shutdown_latency_device_legacy_nv: unsafe {
+                        unsafe extern "system" fn shutdown_latency_device_legacy_nv(
+                            _device: crate::vk::Device,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(shutdown_latency_device_legacy_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkShutdownLatencyDeviceLegacyNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            shutdown_latency_device_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
     }
     #[doc = "VK_NV_fragment_shading_rate_enums"]
     pub mod fragment_shading_rate_enums {

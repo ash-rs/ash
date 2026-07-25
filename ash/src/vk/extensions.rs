@@ -8689,7 +8689,31 @@ pub type PFN_vkCmdEndPerTileExecutionQCOM = unsafe extern "system" fn(
 );
 pub const NV_LOW_LATENCY_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_low_latency\0") };
-pub const NV_LOW_LATENCY_SPEC_VERSION: u32 = 1u32;
+pub const NV_LOW_LATENCY_SPEC_VERSION: u32 = 2u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkSetLatencySleepModeLegacyNV = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    low_latency_mode: Bool32,
+    low_latency_boost: Bool32,
+    minimum_interval_us: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkLatencySleepLegacyNV =
+    unsafe extern "system" fn(device: crate::vk::Device, signal_semaphore: Semaphore, value: u64);
+#[allow(non_camel_case_types)]
+pub type PFN_vkSetLatencyMarkerLegacyNV =
+    unsafe extern "system" fn(device: crate::vk::Device, frame_id: u64, marker: u32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetLatencyTimingsLegacyNV =
+    unsafe extern "system" fn(device: crate::vk::Device, p_timings: *mut c_void);
+#[allow(non_camel_case_types)]
+pub type PFN_vkQueueNotifyOutOfBandLegacyNV =
+    unsafe extern "system" fn(queue: Queue, queue_type: u32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetSleepStatusLegacyNV =
+    unsafe extern "system" fn(device: crate::vk::Device, p_low_latency_mode: *mut Bool32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkShutdownLatencyDeviceLegacyNV = unsafe extern "system" fn(device: crate::vk::Device);
 pub const EXT_METAL_OBJECTS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_metal_objects\0") };
 pub const EXT_METAL_OBJECTS_SPEC_VERSION: u32 = 2u32;
