@@ -728,10 +728,16 @@ pub struct Offset2D {
     pub x: i32,
     pub y: i32,
 }
+impl Offset2D {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for Offset2D {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl Offset2D {
@@ -756,10 +762,16 @@ pub struct Offset3D {
     pub y: i32,
     pub z: i32,
 }
+impl Offset3D {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for Offset3D {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl Offset3D {
@@ -788,10 +800,16 @@ pub struct Extent2D {
     pub width: u32,
     pub height: u32,
 }
+impl Extent2D {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for Extent2D {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl Extent2D {
@@ -816,10 +834,16 @@ pub struct Extent3D {
     pub height: u32,
     pub depth: u32,
 }
+impl Extent3D {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for Extent3D {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl Extent3D {
@@ -852,10 +876,16 @@ pub struct Viewport {
     pub min_depth: f32,
     pub max_depth: f32,
 }
+impl Viewport {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for Viewport {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl Viewport {
@@ -899,10 +929,16 @@ pub struct Rect2D {
     pub offset: Offset2D,
     pub extent: Extent2D,
 }
+impl Rect2D {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for Rect2D {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl Rect2D {
@@ -927,10 +963,16 @@ pub struct ClearRect {
     pub base_array_layer: u32,
     pub layer_count: u32,
 }
+impl ClearRect {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ClearRect {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ClearRect {
@@ -961,10 +1003,16 @@ pub struct ComponentMapping {
     pub b: ComponentSwizzle,
     pub a: ComponentSwizzle,
 }
+impl ComponentMapping {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ComponentMapping {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ComponentMapping {
@@ -1020,10 +1068,16 @@ impl fmt::Debug for PhysicalDeviceProperties {
             .finish()
     }
 }
+impl PhysicalDeviceProperties {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PhysicalDeviceProperties {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PhysicalDeviceProperties {
@@ -1096,10 +1150,16 @@ impl fmt::Debug for ExtensionProperties {
             .finish()
     }
 }
+impl ExtensionProperties {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ExtensionProperties {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ExtensionProperties {
@@ -1141,10 +1201,16 @@ impl fmt::Debug for LayerProperties {
             .finish()
     }
 }
+impl LayerProperties {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for LayerProperties {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl LayerProperties {
@@ -1198,10 +1264,16 @@ pub struct ApplicationInfo<'a> {
 }
 unsafe impl Send for ApplicationInfo<'_> {}
 unsafe impl Sync for ApplicationInfo<'_> {}
+impl ApplicationInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ApplicationInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ApplicationInfo<'a> {
@@ -1289,10 +1361,16 @@ impl fmt::Debug for AllocationCallbacks {
             .finish()
     }
 }
+impl AllocationCallbacks {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for AllocationCallbacks {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl AllocationCallbacks {
@@ -1346,10 +1424,16 @@ pub struct DeviceQueueCreateInfo<'a> {
 }
 unsafe impl Send for DeviceQueueCreateInfo<'_> {}
 unsafe impl Sync for DeviceQueueCreateInfo<'_> {}
+impl DeviceQueueCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceQueueCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueCreateInfo<'a> {
@@ -1395,10 +1479,16 @@ pub struct DeviceCreateInfo<'a> {
 }
 unsafe impl Send for DeviceCreateInfo<'_> {}
 unsafe impl Sync for DeviceCreateInfo<'_> {}
+impl DeviceCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceCreateInfo<'a> {
@@ -1457,10 +1547,16 @@ pub struct InstanceCreateInfo<'a> {
 }
 unsafe impl Send for InstanceCreateInfo<'_> {}
 unsafe impl Sync for InstanceCreateInfo<'_> {}
+impl InstanceCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for InstanceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for InstanceCreateInfo<'a> {
@@ -1501,10 +1597,16 @@ pub struct QueueFamilyProperties {
     pub timestamp_valid_bits: u32,
     pub min_image_transfer_granularity: Extent3D,
 }
+impl QueueFamilyProperties {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for QueueFamilyProperties {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl QueueFamilyProperties {
@@ -1553,10 +1655,16 @@ impl fmt::Debug for PhysicalDeviceMemoryProperties {
             .finish()
     }
 }
+impl PhysicalDeviceMemoryProperties {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMemoryProperties {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PhysicalDeviceMemoryProperties {
@@ -1595,10 +1703,16 @@ pub struct MemoryAllocateInfo<'a> {
 }
 unsafe impl Send for MemoryAllocateInfo<'_> {}
 unsafe impl Sync for MemoryAllocateInfo<'_> {}
+impl MemoryAllocateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryAllocateInfo<'a> {
@@ -1626,10 +1740,16 @@ pub struct MemoryRequirements {
     pub alignment: DeviceSize,
     pub memory_type_bits: u32,
 }
+impl MemoryRequirements {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for MemoryRequirements {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl MemoryRequirements {
@@ -1659,10 +1779,16 @@ pub struct SparseImageFormatProperties {
     pub image_granularity: Extent3D,
     pub flags: SparseImageFormatFlags,
 }
+impl SparseImageFormatProperties {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SparseImageFormatProperties {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl SparseImageFormatProperties {
@@ -1694,10 +1820,16 @@ pub struct SparseImageMemoryRequirements {
     pub image_mip_tail_offset: DeviceSize,
     pub image_mip_tail_stride: DeviceSize,
 }
+impl SparseImageMemoryRequirements {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SparseImageMemoryRequirements {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl SparseImageMemoryRequirements {
@@ -1736,10 +1868,16 @@ pub struct MemoryType {
     pub property_flags: MemoryPropertyFlags,
     pub heap_index: u32,
 }
+impl MemoryType {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for MemoryType {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl MemoryType {
@@ -1763,10 +1901,16 @@ pub struct MemoryHeap {
     pub size: DeviceSize,
     pub flags: MemoryHeapFlags,
 }
+impl MemoryHeap {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for MemoryHeap {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl MemoryHeap {
@@ -1796,10 +1940,16 @@ pub struct MappedMemoryRange<'a> {
 }
 unsafe impl Send for MappedMemoryRange<'_> {}
 unsafe impl Sync for MappedMemoryRange<'_> {}
+impl MappedMemoryRange<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MappedMemoryRange<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MappedMemoryRange<'a> {
@@ -1832,10 +1982,16 @@ pub struct FormatProperties {
     pub optimal_tiling_features: FormatFeatureFlags,
     pub buffer_features: FormatFeatureFlags,
 }
+impl FormatProperties {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for FormatProperties {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl FormatProperties {
@@ -1867,10 +2023,16 @@ pub struct ImageFormatProperties {
     pub sample_counts: SampleCountFlags,
     pub max_resource_size: DeviceSize,
 }
+impl ImageFormatProperties {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ImageFormatProperties {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ImageFormatProperties {
@@ -1910,10 +2072,16 @@ pub struct DescriptorBufferInfo {
     pub offset: DeviceSize,
     pub range: DeviceSize,
 }
+impl DescriptorBufferInfo {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DescriptorBufferInfo {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DescriptorBufferInfo {
@@ -1943,10 +2111,16 @@ pub struct DescriptorImageInfo {
     pub image_view: ImageView,
     pub image_layout: ImageLayout,
 }
+impl DescriptorImageInfo {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DescriptorImageInfo {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DescriptorImageInfo {
@@ -1986,10 +2160,16 @@ pub struct WriteDescriptorSet<'a> {
 }
 unsafe impl Send for WriteDescriptorSet<'_> {}
 unsafe impl Sync for WriteDescriptorSet<'_> {}
+impl WriteDescriptorSet<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for WriteDescriptorSet<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSet<'a> {
@@ -2059,10 +2239,16 @@ pub struct CopyDescriptorSet<'a> {
 }
 unsafe impl Send for CopyDescriptorSet<'_> {}
 unsafe impl Sync for CopyDescriptorSet<'_> {}
+impl CopyDescriptorSet<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyDescriptorSet<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyDescriptorSet<'a> {
@@ -2118,10 +2304,16 @@ pub struct BufferUsageFlags2CreateInfo<'a> {
 }
 unsafe impl Send for BufferUsageFlags2CreateInfo<'_> {}
 unsafe impl Sync for BufferUsageFlags2CreateInfo<'_> {}
+impl BufferUsageFlags2CreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferUsageFlags2CreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferUsageFlags2CreateInfo<'a> {
@@ -2156,10 +2348,16 @@ pub struct BufferCreateInfo<'a> {
 }
 unsafe impl Send for BufferCreateInfo<'_> {}
 unsafe impl Sync for BufferCreateInfo<'_> {}
+impl BufferCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCreateInfo<'a> {
@@ -2210,10 +2408,16 @@ pub struct BufferViewCreateInfo<'a> {
 }
 unsafe impl Send for BufferViewCreateInfo<'_> {}
 unsafe impl Sync for BufferViewCreateInfo<'_> {}
+impl BufferViewCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferViewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferViewCreateInfo<'a> {
@@ -2256,10 +2460,16 @@ pub struct ImageSubresource {
     pub mip_level: u32,
     pub array_layer: u32,
 }
+impl ImageSubresource {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ImageSubresource {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ImageSubresource {
@@ -2290,10 +2500,16 @@ pub struct ImageSubresourceLayers {
     pub base_array_layer: u32,
     pub layer_count: u32,
 }
+impl ImageSubresourceLayers {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ImageSubresourceLayers {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ImageSubresourceLayers {
@@ -2330,10 +2546,16 @@ pub struct ImageSubresourceRange {
     pub base_array_layer: u32,
     pub layer_count: u32,
 }
+impl ImageSubresourceRange {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ImageSubresourceRange {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ImageSubresourceRange {
@@ -2377,10 +2599,16 @@ pub struct MemoryBarrier<'a> {
 }
 unsafe impl Send for MemoryBarrier<'_> {}
 unsafe impl Sync for MemoryBarrier<'_> {}
+impl MemoryBarrier<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryBarrier<'a> {
@@ -2417,10 +2645,16 @@ pub struct BufferMemoryBarrier<'a> {
 }
 unsafe impl Send for BufferMemoryBarrier<'_> {}
 unsafe impl Sync for BufferMemoryBarrier<'_> {}
+impl BufferMemoryBarrier<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferMemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferMemoryBarrier<'a> {
@@ -2483,10 +2717,16 @@ pub struct ImageMemoryBarrier<'a> {
 }
 unsafe impl Send for ImageMemoryBarrier<'_> {}
 unsafe impl Sync for ImageMemoryBarrier<'_> {}
+impl ImageMemoryBarrier<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageMemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageMemoryBarrier<'a> {
@@ -2559,10 +2799,16 @@ pub struct ImageCreateInfo<'a> {
 }
 unsafe impl Send for ImageCreateInfo<'_> {}
 unsafe impl Sync for ImageCreateInfo<'_> {}
+impl ImageCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCreateInfo<'a> {
@@ -2643,10 +2889,16 @@ pub struct SubresourceLayout {
     pub array_pitch: DeviceSize,
     pub depth_pitch: DeviceSize,
 }
+impl SubresourceLayout {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SubresourceLayout {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl SubresourceLayout {
@@ -2694,10 +2946,16 @@ pub struct ImageViewCreateInfo<'a> {
 }
 unsafe impl Send for ImageViewCreateInfo<'_> {}
 unsafe impl Sync for ImageViewCreateInfo<'_> {}
+impl ImageViewCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageViewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewCreateInfo<'a> {
@@ -2745,10 +3003,16 @@ pub struct BufferCopy {
     pub dst_offset: DeviceSize,
     pub size: DeviceSize,
 }
+impl BufferCopy {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for BufferCopy {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl BufferCopy {
@@ -2780,10 +3044,16 @@ pub struct SparseMemoryBind {
     pub memory_offset: DeviceSize,
     pub flags: SparseMemoryBindFlags,
 }
+impl SparseMemoryBind {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SparseMemoryBind {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl SparseMemoryBind {
@@ -2826,10 +3096,16 @@ pub struct SparseImageMemoryBind {
     pub memory_offset: DeviceSize,
     pub flags: SparseMemoryBindFlags,
 }
+impl SparseImageMemoryBind {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SparseImageMemoryBind {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl SparseImageMemoryBind {
@@ -2877,10 +3153,16 @@ pub struct SparseBufferMemoryBindInfo<'a> {
 }
 unsafe impl Send for SparseBufferMemoryBindInfo<'_> {}
 unsafe impl Sync for SparseBufferMemoryBindInfo<'_> {}
+impl SparseBufferMemoryBindInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SparseBufferMemoryBindInfo<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> SparseBufferMemoryBindInfo<'a> {
@@ -2909,10 +3191,16 @@ pub struct SparseImageOpaqueMemoryBindInfo<'a> {
 }
 unsafe impl Send for SparseImageOpaqueMemoryBindInfo<'_> {}
 unsafe impl Sync for SparseImageOpaqueMemoryBindInfo<'_> {}
+impl SparseImageOpaqueMemoryBindInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SparseImageOpaqueMemoryBindInfo<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> SparseImageOpaqueMemoryBindInfo<'a> {
@@ -2941,10 +3229,16 @@ pub struct SparseImageMemoryBindInfo<'a> {
 }
 unsafe impl Send for SparseImageMemoryBindInfo<'_> {}
 unsafe impl Sync for SparseImageMemoryBindInfo<'_> {}
+impl SparseImageMemoryBindInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SparseImageMemoryBindInfo<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> SparseImageMemoryBindInfo<'a> {
@@ -2982,10 +3276,16 @@ pub struct BindSparseInfo<'a> {
 }
 unsafe impl Send for BindSparseInfo<'_> {}
 unsafe impl Sync for BindSparseInfo<'_> {}
+impl BindSparseInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindSparseInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindSparseInfo<'a> {
@@ -3038,10 +3338,16 @@ pub struct ImageCopy {
     pub dst_offset: Offset3D,
     pub extent: Extent3D,
 }
+impl ImageCopy {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ImageCopy {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ImageCopy {
@@ -3082,10 +3388,16 @@ pub struct ImageBlit {
     pub dst_subresource: ImageSubresourceLayers,
     pub dst_offsets: [Offset3D; 2],
 }
+impl ImageBlit {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ImageBlit {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ImageBlit {
@@ -3123,10 +3435,16 @@ pub struct BufferImageCopy {
     pub image_offset: Offset3D,
     pub image_extent: Extent3D,
 }
+impl BufferImageCopy {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for BufferImageCopy {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl BufferImageCopy {
@@ -3171,10 +3489,16 @@ pub struct StridedDeviceAddressRangeKHR {
     pub size: DeviceSize,
     pub stride: DeviceSize,
 }
+impl StridedDeviceAddressRangeKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for StridedDeviceAddressRangeKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl StridedDeviceAddressRangeKHR {
@@ -3204,10 +3528,16 @@ pub struct CopyMemoryIndirectCommandKHR {
     pub dst_address: DeviceAddress,
     pub size: DeviceSize,
 }
+impl CopyMemoryIndirectCommandKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for CopyMemoryIndirectCommandKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl CopyMemoryIndirectCommandKHR {
@@ -3243,10 +3573,16 @@ pub struct CopyMemoryIndirectInfoKHR<'a> {
 }
 unsafe impl Send for CopyMemoryIndirectInfoKHR<'_> {}
 unsafe impl Sync for CopyMemoryIndirectInfoKHR<'_> {}
+impl CopyMemoryIndirectInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyMemoryIndirectInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryIndirectInfoKHR<'a> {
@@ -3287,10 +3623,16 @@ pub struct CopyMemoryToImageIndirectCommandKHR {
     pub image_offset: Offset3D,
     pub image_extent: Extent3D,
 }
+impl CopyMemoryToImageIndirectCommandKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for CopyMemoryToImageIndirectCommandKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl CopyMemoryToImageIndirectCommandKHR {
@@ -3343,10 +3685,16 @@ pub struct CopyMemoryToImageIndirectInfoKHR<'a> {
 }
 unsafe impl Send for CopyMemoryToImageIndirectInfoKHR<'_> {}
 unsafe impl Sync for CopyMemoryToImageIndirectInfoKHR<'_> {}
+impl CopyMemoryToImageIndirectInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyMemoryToImageIndirectInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToImageIndirectInfoKHR<'a> {
@@ -3392,10 +3740,16 @@ pub struct ImageResolve {
     pub dst_offset: Offset3D,
     pub extent: Extent3D,
 }
+impl ImageResolve {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ImageResolve {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ImageResolve {
@@ -3440,10 +3794,16 @@ pub struct ShaderModuleCreateInfo<'a> {
 }
 unsafe impl Send for ShaderModuleCreateInfo<'_> {}
 unsafe impl Sync for ShaderModuleCreateInfo<'_> {}
+impl ShaderModuleCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ShaderModuleCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderModuleCreateInfo<'a> {
@@ -3479,10 +3839,16 @@ pub struct DescriptorSetLayoutBinding<'a> {
 }
 unsafe impl Send for DescriptorSetLayoutBinding<'_> {}
 unsafe impl Sync for DescriptorSetLayoutBinding<'_> {}
+impl DescriptorSetLayoutBinding<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DescriptorSetLayoutBinding<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> DescriptorSetLayoutBinding<'a> {
@@ -3528,10 +3894,16 @@ pub struct DescriptorSetLayoutCreateInfo<'a> {
 }
 unsafe impl Send for DescriptorSetLayoutCreateInfo<'_> {}
 unsafe impl Sync for DescriptorSetLayoutCreateInfo<'_> {}
+impl DescriptorSetLayoutCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorSetLayoutCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutCreateInfo<'a> {
@@ -3559,10 +3931,16 @@ pub struct DescriptorPoolSize {
     pub ty: DescriptorType,
     pub descriptor_count: u32,
 }
+impl DescriptorPoolSize {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DescriptorPoolSize {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DescriptorPoolSize {
@@ -3593,10 +3971,16 @@ pub struct DescriptorPoolCreateInfo<'a> {
 }
 unsafe impl Send for DescriptorPoolCreateInfo<'_> {}
 unsafe impl Sync for DescriptorPoolCreateInfo<'_> {}
+impl DescriptorPoolCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorPoolCreateInfo<'a> {
@@ -3635,10 +4019,16 @@ pub struct DescriptorSetAllocateInfo<'a> {
 }
 unsafe impl Send for DescriptorSetAllocateInfo<'_> {}
 unsafe impl Sync for DescriptorSetAllocateInfo<'_> {}
+impl DescriptorSetAllocateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorSetAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetAllocateInfo<'a> {
@@ -3667,10 +4057,16 @@ pub struct SpecializationMapEntry {
     pub offset: u32,
     pub size: usize,
 }
+impl SpecializationMapEntry {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SpecializationMapEntry {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl SpecializationMapEntry {
@@ -3704,10 +4100,16 @@ pub struct SpecializationInfo<'a> {
 }
 unsafe impl Send for SpecializationInfo<'_> {}
 unsafe impl Sync for SpecializationInfo<'_> {}
+impl SpecializationInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SpecializationInfo<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> SpecializationInfo<'a> {
@@ -3741,10 +4143,16 @@ pub struct PipelineShaderStageCreateInfo<'a> {
 }
 unsafe impl Send for PipelineShaderStageCreateInfo<'_> {}
 unsafe impl Sync for PipelineShaderStageCreateInfo<'_> {}
+impl PipelineShaderStageCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineShaderStageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageCreateInfo<'a> {
@@ -3802,10 +4210,16 @@ pub struct ComputePipelineCreateInfo<'a> {
 }
 unsafe impl Send for ComputePipelineCreateInfo<'_> {}
 unsafe impl Sync for ComputePipelineCreateInfo<'_> {}
+impl ComputePipelineCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ComputePipelineCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ComputePipelineCreateInfo<'a> {
@@ -3853,10 +4267,16 @@ pub struct ComputePipelineIndirectBufferInfoNV<'a> {
 }
 unsafe impl Send for ComputePipelineIndirectBufferInfoNV<'_> {}
 unsafe impl Sync for ComputePipelineIndirectBufferInfoNV<'_> {}
+impl ComputePipelineIndirectBufferInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ComputePipelineIndirectBufferInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ComputePipelineIndirectBufferInfoNV<'a> {
@@ -3896,10 +4316,16 @@ pub struct PipelineCreateFlags2CreateInfo<'a> {
 }
 unsafe impl Send for PipelineCreateFlags2CreateInfo<'_> {}
 unsafe impl Sync for PipelineCreateFlags2CreateInfo<'_> {}
+impl PipelineCreateFlags2CreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineCreateFlags2CreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCreateFlags2CreateInfo<'a> {
@@ -3926,10 +4352,16 @@ pub struct VertexInputBindingDescription {
     pub stride: u32,
     pub input_rate: VertexInputRate,
 }
+impl VertexInputBindingDescription {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for VertexInputBindingDescription {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl VertexInputBindingDescription {
@@ -3960,10 +4392,16 @@ pub struct VertexInputAttributeDescription {
     pub format: Format,
     pub offset: u32,
 }
+impl VertexInputAttributeDescription {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for VertexInputAttributeDescription {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl VertexInputAttributeDescription {
@@ -4005,10 +4443,16 @@ pub struct PipelineVertexInputStateCreateInfo<'a> {
 }
 unsafe impl Send for PipelineVertexInputStateCreateInfo<'_> {}
 unsafe impl Sync for PipelineVertexInputStateCreateInfo<'_> {}
+impl PipelineVertexInputStateCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineVertexInputStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineVertexInputStateCreateInfo<'a> {
@@ -4054,10 +4498,16 @@ pub struct PipelineInputAssemblyStateCreateInfo<'a> {
 }
 unsafe impl Send for PipelineInputAssemblyStateCreateInfo<'_> {}
 unsafe impl Sync for PipelineInputAssemblyStateCreateInfo<'_> {}
+impl PipelineInputAssemblyStateCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineInputAssemblyStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineInputAssemblyStateCreateInfo<'a> {
@@ -4094,10 +4544,16 @@ pub struct PipelineTessellationStateCreateInfo<'a> {
 }
 unsafe impl Send for PipelineTessellationStateCreateInfo<'_> {}
 unsafe impl Sync for PipelineTessellationStateCreateInfo<'_> {}
+impl PipelineTessellationStateCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineTessellationStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineTessellationStateCreateInfo<'a> {
@@ -4132,10 +4588,16 @@ pub struct PipelineViewportStateCreateInfo<'a> {
 }
 unsafe impl Send for PipelineViewportStateCreateInfo<'_> {}
 unsafe impl Sync for PipelineViewportStateCreateInfo<'_> {}
+impl PipelineViewportStateCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineViewportStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportStateCreateInfo<'a> {
@@ -4193,10 +4655,16 @@ pub struct PipelineRasterizationStateCreateInfo<'a> {
 }
 unsafe impl Send for PipelineRasterizationStateCreateInfo<'_> {}
 unsafe impl Sync for PipelineRasterizationStateCreateInfo<'_> {}
+impl PipelineRasterizationStateCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineRasterizationStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateCreateInfo<'a> {
@@ -4278,10 +4746,16 @@ pub struct PipelineMultisampleStateCreateInfo<'a> {
 }
 unsafe impl Send for PipelineMultisampleStateCreateInfo<'_> {}
 unsafe impl Sync for PipelineMultisampleStateCreateInfo<'_> {}
+impl PipelineMultisampleStateCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineMultisampleStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineMultisampleStateCreateInfo<'a> {
@@ -4348,10 +4822,16 @@ pub struct PipelineColorBlendAttachmentState {
     pub alpha_blend_op: BlendOp,
     pub color_write_mask: ColorComponentFlags,
 }
+impl PipelineColorBlendAttachmentState {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PipelineColorBlendAttachmentState {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PipelineColorBlendAttachmentState {
@@ -4414,10 +4894,16 @@ pub struct PipelineColorBlendStateCreateInfo<'a> {
 }
 unsafe impl Send for PipelineColorBlendStateCreateInfo<'_> {}
 unsafe impl Sync for PipelineColorBlendStateCreateInfo<'_> {}
+impl PipelineColorBlendStateCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineColorBlendStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineColorBlendStateCreateInfo<'a> {
@@ -4466,10 +4952,16 @@ pub struct PipelineDynamicStateCreateInfo<'a> {
 }
 unsafe impl Send for PipelineDynamicStateCreateInfo<'_> {}
 unsafe impl Sync for PipelineDynamicStateCreateInfo<'_> {}
+impl PipelineDynamicStateCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineDynamicStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineDynamicStateCreateInfo<'a> {
@@ -4502,10 +4994,16 @@ pub struct StencilOpState {
     pub write_mask: u32,
     pub reference: u32,
 }
+impl StencilOpState {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for StencilOpState {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl StencilOpState {
@@ -4567,10 +5065,16 @@ pub struct PipelineDepthStencilStateCreateInfo<'a> {
 }
 unsafe impl Send for PipelineDepthStencilStateCreateInfo<'_> {}
 unsafe impl Sync for PipelineDepthStencilStateCreateInfo<'_> {}
+impl PipelineDepthStencilStateCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineDepthStencilStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineDepthStencilStateCreateInfo<'a> {
@@ -4657,10 +5161,16 @@ pub struct GraphicsPipelineCreateInfo<'a> {
 }
 unsafe impl Send for GraphicsPipelineCreateInfo<'_> {}
 unsafe impl Sync for GraphicsPipelineCreateInfo<'_> {}
+impl GraphicsPipelineCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GraphicsPipelineCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineCreateInfo<'a> {
@@ -4788,10 +5298,16 @@ pub struct PipelineCacheCreateInfo<'a> {
 }
 unsafe impl Send for PipelineCacheCreateInfo<'_> {}
 unsafe impl Sync for PipelineCacheCreateInfo<'_> {}
+impl PipelineCacheCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineCacheCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCacheCreateInfo<'a> {
@@ -4822,10 +5338,16 @@ pub struct PipelineCacheHeaderVersionOne {
     pub device_id: u32,
     pub pipeline_cache_uuid: [u8; UUID_SIZE],
 }
+impl PipelineCacheHeaderVersionOne {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PipelineCacheHeaderVersionOne {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PipelineCacheHeaderVersionOne {
@@ -4867,10 +5389,16 @@ pub struct PipelineCacheHeaderVersionDataGraphQCOM {
     pub cache_version: u32,
     pub toolchain_version: [u32; DATA_GRAPH_MODEL_TOOLCHAIN_VERSION_LENGTH_QCOM],
 }
+impl PipelineCacheHeaderVersionDataGraphQCOM {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PipelineCacheHeaderVersionDataGraphQCOM {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PipelineCacheHeaderVersionDataGraphQCOM {
@@ -4913,10 +5441,16 @@ pub struct PushConstantRange {
     pub offset: u32,
     pub size: u32,
 }
+impl PushConstantRange {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PushConstantRange {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PushConstantRange {
@@ -4951,10 +5485,16 @@ pub struct PipelineBinaryCreateInfoKHR<'a> {
 }
 unsafe impl Send for PipelineBinaryCreateInfoKHR<'_> {}
 unsafe impl Sync for PipelineBinaryCreateInfoKHR<'_> {}
+impl PipelineBinaryCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineBinaryCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryCreateInfoKHR<'a> {
@@ -4997,10 +5537,16 @@ pub struct PipelineBinaryHandlesInfoKHR<'a> {
 }
 unsafe impl Send for PipelineBinaryHandlesInfoKHR<'_> {}
 unsafe impl Sync for PipelineBinaryHandlesInfoKHR<'_> {}
+impl PipelineBinaryHandlesInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineBinaryHandlesInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryHandlesInfoKHR<'a> {
@@ -5026,10 +5572,16 @@ pub struct PipelineBinaryDataKHR<'a> {
 }
 unsafe impl Send for PipelineBinaryDataKHR<'_> {}
 unsafe impl Sync for PipelineBinaryDataKHR<'_> {}
+impl PipelineBinaryDataKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PipelineBinaryDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> PipelineBinaryDataKHR<'a> {
@@ -5053,10 +5605,16 @@ pub struct PipelineBinaryKeysAndDataKHR<'a> {
 }
 unsafe impl Send for PipelineBinaryKeysAndDataKHR<'_> {}
 unsafe impl Sync for PipelineBinaryKeysAndDataKHR<'_> {}
+impl PipelineBinaryKeysAndDataKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PipelineBinaryKeysAndDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> PipelineBinaryKeysAndDataKHR<'a> {
@@ -5093,10 +5651,16 @@ pub struct PipelineBinaryKeyKHR<'a> {
 }
 unsafe impl Send for PipelineBinaryKeyKHR<'_> {}
 unsafe impl Sync for PipelineBinaryKeyKHR<'_> {}
+impl PipelineBinaryKeyKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineBinaryKeyKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryKeyKHR<'a> {
@@ -5128,10 +5692,16 @@ pub struct PipelineBinaryInfoKHR<'a> {
 }
 unsafe impl Send for PipelineBinaryInfoKHR<'_> {}
 unsafe impl Sync for PipelineBinaryInfoKHR<'_> {}
+impl PipelineBinaryInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineBinaryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryInfoKHR<'a> {
@@ -5161,10 +5731,16 @@ pub struct ReleaseCapturedPipelineDataInfoKHR<'a> {
 }
 unsafe impl Send for ReleaseCapturedPipelineDataInfoKHR<'_> {}
 unsafe impl Sync for ReleaseCapturedPipelineDataInfoKHR<'_> {}
+impl ReleaseCapturedPipelineDataInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ReleaseCapturedPipelineDataInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ReleaseCapturedPipelineDataInfoKHR<'a> {
@@ -5190,10 +5766,16 @@ pub struct PipelineBinaryDataInfoKHR<'a> {
 }
 unsafe impl Send for PipelineBinaryDataInfoKHR<'_> {}
 unsafe impl Sync for PipelineBinaryDataInfoKHR<'_> {}
+impl PipelineBinaryDataInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineBinaryDataInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryDataInfoKHR<'a> {
@@ -5218,10 +5800,16 @@ pub struct PipelineCreateInfoKHR<'a> {
 }
 unsafe impl Send for PipelineCreateInfoKHR<'_> {}
 unsafe impl Sync for PipelineCreateInfoKHR<'_> {}
+impl PipelineCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCreateInfoKHR<'a> {
@@ -5245,10 +5833,16 @@ pub struct PipelineLayoutCreateInfo<'a> {
 }
 unsafe impl Send for PipelineLayoutCreateInfo<'_> {}
 unsafe impl Sync for PipelineLayoutCreateInfo<'_> {}
+impl PipelineLayoutCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineLayoutCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineLayoutCreateInfo<'a> {
@@ -5311,10 +5905,16 @@ pub struct SamplerCreateInfo<'a> {
 }
 unsafe impl Send for SamplerCreateInfo<'_> {}
 unsafe impl Sync for SamplerCreateInfo<'_> {}
+impl SamplerCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SamplerCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCreateInfo<'a> {
@@ -5416,10 +6016,16 @@ pub struct CommandPoolCreateInfo<'a> {
 }
 unsafe impl Send for CommandPoolCreateInfo<'_> {}
 unsafe impl Sync for CommandPoolCreateInfo<'_> {}
+impl CommandPoolCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CommandPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandPoolCreateInfo<'a> {
@@ -5452,10 +6058,16 @@ pub struct CommandBufferAllocateInfo<'a> {
 }
 unsafe impl Send for CommandBufferAllocateInfo<'_> {}
 unsafe impl Sync for CommandBufferAllocateInfo<'_> {}
+impl CommandBufferAllocateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CommandBufferAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferAllocateInfo<'a> {
@@ -5496,10 +6108,16 @@ pub struct CommandBufferInheritanceInfo<'a> {
 }
 unsafe impl Send for CommandBufferInheritanceInfo<'_> {}
 unsafe impl Sync for CommandBufferInheritanceInfo<'_> {}
+impl CommandBufferInheritanceInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CommandBufferInheritanceInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceInfo<'a> {
@@ -5551,10 +6169,16 @@ pub struct CommandBufferBeginInfo<'a> {
 }
 unsafe impl Send for CommandBufferBeginInfo<'_> {}
 unsafe impl Sync for CommandBufferBeginInfo<'_> {}
+impl CommandBufferBeginInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CommandBufferBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferBeginInfo<'a> {
@@ -5605,10 +6229,16 @@ impl fmt::Debug for RenderPassBeginInfo<'_> {
             .finish()
     }
 }
+impl RenderPassBeginInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassBeginInfo<'a> {
@@ -5660,10 +6290,16 @@ pub struct ClearDepthStencilValue {
     pub depth: f32,
     pub stencil: u32,
 }
+impl ClearDepthStencilValue {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ClearDepthStencilValue {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ClearDepthStencilValue {
@@ -5710,10 +6346,16 @@ impl fmt::Debug for ClearAttachment {
             .finish()
     }
 }
+impl ClearAttachment {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ClearAttachment {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ClearAttachment {
@@ -5749,10 +6391,16 @@ pub struct AttachmentDescription {
     pub initial_layout: ImageLayout,
     pub final_layout: ImageLayout,
 }
+impl AttachmentDescription {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for AttachmentDescription {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl AttachmentDescription {
@@ -5811,10 +6459,16 @@ pub struct AttachmentReference {
     pub attachment: u32,
     pub layout: ImageLayout,
 }
+impl AttachmentReference {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for AttachmentReference {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl AttachmentReference {
@@ -5849,10 +6503,16 @@ pub struct SubpassDescription<'a> {
 }
 unsafe impl Send for SubpassDescription<'_> {}
 unsafe impl Sync for SubpassDescription<'_> {}
+impl SubpassDescription<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SubpassDescription<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> SubpassDescription<'a> {
@@ -5913,10 +6573,16 @@ pub struct SubpassDependency {
     pub dst_access_mask: AccessFlags,
     pub dependency_flags: DependencyFlags,
 }
+impl SubpassDependency {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SubpassDependency {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl SubpassDependency {
@@ -5975,10 +6641,16 @@ pub struct RenderPassCreateInfo<'a> {
 }
 unsafe impl Send for RenderPassCreateInfo<'_> {}
 unsafe impl Sync for RenderPassCreateInfo<'_> {}
+impl RenderPassCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreateInfo<'a> {
@@ -6022,10 +6694,16 @@ pub struct EventCreateInfo<'a> {
 }
 unsafe impl Send for EventCreateInfo<'_> {}
 unsafe impl Sync for EventCreateInfo<'_> {}
+impl EventCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for EventCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for EventCreateInfo<'a> {
@@ -6051,10 +6729,16 @@ pub struct FenceCreateInfo<'a> {
 }
 unsafe impl Send for FenceCreateInfo<'_> {}
 unsafe impl Sync for FenceCreateInfo<'_> {}
+impl FenceCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for FenceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FenceCreateInfo<'a> {
@@ -6129,10 +6813,16 @@ pub struct PhysicalDeviceFeatures {
     pub variable_multisample_rate: Bool32,
     pub inherited_queries: Bool32,
 }
+impl PhysicalDeviceFeatures {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFeatures {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PhysicalDeviceFeatures {
@@ -6461,10 +7151,16 @@ pub struct PhysicalDeviceSparseProperties {
     pub residency_aligned_mip_size: Bool32,
     pub residency_non_resident_strict: Bool32,
 }
+impl PhysicalDeviceSparseProperties {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSparseProperties {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PhysicalDeviceSparseProperties {
@@ -6617,10 +7313,16 @@ pub struct PhysicalDeviceLimits {
     pub optimal_buffer_copy_row_pitch_alignment: DeviceSize,
     pub non_coherent_atom_size: DeviceSize,
 }
+impl PhysicalDeviceLimits {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PhysicalDeviceLimits {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PhysicalDeviceLimits {
@@ -7300,10 +8002,16 @@ pub struct SemaphoreCreateInfo<'a> {
 }
 unsafe impl Send for SemaphoreCreateInfo<'_> {}
 unsafe impl Sync for SemaphoreCreateInfo<'_> {}
+impl SemaphoreCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SemaphoreCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreCreateInfo<'a> {
@@ -7332,10 +8040,16 @@ pub struct QueryPoolCreateInfo<'a> {
 }
 unsafe impl Send for QueryPoolCreateInfo<'_> {}
 unsafe impl Sync for QueryPoolCreateInfo<'_> {}
+impl QueryPoolCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueryPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolCreateInfo<'a> {
@@ -7382,10 +8096,16 @@ pub struct FramebufferCreateInfo<'a> {
 }
 unsafe impl Send for FramebufferCreateInfo<'_> {}
 unsafe impl Sync for FramebufferCreateInfo<'_> {}
+impl FramebufferCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for FramebufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferCreateInfo<'a> {
@@ -7440,10 +8160,16 @@ pub struct DrawIndirectCommand {
     pub first_vertex: u32,
     pub first_instance: u32,
 }
+impl DrawIndirectCommand {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DrawIndirectCommand {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DrawIndirectCommand {
@@ -7480,10 +8206,16 @@ pub struct DrawIndexedIndirectCommand {
     pub vertex_offset: i32,
     pub first_instance: u32,
 }
+impl DrawIndexedIndirectCommand {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DrawIndexedIndirectCommand {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DrawIndexedIndirectCommand {
@@ -7523,10 +8255,16 @@ pub struct DispatchIndirectCommand {
     pub y: u32,
     pub z: u32,
 }
+impl DispatchIndirectCommand {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DispatchIndirectCommand {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DispatchIndirectCommand {
@@ -7555,10 +8293,16 @@ pub struct MultiDrawInfoEXT {
     pub first_vertex: u32,
     pub vertex_count: u32,
 }
+impl MultiDrawInfoEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for MultiDrawInfoEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl MultiDrawInfoEXT {
@@ -7583,10 +8327,16 @@ pub struct MultiDrawIndexedInfoEXT {
     pub index_count: u32,
     pub vertex_offset: i32,
 }
+impl MultiDrawIndexedInfoEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for MultiDrawIndexedInfoEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl MultiDrawIndexedInfoEXT {
@@ -7625,10 +8375,16 @@ pub struct SubmitInfo<'a> {
 }
 unsafe impl Send for SubmitInfo<'_> {}
 unsafe impl Sync for SubmitInfo<'_> {}
+impl SubmitInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubmitInfo<'a> {
@@ -7677,10 +8433,16 @@ pub struct DisplayPropertiesKHR<'a> {
 }
 unsafe impl Send for DisplayPropertiesKHR<'_> {}
 unsafe impl Sync for DisplayPropertiesKHR<'_> {}
+impl DisplayPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DisplayPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> DisplayPropertiesKHR<'a> {
@@ -7737,10 +8499,16 @@ pub struct DisplayPlanePropertiesKHR {
     pub current_display: DisplayKHR,
     pub current_stack_index: u32,
 }
+impl DisplayPlanePropertiesKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DisplayPlanePropertiesKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DisplayPlanePropertiesKHR {
@@ -7764,10 +8532,16 @@ pub struct DisplayModeParametersKHR {
     pub visible_region: Extent2D,
     pub refresh_rate: u32,
 }
+impl DisplayModeParametersKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DisplayModeParametersKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DisplayModeParametersKHR {
@@ -7791,10 +8565,16 @@ pub struct DisplayModePropertiesKHR {
     pub display_mode: DisplayModeKHR,
     pub parameters: DisplayModeParametersKHR,
 }
+impl DisplayModePropertiesKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DisplayModePropertiesKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DisplayModePropertiesKHR {
@@ -7823,10 +8603,16 @@ pub struct DisplayModeCreateInfoKHR<'a> {
 }
 unsafe impl Send for DisplayModeCreateInfoKHR<'_> {}
 unsafe impl Sync for DisplayModeCreateInfoKHR<'_> {}
+impl DisplayModeCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DisplayModeCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayModeCreateInfoKHR<'a> {
@@ -7860,10 +8646,16 @@ pub struct DisplayPlaneCapabilitiesKHR {
     pub min_dst_extent: Extent2D,
     pub max_dst_extent: Extent2D,
 }
+impl DisplayPlaneCapabilitiesKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DisplayPlaneCapabilitiesKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DisplayPlaneCapabilitiesKHR {
@@ -7933,10 +8725,16 @@ pub struct DisplaySurfaceCreateInfoKHR<'a> {
 }
 unsafe impl Send for DisplaySurfaceCreateInfoKHR<'_> {}
 unsafe impl Sync for DisplaySurfaceCreateInfoKHR<'_> {}
+impl DisplaySurfaceCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DisplaySurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplaySurfaceCreateInfoKHR<'a> {
@@ -7997,10 +8795,16 @@ pub struct DisplaySurfaceStereoCreateInfoNV<'a> {
 }
 unsafe impl Send for DisplaySurfaceStereoCreateInfoNV<'_> {}
 unsafe impl Sync for DisplaySurfaceStereoCreateInfoNV<'_> {}
+impl DisplaySurfaceStereoCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DisplaySurfaceStereoCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplaySurfaceStereoCreateInfoNV<'a> {
@@ -8029,10 +8833,16 @@ pub struct DisplayPresentInfoKHR<'a> {
 }
 unsafe impl Send for DisplayPresentInfoKHR<'_> {}
 unsafe impl Sync for DisplayPresentInfoKHR<'_> {}
+impl DisplayPresentInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DisplayPresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPresentInfoKHR<'a> {
@@ -8073,10 +8883,16 @@ pub struct SurfaceCapabilitiesKHR {
     pub supported_composite_alpha: CompositeAlphaFlagsKHR,
     pub supported_usage_flags: ImageUsageFlags,
 }
+impl SurfaceCapabilitiesKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SurfaceCapabilitiesKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl SurfaceCapabilitiesKHR {
@@ -8148,10 +8964,16 @@ pub struct AndroidSurfaceCreateInfoKHR<'a> {
 }
 unsafe impl Send for AndroidSurfaceCreateInfoKHR<'_> {}
 unsafe impl Sync for AndroidSurfaceCreateInfoKHR<'_> {}
+impl AndroidSurfaceCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AndroidSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidSurfaceCreateInfoKHR<'a> {
@@ -8183,10 +9005,16 @@ pub struct ViSurfaceCreateInfoNN<'a> {
 }
 unsafe impl Send for ViSurfaceCreateInfoNN<'_> {}
 unsafe impl Sync for ViSurfaceCreateInfoNN<'_> {}
+impl ViSurfaceCreateInfoNN<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ViSurfaceCreateInfoNN<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ViSurfaceCreateInfoNN<'a> {
@@ -8219,10 +9047,16 @@ pub struct WaylandSurfaceCreateInfoKHR<'a> {
 }
 unsafe impl Send for WaylandSurfaceCreateInfoKHR<'_> {}
 unsafe impl Sync for WaylandSurfaceCreateInfoKHR<'_> {}
+impl WaylandSurfaceCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for WaylandSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WaylandSurfaceCreateInfoKHR<'a> {
@@ -8260,10 +9094,16 @@ pub struct UbmSurfaceCreateInfoSEC<'a> {
 }
 unsafe impl Send for UbmSurfaceCreateInfoSEC<'_> {}
 unsafe impl Sync for UbmSurfaceCreateInfoSEC<'_> {}
+impl UbmSurfaceCreateInfoSEC<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for UbmSurfaceCreateInfoSEC<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for UbmSurfaceCreateInfoSEC<'a> {
@@ -8301,10 +9141,16 @@ pub struct Win32SurfaceCreateInfoKHR<'a> {
 }
 unsafe impl Send for Win32SurfaceCreateInfoKHR<'_> {}
 unsafe impl Sync for Win32SurfaceCreateInfoKHR<'_> {}
+impl Win32SurfaceCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for Win32SurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for Win32SurfaceCreateInfoKHR<'a> {
@@ -8342,10 +9188,16 @@ pub struct XlibSurfaceCreateInfoKHR<'a> {
 }
 unsafe impl Send for XlibSurfaceCreateInfoKHR<'_> {}
 unsafe impl Sync for XlibSurfaceCreateInfoKHR<'_> {}
+impl XlibSurfaceCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for XlibSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for XlibSurfaceCreateInfoKHR<'a> {
@@ -8383,10 +9235,16 @@ pub struct XcbSurfaceCreateInfoKHR<'a> {
 }
 unsafe impl Send for XcbSurfaceCreateInfoKHR<'_> {}
 unsafe impl Sync for XcbSurfaceCreateInfoKHR<'_> {}
+impl XcbSurfaceCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for XcbSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for XcbSurfaceCreateInfoKHR<'a> {
@@ -8424,10 +9282,16 @@ pub struct DirectFBSurfaceCreateInfoEXT<'a> {
 }
 unsafe impl Send for DirectFBSurfaceCreateInfoEXT<'_> {}
 unsafe impl Sync for DirectFBSurfaceCreateInfoEXT<'_> {}
+impl DirectFBSurfaceCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DirectFBSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DirectFBSurfaceCreateInfoEXT<'a> {
@@ -8464,10 +9328,16 @@ pub struct ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
 }
 unsafe impl Send for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {}
 unsafe impl Sync for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {}
+impl ImagePipeSurfaceCreateInfoFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
@@ -8499,10 +9369,16 @@ pub struct StreamDescriptorSurfaceCreateInfoGGP<'a> {
 }
 unsafe impl Send for StreamDescriptorSurfaceCreateInfoGGP<'_> {}
 unsafe impl Sync for StreamDescriptorSurfaceCreateInfoGGP<'_> {}
+impl StreamDescriptorSurfaceCreateInfoGGP<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for StreamDescriptorSurfaceCreateInfoGGP<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for StreamDescriptorSurfaceCreateInfoGGP<'a> {
@@ -8535,10 +9411,16 @@ pub struct ScreenSurfaceCreateInfoQNX<'a> {
 }
 unsafe impl Send for ScreenSurfaceCreateInfoQNX<'_> {}
 unsafe impl Sync for ScreenSurfaceCreateInfoQNX<'_> {}
+impl ScreenSurfaceCreateInfoQNX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ScreenSurfaceCreateInfoQNX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ScreenSurfaceCreateInfoQNX<'a> {
@@ -8570,10 +9452,16 @@ pub struct SurfaceFormatKHR {
     pub format: Format,
     pub color_space: ColorSpaceKHR,
 }
+impl SurfaceFormatKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SurfaceFormatKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl SurfaceFormatKHR {
@@ -8616,10 +9504,16 @@ pub struct SwapchainCreateInfoKHR<'a> {
 }
 unsafe impl Send for SwapchainCreateInfoKHR<'_> {}
 unsafe impl Sync for SwapchainCreateInfoKHR<'_> {}
+impl SwapchainCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainCreateInfoKHR<'a> {
@@ -8721,10 +9615,16 @@ pub struct PresentInfoKHR<'a> {
 }
 unsafe impl Send for PresentInfoKHR<'_> {}
 unsafe impl Sync for PresentInfoKHR<'_> {}
+impl PresentInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentInfoKHR<'a> {
@@ -8782,10 +9682,16 @@ impl fmt::Debug for DebugReportCallbackCreateInfoEXT<'_> {
             .finish()
     }
 }
+impl DebugReportCallbackCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DebugReportCallbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugReportCallbackCreateInfoEXT<'a> {
@@ -8823,10 +9729,16 @@ pub struct ValidationFlagsEXT<'a> {
 }
 unsafe impl Send for ValidationFlagsEXT<'_> {}
 unsafe impl Sync for ValidationFlagsEXT<'_> {}
+impl ValidationFlagsEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ValidationFlagsEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ValidationFlagsEXT<'a> {
@@ -8860,10 +9772,16 @@ pub struct ValidationFeaturesEXT<'a> {
 }
 unsafe impl Send for ValidationFeaturesEXT<'_> {}
 unsafe impl Sync for ValidationFeaturesEXT<'_> {}
+impl ValidationFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ValidationFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ValidationFeaturesEXT<'a> {
@@ -8906,10 +9824,16 @@ pub struct LayerSettingsCreateInfoEXT<'a> {
 }
 unsafe impl Send for LayerSettingsCreateInfoEXT<'_> {}
 unsafe impl Sync for LayerSettingsCreateInfoEXT<'_> {}
+impl LayerSettingsCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for LayerSettingsCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LayerSettingsCreateInfoEXT<'a> {
@@ -8939,10 +9863,16 @@ pub struct LayerSettingEXT<'a> {
 }
 unsafe impl Send for LayerSettingEXT<'_> {}
 unsafe impl Sync for LayerSettingEXT<'_> {}
+impl LayerSettingEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for LayerSettingEXT<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> LayerSettingEXT<'a> {
@@ -8997,10 +9927,16 @@ pub struct PipelineRasterizationStateRasterizationOrderAMD<'a> {
 }
 unsafe impl Send for PipelineRasterizationStateRasterizationOrderAMD<'_> {}
 unsafe impl Sync for PipelineRasterizationStateRasterizationOrderAMD<'_> {}
+impl PipelineRasterizationStateRasterizationOrderAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineRasterizationStateRasterizationOrderAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateRasterizationOrderAMD<'a> {
@@ -9033,10 +9969,16 @@ pub struct DebugMarkerObjectNameInfoEXT<'a> {
 }
 unsafe impl Send for DebugMarkerObjectNameInfoEXT<'_> {}
 unsafe impl Sync for DebugMarkerObjectNameInfoEXT<'_> {}
+impl DebugMarkerObjectNameInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DebugMarkerObjectNameInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugMarkerObjectNameInfoEXT<'a> {
@@ -9084,10 +10026,16 @@ pub struct DebugMarkerObjectTagInfoEXT<'a> {
 }
 unsafe impl Send for DebugMarkerObjectTagInfoEXT<'_> {}
 unsafe impl Sync for DebugMarkerObjectTagInfoEXT<'_> {}
+impl DebugMarkerObjectTagInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DebugMarkerObjectTagInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugMarkerObjectTagInfoEXT<'a> {
@@ -9130,10 +10078,16 @@ pub struct DebugMarkerMarkerInfoEXT<'a> {
 }
 unsafe impl Send for DebugMarkerMarkerInfoEXT<'_> {}
 unsafe impl Sync for DebugMarkerMarkerInfoEXT<'_> {}
+impl DebugMarkerMarkerInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DebugMarkerMarkerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugMarkerMarkerInfoEXT<'a> {
@@ -9172,10 +10126,16 @@ pub struct DedicatedAllocationImageCreateInfoNV<'a> {
 }
 unsafe impl Send for DedicatedAllocationImageCreateInfoNV<'_> {}
 unsafe impl Sync for DedicatedAllocationImageCreateInfoNV<'_> {}
+impl DedicatedAllocationImageCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DedicatedAllocationImageCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationImageCreateInfoNV<'a> {
@@ -9202,10 +10162,16 @@ pub struct DedicatedAllocationBufferCreateInfoNV<'a> {
 }
 unsafe impl Send for DedicatedAllocationBufferCreateInfoNV<'_> {}
 unsafe impl Sync for DedicatedAllocationBufferCreateInfoNV<'_> {}
+impl DedicatedAllocationBufferCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DedicatedAllocationBufferCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationBufferCreateInfoNV<'a> {
@@ -9233,10 +10199,16 @@ pub struct DedicatedAllocationMemoryAllocateInfoNV<'a> {
 }
 unsafe impl Send for DedicatedAllocationMemoryAllocateInfoNV<'_> {}
 unsafe impl Sync for DedicatedAllocationMemoryAllocateInfoNV<'_> {}
+impl DedicatedAllocationMemoryAllocateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DedicatedAllocationMemoryAllocateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationMemoryAllocateInfoNV<'a> {
@@ -9267,10 +10239,16 @@ pub struct ExternalImageFormatPropertiesNV {
     pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlagsNV,
     pub compatible_handle_types: ExternalMemoryHandleTypeFlagsNV,
 }
+impl ExternalImageFormatPropertiesNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ExternalImageFormatPropertiesNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ExternalImageFormatPropertiesNV {
@@ -9320,10 +10298,16 @@ pub struct ExternalMemoryImageCreateInfoNV<'a> {
 }
 unsafe impl Send for ExternalMemoryImageCreateInfoNV<'_> {}
 unsafe impl Sync for ExternalMemoryImageCreateInfoNV<'_> {}
+impl ExternalMemoryImageCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalMemoryImageCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryImageCreateInfoNV<'a> {
@@ -9350,10 +10334,16 @@ pub struct ExportMemoryAllocateInfoNV<'a> {
 }
 unsafe impl Send for ExportMemoryAllocateInfoNV<'_> {}
 unsafe impl Sync for ExportMemoryAllocateInfoNV<'_> {}
+impl ExportMemoryAllocateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportMemoryAllocateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryAllocateInfoNV<'a> {
@@ -9381,10 +10371,16 @@ pub struct ImportMemoryWin32HandleInfoNV<'a> {
 }
 unsafe impl Send for ImportMemoryWin32HandleInfoNV<'_> {}
 unsafe impl Sync for ImportMemoryWin32HandleInfoNV<'_> {}
+impl ImportMemoryWin32HandleInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportMemoryWin32HandleInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryWin32HandleInfoNV<'a> {
@@ -9417,10 +10413,16 @@ pub struct ExportMemoryWin32HandleInfoNV<'a> {
 }
 unsafe impl Send for ExportMemoryWin32HandleInfoNV<'_> {}
 unsafe impl Sync for ExportMemoryWin32HandleInfoNV<'_> {}
+impl ExportMemoryWin32HandleInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportMemoryWin32HandleInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoNV<'a> {
@@ -9458,10 +10460,16 @@ pub struct Win32KeyedMutexAcquireReleaseInfoNV<'a> {
 }
 unsafe impl Send for Win32KeyedMutexAcquireReleaseInfoNV<'_> {}
 unsafe impl Sync for Win32KeyedMutexAcquireReleaseInfoNV<'_> {}
+impl Win32KeyedMutexAcquireReleaseInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for Win32KeyedMutexAcquireReleaseInfoNV<'a> {
@@ -9514,10 +10522,16 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {}
+impl PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
@@ -9549,10 +10563,16 @@ pub struct PushConstantBankInfoNV<'a> {
 }
 unsafe impl Send for PushConstantBankInfoNV<'_> {}
 unsafe impl Sync for PushConstantBankInfoNV<'_> {}
+impl PushConstantBankInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PushConstantBankInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushConstantBankInfoNV<'a> {
@@ -9582,10 +10602,16 @@ pub struct PhysicalDevicePushConstantBankFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDevicePushConstantBankFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDevicePushConstantBankFeaturesNV<'_> {}
+impl PhysicalDevicePushConstantBankFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePushConstantBankFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushConstantBankFeaturesNV<'a> {
@@ -9617,10 +10643,16 @@ pub struct PhysicalDevicePushConstantBankPropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDevicePushConstantBankPropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDevicePushConstantBankPropertiesNV<'_> {}
+impl PhysicalDevicePushConstantBankPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePushConstantBankPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushConstantBankPropertiesNV<'a> {
@@ -9671,10 +10703,16 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> {}
+impl PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
@@ -9726,10 +10764,16 @@ pub struct DevicePrivateDataCreateInfo<'a> {
 }
 unsafe impl Send for DevicePrivateDataCreateInfo<'_> {}
 unsafe impl Sync for DevicePrivateDataCreateInfo<'_> {}
+impl DevicePrivateDataCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DevicePrivateDataCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DevicePrivateDataCreateInfo<'a> {
@@ -9756,10 +10800,16 @@ pub struct PrivateDataSlotCreateInfo<'a> {
 }
 unsafe impl Send for PrivateDataSlotCreateInfo<'_> {}
 unsafe impl Sync for PrivateDataSlotCreateInfo<'_> {}
+impl PrivateDataSlotCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PrivateDataSlotCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PrivateDataSlotCreateInfo<'a> {
@@ -9785,10 +10835,16 @@ pub struct PhysicalDevicePrivateDataFeatures<'a> {
 }
 unsafe impl Send for PhysicalDevicePrivateDataFeatures<'_> {}
 unsafe impl Sync for PhysicalDevicePrivateDataFeatures<'_> {}
+impl PhysicalDevicePrivateDataFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePrivateDataFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrivateDataFeatures<'a> {
@@ -9824,10 +10880,16 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {}
+impl PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
@@ -9922,10 +10984,16 @@ pub struct PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'_> {}
+impl PhysicalDeviceClusterAccelerationStructureFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {
@@ -9967,10 +11035,16 @@ pub struct PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'_> {}
+impl PhysicalDeviceClusterAccelerationStructurePropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
@@ -10038,10 +11112,16 @@ pub struct StridedDeviceAddressNV {
     pub start_address: DeviceAddress,
     pub stride_in_bytes: DeviceSize,
 }
+impl StridedDeviceAddressNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for StridedDeviceAddressNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl StridedDeviceAddressNV {
@@ -10069,10 +11149,16 @@ pub struct RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {
 }
 unsafe impl Send for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'_> {}
 unsafe impl Sync for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'_> {}
+impl RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -10112,10 +11198,16 @@ pub struct ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV {
 pub struct ClusterAccelerationStructureMoveObjectsInfoNV {
     pub src_acceleration_structure: DeviceAddress,
 }
+impl ClusterAccelerationStructureMoveObjectsInfoNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ClusterAccelerationStructureMoveObjectsInfoNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ClusterAccelerationStructureMoveObjectsInfoNV {
@@ -10135,10 +11227,16 @@ pub struct ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
     pub cluster_references_stride: u32,
     pub cluster_references: DeviceAddress,
 }
+impl ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
@@ -10166,10 +11264,16 @@ impl ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
 pub struct ClusterAccelerationStructureGetTemplateIndicesInfoNV {
     pub cluster_template_address: DeviceAddress,
 }
+impl ClusterAccelerationStructureGetTemplateIndicesInfoNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ClusterAccelerationStructureGetTemplateIndicesInfoNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ClusterAccelerationStructureGetTemplateIndicesInfoNV {
@@ -10250,10 +11354,16 @@ pub struct ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {
 }
 unsafe impl Send for ClusterAccelerationStructureClustersBottomLevelInputNV<'_> {}
 unsafe impl Sync for ClusterAccelerationStructureClustersBottomLevelInputNV<'_> {}
+impl ClusterAccelerationStructureClustersBottomLevelInputNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ClusterAccelerationStructureClustersBottomLevelInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {
@@ -10296,10 +11406,16 @@ pub struct ClusterAccelerationStructureTriangleClusterInputNV<'a> {
 }
 unsafe impl Send for ClusterAccelerationStructureTriangleClusterInputNV<'_> {}
 unsafe impl Sync for ClusterAccelerationStructureTriangleClusterInputNV<'_> {}
+impl ClusterAccelerationStructureTriangleClusterInputNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ClusterAccelerationStructureTriangleClusterInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureTriangleClusterInputNV<'a> {
@@ -10366,10 +11482,16 @@ pub struct ClusterAccelerationStructureMoveObjectsInputNV<'a> {
 }
 unsafe impl Send for ClusterAccelerationStructureMoveObjectsInputNV<'_> {}
 unsafe impl Sync for ClusterAccelerationStructureMoveObjectsInputNV<'_> {}
+impl ClusterAccelerationStructureMoveObjectsInputNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ClusterAccelerationStructureMoveObjectsInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureMoveObjectsInputNV<'a> {
@@ -10440,10 +11562,16 @@ impl fmt::Debug for ClusterAccelerationStructureInputInfoNV<'_> {
             .finish()
     }
 }
+impl ClusterAccelerationStructureInputInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ClusterAccelerationStructureInputInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureInputInfoNV<'a> {
@@ -10500,10 +11628,16 @@ pub struct ClusterAccelerationStructureCommandsInfoNV<'a> {
 }
 unsafe impl Send for ClusterAccelerationStructureCommandsInfoNV<'_> {}
 unsafe impl Sync for ClusterAccelerationStructureCommandsInfoNV<'_> {}
+impl ClusterAccelerationStructureCommandsInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ClusterAccelerationStructureCommandsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureCommandsInfoNV<'a> {
@@ -10571,10 +11705,16 @@ pub struct PhysicalDeviceMultiDrawPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceMultiDrawPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceMultiDrawPropertiesEXT<'_> {}
+impl PhysicalDeviceMultiDrawPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMultiDrawPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiDrawPropertiesEXT<'a> {
@@ -10604,10 +11744,16 @@ pub struct GraphicsShaderGroupCreateInfoNV<'a> {
 }
 unsafe impl Send for GraphicsShaderGroupCreateInfoNV<'_> {}
 unsafe impl Sync for GraphicsShaderGroupCreateInfoNV<'_> {}
+impl GraphicsShaderGroupCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GraphicsShaderGroupCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsShaderGroupCreateInfoNV<'a> {
@@ -10653,10 +11799,16 @@ pub struct GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
 }
 unsafe impl Send for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {}
 unsafe impl Sync for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {}
+impl GraphicsPipelineShaderGroupsCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
@@ -10689,10 +11841,16 @@ impl<'a> GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
 pub struct BindShaderGroupIndirectCommandNV {
     pub group_index: u32,
 }
+impl BindShaderGroupIndirectCommandNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for BindShaderGroupIndirectCommandNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl BindShaderGroupIndirectCommandNV {
@@ -10712,10 +11870,16 @@ pub struct BindIndexBufferIndirectCommandNV {
     pub size: u32,
     pub index_type: IndexType,
 }
+impl BindIndexBufferIndirectCommandNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for BindIndexBufferIndirectCommandNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl BindIndexBufferIndirectCommandNV {
@@ -10745,10 +11909,16 @@ pub struct BindVertexBufferIndirectCommandNV {
     pub size: u32,
     pub stride: u32,
 }
+impl BindVertexBufferIndirectCommandNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for BindVertexBufferIndirectCommandNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl BindVertexBufferIndirectCommandNV {
@@ -10776,10 +11946,16 @@ impl BindVertexBufferIndirectCommandNV {
 pub struct SetStateFlagsIndirectCommandNV {
     pub data: u32,
 }
+impl SetStateFlagsIndirectCommandNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SetStateFlagsIndirectCommandNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl SetStateFlagsIndirectCommandNV {
@@ -10798,10 +11974,16 @@ pub struct IndirectCommandsStreamNV {
     pub buffer: Buffer,
     pub offset: DeviceSize,
 }
+impl IndirectCommandsStreamNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for IndirectCommandsStreamNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl IndirectCommandsStreamNV {
@@ -10841,10 +12023,16 @@ pub struct IndirectCommandsLayoutTokenNV<'a> {
 }
 unsafe impl Send for IndirectCommandsLayoutTokenNV<'_> {}
 unsafe impl Sync for IndirectCommandsLayoutTokenNV<'_> {}
+impl IndirectCommandsLayoutTokenNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for IndirectCommandsLayoutTokenNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutTokenNV<'a> {
@@ -10938,10 +12126,16 @@ pub struct IndirectCommandsLayoutCreateInfoNV<'a> {
 }
 unsafe impl Send for IndirectCommandsLayoutCreateInfoNV<'_> {}
 unsafe impl Sync for IndirectCommandsLayoutCreateInfoNV<'_> {}
+impl IndirectCommandsLayoutCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for IndirectCommandsLayoutCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutCreateInfoNV<'a> {
@@ -10996,10 +12190,16 @@ pub struct GeneratedCommandsInfoNV<'a> {
 }
 unsafe impl Send for GeneratedCommandsInfoNV<'_> {}
 unsafe impl Sync for GeneratedCommandsInfoNV<'_> {}
+impl GeneratedCommandsInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GeneratedCommandsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsInfoNV<'a> {
@@ -11087,10 +12287,16 @@ pub struct GeneratedCommandsMemoryRequirementsInfoNV<'a> {
 }
 unsafe impl Send for GeneratedCommandsMemoryRequirementsInfoNV<'_> {}
 unsafe impl Sync for GeneratedCommandsMemoryRequirementsInfoNV<'_> {}
+impl GeneratedCommandsMemoryRequirementsInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsMemoryRequirementsInfoNV<'a> {
@@ -11136,10 +12342,16 @@ pub struct PipelineIndirectDeviceAddressInfoNV<'a> {
 }
 unsafe impl Send for PipelineIndirectDeviceAddressInfoNV<'_> {}
 unsafe impl Sync for PipelineIndirectDeviceAddressInfoNV<'_> {}
+impl PipelineIndirectDeviceAddressInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineIndirectDeviceAddressInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineIndirectDeviceAddressInfoNV<'a> {
@@ -11165,10 +12377,16 @@ impl<'a> PipelineIndirectDeviceAddressInfoNV<'a> {
 pub struct BindPipelineIndirectCommandNV {
     pub pipeline_address: DeviceAddress,
 }
+impl BindPipelineIndirectCommandNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for BindPipelineIndirectCommandNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl BindPipelineIndirectCommandNV {
@@ -11191,10 +12409,16 @@ pub struct PhysicalDeviceFeatures2<'a> {
 }
 unsafe impl Send for PhysicalDeviceFeatures2<'_> {}
 unsafe impl Sync for PhysicalDeviceFeatures2<'_> {}
+impl PhysicalDeviceFeatures2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFeatures2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFeatures2<'a> {
@@ -11221,10 +12445,16 @@ pub struct PhysicalDeviceProperties2<'a> {
 }
 unsafe impl Send for PhysicalDeviceProperties2<'_> {}
 unsafe impl Sync for PhysicalDeviceProperties2<'_> {}
+impl PhysicalDeviceProperties2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProperties2<'a> {
@@ -11250,10 +12480,16 @@ pub struct FormatProperties2<'a> {
 }
 unsafe impl Send for FormatProperties2<'_> {}
 unsafe impl Sync for FormatProperties2<'_> {}
+impl FormatProperties2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for FormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FormatProperties2<'a> {
@@ -11279,10 +12515,16 @@ pub struct ImageFormatProperties2<'a> {
 }
 unsafe impl Send for ImageFormatProperties2<'_> {}
 unsafe impl Sync for ImageFormatProperties2<'_> {}
+impl ImageFormatProperties2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageFormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageFormatProperties2<'a> {
@@ -11315,10 +12557,16 @@ pub struct PhysicalDeviceImageFormatInfo2<'a> {
 }
 unsafe impl Send for PhysicalDeviceImageFormatInfo2<'_> {}
 unsafe impl Sync for PhysicalDeviceImageFormatInfo2<'_> {}
+impl PhysicalDeviceImageFormatInfo2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImageFormatInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageFormatInfo2<'a> {
@@ -11364,10 +12612,16 @@ pub struct QueueFamilyProperties2<'a> {
 }
 unsafe impl Send for QueueFamilyProperties2<'_> {}
 unsafe impl Sync for QueueFamilyProperties2<'_> {}
+impl QueueFamilyProperties2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueueFamilyProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyProperties2<'a> {
@@ -11396,10 +12650,16 @@ pub struct PhysicalDeviceMemoryProperties2<'a> {
 }
 unsafe impl Send for PhysicalDeviceMemoryProperties2<'_> {}
 unsafe impl Sync for PhysicalDeviceMemoryProperties2<'_> {}
+impl PhysicalDeviceMemoryProperties2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMemoryProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryProperties2<'a> {
@@ -11425,10 +12685,16 @@ pub struct SparseImageFormatProperties2<'a> {
 }
 unsafe impl Send for SparseImageFormatProperties2<'_> {}
 unsafe impl Sync for SparseImageFormatProperties2<'_> {}
+impl SparseImageFormatProperties2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SparseImageFormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SparseImageFormatProperties2<'a> {
@@ -11458,10 +12724,16 @@ pub struct PhysicalDeviceSparseImageFormatInfo2<'a> {
 }
 unsafe impl Send for PhysicalDeviceSparseImageFormatInfo2<'_> {}
 unsafe impl Sync for PhysicalDeviceSparseImageFormatInfo2<'_> {}
+impl PhysicalDeviceSparseImageFormatInfo2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSparseImageFormatInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSparseImageFormatInfo2<'a> {
@@ -11507,10 +12779,16 @@ pub struct PhysicalDevicePushDescriptorProperties<'a> {
 }
 unsafe impl Send for PhysicalDevicePushDescriptorProperties<'_> {}
 unsafe impl Sync for PhysicalDevicePushDescriptorProperties<'_> {}
+impl PhysicalDevicePushDescriptorProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePushDescriptorProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushDescriptorProperties<'a> {
@@ -11535,10 +12813,16 @@ pub struct ConformanceVersion {
     pub subminor: u8,
     pub patch: u8,
 }
+impl ConformanceVersion {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ConformanceVersion {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ConformanceVersion {
@@ -11591,10 +12875,16 @@ impl fmt::Debug for PhysicalDeviceDriverProperties<'_> {
             .finish()
     }
 }
+impl PhysicalDeviceDriverProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDriverProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDriverProperties<'a> {
@@ -11649,10 +12939,16 @@ pub struct PresentRegionsKHR<'a> {
 }
 unsafe impl Send for PresentRegionsKHR<'_> {}
 unsafe impl Sync for PresentRegionsKHR<'_> {}
+impl PresentRegionsKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PresentRegionsKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentRegionsKHR<'a> {
@@ -11679,10 +12975,16 @@ pub struct PresentRegionKHR<'a> {
 }
 unsafe impl Send for PresentRegionKHR<'_> {}
 unsafe impl Sync for PresentRegionKHR<'_> {}
+impl PresentRegionKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PresentRegionKHR<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> PresentRegionKHR<'a> {
@@ -11703,10 +13005,16 @@ pub struct RectLayerKHR {
     pub extent: Extent2D,
     pub layer: u32,
 }
+impl RectLayerKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for RectLayerKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl RectLayerKHR {
@@ -11740,10 +13048,16 @@ pub struct PhysicalDeviceVariablePointersFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceVariablePointersFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceVariablePointersFeatures<'_> {}
+impl PhysicalDeviceVariablePointersFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVariablePointersFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVariablePointersFeatures<'a> {
@@ -11776,10 +13090,16 @@ pub struct ExternalMemoryProperties {
     pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlags,
     pub compatible_handle_types: ExternalMemoryHandleTypeFlags,
 }
+impl ExternalMemoryProperties {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ExternalMemoryProperties {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ExternalMemoryProperties {
@@ -11821,10 +13141,16 @@ pub struct PhysicalDeviceExternalImageFormatInfo<'a> {
 }
 unsafe impl Send for PhysicalDeviceExternalImageFormatInfo<'_> {}
 unsafe impl Sync for PhysicalDeviceExternalImageFormatInfo<'_> {}
+impl PhysicalDeviceExternalImageFormatInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExternalImageFormatInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalImageFormatInfo<'a> {
@@ -11854,10 +13180,16 @@ pub struct ExternalImageFormatProperties<'a> {
 }
 unsafe impl Send for ExternalImageFormatProperties<'_> {}
 unsafe impl Sync for ExternalImageFormatProperties<'_> {}
+impl ExternalImageFormatProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalImageFormatProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalImageFormatProperties<'a> {
@@ -11889,10 +13221,16 @@ pub struct PhysicalDeviceExternalBufferInfo<'a> {
 }
 unsafe impl Send for PhysicalDeviceExternalBufferInfo<'_> {}
 unsafe impl Sync for PhysicalDeviceExternalBufferInfo<'_> {}
+impl PhysicalDeviceExternalBufferInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExternalBufferInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalBufferInfo<'a> {
@@ -11928,10 +13266,16 @@ pub struct ExternalBufferProperties<'a> {
 }
 unsafe impl Send for ExternalBufferProperties<'_> {}
 unsafe impl Sync for ExternalBufferProperties<'_> {}
+impl ExternalBufferProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalBufferProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalBufferProperties<'a> {
@@ -11964,10 +13308,16 @@ pub struct PhysicalDeviceIDProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceIDProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceIDProperties<'_> {}
+impl PhysicalDeviceIDProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceIDProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceIDProperties<'a> {
@@ -12014,10 +13364,16 @@ pub struct ExternalMemoryImageCreateInfo<'a> {
 }
 unsafe impl Send for ExternalMemoryImageCreateInfo<'_> {}
 unsafe impl Sync for ExternalMemoryImageCreateInfo<'_> {}
+impl ExternalMemoryImageCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalMemoryImageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryImageCreateInfo<'a> {
@@ -12044,10 +13400,16 @@ pub struct ExternalMemoryBufferCreateInfo<'a> {
 }
 unsafe impl Send for ExternalMemoryBufferCreateInfo<'_> {}
 unsafe impl Sync for ExternalMemoryBufferCreateInfo<'_> {}
+impl ExternalMemoryBufferCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalMemoryBufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryBufferCreateInfo<'a> {
@@ -12074,10 +13436,16 @@ pub struct ExportMemoryAllocateInfo<'a> {
 }
 unsafe impl Send for ExportMemoryAllocateInfo<'_> {}
 unsafe impl Sync for ExportMemoryAllocateInfo<'_> {}
+impl ExportMemoryAllocateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportMemoryAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryAllocateInfo<'a> {
@@ -12106,10 +13474,16 @@ pub struct ImportMemoryWin32HandleInfoKHR<'a> {
 }
 unsafe impl Send for ImportMemoryWin32HandleInfoKHR<'_> {}
 unsafe impl Sync for ImportMemoryWin32HandleInfoKHR<'_> {}
+impl ImportMemoryWin32HandleInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportMemoryWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryWin32HandleInfoKHR<'a> {
@@ -12148,10 +13522,16 @@ pub struct ExportMemoryWin32HandleInfoKHR<'a> {
 }
 unsafe impl Send for ExportMemoryWin32HandleInfoKHR<'_> {}
 unsafe impl Sync for ExportMemoryWin32HandleInfoKHR<'_> {}
+impl ExportMemoryWin32HandleInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportMemoryWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoKHR<'a> {
@@ -12189,10 +13569,16 @@ pub struct ImportMemoryZirconHandleInfoFUCHSIA<'a> {
 }
 unsafe impl Send for ImportMemoryZirconHandleInfoFUCHSIA<'_> {}
 unsafe impl Sync for ImportMemoryZirconHandleInfoFUCHSIA<'_> {}
+impl ImportMemoryZirconHandleInfoFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportMemoryZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryZirconHandleInfoFUCHSIA<'a> {
@@ -12224,10 +13610,16 @@ pub struct MemoryZirconHandlePropertiesFUCHSIA<'a> {
 }
 unsafe impl Send for MemoryZirconHandlePropertiesFUCHSIA<'_> {}
 unsafe impl Sync for MemoryZirconHandlePropertiesFUCHSIA<'_> {}
+impl MemoryZirconHandlePropertiesFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryZirconHandlePropertiesFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryZirconHandlePropertiesFUCHSIA<'a> {
@@ -12254,10 +13646,16 @@ pub struct MemoryGetZirconHandleInfoFUCHSIA<'a> {
 }
 unsafe impl Send for MemoryGetZirconHandleInfoFUCHSIA<'_> {}
 unsafe impl Sync for MemoryGetZirconHandleInfoFUCHSIA<'_> {}
+impl MemoryGetZirconHandleInfoFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryGetZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetZirconHandleInfoFUCHSIA<'a> {
@@ -12288,10 +13686,16 @@ pub struct MemoryWin32HandlePropertiesKHR<'a> {
 }
 unsafe impl Send for MemoryWin32HandlePropertiesKHR<'_> {}
 unsafe impl Sync for MemoryWin32HandlePropertiesKHR<'_> {}
+impl MemoryWin32HandlePropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryWin32HandlePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryWin32HandlePropertiesKHR<'a> {
@@ -12318,10 +13722,16 @@ pub struct MemoryGetWin32HandleInfoKHR<'a> {
 }
 unsafe impl Send for MemoryGetWin32HandleInfoKHR<'_> {}
 unsafe impl Sync for MemoryGetWin32HandleInfoKHR<'_> {}
+impl MemoryGetWin32HandleInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetWin32HandleInfoKHR<'a> {
@@ -12353,10 +13763,16 @@ pub struct ImportMemoryFdInfoKHR<'a> {
 }
 unsafe impl Send for ImportMemoryFdInfoKHR<'_> {}
 unsafe impl Sync for ImportMemoryFdInfoKHR<'_> {}
+impl ImportMemoryFdInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportMemoryFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryFdInfoKHR<'a> {
@@ -12388,10 +13804,16 @@ pub struct MemoryFdPropertiesKHR<'a> {
 }
 unsafe impl Send for MemoryFdPropertiesKHR<'_> {}
 unsafe impl Sync for MemoryFdPropertiesKHR<'_> {}
+impl MemoryFdPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryFdPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryFdPropertiesKHR<'a> {
@@ -12418,10 +13840,16 @@ pub struct MemoryGetFdInfoKHR<'a> {
 }
 unsafe impl Send for MemoryGetFdInfoKHR<'_> {}
 unsafe impl Sync for MemoryGetFdInfoKHR<'_> {}
+impl MemoryGetFdInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetFdInfoKHR<'a> {
@@ -12458,10 +13886,16 @@ pub struct Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
 }
 unsafe impl Send for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {}
 unsafe impl Sync for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {}
+impl Win32KeyedMutexAcquireReleaseInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
@@ -12515,10 +13949,16 @@ pub struct ImportMemoryMetalHandleInfoEXT<'a> {
 }
 unsafe impl Send for ImportMemoryMetalHandleInfoEXT<'_> {}
 unsafe impl Sync for ImportMemoryMetalHandleInfoEXT<'_> {}
+impl ImportMemoryMetalHandleInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportMemoryMetalHandleInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryMetalHandleInfoEXT<'a> {
@@ -12550,10 +13990,16 @@ pub struct MemoryMetalHandlePropertiesEXT<'a> {
 }
 unsafe impl Send for MemoryMetalHandlePropertiesEXT<'_> {}
 unsafe impl Sync for MemoryMetalHandlePropertiesEXT<'_> {}
+impl MemoryMetalHandlePropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryMetalHandlePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMetalHandlePropertiesEXT<'a> {
@@ -12580,10 +14026,16 @@ pub struct MemoryGetMetalHandleInfoEXT<'a> {
 }
 unsafe impl Send for MemoryGetMetalHandleInfoEXT<'_> {}
 unsafe impl Sync for MemoryGetMetalHandleInfoEXT<'_> {}
+impl MemoryGetMetalHandleInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryGetMetalHandleInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetMetalHandleInfoEXT<'a> {
@@ -12614,10 +14066,16 @@ pub struct PhysicalDeviceExternalSemaphoreInfo<'a> {
 }
 unsafe impl Send for PhysicalDeviceExternalSemaphoreInfo<'_> {}
 unsafe impl Sync for PhysicalDeviceExternalSemaphoreInfo<'_> {}
+impl PhysicalDeviceExternalSemaphoreInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExternalSemaphoreInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalSemaphoreInfo<'a> {
@@ -12645,10 +14103,16 @@ pub struct ExternalSemaphoreProperties<'a> {
 }
 unsafe impl Send for ExternalSemaphoreProperties<'_> {}
 unsafe impl Sync for ExternalSemaphoreProperties<'_> {}
+impl ExternalSemaphoreProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalSemaphoreProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalSemaphoreProperties<'a> {
@@ -12693,10 +14157,16 @@ pub struct ExportSemaphoreCreateInfo<'a> {
 }
 unsafe impl Send for ExportSemaphoreCreateInfo<'_> {}
 unsafe impl Sync for ExportSemaphoreCreateInfo<'_> {}
+impl ExportSemaphoreCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportSemaphoreCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportSemaphoreCreateInfo<'a> {
@@ -12727,10 +14197,16 @@ pub struct ImportSemaphoreWin32HandleInfoKHR<'a> {
 }
 unsafe impl Send for ImportSemaphoreWin32HandleInfoKHR<'_> {}
 unsafe impl Sync for ImportSemaphoreWin32HandleInfoKHR<'_> {}
+impl ImportSemaphoreWin32HandleInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportSemaphoreWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreWin32HandleInfoKHR<'a> {
@@ -12778,10 +14254,16 @@ pub struct ExportSemaphoreWin32HandleInfoKHR<'a> {
 }
 unsafe impl Send for ExportSemaphoreWin32HandleInfoKHR<'_> {}
 unsafe impl Sync for ExportSemaphoreWin32HandleInfoKHR<'_> {}
+impl ExportSemaphoreWin32HandleInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportSemaphoreWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportSemaphoreWin32HandleInfoKHR<'a> {
@@ -12821,10 +14303,16 @@ pub struct D3D12FenceSubmitInfoKHR<'a> {
 }
 unsafe impl Send for D3D12FenceSubmitInfoKHR<'_> {}
 unsafe impl Sync for D3D12FenceSubmitInfoKHR<'_> {}
+impl D3D12FenceSubmitInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for D3D12FenceSubmitInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for D3D12FenceSubmitInfoKHR<'a> {
@@ -12859,10 +14347,16 @@ pub struct SemaphoreGetWin32HandleInfoKHR<'a> {
 }
 unsafe impl Send for SemaphoreGetWin32HandleInfoKHR<'_> {}
 unsafe impl Sync for SemaphoreGetWin32HandleInfoKHR<'_> {}
+impl SemaphoreGetWin32HandleInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SemaphoreGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetWin32HandleInfoKHR<'a> {
@@ -12896,10 +14390,16 @@ pub struct ImportSemaphoreFdInfoKHR<'a> {
 }
 unsafe impl Send for ImportSemaphoreFdInfoKHR<'_> {}
 unsafe impl Sync for ImportSemaphoreFdInfoKHR<'_> {}
+impl ImportSemaphoreFdInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportSemaphoreFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreFdInfoKHR<'a> {
@@ -12941,10 +14441,16 @@ pub struct SemaphoreGetFdInfoKHR<'a> {
 }
 unsafe impl Send for SemaphoreGetFdInfoKHR<'_> {}
 unsafe impl Sync for SemaphoreGetFdInfoKHR<'_> {}
+impl SemaphoreGetFdInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SemaphoreGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetFdInfoKHR<'a> {
@@ -12978,10 +14484,16 @@ pub struct ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
 }
 unsafe impl Send for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {}
 unsafe impl Sync for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {}
+impl ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
@@ -13024,10 +14536,16 @@ pub struct SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
 }
 unsafe impl Send for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {}
 unsafe impl Sync for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {}
+impl SemaphoreGetZirconHandleInfoFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
@@ -13058,10 +14576,16 @@ pub struct PhysicalDeviceExternalFenceInfo<'a> {
 }
 unsafe impl Send for PhysicalDeviceExternalFenceInfo<'_> {}
 unsafe impl Sync for PhysicalDeviceExternalFenceInfo<'_> {}
+impl PhysicalDeviceExternalFenceInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExternalFenceInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFenceInfo<'a> {
@@ -13089,10 +14613,16 @@ pub struct ExternalFenceProperties<'a> {
 }
 unsafe impl Send for ExternalFenceProperties<'_> {}
 unsafe impl Sync for ExternalFenceProperties<'_> {}
+impl ExternalFenceProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalFenceProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFenceProperties<'a> {
@@ -13137,10 +14667,16 @@ pub struct ExportFenceCreateInfo<'a> {
 }
 unsafe impl Send for ExportFenceCreateInfo<'_> {}
 unsafe impl Sync for ExportFenceCreateInfo<'_> {}
+impl ExportFenceCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportFenceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportFenceCreateInfo<'a> {
@@ -13171,10 +14707,16 @@ pub struct ImportFenceWin32HandleInfoKHR<'a> {
 }
 unsafe impl Send for ImportFenceWin32HandleInfoKHR<'_> {}
 unsafe impl Sync for ImportFenceWin32HandleInfoKHR<'_> {}
+impl ImportFenceWin32HandleInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportFenceWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportFenceWin32HandleInfoKHR<'a> {
@@ -13222,10 +14764,16 @@ pub struct ExportFenceWin32HandleInfoKHR<'a> {
 }
 unsafe impl Send for ExportFenceWin32HandleInfoKHR<'_> {}
 unsafe impl Sync for ExportFenceWin32HandleInfoKHR<'_> {}
+impl ExportFenceWin32HandleInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportFenceWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportFenceWin32HandleInfoKHR<'a> {
@@ -13263,10 +14811,16 @@ pub struct FenceGetWin32HandleInfoKHR<'a> {
 }
 unsafe impl Send for FenceGetWin32HandleInfoKHR<'_> {}
 unsafe impl Sync for FenceGetWin32HandleInfoKHR<'_> {}
+impl FenceGetWin32HandleInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for FenceGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FenceGetWin32HandleInfoKHR<'a> {
@@ -13300,10 +14854,16 @@ pub struct ImportFenceFdInfoKHR<'a> {
 }
 unsafe impl Send for ImportFenceFdInfoKHR<'_> {}
 unsafe impl Sync for ImportFenceFdInfoKHR<'_> {}
+impl ImportFenceFdInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportFenceFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportFenceFdInfoKHR<'a> {
@@ -13345,10 +14905,16 @@ pub struct FenceGetFdInfoKHR<'a> {
 }
 unsafe impl Send for FenceGetFdInfoKHR<'_> {}
 unsafe impl Sync for FenceGetFdInfoKHR<'_> {}
+impl FenceGetFdInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for FenceGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FenceGetFdInfoKHR<'a> {
@@ -13381,10 +14947,16 @@ pub struct PhysicalDeviceMultiviewFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceMultiviewFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceMultiviewFeatures<'_> {}
+impl PhysicalDeviceMultiviewFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMultiviewFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewFeatures<'a> {
@@ -13423,10 +14995,16 @@ pub struct PhysicalDeviceMultiviewProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceMultiviewProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceMultiviewProperties<'_> {}
+impl PhysicalDeviceMultiviewProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMultiviewProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewProperties<'a> {
@@ -13463,10 +15041,16 @@ pub struct RenderPassMultiviewCreateInfo<'a> {
 }
 unsafe impl Send for RenderPassMultiviewCreateInfo<'_> {}
 unsafe impl Sync for RenderPassMultiviewCreateInfo<'_> {}
+impl RenderPassMultiviewCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassMultiviewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassMultiviewCreateInfo<'a> {
@@ -13516,10 +15100,16 @@ pub struct SurfaceCapabilities2EXT<'a> {
 }
 unsafe impl Send for SurfaceCapabilities2EXT<'_> {}
 unsafe impl Sync for SurfaceCapabilities2EXT<'_> {}
+impl SurfaceCapabilities2EXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SurfaceCapabilities2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilities2EXT<'a> {
@@ -13601,10 +15191,16 @@ pub struct DisplayPowerInfoEXT<'a> {
 }
 unsafe impl Send for DisplayPowerInfoEXT<'_> {}
 unsafe impl Sync for DisplayPowerInfoEXT<'_> {}
+impl DisplayPowerInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DisplayPowerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPowerInfoEXT<'a> {
@@ -13630,10 +15226,16 @@ pub struct DeviceEventInfoEXT<'a> {
 }
 unsafe impl Send for DeviceEventInfoEXT<'_> {}
 unsafe impl Sync for DeviceEventInfoEXT<'_> {}
+impl DeviceEventInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceEventInfoEXT<'a> {
@@ -13659,10 +15261,16 @@ pub struct DisplayEventInfoEXT<'a> {
 }
 unsafe impl Send for DisplayEventInfoEXT<'_> {}
 unsafe impl Sync for DisplayEventInfoEXT<'_> {}
+impl DisplayEventInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DisplayEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayEventInfoEXT<'a> {
@@ -13688,10 +15296,16 @@ pub struct SwapchainCounterCreateInfoEXT<'a> {
 }
 unsafe impl Send for SwapchainCounterCreateInfoEXT<'_> {}
 unsafe impl Sync for SwapchainCounterCreateInfoEXT<'_> {}
+impl SwapchainCounterCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SwapchainCounterCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainCounterCreateInfoEXT<'a> {
@@ -13731,10 +15345,16 @@ impl fmt::Debug for PhysicalDeviceGroupProperties<'_> {
             .finish()
     }
 }
+impl PhysicalDeviceGroupProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceGroupProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGroupProperties<'a> {
@@ -13771,10 +15391,16 @@ pub struct MemoryAllocateFlagsInfo<'a> {
 }
 unsafe impl Send for MemoryAllocateFlagsInfo<'_> {}
 unsafe impl Sync for MemoryAllocateFlagsInfo<'_> {}
+impl MemoryAllocateFlagsInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryAllocateFlagsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryAllocateFlagsInfo<'a> {
@@ -13808,10 +15434,16 @@ pub struct BindBufferMemoryInfo<'a> {
 }
 unsafe impl Send for BindBufferMemoryInfo<'_> {}
 unsafe impl Sync for BindBufferMemoryInfo<'_> {}
+impl BindBufferMemoryInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindBufferMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindBufferMemoryInfo<'a> {
@@ -13848,10 +15480,16 @@ pub struct BindBufferMemoryDeviceGroupInfo<'a> {
 }
 unsafe impl Send for BindBufferMemoryDeviceGroupInfo<'_> {}
 unsafe impl Sync for BindBufferMemoryDeviceGroupInfo<'_> {}
+impl BindBufferMemoryDeviceGroupInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindBufferMemoryDeviceGroupInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindBufferMemoryDeviceGroupInfo<'a> {
@@ -13881,10 +15519,16 @@ pub struct BindImageMemoryInfo<'a> {
 }
 unsafe impl Send for BindImageMemoryInfo<'_> {}
 unsafe impl Sync for BindImageMemoryInfo<'_> {}
+impl BindImageMemoryInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindImageMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImageMemoryInfo<'a> {
@@ -13923,10 +15567,16 @@ pub struct BindImageMemoryDeviceGroupInfo<'a> {
 }
 unsafe impl Send for BindImageMemoryDeviceGroupInfo<'_> {}
 unsafe impl Sync for BindImageMemoryDeviceGroupInfo<'_> {}
+impl BindImageMemoryDeviceGroupInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindImageMemoryDeviceGroupInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImageMemoryDeviceGroupInfo<'a> {
@@ -13965,10 +15615,16 @@ pub struct DeviceGroupRenderPassBeginInfo<'a> {
 }
 unsafe impl Send for DeviceGroupRenderPassBeginInfo<'_> {}
 unsafe impl Sync for DeviceGroupRenderPassBeginInfo<'_> {}
+impl DeviceGroupRenderPassBeginInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceGroupRenderPassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupRenderPassBeginInfo<'a> {
@@ -14002,10 +15658,16 @@ pub struct DeviceGroupCommandBufferBeginInfo<'a> {
 }
 unsafe impl Send for DeviceGroupCommandBufferBeginInfo<'_> {}
 unsafe impl Sync for DeviceGroupCommandBufferBeginInfo<'_> {}
+impl DeviceGroupCommandBufferBeginInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceGroupCommandBufferBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupCommandBufferBeginInfo<'a> {
@@ -14037,10 +15699,16 @@ pub struct DeviceGroupSubmitInfo<'a> {
 }
 unsafe impl Send for DeviceGroupSubmitInfo<'_> {}
 unsafe impl Sync for DeviceGroupSubmitInfo<'_> {}
+impl DeviceGroupSubmitInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceGroupSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupSubmitInfo<'a> {
@@ -14087,10 +15755,16 @@ pub struct DeviceGroupBindSparseInfo<'a> {
 }
 unsafe impl Send for DeviceGroupBindSparseInfo<'_> {}
 unsafe impl Sync for DeviceGroupBindSparseInfo<'_> {}
+impl DeviceGroupBindSparseInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceGroupBindSparseInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupBindSparseInfo<'a> {
@@ -14123,10 +15797,16 @@ pub struct DeviceGroupPresentCapabilitiesKHR<'a> {
 }
 unsafe impl Send for DeviceGroupPresentCapabilitiesKHR<'_> {}
 unsafe impl Sync for DeviceGroupPresentCapabilitiesKHR<'_> {}
+impl DeviceGroupPresentCapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceGroupPresentCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupPresentCapabilitiesKHR<'a> {
@@ -14157,10 +15837,16 @@ pub struct ImageSwapchainCreateInfoKHR<'a> {
 }
 unsafe impl Send for ImageSwapchainCreateInfoKHR<'_> {}
 unsafe impl Sync for ImageSwapchainCreateInfoKHR<'_> {}
+impl ImageSwapchainCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageSwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageSwapchainCreateInfoKHR<'a> {
@@ -14188,10 +15874,16 @@ pub struct BindImageMemorySwapchainInfoKHR<'a> {
 }
 unsafe impl Send for BindImageMemorySwapchainInfoKHR<'_> {}
 unsafe impl Sync for BindImageMemorySwapchainInfoKHR<'_> {}
+impl BindImageMemorySwapchainInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindImageMemorySwapchainInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImageMemorySwapchainInfoKHR<'a> {
@@ -14227,10 +15919,16 @@ pub struct AcquireNextImageInfoKHR<'a> {
 }
 unsafe impl Send for AcquireNextImageInfoKHR<'_> {}
 unsafe impl Sync for AcquireNextImageInfoKHR<'_> {}
+impl AcquireNextImageInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AcquireNextImageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AcquireNextImageInfoKHR<'a> {
@@ -14278,10 +15976,16 @@ pub struct DeviceGroupPresentInfoKHR<'a> {
 }
 unsafe impl Send for DeviceGroupPresentInfoKHR<'_> {}
 unsafe impl Sync for DeviceGroupPresentInfoKHR<'_> {}
+impl DeviceGroupPresentInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceGroupPresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupPresentInfoKHR<'a> {
@@ -14315,10 +16019,16 @@ pub struct DeviceGroupDeviceCreateInfo<'a> {
 }
 unsafe impl Send for DeviceGroupDeviceCreateInfo<'_> {}
 unsafe impl Sync for DeviceGroupDeviceCreateInfo<'_> {}
+impl DeviceGroupDeviceCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceGroupDeviceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupDeviceCreateInfo<'a> {
@@ -14346,10 +16056,16 @@ pub struct DeviceGroupSwapchainCreateInfoKHR<'a> {
 }
 unsafe impl Send for DeviceGroupSwapchainCreateInfoKHR<'_> {}
 unsafe impl Sync for DeviceGroupSwapchainCreateInfoKHR<'_> {}
+impl DeviceGroupSwapchainCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceGroupSwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupSwapchainCreateInfoKHR<'a> {
@@ -14376,10 +16092,16 @@ pub struct DescriptorUpdateTemplateEntry {
     pub offset: usize,
     pub stride: usize,
 }
+impl DescriptorUpdateTemplateEntry {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DescriptorUpdateTemplateEntry {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DescriptorUpdateTemplateEntry {
@@ -14434,10 +16156,16 @@ pub struct DescriptorUpdateTemplateCreateInfo<'a> {
 }
 unsafe impl Send for DescriptorUpdateTemplateCreateInfo<'_> {}
 unsafe impl Sync for DescriptorUpdateTemplateCreateInfo<'_> {}
+impl DescriptorUpdateTemplateCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorUpdateTemplateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorUpdateTemplateCreateInfo<'a> {
@@ -14493,10 +16221,16 @@ pub struct XYColorEXT {
     pub x: f32,
     pub y: f32,
 }
+impl XYColorEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for XYColorEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl XYColorEXT {
@@ -14524,10 +16258,16 @@ pub struct PhysicalDevicePresentIdFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDevicePresentIdFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDevicePresentIdFeaturesKHR<'_> {}
+impl PhysicalDevicePresentIdFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePresentIdFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentIdFeaturesKHR<'a> {
@@ -14556,10 +16296,16 @@ pub struct PresentIdKHR<'a> {
 }
 unsafe impl Send for PresentIdKHR<'_> {}
 unsafe impl Sync for PresentIdKHR<'_> {}
+impl PresentIdKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PresentIdKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentIdKHR<'a> {
@@ -14587,10 +16333,16 @@ pub struct PhysicalDevicePresentId2FeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDevicePresentId2FeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDevicePresentId2FeaturesKHR<'_> {}
+impl PhysicalDevicePresentId2FeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePresentId2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentId2FeaturesKHR<'a> {
@@ -14619,10 +16371,16 @@ pub struct PresentId2KHR<'a> {
 }
 unsafe impl Send for PresentId2KHR<'_> {}
 unsafe impl Sync for PresentId2KHR<'_> {}
+impl PresentId2KHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PresentId2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentId2KHR<'a> {
@@ -14651,10 +16409,16 @@ pub struct PresentWait2InfoKHR<'a> {
 }
 unsafe impl Send for PresentWait2InfoKHR<'_> {}
 unsafe impl Sync for PresentWait2InfoKHR<'_> {}
+impl PresentWait2InfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PresentWait2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentWait2InfoKHR<'a> {
@@ -14685,10 +16449,16 @@ pub struct PhysicalDevicePresentWaitFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDevicePresentWaitFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDevicePresentWaitFeaturesKHR<'_> {}
+impl PhysicalDevicePresentWaitFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePresentWaitFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentWaitFeaturesKHR<'a> {
@@ -14716,10 +16486,16 @@ pub struct PhysicalDevicePresentWait2FeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDevicePresentWait2FeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDevicePresentWait2FeaturesKHR<'_> {}
+impl PhysicalDevicePresentWait2FeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePresentWait2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentWait2FeaturesKHR<'a> {
@@ -14750,10 +16526,16 @@ pub struct PhysicalDevicePresentTimingFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDevicePresentTimingFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDevicePresentTimingFeaturesEXT<'_> {}
+impl PhysicalDevicePresentTimingFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePresentTimingFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentTimingFeaturesEXT<'a> {
@@ -14795,10 +16577,16 @@ pub struct PresentTimingSurfaceCapabilitiesEXT<'a> {
 }
 unsafe impl Send for PresentTimingSurfaceCapabilitiesEXT<'_> {}
 unsafe impl Sync for PresentTimingSurfaceCapabilitiesEXT<'_> {}
+impl PresentTimingSurfaceCapabilitiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PresentTimingSurfaceCapabilitiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimingSurfaceCapabilitiesEXT<'a> {
@@ -14847,10 +16635,16 @@ pub struct SwapchainTimingPropertiesEXT<'a> {
 }
 unsafe impl Send for SwapchainTimingPropertiesEXT<'_> {}
 unsafe impl Sync for SwapchainTimingPropertiesEXT<'_> {}
+impl SwapchainTimingPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SwapchainTimingPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainTimingPropertiesEXT<'a> {
@@ -14883,10 +16677,16 @@ pub struct SwapchainTimeDomainPropertiesEXT<'a> {
 }
 unsafe impl Send for SwapchainTimeDomainPropertiesEXT<'_> {}
 unsafe impl Sync for SwapchainTimeDomainPropertiesEXT<'_> {}
+impl SwapchainTimeDomainPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SwapchainTimeDomainPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainTimeDomainPropertiesEXT<'a> {
@@ -14915,10 +16715,16 @@ pub struct PresentStageTimeEXT {
     pub stage: PresentStageFlagsEXT,
     pub time: u64,
 }
+impl PresentStageTimeEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PresentStageTimeEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PresentStageTimeEXT {
@@ -14947,10 +16753,16 @@ pub struct PastPresentationTimingInfoEXT<'a> {
 }
 unsafe impl Send for PastPresentationTimingInfoEXT<'_> {}
 unsafe impl Sync for PastPresentationTimingInfoEXT<'_> {}
+impl PastPresentationTimingInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PastPresentationTimingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PastPresentationTimingInfoEXT<'a> {
@@ -14984,10 +16796,16 @@ pub struct PastPresentationTimingPropertiesEXT<'a> {
 }
 unsafe impl Send for PastPresentationTimingPropertiesEXT<'_> {}
 unsafe impl Sync for PastPresentationTimingPropertiesEXT<'_> {}
+impl PastPresentationTimingPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PastPresentationTimingPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PastPresentationTimingPropertiesEXT<'a> {
@@ -15033,10 +16851,16 @@ pub struct PastPresentationTimingEXT<'a> {
 }
 unsafe impl Send for PastPresentationTimingEXT<'_> {}
 unsafe impl Sync for PastPresentationTimingEXT<'_> {}
+impl PastPresentationTimingEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PastPresentationTimingEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PastPresentationTimingEXT<'a> {
@@ -15089,10 +16913,16 @@ pub struct PresentTimingsInfoEXT<'a> {
 }
 unsafe impl Send for PresentTimingsInfoEXT<'_> {}
 unsafe impl Sync for PresentTimingsInfoEXT<'_> {}
+impl PresentTimingsInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PresentTimingsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimingsInfoEXT<'a> {
@@ -15124,10 +16954,16 @@ pub struct PresentTimingInfoEXT<'a> {
 }
 unsafe impl Send for PresentTimingInfoEXT<'_> {}
 unsafe impl Sync for PresentTimingInfoEXT<'_> {}
+impl PresentTimingInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PresentTimingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimingInfoEXT<'a> {
@@ -15178,10 +17014,16 @@ pub struct SwapchainCalibratedTimestampInfoEXT<'a> {
 }
 unsafe impl Send for SwapchainCalibratedTimestampInfoEXT<'_> {}
 unsafe impl Sync for SwapchainCalibratedTimestampInfoEXT<'_> {}
+impl SwapchainCalibratedTimestampInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SwapchainCalibratedTimestampInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainCalibratedTimestampInfoEXT<'a> {
@@ -15225,10 +17067,16 @@ pub struct HdrMetadataEXT<'a> {
 }
 unsafe impl Send for HdrMetadataEXT<'_> {}
 unsafe impl Sync for HdrMetadataEXT<'_> {}
+impl HdrMetadataEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for HdrMetadataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HdrMetadataEXT<'a> {
@@ -15290,10 +17138,16 @@ pub struct HdrVividDynamicMetadataHUAWEI<'a> {
 }
 unsafe impl Send for HdrVividDynamicMetadataHUAWEI<'_> {}
 unsafe impl Sync for HdrVividDynamicMetadataHUAWEI<'_> {}
+impl HdrVividDynamicMetadataHUAWEI<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for HdrVividDynamicMetadataHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HdrVividDynamicMetadataHUAWEI<'a> {
@@ -15321,10 +17175,16 @@ pub struct DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
 }
 unsafe impl Send for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {}
 unsafe impl Sync for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {}
+impl DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
@@ -15352,10 +17212,16 @@ pub struct SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
 }
 unsafe impl Send for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {}
 unsafe impl Sync for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {}
+impl SwapchainDisplayNativeHdrCreateInfoAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
@@ -15378,10 +17244,16 @@ impl<'a> SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
 pub struct RefreshCycleDurationGOOGLE {
     pub refresh_duration: u64,
 }
+impl RefreshCycleDurationGOOGLE {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for RefreshCycleDurationGOOGLE {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl RefreshCycleDurationGOOGLE {
@@ -15403,10 +17275,16 @@ pub struct PastPresentationTimingGOOGLE {
     pub earliest_present_time: u64,
     pub present_margin: u64,
 }
+impl PastPresentationTimingGOOGLE {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PastPresentationTimingGOOGLE {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PastPresentationTimingGOOGLE {
@@ -15450,10 +17328,16 @@ pub struct PresentTimesInfoGOOGLE<'a> {
 }
 unsafe impl Send for PresentTimesInfoGOOGLE<'_> {}
 unsafe impl Sync for PresentTimesInfoGOOGLE<'_> {}
+impl PresentTimesInfoGOOGLE<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PresentTimesInfoGOOGLE<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimesInfoGOOGLE<'a> {
@@ -15477,10 +17361,16 @@ pub struct PresentTimeGOOGLE {
     pub present_id: u32,
     pub desired_present_time: u64,
 }
+impl PresentTimeGOOGLE {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PresentTimeGOOGLE {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PresentTimeGOOGLE {
@@ -15509,10 +17399,16 @@ pub struct IOSSurfaceCreateInfoMVK<'a> {
 }
 unsafe impl Send for IOSSurfaceCreateInfoMVK<'_> {}
 unsafe impl Sync for IOSSurfaceCreateInfoMVK<'_> {}
+impl IOSSurfaceCreateInfoMVK<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for IOSSurfaceCreateInfoMVK<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IOSSurfaceCreateInfoMVK<'a> {
@@ -15544,10 +17440,16 @@ pub struct MacOSSurfaceCreateInfoMVK<'a> {
 }
 unsafe impl Send for MacOSSurfaceCreateInfoMVK<'_> {}
 unsafe impl Sync for MacOSSurfaceCreateInfoMVK<'_> {}
+impl MacOSSurfaceCreateInfoMVK<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MacOSSurfaceCreateInfoMVK<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MacOSSurfaceCreateInfoMVK<'a> {
@@ -15579,10 +17481,16 @@ pub struct MetalSurfaceCreateInfoEXT<'a> {
 }
 unsafe impl Send for MetalSurfaceCreateInfoEXT<'_> {}
 unsafe impl Sync for MetalSurfaceCreateInfoEXT<'_> {}
+impl MetalSurfaceCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MetalSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MetalSurfaceCreateInfoEXT<'a> {
@@ -15609,10 +17517,16 @@ pub struct ViewportWScalingNV {
     pub xcoeff: f32,
     pub ycoeff: f32,
 }
+impl ViewportWScalingNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ViewportWScalingNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ViewportWScalingNV {
@@ -15642,10 +17556,16 @@ pub struct PipelineViewportWScalingStateCreateInfoNV<'a> {
 }
 unsafe impl Send for PipelineViewportWScalingStateCreateInfoNV<'_> {}
 unsafe impl Sync for PipelineViewportWScalingStateCreateInfoNV<'_> {}
+impl PipelineViewportWScalingStateCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineViewportWScalingStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportWScalingStateCreateInfoNV<'a> {
@@ -15680,10 +17600,16 @@ pub struct ViewportSwizzleNV {
     pub z: ViewportCoordinateSwizzleNV,
     pub w: ViewportCoordinateSwizzleNV,
 }
+impl ViewportSwizzleNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ViewportSwizzleNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ViewportSwizzleNV {
@@ -15723,10 +17649,16 @@ pub struct PipelineViewportSwizzleStateCreateInfoNV<'a> {
 }
 unsafe impl Send for PipelineViewportSwizzleStateCreateInfoNV<'_> {}
 unsafe impl Sync for PipelineViewportSwizzleStateCreateInfoNV<'_> {}
+impl PipelineViewportSwizzleStateCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineViewportSwizzleStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportSwizzleStateCreateInfoNV<'a> {
@@ -15763,10 +17695,16 @@ pub struct PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {}
+impl PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
@@ -15800,10 +17738,16 @@ pub struct PipelineDiscardRectangleStateCreateInfoEXT<'a> {
 }
 unsafe impl Send for PipelineDiscardRectangleStateCreateInfoEXT<'_> {}
 unsafe impl Sync for PipelineDiscardRectangleStateCreateInfoEXT<'_> {}
+impl PipelineDiscardRectangleStateCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineDiscardRectangleStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineDiscardRectangleStateCreateInfoEXT<'a> {
@@ -15848,10 +17792,16 @@ pub struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
 }
 unsafe impl Send for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {}
 unsafe impl Sync for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {}
+impl PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
@@ -15882,10 +17832,16 @@ pub struct InputAttachmentAspectReference {
     pub input_attachment_index: u32,
     pub aspect_mask: ImageAspectFlags,
 }
+impl InputAttachmentAspectReference {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for InputAttachmentAspectReference {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl InputAttachmentAspectReference {
@@ -15919,10 +17875,16 @@ pub struct RenderPassInputAttachmentAspectCreateInfo<'a> {
 }
 unsafe impl Send for RenderPassInputAttachmentAspectCreateInfo<'_> {}
 unsafe impl Sync for RenderPassInputAttachmentAspectCreateInfo<'_> {}
+impl RenderPassInputAttachmentAspectCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassInputAttachmentAspectCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassInputAttachmentAspectCreateInfo<'a> {
@@ -15954,10 +17916,16 @@ pub struct PhysicalDeviceSurfaceInfo2KHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceSurfaceInfo2KHR<'_> {}
 unsafe impl Sync for PhysicalDeviceSurfaceInfo2KHR<'_> {}
+impl PhysicalDeviceSurfaceInfo2KHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSurfaceInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSurfaceInfo2KHR<'a> {
@@ -15983,10 +17951,16 @@ pub struct SurfaceCapabilities2KHR<'a> {
 }
 unsafe impl Send for SurfaceCapabilities2KHR<'_> {}
 unsafe impl Sync for SurfaceCapabilities2KHR<'_> {}
+impl SurfaceCapabilities2KHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SurfaceCapabilities2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilities2KHR<'a> {
@@ -16012,10 +17986,16 @@ pub struct SurfaceFormat2KHR<'a> {
 }
 unsafe impl Send for SurfaceFormat2KHR<'_> {}
 unsafe impl Sync for SurfaceFormat2KHR<'_> {}
+impl SurfaceFormat2KHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SurfaceFormat2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceFormat2KHR<'a> {
@@ -16041,10 +18021,16 @@ pub struct DisplayProperties2KHR<'a> {
 }
 unsafe impl Send for DisplayProperties2KHR<'_> {}
 unsafe impl Sync for DisplayProperties2KHR<'_> {}
+impl DisplayProperties2KHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DisplayProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayProperties2KHR<'a> {
@@ -16070,10 +18056,16 @@ pub struct DisplayPlaneProperties2KHR<'a> {
 }
 unsafe impl Send for DisplayPlaneProperties2KHR<'_> {}
 unsafe impl Sync for DisplayPlaneProperties2KHR<'_> {}
+impl DisplayPlaneProperties2KHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DisplayPlaneProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneProperties2KHR<'a> {
@@ -16102,10 +18094,16 @@ pub struct DisplayModeProperties2KHR<'a> {
 }
 unsafe impl Send for DisplayModeProperties2KHR<'_> {}
 unsafe impl Sync for DisplayModeProperties2KHR<'_> {}
+impl DisplayModeProperties2KHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DisplayModeProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayModeProperties2KHR<'a> {
@@ -16134,10 +18132,16 @@ pub struct DisplayModeStereoPropertiesNV<'a> {
 }
 unsafe impl Send for DisplayModeStereoPropertiesNV<'_> {}
 unsafe impl Sync for DisplayModeStereoPropertiesNV<'_> {}
+impl DisplayModeStereoPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DisplayModeStereoPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayModeStereoPropertiesNV<'a> {
@@ -16165,10 +18169,16 @@ pub struct DisplayPlaneInfo2KHR<'a> {
 }
 unsafe impl Send for DisplayPlaneInfo2KHR<'_> {}
 unsafe impl Sync for DisplayPlaneInfo2KHR<'_> {}
+impl DisplayPlaneInfo2KHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DisplayPlaneInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneInfo2KHR<'a> {
@@ -16199,10 +18209,16 @@ pub struct DisplayPlaneCapabilities2KHR<'a> {
 }
 unsafe impl Send for DisplayPlaneCapabilities2KHR<'_> {}
 unsafe impl Sync for DisplayPlaneCapabilities2KHR<'_> {}
+impl DisplayPlaneCapabilities2KHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DisplayPlaneCapabilities2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneCapabilities2KHR<'a> {
@@ -16228,10 +18244,16 @@ pub struct SharedPresentSurfaceCapabilitiesKHR<'a> {
 }
 unsafe impl Send for SharedPresentSurfaceCapabilitiesKHR<'_> {}
 unsafe impl Sync for SharedPresentSurfaceCapabilitiesKHR<'_> {}
+impl SharedPresentSurfaceCapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SharedPresentSurfaceCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SharedPresentSurfaceCapabilitiesKHR<'a> {
@@ -16264,10 +18286,16 @@ pub struct PhysicalDevice16BitStorageFeatures<'a> {
 }
 unsafe impl Send for PhysicalDevice16BitStorageFeatures<'_> {}
 unsafe impl Sync for PhysicalDevice16BitStorageFeatures<'_> {}
+impl PhysicalDevice16BitStorageFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevice16BitStorageFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice16BitStorageFeatures<'a> {
@@ -16317,10 +18345,16 @@ pub struct PhysicalDeviceSubgroupProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceSubgroupProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceSubgroupProperties<'_> {}
+impl PhysicalDeviceSubgroupProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSubgroupProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupProperties<'a> {
@@ -16362,10 +18396,16 @@ pub struct PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {}
+impl PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
@@ -16400,10 +18440,16 @@ pub struct BufferMemoryRequirementsInfo2<'a> {
 }
 unsafe impl Send for BufferMemoryRequirementsInfo2<'_> {}
 unsafe impl Sync for BufferMemoryRequirementsInfo2<'_> {}
+impl BufferMemoryRequirementsInfo2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferMemoryRequirementsInfo2<'a> {
@@ -16429,10 +18475,16 @@ pub struct DeviceBufferMemoryRequirements<'a> {
 }
 unsafe impl Send for DeviceBufferMemoryRequirements<'_> {}
 unsafe impl Sync for DeviceBufferMemoryRequirements<'_> {}
+impl DeviceBufferMemoryRequirements<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceBufferMemoryRequirements<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceBufferMemoryRequirements<'a> {
@@ -16458,10 +18510,16 @@ pub struct ImageMemoryRequirementsInfo2<'a> {
 }
 unsafe impl Send for ImageMemoryRequirementsInfo2<'_> {}
 unsafe impl Sync for ImageMemoryRequirementsInfo2<'_> {}
+impl ImageMemoryRequirementsInfo2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageMemoryRequirementsInfo2<'a> {
@@ -16487,10 +18545,16 @@ pub struct ImageSparseMemoryRequirementsInfo2<'a> {
 }
 unsafe impl Send for ImageSparseMemoryRequirementsInfo2<'_> {}
 unsafe impl Sync for ImageSparseMemoryRequirementsInfo2<'_> {}
+impl ImageSparseMemoryRequirementsInfo2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageSparseMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageSparseMemoryRequirementsInfo2<'a> {
@@ -16517,10 +18581,16 @@ pub struct DeviceImageMemoryRequirements<'a> {
 }
 unsafe impl Send for DeviceImageMemoryRequirements<'_> {}
 unsafe impl Sync for DeviceImageMemoryRequirements<'_> {}
+impl DeviceImageMemoryRequirements<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceImageMemoryRequirements<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceImageMemoryRequirements<'a> {
@@ -16551,10 +18621,16 @@ pub struct MemoryRequirements2<'a> {
 }
 unsafe impl Send for MemoryRequirements2<'_> {}
 unsafe impl Sync for MemoryRequirements2<'_> {}
+impl MemoryRequirements2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryRequirements2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryRequirements2<'a> {
@@ -16580,10 +18656,16 @@ pub struct SparseImageMemoryRequirements2<'a> {
 }
 unsafe impl Send for SparseImageMemoryRequirements2<'_> {}
 unsafe impl Sync for SparseImageMemoryRequirements2<'_> {}
+impl SparseImageMemoryRequirements2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SparseImageMemoryRequirements2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SparseImageMemoryRequirements2<'a> {
@@ -16612,10 +18694,16 @@ pub struct PhysicalDevicePointClippingProperties<'a> {
 }
 unsafe impl Send for PhysicalDevicePointClippingProperties<'_> {}
 unsafe impl Sync for PhysicalDevicePointClippingProperties<'_> {}
+impl PhysicalDevicePointClippingProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePointClippingProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePointClippingProperties<'a> {
@@ -16646,10 +18734,16 @@ pub struct MemoryDedicatedRequirements<'a> {
 }
 unsafe impl Send for MemoryDedicatedRequirements<'_> {}
 unsafe impl Sync for MemoryDedicatedRequirements<'_> {}
+impl MemoryDedicatedRequirements<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryDedicatedRequirements<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedRequirements<'a> {
@@ -16682,10 +18776,16 @@ pub struct MemoryDedicatedAllocateInfo<'a> {
 }
 unsafe impl Send for MemoryDedicatedAllocateInfo<'_> {}
 unsafe impl Sync for MemoryDedicatedAllocateInfo<'_> {}
+impl MemoryDedicatedAllocateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryDedicatedAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedAllocateInfo<'a> {
@@ -16717,10 +18817,16 @@ pub struct ImageViewUsageCreateInfo<'a> {
 }
 unsafe impl Send for ImageViewUsageCreateInfo<'_> {}
 unsafe impl Sync for ImageViewUsageCreateInfo<'_> {}
+impl ImageViewUsageCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageViewUsageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewUsageCreateInfo<'a> {
@@ -16748,10 +18854,16 @@ pub struct ImageViewSlicedCreateInfoEXT<'a> {
 }
 unsafe impl Send for ImageViewSlicedCreateInfoEXT<'_> {}
 unsafe impl Sync for ImageViewSlicedCreateInfoEXT<'_> {}
+impl ImageViewSlicedCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageViewSlicedCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewSlicedCreateInfoEXT<'a> {
@@ -16783,10 +18895,16 @@ pub struct PipelineTessellationDomainOriginStateCreateInfo<'a> {
 }
 unsafe impl Send for PipelineTessellationDomainOriginStateCreateInfo<'_> {}
 unsafe impl Sync for PipelineTessellationDomainOriginStateCreateInfo<'_> {}
+impl PipelineTessellationDomainOriginStateCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineTessellationDomainOriginStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineTessellationDomainOriginStateCreateInfo<'a> {
@@ -16817,10 +18935,16 @@ pub struct SamplerYcbcrConversionInfo<'a> {
 }
 unsafe impl Send for SamplerYcbcrConversionInfo<'_> {}
 unsafe impl Sync for SamplerYcbcrConversionInfo<'_> {}
+impl SamplerYcbcrConversionInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SamplerYcbcrConversionInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionInfo<'a> {
@@ -16855,10 +18979,16 @@ pub struct SamplerYcbcrConversionCreateInfo<'a> {
 }
 unsafe impl Send for SamplerYcbcrConversionCreateInfo<'_> {}
 unsafe impl Sync for SamplerYcbcrConversionCreateInfo<'_> {}
+impl SamplerYcbcrConversionCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SamplerYcbcrConversionCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionCreateInfo<'a> {
@@ -16919,10 +19049,16 @@ pub struct BindImagePlaneMemoryInfo<'a> {
 }
 unsafe impl Send for BindImagePlaneMemoryInfo<'_> {}
 unsafe impl Sync for BindImagePlaneMemoryInfo<'_> {}
+impl BindImagePlaneMemoryInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindImagePlaneMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImagePlaneMemoryInfo<'a> {
@@ -16949,10 +19085,16 @@ pub struct ImagePlaneMemoryRequirementsInfo<'a> {
 }
 unsafe impl Send for ImagePlaneMemoryRequirementsInfo<'_> {}
 unsafe impl Sync for ImagePlaneMemoryRequirementsInfo<'_> {}
+impl ImagePlaneMemoryRequirementsInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImagePlaneMemoryRequirementsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImagePlaneMemoryRequirementsInfo<'a> {
@@ -16979,10 +19121,16 @@ pub struct PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {}
+impl PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
@@ -17014,10 +19162,16 @@ pub struct SamplerYcbcrConversionImageFormatProperties<'a> {
 }
 unsafe impl Send for SamplerYcbcrConversionImageFormatProperties<'_> {}
 unsafe impl Sync for SamplerYcbcrConversionImageFormatProperties<'_> {}
+impl SamplerYcbcrConversionImageFormatProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SamplerYcbcrConversionImageFormatProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionImageFormatProperties<'a> {
@@ -17051,10 +19205,16 @@ pub struct TextureLODGatherFormatPropertiesAMD<'a> {
 }
 unsafe impl Send for TextureLODGatherFormatPropertiesAMD<'_> {}
 unsafe impl Sync for TextureLODGatherFormatPropertiesAMD<'_> {}
+impl TextureLODGatherFormatPropertiesAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TextureLODGatherFormatPropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TextureLODGatherFormatPropertiesAMD<'a> {
@@ -17086,10 +19246,16 @@ pub struct ConditionalRenderingBeginInfoEXT<'a> {
 }
 unsafe impl Send for ConditionalRenderingBeginInfoEXT<'_> {}
 unsafe impl Sync for ConditionalRenderingBeginInfoEXT<'_> {}
+impl ConditionalRenderingBeginInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ConditionalRenderingBeginInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ConditionalRenderingBeginInfoEXT<'a> {
@@ -17125,10 +19291,16 @@ pub struct ProtectedSubmitInfo<'a> {
 }
 unsafe impl Send for ProtectedSubmitInfo<'_> {}
 unsafe impl Sync for ProtectedSubmitInfo<'_> {}
+impl ProtectedSubmitInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ProtectedSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ProtectedSubmitInfo<'a> {
@@ -17155,10 +19327,16 @@ pub struct PhysicalDeviceProtectedMemoryFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceProtectedMemoryFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceProtectedMemoryFeatures<'_> {}
+impl PhysicalDeviceProtectedMemoryFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceProtectedMemoryFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProtectedMemoryFeatures<'a> {
@@ -17186,10 +19364,16 @@ pub struct PhysicalDeviceProtectedMemoryProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceProtectedMemoryProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceProtectedMemoryProperties<'_> {}
+impl PhysicalDeviceProtectedMemoryProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceProtectedMemoryProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProtectedMemoryProperties<'a> {
@@ -17219,10 +19403,16 @@ pub struct DeviceQueueInfo2<'a> {
 }
 unsafe impl Send for DeviceQueueInfo2<'_> {}
 unsafe impl Sync for DeviceQueueInfo2<'_> {}
+impl DeviceQueueInfo2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceQueueInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueInfo2<'a> {
@@ -17260,10 +19450,16 @@ pub struct PipelineCoverageToColorStateCreateInfoNV<'a> {
 }
 unsafe impl Send for PipelineCoverageToColorStateCreateInfoNV<'_> {}
 unsafe impl Sync for PipelineCoverageToColorStateCreateInfoNV<'_> {}
+impl PipelineCoverageToColorStateCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineCoverageToColorStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageToColorStateCreateInfoNV<'a> {
@@ -17305,10 +19501,16 @@ pub struct PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {}
+impl PhysicalDeviceSamplerFilterMinmaxProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
@@ -17346,10 +19548,16 @@ pub struct SampleLocationEXT {
     pub x: f32,
     pub y: f32,
 }
+impl SampleLocationEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SampleLocationEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl SampleLocationEXT {
@@ -17380,10 +19588,16 @@ pub struct SampleLocationsInfoEXT<'a> {
 }
 unsafe impl Send for SampleLocationsInfoEXT<'_> {}
 unsafe impl Sync for SampleLocationsInfoEXT<'_> {}
+impl SampleLocationsInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SampleLocationsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SampleLocationsInfoEXT<'a> {
@@ -17422,10 +19636,16 @@ pub struct AttachmentSampleLocationsEXT<'a> {
     pub sample_locations_info: SampleLocationsInfoEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+impl AttachmentSampleLocationsEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for AttachmentSampleLocationsEXT<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> AttachmentSampleLocationsEXT<'a> {
@@ -17453,10 +19673,16 @@ pub struct SubpassSampleLocationsEXT<'a> {
     pub sample_locations_info: SampleLocationsInfoEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+impl SubpassSampleLocationsEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SubpassSampleLocationsEXT<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> SubpassSampleLocationsEXT<'a> {
@@ -17490,10 +19716,16 @@ pub struct RenderPassSampleLocationsBeginInfoEXT<'a> {
 }
 unsafe impl Send for RenderPassSampleLocationsBeginInfoEXT<'_> {}
 unsafe impl Sync for RenderPassSampleLocationsBeginInfoEXT<'_> {}
+impl RenderPassSampleLocationsBeginInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassSampleLocationsBeginInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassSampleLocationsBeginInfoEXT<'a> {
@@ -17536,10 +19768,16 @@ pub struct PipelineSampleLocationsStateCreateInfoEXT<'a> {
 }
 unsafe impl Send for PipelineSampleLocationsStateCreateInfoEXT<'_> {}
 unsafe impl Sync for PipelineSampleLocationsStateCreateInfoEXT<'_> {}
+impl PipelineSampleLocationsStateCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineSampleLocationsStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineSampleLocationsStateCreateInfoEXT<'a> {
@@ -17582,10 +19820,16 @@ pub struct PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {}
+impl PhysicalDeviceSampleLocationsPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
@@ -17645,10 +19889,16 @@ pub struct MultisamplePropertiesEXT<'a> {
 }
 unsafe impl Send for MultisamplePropertiesEXT<'_> {}
 unsafe impl Sync for MultisamplePropertiesEXT<'_> {}
+impl MultisamplePropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MultisamplePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MultisamplePropertiesEXT<'a> {
@@ -17677,10 +19927,16 @@ pub struct SamplerReductionModeCreateInfo<'a> {
 }
 unsafe impl Send for SamplerReductionModeCreateInfo<'_> {}
 unsafe impl Sync for SamplerReductionModeCreateInfo<'_> {}
+impl SamplerReductionModeCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SamplerReductionModeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerReductionModeCreateInfo<'a> {
@@ -17707,10 +19963,16 @@ pub struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {}
+impl PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
@@ -17745,10 +20007,16 @@ pub struct PhysicalDeviceMultiDrawFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceMultiDrawFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceMultiDrawFeaturesEXT<'_> {}
+impl PhysicalDeviceMultiDrawFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMultiDrawFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiDrawFeaturesEXT<'a> {
@@ -17781,10 +20049,16 @@ pub struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {}
+impl PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
@@ -17859,10 +20133,16 @@ pub struct PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
 }
 unsafe impl Send for PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {}
 unsafe impl Sync for PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {}
+impl PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
@@ -17904,10 +20184,16 @@ pub struct PhysicalDeviceInlineUniformBlockFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceInlineUniformBlockFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceInlineUniformBlockFeatures<'_> {}
+impl PhysicalDeviceInlineUniformBlockFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceInlineUniformBlockFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInlineUniformBlockFeatures<'a> {
@@ -17949,10 +20235,16 @@ pub struct PhysicalDeviceInlineUniformBlockProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceInlineUniformBlockProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceInlineUniformBlockProperties<'_> {}
+impl PhysicalDeviceInlineUniformBlockProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceInlineUniformBlockProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInlineUniformBlockProperties<'a> {
@@ -18019,10 +20311,16 @@ pub struct WriteDescriptorSetInlineUniformBlock<'a> {
 }
 unsafe impl Send for WriteDescriptorSetInlineUniformBlock<'_> {}
 unsafe impl Sync for WriteDescriptorSetInlineUniformBlock<'_> {}
+impl WriteDescriptorSetInlineUniformBlock<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for WriteDescriptorSetInlineUniformBlock<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetInlineUniformBlock<'a> {
@@ -18050,10 +20348,16 @@ pub struct DescriptorPoolInlineUniformBlockCreateInfo<'a> {
 }
 unsafe impl Send for DescriptorPoolInlineUniformBlockCreateInfo<'_> {}
 unsafe impl Sync for DescriptorPoolInlineUniformBlockCreateInfo<'_> {}
+impl DescriptorPoolInlineUniformBlockCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorPoolInlineUniformBlockCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorPoolInlineUniformBlockCreateInfo<'a> {
@@ -18091,10 +20395,16 @@ pub struct PipelineCoverageModulationStateCreateInfoNV<'a> {
 }
 unsafe impl Send for PipelineCoverageModulationStateCreateInfoNV<'_> {}
 unsafe impl Sync for PipelineCoverageModulationStateCreateInfoNV<'_> {}
+impl PipelineCoverageModulationStateCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineCoverageModulationStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageModulationStateCreateInfoNV<'a> {
@@ -18148,10 +20458,16 @@ pub struct ImageFormatListCreateInfo<'a> {
 }
 unsafe impl Send for ImageFormatListCreateInfo<'_> {}
 unsafe impl Sync for ImageFormatListCreateInfo<'_> {}
+impl ImageFormatListCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageFormatListCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageFormatListCreateInfo<'a> {
@@ -18183,10 +20499,16 @@ pub struct ValidationCacheCreateInfoEXT<'a> {
 }
 unsafe impl Send for ValidationCacheCreateInfoEXT<'_> {}
 unsafe impl Sync for ValidationCacheCreateInfoEXT<'_> {}
+impl ValidationCacheCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ValidationCacheCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ValidationCacheCreateInfoEXT<'a> {
@@ -18218,10 +20540,16 @@ pub struct ShaderModuleValidationCacheCreateInfoEXT<'a> {
 }
 unsafe impl Send for ShaderModuleValidationCacheCreateInfoEXT<'_> {}
 unsafe impl Sync for ShaderModuleValidationCacheCreateInfoEXT<'_> {}
+impl ShaderModuleValidationCacheCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ShaderModuleValidationCacheCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderModuleValidationCacheCreateInfoEXT<'a> {
@@ -18254,10 +20582,16 @@ pub struct PhysicalDeviceMaintenance3Properties<'a> {
 }
 unsafe impl Send for PhysicalDeviceMaintenance3Properties<'_> {}
 unsafe impl Sync for PhysicalDeviceMaintenance3Properties<'_> {}
+impl PhysicalDeviceMaintenance3Properties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMaintenance3Properties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance3Properties<'a> {
@@ -18289,10 +20623,16 @@ pub struct PhysicalDeviceMaintenance4Features<'a> {
 }
 unsafe impl Send for PhysicalDeviceMaintenance4Features<'_> {}
 unsafe impl Sync for PhysicalDeviceMaintenance4Features<'_> {}
+impl PhysicalDeviceMaintenance4Features<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMaintenance4Features<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance4Features<'a> {
@@ -18320,10 +20660,16 @@ pub struct PhysicalDeviceMaintenance4Properties<'a> {
 }
 unsafe impl Send for PhysicalDeviceMaintenance4Properties<'_> {}
 unsafe impl Sync for PhysicalDeviceMaintenance4Properties<'_> {}
+impl PhysicalDeviceMaintenance4Properties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMaintenance4Properties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance4Properties<'a> {
@@ -18350,10 +20696,16 @@ pub struct PhysicalDeviceMaintenance5Features<'a> {
 }
 unsafe impl Send for PhysicalDeviceMaintenance5Features<'_> {}
 unsafe impl Sync for PhysicalDeviceMaintenance5Features<'_> {}
+impl PhysicalDeviceMaintenance5Features<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMaintenance5Features<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance5Features<'a> {
@@ -18386,10 +20738,16 @@ pub struct PhysicalDeviceMaintenance5Properties<'a> {
 }
 unsafe impl Send for PhysicalDeviceMaintenance5Properties<'_> {}
 unsafe impl Sync for PhysicalDeviceMaintenance5Properties<'_> {}
+impl PhysicalDeviceMaintenance5Properties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMaintenance5Properties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance5Properties<'a> {
@@ -18460,10 +20818,16 @@ pub struct PhysicalDeviceMaintenance6Features<'a> {
 }
 unsafe impl Send for PhysicalDeviceMaintenance6Features<'_> {}
 unsafe impl Sync for PhysicalDeviceMaintenance6Features<'_> {}
+impl PhysicalDeviceMaintenance6Features<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMaintenance6Features<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance6Features<'a> {
@@ -18493,10 +20857,16 @@ pub struct PhysicalDeviceMaintenance6Properties<'a> {
 }
 unsafe impl Send for PhysicalDeviceMaintenance6Properties<'_> {}
 unsafe impl Sync for PhysicalDeviceMaintenance6Properties<'_> {}
+impl PhysicalDeviceMaintenance6Properties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMaintenance6Properties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance6Properties<'a> {
@@ -18545,10 +20915,16 @@ pub struct PhysicalDeviceMaintenance7FeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceMaintenance7FeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceMaintenance7FeaturesKHR<'_> {}
+impl PhysicalDeviceMaintenance7FeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMaintenance7FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance7FeaturesKHR<'a> {
@@ -18583,10 +20959,16 @@ pub struct PhysicalDeviceMaintenance7PropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceMaintenance7PropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceMaintenance7PropertiesKHR<'_> {}
+impl PhysicalDeviceMaintenance7PropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMaintenance7PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance7PropertiesKHR<'a> {
@@ -18681,10 +21063,16 @@ pub struct PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceLayeredApiPropertiesListKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceLayeredApiPropertiesListKHR<'_> {}
+impl PhysicalDeviceLayeredApiPropertiesListKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesListKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
@@ -18734,10 +21122,16 @@ impl fmt::Debug for PhysicalDeviceLayeredApiPropertiesKHR<'_> {
             .finish()
     }
 }
+impl PhysicalDeviceLayeredApiPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiPropertiesKHR<'a> {
@@ -18784,10 +21178,16 @@ pub struct PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_> {}
+impl PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
@@ -18818,10 +21218,16 @@ pub struct PhysicalDeviceMaintenance8FeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceMaintenance8FeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceMaintenance8FeaturesKHR<'_> {}
+impl PhysicalDeviceMaintenance8FeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMaintenance8FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance8FeaturesKHR<'a> {
@@ -18849,10 +21255,16 @@ pub struct PhysicalDeviceMaintenance9FeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceMaintenance9FeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceMaintenance9FeaturesKHR<'_> {}
+impl PhysicalDeviceMaintenance9FeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMaintenance9FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance9FeaturesKHR<'a> {
@@ -18881,10 +21293,16 @@ pub struct PhysicalDeviceMaintenance9PropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceMaintenance9PropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceMaintenance9PropertiesKHR<'_> {}
+impl PhysicalDeviceMaintenance9PropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMaintenance9PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance9PropertiesKHR<'a> {
@@ -18920,10 +21338,16 @@ pub struct PhysicalDeviceMaintenance11FeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceMaintenance11FeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceMaintenance11FeaturesKHR<'_> {}
+impl PhysicalDeviceMaintenance11FeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMaintenance11FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance11FeaturesKHR<'a> {
@@ -18954,10 +21378,16 @@ pub struct PhysicalDeviceMaintenance10PropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceMaintenance10PropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceMaintenance10PropertiesKHR<'_> {}
+impl PhysicalDeviceMaintenance10PropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMaintenance10PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance10PropertiesKHR<'a> {
@@ -19006,10 +21436,16 @@ pub struct PhysicalDeviceMaintenance10FeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceMaintenance10FeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceMaintenance10FeaturesKHR<'_> {}
+impl PhysicalDeviceMaintenance10FeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMaintenance10FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance10FeaturesKHR<'a> {
@@ -19038,10 +21474,16 @@ pub struct QueueFamilyOwnershipTransferPropertiesKHR<'a> {
 }
 unsafe impl Send for QueueFamilyOwnershipTransferPropertiesKHR<'_> {}
 unsafe impl Sync for QueueFamilyOwnershipTransferPropertiesKHR<'_> {}
+impl QueueFamilyOwnershipTransferPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueueFamilyOwnershipTransferPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyOwnershipTransferPropertiesKHR<'a> {
@@ -19072,10 +21514,16 @@ pub struct QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'a> {
 }
 unsafe impl Send for QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'_> {}
 unsafe impl Sync for QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'_> {}
+impl QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -19115,10 +21563,16 @@ pub struct RenderingAreaInfo<'a> {
 }
 unsafe impl Send for RenderingAreaInfo<'_> {}
 unsafe impl Sync for RenderingAreaInfo<'_> {}
+impl RenderingAreaInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderingAreaInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingAreaInfo<'a> {
@@ -19160,10 +21614,16 @@ pub struct DescriptorSetLayoutSupport<'a> {
 }
 unsafe impl Send for DescriptorSetLayoutSupport<'_> {}
 unsafe impl Sync for DescriptorSetLayoutSupport<'_> {}
+impl DescriptorSetLayoutSupport<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorSetLayoutSupport<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutSupport<'a> {
@@ -19189,10 +21649,16 @@ pub struct PhysicalDeviceShaderDrawParametersFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderDrawParametersFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderDrawParametersFeatures<'_> {}
+impl PhysicalDeviceShaderDrawParametersFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderDrawParametersFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderDrawParametersFeatures<'a> {
@@ -19225,10 +21691,16 @@ pub struct PhysicalDeviceShaderFloat16Int8Features<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderFloat16Int8Features<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderFloat16Int8Features<'_> {}
+impl PhysicalDeviceShaderFloat16Int8Features<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderFloat16Int8Features<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloat16Int8Features<'a> {
@@ -19278,10 +21750,16 @@ pub struct PhysicalDeviceFloatControlsProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceFloatControlsProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceFloatControlsProperties<'_> {}
+impl PhysicalDeviceFloatControlsProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFloatControlsProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFloatControlsProperties<'a> {
@@ -19433,10 +21911,16 @@ pub struct PhysicalDeviceHostQueryResetFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceHostQueryResetFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceHostQueryResetFeatures<'_> {}
+impl PhysicalDeviceHostQueryResetFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceHostQueryResetFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostQueryResetFeatures<'a> {
@@ -19460,10 +21944,16 @@ pub struct NativeBufferUsage2ANDROID {
     pub consumer: u64,
     pub producer: u64,
 }
+impl NativeBufferUsage2ANDROID {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for NativeBufferUsage2ANDROID {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl NativeBufferUsage2ANDROID {
@@ -19495,10 +21985,16 @@ pub struct NativeBufferANDROID<'a> {
 }
 unsafe impl Send for NativeBufferANDROID<'_> {}
 unsafe impl Sync for NativeBufferANDROID<'_> {}
+impl NativeBufferANDROID<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for NativeBufferANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferANDROID<'a> {
@@ -19546,10 +22042,16 @@ pub struct SwapchainImageCreateInfoANDROID<'a> {
 }
 unsafe impl Send for SwapchainImageCreateInfoANDROID<'_> {}
 unsafe impl Sync for SwapchainImageCreateInfoANDROID<'_> {}
+impl SwapchainImageCreateInfoANDROID<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SwapchainImageCreateInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainImageCreateInfoANDROID<'a> {
@@ -19576,10 +22078,16 @@ pub struct PhysicalDevicePresentationPropertiesANDROID<'a> {
 }
 unsafe impl Send for PhysicalDevicePresentationPropertiesANDROID<'_> {}
 unsafe impl Sync for PhysicalDevicePresentationPropertiesANDROID<'_> {}
+impl PhysicalDevicePresentationPropertiesANDROID<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePresentationPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentationPropertiesANDROID<'a> {
@@ -19609,10 +22117,16 @@ pub struct ShaderResourceUsageAMD {
     pub lds_usage_size_in_bytes: usize,
     pub scratch_mem_usage_in_bytes: usize,
 }
+impl ShaderResourceUsageAMD {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ShaderResourceUsageAMD {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ShaderResourceUsageAMD {
@@ -19656,10 +22170,16 @@ pub struct ShaderStatisticsInfoAMD {
     pub num_available_sgprs: u32,
     pub compute_work_group_size: [u32; 3],
 }
+impl ShaderStatisticsInfoAMD {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ShaderStatisticsInfoAMD {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ShaderStatisticsInfoAMD {
@@ -19712,10 +22232,16 @@ pub struct PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {}
+impl PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'a> {
@@ -19747,10 +22273,16 @@ pub struct DeviceQueueGlobalPriorityCreateInfo<'a> {
 }
 unsafe impl Send for DeviceQueueGlobalPriorityCreateInfo<'_> {}
 unsafe impl Sync for DeviceQueueGlobalPriorityCreateInfo<'_> {}
+impl DeviceQueueGlobalPriorityCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceQueueGlobalPriorityCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueGlobalPriorityCreateInfo<'a> {
@@ -19777,10 +22309,16 @@ pub struct PhysicalDeviceGlobalPriorityQueryFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceGlobalPriorityQueryFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceGlobalPriorityQueryFeatures<'_> {}
+impl PhysicalDeviceGlobalPriorityQueryFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceGlobalPriorityQueryFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGlobalPriorityQueryFeatures<'a> {
@@ -19820,10 +22358,16 @@ impl fmt::Debug for QueueFamilyGlobalPriorityProperties<'_> {
             .finish()
     }
 }
+impl QueueFamilyGlobalPriorityProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueueFamilyGlobalPriorityProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyGlobalPriorityProperties<'a> {
@@ -19857,10 +22401,16 @@ pub struct DebugUtilsObjectNameInfoEXT<'a> {
 }
 unsafe impl Send for DebugUtilsObjectNameInfoEXT<'_> {}
 unsafe impl Sync for DebugUtilsObjectNameInfoEXT<'_> {}
+impl DebugUtilsObjectNameInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DebugUtilsObjectNameInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsObjectNameInfoEXT<'a> {
@@ -19907,10 +22457,16 @@ pub struct DebugUtilsObjectTagInfoEXT<'a> {
 }
 unsafe impl Send for DebugUtilsObjectTagInfoEXT<'_> {}
 unsafe impl Sync for DebugUtilsObjectTagInfoEXT<'_> {}
+impl DebugUtilsObjectTagInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DebugUtilsObjectTagInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsObjectTagInfoEXT<'a> {
@@ -19949,10 +22505,16 @@ pub struct DebugUtilsLabelEXT<'a> {
 }
 unsafe impl Send for DebugUtilsLabelEXT<'_> {}
 unsafe impl Sync for DebugUtilsLabelEXT<'_> {}
+impl DebugUtilsLabelEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DebugUtilsLabelEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsLabelEXT<'a> {
@@ -20011,10 +22573,16 @@ impl fmt::Debug for DebugUtilsMessengerCreateInfoEXT<'_> {
             .finish()
     }
 }
+impl DebugUtilsMessengerCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DebugUtilsMessengerCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsMessengerCreateInfoEXT<'a> {
@@ -20073,10 +22641,16 @@ pub struct DebugUtilsMessengerCallbackDataEXT<'a> {
 }
 unsafe impl Send for DebugUtilsMessengerCallbackDataEXT<'_> {}
 unsafe impl Sync for DebugUtilsMessengerCallbackDataEXT<'_> {}
+impl DebugUtilsMessengerCallbackDataEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DebugUtilsMessengerCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsMessengerCallbackDataEXT<'a> {
@@ -20151,10 +22725,16 @@ pub struct PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {}
+impl PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
@@ -20202,10 +22782,16 @@ impl fmt::Debug for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
             .finish()
     }
 }
+impl DeviceDeviceMemoryReportCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceDeviceMemoryReportCreateInfoEXT<'a> {
@@ -20252,10 +22838,16 @@ pub struct DeviceMemoryReportCallbackDataEXT<'a> {
 }
 unsafe impl Send for DeviceMemoryReportCallbackDataEXT<'_> {}
 unsafe impl Sync for DeviceMemoryReportCallbackDataEXT<'_> {}
+impl DeviceMemoryReportCallbackDataEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceMemoryReportCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryReportCallbackDataEXT<'a> {
@@ -20308,10 +22900,16 @@ pub struct ImportMemoryHostPointerInfoEXT<'a> {
 }
 unsafe impl Send for ImportMemoryHostPointerInfoEXT<'_> {}
 unsafe impl Sync for ImportMemoryHostPointerInfoEXT<'_> {}
+impl ImportMemoryHostPointerInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportMemoryHostPointerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryHostPointerInfoEXT<'a> {
@@ -20343,10 +22941,16 @@ pub struct MemoryHostPointerPropertiesEXT<'a> {
 }
 unsafe impl Send for MemoryHostPointerPropertiesEXT<'_> {}
 unsafe impl Sync for MemoryHostPointerPropertiesEXT<'_> {}
+impl MemoryHostPointerPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryHostPointerPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryHostPointerPropertiesEXT<'a> {
@@ -20372,10 +22976,16 @@ pub struct PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {}
+impl PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
@@ -20417,10 +23027,16 @@ pub struct PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {}
+impl PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
@@ -20513,10 +23129,16 @@ pub struct CalibratedTimestampInfoKHR<'a> {
 }
 unsafe impl Send for CalibratedTimestampInfoKHR<'_> {}
 unsafe impl Sync for CalibratedTimestampInfoKHR<'_> {}
+impl CalibratedTimestampInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CalibratedTimestampInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CalibratedTimestampInfoKHR<'a> {
@@ -20555,10 +23177,16 @@ pub struct PhysicalDeviceShaderCorePropertiesAMD<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderCorePropertiesAMD<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderCorePropertiesAMD<'_> {}
+impl PhysicalDeviceShaderCorePropertiesAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCorePropertiesAMD<'a> {
@@ -20651,10 +23279,16 @@ pub struct PhysicalDeviceShaderCoreProperties2AMD<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderCoreProperties2AMD<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderCoreProperties2AMD<'_> {}
+impl PhysicalDeviceShaderCoreProperties2AMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderCoreProperties2AMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreProperties2AMD<'a> {
@@ -20692,10 +23326,16 @@ pub struct PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
 }
 unsafe impl Send for PipelineRasterizationConservativeStateCreateInfoEXT<'_> {}
 unsafe impl Sync for PipelineRasterizationConservativeStateCreateInfoEXT<'_> {}
+impl PipelineRasterizationConservativeStateCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineRasterizationConservativeStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
@@ -20761,10 +23401,16 @@ pub struct PhysicalDeviceDescriptorIndexingFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceDescriptorIndexingFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceDescriptorIndexingFeatures<'_> {}
+impl PhysicalDeviceDescriptorIndexingFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDescriptorIndexingFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorIndexingFeatures<'a> {
@@ -20985,10 +23631,16 @@ pub struct PhysicalDeviceDescriptorIndexingProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceDescriptorIndexingProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceDescriptorIndexingProperties<'_> {}
+impl PhysicalDeviceDescriptorIndexingProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDescriptorIndexingProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorIndexingProperties<'a> {
@@ -21216,10 +23868,16 @@ pub struct DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
 }
 unsafe impl Send for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {}
 unsafe impl Sync for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {}
+impl DescriptorSetLayoutBindingFlagsCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
@@ -21252,10 +23910,16 @@ pub struct DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
 }
 unsafe impl Send for DescriptorSetVariableDescriptorCountAllocateInfo<'_> {}
 unsafe impl Sync for DescriptorSetVariableDescriptorCountAllocateInfo<'_> {}
+impl DescriptorSetVariableDescriptorCountAllocateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorSetVariableDescriptorCountAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
@@ -21287,10 +23951,16 @@ pub struct DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
 }
 unsafe impl Send for DescriptorSetVariableDescriptorCountLayoutSupport<'_> {}
 unsafe impl Sync for DescriptorSetVariableDescriptorCountLayoutSupport<'_> {}
+impl DescriptorSetVariableDescriptorCountLayoutSupport<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorSetVariableDescriptorCountLayoutSupport<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
@@ -21329,10 +23999,16 @@ pub struct AttachmentDescription2<'a> {
 }
 unsafe impl Send for AttachmentDescription2<'_> {}
 unsafe impl Sync for AttachmentDescription2<'_> {}
+impl AttachmentDescription2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AttachmentDescription2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentDescription2<'a> {
@@ -21400,10 +24076,16 @@ pub struct AttachmentReference2<'a> {
 }
 unsafe impl Send for AttachmentReference2<'_> {}
 unsafe impl Sync for AttachmentReference2<'_> {}
+impl AttachmentReference2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AttachmentReference2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentReference2<'a> {
@@ -21449,10 +24131,16 @@ pub struct SubpassDescription2<'a> {
 }
 unsafe impl Send for SubpassDescription2<'_> {}
 unsafe impl Sync for SubpassDescription2<'_> {}
+impl SubpassDescription2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SubpassDescription2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassDescription2<'a> {
@@ -21530,10 +24218,16 @@ pub struct SubpassDependency2<'a> {
 }
 unsafe impl Send for SubpassDependency2<'_> {}
 unsafe impl Sync for SubpassDependency2<'_> {}
+impl SubpassDependency2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SubpassDependency2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassDependency2<'a> {
@@ -21602,10 +24296,16 @@ pub struct RenderPassCreateInfo2<'a> {
 }
 unsafe impl Send for RenderPassCreateInfo2<'_> {}
 unsafe impl Sync for RenderPassCreateInfo2<'_> {}
+impl RenderPassCreateInfo2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassCreateInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreateInfo2<'a> {
@@ -21655,10 +24355,16 @@ pub struct SubpassBeginInfo<'a> {
 }
 unsafe impl Send for SubpassBeginInfo<'_> {}
 unsafe impl Sync for SubpassBeginInfo<'_> {}
+impl SubpassBeginInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SubpassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassBeginInfo<'a> {
@@ -21683,10 +24389,16 @@ pub struct SubpassEndInfo<'a> {
 }
 unsafe impl Send for SubpassEndInfo<'_> {}
 unsafe impl Sync for SubpassEndInfo<'_> {}
+impl SubpassEndInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SubpassEndInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassEndInfo<'a> {
@@ -21706,10 +24418,16 @@ pub struct PhysicalDeviceTimelineSemaphoreFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceTimelineSemaphoreFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceTimelineSemaphoreFeatures<'_> {}
+impl PhysicalDeviceTimelineSemaphoreFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTimelineSemaphoreFeatures<'a> {
@@ -21738,10 +24456,16 @@ pub struct PhysicalDeviceTimelineSemaphoreProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceTimelineSemaphoreProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceTimelineSemaphoreProperties<'_> {}
+impl PhysicalDeviceTimelineSemaphoreProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTimelineSemaphoreProperties<'a> {
@@ -21776,10 +24500,16 @@ pub struct SemaphoreTypeCreateInfo<'a> {
 }
 unsafe impl Send for SemaphoreTypeCreateInfo<'_> {}
 unsafe impl Sync for SemaphoreTypeCreateInfo<'_> {}
+impl SemaphoreTypeCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SemaphoreTypeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreTypeCreateInfo<'a> {
@@ -21815,10 +24545,16 @@ pub struct TimelineSemaphoreSubmitInfo<'a> {
 }
 unsafe impl Send for TimelineSemaphoreSubmitInfo<'_> {}
 unsafe impl Sync for TimelineSemaphoreSubmitInfo<'_> {}
+impl TimelineSemaphoreSubmitInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TimelineSemaphoreSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TimelineSemaphoreSubmitInfo<'a> {
@@ -21856,10 +24592,16 @@ pub struct SemaphoreWaitInfo<'a> {
 }
 unsafe impl Send for SemaphoreWaitInfo<'_> {}
 unsafe impl Sync for SemaphoreWaitInfo<'_> {}
+impl SemaphoreWaitInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SemaphoreWaitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreWaitInfo<'a> {
@@ -21898,10 +24640,16 @@ pub struct SemaphoreSignalInfo<'a> {
 }
 unsafe impl Send for SemaphoreSignalInfo<'_> {}
 unsafe impl Sync for SemaphoreSignalInfo<'_> {}
+impl SemaphoreSignalInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SemaphoreSignalInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreSignalInfo<'a> {
@@ -21928,10 +24676,16 @@ pub struct VertexInputBindingDivisorDescription {
     pub binding: u32,
     pub divisor: u32,
 }
+impl VertexInputBindingDivisorDescription {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for VertexInputBindingDivisorDescription {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl VertexInputBindingDivisorDescription {
@@ -21960,10 +24714,16 @@ pub struct PipelineVertexInputDivisorStateCreateInfo<'a> {
 }
 unsafe impl Send for PipelineVertexInputDivisorStateCreateInfo<'_> {}
 unsafe impl Sync for PipelineVertexInputDivisorStateCreateInfo<'_> {}
+impl PipelineVertexInputDivisorStateCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineVertexInputDivisorStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineVertexInputDivisorStateCreateInfo<'a> {
@@ -21998,10 +24758,16 @@ pub struct PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {}
+impl PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
@@ -22033,10 +24799,16 @@ pub struct PhysicalDeviceVertexAttributeDivisorProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceVertexAttributeDivisorProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorProperties<'_> {}
+impl PhysicalDeviceVertexAttributeDivisorProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorProperties<'a> {
@@ -22078,10 +24850,16 @@ pub struct PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {}
+impl PhysicalDevicePCIBusInfoPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
@@ -22124,10 +24902,16 @@ pub struct ImportAndroidHardwareBufferInfoANDROID<'a> {
 }
 unsafe impl Send for ImportAndroidHardwareBufferInfoANDROID<'_> {}
 unsafe impl Sync for ImportAndroidHardwareBufferInfoANDROID<'_> {}
+impl ImportAndroidHardwareBufferInfoANDROID<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportAndroidHardwareBufferInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportAndroidHardwareBufferInfoANDROID<'a> {
@@ -22155,10 +24939,16 @@ pub struct AndroidHardwareBufferUsageANDROID<'a> {
 }
 unsafe impl Send for AndroidHardwareBufferUsageANDROID<'_> {}
 unsafe impl Sync for AndroidHardwareBufferUsageANDROID<'_> {}
+impl AndroidHardwareBufferUsageANDROID<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AndroidHardwareBufferUsageANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferUsageANDROID<'a> {
@@ -22186,10 +24976,16 @@ pub struct AndroidHardwareBufferPropertiesANDROID<'a> {
 }
 unsafe impl Send for AndroidHardwareBufferPropertiesANDROID<'_> {}
 unsafe impl Sync for AndroidHardwareBufferPropertiesANDROID<'_> {}
+impl AndroidHardwareBufferPropertiesANDROID<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AndroidHardwareBufferPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferPropertiesANDROID<'a> {
@@ -22220,10 +25016,16 @@ pub struct MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
 }
 unsafe impl Send for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {}
 unsafe impl Sync for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {}
+impl MemoryGetAndroidHardwareBufferInfoANDROID<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
@@ -22257,10 +25059,16 @@ pub struct AndroidHardwareBufferFormatPropertiesANDROID<'a> {
 }
 unsafe impl Send for AndroidHardwareBufferFormatPropertiesANDROID<'_> {}
 unsafe impl Sync for AndroidHardwareBufferFormatPropertiesANDROID<'_> {}
+impl AndroidHardwareBufferFormatPropertiesANDROID<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AndroidHardwareBufferFormatPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatPropertiesANDROID<'a> {
@@ -22332,10 +25140,16 @@ pub struct CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
 }
 unsafe impl Send for CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {}
 unsafe impl Sync for CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {}
+impl CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
@@ -22366,10 +25180,16 @@ pub struct ExternalFormatANDROID<'a> {
 }
 unsafe impl Send for ExternalFormatANDROID<'_> {}
 unsafe impl Sync for ExternalFormatANDROID<'_> {}
+impl ExternalFormatANDROID<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalFormatANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFormatANDROID<'a> {
@@ -22402,10 +25222,16 @@ pub struct PhysicalDevice8BitStorageFeatures<'a> {
 }
 unsafe impl Send for PhysicalDevice8BitStorageFeatures<'_> {}
 unsafe impl Sync for PhysicalDevice8BitStorageFeatures<'_> {}
+impl PhysicalDevice8BitStorageFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevice8BitStorageFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice8BitStorageFeatures<'a> {
@@ -22447,10 +25273,16 @@ pub struct PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {}
+impl PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
@@ -22492,10 +25324,16 @@ pub struct PhysicalDeviceVulkanMemoryModelFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceVulkanMemoryModelFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceVulkanMemoryModelFeatures<'_> {}
+impl PhysicalDeviceVulkanMemoryModelFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVulkanMemoryModelFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkanMemoryModelFeatures<'a> {
@@ -22542,10 +25380,16 @@ pub struct PhysicalDeviceShaderAtomicInt64Features<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderAtomicInt64Features<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderAtomicInt64Features<'_> {}
+impl PhysicalDeviceShaderAtomicInt64Features<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicInt64Features<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicInt64Features<'a> {
@@ -22590,10 +25434,16 @@ pub struct PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {}
+impl PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
@@ -22709,10 +25559,16 @@ pub struct PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {}
+impl PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
@@ -22830,10 +25686,16 @@ pub struct PhysicalDeviceVertexAttributeDivisorFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceVertexAttributeDivisorFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorFeatures<'_> {}
+impl PhysicalDeviceVertexAttributeDivisorFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorFeatures<'a> {
@@ -22877,10 +25739,16 @@ pub struct QueueFamilyCheckpointPropertiesNV<'a> {
 }
 unsafe impl Send for QueueFamilyCheckpointPropertiesNV<'_> {}
 unsafe impl Sync for QueueFamilyCheckpointPropertiesNV<'_> {}
+impl QueueFamilyCheckpointPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueueFamilyCheckpointPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyCheckpointPropertiesNV<'a> {
@@ -22911,10 +25779,16 @@ pub struct CheckpointDataNV<'a> {
 }
 unsafe impl Send for CheckpointDataNV<'_> {}
 unsafe impl Sync for CheckpointDataNV<'_> {}
+impl CheckpointDataNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CheckpointDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CheckpointDataNV<'a> {
@@ -22948,10 +25822,16 @@ pub struct PhysicalDeviceDepthStencilResolveProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceDepthStencilResolveProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceDepthStencilResolveProperties<'_> {}
+impl PhysicalDeviceDepthStencilResolveProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDepthStencilResolveProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthStencilResolveProperties<'a> {
@@ -23005,10 +25885,16 @@ pub struct SubpassDescriptionDepthStencilResolve<'a> {
 }
 unsafe impl Send for SubpassDescriptionDepthStencilResolve<'_> {}
 unsafe impl Sync for SubpassDescriptionDepthStencilResolve<'_> {}
+impl SubpassDescriptionDepthStencilResolve<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SubpassDescriptionDepthStencilResolve<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassDescriptionDepthStencilResolve<'a> {
@@ -23048,10 +25934,16 @@ pub struct ImageViewASTCDecodeModeEXT<'a> {
 }
 unsafe impl Send for ImageViewASTCDecodeModeEXT<'_> {}
 unsafe impl Sync for ImageViewASTCDecodeModeEXT<'_> {}
+impl ImageViewASTCDecodeModeEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageViewASTCDecodeModeEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewASTCDecodeModeEXT<'a> {
@@ -23078,10 +25970,16 @@ pub struct PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {}
+impl PhysicalDeviceASTCDecodeFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
@@ -23110,10 +26008,16 @@ pub struct PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {}
+impl PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
@@ -23159,10 +26063,16 @@ pub struct PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {}
+impl PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
@@ -23259,10 +26169,16 @@ pub struct PipelineRasterizationStateStreamCreateInfoEXT<'a> {
 }
 unsafe impl Send for PipelineRasterizationStateStreamCreateInfoEXT<'_> {}
 unsafe impl Sync for PipelineRasterizationStateStreamCreateInfoEXT<'_> {}
+impl PipelineRasterizationStateStreamCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineRasterizationStateStreamCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateStreamCreateInfoEXT<'a> {
@@ -23298,10 +26214,16 @@ pub struct PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {}
+impl PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
@@ -23336,10 +26258,16 @@ pub struct PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
 }
 unsafe impl Send for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {}
 unsafe impl Sync for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {}
+impl PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
@@ -23373,10 +26301,16 @@ pub struct PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {}
+impl PhysicalDeviceExclusiveScissorFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
@@ -23406,10 +26340,16 @@ pub struct PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
 }
 unsafe impl Send for PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {}
 unsafe impl Sync for PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {}
+impl PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
@@ -23441,10 +26381,16 @@ pub struct PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {}
+impl PhysicalDeviceCornerSampledImageFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
@@ -23477,10 +26423,16 @@ pub struct PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {}
+impl PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
@@ -23523,10 +26475,16 @@ pub struct PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {}
+impl PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
@@ -23560,10 +26518,16 @@ pub struct PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {}
+impl PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
@@ -23595,10 +26559,16 @@ pub struct PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_> {}
+impl PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -23639,10 +26609,16 @@ pub struct PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'_> {}
+impl PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'a> {
@@ -23679,10 +26655,16 @@ pub struct PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {}
+impl PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
@@ -23714,10 +26696,16 @@ pub struct PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'_> {}
+impl PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'a> {
@@ -23748,10 +26736,16 @@ pub struct PhysicalDeviceMemoryDecompressionFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {}
+impl PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionFeaturesEXT<'a> {
@@ -23784,10 +26778,16 @@ pub struct PhysicalDeviceMemoryDecompressionPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {}
+impl PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionPropertiesEXT<'a> {
@@ -23828,10 +26828,16 @@ pub struct ShadingRatePaletteNV<'a> {
 }
 unsafe impl Send for ShadingRatePaletteNV<'_> {}
 unsafe impl Sync for ShadingRatePaletteNV<'_> {}
+impl ShadingRatePaletteNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ShadingRatePaletteNV<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> ShadingRatePaletteNV<'a> {
@@ -23860,10 +26866,16 @@ pub struct PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
 }
 unsafe impl Send for PipelineViewportShadingRateImageStateCreateInfoNV<'_> {}
 unsafe impl Sync for PipelineViewportShadingRateImageStateCreateInfoNV<'_> {}
+impl PipelineViewportShadingRateImageStateCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineViewportShadingRateImageStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
@@ -23904,10 +26916,16 @@ pub struct PhysicalDeviceShadingRateImageFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceShadingRateImageFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceShadingRateImageFeaturesNV<'_> {}
+impl PhysicalDeviceShadingRateImageFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShadingRateImageFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShadingRateImageFeaturesNV<'a> {
@@ -23946,10 +26964,16 @@ pub struct PhysicalDeviceShadingRateImagePropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceShadingRateImagePropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceShadingRateImagePropertiesNV<'_> {}
+impl PhysicalDeviceShadingRateImagePropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShadingRateImagePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShadingRateImagePropertiesNV<'a> {
@@ -23990,10 +27014,16 @@ pub struct PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
 }
 unsafe impl Send for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {}
 unsafe impl Sync for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {}
+impl PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
@@ -24022,10 +27052,16 @@ pub struct CoarseSampleLocationNV {
     pub pixel_y: u32,
     pub sample: u32,
 }
+impl CoarseSampleLocationNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for CoarseSampleLocationNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl CoarseSampleLocationNV {
@@ -24059,10 +27095,16 @@ pub struct CoarseSampleOrderCustomNV<'a> {
 }
 unsafe impl Send for CoarseSampleOrderCustomNV<'_> {}
 unsafe impl Sync for CoarseSampleOrderCustomNV<'_> {}
+impl CoarseSampleOrderCustomNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for CoarseSampleOrderCustomNV<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> CoarseSampleOrderCustomNV<'a> {
@@ -24098,10 +27140,16 @@ pub struct PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
 }
 unsafe impl Send for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {}
 unsafe impl Sync for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {}
+impl PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
@@ -24142,10 +27190,16 @@ pub struct PhysicalDeviceMeshShaderFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceMeshShaderFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceMeshShaderFeaturesNV<'_> {}
+impl PhysicalDeviceMeshShaderFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderFeaturesNV<'a> {
@@ -24190,10 +27244,16 @@ pub struct PhysicalDeviceMeshShaderPropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceMeshShaderPropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceMeshShaderPropertiesNV<'_> {}
+impl PhysicalDeviceMeshShaderPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderPropertiesNV<'a> {
@@ -24282,10 +27342,16 @@ pub struct DrawMeshTasksIndirectCommandNV {
     pub task_count: u32,
     pub first_task: u32,
 }
+impl DrawMeshTasksIndirectCommandNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DrawMeshTasksIndirectCommandNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DrawMeshTasksIndirectCommandNV {
@@ -24317,10 +27383,16 @@ pub struct PhysicalDeviceMeshShaderFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceMeshShaderFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceMeshShaderFeaturesEXT<'_> {}
+impl PhysicalDeviceMeshShaderFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderFeaturesEXT<'a> {
@@ -24399,10 +27471,16 @@ pub struct PhysicalDeviceMeshShaderPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceMeshShaderPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceMeshShaderPropertiesEXT<'_> {}
+impl PhysicalDeviceMeshShaderPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderPropertiesEXT<'a> {
@@ -24592,10 +27670,16 @@ pub struct DrawMeshTasksIndirectCommandEXT {
     pub group_count_y: u32,
     pub group_count_z: u32,
 }
+impl DrawMeshTasksIndirectCommandEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DrawMeshTasksIndirectCommandEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DrawMeshTasksIndirectCommandEXT {
@@ -24632,10 +27716,16 @@ pub struct RayTracingShaderGroupCreateInfoNV<'a> {
 }
 unsafe impl Send for RayTracingShaderGroupCreateInfoNV<'_> {}
 unsafe impl Sync for RayTracingShaderGroupCreateInfoNV<'_> {}
+impl RayTracingShaderGroupCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RayTracingShaderGroupCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingShaderGroupCreateInfoNV<'a> {
@@ -24686,10 +27776,16 @@ pub struct RayTracingShaderGroupCreateInfoKHR<'a> {
 }
 unsafe impl Send for RayTracingShaderGroupCreateInfoKHR<'_> {}
 unsafe impl Sync for RayTracingShaderGroupCreateInfoKHR<'_> {}
+impl RayTracingShaderGroupCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RayTracingShaderGroupCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingShaderGroupCreateInfoKHR<'a> {
@@ -24751,10 +27847,16 @@ pub struct RayTracingPipelineCreateInfoNV<'a> {
 }
 unsafe impl Send for RayTracingPipelineCreateInfoNV<'_> {}
 unsafe impl Sync for RayTracingPipelineCreateInfoNV<'_> {}
+impl RayTracingPipelineCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RayTracingPipelineCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineCreateInfoNV<'a> {
@@ -24823,10 +27925,16 @@ pub struct RayTracingPipelineCreateInfoKHR<'a> {
 }
 unsafe impl Send for RayTracingPipelineCreateInfoKHR<'_> {}
 unsafe impl Sync for RayTracingPipelineCreateInfoKHR<'_> {}
+impl RayTracingPipelineCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineCreateInfoKHR<'a> {
@@ -24915,10 +28023,16 @@ pub struct GeometryTrianglesNV<'a> {
 }
 unsafe impl Send for GeometryTrianglesNV<'_> {}
 unsafe impl Sync for GeometryTrianglesNV<'_> {}
+impl GeometryTrianglesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GeometryTrianglesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeometryTrianglesNV<'a> {
@@ -24997,10 +28111,16 @@ pub struct GeometryAABBNV<'a> {
 }
 unsafe impl Send for GeometryAABBNV<'_> {}
 unsafe impl Sync for GeometryAABBNV<'_> {}
+impl GeometryAABBNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GeometryAABBNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeometryAABBNV<'a> {
@@ -25038,10 +28158,16 @@ pub struct GeometryDataNV<'a> {
     pub aabbs: GeometryAABBNV<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+impl GeometryDataNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for GeometryDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> GeometryDataNV<'a> {
@@ -25071,10 +28197,16 @@ pub struct GeometryNV<'a> {
 }
 unsafe impl Send for GeometryNV<'_> {}
 unsafe impl Sync for GeometryNV<'_> {}
+impl GeometryNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GeometryNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeometryNV<'a> {
@@ -25114,10 +28246,16 @@ pub struct AccelerationStructureInfoNV<'a> {
 }
 unsafe impl Send for AccelerationStructureInfoNV<'_> {}
 unsafe impl Sync for AccelerationStructureInfoNV<'_> {}
+impl AccelerationStructureInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureInfoNV<'a> {
@@ -25160,10 +28298,16 @@ pub struct AccelerationStructureCreateInfoNV<'a> {
 }
 unsafe impl Send for AccelerationStructureCreateInfoNV<'_> {}
 unsafe impl Sync for AccelerationStructureCreateInfoNV<'_> {}
+impl AccelerationStructureCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfoNV<'a> {
@@ -25198,10 +28342,16 @@ pub struct BindAccelerationStructureMemoryInfoNV<'a> {
 }
 unsafe impl Send for BindAccelerationStructureMemoryInfoNV<'_> {}
 unsafe impl Sync for BindAccelerationStructureMemoryInfoNV<'_> {}
+impl BindAccelerationStructureMemoryInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindAccelerationStructureMemoryInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindAccelerationStructureMemoryInfoNV<'a> {
@@ -25247,10 +28397,16 @@ pub struct WriteDescriptorSetAccelerationStructureKHR<'a> {
 }
 unsafe impl Send for WriteDescriptorSetAccelerationStructureKHR<'_> {}
 unsafe impl Sync for WriteDescriptorSetAccelerationStructureKHR<'_> {}
+impl WriteDescriptorSetAccelerationStructureKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for WriteDescriptorSetAccelerationStructureKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetAccelerationStructureKHR<'a> {
@@ -25283,10 +28439,16 @@ pub struct WriteDescriptorSetAccelerationStructureNV<'a> {
 }
 unsafe impl Send for WriteDescriptorSetAccelerationStructureNV<'_> {}
 unsafe impl Sync for WriteDescriptorSetAccelerationStructureNV<'_> {}
+impl WriteDescriptorSetAccelerationStructureNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for WriteDescriptorSetAccelerationStructureNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetAccelerationStructureNV<'a> {
@@ -25319,10 +28481,16 @@ pub struct AccelerationStructureMemoryRequirementsInfoNV<'a> {
 }
 unsafe impl Send for AccelerationStructureMemoryRequirementsInfoNV<'_> {}
 unsafe impl Sync for AccelerationStructureMemoryRequirementsInfoNV<'_> {}
+impl AccelerationStructureMemoryRequirementsInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureMemoryRequirementsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureMemoryRequirementsInfoNV<'a> {
@@ -25361,10 +28529,16 @@ pub struct PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {}
+impl PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
@@ -25433,10 +28607,16 @@ pub struct PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {}
+impl PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
@@ -25503,10 +28683,16 @@ pub struct PhysicalDeviceRayQueryFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceRayQueryFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceRayQueryFeaturesKHR<'_> {}
+impl PhysicalDeviceRayQueryFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRayQueryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayQueryFeaturesKHR<'a> {
@@ -25541,10 +28727,16 @@ pub struct PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {}
+impl PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
@@ -25637,10 +28829,16 @@ pub struct PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {}
+impl PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
@@ -25719,10 +28917,16 @@ pub struct PhysicalDeviceRayTracingPropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceRayTracingPropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceRayTracingPropertiesNV<'_> {}
+impl PhysicalDeviceRayTracingPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRayTracingPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPropertiesNV<'a> {
@@ -25785,10 +28989,16 @@ pub struct StridedDeviceAddressRegionKHR {
     pub stride: DeviceSize,
     pub size: DeviceSize,
 }
+impl StridedDeviceAddressRegionKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for StridedDeviceAddressRegionKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl StridedDeviceAddressRegionKHR {
@@ -25818,10 +29028,16 @@ pub struct TraceRaysIndirectCommandKHR {
     pub height: u32,
     pub depth: u32,
 }
+impl TraceRaysIndirectCommandKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for TraceRaysIndirectCommandKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl TraceRaysIndirectCommandKHR {
@@ -25862,10 +29078,16 @@ pub struct TraceRaysIndirectCommand2KHR {
     pub height: u32,
     pub depth: u32,
 }
+impl TraceRaysIndirectCommand2KHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for TraceRaysIndirectCommand2KHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl TraceRaysIndirectCommand2KHR {
@@ -25984,10 +29206,16 @@ pub struct PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {}
+impl PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
@@ -26029,10 +29257,16 @@ pub struct DrmFormatModifierPropertiesListEXT<'a> {
 }
 unsafe impl Send for DrmFormatModifierPropertiesListEXT<'_> {}
 unsafe impl Sync for DrmFormatModifierPropertiesListEXT<'_> {}
+impl DrmFormatModifierPropertiesListEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DrmFormatModifierPropertiesListEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DrmFormatModifierPropertiesListEXT<'a> {
@@ -26060,10 +29294,16 @@ pub struct DrmFormatModifierPropertiesEXT {
     pub drm_format_modifier_plane_count: u32,
     pub drm_format_modifier_tiling_features: FormatFeatureFlags,
 }
+impl DrmFormatModifierPropertiesEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DrmFormatModifierPropertiesEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DrmFormatModifierPropertiesEXT {
@@ -26102,10 +29342,16 @@ pub struct PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {}
+impl PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
@@ -26148,10 +29394,16 @@ pub struct ImageDrmFormatModifierListCreateInfoEXT<'a> {
 }
 unsafe impl Send for ImageDrmFormatModifierListCreateInfoEXT<'_> {}
 unsafe impl Sync for ImageDrmFormatModifierListCreateInfoEXT<'_> {}
+impl ImageDrmFormatModifierListCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageDrmFormatModifierListCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierListCreateInfoEXT<'a> {
@@ -26182,10 +29434,16 @@ pub struct ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
 }
 unsafe impl Send for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {}
 unsafe impl Sync for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {}
+impl ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
@@ -26219,10 +29477,16 @@ pub struct ImageDrmFormatModifierPropertiesEXT<'a> {
 }
 unsafe impl Send for ImageDrmFormatModifierPropertiesEXT<'_> {}
 unsafe impl Sync for ImageDrmFormatModifierPropertiesEXT<'_> {}
+impl ImageDrmFormatModifierPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageDrmFormatModifierPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierPropertiesEXT<'a> {
@@ -26248,10 +29512,16 @@ pub struct ImageStencilUsageCreateInfo<'a> {
 }
 unsafe impl Send for ImageStencilUsageCreateInfo<'_> {}
 unsafe impl Sync for ImageStencilUsageCreateInfo<'_> {}
+impl ImageStencilUsageCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageStencilUsageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageStencilUsageCreateInfo<'a> {
@@ -26279,10 +29549,16 @@ pub struct DeviceMemoryOverallocationCreateInfoAMD<'a> {
 }
 unsafe impl Send for DeviceMemoryOverallocationCreateInfoAMD<'_> {}
 unsafe impl Sync for DeviceMemoryOverallocationCreateInfoAMD<'_> {}
+impl DeviceMemoryOverallocationCreateInfoAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceMemoryOverallocationCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryOverallocationCreateInfoAMD<'a> {
@@ -26315,10 +29591,16 @@ pub struct PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {}
+impl PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
@@ -26364,10 +29646,16 @@ pub struct PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {}
+impl PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
@@ -26399,10 +29687,16 @@ pub struct PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'_> {}
+impl PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {
@@ -26439,10 +29733,16 @@ pub struct PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {}
+impl PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
@@ -26492,10 +29792,16 @@ pub struct PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {}
+impl PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
@@ -26548,10 +29854,16 @@ pub struct PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'_> {}
+impl PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {
@@ -26585,10 +29897,16 @@ pub struct RenderPassFragmentDensityMapCreateInfoEXT<'a> {
 }
 unsafe impl Send for RenderPassFragmentDensityMapCreateInfoEXT<'_> {}
 unsafe impl Sync for RenderPassFragmentDensityMapCreateInfoEXT<'_> {}
+impl RenderPassFragmentDensityMapCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassFragmentDensityMapCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassFragmentDensityMapCreateInfoEXT<'a> {
@@ -26621,10 +29939,16 @@ pub struct RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {
 }
 unsafe impl Send for RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {}
 unsafe impl Sync for RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {}
+impl RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {
@@ -26654,10 +29978,16 @@ pub struct PhysicalDeviceScalarBlockLayoutFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceScalarBlockLayoutFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceScalarBlockLayoutFeatures<'_> {}
+impl PhysicalDeviceScalarBlockLayoutFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceScalarBlockLayoutFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceScalarBlockLayoutFeatures<'a> {
@@ -26686,10 +30016,16 @@ pub struct SurfaceProtectedCapabilitiesKHR<'a> {
 }
 unsafe impl Send for SurfaceProtectedCapabilitiesKHR<'_> {}
 unsafe impl Sync for SurfaceProtectedCapabilitiesKHR<'_> {}
+impl SurfaceProtectedCapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SurfaceProtectedCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceProtectedCapabilitiesKHR<'a> {
@@ -26716,10 +30052,16 @@ pub struct PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {}
+impl PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
@@ -26754,10 +30096,16 @@ pub struct PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {}
+impl PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
@@ -26787,10 +30135,16 @@ pub struct PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
 }
 unsafe impl Send for PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {}
 unsafe impl Sync for PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {}
+impl PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
@@ -26827,10 +30181,16 @@ pub struct PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {}
+impl PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
@@ -26866,10 +30226,16 @@ pub struct PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {}
+impl PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
@@ -26898,10 +30264,16 @@ pub struct MemoryPriorityAllocateInfoEXT<'a> {
 }
 unsafe impl Send for MemoryPriorityAllocateInfoEXT<'_> {}
 unsafe impl Sync for MemoryPriorityAllocateInfoEXT<'_> {}
+impl MemoryPriorityAllocateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryPriorityAllocateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryPriorityAllocateInfoEXT<'a> {
@@ -26928,10 +30300,16 @@ pub struct PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {}
+impl PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
@@ -26968,10 +30346,16 @@ pub struct PhysicalDeviceBufferDeviceAddressFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceBufferDeviceAddressFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceBufferDeviceAddressFeatures<'_> {}
+impl PhysicalDeviceBufferDeviceAddressFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBufferDeviceAddressFeatures<'a> {
@@ -27018,10 +30402,16 @@ pub struct PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {}
+impl PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
@@ -27069,10 +30459,16 @@ pub struct BufferDeviceAddressInfo<'a> {
 }
 unsafe impl Send for BufferDeviceAddressInfo<'_> {}
 unsafe impl Sync for BufferDeviceAddressInfo<'_> {}
+impl BufferDeviceAddressInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferDeviceAddressInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferDeviceAddressInfo<'a> {
@@ -27098,10 +30494,16 @@ pub struct BufferOpaqueCaptureAddressCreateInfo<'a> {
 }
 unsafe impl Send for BufferOpaqueCaptureAddressCreateInfo<'_> {}
 unsafe impl Sync for BufferOpaqueCaptureAddressCreateInfo<'_> {}
+impl BufferOpaqueCaptureAddressCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferOpaqueCaptureAddressCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferOpaqueCaptureAddressCreateInfo<'a> {
@@ -27128,10 +30530,16 @@ pub struct BufferDeviceAddressCreateInfoEXT<'a> {
 }
 unsafe impl Send for BufferDeviceAddressCreateInfoEXT<'_> {}
 unsafe impl Sync for BufferDeviceAddressCreateInfoEXT<'_> {}
+impl BufferDeviceAddressCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferDeviceAddressCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferDeviceAddressCreateInfoEXT<'a> {
@@ -27158,10 +30566,16 @@ pub struct PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {}
+impl PhysicalDeviceImageViewImageFormatInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
@@ -27193,10 +30607,16 @@ pub struct FilterCubicImageViewImageFormatPropertiesEXT<'a> {
 }
 unsafe impl Send for FilterCubicImageViewImageFormatPropertiesEXT<'_> {}
 unsafe impl Sync for FilterCubicImageViewImageFormatPropertiesEXT<'_> {}
+impl FilterCubicImageViewImageFormatPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for FilterCubicImageViewImageFormatPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FilterCubicImageViewImageFormatPropertiesEXT<'a> {
@@ -27232,10 +30652,16 @@ pub struct PhysicalDeviceImagelessFramebufferFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceImagelessFramebufferFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceImagelessFramebufferFeatures<'_> {}
+impl PhysicalDeviceImagelessFramebufferFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImagelessFramebufferFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImagelessFramebufferFeatures<'a> {
@@ -27268,10 +30694,16 @@ pub struct FramebufferAttachmentsCreateInfo<'a> {
 }
 unsafe impl Send for FramebufferAttachmentsCreateInfo<'_> {}
 unsafe impl Sync for FramebufferAttachmentsCreateInfo<'_> {}
+impl FramebufferAttachmentsCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for FramebufferAttachmentsCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferAttachmentsCreateInfo<'a> {
@@ -27308,10 +30740,16 @@ pub struct FramebufferAttachmentImageInfo<'a> {
 }
 unsafe impl Send for FramebufferAttachmentImageInfo<'_> {}
 unsafe impl Sync for FramebufferAttachmentImageInfo<'_> {}
+impl FramebufferAttachmentImageInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for FramebufferAttachmentImageInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferAttachmentImageInfo<'a> {
@@ -27364,10 +30802,16 @@ pub struct RenderPassAttachmentBeginInfo<'a> {
 }
 unsafe impl Send for RenderPassAttachmentBeginInfo<'_> {}
 unsafe impl Sync for RenderPassAttachmentBeginInfo<'_> {}
+impl RenderPassAttachmentBeginInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassAttachmentBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassAttachmentBeginInfo<'a> {
@@ -27395,10 +30839,16 @@ pub struct PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {}
+impl PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
@@ -27431,10 +30881,16 @@ pub struct PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {}
+impl PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
@@ -27472,10 +30928,16 @@ pub struct PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {}
+impl PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
@@ -27516,10 +30978,16 @@ pub struct CooperativeMatrixPropertiesNV<'a> {
 }
 unsafe impl Send for CooperativeMatrixPropertiesNV<'_> {}
 unsafe impl Sync for CooperativeMatrixPropertiesNV<'_> {}
+impl CooperativeMatrixPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CooperativeMatrixPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixPropertiesNV<'a> {
@@ -27580,10 +31048,16 @@ pub struct PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {}
+impl PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
@@ -27614,10 +31088,16 @@ pub struct ImageViewHandleInfoNVX<'a> {
 }
 unsafe impl Send for ImageViewHandleInfoNVX<'_> {}
 unsafe impl Sync for ImageViewHandleInfoNVX<'_> {}
+impl ImageViewHandleInfoNVX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageViewHandleInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewHandleInfoNVX<'a> {
@@ -27654,10 +31134,16 @@ pub struct ImageViewAddressPropertiesNVX<'a> {
 }
 unsafe impl Send for ImageViewAddressPropertiesNVX<'_> {}
 unsafe impl Sync for ImageViewAddressPropertiesNVX<'_> {}
+impl ImageViewAddressPropertiesNVX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageViewAddressPropertiesNVX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewAddressPropertiesNVX<'a> {
@@ -27688,10 +31174,16 @@ pub struct PresentFrameTokenGGP<'a> {
 }
 unsafe impl Send for PresentFrameTokenGGP<'_> {}
 unsafe impl Sync for PresentFrameTokenGGP<'_> {}
+impl PresentFrameTokenGGP<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PresentFrameTokenGGP<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentFrameTokenGGP<'a> {
@@ -27714,10 +31206,16 @@ pub struct PipelineCreationFeedback {
     pub flags: PipelineCreationFeedbackFlags,
     pub duration: u64,
 }
+impl PipelineCreationFeedback {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PipelineCreationFeedback {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PipelineCreationFeedback {
@@ -27747,10 +31245,16 @@ pub struct PipelineCreationFeedbackCreateInfo<'a> {
 }
 unsafe impl Send for PipelineCreationFeedbackCreateInfo<'_> {}
 unsafe impl Sync for PipelineCreationFeedbackCreateInfo<'_> {}
+impl PipelineCreationFeedbackCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineCreationFeedbackCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCreationFeedbackCreateInfo<'a> {
@@ -27801,10 +31305,16 @@ pub struct SurfaceFullScreenExclusiveInfoEXT<'a> {
 }
 unsafe impl Send for SurfaceFullScreenExclusiveInfoEXT<'_> {}
 unsafe impl Sync for SurfaceFullScreenExclusiveInfoEXT<'_> {}
+impl SurfaceFullScreenExclusiveInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SurfaceFullScreenExclusiveInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceFullScreenExclusiveInfoEXT<'a> {
@@ -27832,10 +31342,16 @@ pub struct SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
 }
 unsafe impl Send for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {}
 unsafe impl Sync for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {}
+impl SurfaceFullScreenExclusiveWin32InfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
@@ -27867,10 +31383,16 @@ pub struct SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
 }
 unsafe impl Send for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {}
 unsafe impl Sync for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {}
+impl SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
@@ -27901,10 +31423,16 @@ pub struct PhysicalDevicePresentBarrierFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDevicePresentBarrierFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDevicePresentBarrierFeaturesNV<'_> {}
+impl PhysicalDevicePresentBarrierFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePresentBarrierFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentBarrierFeaturesNV<'a> {
@@ -27933,10 +31461,16 @@ pub struct SurfaceCapabilitiesPresentBarrierNV<'a> {
 }
 unsafe impl Send for SurfaceCapabilitiesPresentBarrierNV<'_> {}
 unsafe impl Sync for SurfaceCapabilitiesPresentBarrierNV<'_> {}
+impl SurfaceCapabilitiesPresentBarrierNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SurfaceCapabilitiesPresentBarrierNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentBarrierNV<'a> {
@@ -27963,10 +31497,16 @@ pub struct SwapchainPresentBarrierCreateInfoNV<'a> {
 }
 unsafe impl Send for SwapchainPresentBarrierCreateInfoNV<'_> {}
 unsafe impl Sync for SwapchainPresentBarrierCreateInfoNV<'_> {}
+impl SwapchainPresentBarrierCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SwapchainPresentBarrierCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentBarrierCreateInfoNV<'a> {
@@ -27994,10 +31534,16 @@ pub struct PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {}
+impl PhysicalDevicePerformanceQueryFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
@@ -28038,10 +31584,16 @@ pub struct PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {}
+impl PhysicalDevicePerformanceQueryPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
@@ -28078,10 +31630,16 @@ pub struct PerformanceCounterKHR<'a> {
 }
 unsafe impl Send for PerformanceCounterKHR<'_> {}
 unsafe impl Sync for PerformanceCounterKHR<'_> {}
+impl PerformanceCounterKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PerformanceCounterKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterKHR<'a> {
@@ -28137,10 +31695,16 @@ impl fmt::Debug for PerformanceCounterDescriptionKHR<'_> {
             .finish()
     }
 }
+impl PerformanceCounterDescriptionKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PerformanceCounterDescriptionKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterDescriptionKHR<'a> {
@@ -28198,10 +31762,16 @@ pub struct QueryPoolPerformanceCreateInfoKHR<'a> {
 }
 unsafe impl Send for QueryPoolPerformanceCreateInfoKHR<'_> {}
 unsafe impl Sync for QueryPoolPerformanceCreateInfoKHR<'_> {}
+impl QueryPoolPerformanceCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueryPoolPerformanceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolPerformanceCreateInfoKHR<'a> {
@@ -28252,10 +31822,16 @@ pub struct AcquireProfilingLockInfoKHR<'a> {
 }
 unsafe impl Send for AcquireProfilingLockInfoKHR<'_> {}
 unsafe impl Sync for AcquireProfilingLockInfoKHR<'_> {}
+impl AcquireProfilingLockInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AcquireProfilingLockInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AcquireProfilingLockInfoKHR<'a> {
@@ -28286,10 +31862,16 @@ pub struct PerformanceQuerySubmitInfoKHR<'a> {
 }
 unsafe impl Send for PerformanceQuerySubmitInfoKHR<'_> {}
 unsafe impl Sync for PerformanceQuerySubmitInfoKHR<'_> {}
+impl PerformanceQuerySubmitInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PerformanceQuerySubmitInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceQuerySubmitInfoKHR<'a> {
@@ -28317,10 +31899,16 @@ pub struct HeadlessSurfaceCreateInfoEXT<'a> {
 }
 unsafe impl Send for HeadlessSurfaceCreateInfoEXT<'_> {}
 unsafe impl Sync for HeadlessSurfaceCreateInfoEXT<'_> {}
+impl HeadlessSurfaceCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for HeadlessSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HeadlessSurfaceCreateInfoEXT<'a> {
@@ -28346,10 +31934,16 @@ pub struct PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {}
+impl PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
@@ -28382,10 +31976,16 @@ pub struct PipelineCoverageReductionStateCreateInfoNV<'a> {
 }
 unsafe impl Send for PipelineCoverageReductionStateCreateInfoNV<'_> {}
 unsafe impl Sync for PipelineCoverageReductionStateCreateInfoNV<'_> {}
+impl PipelineCoverageReductionStateCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineCoverageReductionStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageReductionStateCreateInfoNV<'a> {
@@ -28427,10 +32027,16 @@ pub struct FramebufferMixedSamplesCombinationNV<'a> {
 }
 unsafe impl Send for FramebufferMixedSamplesCombinationNV<'_> {}
 unsafe impl Sync for FramebufferMixedSamplesCombinationNV<'_> {}
+impl FramebufferMixedSamplesCombinationNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for FramebufferMixedSamplesCombinationNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferMixedSamplesCombinationNV<'a> {
@@ -28474,10 +32080,16 @@ pub struct PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {}
+impl PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
@@ -28532,10 +32144,16 @@ impl fmt::Debug for PerformanceValueINTEL {
             .finish()
     }
 }
+impl PerformanceValueINTEL {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PerformanceValueINTEL {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PerformanceValueINTEL {
@@ -28563,10 +32181,16 @@ pub struct InitializePerformanceApiInfoINTEL<'a> {
 }
 unsafe impl Send for InitializePerformanceApiInfoINTEL<'_> {}
 unsafe impl Sync for InitializePerformanceApiInfoINTEL<'_> {}
+impl InitializePerformanceApiInfoINTEL<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for InitializePerformanceApiInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for InitializePerformanceApiInfoINTEL<'a> {
@@ -28592,10 +32216,16 @@ pub struct QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
 }
 unsafe impl Send for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {}
 unsafe impl Sync for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {}
+impl QueryPoolPerformanceQueryCreateInfoINTEL<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
@@ -28626,10 +32256,16 @@ pub struct PerformanceMarkerInfoINTEL<'a> {
 }
 unsafe impl Send for PerformanceMarkerInfoINTEL<'_> {}
 unsafe impl Sync for PerformanceMarkerInfoINTEL<'_> {}
+impl PerformanceMarkerInfoINTEL<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PerformanceMarkerInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceMarkerInfoINTEL<'a> {
@@ -28655,10 +32291,16 @@ pub struct PerformanceStreamMarkerInfoINTEL<'a> {
 }
 unsafe impl Send for PerformanceStreamMarkerInfoINTEL<'_> {}
 unsafe impl Sync for PerformanceStreamMarkerInfoINTEL<'_> {}
+impl PerformanceStreamMarkerInfoINTEL<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PerformanceStreamMarkerInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceStreamMarkerInfoINTEL<'a> {
@@ -28686,10 +32328,16 @@ pub struct PerformanceOverrideInfoINTEL<'a> {
 }
 unsafe impl Send for PerformanceOverrideInfoINTEL<'_> {}
 unsafe impl Sync for PerformanceOverrideInfoINTEL<'_> {}
+impl PerformanceOverrideInfoINTEL<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PerformanceOverrideInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceOverrideInfoINTEL<'a> {
@@ -28725,10 +32373,16 @@ pub struct PerformanceConfigurationAcquireInfoINTEL<'a> {
 }
 unsafe impl Send for PerformanceConfigurationAcquireInfoINTEL<'_> {}
 unsafe impl Sync for PerformanceConfigurationAcquireInfoINTEL<'_> {}
+impl PerformanceConfigurationAcquireInfoINTEL<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PerformanceConfigurationAcquireInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceConfigurationAcquireInfoINTEL<'a> {
@@ -28756,10 +32410,16 @@ pub struct PhysicalDeviceShaderClockFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderClockFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderClockFeaturesKHR<'_> {}
+impl PhysicalDeviceShaderClockFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderClockFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderClockFeaturesKHR<'a> {
@@ -28792,10 +32452,16 @@ pub struct PhysicalDeviceIndexTypeUint8Features<'a> {
 }
 unsafe impl Send for PhysicalDeviceIndexTypeUint8Features<'_> {}
 unsafe impl Sync for PhysicalDeviceIndexTypeUint8Features<'_> {}
+impl PhysicalDeviceIndexTypeUint8Features<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceIndexTypeUint8Features<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceIndexTypeUint8Features<'a> {
@@ -28824,10 +32490,16 @@ pub struct PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {}
+impl PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
@@ -28863,10 +32535,16 @@ pub struct PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {}
+impl PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
@@ -28897,10 +32575,16 @@ pub struct PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {}
+impl PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
@@ -28951,10 +32635,16 @@ pub struct PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {}
+impl PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
@@ -28989,10 +32679,16 @@ pub struct AttachmentReferenceStencilLayout<'a> {
 }
 unsafe impl Send for AttachmentReferenceStencilLayout<'_> {}
 unsafe impl Sync for AttachmentReferenceStencilLayout<'_> {}
+impl AttachmentReferenceStencilLayout<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AttachmentReferenceStencilLayout<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentReferenceStencilLayout<'a> {
@@ -29020,10 +32716,16 @@ pub struct PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {}
+impl PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
@@ -29070,10 +32772,16 @@ pub struct AttachmentDescriptionStencilLayout<'a> {
 }
 unsafe impl Send for AttachmentDescriptionStencilLayout<'_> {}
 unsafe impl Sync for AttachmentDescriptionStencilLayout<'_> {}
+impl AttachmentDescriptionStencilLayout<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AttachmentDescriptionStencilLayout<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentDescriptionStencilLayout<'a> {
@@ -29105,10 +32813,16 @@ pub struct PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {}
+impl PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
@@ -29143,10 +32857,16 @@ pub struct PipelineInfoKHR<'a> {
 }
 unsafe impl Send for PipelineInfoKHR<'_> {}
 unsafe impl Sync for PipelineInfoKHR<'_> {}
+impl PipelineInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineInfoKHR<'a> {
@@ -29187,10 +32907,16 @@ impl fmt::Debug for PipelineExecutablePropertiesKHR<'_> {
             .finish()
     }
 }
+impl PipelineExecutablePropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineExecutablePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutablePropertiesKHR<'a> {
@@ -29241,10 +32967,16 @@ pub struct PipelineExecutableInfoKHR<'a> {
 }
 unsafe impl Send for PipelineExecutableInfoKHR<'_> {}
 unsafe impl Sync for PipelineExecutableInfoKHR<'_> {}
+impl PipelineExecutableInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineExecutableInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableInfoKHR<'a> {
@@ -29305,10 +33037,16 @@ impl fmt::Debug for PipelineExecutableStatisticKHR<'_> {
             .finish()
     }
 }
+impl PipelineExecutableStatisticKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineExecutableStatisticKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableStatisticKHR<'a> {
@@ -29375,10 +33113,16 @@ impl fmt::Debug for PipelineExecutableInternalRepresentationKHR<'_> {
             .finish()
     }
 }
+impl PipelineExecutableInternalRepresentationKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineExecutableInternalRepresentationKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableInternalRepresentationKHR<'a> {
@@ -29430,10 +33174,16 @@ pub struct PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {}
+impl PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
@@ -29471,10 +33221,16 @@ pub struct PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {}
+impl PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
@@ -29509,10 +33265,16 @@ pub struct PhysicalDeviceTexelBufferAlignmentProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceTexelBufferAlignmentProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceTexelBufferAlignmentProperties<'_> {}
+impl PhysicalDeviceTexelBufferAlignmentProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTexelBufferAlignmentProperties<'a> {
@@ -29575,10 +33337,16 @@ pub struct PhysicalDeviceSubgroupSizeControlFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceSubgroupSizeControlFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceSubgroupSizeControlFeatures<'_> {}
+impl PhysicalDeviceSubgroupSizeControlFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupSizeControlFeatures<'a> {
@@ -29615,10 +33383,16 @@ pub struct PhysicalDeviceSubgroupSizeControlProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceSubgroupSizeControlProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceSubgroupSizeControlProperties<'_> {}
+impl PhysicalDeviceSubgroupSizeControlProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupSizeControlProperties<'a> {
@@ -29667,10 +33441,16 @@ pub struct PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
 }
 unsafe impl Send for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {}
 unsafe impl Sync for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {}
+impl PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
@@ -29706,10 +33486,16 @@ pub struct SubpassShadingPipelineCreateInfoHUAWEI<'a> {
 }
 unsafe impl Send for SubpassShadingPipelineCreateInfoHUAWEI<'_> {}
 unsafe impl Sync for SubpassShadingPipelineCreateInfoHUAWEI<'_> {}
+impl SubpassShadingPipelineCreateInfoHUAWEI<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SubpassShadingPipelineCreateInfoHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassShadingPipelineCreateInfoHUAWEI<'a> {
@@ -29742,10 +33528,16 @@ pub struct PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
 }
 unsafe impl Send for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {}
 unsafe impl Sync for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {}
+impl PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
@@ -29783,10 +33575,16 @@ pub struct PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
 }
 unsafe impl Send for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {}
 unsafe impl Sync for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {}
+impl PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
@@ -29835,10 +33633,16 @@ pub struct MemoryOpaqueCaptureAddressAllocateInfo<'a> {
 }
 unsafe impl Send for MemoryOpaqueCaptureAddressAllocateInfo<'_> {}
 unsafe impl Sync for MemoryOpaqueCaptureAddressAllocateInfo<'_> {}
+impl MemoryOpaqueCaptureAddressAllocateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryOpaqueCaptureAddressAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryOpaqueCaptureAddressAllocateInfo<'a> {
@@ -29866,10 +33670,16 @@ pub struct DeviceMemoryOpaqueCaptureAddressInfo<'a> {
 }
 unsafe impl Send for DeviceMemoryOpaqueCaptureAddressInfo<'_> {}
 unsafe impl Sync for DeviceMemoryOpaqueCaptureAddressInfo<'_> {}
+impl DeviceMemoryOpaqueCaptureAddressInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceMemoryOpaqueCaptureAddressInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryOpaqueCaptureAddressInfo<'a> {
@@ -29900,10 +33710,16 @@ pub struct PhysicalDeviceLineRasterizationFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceLineRasterizationFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceLineRasterizationFeatures<'_> {}
+impl PhysicalDeviceLineRasterizationFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceLineRasterizationFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLineRasterizationFeatures<'a> {
@@ -29957,10 +33773,16 @@ pub struct PhysicalDeviceLineRasterizationProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceLineRasterizationProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceLineRasterizationProperties<'_> {}
+impl PhysicalDeviceLineRasterizationProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceLineRasterizationProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLineRasterizationProperties<'a> {
@@ -29994,10 +33816,16 @@ pub struct PipelineRasterizationLineStateCreateInfo<'a> {
 }
 unsafe impl Send for PipelineRasterizationLineStateCreateInfo<'_> {}
 unsafe impl Sync for PipelineRasterizationLineStateCreateInfo<'_> {}
+impl PipelineRasterizationLineStateCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineRasterizationLineStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationLineStateCreateInfo<'a> {
@@ -30046,10 +33874,16 @@ pub struct PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
 }
 unsafe impl Send for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {}
 unsafe impl Sync for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {}
+impl PhysicalDevicePipelineCreationCacheControlFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
@@ -30098,10 +33932,16 @@ pub struct PhysicalDeviceVulkan11Features<'a> {
 }
 unsafe impl Send for PhysicalDeviceVulkan11Features<'_> {}
 unsafe impl Sync for PhysicalDeviceVulkan11Features<'_> {}
+impl PhysicalDeviceVulkan11Features<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVulkan11Features<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan11Features<'a> {
@@ -30205,10 +34045,16 @@ pub struct PhysicalDeviceVulkan11Properties<'a> {
 }
 unsafe impl Send for PhysicalDeviceVulkan11Properties<'_> {}
 unsafe impl Sync for PhysicalDeviceVulkan11Properties<'_> {}
+impl PhysicalDeviceVulkan11Properties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVulkan11Properties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan11Properties<'a> {
@@ -30363,10 +34209,16 @@ pub struct PhysicalDeviceVulkan12Features<'a> {
 }
 unsafe impl Send for PhysicalDeviceVulkan12Features<'_> {}
 unsafe impl Sync for PhysicalDeviceVulkan12Features<'_> {}
+impl PhysicalDeviceVulkan12Features<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVulkan12Features<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan12Features<'a> {
@@ -30964,10 +34816,16 @@ impl fmt::Debug for PhysicalDeviceVulkan12Properties<'_> {
             .finish()
     }
 }
+impl PhysicalDeviceVulkan12Properties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVulkan12Properties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan12Properties<'a> {
@@ -31424,10 +35282,16 @@ pub struct PhysicalDeviceVulkan13Features<'a> {
 }
 unsafe impl Send for PhysicalDeviceVulkan13Features<'_> {}
 unsafe impl Sync for PhysicalDeviceVulkan13Features<'_> {}
+impl PhysicalDeviceVulkan13Features<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVulkan13Features<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan13Features<'a> {
@@ -31584,10 +35448,16 @@ pub struct PhysicalDeviceVulkan13Properties<'a> {
 }
 unsafe impl Send for PhysicalDeviceVulkan13Properties<'_> {}
 unsafe impl Sync for PhysicalDeviceVulkan13Properties<'_> {}
+impl PhysicalDeviceVulkan13Properties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVulkan13Properties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan13Properties<'a> {
@@ -32007,10 +35877,16 @@ pub struct PhysicalDeviceVulkan14Features<'a> {
 }
 unsafe impl Send for PhysicalDeviceVulkan14Features<'_> {}
 unsafe impl Sync for PhysicalDeviceVulkan14Features<'_> {}
+impl PhysicalDeviceVulkan14Features<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVulkan14Features<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan14Features<'a> {
@@ -32172,10 +36048,16 @@ pub struct PhysicalDeviceVulkan14Properties<'a> {
 }
 unsafe impl Send for PhysicalDeviceVulkan14Properties<'_> {}
 unsafe impl Sync for PhysicalDeviceVulkan14Properties<'_> {}
+impl PhysicalDeviceVulkan14Properties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVulkan14Properties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan14Properties<'a> {
@@ -32374,10 +36256,16 @@ pub struct PipelineCompilerControlCreateInfoAMD<'a> {
 }
 unsafe impl Send for PipelineCompilerControlCreateInfoAMD<'_> {}
 unsafe impl Sync for PipelineCompilerControlCreateInfoAMD<'_> {}
+impl PipelineCompilerControlCreateInfoAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineCompilerControlCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCompilerControlCreateInfoAMD<'a> {
@@ -32413,10 +36301,16 @@ pub struct PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
 }
 unsafe impl Send for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {}
 unsafe impl Sync for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {}
+impl PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
@@ -32446,10 +36340,16 @@ pub struct GpaPerfBlockPropertiesAMD {
     pub max_global_shared_counters: u32,
     pub max_streaming_counters: u32,
 }
+impl GpaPerfBlockPropertiesAMD {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for GpaPerfBlockPropertiesAMD {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl GpaPerfBlockPropertiesAMD {
@@ -32505,10 +36405,16 @@ pub struct PhysicalDeviceGpaFeaturesAMD<'a> {
 }
 unsafe impl Send for PhysicalDeviceGpaFeaturesAMD<'_> {}
 unsafe impl Sync for PhysicalDeviceGpaFeaturesAMD<'_> {}
+impl PhysicalDeviceGpaFeaturesAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceGpaFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaFeaturesAMD<'a> {
@@ -32555,10 +36461,16 @@ pub struct PhysicalDeviceGpaPropertiesAMD<'a> {
 }
 unsafe impl Send for PhysicalDeviceGpaPropertiesAMD<'_> {}
 unsafe impl Sync for PhysicalDeviceGpaPropertiesAMD<'_> {}
+impl PhysicalDeviceGpaPropertiesAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceGpaPropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaPropertiesAMD<'a> {
@@ -32601,10 +36513,16 @@ pub struct PhysicalDeviceGpaProperties2AMD<'a> {
 }
 unsafe impl Send for PhysicalDeviceGpaProperties2AMD<'_> {}
 unsafe impl Sync for PhysicalDeviceGpaProperties2AMD<'_> {}
+impl PhysicalDeviceGpaProperties2AMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceGpaProperties2AMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaProperties2AMD<'a> {
@@ -32628,10 +36546,16 @@ pub struct GpaPerfCounterAMD {
     pub block_instance: u32,
     pub event_id: u32,
 }
+impl GpaPerfCounterAMD {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for GpaPerfCounterAMD {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl GpaPerfCounterAMD {
@@ -32677,10 +36601,16 @@ pub struct GpaSampleBeginInfoAMD<'a> {
 }
 unsafe impl Send for GpaSampleBeginInfoAMD<'_> {}
 unsafe impl Sync for GpaSampleBeginInfoAMD<'_> {}
+impl GpaSampleBeginInfoAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GpaSampleBeginInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaSampleBeginInfoAMD<'a> {
@@ -32785,10 +36715,16 @@ pub struct GpaDeviceClockModeInfoAMD<'a> {
 }
 unsafe impl Send for GpaDeviceClockModeInfoAMD<'_> {}
 unsafe impl Sync for GpaDeviceClockModeInfoAMD<'_> {}
+impl GpaDeviceClockModeInfoAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GpaDeviceClockModeInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaDeviceClockModeInfoAMD<'a> {
@@ -32827,10 +36763,16 @@ pub struct GpaDeviceGetClockInfoAMD<'a> {
 }
 unsafe impl Send for GpaDeviceGetClockInfoAMD<'_> {}
 unsafe impl Sync for GpaDeviceGetClockInfoAMD<'_> {}
+impl GpaDeviceGetClockInfoAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GpaDeviceGetClockInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaDeviceGetClockInfoAMD<'a> {
@@ -32871,10 +36813,16 @@ pub struct GpaSessionCreateInfoAMD<'a> {
 }
 unsafe impl Send for GpaSessionCreateInfoAMD<'_> {}
 unsafe impl Sync for GpaSessionCreateInfoAMD<'_> {}
+impl GpaSessionCreateInfoAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GpaSessionCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaSessionCreateInfoAMD<'a> {
@@ -32917,10 +36865,16 @@ impl fmt::Debug for PhysicalDeviceToolProperties<'_> {
             .finish()
     }
 }
+impl PhysicalDeviceToolProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceToolProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceToolProperties<'a> {
@@ -32995,10 +36949,16 @@ impl fmt::Debug for SamplerCustomBorderColorCreateInfoEXT<'_> {
             .finish()
     }
 }
+impl SamplerCustomBorderColorCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SamplerCustomBorderColorCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCustomBorderColorCreateInfoEXT<'a> {
@@ -33031,10 +36991,16 @@ pub struct PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {}
+impl PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
@@ -33069,10 +37035,16 @@ pub struct PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {}
+impl PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
@@ -33113,10 +37085,16 @@ pub struct SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
 }
 unsafe impl Send for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {}
 unsafe impl Sync for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {}
+impl SamplerBorderColorComponentMappingCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
@@ -33150,10 +37128,16 @@ pub struct PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {}
+impl PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
@@ -33255,10 +37239,16 @@ impl fmt::Debug for AccelerationStructureGeometryTrianglesDataKHR<'_> {
             .finish()
     }
 }
+impl AccelerationStructureGeometryTrianglesDataKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureGeometryTrianglesDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryTrianglesDataKHR<'a> {
@@ -33326,10 +37316,16 @@ impl fmt::Debug for AccelerationStructureGeometryAabbsDataKHR<'_> {
             .finish()
     }
 }
+impl AccelerationStructureGeometryAabbsDataKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureGeometryAabbsDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryAabbsDataKHR<'a> {
@@ -33372,10 +37368,16 @@ impl fmt::Debug for AccelerationStructureGeometryInstancesDataKHR<'_> {
             .finish()
     }
 }
+impl AccelerationStructureGeometryInstancesDataKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureGeometryInstancesDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryInstancesDataKHR<'a> {
@@ -33436,10 +37438,16 @@ impl fmt::Debug for AccelerationStructureGeometryLinearSweptSpheresDataNV<'_> {
             .finish()
     }
 }
+impl AccelerationStructureGeometryLinearSweptSpheresDataNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureGeometryLinearSweptSpheresDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
@@ -33545,10 +37553,16 @@ impl fmt::Debug for AccelerationStructureGeometrySpheresDataNV<'_> {
             .finish()
     }
 }
+impl AccelerationStructureGeometrySpheresDataNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureGeometrySpheresDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometrySpheresDataNV<'a> {
@@ -33646,10 +37660,16 @@ impl fmt::Debug for AccelerationStructureGeometryKHR<'_> {
             .finish()
     }
 }
+impl AccelerationStructureGeometryKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureGeometryKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryKHR<'a> {
@@ -33716,10 +37736,16 @@ impl fmt::Debug for AccelerationStructureBuildGeometryInfoKHR<'_> {
             .finish()
     }
 }
+impl AccelerationStructureBuildGeometryInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureBuildGeometryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureBuildGeometryInfoKHR<'a> {
@@ -33790,10 +37816,16 @@ pub struct AccelerationStructureBuildRangeInfoKHR {
     pub first_vertex: u32,
     pub transform_offset: u32,
 }
+impl AccelerationStructureBuildRangeInfoKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for AccelerationStructureBuildRangeInfoKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl AccelerationStructureBuildRangeInfoKHR {
@@ -33836,10 +37868,16 @@ pub struct AccelerationStructureCreateInfoKHR<'a> {
 }
 unsafe impl Send for AccelerationStructureCreateInfoKHR<'_> {}
 unsafe impl Sync for AccelerationStructureCreateInfoKHR<'_> {}
+impl AccelerationStructureCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfoKHR<'a> {
@@ -33890,10 +37928,16 @@ pub struct AabbPositionsKHR {
     pub max_y: f32,
     pub max_z: f32,
 }
+impl AabbPositionsKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for AabbPositionsKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl AabbPositionsKHR {
@@ -33969,10 +38013,16 @@ pub struct AccelerationStructureDeviceAddressInfoKHR<'a> {
 }
 unsafe impl Send for AccelerationStructureDeviceAddressInfoKHR<'_> {}
 unsafe impl Sync for AccelerationStructureDeviceAddressInfoKHR<'_> {}
+impl AccelerationStructureDeviceAddressInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureDeviceAddressInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureDeviceAddressInfoKHR<'a> {
@@ -34002,10 +38052,16 @@ pub struct AccelerationStructureVersionInfoKHR<'a> {
 }
 unsafe impl Send for AccelerationStructureVersionInfoKHR<'_> {}
 unsafe impl Sync for AccelerationStructureVersionInfoKHR<'_> {}
+impl AccelerationStructureVersionInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureVersionInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureVersionInfoKHR<'a> {
@@ -34033,10 +38089,16 @@ pub struct CopyAccelerationStructureInfoKHR<'a> {
 }
 unsafe impl Send for CopyAccelerationStructureInfoKHR<'_> {}
 unsafe impl Sync for CopyAccelerationStructureInfoKHR<'_> {}
+impl CopyAccelerationStructureInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyAccelerationStructureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyAccelerationStructureInfoKHR<'a> {
@@ -34085,10 +38147,16 @@ impl fmt::Debug for CopyAccelerationStructureToMemoryInfoKHR<'_> {
             .finish()
     }
 }
+impl CopyAccelerationStructureToMemoryInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyAccelerationStructureToMemoryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyAccelerationStructureToMemoryInfoKHR<'a> {
@@ -34138,10 +38206,16 @@ impl fmt::Debug for CopyMemoryToAccelerationStructureInfoKHR<'_> {
             .finish()
     }
 }
+impl CopyMemoryToAccelerationStructureInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyMemoryToAccelerationStructureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToAccelerationStructureInfoKHR<'a> {
@@ -34179,10 +38253,16 @@ pub struct RayTracingPipelineInterfaceCreateInfoKHR<'a> {
 }
 unsafe impl Send for RayTracingPipelineInterfaceCreateInfoKHR<'_> {}
 unsafe impl Sync for RayTracingPipelineInterfaceCreateInfoKHR<'_> {}
+impl RayTracingPipelineInterfaceCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RayTracingPipelineInterfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineInterfaceCreateInfoKHR<'a> {
@@ -34218,10 +38298,16 @@ pub struct PipelineLibraryCreateInfoKHR<'a> {
 }
 unsafe impl Send for PipelineLibraryCreateInfoKHR<'_> {}
 unsafe impl Sync for PipelineLibraryCreateInfoKHR<'_> {}
+impl PipelineLibraryCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineLibraryCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineLibraryCreateInfoKHR<'a> {
@@ -34249,10 +38335,16 @@ pub struct PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {}
+impl PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
@@ -34286,10 +38378,16 @@ pub struct PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {}
+impl PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
@@ -34368,10 +38466,16 @@ pub struct PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {}
+impl PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
@@ -34675,10 +38779,16 @@ pub struct PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {}
+impl PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
@@ -34713,10 +38823,16 @@ pub struct ColorBlendEquationEXT {
     pub dst_alpha_blend_factor: BlendFactor,
     pub alpha_blend_op: BlendOp,
 }
+impl ColorBlendEquationEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ColorBlendEquationEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ColorBlendEquationEXT {
@@ -34763,10 +38879,16 @@ pub struct ColorBlendAdvancedEXT {
     pub blend_overlap: BlendOverlapEXT,
     pub clamp_results: Bool32,
 }
+impl ColorBlendAdvancedEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ColorBlendAdvancedEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ColorBlendAdvancedEXT {
@@ -34809,10 +38931,16 @@ pub struct RenderPassTransformBeginInfoQCOM<'a> {
 }
 unsafe impl Send for RenderPassTransformBeginInfoQCOM<'_> {}
 unsafe impl Sync for RenderPassTransformBeginInfoQCOM<'_> {}
+impl RenderPassTransformBeginInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassTransformBeginInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassTransformBeginInfoQCOM<'a> {
@@ -34839,10 +38967,16 @@ pub struct CopyCommandTransformInfoQCOM<'a> {
 }
 unsafe impl Send for CopyCommandTransformInfoQCOM<'_> {}
 unsafe impl Sync for CopyCommandTransformInfoQCOM<'_> {}
+impl CopyCommandTransformInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyCommandTransformInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyCommandTransformInfoQCOM<'a> {
@@ -34872,10 +39006,16 @@ pub struct CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
 }
 unsafe impl Send for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {}
 unsafe impl Sync for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {}
+impl CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
@@ -34911,10 +39051,16 @@ pub struct PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'_> {}
+impl PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -34954,10 +39100,16 @@ pub struct PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'_> {}
+impl PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -34987,10 +39139,16 @@ pub struct BuildPartitionedAccelerationStructureIndirectCommandNV {
     pub arg_count: u32,
     pub arg_data: StridedDeviceAddressNV,
 }
+impl BuildPartitionedAccelerationStructureIndirectCommandNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for BuildPartitionedAccelerationStructureIndirectCommandNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl BuildPartitionedAccelerationStructureIndirectCommandNV {
@@ -35023,10 +39181,16 @@ pub struct PartitionedAccelerationStructureFlagsNV<'a> {
 }
 unsafe impl Send for PartitionedAccelerationStructureFlagsNV<'_> {}
 unsafe impl Sync for PartitionedAccelerationStructureFlagsNV<'_> {}
+impl PartitionedAccelerationStructureFlagsNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PartitionedAccelerationStructureFlagsNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PartitionedAccelerationStructureFlagsNV<'a> {
@@ -35060,10 +39224,16 @@ pub struct PartitionedAccelerationStructureWriteInstanceDataNV {
     pub partition_index: u32,
     pub acceleration_structure: DeviceAddress,
 }
+impl PartitionedAccelerationStructureWriteInstanceDataNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PartitionedAccelerationStructureWriteInstanceDataNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PartitionedAccelerationStructureWriteInstanceDataNV {
@@ -35129,10 +39299,16 @@ pub struct PartitionedAccelerationStructureUpdateInstanceDataNV {
     pub instance_contribution_to_hit_group_index: u32,
     pub acceleration_structure: DeviceAddress,
 }
+impl PartitionedAccelerationStructureUpdateInstanceDataNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PartitionedAccelerationStructureUpdateInstanceDataNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PartitionedAccelerationStructureUpdateInstanceDataNV {
@@ -35164,10 +39340,16 @@ pub struct PartitionedAccelerationStructureWritePartitionTranslationDataNV {
     pub partition_index: u32,
     pub partition_translation: [f32; 3],
 }
+impl PartitionedAccelerationStructureWritePartitionTranslationDataNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PartitionedAccelerationStructureWritePartitionTranslationDataNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PartitionedAccelerationStructureWritePartitionTranslationDataNV {
@@ -35196,10 +39378,16 @@ pub struct WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {
 }
 unsafe impl Send for WriteDescriptorSetPartitionedAccelerationStructureNV<'_> {}
 unsafe impl Sync for WriteDescriptorSetPartitionedAccelerationStructureNV<'_> {}
+impl WriteDescriptorSetPartitionedAccelerationStructureNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for WriteDescriptorSetPartitionedAccelerationStructureNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {
@@ -35235,10 +39423,16 @@ pub struct PartitionedAccelerationStructureInstancesInputNV<'a> {
 }
 unsafe impl Send for PartitionedAccelerationStructureInstancesInputNV<'_> {}
 unsafe impl Sync for PartitionedAccelerationStructureInstancesInputNV<'_> {}
+impl PartitionedAccelerationStructureInstancesInputNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PartitionedAccelerationStructureInstancesInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PartitionedAccelerationStructureInstancesInputNV<'a> {
@@ -35296,10 +39490,16 @@ pub struct BuildPartitionedAccelerationStructureInfoNV<'a> {
 }
 unsafe impl Send for BuildPartitionedAccelerationStructureInfoNV<'_> {}
 unsafe impl Sync for BuildPartitionedAccelerationStructureInfoNV<'_> {}
+impl BuildPartitionedAccelerationStructureInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BuildPartitionedAccelerationStructureInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BuildPartitionedAccelerationStructureInfoNV<'a> {
@@ -35357,10 +39557,16 @@ pub struct PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {}
+impl PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
@@ -35389,10 +39595,16 @@ pub struct DeviceDiagnosticsConfigCreateInfoNV<'a> {
 }
 unsafe impl Send for DeviceDiagnosticsConfigCreateInfoNV<'_> {}
 unsafe impl Sync for DeviceDiagnosticsConfigCreateInfoNV<'_> {}
+impl DeviceDiagnosticsConfigCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceDiagnosticsConfigCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceDiagnosticsConfigCreateInfoNV<'a> {
@@ -35419,10 +39631,16 @@ pub struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {}
+impl PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
@@ -35461,10 +39679,16 @@ pub struct PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_> {}
+impl PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -35506,10 +39730,16 @@ pub struct PhysicalDeviceRobustness2FeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceRobustness2FeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceRobustness2FeaturesKHR<'_> {}
+impl PhysicalDeviceRobustness2FeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRobustness2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRobustness2FeaturesKHR<'a> {
@@ -35548,10 +39778,16 @@ pub struct PhysicalDeviceRobustness2PropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceRobustness2PropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceRobustness2PropertiesKHR<'_> {}
+impl PhysicalDeviceRobustness2PropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRobustness2PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRobustness2PropertiesKHR<'a> {
@@ -35592,10 +39828,16 @@ pub struct PhysicalDeviceImageRobustnessFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceImageRobustnessFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceImageRobustnessFeatures<'_> {}
+impl PhysicalDeviceImageRobustnessFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImageRobustnessFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageRobustnessFeatures<'a> {
@@ -35626,10 +39868,16 @@ pub struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> {}
+impl PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
@@ -35712,10 +39960,17 @@ unsafe impl Send for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {}
 #[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {}
 #[cfg(feature = "provisional")]
+impl PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -35838,10 +40093,17 @@ unsafe impl Send for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {}
 #[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {}
 #[cfg(feature = "provisional")]
+impl PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -35879,10 +40141,16 @@ pub struct PhysicalDevice4444FormatsFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDevice4444FormatsFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDevice4444FormatsFeaturesEXT<'_> {}
+impl PhysicalDevice4444FormatsFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevice4444FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice4444FormatsFeaturesEXT<'a> {
@@ -35915,10 +40183,16 @@ pub struct PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
 }
 unsafe impl Send for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {}
 unsafe impl Sync for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {}
+impl PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
@@ -35951,10 +40225,16 @@ pub struct PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
 }
 unsafe impl Send for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {}
 unsafe impl Sync for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {}
+impl PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
@@ -35994,10 +40274,16 @@ pub struct PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
 }
 unsafe impl Send for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {}
 unsafe impl Sync for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {}
+impl PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
@@ -36030,10 +40316,16 @@ pub struct BufferCopy2<'a> {
 }
 unsafe impl Send for BufferCopy2<'_> {}
 unsafe impl Sync for BufferCopy2<'_> {}
+impl BufferCopy2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferCopy2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCopy2<'a> {
@@ -36073,10 +40365,16 @@ pub struct ImageCopy2<'a> {
 }
 unsafe impl Send for ImageCopy2<'_> {}
 unsafe impl Sync for ImageCopy2<'_> {}
+impl ImageCopy2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageCopy2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCopy2<'a> {
@@ -36125,10 +40423,16 @@ pub struct ImageBlit2<'a> {
 }
 unsafe impl Send for ImageBlit2<'_> {}
 unsafe impl Sync for ImageBlit2<'_> {}
+impl ImageBlit2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageBlit2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageBlit2<'a> {
@@ -36174,10 +40478,16 @@ pub struct BufferImageCopy2<'a> {
 }
 unsafe impl Send for BufferImageCopy2<'_> {}
 unsafe impl Sync for BufferImageCopy2<'_> {}
+impl BufferImageCopy2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferImageCopy2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferImageCopy2<'a> {
@@ -36232,10 +40542,16 @@ pub struct ImageResolve2<'a> {
 }
 unsafe impl Send for ImageResolve2<'_> {}
 unsafe impl Sync for ImageResolve2<'_> {}
+impl ImageResolve2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageResolve2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageResolve2<'a> {
@@ -36284,10 +40600,16 @@ pub struct CopyBufferInfo2<'a> {
 }
 unsafe impl Send for CopyBufferInfo2<'_> {}
 unsafe impl Sync for CopyBufferInfo2<'_> {}
+impl CopyBufferInfo2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyBufferInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyBufferInfo2<'a> {
@@ -36329,10 +40651,16 @@ pub struct CopyImageInfo2<'a> {
 }
 unsafe impl Send for CopyImageInfo2<'_> {}
 unsafe impl Sync for CopyImageInfo2<'_> {}
+impl CopyImageInfo2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageInfo2<'a> {
@@ -36385,10 +40713,16 @@ pub struct BlitImageInfo2<'a> {
 }
 unsafe impl Send for BlitImageInfo2<'_> {}
 unsafe impl Sync for BlitImageInfo2<'_> {}
+impl BlitImageInfo2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BlitImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BlitImageInfo2<'a> {
@@ -36444,10 +40778,16 @@ pub struct CopyBufferToImageInfo2<'a> {
 }
 unsafe impl Send for CopyBufferToImageInfo2<'_> {}
 unsafe impl Sync for CopyBufferToImageInfo2<'_> {}
+impl CopyBufferToImageInfo2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyBufferToImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyBufferToImageInfo2<'a> {
@@ -36493,10 +40833,16 @@ pub struct CopyImageToBufferInfo2<'a> {
 }
 unsafe impl Send for CopyImageToBufferInfo2<'_> {}
 unsafe impl Sync for CopyImageToBufferInfo2<'_> {}
+impl CopyImageToBufferInfo2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyImageToBufferInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageToBufferInfo2<'a> {
@@ -36543,10 +40889,16 @@ pub struct ResolveImageInfo2<'a> {
 }
 unsafe impl Send for ResolveImageInfo2<'_> {}
 unsafe impl Sync for ResolveImageInfo2<'_> {}
+impl ResolveImageInfo2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ResolveImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ResolveImageInfo2<'a> {
@@ -36594,10 +40946,16 @@ pub struct PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {}
+impl PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
@@ -36635,10 +40993,16 @@ pub struct FragmentShadingRateAttachmentInfoKHR<'a> {
 }
 unsafe impl Send for FragmentShadingRateAttachmentInfoKHR<'_> {}
 unsafe impl Sync for FragmentShadingRateAttachmentInfoKHR<'_> {}
+impl FragmentShadingRateAttachmentInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for FragmentShadingRateAttachmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FragmentShadingRateAttachmentInfoKHR<'a> {
@@ -36677,10 +41041,16 @@ pub struct PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
 }
 unsafe impl Send for PipelineFragmentShadingRateStateCreateInfoKHR<'_> {}
 unsafe impl Sync for PipelineFragmentShadingRateStateCreateInfoKHR<'_> {}
+impl PipelineFragmentShadingRateStateCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineFragmentShadingRateStateCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
@@ -36718,10 +41088,16 @@ pub struct PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {}
+impl PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
@@ -36785,10 +41161,16 @@ pub struct PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {}
+impl PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
@@ -36958,10 +41340,16 @@ pub struct PhysicalDeviceFragmentShadingRateKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentShadingRateKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentShadingRateKHR<'_> {}
+impl PhysicalDeviceFragmentShadingRateKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateKHR<'a> {
@@ -36992,10 +41380,16 @@ pub struct PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {}
+impl PhysicalDeviceShaderTerminateInvocationFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
@@ -37029,10 +41423,16 @@ pub struct PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {}
+impl PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
@@ -37080,10 +41480,16 @@ pub struct PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {}
+impl PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
@@ -37120,10 +41526,16 @@ pub struct PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
 }
 unsafe impl Send for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {}
 unsafe impl Sync for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {}
+impl PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
@@ -37166,10 +41578,16 @@ pub struct AccelerationStructureBuildSizesInfoKHR<'a> {
 }
 unsafe impl Send for AccelerationStructureBuildSizesInfoKHR<'_> {}
 unsafe impl Sync for AccelerationStructureBuildSizesInfoKHR<'_> {}
+impl AccelerationStructureBuildSizesInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureBuildSizesInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureBuildSizesInfoKHR<'a> {
@@ -37207,10 +41625,16 @@ pub struct PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {}
+impl PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
@@ -37244,10 +41668,16 @@ pub struct PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {}
+impl PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
@@ -37279,10 +41709,16 @@ pub struct PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_> {}
+impl PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -37322,10 +41758,16 @@ pub struct PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'_> {}
+impl PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
@@ -37357,10 +41799,16 @@ pub struct PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'_> {}
+impl PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
@@ -37391,10 +41839,16 @@ pub struct PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {}
+impl PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
@@ -37425,10 +41879,16 @@ pub struct MutableDescriptorTypeListEXT<'a> {
 }
 unsafe impl Send for MutableDescriptorTypeListEXT<'_> {}
 unsafe impl Sync for MutableDescriptorTypeListEXT<'_> {}
+impl MutableDescriptorTypeListEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for MutableDescriptorTypeListEXT<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> MutableDescriptorTypeListEXT<'a> {
@@ -37453,10 +41913,16 @@ pub struct MutableDescriptorTypeCreateInfoEXT<'a> {
 }
 unsafe impl Send for MutableDescriptorTypeCreateInfoEXT<'_> {}
 unsafe impl Sync for MutableDescriptorTypeCreateInfoEXT<'_> {}
+impl MutableDescriptorTypeCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MutableDescriptorTypeCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MutableDescriptorTypeCreateInfoEXT<'a> {
@@ -37488,10 +41954,16 @@ pub struct PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {}
+impl PhysicalDeviceDepthClipControlFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
@@ -37520,10 +41992,16 @@ pub struct PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'_> {}
+impl PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a> {
@@ -37557,10 +42035,16 @@ pub struct BeginCustomResolveInfoEXT<'a> {
 }
 unsafe impl Send for BeginCustomResolveInfoEXT<'_> {}
 unsafe impl Sync for BeginCustomResolveInfoEXT<'_> {}
+impl BeginCustomResolveInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BeginCustomResolveInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BeginCustomResolveInfoEXT<'a> {
@@ -37580,10 +42064,16 @@ pub struct PhysicalDeviceCustomResolveFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceCustomResolveFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceCustomResolveFeaturesEXT<'_> {}
+impl PhysicalDeviceCustomResolveFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCustomResolveFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomResolveFeaturesEXT<'a> {
@@ -37616,10 +42106,16 @@ pub struct CustomResolveCreateInfoEXT<'a> {
 }
 unsafe impl Send for CustomResolveCreateInfoEXT<'_> {}
 unsafe impl Sync for CustomResolveCreateInfoEXT<'_> {}
+impl CustomResolveCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CustomResolveCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CustomResolveCreateInfoEXT<'a> {
@@ -37665,10 +42161,16 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'_> {}
+impl PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
@@ -37719,10 +42221,16 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'_> {}
+impl PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
@@ -37842,10 +42350,16 @@ pub struct GeneratedCommandsPipelineInfoEXT<'a> {
 }
 unsafe impl Send for GeneratedCommandsPipelineInfoEXT<'_> {}
 unsafe impl Sync for GeneratedCommandsPipelineInfoEXT<'_> {}
+impl GeneratedCommandsPipelineInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GeneratedCommandsPipelineInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsPipelineInfoEXT<'a> {
@@ -37877,10 +42391,16 @@ pub struct GeneratedCommandsShaderInfoEXT<'a> {
 }
 unsafe impl Send for GeneratedCommandsShaderInfoEXT<'_> {}
 unsafe impl Sync for GeneratedCommandsShaderInfoEXT<'_> {}
+impl GeneratedCommandsShaderInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GeneratedCommandsShaderInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsShaderInfoEXT<'a> {
@@ -37915,10 +42435,16 @@ pub struct GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
 }
 unsafe impl Send for GeneratedCommandsMemoryRequirementsInfoEXT<'_> {}
 unsafe impl Sync for GeneratedCommandsMemoryRequirementsInfoEXT<'_> {}
+impl GeneratedCommandsMemoryRequirementsInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
@@ -37967,10 +42493,16 @@ pub struct IndirectExecutionSetPipelineInfoEXT<'a> {
 }
 unsafe impl Send for IndirectExecutionSetPipelineInfoEXT<'_> {}
 unsafe impl Sync for IndirectExecutionSetPipelineInfoEXT<'_> {}
+impl IndirectExecutionSetPipelineInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for IndirectExecutionSetPipelineInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetPipelineInfoEXT<'a> {
@@ -38002,10 +42534,16 @@ pub struct IndirectExecutionSetShaderLayoutInfoEXT<'a> {
 }
 unsafe impl Send for IndirectExecutionSetShaderLayoutInfoEXT<'_> {}
 unsafe impl Sync for IndirectExecutionSetShaderLayoutInfoEXT<'_> {}
+impl IndirectExecutionSetShaderLayoutInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for IndirectExecutionSetShaderLayoutInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetShaderLayoutInfoEXT<'a> {
@@ -38038,10 +42576,16 @@ pub struct IndirectExecutionSetShaderInfoEXT<'a> {
 }
 unsafe impl Send for IndirectExecutionSetShaderInfoEXT<'_> {}
 unsafe impl Sync for IndirectExecutionSetShaderInfoEXT<'_> {}
+impl IndirectExecutionSetShaderInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for IndirectExecutionSetShaderInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetShaderInfoEXT<'a> {
@@ -38112,10 +42656,16 @@ impl fmt::Debug for IndirectExecutionSetCreateInfoEXT<'_> {
             .finish()
     }
 }
+impl IndirectExecutionSetCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for IndirectExecutionSetCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetCreateInfoEXT<'a> {
@@ -38155,10 +42705,16 @@ pub struct GeneratedCommandsInfoEXT<'a> {
 }
 unsafe impl Send for GeneratedCommandsInfoEXT<'_> {}
 unsafe impl Sync for GeneratedCommandsInfoEXT<'_> {}
+impl GeneratedCommandsInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GeneratedCommandsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsInfoEXT<'a> {
@@ -38236,10 +42792,16 @@ pub struct WriteIndirectExecutionSetPipelineEXT<'a> {
 }
 unsafe impl Send for WriteIndirectExecutionSetPipelineEXT<'_> {}
 unsafe impl Sync for WriteIndirectExecutionSetPipelineEXT<'_> {}
+impl WriteIndirectExecutionSetPipelineEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for WriteIndirectExecutionSetPipelineEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteIndirectExecutionSetPipelineEXT<'a> {
@@ -38271,10 +42833,16 @@ pub struct WriteIndirectExecutionSetShaderEXT<'a> {
 }
 unsafe impl Send for WriteIndirectExecutionSetShaderEXT<'_> {}
 unsafe impl Sync for WriteIndirectExecutionSetShaderEXT<'_> {}
+impl WriteIndirectExecutionSetShaderEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for WriteIndirectExecutionSetShaderEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteIndirectExecutionSetShaderEXT<'a> {
@@ -38310,10 +42878,16 @@ pub struct IndirectCommandsLayoutCreateInfoEXT<'a> {
 }
 unsafe impl Send for IndirectCommandsLayoutCreateInfoEXT<'_> {}
 unsafe impl Sync for IndirectCommandsLayoutCreateInfoEXT<'_> {}
+impl IndirectCommandsLayoutCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for IndirectCommandsLayoutCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutCreateInfoEXT<'a> {
@@ -38373,10 +42947,16 @@ impl fmt::Debug for IndirectCommandsLayoutTokenEXT<'_> {
             .finish()
     }
 }
+impl IndirectCommandsLayoutTokenEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for IndirectCommandsLayoutTokenEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutTokenEXT<'a> {
@@ -38409,10 +42989,16 @@ pub struct DrawIndirectCountIndirectCommandEXT {
     pub stride: u32,
     pub command_count: u32,
 }
+impl DrawIndirectCountIndirectCommandEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DrawIndirectCountIndirectCommandEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DrawIndirectCountIndirectCommandEXT {
@@ -38440,10 +43026,16 @@ impl DrawIndirectCountIndirectCommandEXT {
 pub struct IndirectCommandsVertexBufferTokenEXT {
     pub vertex_binding_unit: u32,
 }
+impl IndirectCommandsVertexBufferTokenEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for IndirectCommandsVertexBufferTokenEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl IndirectCommandsVertexBufferTokenEXT {
@@ -38463,10 +43055,16 @@ pub struct BindVertexBufferIndirectCommandEXT {
     pub size: u32,
     pub stride: u32,
 }
+impl BindVertexBufferIndirectCommandEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for BindVertexBufferIndirectCommandEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl BindVertexBufferIndirectCommandEXT {
@@ -38494,10 +43092,16 @@ impl BindVertexBufferIndirectCommandEXT {
 pub struct IndirectCommandsIndexBufferTokenEXT {
     pub mode: IndirectCommandsInputModeFlagsEXT,
 }
+impl IndirectCommandsIndexBufferTokenEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for IndirectCommandsIndexBufferTokenEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl IndirectCommandsIndexBufferTokenEXT {
@@ -38517,10 +43121,16 @@ pub struct BindIndexBufferIndirectCommandEXT {
     pub size: u32,
     pub index_type: IndexType,
 }
+impl BindIndexBufferIndirectCommandEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for BindIndexBufferIndirectCommandEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl BindIndexBufferIndirectCommandEXT {
@@ -38548,10 +43158,16 @@ impl BindIndexBufferIndirectCommandEXT {
 pub struct IndirectCommandsPushConstantTokenEXT {
     pub update_range: PushConstantRange,
 }
+impl IndirectCommandsPushConstantTokenEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for IndirectCommandsPushConstantTokenEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl IndirectCommandsPushConstantTokenEXT {
@@ -38570,10 +43186,16 @@ pub struct IndirectCommandsExecutionSetTokenEXT {
     pub ty: IndirectExecutionSetInfoTypeEXT,
     pub shader_stages: ShaderStageFlags,
 }
+impl IndirectCommandsExecutionSetTokenEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for IndirectCommandsExecutionSetTokenEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl IndirectCommandsExecutionSetTokenEXT {
@@ -38616,10 +43238,16 @@ pub struct PipelineViewportDepthClipControlCreateInfoEXT<'a> {
 }
 unsafe impl Send for PipelineViewportDepthClipControlCreateInfoEXT<'_> {}
 unsafe impl Sync for PipelineViewportDepthClipControlCreateInfoEXT<'_> {}
+impl PipelineViewportDepthClipControlCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineViewportDepthClipControlCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportDepthClipControlCreateInfoEXT<'a> {
@@ -38650,10 +43278,16 @@ pub struct PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceDepthClampControlFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceDepthClampControlFeaturesEXT<'_> {}
+impl PhysicalDeviceDepthClampControlFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDepthClampControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
@@ -38686,10 +43320,16 @@ pub struct PipelineViewportDepthClampControlCreateInfoEXT<'a> {
 }
 unsafe impl Send for PipelineViewportDepthClampControlCreateInfoEXT<'_> {}
 unsafe impl Sync for PipelineViewportDepthClampControlCreateInfoEXT<'_> {}
+impl PipelineViewportDepthClampControlCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineViewportDepthClampControlCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportDepthClampControlCreateInfoEXT<'a> {
@@ -38725,10 +43365,16 @@ pub struct PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {}
+impl PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
@@ -38760,10 +43406,16 @@ pub struct PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {}
+impl PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
@@ -38795,10 +43447,16 @@ pub struct PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'_> {}
+impl PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -38841,10 +43499,16 @@ pub struct VertexInputBindingDescription2EXT<'a> {
 }
 unsafe impl Send for VertexInputBindingDescription2EXT<'_> {}
 unsafe impl Sync for VertexInputBindingDescription2EXT<'_> {}
+impl VertexInputBindingDescription2EXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VertexInputBindingDescription2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VertexInputBindingDescription2EXT<'a> {
@@ -38888,10 +43552,16 @@ pub struct VertexInputAttributeDescription2EXT<'a> {
 }
 unsafe impl Send for VertexInputAttributeDescription2EXT<'_> {}
 unsafe impl Sync for VertexInputAttributeDescription2EXT<'_> {}
+impl VertexInputAttributeDescription2EXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VertexInputAttributeDescription2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VertexInputAttributeDescription2EXT<'a> {
@@ -38932,10 +43602,16 @@ pub struct PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {}
+impl PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
@@ -38965,10 +43641,16 @@ pub struct PipelineColorWriteCreateInfoEXT<'a> {
 }
 unsafe impl Send for PipelineColorWriteCreateInfoEXT<'_> {}
 unsafe impl Sync for PipelineColorWriteCreateInfoEXT<'_> {}
+impl PipelineColorWriteCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineColorWriteCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineColorWriteCreateInfoEXT<'a> {
@@ -38999,10 +43681,16 @@ pub struct MemoryBarrier2<'a> {
 }
 unsafe impl Send for MemoryBarrier2<'_> {}
 unsafe impl Sync for MemoryBarrier2<'_> {}
+impl MemoryBarrier2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryBarrier2<'a> {
@@ -39053,10 +43741,16 @@ pub struct ImageMemoryBarrier2<'a> {
 }
 unsafe impl Send for ImageMemoryBarrier2<'_> {}
 unsafe impl Sync for ImageMemoryBarrier2<'_> {}
+impl ImageMemoryBarrier2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageMemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageMemoryBarrier2<'a> {
@@ -39135,10 +43829,16 @@ pub struct BufferMemoryBarrier2<'a> {
 }
 unsafe impl Send for BufferMemoryBarrier2<'_> {}
 unsafe impl Sync for BufferMemoryBarrier2<'_> {}
+impl BufferMemoryBarrier2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferMemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferMemoryBarrier2<'a> {
@@ -39205,10 +43905,16 @@ pub struct MemoryBarrierAccessFlags3KHR<'a> {
 }
 unsafe impl Send for MemoryBarrierAccessFlags3KHR<'_> {}
 unsafe impl Sync for MemoryBarrierAccessFlags3KHR<'_> {}
+impl MemoryBarrierAccessFlags3KHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryBarrierAccessFlags3KHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryBarrierAccessFlags3KHR<'a> {
@@ -39249,10 +43955,16 @@ pub struct DependencyInfo<'a> {
 }
 unsafe impl Send for DependencyInfo<'_> {}
 unsafe impl Sync for DependencyInfo<'_> {}
+impl DependencyInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DependencyInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DependencyInfo<'a> {
@@ -39305,10 +44017,16 @@ pub struct SemaphoreSubmitInfo<'a> {
 }
 unsafe impl Send for SemaphoreSubmitInfo<'_> {}
 unsafe impl Sync for SemaphoreSubmitInfo<'_> {}
+impl SemaphoreSubmitInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SemaphoreSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreSubmitInfo<'a> {
@@ -39350,10 +44068,16 @@ pub struct CommandBufferSubmitInfo<'a> {
 }
 unsafe impl Send for CommandBufferSubmitInfo<'_> {}
 unsafe impl Sync for CommandBufferSubmitInfo<'_> {}
+impl CommandBufferSubmitInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CommandBufferSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferSubmitInfo<'a> {
@@ -39390,10 +44114,16 @@ pub struct SubmitInfo2<'a> {
 }
 unsafe impl Send for SubmitInfo2<'_> {}
 unsafe impl Sync for SubmitInfo2<'_> {}
+impl SubmitInfo2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SubmitInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubmitInfo2<'a> {
@@ -39446,10 +44176,16 @@ pub struct QueueFamilyCheckpointProperties2NV<'a> {
 }
 unsafe impl Send for QueueFamilyCheckpointProperties2NV<'_> {}
 unsafe impl Sync for QueueFamilyCheckpointProperties2NV<'_> {}
+impl QueueFamilyCheckpointProperties2NV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueueFamilyCheckpointProperties2NV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyCheckpointProperties2NV<'a> {
@@ -39480,10 +44216,16 @@ pub struct CheckpointData2NV<'a> {
 }
 unsafe impl Send for CheckpointData2NV<'_> {}
 unsafe impl Sync for CheckpointData2NV<'_> {}
+impl CheckpointData2NV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CheckpointData2NV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CheckpointData2NV<'a> {
@@ -39514,10 +44256,16 @@ pub struct PhysicalDeviceSynchronization2Features<'a> {
 }
 unsafe impl Send for PhysicalDeviceSynchronization2Features<'_> {}
 unsafe impl Sync for PhysicalDeviceSynchronization2Features<'_> {}
+impl PhysicalDeviceSynchronization2Features<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSynchronization2Features<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSynchronization2Features<'a> {
@@ -39546,10 +44294,16 @@ pub struct PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'_> {}
+impl PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'a> {
@@ -39586,10 +44340,16 @@ pub struct PhysicalDeviceHostImageCopyFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceHostImageCopyFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceHostImageCopyFeatures<'_> {}
+impl PhysicalDeviceHostImageCopyFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceHostImageCopyFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostImageCopyFeatures<'a> {
@@ -39622,10 +44382,16 @@ pub struct PhysicalDeviceHostImageCopyProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceHostImageCopyProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceHostImageCopyProperties<'_> {}
+impl PhysicalDeviceHostImageCopyProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceHostImageCopyProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostImageCopyProperties<'a> {
@@ -39680,10 +44446,16 @@ pub struct MemoryToImageCopy<'a> {
 }
 unsafe impl Send for MemoryToImageCopy<'_> {}
 unsafe impl Sync for MemoryToImageCopy<'_> {}
+impl MemoryToImageCopy<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryToImageCopy<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryToImageCopy<'a> {
@@ -39739,10 +44511,16 @@ pub struct ImageToMemoryCopy<'a> {
 }
 unsafe impl Send for ImageToMemoryCopy<'_> {}
 unsafe impl Sync for ImageToMemoryCopy<'_> {}
+impl ImageToMemoryCopy<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageToMemoryCopy<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageToMemoryCopy<'a> {
@@ -39797,10 +44575,16 @@ pub struct CopyMemoryToImageInfo<'a> {
 }
 unsafe impl Send for CopyMemoryToImageInfo<'_> {}
 unsafe impl Sync for CopyMemoryToImageInfo<'_> {}
+impl CopyMemoryToImageInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyMemoryToImageInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToImageInfo<'a> {
@@ -39846,10 +44630,16 @@ pub struct CopyImageToMemoryInfo<'a> {
 }
 unsafe impl Send for CopyImageToMemoryInfo<'_> {}
 unsafe impl Sync for CopyImageToMemoryInfo<'_> {}
+impl CopyImageToMemoryInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyImageToMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageToMemoryInfo<'a> {
@@ -39897,10 +44687,16 @@ pub struct CopyImageToImageInfo<'a> {
 }
 unsafe impl Send for CopyImageToImageInfo<'_> {}
 unsafe impl Sync for CopyImageToImageInfo<'_> {}
+impl CopyImageToImageInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyImageToImageInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageToImageInfo<'a> {
@@ -39955,10 +44751,16 @@ pub struct HostImageLayoutTransitionInfo<'a> {
 }
 unsafe impl Send for HostImageLayoutTransitionInfo<'_> {}
 unsafe impl Sync for HostImageLayoutTransitionInfo<'_> {}
+impl HostImageLayoutTransitionInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for HostImageLayoutTransitionInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HostImageLayoutTransitionInfo<'a> {
@@ -39999,10 +44801,16 @@ pub struct SubresourceHostMemcpySize<'a> {
 }
 unsafe impl Send for SubresourceHostMemcpySize<'_> {}
 unsafe impl Sync for SubresourceHostMemcpySize<'_> {}
+impl SubresourceHostMemcpySize<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SubresourceHostMemcpySize<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubresourceHostMemcpySize<'a> {
@@ -40030,10 +44838,16 @@ pub struct HostImageCopyDevicePerformanceQuery<'a> {
 }
 unsafe impl Send for HostImageCopyDevicePerformanceQuery<'_> {}
 unsafe impl Sync for HostImageCopyDevicePerformanceQuery<'_> {}
+impl HostImageCopyDevicePerformanceQuery<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for HostImageCopyDevicePerformanceQuery<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HostImageCopyDevicePerformanceQuery<'a> {
@@ -40067,10 +44881,16 @@ pub struct PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {}
+impl PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
@@ -40123,10 +44943,16 @@ pub struct PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {}
+impl PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
@@ -40155,10 +44981,16 @@ pub struct PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_> {}
+impl PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -40198,10 +45030,16 @@ pub struct SurfaceCapabilitiesPresentId2KHR<'a> {
 }
 unsafe impl Send for SurfaceCapabilitiesPresentId2KHR<'_> {}
 unsafe impl Sync for SurfaceCapabilitiesPresentId2KHR<'_> {}
+impl SurfaceCapabilitiesPresentId2KHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SurfaceCapabilitiesPresentId2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentId2KHR<'a> {
@@ -40228,10 +45066,16 @@ pub struct SurfaceCapabilitiesPresentWait2KHR<'a> {
 }
 unsafe impl Send for SurfaceCapabilitiesPresentWait2KHR<'_> {}
 unsafe impl Sync for SurfaceCapabilitiesPresentWait2KHR<'_> {}
+impl SurfaceCapabilitiesPresentWait2KHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SurfaceCapabilitiesPresentWait2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentWait2KHR<'a> {
@@ -40258,10 +45102,16 @@ pub struct SubpassResolvePerformanceQueryEXT<'a> {
 }
 unsafe impl Send for SubpassResolvePerformanceQueryEXT<'_> {}
 unsafe impl Sync for SubpassResolvePerformanceQueryEXT<'_> {}
+impl SubpassResolvePerformanceQueryEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SubpassResolvePerformanceQueryEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassResolvePerformanceQueryEXT<'a> {
@@ -40289,10 +45139,16 @@ pub struct MultisampledRenderToSingleSampledInfoEXT<'a> {
 }
 unsafe impl Send for MultisampledRenderToSingleSampledInfoEXT<'_> {}
 unsafe impl Sync for MultisampledRenderToSingleSampledInfoEXT<'_> {}
+impl MultisampledRenderToSingleSampledInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MultisampledRenderToSingleSampledInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MultisampledRenderToSingleSampledInfoEXT<'a> {
@@ -40330,10 +45186,16 @@ pub struct PhysicalDevicePipelineProtectedAccessFeatures<'a> {
 }
 unsafe impl Send for PhysicalDevicePipelineProtectedAccessFeatures<'_> {}
 unsafe impl Sync for PhysicalDevicePipelineProtectedAccessFeatures<'_> {}
+impl PhysicalDevicePipelineProtectedAccessFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePipelineProtectedAccessFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineProtectedAccessFeatures<'a> {
@@ -40365,10 +45227,16 @@ pub struct QueueFamilyVideoPropertiesKHR<'a> {
 }
 unsafe impl Send for QueueFamilyVideoPropertiesKHR<'_> {}
 unsafe impl Sync for QueueFamilyVideoPropertiesKHR<'_> {}
+impl QueueFamilyVideoPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueueFamilyVideoPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyVideoPropertiesKHR<'a> {
@@ -40398,10 +45266,16 @@ pub struct QueueFamilyQueryResultStatusPropertiesKHR<'a> {
 }
 unsafe impl Send for QueueFamilyQueryResultStatusPropertiesKHR<'_> {}
 unsafe impl Sync for QueueFamilyQueryResultStatusPropertiesKHR<'_> {}
+impl QueueFamilyQueryResultStatusPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueueFamilyQueryResultStatusPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyQueryResultStatusPropertiesKHR<'a> {
@@ -40430,10 +45304,16 @@ pub struct VideoProfileListInfoKHR<'a> {
 }
 unsafe impl Send for VideoProfileListInfoKHR<'_> {}
 unsafe impl Sync for VideoProfileListInfoKHR<'_> {}
+impl VideoProfileListInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoProfileListInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoProfileListInfoKHR<'a> {
@@ -40464,10 +45344,16 @@ pub struct PhysicalDeviceVideoFormatInfoKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceVideoFormatInfoKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceVideoFormatInfoKHR<'_> {}
+impl PhysicalDeviceVideoFormatInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVideoFormatInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoFormatInfoKHR<'a> {
@@ -40498,10 +45384,16 @@ pub struct VideoFormatPropertiesKHR<'a> {
 }
 unsafe impl Send for VideoFormatPropertiesKHR<'_> {}
 unsafe impl Sync for VideoFormatPropertiesKHR<'_> {}
+impl VideoFormatPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoFormatPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatPropertiesKHR<'a> {
@@ -40552,10 +45444,16 @@ pub struct VideoEncodeQuantizationMapCapabilitiesKHR<'a> {
 }
 unsafe impl Send for VideoEncodeQuantizationMapCapabilitiesKHR<'_> {}
 unsafe impl Sync for VideoEncodeQuantizationMapCapabilitiesKHR<'_> {}
+impl VideoEncodeQuantizationMapCapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeQuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQuantizationMapCapabilitiesKHR<'a> {
@@ -40584,10 +45482,16 @@ pub struct VideoEncodeH264QuantizationMapCapabilitiesKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH264QuantizationMapCapabilitiesKHR<'_> {}
 unsafe impl Sync for VideoEncodeH264QuantizationMapCapabilitiesKHR<'_> {}
+impl VideoEncodeH264QuantizationMapCapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH264QuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264QuantizationMapCapabilitiesKHR<'a> {
@@ -40624,10 +45528,16 @@ pub struct VideoEncodeH265QuantizationMapCapabilitiesKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH265QuantizationMapCapabilitiesKHR<'_> {}
 unsafe impl Sync for VideoEncodeH265QuantizationMapCapabilitiesKHR<'_> {}
+impl VideoEncodeH265QuantizationMapCapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH265QuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265QuantizationMapCapabilitiesKHR<'a> {
@@ -40664,10 +45574,16 @@ pub struct VideoEncodeAV1QuantizationMapCapabilitiesKHR<'a> {
 }
 unsafe impl Send for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'_> {}
 unsafe impl Sync for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'_> {}
+impl VideoEncodeAV1QuantizationMapCapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'a> {
@@ -40700,10 +45616,16 @@ pub struct VideoFormatQuantizationMapPropertiesKHR<'a> {
 }
 unsafe impl Send for VideoFormatQuantizationMapPropertiesKHR<'_> {}
 unsafe impl Sync for VideoFormatQuantizationMapPropertiesKHR<'_> {}
+impl VideoFormatQuantizationMapPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoFormatQuantizationMapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatQuantizationMapPropertiesKHR<'a> {
@@ -40731,10 +45653,16 @@ pub struct VideoFormatH265QuantizationMapPropertiesKHR<'a> {
 }
 unsafe impl Send for VideoFormatH265QuantizationMapPropertiesKHR<'_> {}
 unsafe impl Sync for VideoFormatH265QuantizationMapPropertiesKHR<'_> {}
+impl VideoFormatH265QuantizationMapPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoFormatH265QuantizationMapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatH265QuantizationMapPropertiesKHR<'a> {
@@ -40768,10 +45696,16 @@ pub struct VideoFormatAV1QuantizationMapPropertiesKHR<'a> {
 }
 unsafe impl Send for VideoFormatAV1QuantizationMapPropertiesKHR<'_> {}
 unsafe impl Sync for VideoFormatAV1QuantizationMapPropertiesKHR<'_> {}
+impl VideoFormatAV1QuantizationMapPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoFormatAV1QuantizationMapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatAV1QuantizationMapPropertiesKHR<'a> {
@@ -40808,10 +45742,16 @@ pub struct VideoProfileInfoKHR<'a> {
 }
 unsafe impl Send for VideoProfileInfoKHR<'_> {}
 unsafe impl Sync for VideoProfileInfoKHR<'_> {}
+impl VideoProfileInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoProfileInfoKHR<'a> {
@@ -40867,10 +45807,16 @@ pub struct VideoCapabilitiesKHR<'a> {
 }
 unsafe impl Send for VideoCapabilitiesKHR<'_> {}
 unsafe impl Sync for VideoCapabilitiesKHR<'_> {}
+impl VideoCapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoCapabilitiesKHR<'a> {
@@ -40943,10 +45889,16 @@ pub struct VideoSessionMemoryRequirementsKHR<'a> {
 }
 unsafe impl Send for VideoSessionMemoryRequirementsKHR<'_> {}
 unsafe impl Sync for VideoSessionMemoryRequirementsKHR<'_> {}
+impl VideoSessionMemoryRequirementsKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoSessionMemoryRequirementsKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionMemoryRequirementsKHR<'a> {
@@ -40980,10 +45932,16 @@ pub struct BindVideoSessionMemoryInfoKHR<'a> {
 }
 unsafe impl Send for BindVideoSessionMemoryInfoKHR<'_> {}
 unsafe impl Sync for BindVideoSessionMemoryInfoKHR<'_> {}
+impl BindVideoSessionMemoryInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindVideoSessionMemoryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindVideoSessionMemoryInfoKHR<'a> {
@@ -41027,10 +45985,16 @@ pub struct VideoPictureResourceInfoKHR<'a> {
 }
 unsafe impl Send for VideoPictureResourceInfoKHR<'_> {}
 unsafe impl Sync for VideoPictureResourceInfoKHR<'_> {}
+impl VideoPictureResourceInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoPictureResourceInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoPictureResourceInfoKHR<'a> {
@@ -41072,10 +46036,16 @@ pub struct VideoReferenceSlotInfoKHR<'a> {
 }
 unsafe impl Send for VideoReferenceSlotInfoKHR<'_> {}
 unsafe impl Sync for VideoReferenceSlotInfoKHR<'_> {}
+impl VideoReferenceSlotInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoReferenceSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoReferenceSlotInfoKHR<'a> {
@@ -41109,10 +46079,16 @@ pub struct VideoDecodeCapabilitiesKHR<'a> {
 }
 unsafe impl Send for VideoDecodeCapabilitiesKHR<'_> {}
 unsafe impl Sync for VideoDecodeCapabilitiesKHR<'_> {}
+impl VideoDecodeCapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeCapabilitiesKHR<'a> {
@@ -41139,10 +46115,16 @@ pub struct VideoDecodeUsageInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeUsageInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeUsageInfoKHR<'_> {}
+impl VideoDecodeUsageInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeUsageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeUsageInfoKHR<'a> {
@@ -41177,10 +46159,16 @@ pub struct VideoDecodeInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeInfoKHR<'_> {}
+impl VideoDecodeInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeInfoKHR<'a> {
@@ -41243,10 +46231,16 @@ pub struct PhysicalDeviceVideoMaintenance1FeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {}
+impl PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoMaintenance1FeaturesKHR<'a> {
@@ -41278,10 +46272,16 @@ pub struct PhysicalDeviceVideoMaintenance2FeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {}
+impl PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoMaintenance2FeaturesKHR<'a> {
@@ -41315,10 +46315,16 @@ pub struct VideoInlineQueryInfoKHR<'a> {
 }
 unsafe impl Send for VideoInlineQueryInfoKHR<'_> {}
 unsafe impl Sync for VideoInlineQueryInfoKHR<'_> {}
+impl VideoInlineQueryInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoInlineQueryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoInlineQueryInfoKHR<'a> {
@@ -41357,10 +46363,16 @@ pub struct VideoDecodeH264ProfileInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeH264ProfileInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeH264ProfileInfoKHR<'_> {}
+impl VideoDecodeH264ProfileInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeH264ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264ProfileInfoKHR<'a> {
@@ -41394,10 +46406,16 @@ pub struct VideoDecodeH264CapabilitiesKHR<'a> {
 }
 unsafe impl Send for VideoDecodeH264CapabilitiesKHR<'_> {}
 unsafe impl Sync for VideoDecodeH264CapabilitiesKHR<'_> {}
+impl VideoDecodeH264CapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeH264CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264CapabilitiesKHR<'a> {
@@ -41432,10 +46450,16 @@ pub struct VideoDecodeH264SessionParametersAddInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeH264SessionParametersAddInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeH264SessionParametersAddInfoKHR<'_> {}
+impl VideoDecodeH264SessionParametersAddInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeH264SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264SessionParametersAddInfoKHR<'a> {
@@ -41475,10 +46499,16 @@ pub struct VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeH264SessionParametersCreateInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeH264SessionParametersCreateInfoKHR<'_> {}
+impl VideoDecodeH264SessionParametersCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeH264SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
@@ -41523,10 +46553,16 @@ pub struct VideoDecodeH264InlineSessionParametersInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeH264InlineSessionParametersInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeH264InlineSessionParametersInfoKHR<'_> {}
+impl VideoDecodeH264InlineSessionParametersInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeH264InlineSessionParametersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264InlineSessionParametersInfoKHR<'a> {
@@ -41561,10 +46597,16 @@ pub struct VideoDecodeH264PictureInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeH264PictureInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeH264PictureInfoKHR<'_> {}
+impl VideoDecodeH264PictureInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeH264PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264PictureInfoKHR<'a> {
@@ -41597,10 +46639,16 @@ pub struct VideoDecodeH264DpbSlotInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeH264DpbSlotInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeH264DpbSlotInfoKHR<'_> {}
+impl VideoDecodeH264DpbSlotInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeH264DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264DpbSlotInfoKHR<'a> {
@@ -41630,10 +46678,16 @@ pub struct VideoDecodeH265ProfileInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeH265ProfileInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeH265ProfileInfoKHR<'_> {}
+impl VideoDecodeH265ProfileInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeH265ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265ProfileInfoKHR<'a> {
@@ -41661,10 +46715,16 @@ pub struct VideoDecodeH265CapabilitiesKHR<'a> {
 }
 unsafe impl Send for VideoDecodeH265CapabilitiesKHR<'_> {}
 unsafe impl Sync for VideoDecodeH265CapabilitiesKHR<'_> {}
+impl VideoDecodeH265CapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeH265CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265CapabilitiesKHR<'a> {
@@ -41696,10 +46756,16 @@ pub struct VideoDecodeH265SessionParametersAddInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeH265SessionParametersAddInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeH265SessionParametersAddInfoKHR<'_> {}
+impl VideoDecodeH265SessionParametersAddInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeH265SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265SessionParametersAddInfoKHR<'a> {
@@ -41746,10 +46812,16 @@ pub struct VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeH265SessionParametersCreateInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeH265SessionParametersCreateInfoKHR<'_> {}
+impl VideoDecodeH265SessionParametersCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeH265SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
@@ -41800,10 +46872,16 @@ pub struct VideoDecodeH265InlineSessionParametersInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeH265InlineSessionParametersInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeH265InlineSessionParametersInfoKHR<'_> {}
+impl VideoDecodeH265InlineSessionParametersInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeH265InlineSessionParametersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265InlineSessionParametersInfoKHR<'a> {
@@ -41843,10 +46921,16 @@ pub struct VideoDecodeH265PictureInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeH265PictureInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeH265PictureInfoKHR<'_> {}
+impl VideoDecodeH265PictureInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeH265PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265PictureInfoKHR<'a> {
@@ -41879,10 +46963,16 @@ pub struct VideoDecodeH265DpbSlotInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeH265DpbSlotInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeH265DpbSlotInfoKHR<'_> {}
+impl VideoDecodeH265DpbSlotInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeH265DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265DpbSlotInfoKHR<'a> {
@@ -41912,10 +47002,16 @@ pub struct PhysicalDeviceVideoDecodeVP9FeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'_> {}
+impl PhysicalDeviceVideoDecodeVP9FeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'a> {
@@ -41944,10 +47040,16 @@ pub struct VideoDecodeVP9ProfileInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeVP9ProfileInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeVP9ProfileInfoKHR<'_> {}
+impl VideoDecodeVP9ProfileInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeVP9ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeVP9ProfileInfoKHR<'a> {
@@ -41975,10 +47077,16 @@ pub struct VideoDecodeVP9CapabilitiesKHR<'a> {
 }
 unsafe impl Send for VideoDecodeVP9CapabilitiesKHR<'_> {}
 unsafe impl Sync for VideoDecodeVP9CapabilitiesKHR<'_> {}
+impl VideoDecodeVP9CapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeVP9CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeVP9CapabilitiesKHR<'a> {
@@ -42009,10 +47117,16 @@ pub struct VideoDecodeVP9PictureInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeVP9PictureInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeVP9PictureInfoKHR<'_> {}
+impl VideoDecodeVP9PictureInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeVP9PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeVP9PictureInfoKHR<'a> {
@@ -42063,10 +47177,16 @@ pub struct VideoDecodeAV1ProfileInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeAV1ProfileInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeAV1ProfileInfoKHR<'_> {}
+impl VideoDecodeAV1ProfileInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeAV1ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1ProfileInfoKHR<'a> {
@@ -42099,10 +47219,16 @@ pub struct VideoDecodeAV1CapabilitiesKHR<'a> {
 }
 unsafe impl Send for VideoDecodeAV1CapabilitiesKHR<'_> {}
 unsafe impl Sync for VideoDecodeAV1CapabilitiesKHR<'_> {}
+impl VideoDecodeAV1CapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeAV1CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1CapabilitiesKHR<'a> {
@@ -42129,10 +47255,16 @@ pub struct VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {}
+impl VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
@@ -42166,10 +47298,16 @@ pub struct VideoDecodeAV1InlineSessionParametersInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {}
+impl VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1InlineSessionParametersInfoKHR<'a> {
@@ -42205,10 +47343,16 @@ pub struct VideoDecodeAV1PictureInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeAV1PictureInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeAV1PictureInfoKHR<'_> {}
+impl VideoDecodeAV1PictureInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeAV1PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1PictureInfoKHR<'a> {
@@ -42260,10 +47404,16 @@ pub struct VideoDecodeAV1DpbSlotInfoKHR<'a> {
 }
 unsafe impl Send for VideoDecodeAV1DpbSlotInfoKHR<'_> {}
 unsafe impl Sync for VideoDecodeAV1DpbSlotInfoKHR<'_> {}
+impl VideoDecodeAV1DpbSlotInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoDecodeAV1DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1DpbSlotInfoKHR<'a> {
@@ -42301,10 +47451,16 @@ pub struct VideoSessionCreateInfoKHR<'a> {
 }
 unsafe impl Send for VideoSessionCreateInfoKHR<'_> {}
 unsafe impl Sync for VideoSessionCreateInfoKHR<'_> {}
+impl VideoSessionCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoSessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionCreateInfoKHR<'a> {
@@ -42372,10 +47528,16 @@ pub struct VideoSessionParametersCreateInfoKHR<'a> {
 }
 unsafe impl Send for VideoSessionParametersCreateInfoKHR<'_> {}
 unsafe impl Sync for VideoSessionParametersCreateInfoKHR<'_> {}
+impl VideoSessionParametersCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoSessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionParametersCreateInfoKHR<'a> {
@@ -42414,10 +47576,16 @@ pub struct VideoSessionParametersUpdateInfoKHR<'a> {
 }
 unsafe impl Send for VideoSessionParametersUpdateInfoKHR<'_> {}
 unsafe impl Sync for VideoSessionParametersUpdateInfoKHR<'_> {}
+impl VideoSessionParametersUpdateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoSessionParametersUpdateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionParametersUpdateInfoKHR<'a> {
@@ -42443,10 +47611,16 @@ pub struct VideoEncodeSessionParametersGetInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeSessionParametersGetInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeSessionParametersGetInfoKHR<'_> {}
+impl VideoEncodeSessionParametersGetInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeSessionParametersGetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionParametersGetInfoKHR<'a> {
@@ -42476,10 +47650,16 @@ pub struct VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeSessionParametersFeedbackInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeSessionParametersFeedbackInfoKHR<'_> {}
+impl VideoEncodeSessionParametersFeedbackInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeSessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
@@ -42510,10 +47690,16 @@ pub struct VideoBeginCodingInfoKHR<'a> {
 }
 unsafe impl Send for VideoBeginCodingInfoKHR<'_> {}
 unsafe impl Sync for VideoBeginCodingInfoKHR<'_> {}
+impl VideoBeginCodingInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoBeginCodingInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoBeginCodingInfoKHR<'a> {
@@ -42558,10 +47744,16 @@ pub struct VideoEndCodingInfoKHR<'a> {
 }
 unsafe impl Send for VideoEndCodingInfoKHR<'_> {}
 unsafe impl Sync for VideoEndCodingInfoKHR<'_> {}
+impl VideoEndCodingInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEndCodingInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEndCodingInfoKHR<'a> {
@@ -42587,10 +47779,16 @@ pub struct VideoCodingControlInfoKHR<'a> {
 }
 unsafe impl Send for VideoCodingControlInfoKHR<'_> {}
 unsafe impl Sync for VideoCodingControlInfoKHR<'_> {}
+impl VideoCodingControlInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoCodingControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoCodingControlInfoKHR<'a> {
@@ -42618,10 +47816,16 @@ pub struct VideoEncodeUsageInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeUsageInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeUsageInfoKHR<'_> {}
+impl VideoEncodeUsageInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeUsageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeUsageInfoKHR<'a> {
@@ -42667,10 +47871,16 @@ pub struct VideoEncodeInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeInfoKHR<'_> {}
+impl VideoEncodeInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeInfoKHR<'a> {
@@ -42742,10 +47952,16 @@ pub struct VideoEncodeQuantizationMapInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeQuantizationMapInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeQuantizationMapInfoKHR<'_> {}
+impl VideoEncodeQuantizationMapInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeQuantizationMapInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQuantizationMapInfoKHR<'a> {
@@ -42777,10 +47993,16 @@ pub struct VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'_> {}
+impl VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -42813,10 +48035,16 @@ pub struct PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'_> {}
+impl PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'a> {
@@ -42851,10 +48079,16 @@ pub struct QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
 }
 unsafe impl Send for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {}
 unsafe impl Sync for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {}
+impl QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
@@ -42885,10 +48119,16 @@ pub struct VideoEncodeQualityLevelInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeQualityLevelInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeQualityLevelInfoKHR<'_> {}
+impl VideoEncodeQualityLevelInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeQualityLevelInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQualityLevelInfoKHR<'a> {
@@ -42920,10 +48160,16 @@ pub struct PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {}
+impl PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
@@ -42956,10 +48202,16 @@ pub struct VideoEncodeQualityLevelPropertiesKHR<'a> {
 }
 unsafe impl Send for VideoEncodeQualityLevelPropertiesKHR<'_> {}
 unsafe impl Sync for VideoEncodeQualityLevelPropertiesKHR<'_> {}
+impl VideoEncodeQualityLevelPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeQualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQualityLevelPropertiesKHR<'a> {
@@ -43001,10 +48253,16 @@ pub struct VideoEncodeRateControlInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeRateControlInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeRateControlInfoKHR<'_> {}
+impl VideoEncodeRateControlInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeRateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRateControlInfoKHR<'a> {
@@ -43062,10 +48320,16 @@ pub struct VideoEncodeRateControlLayerInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeRateControlLayerInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeRateControlLayerInfoKHR<'_> {}
+impl VideoEncodeRateControlLayerInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRateControlLayerInfoKHR<'a> {
@@ -43112,10 +48376,16 @@ pub struct VideoEncodeCapabilitiesKHR<'a> {
 }
 unsafe impl Send for VideoEncodeCapabilitiesKHR<'_> {}
 unsafe impl Sync for VideoEncodeCapabilitiesKHR<'_> {}
+impl VideoEncodeCapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeCapabilitiesKHR<'a> {
@@ -43193,10 +48463,16 @@ pub struct VideoEncodeH264CapabilitiesKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH264CapabilitiesKHR<'_> {}
 unsafe impl Sync for VideoEncodeH264CapabilitiesKHR<'_> {}
+impl VideoEncodeH264CapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH264CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264CapabilitiesKHR<'a> {
@@ -43300,10 +48576,16 @@ pub struct VideoEncodeH264QualityLevelPropertiesKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH264QualityLevelPropertiesKHR<'_> {}
 unsafe impl Sync for VideoEncodeH264QualityLevelPropertiesKHR<'_> {}
+impl VideoEncodeH264QualityLevelPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH264QualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264QualityLevelPropertiesKHR<'a> {
@@ -43390,10 +48672,16 @@ pub struct VideoEncodeH264SessionCreateInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH264SessionCreateInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH264SessionCreateInfoKHR<'_> {}
+impl VideoEncodeH264SessionCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH264SessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionCreateInfoKHR<'a> {
@@ -43428,10 +48716,16 @@ pub struct VideoEncodeH264SessionParametersAddInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH264SessionParametersAddInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH264SessionParametersAddInfoKHR<'_> {}
+impl VideoEncodeH264SessionParametersAddInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH264SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersAddInfoKHR<'a> {
@@ -43471,10 +48765,16 @@ pub struct VideoEncodeH264SessionParametersCreateInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH264SessionParametersCreateInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH264SessionParametersCreateInfoKHR<'_> {}
+impl VideoEncodeH264SessionParametersCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH264SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersCreateInfoKHR<'a> {
@@ -43521,10 +48821,16 @@ pub struct VideoEncodeH264SessionParametersGetInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH264SessionParametersGetInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH264SessionParametersGetInfoKHR<'_> {}
+impl VideoEncodeH264SessionParametersGetInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH264SessionParametersGetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersGetInfoKHR<'a> {
@@ -43571,10 +48877,16 @@ pub struct VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {}
+impl VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {
@@ -43610,10 +48922,16 @@ pub struct VideoEncodeH264DpbSlotInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH264DpbSlotInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH264DpbSlotInfoKHR<'_> {}
+impl VideoEncodeH264DpbSlotInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH264DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264DpbSlotInfoKHR<'a> {
@@ -43646,10 +48964,16 @@ pub struct VideoEncodeH264PictureInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH264PictureInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH264PictureInfoKHR<'_> {}
+impl VideoEncodeH264PictureInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH264PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264PictureInfoKHR<'a> {
@@ -43690,10 +49014,16 @@ pub struct VideoEncodeH264ProfileInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH264ProfileInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH264ProfileInfoKHR<'_> {}
+impl VideoEncodeH264ProfileInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH264ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264ProfileInfoKHR<'a> {
@@ -43722,10 +49052,16 @@ pub struct VideoEncodeH264NaluSliceInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH264NaluSliceInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH264NaluSliceInfoKHR<'_> {}
+impl VideoEncodeH264NaluSliceInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH264NaluSliceInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264NaluSliceInfoKHR<'a> {
@@ -43760,10 +49096,16 @@ pub struct VideoEncodeH264RateControlInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH264RateControlInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH264RateControlInfoKHR<'_> {}
+impl VideoEncodeH264RateControlInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH264RateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264RateControlInfoKHR<'a> {
@@ -43808,10 +49150,16 @@ pub struct VideoEncodeH264QpKHR {
     pub qp_p: i32,
     pub qp_b: i32,
 }
+impl VideoEncodeH264QpKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for VideoEncodeH264QpKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl VideoEncodeH264QpKHR {
@@ -43841,10 +49189,16 @@ pub struct VideoEncodeH264FrameSizeKHR {
     pub frame_p_size: u32,
     pub frame_b_size: u32,
 }
+impl VideoEncodeH264FrameSizeKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for VideoEncodeH264FrameSizeKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl VideoEncodeH264FrameSizeKHR {
@@ -43880,10 +49234,16 @@ pub struct VideoEncodeH264GopRemainingFrameInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {}
+impl VideoEncodeH264GopRemainingFrameInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264GopRemainingFrameInfoKHR<'a> {
@@ -43931,10 +49291,16 @@ pub struct VideoEncodeH264RateControlLayerInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH264RateControlLayerInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH264RateControlLayerInfoKHR<'_> {}
+impl VideoEncodeH264RateControlLayerInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH264RateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264RateControlLayerInfoKHR<'a> {
@@ -44005,10 +49371,16 @@ pub struct VideoEncodeH265CapabilitiesKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH265CapabilitiesKHR<'_> {}
 unsafe impl Sync for VideoEncodeH265CapabilitiesKHR<'_> {}
+impl VideoEncodeH265CapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH265CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265CapabilitiesKHR<'a> {
@@ -44130,10 +49502,16 @@ pub struct VideoEncodeH265QualityLevelPropertiesKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH265QualityLevelPropertiesKHR<'_> {}
 unsafe impl Sync for VideoEncodeH265QualityLevelPropertiesKHR<'_> {}
+impl VideoEncodeH265QualityLevelPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH265QualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265QualityLevelPropertiesKHR<'a> {
@@ -44212,10 +49590,16 @@ pub struct VideoEncodeH265SessionCreateInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH265SessionCreateInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH265SessionCreateInfoKHR<'_> {}
+impl VideoEncodeH265SessionCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH265SessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionCreateInfoKHR<'a> {
@@ -44252,10 +49636,16 @@ pub struct VideoEncodeH265SessionParametersAddInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH265SessionParametersAddInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH265SessionParametersAddInfoKHR<'_> {}
+impl VideoEncodeH265SessionParametersAddInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH265SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersAddInfoKHR<'a> {
@@ -44302,10 +49692,16 @@ pub struct VideoEncodeH265SessionParametersCreateInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH265SessionParametersCreateInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH265SessionParametersCreateInfoKHR<'_> {}
+impl VideoEncodeH265SessionParametersCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH265SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersCreateInfoKHR<'a> {
@@ -44359,10 +49755,16 @@ pub struct VideoEncodeH265SessionParametersGetInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH265SessionParametersGetInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH265SessionParametersGetInfoKHR<'_> {}
+impl VideoEncodeH265SessionParametersGetInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH265SessionParametersGetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersGetInfoKHR<'a> {
@@ -44420,10 +49822,16 @@ pub struct VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {}
+impl VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {
@@ -44466,10 +49874,16 @@ pub struct VideoEncodeH265PictureInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH265PictureInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH265PictureInfoKHR<'_> {}
+impl VideoEncodeH265PictureInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH265PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265PictureInfoKHR<'a> {
@@ -44506,10 +49920,16 @@ pub struct VideoEncodeH265NaluSliceSegmentInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {}
+impl VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265NaluSliceSegmentInfoKHR<'a> {
@@ -44548,10 +49968,16 @@ pub struct VideoEncodeH265RateControlInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH265RateControlInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH265RateControlInfoKHR<'_> {}
+impl VideoEncodeH265RateControlInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH265RateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265RateControlInfoKHR<'a> {
@@ -44596,10 +50022,16 @@ pub struct VideoEncodeH265QpKHR {
     pub qp_p: i32,
     pub qp_b: i32,
 }
+impl VideoEncodeH265QpKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for VideoEncodeH265QpKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl VideoEncodeH265QpKHR {
@@ -44629,10 +50061,16 @@ pub struct VideoEncodeH265FrameSizeKHR {
     pub frame_p_size: u32,
     pub frame_b_size: u32,
 }
+impl VideoEncodeH265FrameSizeKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for VideoEncodeH265FrameSizeKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl VideoEncodeH265FrameSizeKHR {
@@ -44668,10 +50106,16 @@ pub struct VideoEncodeH265GopRemainingFrameInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {}
+impl VideoEncodeH265GopRemainingFrameInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265GopRemainingFrameInfoKHR<'a> {
@@ -44719,10 +50163,16 @@ pub struct VideoEncodeH265RateControlLayerInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH265RateControlLayerInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH265RateControlLayerInfoKHR<'_> {}
+impl VideoEncodeH265RateControlLayerInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH265RateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265RateControlLayerInfoKHR<'a> {
@@ -44778,10 +50228,16 @@ pub struct VideoEncodeH265ProfileInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH265ProfileInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH265ProfileInfoKHR<'_> {}
+impl VideoEncodeH265ProfileInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH265ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265ProfileInfoKHR<'a> {
@@ -44809,10 +50265,16 @@ pub struct VideoEncodeH265DpbSlotInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeH265DpbSlotInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeH265DpbSlotInfoKHR<'_> {}
+impl VideoEncodeH265DpbSlotInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeH265DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265DpbSlotInfoKHR<'a> {
@@ -44865,10 +50327,16 @@ pub struct VideoEncodeAV1CapabilitiesKHR<'a> {
 }
 unsafe impl Send for VideoEncodeAV1CapabilitiesKHR<'_> {}
 unsafe impl Sync for VideoEncodeAV1CapabilitiesKHR<'_> {}
+impl VideoEncodeAV1CapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeAV1CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1CapabilitiesKHR<'a> {
@@ -45055,10 +50523,16 @@ pub struct VideoEncodeAV1QualityLevelPropertiesKHR<'a> {
 }
 unsafe impl Send for VideoEncodeAV1QualityLevelPropertiesKHR<'_> {}
 unsafe impl Sync for VideoEncodeAV1QualityLevelPropertiesKHR<'_> {}
+impl VideoEncodeAV1QualityLevelPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeAV1QualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1QualityLevelPropertiesKHR<'a> {
@@ -45203,10 +50677,16 @@ pub struct PhysicalDeviceVideoEncodeAV1FeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'_> {}
+impl PhysicalDeviceVideoEncodeAV1FeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'a> {
@@ -45236,10 +50716,16 @@ pub struct VideoEncodeAV1SessionCreateInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeAV1SessionCreateInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeAV1SessionCreateInfoKHR<'_> {}
+impl VideoEncodeAV1SessionCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeAV1SessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1SessionCreateInfoKHR<'a> {
@@ -45274,10 +50760,16 @@ pub struct VideoEncodeAV1SessionParametersCreateInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeAV1SessionParametersCreateInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeAV1SessionParametersCreateInfoKHR<'_> {}
+impl VideoEncodeAV1SessionParametersCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeAV1SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1SessionParametersCreateInfoKHR<'a> {
@@ -45328,10 +50820,16 @@ pub struct VideoEncodeAV1DpbSlotInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeAV1DpbSlotInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeAV1DpbSlotInfoKHR<'_> {}
+impl VideoEncodeAV1DpbSlotInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeAV1DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1DpbSlotInfoKHR<'a> {
@@ -45367,10 +50865,16 @@ pub struct VideoEncodeAV1PictureInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeAV1PictureInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeAV1PictureInfoKHR<'_> {}
+impl VideoEncodeAV1PictureInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeAV1PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1PictureInfoKHR<'a> {
@@ -45433,10 +50937,16 @@ pub struct VideoEncodeAV1ProfileInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeAV1ProfileInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeAV1ProfileInfoKHR<'_> {}
+impl VideoEncodeAV1ProfileInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeAV1ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1ProfileInfoKHR<'a> {
@@ -45468,10 +50978,16 @@ pub struct VideoEncodeAV1RateControlInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeAV1RateControlInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeAV1RateControlInfoKHR<'_> {}
+impl VideoEncodeAV1RateControlInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeAV1RateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1RateControlInfoKHR<'a> {
@@ -45519,10 +51035,16 @@ pub struct VideoEncodeAV1QIndexKHR {
     pub predictive_q_index: u32,
     pub bipredictive_q_index: u32,
 }
+impl VideoEncodeAV1QIndexKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for VideoEncodeAV1QIndexKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl VideoEncodeAV1QIndexKHR {
@@ -45552,10 +51074,16 @@ pub struct VideoEncodeAV1FrameSizeKHR {
     pub predictive_frame_size: u32,
     pub bipredictive_frame_size: u32,
 }
+impl VideoEncodeAV1FrameSizeKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for VideoEncodeAV1FrameSizeKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl VideoEncodeAV1FrameSizeKHR {
@@ -45591,10 +51119,16 @@ pub struct VideoEncodeAV1GopRemainingFrameInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeAV1GopRemainingFrameInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeAV1GopRemainingFrameInfoKHR<'_> {}
+impl VideoEncodeAV1GopRemainingFrameInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeAV1GopRemainingFrameInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1GopRemainingFrameInfoKHR<'a> {
@@ -45642,10 +51176,16 @@ pub struct VideoEncodeAV1RateControlLayerInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeAV1RateControlLayerInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeAV1RateControlLayerInfoKHR<'_> {}
+impl VideoEncodeAV1RateControlLayerInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeAV1RateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1RateControlLayerInfoKHR<'a> {
@@ -45701,10 +51241,16 @@ pub struct PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {}
+impl PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
@@ -45738,10 +51284,16 @@ pub struct CommandBufferInheritanceViewportScissorInfoNV<'a> {
 }
 unsafe impl Send for CommandBufferInheritanceViewportScissorInfoNV<'_> {}
 unsafe impl Sync for CommandBufferInheritanceViewportScissorInfoNV<'_> {}
+impl CommandBufferInheritanceViewportScissorInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CommandBufferInheritanceViewportScissorInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceViewportScissorInfoNV<'a> {
@@ -45782,10 +51334,16 @@ pub struct PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {}
+impl PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
@@ -45818,10 +51376,16 @@ pub struct PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {}
+impl PhysicalDeviceProvokingVertexFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
@@ -45860,10 +51424,16 @@ pub struct PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {}
+impl PhysicalDeviceProvokingVertexPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
@@ -45906,10 +51476,16 @@ pub struct PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
 }
 unsafe impl Send for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> {}
 unsafe impl Sync for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> {}
+impl PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
@@ -45944,10 +51520,16 @@ pub struct VideoEncodeIntraRefreshCapabilitiesKHR<'a> {
 }
 unsafe impl Send for VideoEncodeIntraRefreshCapabilitiesKHR<'_> {}
 unsafe impl Sync for VideoEncodeIntraRefreshCapabilitiesKHR<'_> {}
+impl VideoEncodeIntraRefreshCapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeIntraRefreshCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeIntraRefreshCapabilitiesKHR<'a> {
@@ -46012,10 +51594,16 @@ pub struct VideoEncodeSessionIntraRefreshCreateInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeSessionIntraRefreshCreateInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeSessionIntraRefreshCreateInfoKHR<'_> {}
+impl VideoEncodeSessionIntraRefreshCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeSessionIntraRefreshCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionIntraRefreshCreateInfoKHR<'a> {
@@ -46050,10 +51638,16 @@ pub struct VideoEncodeIntraRefreshInfoKHR<'a> {
 }
 unsafe impl Send for VideoEncodeIntraRefreshInfoKHR<'_> {}
 unsafe impl Sync for VideoEncodeIntraRefreshInfoKHR<'_> {}
+impl VideoEncodeIntraRefreshInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeIntraRefreshInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeIntraRefreshInfoKHR<'a> {
@@ -46085,10 +51679,16 @@ pub struct VideoReferenceIntraRefreshInfoKHR<'a> {
 }
 unsafe impl Send for VideoReferenceIntraRefreshInfoKHR<'_> {}
 unsafe impl Sync for VideoReferenceIntraRefreshInfoKHR<'_> {}
+impl VideoReferenceIntraRefreshInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoReferenceIntraRefreshInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoReferenceIntraRefreshInfoKHR<'a> {
@@ -46115,10 +51715,16 @@ pub struct PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'_> {}
+impl PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'a> {
@@ -46151,10 +51757,16 @@ pub struct CuModuleCreateInfoNVX<'a> {
 }
 unsafe impl Send for CuModuleCreateInfoNVX<'_> {}
 unsafe impl Sync for CuModuleCreateInfoNVX<'_> {}
+impl CuModuleCreateInfoNVX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CuModuleCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CuModuleCreateInfoNVX<'a> {
@@ -46181,10 +51793,16 @@ pub struct CuModuleTexturingModeCreateInfoNVX<'a> {
 }
 unsafe impl Send for CuModuleTexturingModeCreateInfoNVX<'_> {}
 unsafe impl Sync for CuModuleTexturingModeCreateInfoNVX<'_> {}
+impl CuModuleTexturingModeCreateInfoNVX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CuModuleTexturingModeCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CuModuleTexturingModeCreateInfoNVX<'a> {
@@ -46212,10 +51830,16 @@ pub struct CuFunctionCreateInfoNVX<'a> {
 }
 unsafe impl Send for CuFunctionCreateInfoNVX<'_> {}
 unsafe impl Sync for CuFunctionCreateInfoNVX<'_> {}
+impl CuFunctionCreateInfoNVX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CuFunctionCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CuFunctionCreateInfoNVX<'a> {
@@ -46265,10 +51889,16 @@ pub struct CuLaunchInfoNVX<'a> {
 }
 unsafe impl Send for CuLaunchInfoNVX<'_> {}
 unsafe impl Sync for CuLaunchInfoNVX<'_> {}
+impl CuLaunchInfoNVX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CuLaunchInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CuLaunchInfoNVX<'a> {
@@ -46344,10 +51974,16 @@ pub struct PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {}
+impl PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
@@ -46432,10 +52068,16 @@ pub struct PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {}
+impl PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
@@ -46711,10 +52353,16 @@ pub struct PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {}
+impl PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
@@ -46751,10 +52399,16 @@ pub struct DescriptorAddressInfoEXT<'a> {
 }
 unsafe impl Send for DescriptorAddressInfoEXT<'_> {}
 unsafe impl Sync for DescriptorAddressInfoEXT<'_> {}
+impl DescriptorAddressInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorAddressInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorAddressInfoEXT<'a> {
@@ -46791,10 +52445,16 @@ pub struct DescriptorBufferBindingInfoEXT<'a> {
 }
 unsafe impl Send for DescriptorBufferBindingInfoEXT<'_> {}
 unsafe impl Sync for DescriptorBufferBindingInfoEXT<'_> {}
+impl DescriptorBufferBindingInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorBufferBindingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorBufferBindingInfoEXT<'a> {
@@ -46825,10 +52485,16 @@ pub struct DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
 }
 unsafe impl Send for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {}
 unsafe impl Sync for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {}
+impl DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
@@ -46891,10 +52557,16 @@ impl fmt::Debug for DescriptorGetInfoEXT<'_> {
             .finish()
     }
 }
+impl DescriptorGetInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorGetInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorGetInfoEXT<'a> {
@@ -46925,10 +52597,16 @@ pub struct BufferCaptureDescriptorDataInfoEXT<'a> {
 }
 unsafe impl Send for BufferCaptureDescriptorDataInfoEXT<'_> {}
 unsafe impl Sync for BufferCaptureDescriptorDataInfoEXT<'_> {}
+impl BufferCaptureDescriptorDataInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCaptureDescriptorDataInfoEXT<'a> {
@@ -46954,10 +52632,16 @@ pub struct ImageCaptureDescriptorDataInfoEXT<'a> {
 }
 unsafe impl Send for ImageCaptureDescriptorDataInfoEXT<'_> {}
 unsafe impl Sync for ImageCaptureDescriptorDataInfoEXT<'_> {}
+impl ImageCaptureDescriptorDataInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCaptureDescriptorDataInfoEXT<'a> {
@@ -46983,10 +52667,16 @@ pub struct ImageViewCaptureDescriptorDataInfoEXT<'a> {
 }
 unsafe impl Send for ImageViewCaptureDescriptorDataInfoEXT<'_> {}
 unsafe impl Sync for ImageViewCaptureDescriptorDataInfoEXT<'_> {}
+impl ImageViewCaptureDescriptorDataInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageViewCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewCaptureDescriptorDataInfoEXT<'a> {
@@ -47013,10 +52703,16 @@ pub struct SamplerCaptureDescriptorDataInfoEXT<'a> {
 }
 unsafe impl Send for SamplerCaptureDescriptorDataInfoEXT<'_> {}
 unsafe impl Sync for SamplerCaptureDescriptorDataInfoEXT<'_> {}
+impl SamplerCaptureDescriptorDataInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SamplerCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCaptureDescriptorDataInfoEXT<'a> {
@@ -47043,10 +52739,16 @@ pub struct AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
 }
 unsafe impl Send for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {}
 unsafe impl Sync for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {}
+impl AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
@@ -47084,10 +52786,16 @@ pub struct OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
 }
 unsafe impl Send for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
 unsafe impl Sync for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
+impl OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
@@ -47135,10 +52843,16 @@ pub struct PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {}
+impl PhysicalDeviceShaderIntegerDotProductFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
@@ -47200,10 +52914,16 @@ pub struct PhysicalDeviceShaderIntegerDotProductProperties<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderIntegerDotProductProperties<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderIntegerDotProductProperties<'_> {}
+impl PhysicalDeviceShaderIntegerDotProductProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerDotProductProperties<'a> {
@@ -47503,10 +53223,16 @@ pub struct PhysicalDeviceDrmPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceDrmPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceDrmPropertiesEXT<'_> {}
+impl PhysicalDeviceDrmPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDrmPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDrmPropertiesEXT<'a> {
@@ -47558,10 +53284,16 @@ pub struct PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {}
+impl PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
@@ -47596,10 +53328,16 @@ pub struct PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {}
+impl PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
@@ -47636,10 +53374,16 @@ pub struct PhysicalDeviceShaderFmaFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderFmaFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderFmaFeaturesKHR<'_> {}
+impl PhysicalDeviceShaderFmaFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderFmaFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFmaFeaturesKHR<'a> {
@@ -47678,10 +53422,16 @@ pub struct PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {}
+impl PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
@@ -47722,10 +53472,16 @@ pub struct PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {}
+impl PhysicalDeviceRayTracingValidationFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
@@ -47758,10 +53514,16 @@ pub struct PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'_> {}
+impl PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {
@@ -47810,10 +53572,16 @@ impl fmt::Debug for AccelerationStructureGeometryMotionTrianglesDataNV<'_> {
             .finish()
     }
 }
+impl AccelerationStructureGeometryMotionTrianglesDataNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureGeometryMotionTrianglesDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
@@ -47845,10 +53613,16 @@ pub struct AccelerationStructureMotionInfoNV<'a> {
 }
 unsafe impl Send for AccelerationStructureMotionInfoNV<'_> {}
 unsafe impl Sync for AccelerationStructureMotionInfoNV<'_> {}
+impl AccelerationStructureMotionInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureMotionInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureMotionInfoNV<'a> {
@@ -47893,10 +53667,16 @@ pub struct SRTDataNV {
     pub ty: f32,
     pub tz: f32,
 }
+impl SRTDataNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for SRTDataNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl SRTDataNV {
@@ -48040,10 +53820,16 @@ impl fmt::Debug for AccelerationStructureMotionInstanceNV {
             .finish()
     }
 }
+impl AccelerationStructureMotionInstanceNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for AccelerationStructureMotionInstanceNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl AccelerationStructureMotionInstanceNV {
@@ -48079,10 +53865,16 @@ pub struct MemoryGetRemoteAddressInfoNV<'a> {
 }
 unsafe impl Send for MemoryGetRemoteAddressInfoNV<'_> {}
 unsafe impl Sync for MemoryGetRemoteAddressInfoNV<'_> {}
+impl MemoryGetRemoteAddressInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryGetRemoteAddressInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetRemoteAddressInfoNV<'a> {
@@ -48114,10 +53906,16 @@ pub struct ImportMemoryBufferCollectionFUCHSIA<'a> {
 }
 unsafe impl Send for ImportMemoryBufferCollectionFUCHSIA<'_> {}
 unsafe impl Sync for ImportMemoryBufferCollectionFUCHSIA<'_> {}
+impl ImportMemoryBufferCollectionFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportMemoryBufferCollectionFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryBufferCollectionFUCHSIA<'a> {
@@ -48150,10 +53948,16 @@ pub struct BufferCollectionImageCreateInfoFUCHSIA<'a> {
 }
 unsafe impl Send for BufferCollectionImageCreateInfoFUCHSIA<'_> {}
 unsafe impl Sync for BufferCollectionImageCreateInfoFUCHSIA<'_> {}
+impl BufferCollectionImageCreateInfoFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferCollectionImageCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionImageCreateInfoFUCHSIA<'a> {
@@ -48187,10 +53991,16 @@ pub struct BufferCollectionBufferCreateInfoFUCHSIA<'a> {
 }
 unsafe impl Send for BufferCollectionBufferCreateInfoFUCHSIA<'_> {}
 unsafe impl Sync for BufferCollectionBufferCreateInfoFUCHSIA<'_> {}
+impl BufferCollectionBufferCreateInfoFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferCollectionBufferCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionBufferCreateInfoFUCHSIA<'a> {
@@ -48223,10 +54033,16 @@ pub struct BufferCollectionCreateInfoFUCHSIA<'a> {
 }
 unsafe impl Send for BufferCollectionCreateInfoFUCHSIA<'_> {}
 unsafe impl Sync for BufferCollectionCreateInfoFUCHSIA<'_> {}
+impl BufferCollectionCreateInfoFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferCollectionCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionCreateInfoFUCHSIA<'a> {
@@ -48262,10 +54078,16 @@ pub struct BufferCollectionPropertiesFUCHSIA<'a> {
 }
 unsafe impl Send for BufferCollectionPropertiesFUCHSIA<'_> {}
 unsafe impl Sync for BufferCollectionPropertiesFUCHSIA<'_> {}
+impl BufferCollectionPropertiesFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferCollectionPropertiesFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionPropertiesFUCHSIA<'a> {
@@ -48352,10 +54174,16 @@ pub struct BufferConstraintsInfoFUCHSIA<'a> {
 }
 unsafe impl Send for BufferConstraintsInfoFUCHSIA<'_> {}
 unsafe impl Sync for BufferConstraintsInfoFUCHSIA<'_> {}
+impl BufferConstraintsInfoFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferConstraintsInfoFUCHSIA<'a> {
@@ -48397,10 +54225,16 @@ pub struct SysmemColorSpaceFUCHSIA<'a> {
 }
 unsafe impl Send for SysmemColorSpaceFUCHSIA<'_> {}
 unsafe impl Sync for SysmemColorSpaceFUCHSIA<'_> {}
+impl SysmemColorSpaceFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SysmemColorSpaceFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SysmemColorSpaceFUCHSIA<'a> {
@@ -48431,10 +54265,16 @@ pub struct ImageFormatConstraintsInfoFUCHSIA<'a> {
 }
 unsafe impl Send for ImageFormatConstraintsInfoFUCHSIA<'_> {}
 unsafe impl Sync for ImageFormatConstraintsInfoFUCHSIA<'_> {}
+impl ImageFormatConstraintsInfoFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageFormatConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageFormatConstraintsInfoFUCHSIA<'a> {
@@ -48487,10 +54327,16 @@ pub struct ImageConstraintsInfoFUCHSIA<'a> {
 }
 unsafe impl Send for ImageConstraintsInfoFUCHSIA<'_> {}
 unsafe impl Sync for ImageConstraintsInfoFUCHSIA<'_> {}
+impl ImageConstraintsInfoFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageConstraintsInfoFUCHSIA<'a> {
@@ -48537,10 +54383,16 @@ pub struct BufferCollectionConstraintsInfoFUCHSIA<'a> {
 }
 unsafe impl Send for BufferCollectionConstraintsInfoFUCHSIA<'_> {}
 unsafe impl Sync for BufferCollectionConstraintsInfoFUCHSIA<'_> {}
+impl BufferCollectionConstraintsInfoFUCHSIA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BufferCollectionConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionConstraintsInfoFUCHSIA<'a> {
@@ -48609,10 +54461,17 @@ unsafe impl Send for CudaModuleCreateInfoNV<'_> {}
 #[cfg(feature = "provisional")]
 unsafe impl Sync for CudaModuleCreateInfoNV<'_> {}
 #[cfg(feature = "provisional")]
+impl CudaModuleCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for CudaModuleCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -48646,10 +54505,17 @@ unsafe impl Send for CudaFunctionCreateInfoNV<'_> {}
 #[cfg(feature = "provisional")]
 unsafe impl Sync for CudaFunctionCreateInfoNV<'_> {}
 #[cfg(feature = "provisional")]
+impl CudaFunctionCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for CudaFunctionCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -48705,10 +54571,17 @@ unsafe impl Send for CudaLaunchInfoNV<'_> {}
 #[cfg(feature = "provisional")]
 unsafe impl Sync for CudaLaunchInfoNV<'_> {}
 #[cfg(feature = "provisional")]
+impl CudaLaunchInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for CudaLaunchInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -48783,10 +54656,16 @@ pub struct PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {}
+impl PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
@@ -48821,10 +54700,16 @@ pub struct FormatProperties3<'a> {
 }
 unsafe impl Send for FormatProperties3<'_> {}
 unsafe impl Sync for FormatProperties3<'_> {}
+impl FormatProperties3<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for FormatProperties3<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FormatProperties3<'a> {
@@ -48862,10 +54747,16 @@ pub struct DrmFormatModifierPropertiesList2EXT<'a> {
 }
 unsafe impl Send for DrmFormatModifierPropertiesList2EXT<'_> {}
 unsafe impl Sync for DrmFormatModifierPropertiesList2EXT<'_> {}
+impl DrmFormatModifierPropertiesList2EXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DrmFormatModifierPropertiesList2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DrmFormatModifierPropertiesList2EXT<'a> {
@@ -48893,10 +54784,16 @@ pub struct DrmFormatModifierProperties2EXT {
     pub drm_format_modifier_plane_count: u32,
     pub drm_format_modifier_tiling_features: FormatFeatureFlags2,
 }
+impl DrmFormatModifierProperties2EXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DrmFormatModifierProperties2EXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DrmFormatModifierProperties2EXT {
@@ -48939,10 +54836,16 @@ pub struct AndroidHardwareBufferFormatProperties2ANDROID<'a> {
 }
 unsafe impl Send for AndroidHardwareBufferFormatProperties2ANDROID<'_> {}
 unsafe impl Sync for AndroidHardwareBufferFormatProperties2ANDROID<'_> {}
+impl AndroidHardwareBufferFormatProperties2ANDROID<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AndroidHardwareBufferFormatProperties2ANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatProperties2ANDROID<'a> {
@@ -49018,10 +54921,16 @@ pub struct PipelineRenderingCreateInfo<'a> {
 }
 unsafe impl Send for PipelineRenderingCreateInfo<'_> {}
 unsafe impl Sync for PipelineRenderingCreateInfo<'_> {}
+impl PipelineRenderingCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineRenderingCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRenderingCreateInfo<'a> {
@@ -49071,10 +54980,16 @@ pub struct RenderingInfo<'a> {
 }
 unsafe impl Send for RenderingInfo<'_> {}
 unsafe impl Sync for RenderingInfo<'_> {}
+impl RenderingInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderingInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingInfo<'a> {
@@ -49136,10 +55051,16 @@ pub struct RenderingEndInfoKHR<'a> {
 }
 unsafe impl Send for RenderingEndInfoKHR<'_> {}
 unsafe impl Sync for RenderingEndInfoKHR<'_> {}
+impl RenderingEndInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderingEndInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingEndInfoKHR<'a> {
@@ -49182,10 +55103,16 @@ impl fmt::Debug for RenderingAttachmentInfo<'_> {
             .finish()
     }
 }
+impl RenderingAttachmentInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderingAttachmentInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentInfo<'a> {
@@ -49248,10 +55175,16 @@ pub struct RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
 }
 unsafe impl Send for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {}
 unsafe impl Sync for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {}
+impl RenderingFragmentShadingRateAttachmentInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
@@ -49293,10 +55226,16 @@ pub struct RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
 }
 unsafe impl Send for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {}
 unsafe impl Sync for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {}
+impl RenderingFragmentDensityMapAttachmentInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
@@ -49329,10 +55268,16 @@ pub struct PhysicalDeviceDynamicRenderingFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceDynamicRenderingFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceDynamicRenderingFeatures<'_> {}
+impl PhysicalDeviceDynamicRenderingFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDynamicRenderingFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDynamicRenderingFeatures<'a> {
@@ -49366,10 +55311,16 @@ pub struct CommandBufferInheritanceRenderingInfo<'a> {
 }
 unsafe impl Send for CommandBufferInheritanceRenderingInfo<'_> {}
 unsafe impl Sync for CommandBufferInheritanceRenderingInfo<'_> {}
+impl CommandBufferInheritanceRenderingInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CommandBufferInheritanceRenderingInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceRenderingInfo<'a> {
@@ -49427,10 +55378,16 @@ pub struct AttachmentSampleCountInfoAMD<'a> {
 }
 unsafe impl Send for AttachmentSampleCountInfoAMD<'_> {}
 unsafe impl Sync for AttachmentSampleCountInfoAMD<'_> {}
+impl AttachmentSampleCountInfoAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AttachmentSampleCountInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentSampleCountInfoAMD<'a> {
@@ -49471,10 +55428,16 @@ pub struct MultiviewPerViewAttributesInfoNVX<'a> {
 }
 unsafe impl Send for MultiviewPerViewAttributesInfoNVX<'_> {}
 unsafe impl Sync for MultiviewPerViewAttributesInfoNVX<'_> {}
+impl MultiviewPerViewAttributesInfoNVX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MultiviewPerViewAttributesInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MultiviewPerViewAttributesInfoNVX<'a> {
@@ -49511,10 +55474,16 @@ pub struct PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {}
+impl PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
@@ -49543,10 +55512,16 @@ pub struct ImageViewMinLodCreateInfoEXT<'a> {
 }
 unsafe impl Send for ImageViewMinLodCreateInfoEXT<'_> {}
 unsafe impl Sync for ImageViewMinLodCreateInfoEXT<'_> {}
+impl ImageViewMinLodCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageViewMinLodCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewMinLodCreateInfoEXT<'a> {
@@ -49575,10 +55550,16 @@ pub struct PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'_> {}
+impl PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -49637,10 +55618,16 @@ pub struct PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {}
+impl PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
@@ -49672,10 +55659,16 @@ pub struct PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {}
+impl PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
@@ -49707,10 +55700,16 @@ pub struct PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {}
+impl PhysicalDevicePipelineBinaryFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
@@ -49739,10 +55738,16 @@ pub struct DevicePipelineBinaryInternalCacheControlKHR<'a> {
 }
 unsafe impl Send for DevicePipelineBinaryInternalCacheControlKHR<'_> {}
 unsafe impl Sync for DevicePipelineBinaryInternalCacheControlKHR<'_> {}
+impl DevicePipelineBinaryInternalCacheControlKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DevicePipelineBinaryInternalCacheControlKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DevicePipelineBinaryInternalCacheControlKHR<'a> {
@@ -49774,10 +55779,16 @@ pub struct PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {}
+impl PhysicalDevicePipelineBinaryPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
@@ -49842,10 +55853,16 @@ pub struct PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {}
+impl PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
@@ -49888,10 +55905,16 @@ pub struct GraphicsPipelineLibraryCreateInfoEXT<'a> {
 }
 unsafe impl Send for GraphicsPipelineLibraryCreateInfoEXT<'_> {}
 unsafe impl Sync for GraphicsPipelineLibraryCreateInfoEXT<'_> {}
+impl GraphicsPipelineLibraryCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GraphicsPipelineLibraryCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineLibraryCreateInfoEXT<'a> {
@@ -49918,12 +55941,18 @@ pub struct PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM<'_> {}
+impl PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default
     for PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM<'_>
 {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -49964,10 +55993,16 @@ pub struct DataGraphPipelineNeuralStatisticsCreateInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineNeuralStatisticsCreateInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineNeuralStatisticsCreateInfoARM<'_> {}
+impl DataGraphPipelineNeuralStatisticsCreateInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineNeuralStatisticsCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineNeuralStatisticsCreateInfoARM<'a> {
@@ -49998,10 +56033,16 @@ pub struct DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'_> {}
+impl DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'a> {
@@ -50032,10 +56073,16 @@ pub struct PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
 }
 unsafe impl Send for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {}
 unsafe impl Sync for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {}
+impl PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
@@ -50071,10 +56118,16 @@ pub struct DescriptorSetBindingReferenceVALVE<'a> {
 }
 unsafe impl Send for DescriptorSetBindingReferenceVALVE<'_> {}
 unsafe impl Sync for DescriptorSetBindingReferenceVALVE<'_> {}
+impl DescriptorSetBindingReferenceVALVE<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorSetBindingReferenceVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetBindingReferenceVALVE<'a> {
@@ -50106,10 +56159,16 @@ pub struct DescriptorSetLayoutHostMappingInfoVALVE<'a> {
 }
 unsafe impl Send for DescriptorSetLayoutHostMappingInfoVALVE<'_> {}
 unsafe impl Sync for DescriptorSetLayoutHostMappingInfoVALVE<'_> {}
+impl DescriptorSetLayoutHostMappingInfoVALVE<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorSetLayoutHostMappingInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutHostMappingInfoVALVE<'a> {
@@ -50143,10 +56202,16 @@ pub struct PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {}
+impl PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
@@ -50194,10 +56259,16 @@ pub struct PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {}
+impl PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
@@ -50231,10 +56302,16 @@ pub struct PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {}
+impl PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
@@ -50266,10 +56343,16 @@ pub struct PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {}
+impl PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
@@ -50304,10 +56387,16 @@ pub struct PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
 }
 unsafe impl Send for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {}
 unsafe impl Sync for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {}
+impl PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
@@ -50350,10 +56439,16 @@ impl fmt::Debug for ShaderModuleIdentifierEXT<'_> {
             .finish()
     }
 }
+impl ShaderModuleIdentifierEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ShaderModuleIdentifierEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderModuleIdentifierEXT<'a> {
@@ -50386,10 +56481,16 @@ pub struct ImageCompressionControlEXT<'a> {
 }
 unsafe impl Send for ImageCompressionControlEXT<'_> {}
 unsafe impl Sync for ImageCompressionControlEXT<'_> {}
+impl ImageCompressionControlEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageCompressionControlEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCompressionControlEXT<'a> {
@@ -50427,10 +56528,16 @@ pub struct PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {}
+impl PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
@@ -50463,10 +56570,16 @@ pub struct ImageCompressionPropertiesEXT<'a> {
 }
 unsafe impl Send for ImageCompressionPropertiesEXT<'_> {}
 unsafe impl Sync for ImageCompressionPropertiesEXT<'_> {}
+impl ImageCompressionPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageCompressionPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCompressionPropertiesEXT<'a> {
@@ -50506,10 +56619,16 @@ pub struct PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_> {}
+impl PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -50549,10 +56668,16 @@ pub struct ImageSubresource2<'a> {
 }
 unsafe impl Send for ImageSubresource2<'_> {}
 unsafe impl Sync for ImageSubresource2<'_> {}
+impl ImageSubresource2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageSubresource2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageSubresource2<'a> {
@@ -50578,10 +56703,16 @@ pub struct SubresourceLayout2<'a> {
 }
 unsafe impl Send for SubresourceLayout2<'_> {}
 unsafe impl Sync for SubresourceLayout2<'_> {}
+impl SubresourceLayout2<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SubresourceLayout2<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubresourceLayout2<'a> {
@@ -50607,10 +56738,16 @@ pub struct RenderPassCreationControlEXT<'a> {
 }
 unsafe impl Send for RenderPassCreationControlEXT<'_> {}
 unsafe impl Sync for RenderPassCreationControlEXT<'_> {}
+impl RenderPassCreationControlEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassCreationControlEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreationControlEXT<'a> {
@@ -50633,10 +56770,16 @@ impl<'a> RenderPassCreationControlEXT<'a> {
 pub struct RenderPassCreationFeedbackInfoEXT {
     pub post_merge_subpass_count: u32,
 }
+impl RenderPassCreationFeedbackInfoEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for RenderPassCreationFeedbackInfoEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl RenderPassCreationFeedbackInfoEXT {
@@ -50659,10 +56802,16 @@ pub struct RenderPassCreationFeedbackCreateInfoEXT<'a> {
 }
 unsafe impl Send for RenderPassCreationFeedbackCreateInfoEXT<'_> {}
 unsafe impl Sync for RenderPassCreationFeedbackCreateInfoEXT<'_> {}
+impl RenderPassCreationFeedbackCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassCreationFeedbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreationFeedbackCreateInfoEXT<'a> {
@@ -50699,10 +56848,16 @@ impl fmt::Debug for RenderPassSubpassFeedbackInfoEXT {
             .finish()
     }
 }
+impl RenderPassSubpassFeedbackInfoEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for RenderPassSubpassFeedbackInfoEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl RenderPassSubpassFeedbackInfoEXT {
@@ -50741,10 +56896,16 @@ pub struct RenderPassSubpassFeedbackCreateInfoEXT<'a> {
 }
 unsafe impl Send for RenderPassSubpassFeedbackCreateInfoEXT<'_> {}
 unsafe impl Sync for RenderPassSubpassFeedbackCreateInfoEXT<'_> {}
+impl RenderPassSubpassFeedbackCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassSubpassFeedbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassSubpassFeedbackCreateInfoEXT<'a> {
@@ -50775,10 +56936,16 @@ pub struct PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {}
+impl PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
@@ -50839,10 +57006,16 @@ impl fmt::Debug for MicromapBuildInfoEXT<'_> {
             .finish()
     }
 }
+impl MicromapBuildInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MicromapBuildInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MicromapBuildInfoEXT<'a> {
@@ -50920,10 +57093,16 @@ pub struct AccelerationStructureGeometryMicromapDataKHR<'a> {
 }
 unsafe impl Send for AccelerationStructureGeometryMicromapDataKHR<'_> {}
 unsafe impl Sync for AccelerationStructureGeometryMicromapDataKHR<'_> {}
+impl AccelerationStructureGeometryMicromapDataKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureGeometryMicromapDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryMicromapDataKHR<'a> {
@@ -50981,10 +57160,16 @@ pub struct MicromapCreateInfoEXT<'a> {
 }
 unsafe impl Send for MicromapCreateInfoEXT<'_> {}
 unsafe impl Sync for MicromapCreateInfoEXT<'_> {}
+impl MicromapCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MicromapCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MicromapCreateInfoEXT<'a> {
@@ -51035,10 +57220,16 @@ pub struct MicromapVersionInfoEXT<'a> {
 }
 unsafe impl Send for MicromapVersionInfoEXT<'_> {}
 unsafe impl Sync for MicromapVersionInfoEXT<'_> {}
+impl MicromapVersionInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MicromapVersionInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MicromapVersionInfoEXT<'a> {
@@ -51066,10 +57257,16 @@ pub struct CopyMicromapInfoEXT<'a> {
 }
 unsafe impl Send for CopyMicromapInfoEXT<'_> {}
 unsafe impl Sync for CopyMicromapInfoEXT<'_> {}
+impl CopyMicromapInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyMicromapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMicromapInfoEXT<'a> {
@@ -51118,10 +57315,16 @@ impl fmt::Debug for CopyMicromapToMemoryInfoEXT<'_> {
             .finish()
     }
 }
+impl CopyMicromapToMemoryInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyMicromapToMemoryInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMicromapToMemoryInfoEXT<'a> {
@@ -51170,10 +57373,16 @@ impl fmt::Debug for CopyMemoryToMicromapInfoEXT<'_> {
             .finish()
     }
 }
+impl CopyMemoryToMicromapInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyMemoryToMicromapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToMicromapInfoEXT<'a> {
@@ -51211,10 +57420,16 @@ pub struct MicromapBuildSizesInfoEXT<'a> {
 }
 unsafe impl Send for MicromapBuildSizesInfoEXT<'_> {}
 unsafe impl Sync for MicromapBuildSizesInfoEXT<'_> {}
+impl MicromapBuildSizesInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MicromapBuildSizesInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MicromapBuildSizesInfoEXT<'a> {
@@ -51247,10 +57462,16 @@ pub struct MicromapUsageKHR {
     pub subdivision_level: u32,
     pub format: OpacityMicromapFormatKHR,
 }
+impl MicromapUsageKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for MicromapUsageKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl MicromapUsageKHR {
@@ -51280,10 +57501,16 @@ pub struct MicromapUsageEXT {
     pub subdivision_level: u32,
     pub format: u32,
 }
+impl MicromapUsageEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for MicromapUsageEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl MicromapUsageEXT {
@@ -51313,10 +57540,16 @@ pub struct MicromapTriangleKHR {
     pub subdivision_level: u16,
     pub format: u16,
 }
+impl MicromapTriangleKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for MicromapTriangleKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl MicromapTriangleKHR {
@@ -51349,10 +57582,16 @@ pub struct PhysicalDeviceOpacityMicromapFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {}
+impl PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapFeaturesKHR<'a> {
@@ -51383,10 +57622,16 @@ pub struct PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {}
+impl PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
@@ -51428,10 +57673,16 @@ pub struct PhysicalDeviceOpacityMicromapPropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {}
+impl PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapPropertiesKHR<'a> {
@@ -51488,10 +57739,16 @@ pub struct PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {}
+impl PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
@@ -51537,10 +57794,16 @@ pub struct AccelerationStructureTrianglesOpacityMicromapKHR<'a> {
 }
 unsafe impl Send for AccelerationStructureTrianglesOpacityMicromapKHR<'_> {}
 unsafe impl Sync for AccelerationStructureTrianglesOpacityMicromapKHR<'_> {}
+impl AccelerationStructureTrianglesOpacityMicromapKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesOpacityMicromapKHR<'a> {
@@ -51619,10 +57882,16 @@ impl fmt::Debug for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
             .finish()
     }
 }
+impl AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
@@ -51694,10 +57963,17 @@ unsafe impl Send for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
 #[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
 #[cfg(feature = "provisional")]
+impl PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -51737,10 +58013,17 @@ unsafe impl Send for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {}
 #[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {}
 #[cfg(feature = "provisional")]
+impl PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -51837,10 +58120,17 @@ impl fmt::Debug for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
     }
 }
 #[cfg(feature = "provisional")]
+impl AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -51964,10 +58254,16 @@ pub struct PipelinePropertiesIdentifierEXT<'a> {
 }
 unsafe impl Send for PipelinePropertiesIdentifierEXT<'_> {}
 unsafe impl Sync for PipelinePropertiesIdentifierEXT<'_> {}
+impl PipelinePropertiesIdentifierEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelinePropertiesIdentifierEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelinePropertiesIdentifierEXT<'a> {
@@ -51993,10 +58289,16 @@ pub struct PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {}
+impl PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
@@ -52028,10 +58330,16 @@ pub struct PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_> {}
+impl PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -52071,10 +58379,16 @@ pub struct ExternalMemoryAcquireUnmodifiedEXT<'a> {
 }
 unsafe impl Send for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
 unsafe impl Sync for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
+impl ExternalMemoryAcquireUnmodifiedEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalMemoryAcquireUnmodifiedEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryAcquireUnmodifiedEXT<'a> {
@@ -52104,10 +58418,16 @@ pub struct ExportMetalObjectCreateInfoEXT<'a> {
 }
 unsafe impl Send for ExportMetalObjectCreateInfoEXT<'_> {}
 unsafe impl Sync for ExportMetalObjectCreateInfoEXT<'_> {}
+impl ExportMetalObjectCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportMetalObjectCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalObjectCreateInfoEXT<'a> {
@@ -52139,10 +58459,16 @@ pub struct ExportMetalObjectsInfoEXT<'a> {
 }
 unsafe impl Send for ExportMetalObjectsInfoEXT<'_> {}
 unsafe impl Sync for ExportMetalObjectsInfoEXT<'_> {}
+impl ExportMetalObjectsInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportMetalObjectsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalObjectsInfoEXT<'a> {
@@ -52162,10 +58488,16 @@ pub struct ExportMetalDeviceInfoEXT<'a> {
 }
 unsafe impl Send for ExportMetalDeviceInfoEXT<'_> {}
 unsafe impl Sync for ExportMetalDeviceInfoEXT<'_> {}
+impl ExportMetalDeviceInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportMetalDeviceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalDeviceInfoEXT<'a> {
@@ -52193,10 +58525,16 @@ pub struct ExportMetalCommandQueueInfoEXT<'a> {
 }
 unsafe impl Send for ExportMetalCommandQueueInfoEXT<'_> {}
 unsafe impl Sync for ExportMetalCommandQueueInfoEXT<'_> {}
+impl ExportMetalCommandQueueInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportMetalCommandQueueInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalCommandQueueInfoEXT<'a> {
@@ -52229,10 +58567,16 @@ pub struct ExportMetalBufferInfoEXT<'a> {
 }
 unsafe impl Send for ExportMetalBufferInfoEXT<'_> {}
 unsafe impl Sync for ExportMetalBufferInfoEXT<'_> {}
+impl ExportMetalBufferInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportMetalBufferInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalBufferInfoEXT<'a> {
@@ -52264,10 +58608,16 @@ pub struct ImportMetalBufferInfoEXT<'a> {
 }
 unsafe impl Send for ImportMetalBufferInfoEXT<'_> {}
 unsafe impl Sync for ImportMetalBufferInfoEXT<'_> {}
+impl ImportMetalBufferInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportMetalBufferInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalBufferInfoEXT<'a> {
@@ -52298,10 +58648,16 @@ pub struct ExportMetalTextureInfoEXT<'a> {
 }
 unsafe impl Send for ExportMetalTextureInfoEXT<'_> {}
 unsafe impl Sync for ExportMetalTextureInfoEXT<'_> {}
+impl ExportMetalTextureInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportMetalTextureInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalTextureInfoEXT<'a> {
@@ -52349,10 +58705,16 @@ pub struct ImportMetalTextureInfoEXT<'a> {
 }
 unsafe impl Send for ImportMetalTextureInfoEXT<'_> {}
 unsafe impl Sync for ImportMetalTextureInfoEXT<'_> {}
+impl ImportMetalTextureInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportMetalTextureInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalTextureInfoEXT<'a> {
@@ -52385,10 +58747,16 @@ pub struct ExportMetalIOSurfaceInfoEXT<'a> {
 }
 unsafe impl Send for ExportMetalIOSurfaceInfoEXT<'_> {}
 unsafe impl Sync for ExportMetalIOSurfaceInfoEXT<'_> {}
+impl ExportMetalIOSurfaceInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportMetalIOSurfaceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalIOSurfaceInfoEXT<'a> {
@@ -52420,10 +58788,16 @@ pub struct ImportMetalIOSurfaceInfoEXT<'a> {
 }
 unsafe impl Send for ImportMetalIOSurfaceInfoEXT<'_> {}
 unsafe impl Sync for ImportMetalIOSurfaceInfoEXT<'_> {}
+impl ImportMetalIOSurfaceInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportMetalIOSurfaceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalIOSurfaceInfoEXT<'a> {
@@ -52452,10 +58826,16 @@ pub struct ExportMetalSharedEventInfoEXT<'a> {
 }
 unsafe impl Send for ExportMetalSharedEventInfoEXT<'_> {}
 unsafe impl Sync for ExportMetalSharedEventInfoEXT<'_> {}
+impl ExportMetalSharedEventInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExportMetalSharedEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalSharedEventInfoEXT<'a> {
@@ -52492,10 +58872,16 @@ pub struct ImportMetalSharedEventInfoEXT<'a> {
 }
 unsafe impl Send for ImportMetalSharedEventInfoEXT<'_> {}
 unsafe impl Sync for ImportMetalSharedEventInfoEXT<'_> {}
+impl ImportMetalSharedEventInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportMetalSharedEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalSharedEventInfoEXT<'a> {
@@ -52523,10 +58909,16 @@ pub struct PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {}
+impl PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
@@ -52558,10 +58950,16 @@ pub struct PhysicalDevicePipelineRobustnessFeatures<'a> {
 }
 unsafe impl Send for PhysicalDevicePipelineRobustnessFeatures<'_> {}
 unsafe impl Sync for PhysicalDevicePipelineRobustnessFeatures<'_> {}
+impl PhysicalDevicePipelineRobustnessFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePipelineRobustnessFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineRobustnessFeatures<'a> {
@@ -52593,10 +58991,16 @@ pub struct PipelineRobustnessCreateInfo<'a> {
 }
 unsafe impl Send for PipelineRobustnessCreateInfo<'_> {}
 unsafe impl Sync for PipelineRobustnessCreateInfo<'_> {}
+impl PipelineRobustnessCreateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineRobustnessCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRobustnessCreateInfo<'a> {
@@ -52644,10 +59048,16 @@ pub struct PhysicalDevicePipelineRobustnessProperties<'a> {
 }
 unsafe impl Send for PhysicalDevicePipelineRobustnessProperties<'_> {}
 unsafe impl Sync for PhysicalDevicePipelineRobustnessProperties<'_> {}
+impl PhysicalDevicePipelineRobustnessProperties<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePipelineRobustnessProperties<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineRobustnessProperties<'a> {
@@ -52707,10 +59117,16 @@ pub struct ImageViewSampleWeightCreateInfoQCOM<'a> {
 }
 unsafe impl Send for ImageViewSampleWeightCreateInfoQCOM<'_> {}
 unsafe impl Sync for ImageViewSampleWeightCreateInfoQCOM<'_> {}
+impl ImageViewSampleWeightCreateInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageViewSampleWeightCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewSampleWeightCreateInfoQCOM<'a> {
@@ -52747,10 +59163,16 @@ pub struct PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {}
+impl PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'a> {
@@ -52785,10 +59207,16 @@ pub struct PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {}
+impl PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'a> {
@@ -52821,10 +59249,16 @@ pub struct PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {}
+impl PhysicalDeviceImageProcessingFeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
@@ -52866,10 +59300,16 @@ pub struct PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {}
+impl PhysicalDeviceImageProcessingPropertiesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
@@ -52915,10 +59355,16 @@ pub struct PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {}
+impl PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
@@ -52949,10 +59395,16 @@ pub struct TilePropertiesQCOM<'a> {
 }
 unsafe impl Send for TilePropertiesQCOM<'_> {}
 unsafe impl Sync for TilePropertiesQCOM<'_> {}
+impl TilePropertiesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TilePropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TilePropertiesQCOM<'a> {
@@ -52988,10 +59440,16 @@ pub struct TileMemoryBindInfoQCOM<'a> {
 }
 unsafe impl Send for TileMemoryBindInfoQCOM<'_> {}
 unsafe impl Sync for TileMemoryBindInfoQCOM<'_> {}
+impl TileMemoryBindInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TileMemoryBindInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TileMemoryBindInfoQCOM<'a> {
@@ -53018,10 +59476,16 @@ pub struct PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
 }
 unsafe impl Send for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {}
 unsafe impl Sync for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {}
+impl PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
@@ -53051,10 +59515,16 @@ pub struct AmigoProfilingSubmitInfoSEC<'a> {
 }
 unsafe impl Send for AmigoProfilingSubmitInfoSEC<'_> {}
 unsafe impl Sync for AmigoProfilingSubmitInfoSEC<'_> {}
+impl AmigoProfilingSubmitInfoSEC<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AmigoProfilingSubmitInfoSEC<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AmigoProfilingSubmitInfoSEC<'a> {
@@ -53086,10 +59556,16 @@ pub struct PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {}
+impl PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
@@ -53127,10 +59603,16 @@ pub struct AttachmentFeedbackLoopInfoEXT<'a> {
 }
 unsafe impl Send for AttachmentFeedbackLoopInfoEXT<'_> {}
 unsafe impl Sync for AttachmentFeedbackLoopInfoEXT<'_> {}
+impl AttachmentFeedbackLoopInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AttachmentFeedbackLoopInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentFeedbackLoopInfoEXT<'a> {
@@ -53157,10 +59639,16 @@ pub struct PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {}
+impl PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
@@ -53192,10 +59680,16 @@ pub struct RenderingAttachmentFlagsInfoKHR<'a> {
 }
 unsafe impl Send for RenderingAttachmentFlagsInfoKHR<'_> {}
 unsafe impl Sync for RenderingAttachmentFlagsInfoKHR<'_> {}
+impl RenderingAttachmentFlagsInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderingAttachmentFlagsInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentFlagsInfoKHR<'a> {
@@ -53224,10 +59718,16 @@ pub struct ResolveImageModeInfoKHR<'a> {
 }
 unsafe impl Send for ResolveImageModeInfoKHR<'_> {}
 unsafe impl Sync for ResolveImageModeInfoKHR<'_> {}
+impl ResolveImageModeInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ResolveImageModeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ResolveImageModeInfoKHR<'a> {
@@ -53267,10 +59767,16 @@ pub struct DeviceAddressBindingCallbackDataEXT<'a> {
 }
 unsafe impl Send for DeviceAddressBindingCallbackDataEXT<'_> {}
 unsafe impl Sync for DeviceAddressBindingCallbackDataEXT<'_> {}
+impl DeviceAddressBindingCallbackDataEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceAddressBindingCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceAddressBindingCallbackDataEXT<'a> {
@@ -53315,10 +59821,16 @@ pub struct PhysicalDeviceOpticalFlowFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceOpticalFlowFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceOpticalFlowFeaturesNV<'_> {}
+impl PhysicalDeviceOpticalFlowFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceOpticalFlowFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpticalFlowFeaturesNV<'a> {
@@ -53356,10 +59868,16 @@ pub struct PhysicalDeviceOpticalFlowPropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceOpticalFlowPropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceOpticalFlowPropertiesNV<'_> {}
+impl PhysicalDeviceOpticalFlowPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceOpticalFlowPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpticalFlowPropertiesNV<'a> {
@@ -53442,10 +59960,16 @@ pub struct OpticalFlowImageFormatInfoNV<'a> {
 }
 unsafe impl Send for OpticalFlowImageFormatInfoNV<'_> {}
 unsafe impl Sync for OpticalFlowImageFormatInfoNV<'_> {}
+impl OpticalFlowImageFormatInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for OpticalFlowImageFormatInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowImageFormatInfoNV<'a> {
@@ -53473,10 +59997,16 @@ pub struct OpticalFlowImageFormatPropertiesNV<'a> {
 }
 unsafe impl Send for OpticalFlowImageFormatPropertiesNV<'_> {}
 unsafe impl Sync for OpticalFlowImageFormatPropertiesNV<'_> {}
+impl OpticalFlowImageFormatPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for OpticalFlowImageFormatPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowImageFormatPropertiesNV<'a> {
@@ -53510,10 +60040,16 @@ pub struct OpticalFlowSessionCreateInfoNV<'a> {
 }
 unsafe impl Send for OpticalFlowSessionCreateInfoNV<'_> {}
 unsafe impl Sync for OpticalFlowSessionCreateInfoNV<'_> {}
+impl OpticalFlowSessionCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for OpticalFlowSessionCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowSessionCreateInfoNV<'a> {
@@ -53581,10 +60117,16 @@ pub struct OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
 }
 unsafe impl Send for OpticalFlowSessionCreatePrivateDataInfoNV<'_> {}
 unsafe impl Sync for OpticalFlowSessionCreatePrivateDataInfoNV<'_> {}
+impl OpticalFlowSessionCreatePrivateDataInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for OpticalFlowSessionCreatePrivateDataInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
@@ -53627,10 +60169,16 @@ pub struct OpticalFlowExecuteInfoNV<'a> {
 }
 unsafe impl Send for OpticalFlowExecuteInfoNV<'_> {}
 unsafe impl Sync for OpticalFlowExecuteInfoNV<'_> {}
+impl OpticalFlowExecuteInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for OpticalFlowExecuteInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowExecuteInfoNV<'a> {
@@ -53663,10 +60211,16 @@ pub struct PhysicalDeviceFaultFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceFaultFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceFaultFeaturesEXT<'_> {}
+impl PhysicalDeviceFaultFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFaultFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultFeaturesEXT<'a> {
@@ -53696,10 +60250,16 @@ pub struct DeviceFaultAddressInfoKHR {
     pub reported_address: DeviceAddress,
     pub address_precision: DeviceSize,
 }
+impl DeviceFaultAddressInfoKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DeviceFaultAddressInfoKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DeviceFaultAddressInfoKHR {
@@ -53738,10 +60298,16 @@ impl fmt::Debug for DeviceFaultVendorInfoKHR {
             .finish()
     }
 }
+impl DeviceFaultVendorInfoKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DeviceFaultVendorInfoKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DeviceFaultVendorInfoKHR {
@@ -53799,10 +60365,16 @@ impl fmt::Debug for DeviceFaultInfoKHR<'_> {
             .finish()
     }
 }
+impl DeviceFaultInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceFaultInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultInfoKHR<'a> {
@@ -53863,10 +60435,16 @@ pub struct DeviceFaultDebugInfoKHR<'a> {
 }
 unsafe impl Send for DeviceFaultDebugInfoKHR<'_> {}
 unsafe impl Sync for DeviceFaultDebugInfoKHR<'_> {}
+impl DeviceFaultDebugInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceFaultDebugInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultDebugInfoKHR<'a> {
@@ -53895,10 +60473,16 @@ pub struct DeviceFaultCountsEXT<'a> {
 }
 unsafe impl Send for DeviceFaultCountsEXT<'_> {}
 unsafe impl Sync for DeviceFaultCountsEXT<'_> {}
+impl DeviceFaultCountsEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceFaultCountsEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultCountsEXT<'a> {
@@ -53949,10 +60533,16 @@ impl fmt::Debug for DeviceFaultInfoEXT<'_> {
             .finish()
     }
 }
+impl DeviceFaultInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceFaultInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultInfoEXT<'a> {
@@ -54004,10 +60594,16 @@ pub struct DeviceFaultVendorBinaryHeaderVersionOneKHR {
     pub engine_version: u32,
     pub api_version: u32,
 }
+impl DeviceFaultVendorBinaryHeaderVersionOneKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DeviceFaultVendorBinaryHeaderVersionOneKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DeviceFaultVendorBinaryHeaderVersionOneKHR {
@@ -54086,10 +60682,16 @@ pub struct PhysicalDeviceFaultFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceFaultFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceFaultFeaturesKHR<'_> {}
+impl PhysicalDeviceFaultFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFaultFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultFeaturesKHR<'a> {
@@ -54135,10 +60737,16 @@ pub struct PhysicalDeviceFaultPropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceFaultPropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceFaultPropertiesKHR<'_> {}
+impl PhysicalDeviceFaultPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFaultPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultPropertiesKHR<'a> {
@@ -54165,10 +60773,16 @@ pub struct PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {}
+impl PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
@@ -54205,10 +60819,16 @@ pub struct DepthBiasInfoEXT<'a> {
 }
 unsafe impl Send for DepthBiasInfoEXT<'_> {}
 unsafe impl Sync for DepthBiasInfoEXT<'_> {}
+impl DepthBiasInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DepthBiasInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DepthBiasInfoEXT<'a> {
@@ -54245,10 +60865,16 @@ pub struct DepthBiasRepresentationInfoEXT<'a> {
 }
 unsafe impl Send for DepthBiasRepresentationInfoEXT<'_> {}
 unsafe impl Sync for DepthBiasRepresentationInfoEXT<'_> {}
+impl DepthBiasRepresentationInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DepthBiasRepresentationInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DepthBiasRepresentationInfoEXT<'a> {
@@ -54286,10 +60912,16 @@ pub struct DecompressMemoryRegionNV {
     pub decompressed_size: DeviceSize,
     pub decompression_method: MemoryDecompressionMethodFlagsEXT,
 }
+impl DecompressMemoryRegionNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DecompressMemoryRegionNV {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DecompressMemoryRegionNV {
@@ -54333,10 +60965,16 @@ pub struct DecompressMemoryRegionEXT {
     pub compressed_size: DeviceSize,
     pub decompressed_size: DeviceSize,
 }
+impl DecompressMemoryRegionEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DecompressMemoryRegionEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DecompressMemoryRegionEXT {
@@ -54376,10 +61014,16 @@ pub struct DecompressMemoryInfoEXT<'a> {
 }
 unsafe impl Send for DecompressMemoryInfoEXT<'_> {}
 unsafe impl Sync for DecompressMemoryInfoEXT<'_> {}
+impl DecompressMemoryInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DecompressMemoryInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DecompressMemoryInfoEXT<'a> {
@@ -54416,10 +61060,16 @@ pub struct PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {}
+impl PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
@@ -54460,10 +61110,16 @@ pub struct PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {}
+impl PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
@@ -54503,10 +61159,16 @@ pub struct FrameBoundaryEXT<'a> {
 }
 unsafe impl Send for FrameBoundaryEXT<'_> {}
 unsafe impl Sync for FrameBoundaryEXT<'_> {}
+impl FrameBoundaryEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for FrameBoundaryEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FrameBoundaryEXT<'a> {
@@ -54564,10 +61226,16 @@ pub struct PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {}
+impl PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
@@ -54596,10 +61264,16 @@ pub struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_> {}
+impl PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -54639,10 +61313,16 @@ pub struct PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'_> {}
+impl PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'a> {
@@ -54677,10 +61357,16 @@ pub struct SurfacePresentModeKHR<'a> {
 }
 unsafe impl Send for SurfacePresentModeKHR<'_> {}
 unsafe impl Sync for SurfacePresentModeKHR<'_> {}
+impl SurfacePresentModeKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SurfacePresentModeKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfacePresentModeKHR<'a> {
@@ -54711,10 +61397,16 @@ pub struct SurfacePresentScalingCapabilitiesKHR<'a> {
 }
 unsafe impl Send for SurfacePresentScalingCapabilitiesKHR<'_> {}
 unsafe impl Sync for SurfacePresentScalingCapabilitiesKHR<'_> {}
+impl SurfacePresentScalingCapabilitiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SurfacePresentScalingCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfacePresentScalingCapabilitiesKHR<'a> {
@@ -54771,10 +61463,16 @@ pub struct SurfacePresentModeCompatibilityKHR<'a> {
 }
 unsafe impl Send for SurfacePresentModeCompatibilityKHR<'_> {}
 unsafe impl Sync for SurfacePresentModeCompatibilityKHR<'_> {}
+impl SurfacePresentModeCompatibilityKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SurfacePresentModeCompatibilityKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfacePresentModeCompatibilityKHR<'a> {
@@ -54802,10 +61500,16 @@ pub struct PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'_> {}
+impl PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'a> {
@@ -54838,10 +61542,16 @@ pub struct SwapchainPresentFenceInfoKHR<'a> {
 }
 unsafe impl Send for SwapchainPresentFenceInfoKHR<'_> {}
 unsafe impl Sync for SwapchainPresentFenceInfoKHR<'_> {}
+impl SwapchainPresentFenceInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SwapchainPresentFenceInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentFenceInfoKHR<'a> {
@@ -54870,10 +61580,16 @@ pub struct SwapchainPresentModesCreateInfoKHR<'a> {
 }
 unsafe impl Send for SwapchainPresentModesCreateInfoKHR<'_> {}
 unsafe impl Sync for SwapchainPresentModesCreateInfoKHR<'_> {}
+impl SwapchainPresentModesCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SwapchainPresentModesCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentModesCreateInfoKHR<'a> {
@@ -54902,10 +61618,16 @@ pub struct SwapchainPresentModeInfoKHR<'a> {
 }
 unsafe impl Send for SwapchainPresentModeInfoKHR<'_> {}
 unsafe impl Sync for SwapchainPresentModeInfoKHR<'_> {}
+impl SwapchainPresentModeInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SwapchainPresentModeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentModeInfoKHR<'a> {
@@ -54935,10 +61657,16 @@ pub struct SwapchainPresentScalingCreateInfoKHR<'a> {
 }
 unsafe impl Send for SwapchainPresentScalingCreateInfoKHR<'_> {}
 unsafe impl Sync for SwapchainPresentScalingCreateInfoKHR<'_> {}
+impl SwapchainPresentScalingCreateInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SwapchainPresentScalingCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentScalingCreateInfoKHR<'a> {
@@ -54977,10 +61705,16 @@ pub struct ReleaseSwapchainImagesInfoKHR<'a> {
 }
 unsafe impl Send for ReleaseSwapchainImagesInfoKHR<'_> {}
 unsafe impl Sync for ReleaseSwapchainImagesInfoKHR<'_> {}
+impl ReleaseSwapchainImagesInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ReleaseSwapchainImagesInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ReleaseSwapchainImagesInfoKHR<'a> {
@@ -55015,10 +61749,16 @@ pub struct PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {}
+impl PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
@@ -55066,10 +61806,16 @@ pub struct PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'_> {}
+impl PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'a> {
@@ -55104,10 +61850,16 @@ pub struct PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {}
+impl PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
@@ -55143,10 +61895,16 @@ pub struct PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'_> {}
+impl PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'a> {
@@ -55189,10 +61947,16 @@ pub struct PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {}
+impl PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
@@ -55227,10 +61991,16 @@ pub struct PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {}
+impl PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
@@ -55267,10 +62037,16 @@ pub struct PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {}
+impl PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
@@ -55334,10 +62110,16 @@ impl fmt::Debug for DirectDriverLoadingInfoLUNARG<'_> {
             .finish()
     }
 }
+impl DirectDriverLoadingInfoLUNARG<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DirectDriverLoadingInfoLUNARG<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DirectDriverLoadingInfoLUNARG<'a> {
@@ -55373,10 +62155,16 @@ pub struct DirectDriverLoadingListLUNARG<'a> {
 }
 unsafe impl Send for DirectDriverLoadingListLUNARG<'_> {}
 unsafe impl Sync for DirectDriverLoadingListLUNARG<'_> {}
+impl DirectDriverLoadingListLUNARG<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DirectDriverLoadingListLUNARG<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DirectDriverLoadingListLUNARG<'a> {
@@ -55409,10 +62197,16 @@ pub struct PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {}
+impl PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
@@ -55447,10 +62241,16 @@ pub struct PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {}
+impl PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
@@ -55483,10 +62283,16 @@ pub struct DeviceImageSubresourceInfo<'a> {
 }
 unsafe impl Send for DeviceImageSubresourceInfo<'_> {}
 unsafe impl Sync for DeviceImageSubresourceInfo<'_> {}
+impl DeviceImageSubresourceInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceImageSubresourceInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceImageSubresourceInfo<'a> {
@@ -55519,10 +62325,16 @@ pub struct PhysicalDeviceShaderCorePropertiesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderCorePropertiesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderCorePropertiesARM<'_> {}
+impl PhysicalDeviceShaderCorePropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCorePropertiesARM<'a> {
@@ -55559,10 +62371,16 @@ pub struct PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {}
+impl PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
@@ -55601,10 +62419,16 @@ pub struct MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
 }
 unsafe impl Send for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {}
 unsafe impl Sync for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {}
+impl MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
@@ -55637,10 +62461,16 @@ pub struct QueryLowLatencySupportNV<'a> {
 }
 unsafe impl Send for QueryLowLatencySupportNV<'_> {}
 unsafe impl Sync for QueryLowLatencySupportNV<'_> {}
+impl QueryLowLatencySupportNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueryLowLatencySupportNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryLowLatencySupportNV<'a> {
@@ -55670,10 +62500,16 @@ pub struct MemoryMapInfo<'a> {
 }
 unsafe impl Send for MemoryMapInfo<'_> {}
 unsafe impl Sync for MemoryMapInfo<'_> {}
+impl MemoryMapInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryMapInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMapInfo<'a> {
@@ -55715,10 +62551,16 @@ pub struct MemoryUnmapInfo<'a> {
 }
 unsafe impl Send for MemoryUnmapInfo<'_> {}
 unsafe impl Sync for MemoryUnmapInfo<'_> {}
+impl MemoryUnmapInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryUnmapInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryUnmapInfo<'a> {
@@ -55749,10 +62591,16 @@ pub struct PhysicalDeviceShaderObjectFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderObjectFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderObjectFeaturesEXT<'_> {}
+impl PhysicalDeviceShaderObjectFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderObjectFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderObjectFeaturesEXT<'a> {
@@ -55781,10 +62629,16 @@ pub struct PhysicalDeviceShaderObjectPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderObjectPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderObjectPropertiesEXT<'_> {}
+impl PhysicalDeviceShaderObjectPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderObjectPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderObjectPropertiesEXT<'a> {
@@ -55828,10 +62682,16 @@ pub struct ShaderCreateInfoEXT<'a> {
 }
 unsafe impl Send for ShaderCreateInfoEXT<'_> {}
 unsafe impl Sync for ShaderCreateInfoEXT<'_> {}
+impl ShaderCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ShaderCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderCreateInfoEXT<'a> {
@@ -55910,10 +62770,16 @@ pub struct PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {}
+impl PhysicalDeviceShaderTileImageFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
@@ -55963,10 +62829,16 @@ pub struct PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {}
+impl PhysicalDeviceShaderTileImagePropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
@@ -56019,10 +62891,16 @@ pub struct ImportScreenBufferInfoQNX<'a> {
 }
 unsafe impl Send for ImportScreenBufferInfoQNX<'_> {}
 unsafe impl Sync for ImportScreenBufferInfoQNX<'_> {}
+impl ImportScreenBufferInfoQNX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportScreenBufferInfoQNX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportScreenBufferInfoQNX<'a> {
@@ -56050,10 +62928,16 @@ pub struct ScreenBufferPropertiesQNX<'a> {
 }
 unsafe impl Send for ScreenBufferPropertiesQNX<'_> {}
 unsafe impl Sync for ScreenBufferPropertiesQNX<'_> {}
+impl ScreenBufferPropertiesQNX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ScreenBufferPropertiesQNX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ScreenBufferPropertiesQNX<'a> {
@@ -56092,10 +62976,16 @@ pub struct ScreenBufferFormatPropertiesQNX<'a> {
 }
 unsafe impl Send for ScreenBufferFormatPropertiesQNX<'_> {}
 unsafe impl Sync for ScreenBufferFormatPropertiesQNX<'_> {}
+impl ScreenBufferFormatPropertiesQNX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ScreenBufferFormatPropertiesQNX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ScreenBufferFormatPropertiesQNX<'a> {
@@ -56168,10 +63058,16 @@ pub struct ExternalFormatQNX<'a> {
 }
 unsafe impl Send for ExternalFormatQNX<'_> {}
 unsafe impl Sync for ExternalFormatQNX<'_> {}
+impl ExternalFormatQNX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalFormatQNX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFormatQNX<'a> {
@@ -56199,10 +63095,16 @@ pub struct PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
 }
 unsafe impl Send for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {}
 unsafe impl Sync for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {}
+impl PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
@@ -56238,10 +63140,16 @@ pub struct PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {}
+impl PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
@@ -56290,10 +63198,16 @@ pub struct CooperativeMatrixPropertiesKHR<'a> {
 }
 unsafe impl Send for CooperativeMatrixPropertiesKHR<'_> {}
 unsafe impl Sync for CooperativeMatrixPropertiesKHR<'_> {}
+impl CooperativeMatrixPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CooperativeMatrixPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixPropertiesKHR<'a> {
@@ -56359,10 +63273,16 @@ pub struct PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {}
+impl PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
@@ -56396,10 +63316,16 @@ pub struct PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'_> {}
+impl PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'a> {
@@ -56444,10 +63370,17 @@ unsafe impl Send for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {}
 #[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {}
 #[cfg(feature = "provisional")]
+impl PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -56532,10 +63465,17 @@ unsafe impl Send for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
 #[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
 #[cfg(feature = "provisional")]
+impl PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -56583,10 +63523,17 @@ unsafe impl Send for ExecutionGraphPipelineCreateInfoAMDX<'_> {}
 #[cfg(feature = "provisional")]
 unsafe impl Sync for ExecutionGraphPipelineCreateInfoAMDX<'_> {}
 #[cfg(feature = "provisional")]
+impl ExecutionGraphPipelineCreateInfoAMDX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -56645,10 +63592,17 @@ unsafe impl Send for PipelineShaderStageNodeCreateInfoAMDX<'_> {}
 #[cfg(feature = "provisional")]
 unsafe impl Sync for PipelineShaderStageNodeCreateInfoAMDX<'_> {}
 #[cfg(feature = "provisional")]
+impl PipelineShaderStageNodeCreateInfoAMDX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PipelineShaderStageNodeCreateInfoAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -56701,10 +63655,17 @@ unsafe impl Send for ExecutionGraphPipelineScratchSizeAMDX<'_> {}
 #[cfg(feature = "provisional")]
 unsafe impl Sync for ExecutionGraphPipelineScratchSizeAMDX<'_> {}
 #[cfg(feature = "provisional")]
+impl ExecutionGraphPipelineScratchSizeAMDX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for ExecutionGraphPipelineScratchSizeAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -56753,10 +63714,17 @@ impl fmt::Debug for DispatchGraphInfoAMDX {
     }
 }
 #[cfg(feature = "provisional")]
+impl DispatchGraphInfoAMDX {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for DispatchGraphInfoAMDX {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -56804,10 +63772,17 @@ impl fmt::Debug for DispatchGraphCountInfoAMDX {
     }
 }
 #[cfg(feature = "provisional")]
+impl DispatchGraphCountInfoAMDX {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for DispatchGraphCountInfoAMDX {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -56841,10 +63816,16 @@ pub struct PhysicalDeviceAntiLagFeaturesAMD<'a> {
 }
 unsafe impl Send for PhysicalDeviceAntiLagFeaturesAMD<'_> {}
 unsafe impl Sync for PhysicalDeviceAntiLagFeaturesAMD<'_> {}
+impl PhysicalDeviceAntiLagFeaturesAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceAntiLagFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAntiLagFeaturesAMD<'a> {
@@ -56874,10 +63855,16 @@ pub struct AntiLagDataAMD<'a> {
 }
 unsafe impl Send for AntiLagDataAMD<'_> {}
 unsafe impl Sync for AntiLagDataAMD<'_> {}
+impl AntiLagDataAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AntiLagDataAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AntiLagDataAMD<'a> {
@@ -56917,10 +63904,16 @@ pub struct AntiLagPresentationInfoAMD<'a> {
 }
 unsafe impl Send for AntiLagPresentationInfoAMD<'_> {}
 unsafe impl Sync for AntiLagPresentationInfoAMD<'_> {}
+impl AntiLagPresentationInfoAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AntiLagPresentationInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AntiLagPresentationInfoAMD<'a> {
@@ -56951,10 +63944,16 @@ pub struct BindMemoryStatus<'a> {
 }
 unsafe impl Send for BindMemoryStatus<'_> {}
 unsafe impl Sync for BindMemoryStatus<'_> {}
+impl BindMemoryStatus<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindMemoryStatus<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindMemoryStatus<'a> {
@@ -56982,10 +63981,16 @@ pub struct PhysicalDeviceTileMemoryHeapFeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'_> {}
+impl PhysicalDeviceTileMemoryHeapFeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'a> {
@@ -57015,10 +64020,16 @@ pub struct PhysicalDeviceTileMemoryHeapPropertiesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'_> {}
+impl PhysicalDeviceTileMemoryHeapPropertiesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'a> {
@@ -57054,10 +64065,16 @@ pub struct TileMemorySizeInfoQCOM<'a> {
 }
 unsafe impl Send for TileMemorySizeInfoQCOM<'_> {}
 unsafe impl Sync for TileMemorySizeInfoQCOM<'_> {}
+impl TileMemorySizeInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TileMemorySizeInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TileMemorySizeInfoQCOM<'a> {
@@ -57087,10 +64104,16 @@ pub struct TileMemoryRequirementsQCOM<'a> {
 }
 unsafe impl Send for TileMemoryRequirementsQCOM<'_> {}
 unsafe impl Sync for TileMemoryRequirementsQCOM<'_> {}
+impl TileMemoryRequirementsQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TileMemoryRequirementsQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TileMemoryRequirementsQCOM<'a> {
@@ -57128,10 +64151,16 @@ pub struct BindDescriptorSetsInfo<'a> {
 }
 unsafe impl Send for BindDescriptorSetsInfo<'_> {}
 unsafe impl Sync for BindDescriptorSetsInfo<'_> {}
+impl BindDescriptorSetsInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindDescriptorSetsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindDescriptorSetsInfo<'a> {
@@ -57183,10 +64212,16 @@ pub struct PushConstantsInfo<'a> {
 }
 unsafe impl Send for PushConstantsInfo<'_> {}
 unsafe impl Sync for PushConstantsInfo<'_> {}
+impl PushConstantsInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PushConstantsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushConstantsInfo<'a> {
@@ -57232,10 +64267,16 @@ pub struct PushDescriptorSetInfo<'a> {
 }
 unsafe impl Send for PushDescriptorSetInfo<'_> {}
 unsafe impl Sync for PushDescriptorSetInfo<'_> {}
+impl PushDescriptorSetInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PushDescriptorSetInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushDescriptorSetInfo<'a> {
@@ -57280,10 +64321,16 @@ pub struct PushDescriptorSetWithTemplateInfo<'a> {
 }
 unsafe impl Send for PushDescriptorSetWithTemplateInfo<'_> {}
 unsafe impl Sync for PushDescriptorSetWithTemplateInfo<'_> {}
+impl PushDescriptorSetWithTemplateInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PushDescriptorSetWithTemplateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushDescriptorSetWithTemplateInfo<'a> {
@@ -57332,10 +64379,16 @@ pub struct SetDescriptorBufferOffsetsInfoEXT<'a> {
 }
 unsafe impl Send for SetDescriptorBufferOffsetsInfoEXT<'_> {}
 unsafe impl Sync for SetDescriptorBufferOffsetsInfoEXT<'_> {}
+impl SetDescriptorBufferOffsetsInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SetDescriptorBufferOffsetsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SetDescriptorBufferOffsetsInfoEXT<'a> {
@@ -57385,10 +64438,16 @@ pub struct BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
 }
 unsafe impl Send for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {}
 unsafe impl Sync for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {}
+impl BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
@@ -57425,10 +64484,16 @@ pub struct PhysicalDeviceCubicClampFeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceCubicClampFeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceCubicClampFeaturesQCOM<'_> {}
+impl PhysicalDeviceCubicClampFeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCubicClampFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCubicClampFeaturesQCOM<'a> {
@@ -57456,10 +64521,16 @@ pub struct PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {}
+impl PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
@@ -57489,10 +64560,16 @@ pub struct SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
 }
 unsafe impl Send for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {}
 unsafe impl Sync for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {}
+impl SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
@@ -57528,10 +64605,16 @@ pub struct PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {}
+impl PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
@@ -57560,10 +64643,16 @@ pub struct SamplerCubicWeightsCreateInfoQCOM<'a> {
 }
 unsafe impl Send for SamplerCubicWeightsCreateInfoQCOM<'_> {}
 unsafe impl Sync for SamplerCubicWeightsCreateInfoQCOM<'_> {}
+impl SamplerCubicWeightsCreateInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SamplerCubicWeightsCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCubicWeightsCreateInfoQCOM<'a> {
@@ -57590,10 +64679,16 @@ pub struct BlitImageCubicWeightsInfoQCOM<'a> {
 }
 unsafe impl Send for BlitImageCubicWeightsInfoQCOM<'_> {}
 unsafe impl Sync for BlitImageCubicWeightsInfoQCOM<'_> {}
+impl BlitImageCubicWeightsInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BlitImageCubicWeightsInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BlitImageCubicWeightsInfoQCOM<'a> {
@@ -57620,10 +64715,16 @@ pub struct PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {}
+impl PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
@@ -57655,10 +64756,16 @@ pub struct PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {}
+impl PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
@@ -57690,10 +64797,16 @@ pub struct SamplerBlockMatchWindowCreateInfoQCOM<'a> {
 }
 unsafe impl Send for SamplerBlockMatchWindowCreateInfoQCOM<'_> {}
 unsafe impl Sync for SamplerBlockMatchWindowCreateInfoQCOM<'_> {}
+impl SamplerBlockMatchWindowCreateInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SamplerBlockMatchWindowCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerBlockMatchWindowCreateInfoQCOM<'a> {
@@ -57731,10 +64844,16 @@ pub struct PhysicalDeviceImageProcessing3FeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {}
+impl PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing3FeaturesQCOM<'a> {
@@ -57779,10 +64898,16 @@ pub struct PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {}
+impl PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
@@ -57817,10 +64942,16 @@ pub struct PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
 }
 unsafe impl Send for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {}
 unsafe impl Sync for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {}
+impl PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
@@ -57852,10 +64983,16 @@ pub struct PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {}
+impl PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
@@ -57892,10 +65029,16 @@ pub struct PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
 }
 unsafe impl Send for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {}
 unsafe impl Sync for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {}
+impl PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
@@ -57932,10 +65075,16 @@ pub struct PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
 }
 unsafe impl Send for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {}
 unsafe impl Sync for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {}
+impl PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
@@ -57986,10 +65135,16 @@ pub struct AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
 }
 unsafe impl Send for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {}
 unsafe impl Sync for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {}
+impl AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
@@ -58022,10 +65177,16 @@ pub struct LatencySleepModeInfoNV<'a> {
 }
 unsafe impl Send for LatencySleepModeInfoNV<'_> {}
 unsafe impl Sync for LatencySleepModeInfoNV<'_> {}
+impl LatencySleepModeInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for LatencySleepModeInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySleepModeInfoNV<'a> {
@@ -58062,10 +65223,16 @@ pub struct LatencySleepInfoNV<'a> {
 }
 unsafe impl Send for LatencySleepInfoNV<'_> {}
 unsafe impl Sync for LatencySleepInfoNV<'_> {}
+impl LatencySleepInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for LatencySleepInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySleepInfoNV<'a> {
@@ -58097,10 +65264,16 @@ pub struct SetLatencyMarkerInfoNV<'a> {
 }
 unsafe impl Send for SetLatencyMarkerInfoNV<'_> {}
 unsafe impl Sync for SetLatencyMarkerInfoNV<'_> {}
+impl SetLatencyMarkerInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SetLatencyMarkerInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SetLatencyMarkerInfoNV<'a> {
@@ -58132,10 +65305,16 @@ pub struct GetLatencyMarkerInfoNV<'a> {
 }
 unsafe impl Send for GetLatencyMarkerInfoNV<'_> {}
 unsafe impl Sync for GetLatencyMarkerInfoNV<'_> {}
+impl GetLatencyMarkerInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for GetLatencyMarkerInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GetLatencyMarkerInfoNV<'a> {
@@ -58175,10 +65354,16 @@ pub struct LatencyTimingsFrameReportNV<'a> {
 }
 unsafe impl Send for LatencyTimingsFrameReportNV<'_> {}
 unsafe impl Sync for LatencyTimingsFrameReportNV<'_> {}
+impl LatencyTimingsFrameReportNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for LatencyTimingsFrameReportNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencyTimingsFrameReportNV<'a> {
@@ -58269,10 +65454,16 @@ pub struct OutOfBandQueueTypeInfoNV<'a> {
 }
 unsafe impl Send for OutOfBandQueueTypeInfoNV<'_> {}
 unsafe impl Sync for OutOfBandQueueTypeInfoNV<'_> {}
+impl OutOfBandQueueTypeInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for OutOfBandQueueTypeInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OutOfBandQueueTypeInfoNV<'a> {
@@ -58298,10 +65489,16 @@ pub struct LatencySubmissionPresentIdNV<'a> {
 }
 unsafe impl Send for LatencySubmissionPresentIdNV<'_> {}
 unsafe impl Sync for LatencySubmissionPresentIdNV<'_> {}
+impl LatencySubmissionPresentIdNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for LatencySubmissionPresentIdNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySubmissionPresentIdNV<'a> {
@@ -58329,10 +65526,16 @@ pub struct SwapchainLatencyCreateInfoNV<'a> {
 }
 unsafe impl Send for SwapchainLatencyCreateInfoNV<'_> {}
 unsafe impl Sync for SwapchainLatencyCreateInfoNV<'_> {}
+impl SwapchainLatencyCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SwapchainLatencyCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainLatencyCreateInfoNV<'a> {
@@ -58360,10 +65563,16 @@ pub struct LatencySurfaceCapabilitiesNV<'a> {
 }
 unsafe impl Send for LatencySurfaceCapabilitiesNV<'_> {}
 unsafe impl Sync for LatencySurfaceCapabilitiesNV<'_> {}
+impl LatencySurfaceCapabilitiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for LatencySurfaceCapabilitiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySurfaceCapabilitiesNV<'a> {
@@ -58395,10 +65604,17 @@ unsafe impl Send for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {}
 #[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {}
 #[cfg(feature = "provisional")]
+impl PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -58436,10 +65652,17 @@ unsafe impl Send for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {}
 #[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {}
 #[cfg(feature = "provisional")]
+impl PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -58478,10 +65701,16 @@ pub struct DeviceQueueShaderCoreControlCreateInfoARM<'a> {
 }
 unsafe impl Send for DeviceQueueShaderCoreControlCreateInfoARM<'_> {}
 unsafe impl Sync for DeviceQueueShaderCoreControlCreateInfoARM<'_> {}
+impl DeviceQueueShaderCoreControlCreateInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceQueueShaderCoreControlCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueShaderCoreControlCreateInfoARM<'a> {
@@ -58510,10 +65739,16 @@ pub struct PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {}
+impl PhysicalDeviceSchedulingControlsFeaturesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
@@ -58545,10 +65780,16 @@ pub struct PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceSchedulingControlsPropertiesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceSchedulingControlsPropertiesARM<'_> {}
+impl PhysicalDeviceSchedulingControlsPropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceSchedulingControlsPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
@@ -58584,12 +65825,18 @@ pub struct PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'_> {}
+impl PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default
     for PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'_>
 {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -58645,10 +65892,16 @@ pub struct DispatchParametersARM<'a> {
 }
 unsafe impl Send for DispatchParametersARM<'_> {}
 unsafe impl Sync for DispatchParametersARM<'_> {}
+impl DispatchParametersARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DispatchParametersARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DispatchParametersARM<'a> {
@@ -58684,10 +65937,16 @@ pub struct PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
 }
 unsafe impl Send for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {}
 unsafe impl Sync for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {}
+impl PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
@@ -58722,10 +65981,16 @@ pub struct PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {}
+impl PhysicalDeviceRenderPassStripedFeaturesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
@@ -58758,10 +66023,16 @@ pub struct PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {}
+impl PhysicalDeviceRenderPassStripedPropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
@@ -58800,10 +66071,16 @@ pub struct RenderPassStripeInfoARM<'a> {
 }
 unsafe impl Send for RenderPassStripeInfoARM<'_> {}
 unsafe impl Sync for RenderPassStripeInfoARM<'_> {}
+impl RenderPassStripeInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassStripeInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeInfoARM<'a> {
@@ -58830,10 +66107,16 @@ pub struct RenderPassStripeBeginInfoARM<'a> {
 }
 unsafe impl Send for RenderPassStripeBeginInfoARM<'_> {}
 unsafe impl Sync for RenderPassStripeBeginInfoARM<'_> {}
+impl RenderPassStripeBeginInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassStripeBeginInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeBeginInfoARM<'a> {
@@ -58863,10 +66146,16 @@ pub struct RenderPassStripeSubmitInfoARM<'a> {
 }
 unsafe impl Send for RenderPassStripeSubmitInfoARM<'_> {}
 unsafe impl Sync for RenderPassStripeSubmitInfoARM<'_> {}
+impl RenderPassStripeSubmitInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassStripeSubmitInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeSubmitInfoARM<'a> {
@@ -58897,10 +66186,16 @@ pub struct PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
 }
 unsafe impl Send for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {}
 unsafe impl Sync for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {}
+impl PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
@@ -58932,10 +66227,16 @@ pub struct PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {}
+impl PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
@@ -58971,10 +66272,16 @@ pub struct PhysicalDeviceShaderSubgroupRotateFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderSubgroupRotateFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderSubgroupRotateFeatures<'_> {}
+impl PhysicalDeviceShaderSubgroupRotateFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupRotateFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupRotateFeatures<'a> {
@@ -59014,10 +66321,16 @@ pub struct PhysicalDeviceShaderExpectAssumeFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderExpectAssumeFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderExpectAssumeFeatures<'_> {}
+impl PhysicalDeviceShaderExpectAssumeFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderExpectAssumeFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderExpectAssumeFeatures<'a> {
@@ -59046,10 +66359,16 @@ pub struct PhysicalDeviceShaderFloatControls2Features<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderFloatControls2Features<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderFloatControls2Features<'_> {}
+impl PhysicalDeviceShaderFloatControls2Features<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderFloatControls2Features<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloatControls2Features<'a> {
@@ -59081,10 +66400,16 @@ pub struct PhysicalDeviceDynamicRenderingLocalReadFeatures<'a> {
 }
 unsafe impl Send for PhysicalDeviceDynamicRenderingLocalReadFeatures<'_> {}
 unsafe impl Sync for PhysicalDeviceDynamicRenderingLocalReadFeatures<'_> {}
+impl PhysicalDeviceDynamicRenderingLocalReadFeatures<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDynamicRenderingLocalReadFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDynamicRenderingLocalReadFeatures<'a> {
@@ -59117,10 +66442,16 @@ pub struct RenderingAttachmentLocationInfo<'a> {
 }
 unsafe impl Send for RenderingAttachmentLocationInfo<'_> {}
 unsafe impl Sync for RenderingAttachmentLocationInfo<'_> {}
+impl RenderingAttachmentLocationInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderingAttachmentLocationInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentLocationInfo<'a> {
@@ -59152,10 +66483,16 @@ pub struct RenderingInputAttachmentIndexInfo<'a> {
 }
 unsafe impl Send for RenderingInputAttachmentIndexInfo<'_> {}
 unsafe impl Sync for RenderingInputAttachmentIndexInfo<'_> {}
+impl RenderingInputAttachmentIndexInfo<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderingInputAttachmentIndexInfo<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingInputAttachmentIndexInfo<'a> {
@@ -59200,10 +66537,16 @@ pub struct PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {}
+impl PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
@@ -59235,10 +66578,16 @@ pub struct PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {}
+impl PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
@@ -59275,10 +66624,16 @@ pub struct PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {}
+impl PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
@@ -59317,10 +66672,16 @@ pub struct PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {}
+impl PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
@@ -59354,10 +66715,16 @@ pub struct MemoryMapPlacedInfoEXT<'a> {
 }
 unsafe impl Send for MemoryMapPlacedInfoEXT<'_> {}
 unsafe impl Sync for MemoryMapPlacedInfoEXT<'_> {}
+impl MemoryMapPlacedInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryMapPlacedInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMapPlacedInfoEXT<'a> {
@@ -59386,10 +66753,16 @@ pub struct PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderBfloat16FeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderBfloat16FeaturesKHR<'_> {}
+impl PhysicalDeviceShaderBfloat16FeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderBfloat16FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {
@@ -59431,10 +66804,16 @@ pub struct PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {}
+impl PhysicalDeviceRawAccessChainsFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
@@ -59463,10 +66842,16 @@ pub struct PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'_> {}
+impl PhysicalDeviceCommandBufferInheritanceFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
@@ -59498,10 +66883,16 @@ pub struct PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
 }
 unsafe impl Send for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {}
 unsafe impl Sync for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {}
+impl PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
@@ -59533,10 +66924,16 @@ pub struct PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
 }
 unsafe impl Send for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {}
 unsafe impl Sync for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {}
+impl PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
@@ -59567,10 +66964,16 @@ pub struct ImageAlignmentControlCreateInfoMESA<'a> {
 }
 unsafe impl Send for ImageAlignmentControlCreateInfoMESA<'_> {}
 unsafe impl Sync for ImageAlignmentControlCreateInfoMESA<'_> {}
+impl ImageAlignmentControlCreateInfoMESA<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageAlignmentControlCreateInfoMESA<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageAlignmentControlCreateInfoMESA<'a> {
@@ -59597,10 +67000,16 @@ pub struct PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'_> {}
+impl PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
@@ -59635,10 +67044,16 @@ pub struct PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'_> {}
+impl PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a> {
@@ -59669,10 +67084,16 @@ pub struct DepthClampRangeEXT {
     pub min_depth_clamp: f32,
     pub max_depth_clamp: f32,
 }
+impl DepthClampRangeEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DepthClampRangeEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DepthClampRangeEXT {
@@ -59706,10 +67127,16 @@ pub struct PhysicalDeviceCooperativeMatrix2FeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceCooperativeMatrix2FeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceCooperativeMatrix2FeaturesNV<'_> {}
+impl PhysicalDeviceCooperativeMatrix2FeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrix2FeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrix2FeaturesNV<'a> {
@@ -59786,10 +67213,16 @@ pub struct PhysicalDeviceCooperativeMatrix2PropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceCooperativeMatrix2PropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceCooperativeMatrix2PropertiesNV<'_> {}
+impl PhysicalDeviceCooperativeMatrix2PropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrix2PropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrix2PropertiesNV<'a> {
@@ -59851,10 +67284,16 @@ pub struct CooperativeMatrixFlexibleDimensionsPropertiesNV<'a> {
 }
 unsafe impl Send for CooperativeMatrixFlexibleDimensionsPropertiesNV<'_> {}
 unsafe impl Sync for CooperativeMatrixFlexibleDimensionsPropertiesNV<'_> {}
+impl CooperativeMatrixFlexibleDimensionsPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CooperativeMatrixFlexibleDimensionsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixFlexibleDimensionsPropertiesNV<'a> {
@@ -59926,10 +67365,16 @@ pub struct PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {}
+impl PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'a> {
@@ -59967,10 +67412,16 @@ pub struct PhysicalDeviceHdrVividFeaturesHUAWEI<'a> {
 }
 unsafe impl Send for PhysicalDeviceHdrVividFeaturesHUAWEI<'_> {}
 unsafe impl Sync for PhysicalDeviceHdrVividFeaturesHUAWEI<'_> {}
+impl PhysicalDeviceHdrVividFeaturesHUAWEI<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceHdrVividFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHdrVividFeaturesHUAWEI<'a> {
@@ -59998,10 +67449,16 @@ pub struct PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'_> {}
+impl PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {
@@ -60040,10 +67497,17 @@ unsafe impl Send for PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'_> {}
 #[cfg(feature = "provisional")]
 unsafe impl Sync for PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'_> {}
 #[cfg(feature = "provisional")]
+impl PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -60105,10 +67569,17 @@ impl fmt::Debug for AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'_
     }
 }
 #[cfg(feature = "provisional")]
+impl AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 impl ::core::default::Default for AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 #[cfg(feature = "provisional")]
@@ -60174,10 +67645,16 @@ pub struct PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {}
+impl PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
@@ -60210,10 +67687,16 @@ pub struct PhysicalDeviceCooperativeVectorFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceCooperativeVectorFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceCooperativeVectorFeaturesNV<'_> {}
+impl PhysicalDeviceCooperativeVectorFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCooperativeVectorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeVectorFeaturesNV<'a> {
@@ -60252,10 +67735,16 @@ pub struct CooperativeVectorPropertiesNV<'a> {
 }
 unsafe impl Send for CooperativeVectorPropertiesNV<'_> {}
 unsafe impl Sync for CooperativeVectorPropertiesNV<'_> {}
+impl CooperativeVectorPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CooperativeVectorPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeVectorPropertiesNV<'a> {
@@ -60309,10 +67798,16 @@ pub struct PhysicalDeviceCooperativeVectorPropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceCooperativeVectorPropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceCooperativeVectorPropertiesNV<'_> {}
+impl PhysicalDeviceCooperativeVectorPropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceCooperativeVectorPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeVectorPropertiesNV<'a> {
@@ -60403,10 +67898,16 @@ impl fmt::Debug for ConvertCooperativeVectorMatrixInfoNV<'_> {
             .finish()
     }
 }
+impl ConvertCooperativeVectorMatrixInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ConvertCooperativeVectorMatrixInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ConvertCooperativeVectorMatrixInfoNV<'a> {
@@ -60500,10 +68001,16 @@ pub struct PhysicalDeviceTileShadingFeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceTileShadingFeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceTileShadingFeaturesQCOM<'_> {}
+impl PhysicalDeviceTileShadingFeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceTileShadingFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileShadingFeaturesQCOM<'a> {
@@ -60605,10 +68112,16 @@ pub struct PhysicalDeviceTileShadingPropertiesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceTileShadingPropertiesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceTileShadingPropertiesQCOM<'_> {}
+impl PhysicalDeviceTileShadingPropertiesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceTileShadingPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileShadingPropertiesQCOM<'a> {
@@ -60652,10 +68165,16 @@ pub struct RenderPassTileShadingCreateInfoQCOM<'a> {
 }
 unsafe impl Send for RenderPassTileShadingCreateInfoQCOM<'_> {}
 unsafe impl Sync for RenderPassTileShadingCreateInfoQCOM<'_> {}
+impl RenderPassTileShadingCreateInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassTileShadingCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassTileShadingCreateInfoQCOM<'a> {
@@ -60689,10 +68208,16 @@ pub struct PerTileBeginInfoQCOM<'a> {
 }
 unsafe impl Send for PerTileBeginInfoQCOM<'_> {}
 unsafe impl Sync for PerTileBeginInfoQCOM<'_> {}
+impl PerTileBeginInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PerTileBeginInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerTileBeginInfoQCOM<'a> {
@@ -60711,10 +68236,16 @@ pub struct PerTileEndInfoQCOM<'a> {
 }
 unsafe impl Send for PerTileEndInfoQCOM<'_> {}
 unsafe impl Sync for PerTileEndInfoQCOM<'_> {}
+impl PerTileEndInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PerTileEndInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerTileEndInfoQCOM<'a> {
@@ -60733,10 +68264,16 @@ pub struct DispatchTileInfoQCOM<'a> {
 }
 unsafe impl Send for DispatchTileInfoQCOM<'_> {}
 unsafe impl Sync for DispatchTileInfoQCOM<'_> {}
+impl DispatchTileInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DispatchTileInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DispatchTileInfoQCOM<'a> {
@@ -60756,10 +68293,16 @@ pub struct PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'_> {}
+impl PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'a> {
@@ -60790,10 +68333,16 @@ pub struct PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'a> {
 }
 unsafe impl Send for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'_> {}
 unsafe impl Sync for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'_> {}
+impl PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'a> {
@@ -60828,10 +68377,16 @@ pub struct PipelineFragmentDensityMapLayeredCreateInfoVALVE<'a> {
 }
 unsafe impl Send for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'_> {}
 unsafe impl Sync for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'_> {}
+impl PipelineFragmentDensityMapLayeredCreateInfoVALVE<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'a> {
@@ -60863,10 +68418,16 @@ pub struct SetPresentConfigNV<'a> {
 }
 unsafe impl Send for SetPresentConfigNV<'_> {}
 unsafe impl Sync for SetPresentConfigNV<'_> {}
+impl SetPresentConfigNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SetPresentConfigNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SetPresentConfigNV<'a> {
@@ -60898,10 +68459,16 @@ pub struct PhysicalDevicePresentMeteringFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDevicePresentMeteringFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDevicePresentMeteringFeaturesNV<'_> {}
+impl PhysicalDevicePresentMeteringFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePresentMeteringFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentMeteringFeaturesNV<'a> {
@@ -60930,10 +68497,16 @@ pub struct ExternalComputeQueueDeviceCreateInfoNV<'a> {
 }
 unsafe impl Send for ExternalComputeQueueDeviceCreateInfoNV<'_> {}
 unsafe impl Sync for ExternalComputeQueueDeviceCreateInfoNV<'_> {}
+impl ExternalComputeQueueDeviceCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalComputeQueueDeviceCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalComputeQueueDeviceCreateInfoNV<'a> {
@@ -60961,10 +68534,16 @@ pub struct ExternalComputeQueueCreateInfoNV<'a> {
 }
 unsafe impl Send for ExternalComputeQueueCreateInfoNV<'_> {}
 unsafe impl Sync for ExternalComputeQueueCreateInfoNV<'_> {}
+impl ExternalComputeQueueCreateInfoNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalComputeQueueCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalComputeQueueCreateInfoNV<'a> {
@@ -60990,10 +68569,16 @@ pub struct ExternalComputeQueueDataParamsNV<'a> {
 }
 unsafe impl Send for ExternalComputeQueueDataParamsNV<'_> {}
 unsafe impl Sync for ExternalComputeQueueDataParamsNV<'_> {}
+impl ExternalComputeQueueDataParamsNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalComputeQueueDataParamsNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalComputeQueueDataParamsNV<'a> {
@@ -61020,10 +68605,16 @@ pub struct PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceExternalComputeQueuePropertiesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceExternalComputeQueuePropertiesNV<'_> {}
+impl PhysicalDeviceExternalComputeQueuePropertiesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExternalComputeQueuePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {
@@ -61064,10 +68655,16 @@ pub struct PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_> {}
+impl PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -61110,10 +68707,16 @@ pub struct PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'_> {}
+impl PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'a> {
@@ -61179,10 +68782,16 @@ pub struct PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {}
+impl PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'a> {
@@ -61214,10 +68823,16 @@ pub struct PhysicalDeviceFormatPackFeaturesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceFormatPackFeaturesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceFormatPackFeaturesARM<'_> {}
+impl PhysicalDeviceFormatPackFeaturesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceFormatPackFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFormatPackFeaturesARM<'a> {
@@ -61245,10 +68860,16 @@ pub struct PhysicalDeviceThrottleHintFeaturesSEC<'a> {
 }
 unsafe impl Send for PhysicalDeviceThrottleHintFeaturesSEC<'_> {}
 unsafe impl Sync for PhysicalDeviceThrottleHintFeaturesSEC<'_> {}
+impl PhysicalDeviceThrottleHintFeaturesSEC<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceThrottleHintFeaturesSEC<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceThrottleHintFeaturesSEC<'a> {
@@ -61276,10 +68897,16 @@ pub struct ThrottleHintSubmitInfoSEC<'a> {
 }
 unsafe impl Send for ThrottleHintSubmitInfoSEC<'_> {}
 unsafe impl Sync for ThrottleHintSubmitInfoSEC<'_> {}
+impl ThrottleHintSubmitInfoSEC<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ThrottleHintSubmitInfoSEC<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ThrottleHintSubmitInfoSEC<'a> {
@@ -61311,10 +68938,16 @@ pub struct TensorDescriptionARM<'a> {
 }
 unsafe impl Send for TensorDescriptionARM<'_> {}
 unsafe impl Sync for TensorDescriptionARM<'_> {}
+impl TensorDescriptionARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TensorDescriptionARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorDescriptionARM<'a> {
@@ -61368,10 +69001,16 @@ pub struct TensorCreateInfoARM<'a> {
 }
 unsafe impl Send for TensorCreateInfoARM<'_> {}
 unsafe impl Sync for TensorCreateInfoARM<'_> {}
+impl TensorCreateInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TensorCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorCreateInfoARM<'a> {
@@ -61415,10 +69054,16 @@ pub struct TensorViewCreateInfoARM<'a> {
 }
 unsafe impl Send for TensorViewCreateInfoARM<'_> {}
 unsafe impl Sync for TensorViewCreateInfoARM<'_> {}
+impl TensorViewCreateInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TensorViewCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorViewCreateInfoARM<'a> {
@@ -61454,10 +69099,16 @@ pub struct TensorMemoryRequirementsInfoARM<'a> {
 }
 unsafe impl Send for TensorMemoryRequirementsInfoARM<'_> {}
 unsafe impl Sync for TensorMemoryRequirementsInfoARM<'_> {}
+impl TensorMemoryRequirementsInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TensorMemoryRequirementsInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorMemoryRequirementsInfoARM<'a> {
@@ -61485,10 +69136,16 @@ pub struct BindTensorMemoryInfoARM<'a> {
 }
 unsafe impl Send for BindTensorMemoryInfoARM<'_> {}
 unsafe impl Sync for BindTensorMemoryInfoARM<'_> {}
+impl BindTensorMemoryInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindTensorMemoryInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindTensorMemoryInfoARM<'a> {
@@ -61525,10 +69182,16 @@ pub struct WriteDescriptorSetTensorARM<'a> {
 }
 unsafe impl Send for WriteDescriptorSetTensorARM<'_> {}
 unsafe impl Sync for WriteDescriptorSetTensorARM<'_> {}
+impl WriteDescriptorSetTensorARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for WriteDescriptorSetTensorARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetTensorARM<'a> {
@@ -61557,10 +69220,16 @@ pub struct TensorFormatPropertiesARM<'a> {
 }
 unsafe impl Send for TensorFormatPropertiesARM<'_> {}
 unsafe impl Sync for TensorFormatPropertiesARM<'_> {}
+impl TensorFormatPropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TensorFormatPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorFormatPropertiesARM<'a> {
@@ -61610,10 +69279,16 @@ pub struct PhysicalDeviceTensorPropertiesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceTensorPropertiesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceTensorPropertiesARM<'_> {}
+impl PhysicalDeviceTensorPropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTensorPropertiesARM<'a> {
@@ -61734,10 +69409,16 @@ pub struct TensorMemoryBarrierARM<'a> {
 }
 unsafe impl Send for TensorMemoryBarrierARM<'_> {}
 unsafe impl Sync for TensorMemoryBarrierARM<'_> {}
+impl TensorMemoryBarrierARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TensorMemoryBarrierARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorMemoryBarrierARM<'a> {
@@ -61795,10 +69476,16 @@ pub struct TensorDependencyInfoARM<'a> {
 }
 unsafe impl Send for TensorDependencyInfoARM<'_> {}
 unsafe impl Sync for TensorDependencyInfoARM<'_> {}
+impl TensorDependencyInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TensorDependencyInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorDependencyInfoARM<'a> {
@@ -61834,10 +69521,16 @@ pub struct PhysicalDeviceTensorFeaturesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceTensorFeaturesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceTensorFeaturesARM<'_> {}
+impl PhysicalDeviceTensorFeaturesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceTensorFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTensorFeaturesARM<'a> {
@@ -61902,10 +69595,16 @@ pub struct DeviceTensorMemoryRequirementsARM<'a> {
 }
 unsafe impl Send for DeviceTensorMemoryRequirementsARM<'_> {}
 unsafe impl Sync for DeviceTensorMemoryRequirementsARM<'_> {}
+impl DeviceTensorMemoryRequirementsARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceTensorMemoryRequirementsARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceTensorMemoryRequirementsARM<'a> {
@@ -61934,10 +69633,16 @@ pub struct CopyTensorInfoARM<'a> {
 }
 unsafe impl Send for CopyTensorInfoARM<'_> {}
 unsafe impl Sync for CopyTensorInfoARM<'_> {}
+impl CopyTensorInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyTensorInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyTensorInfoARM<'a> {
@@ -61977,10 +69682,16 @@ pub struct TensorCopyARM<'a> {
 }
 unsafe impl Send for TensorCopyARM<'_> {}
 unsafe impl Sync for TensorCopyARM<'_> {}
+impl TensorCopyARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TensorCopyARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorCopyARM<'a> {
@@ -62019,10 +69730,16 @@ pub struct MemoryDedicatedAllocateInfoTensorARM<'a> {
 }
 unsafe impl Send for MemoryDedicatedAllocateInfoTensorARM<'_> {}
 unsafe impl Sync for MemoryDedicatedAllocateInfoTensorARM<'_> {}
+impl MemoryDedicatedAllocateInfoTensorARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryDedicatedAllocateInfoTensorARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedAllocateInfoTensorARM<'a> {
@@ -62051,10 +69768,16 @@ pub struct PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'_> {}
+impl PhysicalDeviceDescriptorBufferTensorPropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
@@ -62103,10 +69826,16 @@ pub struct PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'_> {}
+impl PhysicalDeviceDescriptorBufferTensorFeaturesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
@@ -62141,10 +69870,16 @@ pub struct TensorCaptureDescriptorDataInfoARM<'a> {
 }
 unsafe impl Send for TensorCaptureDescriptorDataInfoARM<'_> {}
 unsafe impl Sync for TensorCaptureDescriptorDataInfoARM<'_> {}
+impl TensorCaptureDescriptorDataInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TensorCaptureDescriptorDataInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorCaptureDescriptorDataInfoARM<'a> {
@@ -62170,10 +69905,16 @@ pub struct TensorViewCaptureDescriptorDataInfoARM<'a> {
 }
 unsafe impl Send for TensorViewCaptureDescriptorDataInfoARM<'_> {}
 unsafe impl Sync for TensorViewCaptureDescriptorDataInfoARM<'_> {}
+impl TensorViewCaptureDescriptorDataInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TensorViewCaptureDescriptorDataInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorViewCaptureDescriptorDataInfoARM<'a> {
@@ -62200,10 +69941,16 @@ pub struct DescriptorGetTensorInfoARM<'a> {
 }
 unsafe impl Send for DescriptorGetTensorInfoARM<'_> {}
 unsafe impl Sync for DescriptorGetTensorInfoARM<'_> {}
+impl DescriptorGetTensorInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorGetTensorInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorGetTensorInfoARM<'a> {
@@ -62231,10 +69978,16 @@ pub struct FrameBoundaryTensorsARM<'a> {
 }
 unsafe impl Send for FrameBoundaryTensorsARM<'_> {}
 unsafe impl Sync for FrameBoundaryTensorsARM<'_> {}
+impl FrameBoundaryTensorsARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for FrameBoundaryTensorsARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FrameBoundaryTensorsARM<'a> {
@@ -62267,10 +70020,16 @@ pub struct PhysicalDeviceExternalTensorInfoARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceExternalTensorInfoARM<'_> {}
 unsafe impl Sync for PhysicalDeviceExternalTensorInfoARM<'_> {}
+impl PhysicalDeviceExternalTensorInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceExternalTensorInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalTensorInfoARM<'a> {
@@ -62306,10 +70065,16 @@ pub struct ExternalTensorPropertiesARM<'a> {
 }
 unsafe impl Send for ExternalTensorPropertiesARM<'_> {}
 unsafe impl Sync for ExternalTensorPropertiesARM<'_> {}
+impl ExternalTensorPropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalTensorPropertiesARM<'a> {
@@ -62338,10 +70103,16 @@ pub struct ExternalMemoryTensorCreateInfoARM<'a> {
 }
 unsafe impl Send for ExternalMemoryTensorCreateInfoARM<'_> {}
 unsafe impl Sync for ExternalMemoryTensorCreateInfoARM<'_> {}
+impl ExternalMemoryTensorCreateInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalMemoryTensorCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryTensorCreateInfoARM<'a> {
@@ -62369,10 +70140,16 @@ pub struct PhysicalDeviceShaderFloat8FeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderFloat8FeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderFloat8FeaturesEXT<'_> {}
+impl PhysicalDeviceShaderFloat8FeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderFloat8FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloat8FeaturesEXT<'a> {
@@ -62409,10 +70186,16 @@ pub struct SurfaceCreateInfoOHOS<'a> {
 }
 unsafe impl Send for SurfaceCreateInfoOHOS<'_> {}
 unsafe impl Sync for SurfaceCreateInfoOHOS<'_> {}
+impl SurfaceCreateInfoOHOS<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SurfaceCreateInfoOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCreateInfoOHOS<'a> {
@@ -62447,10 +70230,16 @@ pub struct PhysicalDeviceDataGraphFeaturesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceDataGraphFeaturesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceDataGraphFeaturesARM<'_> {}
+impl PhysicalDeviceDataGraphFeaturesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDataGraphFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDataGraphFeaturesARM<'a> {
@@ -62503,10 +70292,16 @@ pub struct DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'_> {}
+impl DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -62550,10 +70345,16 @@ pub struct DataGraphPipelineConstantARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineConstantARM<'_> {}
 unsafe impl Sync for DataGraphPipelineConstantARM<'_> {}
+impl DataGraphPipelineConstantARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineConstantARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineConstantARM<'a> {
@@ -62586,10 +70387,16 @@ pub struct DataGraphPipelineResourceInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineResourceInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineResourceInfoARM<'_> {}
+impl DataGraphPipelineResourceInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineResourceInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineResourceInfoARM<'a> {
@@ -62625,10 +70432,16 @@ pub struct DataGraphPipelineResourceInfoImageLayoutARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineResourceInfoImageLayoutARM<'_> {}
 unsafe impl Sync for DataGraphPipelineResourceInfoImageLayoutARM<'_> {}
+impl DataGraphPipelineResourceInfoImageLayoutARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineResourceInfoImageLayoutARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineResourceInfoImageLayoutARM<'a> {
@@ -62659,10 +70472,16 @@ pub struct DataGraphPipelineCompilerControlCreateInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineCompilerControlCreateInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineCompilerControlCreateInfoARM<'_> {}
+impl DataGraphPipelineCompilerControlCreateInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineCompilerControlCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineCompilerControlCreateInfoARM<'a> {
@@ -62704,10 +70523,16 @@ pub struct DataGraphPipelineCreateInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineCreateInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineCreateInfoARM<'_> {}
+impl DataGraphPipelineCreateInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineCreateInfoARM<'a> {
@@ -62751,10 +70576,16 @@ pub struct DataGraphPipelineShaderModuleCreateInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineShaderModuleCreateInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineShaderModuleCreateInfoARM<'_> {}
+impl DataGraphPipelineShaderModuleCreateInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineShaderModuleCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineShaderModuleCreateInfoARM<'a> {
@@ -62810,10 +70641,16 @@ pub struct DataGraphPipelineSessionCreateInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineSessionCreateInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineSessionCreateInfoARM<'_> {}
+impl DataGraphPipelineSessionCreateInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineSessionCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionCreateInfoARM<'a> {
@@ -62845,10 +70682,16 @@ pub struct DataGraphPipelineSessionBindPointRequirementsInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineSessionBindPointRequirementsInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineSessionBindPointRequirementsInfoARM<'_> {}
+impl DataGraphPipelineSessionBindPointRequirementsInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineSessionBindPointRequirementsInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionBindPointRequirementsInfoARM<'a> {
@@ -62877,10 +70720,16 @@ pub struct DataGraphPipelineSessionBindPointRequirementARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineSessionBindPointRequirementARM<'_> {}
 unsafe impl Sync for DataGraphPipelineSessionBindPointRequirementARM<'_> {}
+impl DataGraphPipelineSessionBindPointRequirementARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineSessionBindPointRequirementARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionBindPointRequirementARM<'a> {
@@ -62922,10 +70771,16 @@ pub struct DataGraphPipelineSessionMemoryRequirementsInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineSessionMemoryRequirementsInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineSessionMemoryRequirementsInfoARM<'_> {}
+impl DataGraphPipelineSessionMemoryRequirementsInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineSessionMemoryRequirementsInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionMemoryRequirementsInfoARM<'a> {
@@ -62966,10 +70821,16 @@ pub struct BindDataGraphPipelineSessionMemoryInfoARM<'a> {
 }
 unsafe impl Send for BindDataGraphPipelineSessionMemoryInfoARM<'_> {}
 unsafe impl Sync for BindDataGraphPipelineSessionMemoryInfoARM<'_> {}
+impl BindDataGraphPipelineSessionMemoryInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindDataGraphPipelineSessionMemoryInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindDataGraphPipelineSessionMemoryInfoARM<'a> {
@@ -63016,10 +70877,16 @@ pub struct DataGraphPipelineInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineInfoARM<'_> {}
+impl DataGraphPipelineInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineInfoARM<'a> {
@@ -63048,10 +70915,16 @@ pub struct DataGraphPipelinePropertyQueryResultARM<'a> {
 }
 unsafe impl Send for DataGraphPipelinePropertyQueryResultARM<'_> {}
 unsafe impl Sync for DataGraphPipelinePropertyQueryResultARM<'_> {}
+impl DataGraphPipelinePropertyQueryResultARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelinePropertyQueryResultARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelinePropertyQueryResultARM<'a> {
@@ -63090,10 +70963,16 @@ pub struct DataGraphPipelineIdentifierCreateInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineIdentifierCreateInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineIdentifierCreateInfoARM<'_> {}
+impl DataGraphPipelineIdentifierCreateInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineIdentifierCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineIdentifierCreateInfoARM<'a> {
@@ -63125,10 +71004,16 @@ pub struct DataGraphPipelineDispatchInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineDispatchInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineDispatchInfoARM<'_> {}
+impl DataGraphPipelineDispatchInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineDispatchInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineDispatchInfoARM<'a> {
@@ -63150,10 +71035,16 @@ pub struct PhysicalDeviceDataGraphProcessingEngineARM {
     pub ty: PhysicalDeviceDataGraphProcessingEngineTypeARM,
     pub is_foreign: Bool32,
 }
+impl PhysicalDeviceDataGraphProcessingEngineARM {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDataGraphProcessingEngineARM {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PhysicalDeviceDataGraphProcessingEngineARM {
@@ -63187,10 +71078,16 @@ impl fmt::Debug for PhysicalDeviceDataGraphOperationSupportARM {
             .finish()
     }
 }
+impl PhysicalDeviceDataGraphOperationSupportARM {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDataGraphOperationSupportARM {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl PhysicalDeviceDataGraphOperationSupportARM {
@@ -63230,10 +71127,16 @@ pub struct QueueFamilyDataGraphPropertiesARM<'a> {
 }
 unsafe impl Send for QueueFamilyDataGraphPropertiesARM<'_> {}
 unsafe impl Sync for QueueFamilyDataGraphPropertiesARM<'_> {}
+impl QueueFamilyDataGraphPropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueueFamilyDataGraphPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphPropertiesARM<'a> {
@@ -63265,10 +71168,16 @@ pub struct PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'_> {}
 unsafe impl Sync for PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'_> {}
+impl PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -63306,10 +71215,16 @@ pub struct QueueFamilyDataGraphProcessingEnginePropertiesARM<'a> {
 }
 unsafe impl Send for QueueFamilyDataGraphProcessingEnginePropertiesARM<'_> {}
 unsafe impl Sync for QueueFamilyDataGraphProcessingEnginePropertiesARM<'_> {}
+impl QueueFamilyDataGraphProcessingEnginePropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueueFamilyDataGraphProcessingEnginePropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphProcessingEnginePropertiesARM<'a> {
@@ -63348,10 +71263,16 @@ pub struct DataGraphProcessingEngineCreateInfoARM<'a> {
 }
 unsafe impl Send for DataGraphProcessingEngineCreateInfoARM<'_> {}
 unsafe impl Sync for DataGraphProcessingEngineCreateInfoARM<'_> {}
+impl DataGraphProcessingEngineCreateInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphProcessingEngineCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphProcessingEngineCreateInfoARM<'a> {
@@ -63388,10 +71309,16 @@ pub struct PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'a> {
 }
 unsafe impl Send for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'_> {}
 unsafe impl Sync for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'_> {}
+impl PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'a> {
@@ -63429,10 +71356,16 @@ pub struct DataGraphPipelineBuiltinModelCreateInfoQCOM<'a> {
 }
 unsafe impl Send for DataGraphPipelineBuiltinModelCreateInfoQCOM<'_> {}
 unsafe impl Sync for DataGraphPipelineBuiltinModelCreateInfoQCOM<'_> {}
+impl DataGraphPipelineBuiltinModelCreateInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineBuiltinModelCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineBuiltinModelCreateInfoQCOM<'a> {
@@ -63463,10 +71396,16 @@ pub struct PhysicalDeviceDataGraphModelFeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceDataGraphModelFeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceDataGraphModelFeaturesQCOM<'_> {}
+impl PhysicalDeviceDataGraphModelFeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDataGraphModelFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDataGraphModelFeaturesQCOM<'a> {
@@ -63495,10 +71434,16 @@ pub struct PhysicalDeviceShaderUntypedPointersFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'_> {}
+impl PhysicalDeviceShaderUntypedPointersFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'a> {
@@ -63530,10 +71475,16 @@ pub struct PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'a> {
 }
 unsafe impl Send for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'_> {}
 unsafe impl Sync for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'_> {}
+impl PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'a> {
@@ -63571,10 +71522,16 @@ pub struct VideoEncodeRgbConversionCapabilitiesVALVE<'a> {
 }
 unsafe impl Send for VideoEncodeRgbConversionCapabilitiesVALVE<'_> {}
 unsafe impl Sync for VideoEncodeRgbConversionCapabilitiesVALVE<'_> {}
+impl VideoEncodeRgbConversionCapabilitiesVALVE<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeRgbConversionCapabilitiesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRgbConversionCapabilitiesVALVE<'a> {
@@ -63623,10 +71580,16 @@ pub struct VideoEncodeProfileRgbConversionInfoVALVE<'a> {
 }
 unsafe impl Send for VideoEncodeProfileRgbConversionInfoVALVE<'_> {}
 unsafe impl Sync for VideoEncodeProfileRgbConversionInfoVALVE<'_> {}
+impl VideoEncodeProfileRgbConversionInfoVALVE<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeProfileRgbConversionInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeProfileRgbConversionInfoVALVE<'a> {
@@ -63657,10 +71620,16 @@ pub struct VideoEncodeSessionRgbConversionCreateInfoVALVE<'a> {
 }
 unsafe impl Send for VideoEncodeSessionRgbConversionCreateInfoVALVE<'_> {}
 unsafe impl Sync for VideoEncodeSessionRgbConversionCreateInfoVALVE<'_> {}
+impl VideoEncodeSessionRgbConversionCreateInfoVALVE<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for VideoEncodeSessionRgbConversionCreateInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionRgbConversionCreateInfoVALVE<'a> {
@@ -63712,10 +71681,16 @@ pub struct PhysicalDeviceShader64BitIndexingFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {}
+impl PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShader64BitIndexingFeaturesEXT<'a> {
@@ -63747,10 +71722,16 @@ pub struct NativeBufferUsageOHOS<'a> {
 }
 unsafe impl Send for NativeBufferUsageOHOS<'_> {}
 unsafe impl Sync for NativeBufferUsageOHOS<'_> {}
+impl NativeBufferUsageOHOS<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for NativeBufferUsageOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferUsageOHOS<'a> {
@@ -63778,10 +71759,16 @@ pub struct NativeBufferPropertiesOHOS<'a> {
 }
 unsafe impl Send for NativeBufferPropertiesOHOS<'_> {}
 unsafe impl Sync for NativeBufferPropertiesOHOS<'_> {}
+impl NativeBufferPropertiesOHOS<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for NativeBufferPropertiesOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferPropertiesOHOS<'a> {
@@ -63819,10 +71806,16 @@ pub struct NativeBufferFormatPropertiesOHOS<'a> {
 }
 unsafe impl Send for NativeBufferFormatPropertiesOHOS<'_> {}
 unsafe impl Sync for NativeBufferFormatPropertiesOHOS<'_> {}
+impl NativeBufferFormatPropertiesOHOS<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for NativeBufferFormatPropertiesOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferFormatPropertiesOHOS<'a> {
@@ -63890,10 +71883,16 @@ pub struct ImportNativeBufferInfoOHOS<'a> {
 }
 unsafe impl Send for ImportNativeBufferInfoOHOS<'_> {}
 unsafe impl Sync for ImportNativeBufferInfoOHOS<'_> {}
+impl ImportNativeBufferInfoOHOS<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImportNativeBufferInfoOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportNativeBufferInfoOHOS<'a> {
@@ -63920,10 +71919,16 @@ pub struct MemoryGetNativeBufferInfoOHOS<'a> {
 }
 unsafe impl Send for MemoryGetNativeBufferInfoOHOS<'_> {}
 unsafe impl Sync for MemoryGetNativeBufferInfoOHOS<'_> {}
+impl MemoryGetNativeBufferInfoOHOS<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryGetNativeBufferInfoOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetNativeBufferInfoOHOS<'a> {
@@ -63949,10 +71954,16 @@ pub struct ExternalFormatOHOS<'a> {
 }
 unsafe impl Send for ExternalFormatOHOS<'_> {}
 unsafe impl Sync for ExternalFormatOHOS<'_> {}
+impl ExternalFormatOHOS<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ExternalFormatOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFormatOHOS<'a> {
@@ -63984,10 +71995,16 @@ pub struct PerfHintInfoQCOM<'a> {
 }
 unsafe impl Send for PerfHintInfoQCOM<'_> {}
 unsafe impl Sync for PerfHintInfoQCOM<'_> {}
+impl PerfHintInfoQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PerfHintInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerfHintInfoQCOM<'a> {
@@ -64018,10 +72035,16 @@ pub struct PhysicalDeviceQueuePerfHintFeaturesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {}
+impl PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceQueuePerfHintFeaturesQCOM<'a> {
@@ -64050,10 +72073,16 @@ pub struct PhysicalDeviceQueuePerfHintPropertiesQCOM<'a> {
 }
 unsafe impl Send for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {}
 unsafe impl Sync for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {}
+impl PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceQueuePerfHintPropertiesQCOM<'a> {
@@ -64084,10 +72113,16 @@ pub struct PhysicalDevicePerformanceCountersByRegionFeaturesARM<'a> {
 }
 unsafe impl Send for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {}
 unsafe impl Sync for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {}
+impl PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'a> {
@@ -64126,10 +72161,16 @@ pub struct PhysicalDevicePerformanceCountersByRegionPropertiesARM<'a> {
 }
 unsafe impl Send for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> {}
 unsafe impl Sync for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> {}
+impl PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'a> {
@@ -64186,10 +72227,16 @@ pub struct PerformanceCounterARM<'a> {
 }
 unsafe impl Send for PerformanceCounterARM<'_> {}
 unsafe impl Sync for PerformanceCounterARM<'_> {}
+impl PerformanceCounterARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PerformanceCounterARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterARM<'a> {
@@ -64226,10 +72273,16 @@ impl fmt::Debug for PerformanceCounterDescriptionARM<'_> {
             .finish()
     }
 }
+impl PerformanceCounterDescriptionARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PerformanceCounterDescriptionARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterDescriptionARM<'a> {
@@ -64267,10 +72320,16 @@ pub struct RenderPassPerformanceCountersByRegionBeginInfoARM<'a> {
 }
 unsafe impl Send for RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {}
 unsafe impl Sync for RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {}
+impl RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassPerformanceCountersByRegionBeginInfoARM<'a> {
@@ -64315,10 +72374,16 @@ pub struct ComputeOccupancyPriorityParametersNV<'a> {
 }
 unsafe impl Send for ComputeOccupancyPriorityParametersNV<'_> {}
 unsafe impl Sync for ComputeOccupancyPriorityParametersNV<'_> {}
+impl ComputeOccupancyPriorityParametersNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ComputeOccupancyPriorityParametersNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ComputeOccupancyPriorityParametersNV<'a> {
@@ -64349,10 +72414,16 @@ pub struct PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'a> {
 }
 unsafe impl Send for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'_> {}
 unsafe impl Sync for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'_> {}
+impl PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'a> {
@@ -64384,10 +72455,16 @@ pub struct PhysicalDeviceShaderLongVectorFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderLongVectorFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderLongVectorFeaturesEXT<'_> {}
+impl PhysicalDeviceShaderLongVectorFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderLongVectorFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderLongVectorFeaturesEXT<'a> {
@@ -64416,10 +72493,16 @@ pub struct PhysicalDeviceShaderLongVectorPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderLongVectorPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderLongVectorPropertiesEXT<'_> {}
+impl PhysicalDeviceShaderLongVectorPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderLongVectorPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderLongVectorPropertiesEXT<'a> {
@@ -64450,10 +72533,16 @@ pub struct PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'_> {}
+impl PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'a> {
@@ -64488,10 +72577,16 @@ pub struct PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'_> {}
+impl PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'a> {
@@ -64525,10 +72620,16 @@ pub struct HostAddressRangeEXT<'a> {
 }
 unsafe impl Send for HostAddressRangeEXT<'_> {}
 unsafe impl Sync for HostAddressRangeEXT<'_> {}
+impl HostAddressRangeEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for HostAddressRangeEXT<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> HostAddressRangeEXT<'a> {
@@ -64551,10 +72652,16 @@ pub struct HostAddressRangeConstEXT<'a> {
 }
 unsafe impl Send for HostAddressRangeConstEXT<'_> {}
 unsafe impl Sync for HostAddressRangeConstEXT<'_> {}
+impl HostAddressRangeConstEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for HostAddressRangeConstEXT<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> HostAddressRangeConstEXT<'a> {
@@ -64579,10 +72686,16 @@ pub struct TexelBufferDescriptorInfoEXT<'a> {
 }
 unsafe impl Send for TexelBufferDescriptorInfoEXT<'_> {}
 unsafe impl Sync for TexelBufferDescriptorInfoEXT<'_> {}
+impl TexelBufferDescriptorInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for TexelBufferDescriptorInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TexelBufferDescriptorInfoEXT<'a> {
@@ -64614,10 +72727,16 @@ pub struct ImageDescriptorInfoEXT<'a> {
 }
 unsafe impl Send for ImageDescriptorInfoEXT<'_> {}
 unsafe impl Sync for ImageDescriptorInfoEXT<'_> {}
+impl ImageDescriptorInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ImageDescriptorInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDescriptorInfoEXT<'a> {
@@ -64674,10 +72793,16 @@ impl fmt::Debug for ResourceDescriptorInfoEXT<'_> {
             .finish()
     }
 }
+impl ResourceDescriptorInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ResourceDescriptorInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ResourceDescriptorInfoEXT<'a> {
@@ -64710,10 +72835,16 @@ pub struct BindHeapInfoEXT<'a> {
 }
 unsafe impl Send for BindHeapInfoEXT<'_> {}
 unsafe impl Sync for BindHeapInfoEXT<'_> {}
+impl BindHeapInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindHeapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindHeapInfoEXT<'a> {
@@ -64750,10 +72881,16 @@ pub struct PushDataInfoEXT<'a> {
 }
 unsafe impl Send for PushDataInfoEXT<'_> {}
 unsafe impl Sync for PushDataInfoEXT<'_> {}
+impl PushDataInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PushDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushDataInfoEXT<'a> {
@@ -64786,10 +72923,16 @@ pub struct DescriptorMappingSourceConstantOffsetEXT<'a> {
 }
 unsafe impl Send for DescriptorMappingSourceConstantOffsetEXT<'_> {}
 unsafe impl Sync for DescriptorMappingSourceConstantOffsetEXT<'_> {}
+impl DescriptorMappingSourceConstantOffsetEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DescriptorMappingSourceConstantOffsetEXT<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> DescriptorMappingSourceConstantOffsetEXT<'a> {
@@ -64839,10 +72982,16 @@ pub struct DescriptorMappingSourcePushIndexEXT<'a> {
 }
 unsafe impl Send for DescriptorMappingSourcePushIndexEXT<'_> {}
 unsafe impl Sync for DescriptorMappingSourcePushIndexEXT<'_> {}
+impl DescriptorMappingSourcePushIndexEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DescriptorMappingSourcePushIndexEXT<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> DescriptorMappingSourcePushIndexEXT<'a> {
@@ -64922,10 +73071,16 @@ pub struct DescriptorMappingSourceIndirectIndexEXT<'a> {
 }
 unsafe impl Send for DescriptorMappingSourceIndirectIndexEXT<'_> {}
 unsafe impl Sync for DescriptorMappingSourceIndirectIndexEXT<'_> {}
+impl DescriptorMappingSourceIndirectIndexEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DescriptorMappingSourceIndirectIndexEXT<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> DescriptorMappingSourceIndirectIndexEXT<'a> {
@@ -65013,10 +73168,16 @@ pub struct DescriptorMappingSourceIndirectIndexArrayEXT<'a> {
 }
 unsafe impl Send for DescriptorMappingSourceIndirectIndexArrayEXT<'_> {}
 unsafe impl Sync for DescriptorMappingSourceIndirectIndexArrayEXT<'_> {}
+impl DescriptorMappingSourceIndirectIndexArrayEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DescriptorMappingSourceIndirectIndexArrayEXT<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> DescriptorMappingSourceIndirectIndexArrayEXT<'a> {
@@ -65083,10 +73244,16 @@ pub struct DescriptorMappingSourceHeapDataEXT {
     pub heap_offset: u32,
     pub push_offset: u32,
 }
+impl DescriptorMappingSourceHeapDataEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DescriptorMappingSourceHeapDataEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DescriptorMappingSourceHeapDataEXT {
@@ -65121,10 +73288,16 @@ pub struct DescriptorMappingSourceShaderRecordIndexEXT<'a> {
 }
 unsafe impl Send for DescriptorMappingSourceShaderRecordIndexEXT<'_> {}
 unsafe impl Sync for DescriptorMappingSourceShaderRecordIndexEXT<'_> {}
+impl DescriptorMappingSourceShaderRecordIndexEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DescriptorMappingSourceShaderRecordIndexEXT<'_> {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl<'a> DescriptorMappingSourceShaderRecordIndexEXT<'a> {
@@ -65191,10 +73364,16 @@ pub struct DescriptorMappingSourceIndirectAddressEXT {
     pub push_offset: u32,
     pub address_offset: u32,
 }
+impl DescriptorMappingSourceIndirectAddressEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DescriptorMappingSourceIndirectAddressEXT {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DescriptorMappingSourceIndirectAddressEXT {
@@ -65263,10 +73442,16 @@ impl fmt::Debug for DescriptorSetAndBindingMappingEXT<'_> {
             .finish()
     }
 }
+impl DescriptorSetAndBindingMappingEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DescriptorSetAndBindingMappingEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetAndBindingMappingEXT<'a> {
@@ -65318,10 +73503,16 @@ pub struct ShaderDescriptorSetAndBindingMappingInfoEXT<'a> {
 }
 unsafe impl Send for ShaderDescriptorSetAndBindingMappingInfoEXT<'_> {}
 unsafe impl Sync for ShaderDescriptorSetAndBindingMappingInfoEXT<'_> {}
+impl ShaderDescriptorSetAndBindingMappingInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ShaderDescriptorSetAndBindingMappingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderDescriptorSetAndBindingMappingInfoEXT<'a> {
@@ -65354,10 +73545,16 @@ pub struct SamplerCustomBorderColorIndexCreateInfoEXT<'a> {
 }
 unsafe impl Send for SamplerCustomBorderColorIndexCreateInfoEXT<'_> {}
 unsafe impl Sync for SamplerCustomBorderColorIndexCreateInfoEXT<'_> {}
+impl SamplerCustomBorderColorIndexCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SamplerCustomBorderColorIndexCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCustomBorderColorIndexCreateInfoEXT<'a> {
@@ -65385,10 +73582,16 @@ pub struct OpaqueCaptureDataCreateInfoEXT<'a> {
 }
 unsafe impl Send for OpaqueCaptureDataCreateInfoEXT<'_> {}
 unsafe impl Sync for OpaqueCaptureDataCreateInfoEXT<'_> {}
+impl OpaqueCaptureDataCreateInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for OpaqueCaptureDataCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpaqueCaptureDataCreateInfoEXT<'a> {
@@ -65417,10 +73620,16 @@ pub struct IndirectCommandsLayoutPushDataTokenNV<'a> {
 }
 unsafe impl Send for IndirectCommandsLayoutPushDataTokenNV<'_> {}
 unsafe impl Sync for IndirectCommandsLayoutPushDataTokenNV<'_> {}
+impl IndirectCommandsLayoutPushDataTokenNV<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for IndirectCommandsLayoutPushDataTokenNV<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutPushDataTokenNV<'a> {
@@ -65456,10 +73665,16 @@ pub struct SubsampledImageFormatPropertiesEXT<'a> {
 }
 unsafe impl Send for SubsampledImageFormatPropertiesEXT<'_> {}
 unsafe impl Sync for SubsampledImageFormatPropertiesEXT<'_> {}
+impl SubsampledImageFormatPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for SubsampledImageFormatPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubsampledImageFormatPropertiesEXT<'a> {
@@ -65489,10 +73704,16 @@ pub struct PhysicalDeviceShaderSplitBarrierFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {}
+impl PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'a> {
@@ -65524,10 +73745,16 @@ pub struct PhysicalDeviceShaderSplitBarrierPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {}
+impl PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'a> {
@@ -65562,10 +73789,16 @@ pub struct PhysicalDeviceDescriptorHeapFeaturesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceDescriptorHeapFeaturesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceDescriptorHeapFeaturesEXT<'_> {}
+impl PhysicalDeviceDescriptorHeapFeaturesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDescriptorHeapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorHeapFeaturesEXT<'a> {
@@ -65617,10 +73850,16 @@ pub struct PhysicalDeviceDescriptorHeapPropertiesEXT<'a> {
 }
 unsafe impl Send for PhysicalDeviceDescriptorHeapPropertiesEXT<'_> {}
 unsafe impl Sync for PhysicalDeviceDescriptorHeapPropertiesEXT<'_> {}
+impl PhysicalDeviceDescriptorHeapPropertiesEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDescriptorHeapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorHeapPropertiesEXT<'a> {
@@ -65761,10 +74000,16 @@ pub struct CommandBufferInheritanceDescriptorHeapInfoEXT<'a> {
 }
 unsafe impl Send for CommandBufferInheritanceDescriptorHeapInfoEXT<'_> {}
 unsafe impl Sync for CommandBufferInheritanceDescriptorHeapInfoEXT<'_> {}
+impl CommandBufferInheritanceDescriptorHeapInfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CommandBufferInheritanceDescriptorHeapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceDescriptorHeapInfoEXT<'a> {
@@ -65808,10 +74053,16 @@ pub struct PhysicalDeviceDescriptorHeapTensorPropertiesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'_> {}
+impl PhysicalDeviceDescriptorHeapTensorPropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'a> {
@@ -65855,10 +74106,16 @@ pub struct PhysicalDeviceShaderInstrumentationFeaturesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderInstrumentationFeaturesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderInstrumentationFeaturesARM<'_> {}
+impl PhysicalDeviceShaderInstrumentationFeaturesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderInstrumentationFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderInstrumentationFeaturesARM<'a> {
@@ -65891,10 +74148,16 @@ pub struct PhysicalDeviceShaderInstrumentationPropertiesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderInstrumentationPropertiesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderInstrumentationPropertiesARM<'_> {}
+impl PhysicalDeviceShaderInstrumentationPropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderInstrumentationPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderInstrumentationPropertiesARM<'a> {
@@ -65929,10 +74192,16 @@ pub struct ShaderInstrumentationCreateInfoARM<'a> {
 }
 unsafe impl Send for ShaderInstrumentationCreateInfoARM<'_> {}
 unsafe impl Sync for ShaderInstrumentationCreateInfoARM<'_> {}
+impl ShaderInstrumentationCreateInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ShaderInstrumentationCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderInstrumentationCreateInfoARM<'a> {
@@ -65963,10 +74232,16 @@ impl fmt::Debug for ShaderInstrumentationMetricDescriptionARM<'_> {
             .finish()
     }
 }
+impl ShaderInstrumentationMetricDescriptionARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ShaderInstrumentationMetricDescriptionARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderInstrumentationMetricDescriptionARM<'a> {
@@ -66005,10 +74280,16 @@ pub struct ShaderInstrumentationMetricDataHeaderARM {
     pub stages: ShaderStageFlags,
     pub basic_block_index: u32,
 }
+impl ShaderInstrumentationMetricDataHeaderARM {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for ShaderInstrumentationMetricDataHeaderARM {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl ShaderInstrumentationMetricDataHeaderARM {
@@ -66042,10 +74323,16 @@ pub struct DeviceAddressRangeKHR {
     pub address: DeviceAddress,
     pub size: DeviceSize,
 }
+impl DeviceAddressRangeKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DeviceAddressRangeKHR {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DeviceAddressRangeKHR {
@@ -66076,10 +74363,16 @@ pub struct DeviceMemoryCopyKHR<'a> {
 }
 unsafe impl Send for DeviceMemoryCopyKHR<'_> {}
 unsafe impl Sync for DeviceMemoryCopyKHR<'_> {}
+impl DeviceMemoryCopyKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceMemoryCopyKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryCopyKHR<'a> {
@@ -66121,10 +74414,16 @@ pub struct CopyDeviceMemoryInfoKHR<'a> {
 }
 unsafe impl Send for CopyDeviceMemoryInfoKHR<'_> {}
 unsafe impl Sync for CopyDeviceMemoryInfoKHR<'_> {}
+impl CopyDeviceMemoryInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyDeviceMemoryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyDeviceMemoryInfoKHR<'a> {
@@ -66158,10 +74457,16 @@ pub struct DeviceMemoryImageCopyKHR<'a> {
 }
 unsafe impl Send for DeviceMemoryImageCopyKHR<'_> {}
 unsafe impl Sync for DeviceMemoryImageCopyKHR<'_> {}
+impl DeviceMemoryImageCopyKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceMemoryImageCopyKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryImageCopyKHR<'a> {
@@ -66224,10 +74529,16 @@ pub struct CopyDeviceMemoryImageInfoKHR<'a> {
 }
 unsafe impl Send for CopyDeviceMemoryImageInfoKHR<'_> {}
 unsafe impl Sync for CopyDeviceMemoryImageInfoKHR<'_> {}
+impl CopyDeviceMemoryImageInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for CopyDeviceMemoryImageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyDeviceMemoryImageInfoKHR<'a> {
@@ -66260,10 +74571,16 @@ pub struct MemoryRangeBarriersInfoKHR<'a> {
 }
 unsafe impl Send for MemoryRangeBarriersInfoKHR<'_> {}
 unsafe impl Sync for MemoryRangeBarriersInfoKHR<'_> {}
+impl MemoryRangeBarriersInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryRangeBarriersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryRangeBarriersInfoKHR<'a> {
@@ -66301,10 +74618,16 @@ pub struct MemoryRangeBarrierKHR<'a> {
 }
 unsafe impl Send for MemoryRangeBarrierKHR<'_> {}
 unsafe impl Sync for MemoryRangeBarrierKHR<'_> {}
+impl MemoryRangeBarrierKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryRangeBarrierKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryRangeBarrierKHR<'a> {
@@ -66365,10 +74688,16 @@ pub struct PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'_> {}
+impl PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'a> {
@@ -66402,10 +74731,16 @@ pub struct ConditionalRenderingBeginInfo2EXT<'a> {
 }
 unsafe impl Send for ConditionalRenderingBeginInfo2EXT<'_> {}
 unsafe impl Sync for ConditionalRenderingBeginInfo2EXT<'_> {}
+impl ConditionalRenderingBeginInfo2EXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for ConditionalRenderingBeginInfo2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ConditionalRenderingBeginInfo2EXT<'a> {
@@ -66444,10 +74779,16 @@ pub struct AccelerationStructureCreateInfo2KHR<'a> {
 }
 unsafe impl Send for AccelerationStructureCreateInfo2KHR<'_> {}
 unsafe impl Sync for AccelerationStructureCreateInfo2KHR<'_> {}
+impl AccelerationStructureCreateInfo2KHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for AccelerationStructureCreateInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfo2KHR<'a> {
@@ -66490,10 +74831,16 @@ pub struct BindIndexBuffer3InfoKHR<'a> {
 }
 unsafe impl Send for BindIndexBuffer3InfoKHR<'_> {}
 unsafe impl Sync for BindIndexBuffer3InfoKHR<'_> {}
+impl BindIndexBuffer3InfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindIndexBuffer3InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindIndexBuffer3InfoKHR<'a> {
@@ -66531,10 +74878,16 @@ pub struct BindVertexBuffer3InfoKHR<'a> {
 }
 unsafe impl Send for BindVertexBuffer3InfoKHR<'_> {}
 unsafe impl Sync for BindVertexBuffer3InfoKHR<'_> {}
+impl BindVertexBuffer3InfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindVertexBuffer3InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindVertexBuffer3InfoKHR<'a> {
@@ -66572,10 +74925,16 @@ pub struct DrawIndirect2InfoKHR<'a> {
 }
 unsafe impl Send for DrawIndirect2InfoKHR<'_> {}
 unsafe impl Sync for DrawIndirect2InfoKHR<'_> {}
+impl DrawIndirect2InfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DrawIndirect2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DrawIndirect2InfoKHR<'a> {
@@ -66615,10 +74974,16 @@ pub struct DrawIndirectCount2InfoKHR<'a> {
 }
 unsafe impl Send for DrawIndirectCount2InfoKHR<'_> {}
 unsafe impl Sync for DrawIndirectCount2InfoKHR<'_> {}
+impl DrawIndirectCount2InfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DrawIndirectCount2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DrawIndirectCount2InfoKHR<'a> {
@@ -66665,10 +75030,16 @@ pub struct DispatchIndirect2InfoKHR<'a> {
 }
 unsafe impl Send for DispatchIndirect2InfoKHR<'_> {}
 unsafe impl Sync for DispatchIndirect2InfoKHR<'_> {}
+impl DispatchIndirect2InfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DispatchIndirect2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DispatchIndirect2InfoKHR<'a> {
@@ -66700,10 +75071,16 @@ pub struct BindTransformFeedbackBuffer2InfoEXT<'a> {
 }
 unsafe impl Send for BindTransformFeedbackBuffer2InfoEXT<'_> {}
 unsafe impl Sync for BindTransformFeedbackBuffer2InfoEXT<'_> {}
+impl BindTransformFeedbackBuffer2InfoEXT<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for BindTransformFeedbackBuffer2InfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindTransformFeedbackBuffer2InfoEXT<'a> {
@@ -66737,10 +75114,16 @@ pub struct MemoryMarkerInfoAMD<'a> {
 }
 unsafe impl Send for MemoryMarkerInfoAMD<'_> {}
 unsafe impl Sync for MemoryMarkerInfoAMD<'_> {}
+impl MemoryMarkerInfoAMD<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for MemoryMarkerInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMarkerInfoAMD<'a> {
@@ -66781,10 +75164,16 @@ pub struct PhysicalDeviceShaderConstantDataFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderConstantDataFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderConstantDataFeaturesKHR<'_> {}
+impl PhysicalDeviceShaderConstantDataFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderConstantDataFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderConstantDataFeaturesKHR<'a> {
@@ -66816,10 +75205,16 @@ pub struct PhysicalDeviceShaderAbortFeaturesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderAbortFeaturesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderAbortFeaturesKHR<'_> {}
+impl PhysicalDeviceShaderAbortFeaturesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderAbortFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAbortFeaturesKHR<'a> {
@@ -66847,10 +75242,16 @@ pub struct PhysicalDeviceShaderAbortPropertiesKHR<'a> {
 }
 unsafe impl Send for PhysicalDeviceShaderAbortPropertiesKHR<'_> {}
 unsafe impl Sync for PhysicalDeviceShaderAbortPropertiesKHR<'_> {}
+impl PhysicalDeviceShaderAbortPropertiesKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceShaderAbortPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAbortPropertiesKHR<'a> {
@@ -66879,10 +75280,16 @@ pub struct DeviceFaultShaderAbortMessageInfoKHR<'a> {
 }
 unsafe impl Send for DeviceFaultShaderAbortMessageInfoKHR<'_> {}
 unsafe impl Sync for DeviceFaultShaderAbortMessageInfoKHR<'_> {}
+impl DeviceFaultShaderAbortMessageInfoKHR<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DeviceFaultShaderAbortMessageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultShaderAbortMessageInfoKHR<'a> {
@@ -66914,10 +75321,16 @@ impl fmt::Debug for DataGraphTOSANameQualityARM {
             .finish()
     }
 }
+impl DataGraphTOSANameQualityARM {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 impl ::core::default::Default for DataGraphTOSANameQualityARM {
     #[inline]
     fn default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self::const_default()
     }
 }
 impl DataGraphTOSANameQualityARM {
@@ -66952,10 +75365,16 @@ pub struct QueueFamilyDataGraphTOSAPropertiesARM<'a> {
 }
 unsafe impl Send for QueueFamilyDataGraphTOSAPropertiesARM<'_> {}
 unsafe impl Sync for QueueFamilyDataGraphTOSAPropertiesARM<'_> {}
+impl QueueFamilyDataGraphTOSAPropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueueFamilyDataGraphTOSAPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphTOSAPropertiesARM<'a> {
@@ -66996,10 +75415,16 @@ pub struct DataGraphPipelineSingleNodeConnectionARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineSingleNodeConnectionARM<'_> {}
 unsafe impl Sync for DataGraphPipelineSingleNodeConnectionARM<'_> {}
+impl DataGraphPipelineSingleNodeConnectionARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineSingleNodeConnectionARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSingleNodeConnectionARM<'a> {
@@ -67036,10 +75461,16 @@ pub struct PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'a> {
 }
 unsafe impl Send for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'_> {}
 unsafe impl Sync for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'_> {}
+impl PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'a> {
@@ -67078,10 +75509,16 @@ pub struct QueueFamilyDataGraphOpticalFlowPropertiesARM<'a> {
 }
 unsafe impl Send for QueueFamilyDataGraphOpticalFlowPropertiesARM<'_> {}
 unsafe impl Sync for QueueFamilyDataGraphOpticalFlowPropertiesARM<'_> {}
+impl QueueFamilyDataGraphOpticalFlowPropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for QueueFamilyDataGraphOpticalFlowPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphOpticalFlowPropertiesARM<'a> {
@@ -67149,10 +75586,16 @@ pub struct DataGraphOpticalFlowImageFormatInfoARM<'a> {
 }
 unsafe impl Send for DataGraphOpticalFlowImageFormatInfoARM<'_> {}
 unsafe impl Sync for DataGraphOpticalFlowImageFormatInfoARM<'_> {}
+impl DataGraphOpticalFlowImageFormatInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphOpticalFlowImageFormatInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphOpticalFlowImageFormatInfoARM<'a> {
@@ -67184,10 +75627,16 @@ pub struct DataGraphOpticalFlowImageFormatPropertiesARM<'a> {
 }
 unsafe impl Send for DataGraphOpticalFlowImageFormatPropertiesARM<'_> {}
 unsafe impl Sync for DataGraphOpticalFlowImageFormatPropertiesARM<'_> {}
+impl DataGraphOpticalFlowImageFormatPropertiesARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphOpticalFlowImageFormatPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphOpticalFlowImageFormatPropertiesARM<'a> {
@@ -67216,10 +75665,16 @@ pub struct DataGraphPipelineSingleNodeCreateInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineSingleNodeCreateInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineSingleNodeCreateInfoARM<'_> {}
+impl DataGraphPipelineSingleNodeCreateInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineSingleNodeCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSingleNodeCreateInfoARM<'a> {
@@ -67267,10 +75722,16 @@ pub struct DataGraphPipelineOpticalFlowCreateInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineOpticalFlowCreateInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineOpticalFlowCreateInfoARM<'_> {}
+impl DataGraphPipelineOpticalFlowCreateInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineOpticalFlowCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineOpticalFlowCreateInfoARM<'a> {
@@ -67348,10 +75809,16 @@ pub struct DataGraphPipelineOpticalFlowDispatchInfoARM<'a> {
 }
 unsafe impl Send for DataGraphPipelineOpticalFlowDispatchInfoARM<'_> {}
 unsafe impl Sync for DataGraphPipelineOpticalFlowDispatchInfoARM<'_> {}
+impl DataGraphPipelineOpticalFlowDispatchInfoARM<'_> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 impl ::core::default::Default for DataGraphPipelineOpticalFlowDispatchInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        init_tagged_structure()
+        Self::const_default()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineOpticalFlowDispatchInfoARM<'a> {

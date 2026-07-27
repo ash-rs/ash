@@ -1910,10 +1910,17 @@ fn derive_default(
 
     Some(quote! {
         #provisional
+        impl #name #lifetime {
+            #[inline]
+            pub const fn const_default() -> Self {
+                #initializer
+            }
+        }
+        #provisional
         impl ::core::default::Default for #name #lifetime {
             #[inline]
             fn default() -> Self {
-                #initializer
+                Self::const_default()
             }
         }
     })
