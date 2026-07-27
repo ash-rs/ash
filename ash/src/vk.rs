@@ -275,7 +275,7 @@ impl From<Extent2D> for Rect2D {
 }
 
 #[inline]
-pub(crate) fn wrap_c_str_slice_until_nul(
+pub(crate) const fn wrap_c_str_slice_until_nul(
     str: &[core::ffi::c_char],
 ) -> core::result::Result<&core::ffi::CStr, core::ffi::FromBytesUntilNulError> {
     // SAFETY: The cast from c_char to u8 is ok because a c_char is always one byte.
