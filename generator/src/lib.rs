@@ -1886,75 +1886,41 @@ fn derive_default(
     has_lifetime: bool,
     provisional: &Option<TokenStream>,
 ) -> Option<TokenStream> {
+    if struct_.name == "VkBaseInStructure" || struct_.name == "VkBaseOutStructure" {
+        // These don't really have a valid initializer, since they'll end up as
+        // vk::StructureType::APPLICATION_INFO (0).
+        return None;
+    }
     let name = name_to_tokens(&struct_.name);
     let is_structure_type = |field: &vkxml::Field| field.basetype == "VkStructureType";
 
-    // These are also pointers, and therefor also don't implement Default. The spec
-    // also doesn't mark them as pointers
-    let handles = [
-        "LPCWSTR",
-        "HANDLE",
-        "HINSTANCE",
-        "HWND",
-        "HMONITOR",
-        "IOSurfaceRef",
-        "MTLBuffer_id",
-        "MTLCommandQueue_id",
-        "MTLDevice_id",
-        "MTLSharedEvent_id",
-        "MTLTexture_id",
-    ];
-    let contains_ptr = members
-        .iter()
-        .any(|member| member.vkxml_field.reference.is_some());
     let contains_structure_type = members
         .iter()
         .any(|member| is_structure_type(member.vkxml_field));
-    let contains_static_array = members
-        .iter()
-        .any(|member| is_static_array(member.vkxml_field));
-    let contains_deprecated = members.iter().any(|member| member.deprecated.is_some());
-    let allow_deprecated = contains_deprecated.then(|| quote!(#[allow(deprecated)]));
-    if !(contains_ptr || contains_structure_type || contains_static_array) {
-        return None;
-    };
-    let default_fields = members.iter().map(|member| {
-        let param_ident = member.vkxml_field.param_ident();
-        if is_structure_type(member.vkxml_field) {
-            if member.vkxml_field.type_enums.is_some() {
-                quote!(#param_ident: Self::STRUCTURE_TYPE)
-            } else {
-                quote!(#param_ident: unsafe { ::core::mem::zeroed() })
-            }
-        } else if member.vkxml_field.reference.is_some() {
-            if member.vkxml_field.is_const {
-                quote!(#param_ident: ::core::ptr::null())
-            } else {
-                quote!(#param_ident: ::core::ptr::null_mut())
-            }
-        } else if is_static_array(member.vkxml_field)
-            || handles.contains(&member.vkxml_field.basetype.as_str())
-        {
-            quote!(#param_ident: unsafe { ::core::mem::zeroed() })
-        } else {
-            let ty = member.vkxml_field.type_tokens(false, None);
-            quote!(#param_ident: #ty::default())
-        }
-    });
     let lifetime = has_lifetime.then(|| quote!(<'_>));
-    let marker = has_lifetime.then(|| quote!(_marker: PhantomData,));
+
+    let initializer = if contains_structure_type {
+        quote!(init_tagged_structure())
+    } else {
+        quote! {
+            // SAFETY: All Vulkan structures support zero-initialization
+            unsafe { ::core::mem::zeroed() }
+        }
+    };
+
     Some(quote! {
+        #provisional
+        impl #name #lifetime {
+            #[inline]
+            pub const fn const_default() -> Self {
+                #initializer
+            }
+        }
         #provisional
         impl ::core::default::Default for #name #lifetime {
             #[inline]
             fn default() -> Self {
-                #allow_deprecated
-                Self {
-                    #(
-                        #default_fields,
-                    )*
-                    #marker
-                }
+                Self::const_default()
             }
         }
     })
@@ -2156,7 +2122,7 @@ fn derive_getters_and_setters(
         if struct_.name == "VkShaderModuleCreateInfo" && name == "pCode" {
             return Some(quote! {
                 #[inline]
-                pub fn code(mut self, code: &'a [u32]) -> Self {
+                pub const fn code(mut self, code: &'a [u32]) -> Self {
                     self.code_size = code.len() * 4;
                     self.p_code = code.as_ptr();
                     self
@@ -2172,7 +2138,7 @@ fn derive_getters_and_setters(
                 /// See <https://docs.vulkan.org/refpages/latest/refpages/source/VkPipelineMultisampleStateCreateInfo.html#_description>
                 /// for more details.
                 #[inline]
-                pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
+                pub const fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
                     self.p_sample_mask = if sample_mask.is_empty() {
                         core::ptr::null()
                     } else {
@@ -2191,12 +2157,13 @@ fn derive_getters_and_setters(
                 return Some(quote! {
                     #deprecated
                     #[inline]
-                    pub fn #param_ident_short(mut self, #param_ident_short: &'a CStr) -> Self {
+                    pub const fn #param_ident_short(mut self, #param_ident_short: &'a CStr) -> Self {
                         self.#param_ident = #param_ident_short.as_ptr();
                         self
                     }
                     #deprecated
                     #[inline]
+                    // TODO: const requires MSRV 1.84 for is_null(), 1.81 for CStr::from_ptr()
                     pub unsafe fn #param_ident_as_c_str(&self) -> Option<&CStr> {
                         if self.#param_ident.is_null() {
                             None
@@ -2215,7 +2182,7 @@ fn derive_getters_and_setters(
                     }
                     #deprecated
                     #[inline]
-                    pub fn #param_ident_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
+                    pub const fn #param_ident_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
                         wrap_c_str_slice_until_nul(&self.#param_ident)
                     }
                 });
@@ -2254,6 +2221,7 @@ fn derive_getters_and_setters(
                     return Some(quote! {
                         #deprecated
                         #[inline]
+                        // TODO: const when the indexer is
                         pub fn #param_ident_short(mut self, #param_ident_short: &'_ #slice_param_ty_tokens) -> Self {
                             self.#array_size_ident = #param_ident_short.len()#cast;
                             self.#param_ident[..#param_ident_short.len()].copy_from_slice(#param_ident_short);
@@ -2261,6 +2229,7 @@ fn derive_getters_and_setters(
                         }
                         #deprecated
                         #[inline]
+                        // TODO: const when the indexer is
                         pub fn #param_ident_short_as_slice(&self) -> &#slice_param_ty_tokens {
                             &self.#param_ident[..self.#array_size_ident #cast]
                         }
@@ -2312,7 +2281,7 @@ fn derive_getters_and_setters(
                 return Some(quote! {
                     #deprecated
                     #[inline]
-                    pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
+                    pub const fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
                         #set_size_stmt
                         self.#param_ident = #param_ident_short #ptr;
                         self
@@ -2325,8 +2294,9 @@ fn derive_getters_and_setters(
             return Some(quote!{
                 #deprecated
                 #[inline]
-                pub fn #param_ident_short(mut self, #param_ident_short: bool) -> Self {
-                    self.#param_ident = #param_ident_short.into();
+                pub const fn #param_ident_short(mut self, #param_ident_short: bool) -> Self {
+                    // TODO: Explicit conversion to vk::TRUE / vk::FALSE?
+                    self.#param_ident = #param_ident_short as Bool32;
                     self
                 }
             });
@@ -2346,6 +2316,7 @@ fn derive_getters_and_setters(
                 return Some(quote!{
                     #deprecated
                     #[inline]
+                    // TODO: const requires `trait Handle` to be const
                     pub fn #param_ident_short<T: Handle>(mut self, #param_ident_short: T) -> Self {
                         self.#param_ident = #param_ident_short.as_raw();
                         self.#objecttype_ident = T::TYPE;
@@ -2365,7 +2336,7 @@ fn derive_getters_and_setters(
         Some(quote!{
             #deprecated
             #[inline]
-            pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> Self {
+            pub const fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> Self {
                 self.#param_ident = #param_ident_short;
                 self
             }
@@ -2699,16 +2670,11 @@ pub fn generate_struct(
     } else {
         quote!()
     };
-    let derive_default = if default_tokens.is_none() {
-        quote!(Default,)
-    } else {
-        quote!()
-    };
     quote! {
         #provisional
         #[repr(C)]
         #derive_debug
-        #[derive(Copy, Clone, #derive_default #manual_derive_tokens)]
+        #[derive(Copy, Clone, #manual_derive_tokens)]
         #[doc = #khronos_link]
         #[must_use]
         pub struct #name #lifetimes {
@@ -3659,7 +3625,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use super::native::*;
         use super::platform_types::*;
         use super::{
-            wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
+            init_tagged_structure, wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
             Handle, Packed24_5_3, Packed24_8, Packed9_9_6_4_4, TaggedStructure,
         };
         use core::ffi::*;

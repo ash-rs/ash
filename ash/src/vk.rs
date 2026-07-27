@@ -131,6 +131,18 @@ pub unsafe trait TaggedStructure<'a>: Sized {
     }
 }
 
+/// `const`-initializes a tagged structure with all-zeroes, filling only its
+/// [`BaseOutStructure::s_type`] field.
+///
+/// All Vulkan structures support zero-initialization.
+pub const fn init_tagged_structure<'a, T: TaggedStructure<'a>>() -> T {
+    let mut slf = unsafe { core::mem::zeroed() };
+    // SAFETY: All implementers of `TaggedStructure` are required to have the `BaseOutStructure` layout
+    let slf_base = unsafe { &mut *<*mut _>::cast::<BaseOutStructure<'_>>(&mut slf) };
+    slf_base.s_type = T::STRUCTURE_TYPE;
+    slf
+}
+
 /// Implemented for every structure that extends base structure `B`. Concretely that means struct
 /// `B` is listed in its array of [`structextends` in the Vulkan registry][1].
 ///
@@ -263,7 +275,7 @@ impl From<Extent2D> for Rect2D {
 }
 
 #[inline]
-pub(crate) fn wrap_c_str_slice_until_nul(
+pub(crate) const fn wrap_c_str_slice_until_nul(
     str: &[core::ffi::c_char],
 ) -> core::result::Result<&core::ffi::CStr, core::ffi::FromBytesUntilNulError> {
     // SAFETY: The cast from c_char to u8 is ok because a c_char is always one byte.
