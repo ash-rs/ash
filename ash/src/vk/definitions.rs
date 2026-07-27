@@ -706,16 +706,6 @@ pub struct BaseOutStructure<'a> {
 }
 unsafe impl Send for BaseOutStructure<'_> {}
 unsafe impl Sync for BaseOutStructure<'_> {}
-impl ::core::default::Default for BaseOutStructure<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: unsafe { ::core::mem::zeroed() },
-            p_next: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
-    }
-}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -728,16 +718,6 @@ pub struct BaseInStructure<'a> {
 }
 unsafe impl Send for BaseInStructure<'_> {}
 unsafe impl Sync for BaseInStructure<'_> {}
-impl ::core::default::Default for BaseInStructure<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: unsafe { ::core::mem::zeroed() },
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
-    }
-}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default, PartialEq, Eq, Hash)]

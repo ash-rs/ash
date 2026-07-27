@@ -2698,7 +2698,20 @@ pub fn generate_struct(
     };
 
     let debug_tokens = derive_debug(struct_, &members, union_types, has_lifetime, &provisional);
-    let default_tokens = derive_default(struct_, &members, has_lifetime, &provisional);
+    let (default_tokens, derive_default) =
+        if struct_.name == "VkBaseInStructure" || struct_.name == "VkBaseOutStructure" {
+            // These don't really have a valid initializer, since they'll end up as
+            // vk::StructureType::APPLICATION_INFO (0).
+            (None, quote!())
+        } else {
+            let default_tokens = derive_default(struct_, &members, has_lifetime, &provisional);
+            let derive_default = if default_tokens.is_none() {
+                quote!(Default,)
+            } else {
+                quote!()
+            };
+            (default_tokens, derive_default)
+        };
     let send_sync_tokens = derive_send_sync(struct_, has_lifetime, &provisional);
     let setter_tokens = derive_getters_and_setters(
         struct_,
@@ -2710,11 +2723,6 @@ pub fn generate_struct(
     let manual_derive_tokens = manual_derives(struct_);
     let derive_debug = if debug_tokens.is_none() {
         quote!(#[cfg_attr(feature = "debug", derive(Debug))])
-    } else {
-        quote!()
-    };
-    let derive_default = if default_tokens.is_none() {
-        quote!(Default,)
     } else {
         quote!()
     };
