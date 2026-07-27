@@ -6,8 +6,9 @@ use super::enums::*;
 use super::native::*;
 use super::platform_types::*;
 use super::{
-    wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
-    Handle, Packed24_5_3, Packed24_8, Packed9_9_6_4_4, TaggedStructure,
+    init_tagged_structure, wrap_c_str_slice_until_nul, write_c_str_slice_with_nul,
+    CStrTooLargeForStaticArray, Extends, Handle, Packed24_5_3, Packed24_8, Packed9_9_6_4_4,
+    TaggedStructure,
 };
 use core::ffi::*;
 use core::fmt;
@@ -1152,7 +1153,7 @@ unsafe impl Sync for ApplicationInfo<'_> {}
 impl ::core::default::Default for ApplicationInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ApplicationInfo<'a> {
@@ -1300,7 +1301,7 @@ unsafe impl Sync for DeviceQueueCreateInfo<'_> {}
 impl ::core::default::Default for DeviceQueueCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueCreateInfo<'a> {
@@ -1349,7 +1350,7 @@ unsafe impl Sync for DeviceCreateInfo<'_> {}
 impl ::core::default::Default for DeviceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceCreateInfo<'a> {
@@ -1411,7 +1412,7 @@ unsafe impl Sync for InstanceCreateInfo<'_> {}
 impl ::core::default::Default for InstanceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for InstanceCreateInfo<'a> {
@@ -1543,7 +1544,7 @@ unsafe impl Sync for MemoryAllocateInfo<'_> {}
 impl ::core::default::Default for MemoryAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryAllocateInfo<'a> {
@@ -1714,7 +1715,7 @@ unsafe impl Sync for MappedMemoryRange<'_> {}
 impl ::core::default::Default for MappedMemoryRange<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MappedMemoryRange<'a> {
@@ -1880,7 +1881,7 @@ unsafe impl Sync for WriteDescriptorSet<'_> {}
 impl ::core::default::Default for WriteDescriptorSet<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSet<'a> {
@@ -1953,7 +1954,7 @@ unsafe impl Sync for CopyDescriptorSet<'_> {}
 impl ::core::default::Default for CopyDescriptorSet<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyDescriptorSet<'a> {
@@ -2012,7 +2013,7 @@ unsafe impl Sync for BufferUsageFlags2CreateInfo<'_> {}
 impl ::core::default::Default for BufferUsageFlags2CreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferUsageFlags2CreateInfo<'a> {
@@ -2050,7 +2051,7 @@ unsafe impl Sync for BufferCreateInfo<'_> {}
 impl ::core::default::Default for BufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCreateInfo<'a> {
@@ -2104,7 +2105,7 @@ unsafe impl Sync for BufferViewCreateInfo<'_> {}
 impl ::core::default::Default for BufferViewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferViewCreateInfo<'a> {
@@ -2253,7 +2254,7 @@ unsafe impl Sync for MemoryBarrier<'_> {}
 impl ::core::default::Default for MemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryBarrier<'a> {
@@ -2293,7 +2294,7 @@ unsafe impl Sync for BufferMemoryBarrier<'_> {}
 impl ::core::default::Default for BufferMemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferMemoryBarrier<'a> {
@@ -2359,7 +2360,7 @@ unsafe impl Sync for ImageMemoryBarrier<'_> {}
 impl ::core::default::Default for ImageMemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageMemoryBarrier<'a> {
@@ -2435,7 +2436,7 @@ unsafe impl Sync for ImageCreateInfo<'_> {}
 impl ::core::default::Default for ImageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCreateInfo<'a> {
@@ -2564,7 +2565,7 @@ unsafe impl Sync for ImageViewCreateInfo<'_> {}
 impl ::core::default::Default for ImageViewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewCreateInfo<'a> {
@@ -2834,7 +2835,7 @@ unsafe impl Sync for BindSparseInfo<'_> {}
 impl ::core::default::Default for BindSparseInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindSparseInfo<'a> {
@@ -3071,7 +3072,7 @@ unsafe impl Sync for CopyMemoryIndirectInfoKHR<'_> {}
 impl ::core::default::Default for CopyMemoryIndirectInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryIndirectInfoKHR<'a> {
@@ -3165,7 +3166,7 @@ unsafe impl Sync for CopyMemoryToImageIndirectInfoKHR<'_> {}
 impl ::core::default::Default for CopyMemoryToImageIndirectInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToImageIndirectInfoKHR<'a> {
@@ -3256,7 +3257,7 @@ unsafe impl Sync for ShaderModuleCreateInfo<'_> {}
 impl ::core::default::Default for ShaderModuleCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderModuleCreateInfo<'a> {
@@ -3344,7 +3345,7 @@ unsafe impl Sync for DescriptorSetLayoutCreateInfo<'_> {}
 impl ::core::default::Default for DescriptorSetLayoutCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutCreateInfo<'a> {
@@ -3403,7 +3404,7 @@ unsafe impl Sync for DescriptorPoolCreateInfo<'_> {}
 impl ::core::default::Default for DescriptorPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorPoolCreateInfo<'a> {
@@ -3445,7 +3446,7 @@ unsafe impl Sync for DescriptorSetAllocateInfo<'_> {}
 impl ::core::default::Default for DescriptorSetAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetAllocateInfo<'a> {
@@ -3545,7 +3546,7 @@ unsafe impl Sync for PipelineShaderStageCreateInfo<'_> {}
 impl ::core::default::Default for PipelineShaderStageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageCreateInfo<'a> {
@@ -3606,7 +3607,7 @@ unsafe impl Sync for ComputePipelineCreateInfo<'_> {}
 impl ::core::default::Default for ComputePipelineCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ComputePipelineCreateInfo<'a> {
@@ -3657,7 +3658,7 @@ unsafe impl Sync for ComputePipelineIndirectBufferInfoNV<'_> {}
 impl ::core::default::Default for ComputePipelineIndirectBufferInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ComputePipelineIndirectBufferInfoNV<'a> {
@@ -3700,7 +3701,7 @@ unsafe impl Sync for PipelineCreateFlags2CreateInfo<'_> {}
 impl ::core::default::Default for PipelineCreateFlags2CreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCreateFlags2CreateInfo<'a> {
@@ -3797,7 +3798,7 @@ unsafe impl Sync for PipelineVertexInputStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineVertexInputStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineVertexInputStateCreateInfo<'a> {
@@ -3846,7 +3847,7 @@ unsafe impl Sync for PipelineInputAssemblyStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineInputAssemblyStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineInputAssemblyStateCreateInfo<'a> {
@@ -3886,7 +3887,7 @@ unsafe impl Sync for PipelineTessellationStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineTessellationStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineTessellationStateCreateInfo<'a> {
@@ -3924,7 +3925,7 @@ unsafe impl Sync for PipelineViewportStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineViewportStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportStateCreateInfo<'a> {
@@ -3985,7 +3986,7 @@ unsafe impl Sync for PipelineRasterizationStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineRasterizationStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateCreateInfo<'a> {
@@ -4070,7 +4071,7 @@ unsafe impl Sync for PipelineMultisampleStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineMultisampleStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineMultisampleStateCreateInfo<'a> {
@@ -4200,7 +4201,7 @@ unsafe impl Sync for PipelineColorBlendStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineColorBlendStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineColorBlendStateCreateInfo<'a> {
@@ -4252,7 +4253,7 @@ unsafe impl Sync for PipelineDynamicStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineDynamicStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineDynamicStateCreateInfo<'a> {
@@ -4347,7 +4348,7 @@ unsafe impl Sync for PipelineDepthStencilStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineDepthStencilStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineDepthStencilStateCreateInfo<'a> {
@@ -4437,7 +4438,7 @@ unsafe impl Sync for GraphicsPipelineCreateInfo<'_> {}
 impl ::core::default::Default for GraphicsPipelineCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineCreateInfo<'a> {
@@ -4568,7 +4569,7 @@ unsafe impl Sync for PipelineCacheCreateInfo<'_> {}
 impl ::core::default::Default for PipelineCacheCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCacheCreateInfo<'a> {
@@ -4725,7 +4726,7 @@ unsafe impl Sync for PipelineBinaryCreateInfoKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryCreateInfoKHR<'a> {
@@ -4771,7 +4772,7 @@ unsafe impl Sync for PipelineBinaryHandlesInfoKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryHandlesInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryHandlesInfoKHR<'a> {
@@ -4867,7 +4868,7 @@ unsafe impl Sync for PipelineBinaryKeyKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryKeyKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryKeyKHR<'a> {
@@ -4902,7 +4903,7 @@ unsafe impl Sync for PipelineBinaryInfoKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryInfoKHR<'a> {
@@ -4935,7 +4936,7 @@ unsafe impl Sync for ReleaseCapturedPipelineDataInfoKHR<'_> {}
 impl ::core::default::Default for ReleaseCapturedPipelineDataInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ReleaseCapturedPipelineDataInfoKHR<'a> {
@@ -4964,7 +4965,7 @@ unsafe impl Sync for PipelineBinaryDataInfoKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryDataInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryDataInfoKHR<'a> {
@@ -4992,7 +4993,7 @@ unsafe impl Sync for PipelineCreateInfoKHR<'_> {}
 impl ::core::default::Default for PipelineCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCreateInfoKHR<'a> {
@@ -5019,7 +5020,7 @@ unsafe impl Sync for PipelineLayoutCreateInfo<'_> {}
 impl ::core::default::Default for PipelineLayoutCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineLayoutCreateInfo<'a> {
@@ -5085,7 +5086,7 @@ unsafe impl Sync for SamplerCreateInfo<'_> {}
 impl ::core::default::Default for SamplerCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCreateInfo<'a> {
@@ -5190,7 +5191,7 @@ unsafe impl Sync for CommandPoolCreateInfo<'_> {}
 impl ::core::default::Default for CommandPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandPoolCreateInfo<'a> {
@@ -5226,7 +5227,7 @@ unsafe impl Sync for CommandBufferAllocateInfo<'_> {}
 impl ::core::default::Default for CommandBufferAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferAllocateInfo<'a> {
@@ -5270,7 +5271,7 @@ unsafe impl Sync for CommandBufferInheritanceInfo<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceInfo<'a> {
@@ -5325,7 +5326,7 @@ unsafe impl Sync for CommandBufferBeginInfo<'_> {}
 impl ::core::default::Default for CommandBufferBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferBeginInfo<'a> {
@@ -5379,7 +5380,7 @@ impl fmt::Debug for RenderPassBeginInfo<'_> {
 impl ::core::default::Default for RenderPassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassBeginInfo<'a> {
@@ -5719,7 +5720,7 @@ unsafe impl Sync for RenderPassCreateInfo<'_> {}
 impl ::core::default::Default for RenderPassCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreateInfo<'a> {
@@ -5766,7 +5767,7 @@ unsafe impl Sync for EventCreateInfo<'_> {}
 impl ::core::default::Default for EventCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for EventCreateInfo<'a> {
@@ -5795,7 +5796,7 @@ unsafe impl Sync for FenceCreateInfo<'_> {}
 impl ::core::default::Default for FenceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FenceCreateInfo<'a> {
@@ -7032,7 +7033,7 @@ unsafe impl Sync for SemaphoreCreateInfo<'_> {}
 impl ::core::default::Default for SemaphoreCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreCreateInfo<'a> {
@@ -7064,7 +7065,7 @@ unsafe impl Sync for QueryPoolCreateInfo<'_> {}
 impl ::core::default::Default for QueryPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolCreateInfo<'a> {
@@ -7114,7 +7115,7 @@ unsafe impl Sync for FramebufferCreateInfo<'_> {}
 impl ::core::default::Default for FramebufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferCreateInfo<'a> {
@@ -7327,7 +7328,7 @@ unsafe impl Sync for SubmitInfo<'_> {}
 impl ::core::default::Default for SubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubmitInfo<'a> {
@@ -7507,7 +7508,7 @@ unsafe impl Sync for DisplayModeCreateInfoKHR<'_> {}
 impl ::core::default::Default for DisplayModeCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayModeCreateInfoKHR<'a> {
@@ -7611,7 +7612,7 @@ unsafe impl Sync for DisplaySurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for DisplaySurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplaySurfaceCreateInfoKHR<'a> {
@@ -7675,7 +7676,7 @@ unsafe impl Sync for DisplaySurfaceStereoCreateInfoNV<'_> {}
 impl ::core::default::Default for DisplaySurfaceStereoCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplaySurfaceStereoCreateInfoNV<'a> {
@@ -7707,7 +7708,7 @@ unsafe impl Sync for DisplayPresentInfoKHR<'_> {}
 impl ::core::default::Default for DisplayPresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPresentInfoKHR<'a> {
@@ -7820,7 +7821,7 @@ unsafe impl Sync for AndroidSurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for AndroidSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidSurfaceCreateInfoKHR<'a> {
@@ -7855,7 +7856,7 @@ unsafe impl Sync for ViSurfaceCreateInfoNN<'_> {}
 impl ::core::default::Default for ViSurfaceCreateInfoNN<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ViSurfaceCreateInfoNN<'a> {
@@ -7891,7 +7892,7 @@ unsafe impl Sync for WaylandSurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for WaylandSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WaylandSurfaceCreateInfoKHR<'a> {
@@ -7932,7 +7933,7 @@ unsafe impl Sync for UbmSurfaceCreateInfoSEC<'_> {}
 impl ::core::default::Default for UbmSurfaceCreateInfoSEC<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for UbmSurfaceCreateInfoSEC<'a> {
@@ -7973,7 +7974,7 @@ unsafe impl Sync for Win32SurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for Win32SurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for Win32SurfaceCreateInfoKHR<'a> {
@@ -8014,7 +8015,7 @@ unsafe impl Sync for XlibSurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for XlibSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for XlibSurfaceCreateInfoKHR<'a> {
@@ -8055,7 +8056,7 @@ unsafe impl Sync for XcbSurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for XcbSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for XcbSurfaceCreateInfoKHR<'a> {
@@ -8096,7 +8097,7 @@ unsafe impl Sync for DirectFBSurfaceCreateInfoEXT<'_> {}
 impl ::core::default::Default for DirectFBSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DirectFBSurfaceCreateInfoEXT<'a> {
@@ -8136,7 +8137,7 @@ unsafe impl Sync for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {}
 impl ::core::default::Default for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
@@ -8171,7 +8172,7 @@ unsafe impl Sync for StreamDescriptorSurfaceCreateInfoGGP<'_> {}
 impl ::core::default::Default for StreamDescriptorSurfaceCreateInfoGGP<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for StreamDescriptorSurfaceCreateInfoGGP<'a> {
@@ -8207,7 +8208,7 @@ unsafe impl Sync for ScreenSurfaceCreateInfoQNX<'_> {}
 impl ::core::default::Default for ScreenSurfaceCreateInfoQNX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ScreenSurfaceCreateInfoQNX<'a> {
@@ -8282,7 +8283,7 @@ unsafe impl Sync for SwapchainCreateInfoKHR<'_> {}
 impl ::core::default::Default for SwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainCreateInfoKHR<'a> {
@@ -8387,7 +8388,7 @@ unsafe impl Sync for PresentInfoKHR<'_> {}
 impl ::core::default::Default for PresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentInfoKHR<'a> {
@@ -8448,7 +8449,7 @@ impl fmt::Debug for DebugReportCallbackCreateInfoEXT<'_> {
 impl ::core::default::Default for DebugReportCallbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugReportCallbackCreateInfoEXT<'a> {
@@ -8489,7 +8490,7 @@ unsafe impl Sync for ValidationFlagsEXT<'_> {}
 impl ::core::default::Default for ValidationFlagsEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ValidationFlagsEXT<'a> {
@@ -8526,7 +8527,7 @@ unsafe impl Sync for ValidationFeaturesEXT<'_> {}
 impl ::core::default::Default for ValidationFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ValidationFeaturesEXT<'a> {
@@ -8572,7 +8573,7 @@ unsafe impl Sync for LayerSettingsCreateInfoEXT<'_> {}
 impl ::core::default::Default for LayerSettingsCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LayerSettingsCreateInfoEXT<'a> {
@@ -8663,7 +8664,7 @@ unsafe impl Sync for PipelineRasterizationStateRasterizationOrderAMD<'_> {}
 impl ::core::default::Default for PipelineRasterizationStateRasterizationOrderAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateRasterizationOrderAMD<'a> {
@@ -8699,7 +8700,7 @@ unsafe impl Sync for DebugMarkerObjectNameInfoEXT<'_> {}
 impl ::core::default::Default for DebugMarkerObjectNameInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugMarkerObjectNameInfoEXT<'a> {
@@ -8750,7 +8751,7 @@ unsafe impl Sync for DebugMarkerObjectTagInfoEXT<'_> {}
 impl ::core::default::Default for DebugMarkerObjectTagInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugMarkerObjectTagInfoEXT<'a> {
@@ -8796,7 +8797,7 @@ unsafe impl Sync for DebugMarkerMarkerInfoEXT<'_> {}
 impl ::core::default::Default for DebugMarkerMarkerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugMarkerMarkerInfoEXT<'a> {
@@ -8838,7 +8839,7 @@ unsafe impl Sync for DedicatedAllocationImageCreateInfoNV<'_> {}
 impl ::core::default::Default for DedicatedAllocationImageCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationImageCreateInfoNV<'a> {
@@ -8868,7 +8869,7 @@ unsafe impl Sync for DedicatedAllocationBufferCreateInfoNV<'_> {}
 impl ::core::default::Default for DedicatedAllocationBufferCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationBufferCreateInfoNV<'a> {
@@ -8899,7 +8900,7 @@ unsafe impl Sync for DedicatedAllocationMemoryAllocateInfoNV<'_> {}
 impl ::core::default::Default for DedicatedAllocationMemoryAllocateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationMemoryAllocateInfoNV<'a> {
@@ -8980,7 +8981,7 @@ unsafe impl Sync for ExternalMemoryImageCreateInfoNV<'_> {}
 impl ::core::default::Default for ExternalMemoryImageCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryImageCreateInfoNV<'a> {
@@ -9010,7 +9011,7 @@ unsafe impl Sync for ExportMemoryAllocateInfoNV<'_> {}
 impl ::core::default::Default for ExportMemoryAllocateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryAllocateInfoNV<'a> {
@@ -9041,7 +9042,7 @@ unsafe impl Sync for ImportMemoryWin32HandleInfoNV<'_> {}
 impl ::core::default::Default for ImportMemoryWin32HandleInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryWin32HandleInfoNV<'a> {
@@ -9077,7 +9078,7 @@ unsafe impl Sync for ExportMemoryWin32HandleInfoNV<'_> {}
 impl ::core::default::Default for ExportMemoryWin32HandleInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoNV<'a> {
@@ -9118,7 +9119,7 @@ unsafe impl Sync for Win32KeyedMutexAcquireReleaseInfoNV<'_> {}
 impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for Win32KeyedMutexAcquireReleaseInfoNV<'a> {
@@ -9174,7 +9175,7 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
@@ -9209,7 +9210,7 @@ unsafe impl Sync for PushConstantBankInfoNV<'_> {}
 impl ::core::default::Default for PushConstantBankInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushConstantBankInfoNV<'a> {
@@ -9242,7 +9243,7 @@ unsafe impl Sync for PhysicalDevicePushConstantBankFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDevicePushConstantBankFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushConstantBankFeaturesNV<'a> {
@@ -9277,7 +9278,7 @@ unsafe impl Sync for PhysicalDevicePushConstantBankPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDevicePushConstantBankPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushConstantBankPropertiesNV<'a> {
@@ -9331,7 +9332,7 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> 
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
@@ -9386,7 +9387,7 @@ unsafe impl Sync for DevicePrivateDataCreateInfo<'_> {}
 impl ::core::default::Default for DevicePrivateDataCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DevicePrivateDataCreateInfo<'a> {
@@ -9416,7 +9417,7 @@ unsafe impl Sync for PrivateDataSlotCreateInfo<'_> {}
 impl ::core::default::Default for PrivateDataSlotCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PrivateDataSlotCreateInfo<'a> {
@@ -9445,7 +9446,7 @@ unsafe impl Sync for PhysicalDevicePrivateDataFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevicePrivateDataFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrivateDataFeatures<'a> {
@@ -9484,7 +9485,7 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
@@ -9582,7 +9583,7 @@ unsafe impl Sync for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {
@@ -9627,7 +9628,7 @@ unsafe impl Sync for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'_> 
 impl ::core::default::Default for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
@@ -9723,7 +9724,7 @@ unsafe impl Sync for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<
 impl ::core::default::Default for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -9886,7 +9887,7 @@ unsafe impl Sync for ClusterAccelerationStructureClustersBottomLevelInputNV<'_> 
 impl ::core::default::Default for ClusterAccelerationStructureClustersBottomLevelInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {
@@ -9932,7 +9933,7 @@ unsafe impl Sync for ClusterAccelerationStructureTriangleClusterInputNV<'_> {}
 impl ::core::default::Default for ClusterAccelerationStructureTriangleClusterInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureTriangleClusterInputNV<'a> {
@@ -10002,7 +10003,7 @@ unsafe impl Sync for ClusterAccelerationStructureMoveObjectsInputNV<'_> {}
 impl ::core::default::Default for ClusterAccelerationStructureMoveObjectsInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureMoveObjectsInputNV<'a> {
@@ -10076,7 +10077,7 @@ impl fmt::Debug for ClusterAccelerationStructureInputInfoNV<'_> {
 impl ::core::default::Default for ClusterAccelerationStructureInputInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureInputInfoNV<'a> {
@@ -10136,7 +10137,7 @@ unsafe impl Sync for ClusterAccelerationStructureCommandsInfoNV<'_> {}
 impl ::core::default::Default for ClusterAccelerationStructureCommandsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureCommandsInfoNV<'a> {
@@ -10207,7 +10208,7 @@ unsafe impl Sync for PhysicalDeviceMultiDrawPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMultiDrawPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiDrawPropertiesEXT<'a> {
@@ -10240,7 +10241,7 @@ unsafe impl Sync for GraphicsShaderGroupCreateInfoNV<'_> {}
 impl ::core::default::Default for GraphicsShaderGroupCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsShaderGroupCreateInfoNV<'a> {
@@ -10289,7 +10290,7 @@ unsafe impl Sync for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {}
 impl ::core::default::Default for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
@@ -10447,7 +10448,7 @@ unsafe impl Sync for IndirectCommandsLayoutTokenNV<'_> {}
 impl ::core::default::Default for IndirectCommandsLayoutTokenNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutTokenNV<'a> {
@@ -10544,7 +10545,7 @@ unsafe impl Sync for IndirectCommandsLayoutCreateInfoNV<'_> {}
 impl ::core::default::Default for IndirectCommandsLayoutCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutCreateInfoNV<'a> {
@@ -10602,7 +10603,7 @@ unsafe impl Sync for GeneratedCommandsInfoNV<'_> {}
 impl ::core::default::Default for GeneratedCommandsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsInfoNV<'a> {
@@ -10693,7 +10694,7 @@ unsafe impl Sync for GeneratedCommandsMemoryRequirementsInfoNV<'_> {}
 impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsMemoryRequirementsInfoNV<'a> {
@@ -10742,7 +10743,7 @@ unsafe impl Sync for PipelineIndirectDeviceAddressInfoNV<'_> {}
 impl ::core::default::Default for PipelineIndirectDeviceAddressInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineIndirectDeviceAddressInfoNV<'a> {
@@ -10791,7 +10792,7 @@ unsafe impl Sync for PhysicalDeviceFeatures2<'_> {}
 impl ::core::default::Default for PhysicalDeviceFeatures2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFeatures2<'a> {
@@ -10821,7 +10822,7 @@ unsafe impl Sync for PhysicalDeviceProperties2<'_> {}
 impl ::core::default::Default for PhysicalDeviceProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProperties2<'a> {
@@ -10850,7 +10851,7 @@ unsafe impl Sync for FormatProperties2<'_> {}
 impl ::core::default::Default for FormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FormatProperties2<'a> {
@@ -10879,7 +10880,7 @@ unsafe impl Sync for ImageFormatProperties2<'_> {}
 impl ::core::default::Default for ImageFormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageFormatProperties2<'a> {
@@ -10915,7 +10916,7 @@ unsafe impl Sync for PhysicalDeviceImageFormatInfo2<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageFormatInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageFormatInfo2<'a> {
@@ -10964,7 +10965,7 @@ unsafe impl Sync for QueueFamilyProperties2<'_> {}
 impl ::core::default::Default for QueueFamilyProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyProperties2<'a> {
@@ -10996,7 +10997,7 @@ unsafe impl Sync for PhysicalDeviceMemoryProperties2<'_> {}
 impl ::core::default::Default for PhysicalDeviceMemoryProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryProperties2<'a> {
@@ -11025,7 +11026,7 @@ unsafe impl Sync for SparseImageFormatProperties2<'_> {}
 impl ::core::default::Default for SparseImageFormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SparseImageFormatProperties2<'a> {
@@ -11058,7 +11059,7 @@ unsafe impl Sync for PhysicalDeviceSparseImageFormatInfo2<'_> {}
 impl ::core::default::Default for PhysicalDeviceSparseImageFormatInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSparseImageFormatInfo2<'a> {
@@ -11107,7 +11108,7 @@ unsafe impl Sync for PhysicalDevicePushDescriptorProperties<'_> {}
 impl ::core::default::Default for PhysicalDevicePushDescriptorProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushDescriptorProperties<'a> {
@@ -11185,7 +11186,7 @@ impl fmt::Debug for PhysicalDeviceDriverProperties<'_> {
 impl ::core::default::Default for PhysicalDeviceDriverProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDriverProperties<'a> {
@@ -11243,7 +11244,7 @@ unsafe impl Sync for PresentRegionsKHR<'_> {}
 impl ::core::default::Default for PresentRegionsKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentRegionsKHR<'a> {
@@ -11328,7 +11329,7 @@ unsafe impl Sync for PhysicalDeviceVariablePointersFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceVariablePointersFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVariablePointersFeatures<'a> {
@@ -11403,7 +11404,7 @@ unsafe impl Sync for PhysicalDeviceExternalImageFormatInfo<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalImageFormatInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalImageFormatInfo<'a> {
@@ -11436,7 +11437,7 @@ unsafe impl Sync for ExternalImageFormatProperties<'_> {}
 impl ::core::default::Default for ExternalImageFormatProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalImageFormatProperties<'a> {
@@ -11471,7 +11472,7 @@ unsafe impl Sync for PhysicalDeviceExternalBufferInfo<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalBufferInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalBufferInfo<'a> {
@@ -11510,7 +11511,7 @@ unsafe impl Sync for ExternalBufferProperties<'_> {}
 impl ::core::default::Default for ExternalBufferProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalBufferProperties<'a> {
@@ -11546,7 +11547,7 @@ unsafe impl Sync for PhysicalDeviceIDProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceIDProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceIDProperties<'a> {
@@ -11596,7 +11597,7 @@ unsafe impl Sync for ExternalMemoryImageCreateInfo<'_> {}
 impl ::core::default::Default for ExternalMemoryImageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryImageCreateInfo<'a> {
@@ -11626,7 +11627,7 @@ unsafe impl Sync for ExternalMemoryBufferCreateInfo<'_> {}
 impl ::core::default::Default for ExternalMemoryBufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryBufferCreateInfo<'a> {
@@ -11656,7 +11657,7 @@ unsafe impl Sync for ExportMemoryAllocateInfo<'_> {}
 impl ::core::default::Default for ExportMemoryAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryAllocateInfo<'a> {
@@ -11688,7 +11689,7 @@ unsafe impl Sync for ImportMemoryWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ImportMemoryWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryWin32HandleInfoKHR<'a> {
@@ -11730,7 +11731,7 @@ unsafe impl Sync for ExportMemoryWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ExportMemoryWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoKHR<'a> {
@@ -11771,7 +11772,7 @@ unsafe impl Sync for ImportMemoryZirconHandleInfoFUCHSIA<'_> {}
 impl ::core::default::Default for ImportMemoryZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryZirconHandleInfoFUCHSIA<'a> {
@@ -11806,7 +11807,7 @@ unsafe impl Sync for MemoryZirconHandlePropertiesFUCHSIA<'_> {}
 impl ::core::default::Default for MemoryZirconHandlePropertiesFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryZirconHandlePropertiesFUCHSIA<'a> {
@@ -11836,7 +11837,7 @@ unsafe impl Sync for MemoryGetZirconHandleInfoFUCHSIA<'_> {}
 impl ::core::default::Default for MemoryGetZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetZirconHandleInfoFUCHSIA<'a> {
@@ -11870,7 +11871,7 @@ unsafe impl Sync for MemoryWin32HandlePropertiesKHR<'_> {}
 impl ::core::default::Default for MemoryWin32HandlePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryWin32HandlePropertiesKHR<'a> {
@@ -11900,7 +11901,7 @@ unsafe impl Sync for MemoryGetWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for MemoryGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetWin32HandleInfoKHR<'a> {
@@ -11935,7 +11936,7 @@ unsafe impl Sync for ImportMemoryFdInfoKHR<'_> {}
 impl ::core::default::Default for ImportMemoryFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryFdInfoKHR<'a> {
@@ -11970,7 +11971,7 @@ unsafe impl Sync for MemoryFdPropertiesKHR<'_> {}
 impl ::core::default::Default for MemoryFdPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryFdPropertiesKHR<'a> {
@@ -12000,7 +12001,7 @@ unsafe impl Sync for MemoryGetFdInfoKHR<'_> {}
 impl ::core::default::Default for MemoryGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetFdInfoKHR<'a> {
@@ -12040,7 +12041,7 @@ unsafe impl Sync for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {}
 impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
@@ -12097,7 +12098,7 @@ unsafe impl Sync for ImportMemoryMetalHandleInfoEXT<'_> {}
 impl ::core::default::Default for ImportMemoryMetalHandleInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryMetalHandleInfoEXT<'a> {
@@ -12132,7 +12133,7 @@ unsafe impl Sync for MemoryMetalHandlePropertiesEXT<'_> {}
 impl ::core::default::Default for MemoryMetalHandlePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMetalHandlePropertiesEXT<'a> {
@@ -12162,7 +12163,7 @@ unsafe impl Sync for MemoryGetMetalHandleInfoEXT<'_> {}
 impl ::core::default::Default for MemoryGetMetalHandleInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetMetalHandleInfoEXT<'a> {
@@ -12196,7 +12197,7 @@ unsafe impl Sync for PhysicalDeviceExternalSemaphoreInfo<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalSemaphoreInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalSemaphoreInfo<'a> {
@@ -12227,7 +12228,7 @@ unsafe impl Sync for ExternalSemaphoreProperties<'_> {}
 impl ::core::default::Default for ExternalSemaphoreProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalSemaphoreProperties<'a> {
@@ -12275,7 +12276,7 @@ unsafe impl Sync for ExportSemaphoreCreateInfo<'_> {}
 impl ::core::default::Default for ExportSemaphoreCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportSemaphoreCreateInfo<'a> {
@@ -12309,7 +12310,7 @@ unsafe impl Sync for ImportSemaphoreWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ImportSemaphoreWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreWin32HandleInfoKHR<'a> {
@@ -12360,7 +12361,7 @@ unsafe impl Sync for ExportSemaphoreWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ExportSemaphoreWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportSemaphoreWin32HandleInfoKHR<'a> {
@@ -12403,7 +12404,7 @@ unsafe impl Sync for D3D12FenceSubmitInfoKHR<'_> {}
 impl ::core::default::Default for D3D12FenceSubmitInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for D3D12FenceSubmitInfoKHR<'a> {
@@ -12441,7 +12442,7 @@ unsafe impl Sync for SemaphoreGetWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for SemaphoreGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetWin32HandleInfoKHR<'a> {
@@ -12478,7 +12479,7 @@ unsafe impl Sync for ImportSemaphoreFdInfoKHR<'_> {}
 impl ::core::default::Default for ImportSemaphoreFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreFdInfoKHR<'a> {
@@ -12523,7 +12524,7 @@ unsafe impl Sync for SemaphoreGetFdInfoKHR<'_> {}
 impl ::core::default::Default for SemaphoreGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetFdInfoKHR<'a> {
@@ -12560,7 +12561,7 @@ unsafe impl Sync for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {}
 impl ::core::default::Default for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
@@ -12606,7 +12607,7 @@ unsafe impl Sync for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {}
 impl ::core::default::Default for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
@@ -12640,7 +12641,7 @@ unsafe impl Sync for PhysicalDeviceExternalFenceInfo<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalFenceInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFenceInfo<'a> {
@@ -12671,7 +12672,7 @@ unsafe impl Sync for ExternalFenceProperties<'_> {}
 impl ::core::default::Default for ExternalFenceProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFenceProperties<'a> {
@@ -12719,7 +12720,7 @@ unsafe impl Sync for ExportFenceCreateInfo<'_> {}
 impl ::core::default::Default for ExportFenceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportFenceCreateInfo<'a> {
@@ -12753,7 +12754,7 @@ unsafe impl Sync for ImportFenceWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ImportFenceWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportFenceWin32HandleInfoKHR<'a> {
@@ -12804,7 +12805,7 @@ unsafe impl Sync for ExportFenceWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ExportFenceWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportFenceWin32HandleInfoKHR<'a> {
@@ -12845,7 +12846,7 @@ unsafe impl Sync for FenceGetWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for FenceGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FenceGetWin32HandleInfoKHR<'a> {
@@ -12882,7 +12883,7 @@ unsafe impl Sync for ImportFenceFdInfoKHR<'_> {}
 impl ::core::default::Default for ImportFenceFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportFenceFdInfoKHR<'a> {
@@ -12927,7 +12928,7 @@ unsafe impl Sync for FenceGetFdInfoKHR<'_> {}
 impl ::core::default::Default for FenceGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FenceGetFdInfoKHR<'a> {
@@ -12963,7 +12964,7 @@ unsafe impl Sync for PhysicalDeviceMultiviewFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceMultiviewFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewFeatures<'a> {
@@ -13005,7 +13006,7 @@ unsafe impl Sync for PhysicalDeviceMultiviewProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceMultiviewProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewProperties<'a> {
@@ -13045,7 +13046,7 @@ unsafe impl Sync for RenderPassMultiviewCreateInfo<'_> {}
 impl ::core::default::Default for RenderPassMultiviewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassMultiviewCreateInfo<'a> {
@@ -13098,7 +13099,7 @@ unsafe impl Sync for SurfaceCapabilities2EXT<'_> {}
 impl ::core::default::Default for SurfaceCapabilities2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilities2EXT<'a> {
@@ -13183,7 +13184,7 @@ unsafe impl Sync for DisplayPowerInfoEXT<'_> {}
 impl ::core::default::Default for DisplayPowerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPowerInfoEXT<'a> {
@@ -13212,7 +13213,7 @@ unsafe impl Sync for DeviceEventInfoEXT<'_> {}
 impl ::core::default::Default for DeviceEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceEventInfoEXT<'a> {
@@ -13241,7 +13242,7 @@ unsafe impl Sync for DisplayEventInfoEXT<'_> {}
 impl ::core::default::Default for DisplayEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayEventInfoEXT<'a> {
@@ -13270,7 +13271,7 @@ unsafe impl Sync for SwapchainCounterCreateInfoEXT<'_> {}
 impl ::core::default::Default for SwapchainCounterCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainCounterCreateInfoEXT<'a> {
@@ -13313,7 +13314,7 @@ impl fmt::Debug for PhysicalDeviceGroupProperties<'_> {
 impl ::core::default::Default for PhysicalDeviceGroupProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGroupProperties<'a> {
@@ -13353,7 +13354,7 @@ unsafe impl Sync for MemoryAllocateFlagsInfo<'_> {}
 impl ::core::default::Default for MemoryAllocateFlagsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryAllocateFlagsInfo<'a> {
@@ -13390,7 +13391,7 @@ unsafe impl Sync for BindBufferMemoryInfo<'_> {}
 impl ::core::default::Default for BindBufferMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindBufferMemoryInfo<'a> {
@@ -13430,7 +13431,7 @@ unsafe impl Sync for BindBufferMemoryDeviceGroupInfo<'_> {}
 impl ::core::default::Default for BindBufferMemoryDeviceGroupInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindBufferMemoryDeviceGroupInfo<'a> {
@@ -13463,7 +13464,7 @@ unsafe impl Sync for BindImageMemoryInfo<'_> {}
 impl ::core::default::Default for BindImageMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImageMemoryInfo<'a> {
@@ -13505,7 +13506,7 @@ unsafe impl Sync for BindImageMemoryDeviceGroupInfo<'_> {}
 impl ::core::default::Default for BindImageMemoryDeviceGroupInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImageMemoryDeviceGroupInfo<'a> {
@@ -13547,7 +13548,7 @@ unsafe impl Sync for DeviceGroupRenderPassBeginInfo<'_> {}
 impl ::core::default::Default for DeviceGroupRenderPassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupRenderPassBeginInfo<'a> {
@@ -13584,7 +13585,7 @@ unsafe impl Sync for DeviceGroupCommandBufferBeginInfo<'_> {}
 impl ::core::default::Default for DeviceGroupCommandBufferBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupCommandBufferBeginInfo<'a> {
@@ -13619,7 +13620,7 @@ unsafe impl Sync for DeviceGroupSubmitInfo<'_> {}
 impl ::core::default::Default for DeviceGroupSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupSubmitInfo<'a> {
@@ -13669,7 +13670,7 @@ unsafe impl Sync for DeviceGroupBindSparseInfo<'_> {}
 impl ::core::default::Default for DeviceGroupBindSparseInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupBindSparseInfo<'a> {
@@ -13705,7 +13706,7 @@ unsafe impl Sync for DeviceGroupPresentCapabilitiesKHR<'_> {}
 impl ::core::default::Default for DeviceGroupPresentCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupPresentCapabilitiesKHR<'a> {
@@ -13739,7 +13740,7 @@ unsafe impl Sync for ImageSwapchainCreateInfoKHR<'_> {}
 impl ::core::default::Default for ImageSwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageSwapchainCreateInfoKHR<'a> {
@@ -13770,7 +13771,7 @@ unsafe impl Sync for BindImageMemorySwapchainInfoKHR<'_> {}
 impl ::core::default::Default for BindImageMemorySwapchainInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImageMemorySwapchainInfoKHR<'a> {
@@ -13809,7 +13810,7 @@ unsafe impl Sync for AcquireNextImageInfoKHR<'_> {}
 impl ::core::default::Default for AcquireNextImageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AcquireNextImageInfoKHR<'a> {
@@ -13860,7 +13861,7 @@ unsafe impl Sync for DeviceGroupPresentInfoKHR<'_> {}
 impl ::core::default::Default for DeviceGroupPresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupPresentInfoKHR<'a> {
@@ -13897,7 +13898,7 @@ unsafe impl Sync for DeviceGroupDeviceCreateInfo<'_> {}
 impl ::core::default::Default for DeviceGroupDeviceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupDeviceCreateInfo<'a> {
@@ -13928,7 +13929,7 @@ unsafe impl Sync for DeviceGroupSwapchainCreateInfoKHR<'_> {}
 impl ::core::default::Default for DeviceGroupSwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupSwapchainCreateInfoKHR<'a> {
@@ -14010,7 +14011,7 @@ unsafe impl Sync for DescriptorUpdateTemplateCreateInfo<'_> {}
 impl ::core::default::Default for DescriptorUpdateTemplateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorUpdateTemplateCreateInfo<'a> {
@@ -14094,7 +14095,7 @@ unsafe impl Sync for PhysicalDevicePresentIdFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentIdFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentIdFeaturesKHR<'a> {
@@ -14126,7 +14127,7 @@ unsafe impl Sync for PresentIdKHR<'_> {}
 impl ::core::default::Default for PresentIdKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentIdKHR<'a> {
@@ -14157,7 +14158,7 @@ unsafe impl Sync for PhysicalDevicePresentId2FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentId2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentId2FeaturesKHR<'a> {
@@ -14189,7 +14190,7 @@ unsafe impl Sync for PresentId2KHR<'_> {}
 impl ::core::default::Default for PresentId2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentId2KHR<'a> {
@@ -14221,7 +14222,7 @@ unsafe impl Sync for PresentWait2InfoKHR<'_> {}
 impl ::core::default::Default for PresentWait2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentWait2InfoKHR<'a> {
@@ -14255,7 +14256,7 @@ unsafe impl Sync for PhysicalDevicePresentWaitFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentWaitFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentWaitFeaturesKHR<'a> {
@@ -14286,7 +14287,7 @@ unsafe impl Sync for PhysicalDevicePresentWait2FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentWait2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentWait2FeaturesKHR<'a> {
@@ -14320,7 +14321,7 @@ unsafe impl Sync for PhysicalDevicePresentTimingFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentTimingFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentTimingFeaturesEXT<'a> {
@@ -14365,7 +14366,7 @@ unsafe impl Sync for PresentTimingSurfaceCapabilitiesEXT<'_> {}
 impl ::core::default::Default for PresentTimingSurfaceCapabilitiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimingSurfaceCapabilitiesEXT<'a> {
@@ -14417,7 +14418,7 @@ unsafe impl Sync for SwapchainTimingPropertiesEXT<'_> {}
 impl ::core::default::Default for SwapchainTimingPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainTimingPropertiesEXT<'a> {
@@ -14453,7 +14454,7 @@ unsafe impl Sync for SwapchainTimeDomainPropertiesEXT<'_> {}
 impl ::core::default::Default for SwapchainTimeDomainPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainTimeDomainPropertiesEXT<'a> {
@@ -14511,7 +14512,7 @@ unsafe impl Sync for PastPresentationTimingInfoEXT<'_> {}
 impl ::core::default::Default for PastPresentationTimingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PastPresentationTimingInfoEXT<'a> {
@@ -14548,7 +14549,7 @@ unsafe impl Sync for PastPresentationTimingPropertiesEXT<'_> {}
 impl ::core::default::Default for PastPresentationTimingPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PastPresentationTimingPropertiesEXT<'a> {
@@ -14597,7 +14598,7 @@ unsafe impl Sync for PastPresentationTimingEXT<'_> {}
 impl ::core::default::Default for PastPresentationTimingEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PastPresentationTimingEXT<'a> {
@@ -14653,7 +14654,7 @@ unsafe impl Sync for PresentTimingsInfoEXT<'_> {}
 impl ::core::default::Default for PresentTimingsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimingsInfoEXT<'a> {
@@ -14688,7 +14689,7 @@ unsafe impl Sync for PresentTimingInfoEXT<'_> {}
 impl ::core::default::Default for PresentTimingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimingInfoEXT<'a> {
@@ -14742,7 +14743,7 @@ unsafe impl Sync for SwapchainCalibratedTimestampInfoEXT<'_> {}
 impl ::core::default::Default for SwapchainCalibratedTimestampInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainCalibratedTimestampInfoEXT<'a> {
@@ -14789,7 +14790,7 @@ unsafe impl Sync for HdrMetadataEXT<'_> {}
 impl ::core::default::Default for HdrMetadataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HdrMetadataEXT<'a> {
@@ -14854,7 +14855,7 @@ unsafe impl Sync for HdrVividDynamicMetadataHUAWEI<'_> {}
 impl ::core::default::Default for HdrVividDynamicMetadataHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HdrVividDynamicMetadataHUAWEI<'a> {
@@ -14885,7 +14886,7 @@ unsafe impl Sync for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {}
 impl ::core::default::Default for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
@@ -14916,7 +14917,7 @@ unsafe impl Sync for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {}
 impl ::core::default::Default for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
@@ -15002,7 +15003,7 @@ unsafe impl Sync for PresentTimesInfoGOOGLE<'_> {}
 impl ::core::default::Default for PresentTimesInfoGOOGLE<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimesInfoGOOGLE<'a> {
@@ -15055,7 +15056,7 @@ unsafe impl Sync for IOSSurfaceCreateInfoMVK<'_> {}
 impl ::core::default::Default for IOSSurfaceCreateInfoMVK<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IOSSurfaceCreateInfoMVK<'a> {
@@ -15090,7 +15091,7 @@ unsafe impl Sync for MacOSSurfaceCreateInfoMVK<'_> {}
 impl ::core::default::Default for MacOSSurfaceCreateInfoMVK<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MacOSSurfaceCreateInfoMVK<'a> {
@@ -15125,7 +15126,7 @@ unsafe impl Sync for MetalSurfaceCreateInfoEXT<'_> {}
 impl ::core::default::Default for MetalSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MetalSurfaceCreateInfoEXT<'a> {
@@ -15182,7 +15183,7 @@ unsafe impl Sync for PipelineViewportWScalingStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineViewportWScalingStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportWScalingStateCreateInfoNV<'a> {
@@ -15257,7 +15258,7 @@ unsafe impl Sync for PipelineViewportSwizzleStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineViewportSwizzleStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportSwizzleStateCreateInfoNV<'a> {
@@ -15297,7 +15298,7 @@ unsafe impl Sync for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
@@ -15334,7 +15335,7 @@ unsafe impl Sync for PipelineDiscardRectangleStateCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineDiscardRectangleStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineDiscardRectangleStateCreateInfoEXT<'a> {
@@ -15382,7 +15383,7 @@ unsafe impl Sync for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {
 impl ::core::default::Default for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
@@ -15447,7 +15448,7 @@ unsafe impl Sync for RenderPassInputAttachmentAspectCreateInfo<'_> {}
 impl ::core::default::Default for RenderPassInputAttachmentAspectCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassInputAttachmentAspectCreateInfo<'a> {
@@ -15482,7 +15483,7 @@ unsafe impl Sync for PhysicalDeviceSurfaceInfo2KHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceSurfaceInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSurfaceInfo2KHR<'a> {
@@ -15511,7 +15512,7 @@ unsafe impl Sync for SurfaceCapabilities2KHR<'_> {}
 impl ::core::default::Default for SurfaceCapabilities2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilities2KHR<'a> {
@@ -15540,7 +15541,7 @@ unsafe impl Sync for SurfaceFormat2KHR<'_> {}
 impl ::core::default::Default for SurfaceFormat2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceFormat2KHR<'a> {
@@ -15569,7 +15570,7 @@ unsafe impl Sync for DisplayProperties2KHR<'_> {}
 impl ::core::default::Default for DisplayProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayProperties2KHR<'a> {
@@ -15598,7 +15599,7 @@ unsafe impl Sync for DisplayPlaneProperties2KHR<'_> {}
 impl ::core::default::Default for DisplayPlaneProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneProperties2KHR<'a> {
@@ -15630,7 +15631,7 @@ unsafe impl Sync for DisplayModeProperties2KHR<'_> {}
 impl ::core::default::Default for DisplayModeProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayModeProperties2KHR<'a> {
@@ -15662,7 +15663,7 @@ unsafe impl Sync for DisplayModeStereoPropertiesNV<'_> {}
 impl ::core::default::Default for DisplayModeStereoPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayModeStereoPropertiesNV<'a> {
@@ -15693,7 +15694,7 @@ unsafe impl Sync for DisplayPlaneInfo2KHR<'_> {}
 impl ::core::default::Default for DisplayPlaneInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneInfo2KHR<'a> {
@@ -15727,7 +15728,7 @@ unsafe impl Sync for DisplayPlaneCapabilities2KHR<'_> {}
 impl ::core::default::Default for DisplayPlaneCapabilities2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneCapabilities2KHR<'a> {
@@ -15756,7 +15757,7 @@ unsafe impl Sync for SharedPresentSurfaceCapabilitiesKHR<'_> {}
 impl ::core::default::Default for SharedPresentSurfaceCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SharedPresentSurfaceCapabilitiesKHR<'a> {
@@ -15792,7 +15793,7 @@ unsafe impl Sync for PhysicalDevice16BitStorageFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevice16BitStorageFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice16BitStorageFeatures<'a> {
@@ -15845,7 +15846,7 @@ unsafe impl Sync for PhysicalDeviceSubgroupProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubgroupProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupProperties<'a> {
@@ -15890,7 +15891,7 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
@@ -15928,7 +15929,7 @@ unsafe impl Sync for BufferMemoryRequirementsInfo2<'_> {}
 impl ::core::default::Default for BufferMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferMemoryRequirementsInfo2<'a> {
@@ -15957,7 +15958,7 @@ unsafe impl Sync for DeviceBufferMemoryRequirements<'_> {}
 impl ::core::default::Default for DeviceBufferMemoryRequirements<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceBufferMemoryRequirements<'a> {
@@ -15986,7 +15987,7 @@ unsafe impl Sync for ImageMemoryRequirementsInfo2<'_> {}
 impl ::core::default::Default for ImageMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageMemoryRequirementsInfo2<'a> {
@@ -16015,7 +16016,7 @@ unsafe impl Sync for ImageSparseMemoryRequirementsInfo2<'_> {}
 impl ::core::default::Default for ImageSparseMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageSparseMemoryRequirementsInfo2<'a> {
@@ -16045,7 +16046,7 @@ unsafe impl Sync for DeviceImageMemoryRequirements<'_> {}
 impl ::core::default::Default for DeviceImageMemoryRequirements<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceImageMemoryRequirements<'a> {
@@ -16079,7 +16080,7 @@ unsafe impl Sync for MemoryRequirements2<'_> {}
 impl ::core::default::Default for MemoryRequirements2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryRequirements2<'a> {
@@ -16108,7 +16109,7 @@ unsafe impl Sync for SparseImageMemoryRequirements2<'_> {}
 impl ::core::default::Default for SparseImageMemoryRequirements2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SparseImageMemoryRequirements2<'a> {
@@ -16140,7 +16141,7 @@ unsafe impl Sync for PhysicalDevicePointClippingProperties<'_> {}
 impl ::core::default::Default for PhysicalDevicePointClippingProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePointClippingProperties<'a> {
@@ -16174,7 +16175,7 @@ unsafe impl Sync for MemoryDedicatedRequirements<'_> {}
 impl ::core::default::Default for MemoryDedicatedRequirements<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedRequirements<'a> {
@@ -16210,7 +16211,7 @@ unsafe impl Sync for MemoryDedicatedAllocateInfo<'_> {}
 impl ::core::default::Default for MemoryDedicatedAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedAllocateInfo<'a> {
@@ -16245,7 +16246,7 @@ unsafe impl Sync for ImageViewUsageCreateInfo<'_> {}
 impl ::core::default::Default for ImageViewUsageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewUsageCreateInfo<'a> {
@@ -16276,7 +16277,7 @@ unsafe impl Sync for ImageViewSlicedCreateInfoEXT<'_> {}
 impl ::core::default::Default for ImageViewSlicedCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewSlicedCreateInfoEXT<'a> {
@@ -16311,7 +16312,7 @@ unsafe impl Sync for PipelineTessellationDomainOriginStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineTessellationDomainOriginStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineTessellationDomainOriginStateCreateInfo<'a> {
@@ -16345,7 +16346,7 @@ unsafe impl Sync for SamplerYcbcrConversionInfo<'_> {}
 impl ::core::default::Default for SamplerYcbcrConversionInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionInfo<'a> {
@@ -16383,7 +16384,7 @@ unsafe impl Sync for SamplerYcbcrConversionCreateInfo<'_> {}
 impl ::core::default::Default for SamplerYcbcrConversionCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionCreateInfo<'a> {
@@ -16447,7 +16448,7 @@ unsafe impl Sync for BindImagePlaneMemoryInfo<'_> {}
 impl ::core::default::Default for BindImagePlaneMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImagePlaneMemoryInfo<'a> {
@@ -16477,7 +16478,7 @@ unsafe impl Sync for ImagePlaneMemoryRequirementsInfo<'_> {}
 impl ::core::default::Default for ImagePlaneMemoryRequirementsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImagePlaneMemoryRequirementsInfo<'a> {
@@ -16507,7 +16508,7 @@ unsafe impl Sync for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
@@ -16542,7 +16543,7 @@ unsafe impl Sync for SamplerYcbcrConversionImageFormatProperties<'_> {}
 impl ::core::default::Default for SamplerYcbcrConversionImageFormatProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionImageFormatProperties<'a> {
@@ -16579,7 +16580,7 @@ unsafe impl Sync for TextureLODGatherFormatPropertiesAMD<'_> {}
 impl ::core::default::Default for TextureLODGatherFormatPropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TextureLODGatherFormatPropertiesAMD<'a> {
@@ -16614,7 +16615,7 @@ unsafe impl Sync for ConditionalRenderingBeginInfoEXT<'_> {}
 impl ::core::default::Default for ConditionalRenderingBeginInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ConditionalRenderingBeginInfoEXT<'a> {
@@ -16653,7 +16654,7 @@ unsafe impl Sync for ProtectedSubmitInfo<'_> {}
 impl ::core::default::Default for ProtectedSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ProtectedSubmitInfo<'a> {
@@ -16683,7 +16684,7 @@ unsafe impl Sync for PhysicalDeviceProtectedMemoryFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceProtectedMemoryFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProtectedMemoryFeatures<'a> {
@@ -16714,7 +16715,7 @@ unsafe impl Sync for PhysicalDeviceProtectedMemoryProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceProtectedMemoryProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProtectedMemoryProperties<'a> {
@@ -16747,7 +16748,7 @@ unsafe impl Sync for DeviceQueueInfo2<'_> {}
 impl ::core::default::Default for DeviceQueueInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueInfo2<'a> {
@@ -16788,7 +16789,7 @@ unsafe impl Sync for PipelineCoverageToColorStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineCoverageToColorStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageToColorStateCreateInfoNV<'a> {
@@ -16833,7 +16834,7 @@ unsafe impl Sync for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
@@ -16902,7 +16903,7 @@ unsafe impl Sync for SampleLocationsInfoEXT<'_> {}
 impl ::core::default::Default for SampleLocationsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SampleLocationsInfoEXT<'a> {
@@ -17000,7 +17001,7 @@ unsafe impl Sync for RenderPassSampleLocationsBeginInfoEXT<'_> {}
 impl ::core::default::Default for RenderPassSampleLocationsBeginInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassSampleLocationsBeginInfoEXT<'a> {
@@ -17046,7 +17047,7 @@ unsafe impl Sync for PipelineSampleLocationsStateCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineSampleLocationsStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineSampleLocationsStateCreateInfoEXT<'a> {
@@ -17092,7 +17093,7 @@ unsafe impl Sync for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
@@ -17155,7 +17156,7 @@ unsafe impl Sync for MultisamplePropertiesEXT<'_> {}
 impl ::core::default::Default for MultisamplePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MultisamplePropertiesEXT<'a> {
@@ -17187,7 +17188,7 @@ unsafe impl Sync for SamplerReductionModeCreateInfo<'_> {}
 impl ::core::default::Default for SamplerReductionModeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerReductionModeCreateInfo<'a> {
@@ -17217,7 +17218,7 @@ unsafe impl Sync for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
@@ -17255,7 +17256,7 @@ unsafe impl Sync for PhysicalDeviceMultiDrawFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMultiDrawFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiDrawFeaturesEXT<'a> {
@@ -17291,7 +17292,7 @@ unsafe impl Sync for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
@@ -17369,7 +17370,7 @@ unsafe impl Sync for PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
@@ -17414,7 +17415,7 @@ unsafe impl Sync for PhysicalDeviceInlineUniformBlockFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceInlineUniformBlockFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInlineUniformBlockFeatures<'a> {
@@ -17459,7 +17460,7 @@ unsafe impl Sync for PhysicalDeviceInlineUniformBlockProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceInlineUniformBlockProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInlineUniformBlockProperties<'a> {
@@ -17529,7 +17530,7 @@ unsafe impl Sync for WriteDescriptorSetInlineUniformBlock<'_> {}
 impl ::core::default::Default for WriteDescriptorSetInlineUniformBlock<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetInlineUniformBlock<'a> {
@@ -17560,7 +17561,7 @@ unsafe impl Sync for DescriptorPoolInlineUniformBlockCreateInfo<'_> {}
 impl ::core::default::Default for DescriptorPoolInlineUniformBlockCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorPoolInlineUniformBlockCreateInfo<'a> {
@@ -17601,7 +17602,7 @@ unsafe impl Sync for PipelineCoverageModulationStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineCoverageModulationStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageModulationStateCreateInfoNV<'a> {
@@ -17658,7 +17659,7 @@ unsafe impl Sync for ImageFormatListCreateInfo<'_> {}
 impl ::core::default::Default for ImageFormatListCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageFormatListCreateInfo<'a> {
@@ -17693,7 +17694,7 @@ unsafe impl Sync for ValidationCacheCreateInfoEXT<'_> {}
 impl ::core::default::Default for ValidationCacheCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ValidationCacheCreateInfoEXT<'a> {
@@ -17728,7 +17729,7 @@ unsafe impl Sync for ShaderModuleValidationCacheCreateInfoEXT<'_> {}
 impl ::core::default::Default for ShaderModuleValidationCacheCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderModuleValidationCacheCreateInfoEXT<'a> {
@@ -17764,7 +17765,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance3Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance3Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance3Properties<'a> {
@@ -17799,7 +17800,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance4Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance4Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance4Features<'a> {
@@ -17830,7 +17831,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance4Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance4Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance4Properties<'a> {
@@ -17860,7 +17861,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance5Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance5Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance5Features<'a> {
@@ -17896,7 +17897,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance5Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance5Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance5Properties<'a> {
@@ -17970,7 +17971,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance6Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance6Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance6Features<'a> {
@@ -18003,7 +18004,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance6Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance6Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance6Properties<'a> {
@@ -18055,7 +18056,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance7FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance7FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance7FeaturesKHR<'a> {
@@ -18093,7 +18094,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance7PropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance7PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance7PropertiesKHR<'a> {
@@ -18191,7 +18192,7 @@ unsafe impl Sync for PhysicalDeviceLayeredApiPropertiesListKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesListKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
@@ -18244,7 +18245,7 @@ impl fmt::Debug for PhysicalDeviceLayeredApiPropertiesKHR<'_> {
 impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiPropertiesKHR<'a> {
@@ -18294,7 +18295,7 @@ unsafe impl Sync for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
@@ -18328,7 +18329,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance8FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance8FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance8FeaturesKHR<'a> {
@@ -18359,7 +18360,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance9FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance9FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance9FeaturesKHR<'a> {
@@ -18391,7 +18392,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance9PropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance9PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance9PropertiesKHR<'a> {
@@ -18430,7 +18431,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance11FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance11FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance11FeaturesKHR<'a> {
@@ -18464,7 +18465,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance10PropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance10PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance10PropertiesKHR<'a> {
@@ -18516,7 +18517,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance10FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance10FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance10FeaturesKHR<'a> {
@@ -18548,7 +18549,7 @@ unsafe impl Sync for QueueFamilyOwnershipTransferPropertiesKHR<'_> {}
 impl ::core::default::Default for QueueFamilyOwnershipTransferPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyOwnershipTransferPropertiesKHR<'a> {
@@ -18582,7 +18583,7 @@ unsafe impl Sync for QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'_>
 impl ::core::default::Default for QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -18625,7 +18626,7 @@ unsafe impl Sync for RenderingAreaInfo<'_> {}
 impl ::core::default::Default for RenderingAreaInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingAreaInfo<'a> {
@@ -18670,7 +18671,7 @@ unsafe impl Sync for DescriptorSetLayoutSupport<'_> {}
 impl ::core::default::Default for DescriptorSetLayoutSupport<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutSupport<'a> {
@@ -18699,7 +18700,7 @@ unsafe impl Sync for PhysicalDeviceShaderDrawParametersFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderDrawParametersFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderDrawParametersFeatures<'a> {
@@ -18735,7 +18736,7 @@ unsafe impl Sync for PhysicalDeviceShaderFloat16Int8Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderFloat16Int8Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloat16Int8Features<'a> {
@@ -18788,7 +18789,7 @@ unsafe impl Sync for PhysicalDeviceFloatControlsProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceFloatControlsProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFloatControlsProperties<'a> {
@@ -18943,7 +18944,7 @@ unsafe impl Sync for PhysicalDeviceHostQueryResetFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceHostQueryResetFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostQueryResetFeatures<'a> {
@@ -18999,7 +19000,7 @@ unsafe impl Sync for NativeBufferANDROID<'_> {}
 impl ::core::default::Default for NativeBufferANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferANDROID<'a> {
@@ -19050,7 +19051,7 @@ unsafe impl Sync for SwapchainImageCreateInfoANDROID<'_> {}
 impl ::core::default::Default for SwapchainImageCreateInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainImageCreateInfoANDROID<'a> {
@@ -19080,7 +19081,7 @@ unsafe impl Sync for PhysicalDevicePresentationPropertiesANDROID<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentationPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentationPropertiesANDROID<'a> {
@@ -19210,7 +19211,7 @@ unsafe impl Sync for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'a> {
@@ -19245,7 +19246,7 @@ unsafe impl Sync for DeviceQueueGlobalPriorityCreateInfo<'_> {}
 impl ::core::default::Default for DeviceQueueGlobalPriorityCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueGlobalPriorityCreateInfo<'a> {
@@ -19275,7 +19276,7 @@ unsafe impl Sync for PhysicalDeviceGlobalPriorityQueryFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceGlobalPriorityQueryFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGlobalPriorityQueryFeatures<'a> {
@@ -19318,7 +19319,7 @@ impl fmt::Debug for QueueFamilyGlobalPriorityProperties<'_> {
 impl ::core::default::Default for QueueFamilyGlobalPriorityProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyGlobalPriorityProperties<'a> {
@@ -19355,7 +19356,7 @@ unsafe impl Sync for DebugUtilsObjectNameInfoEXT<'_> {}
 impl ::core::default::Default for DebugUtilsObjectNameInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsObjectNameInfoEXT<'a> {
@@ -19405,7 +19406,7 @@ unsafe impl Sync for DebugUtilsObjectTagInfoEXT<'_> {}
 impl ::core::default::Default for DebugUtilsObjectTagInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsObjectTagInfoEXT<'a> {
@@ -19447,7 +19448,7 @@ unsafe impl Sync for DebugUtilsLabelEXT<'_> {}
 impl ::core::default::Default for DebugUtilsLabelEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsLabelEXT<'a> {
@@ -19509,7 +19510,7 @@ impl fmt::Debug for DebugUtilsMessengerCreateInfoEXT<'_> {
 impl ::core::default::Default for DebugUtilsMessengerCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsMessengerCreateInfoEXT<'a> {
@@ -19571,7 +19572,7 @@ unsafe impl Sync for DebugUtilsMessengerCallbackDataEXT<'_> {}
 impl ::core::default::Default for DebugUtilsMessengerCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsMessengerCallbackDataEXT<'a> {
@@ -19649,7 +19650,7 @@ unsafe impl Sync for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
@@ -19700,7 +19701,7 @@ impl fmt::Debug for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
 impl ::core::default::Default for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceDeviceMemoryReportCreateInfoEXT<'a> {
@@ -19750,7 +19751,7 @@ unsafe impl Sync for DeviceMemoryReportCallbackDataEXT<'_> {}
 impl ::core::default::Default for DeviceMemoryReportCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryReportCallbackDataEXT<'a> {
@@ -19806,7 +19807,7 @@ unsafe impl Sync for ImportMemoryHostPointerInfoEXT<'_> {}
 impl ::core::default::Default for ImportMemoryHostPointerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryHostPointerInfoEXT<'a> {
@@ -19841,7 +19842,7 @@ unsafe impl Sync for MemoryHostPointerPropertiesEXT<'_> {}
 impl ::core::default::Default for MemoryHostPointerPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryHostPointerPropertiesEXT<'a> {
@@ -19870,7 +19871,7 @@ unsafe impl Sync for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
@@ -19915,7 +19916,7 @@ unsafe impl Sync for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
@@ -20011,7 +20012,7 @@ unsafe impl Sync for CalibratedTimestampInfoKHR<'_> {}
 impl ::core::default::Default for CalibratedTimestampInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CalibratedTimestampInfoKHR<'a> {
@@ -20053,7 +20054,7 @@ unsafe impl Sync for PhysicalDeviceShaderCorePropertiesAMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCorePropertiesAMD<'a> {
@@ -20149,7 +20150,7 @@ unsafe impl Sync for PhysicalDeviceShaderCoreProperties2AMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderCoreProperties2AMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreProperties2AMD<'a> {
@@ -20190,7 +20191,7 @@ unsafe impl Sync for PipelineRasterizationConservativeStateCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineRasterizationConservativeStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
@@ -20259,7 +20260,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorIndexingFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorIndexingFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorIndexingFeatures<'a> {
@@ -20483,7 +20484,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorIndexingProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorIndexingProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorIndexingProperties<'a> {
@@ -20714,7 +20715,7 @@ unsafe impl Sync for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {}
 impl ::core::default::Default for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
@@ -20750,7 +20751,7 @@ unsafe impl Sync for DescriptorSetVariableDescriptorCountAllocateInfo<'_> {}
 impl ::core::default::Default for DescriptorSetVariableDescriptorCountAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
@@ -20785,7 +20786,7 @@ unsafe impl Sync for DescriptorSetVariableDescriptorCountLayoutSupport<'_> {}
 impl ::core::default::Default for DescriptorSetVariableDescriptorCountLayoutSupport<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
@@ -20827,7 +20828,7 @@ unsafe impl Sync for AttachmentDescription2<'_> {}
 impl ::core::default::Default for AttachmentDescription2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentDescription2<'a> {
@@ -20898,7 +20899,7 @@ unsafe impl Sync for AttachmentReference2<'_> {}
 impl ::core::default::Default for AttachmentReference2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentReference2<'a> {
@@ -20947,7 +20948,7 @@ unsafe impl Sync for SubpassDescription2<'_> {}
 impl ::core::default::Default for SubpassDescription2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassDescription2<'a> {
@@ -21028,7 +21029,7 @@ unsafe impl Sync for SubpassDependency2<'_> {}
 impl ::core::default::Default for SubpassDependency2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassDependency2<'a> {
@@ -21100,7 +21101,7 @@ unsafe impl Sync for RenderPassCreateInfo2<'_> {}
 impl ::core::default::Default for RenderPassCreateInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreateInfo2<'a> {
@@ -21153,7 +21154,7 @@ unsafe impl Sync for SubpassBeginInfo<'_> {}
 impl ::core::default::Default for SubpassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassBeginInfo<'a> {
@@ -21181,7 +21182,7 @@ unsafe impl Sync for SubpassEndInfo<'_> {}
 impl ::core::default::Default for SubpassEndInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassEndInfo<'a> {
@@ -21204,7 +21205,7 @@ unsafe impl Sync for PhysicalDeviceTimelineSemaphoreFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTimelineSemaphoreFeatures<'a> {
@@ -21236,7 +21237,7 @@ unsafe impl Sync for PhysicalDeviceTimelineSemaphoreProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTimelineSemaphoreProperties<'a> {
@@ -21274,7 +21275,7 @@ unsafe impl Sync for SemaphoreTypeCreateInfo<'_> {}
 impl ::core::default::Default for SemaphoreTypeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreTypeCreateInfo<'a> {
@@ -21313,7 +21314,7 @@ unsafe impl Sync for TimelineSemaphoreSubmitInfo<'_> {}
 impl ::core::default::Default for TimelineSemaphoreSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TimelineSemaphoreSubmitInfo<'a> {
@@ -21354,7 +21355,7 @@ unsafe impl Sync for SemaphoreWaitInfo<'_> {}
 impl ::core::default::Default for SemaphoreWaitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreWaitInfo<'a> {
@@ -21396,7 +21397,7 @@ unsafe impl Sync for SemaphoreSignalInfo<'_> {}
 impl ::core::default::Default for SemaphoreSignalInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreSignalInfo<'a> {
@@ -21452,7 +21453,7 @@ unsafe impl Sync for PipelineVertexInputDivisorStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineVertexInputDivisorStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineVertexInputDivisorStateCreateInfo<'a> {
@@ -21490,7 +21491,7 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
@@ -21525,7 +21526,7 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorProperties<'a> {
@@ -21570,7 +21571,7 @@ unsafe impl Sync for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
@@ -21616,7 +21617,7 @@ unsafe impl Sync for ImportAndroidHardwareBufferInfoANDROID<'_> {}
 impl ::core::default::Default for ImportAndroidHardwareBufferInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportAndroidHardwareBufferInfoANDROID<'a> {
@@ -21647,7 +21648,7 @@ unsafe impl Sync for AndroidHardwareBufferUsageANDROID<'_> {}
 impl ::core::default::Default for AndroidHardwareBufferUsageANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferUsageANDROID<'a> {
@@ -21678,7 +21679,7 @@ unsafe impl Sync for AndroidHardwareBufferPropertiesANDROID<'_> {}
 impl ::core::default::Default for AndroidHardwareBufferPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferPropertiesANDROID<'a> {
@@ -21712,7 +21713,7 @@ unsafe impl Sync for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {}
 impl ::core::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
@@ -21749,7 +21750,7 @@ unsafe impl Sync for AndroidHardwareBufferFormatPropertiesANDROID<'_> {}
 impl ::core::default::Default for AndroidHardwareBufferFormatPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatPropertiesANDROID<'a> {
@@ -21824,7 +21825,7 @@ unsafe impl Sync for CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
@@ -21858,7 +21859,7 @@ unsafe impl Sync for ExternalFormatANDROID<'_> {}
 impl ::core::default::Default for ExternalFormatANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFormatANDROID<'a> {
@@ -21894,7 +21895,7 @@ unsafe impl Sync for PhysicalDevice8BitStorageFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevice8BitStorageFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice8BitStorageFeatures<'a> {
@@ -21939,7 +21940,7 @@ unsafe impl Sync for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
@@ -21984,7 +21985,7 @@ unsafe impl Sync for PhysicalDeviceVulkanMemoryModelFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkanMemoryModelFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkanMemoryModelFeatures<'a> {
@@ -22034,7 +22035,7 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicInt64Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicInt64Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicInt64Features<'a> {
@@ -22082,7 +22083,7 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
@@ -22201,7 +22202,7 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
@@ -22322,7 +22323,7 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorFeatures<'a> {
@@ -22369,7 +22370,7 @@ unsafe impl Sync for QueueFamilyCheckpointPropertiesNV<'_> {}
 impl ::core::default::Default for QueueFamilyCheckpointPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyCheckpointPropertiesNV<'a> {
@@ -22403,7 +22404,7 @@ unsafe impl Sync for CheckpointDataNV<'_> {}
 impl ::core::default::Default for CheckpointDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CheckpointDataNV<'a> {
@@ -22440,7 +22441,7 @@ unsafe impl Sync for PhysicalDeviceDepthStencilResolveProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthStencilResolveProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthStencilResolveProperties<'a> {
@@ -22497,7 +22498,7 @@ unsafe impl Sync for SubpassDescriptionDepthStencilResolve<'_> {}
 impl ::core::default::Default for SubpassDescriptionDepthStencilResolve<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassDescriptionDepthStencilResolve<'a> {
@@ -22540,7 +22541,7 @@ unsafe impl Sync for ImageViewASTCDecodeModeEXT<'_> {}
 impl ::core::default::Default for ImageViewASTCDecodeModeEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewASTCDecodeModeEXT<'a> {
@@ -22570,7 +22571,7 @@ unsafe impl Sync for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
@@ -22602,7 +22603,7 @@ unsafe impl Sync for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
@@ -22651,7 +22652,7 @@ unsafe impl Sync for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
@@ -22751,7 +22752,7 @@ unsafe impl Sync for PipelineRasterizationStateStreamCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineRasterizationStateStreamCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateStreamCreateInfoEXT<'a> {
@@ -22790,7 +22791,7 @@ unsafe impl Sync for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
@@ -22828,7 +22829,7 @@ unsafe impl Sync for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
@@ -22865,7 +22866,7 @@ unsafe impl Sync for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
@@ -22898,7 +22899,7 @@ unsafe impl Sync for PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
@@ -22933,7 +22934,7 @@ unsafe impl Sync for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
@@ -22969,7 +22970,7 @@ unsafe impl Sync for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
@@ -23015,7 +23016,7 @@ unsafe impl Sync for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
@@ -23052,7 +23053,7 @@ unsafe impl Sync for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
@@ -23087,7 +23088,7 @@ unsafe impl Sync for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_
 impl ::core::default::Default for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -23131,7 +23132,7 @@ unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'a> {
@@ -23171,7 +23172,7 @@ unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
@@ -23206,7 +23207,7 @@ unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'a> {
@@ -23240,7 +23241,7 @@ unsafe impl Sync for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionFeaturesEXT<'a> {
@@ -23276,7 +23277,7 @@ unsafe impl Sync for PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionPropertiesEXT<'a> {
@@ -23352,7 +23353,7 @@ unsafe impl Sync for PipelineViewportShadingRateImageStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineViewportShadingRateImageStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
@@ -23396,7 +23397,7 @@ unsafe impl Sync for PhysicalDeviceShadingRateImageFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShadingRateImageFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShadingRateImageFeaturesNV<'a> {
@@ -23438,7 +23439,7 @@ unsafe impl Sync for PhysicalDeviceShadingRateImagePropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShadingRateImagePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShadingRateImagePropertiesNV<'a> {
@@ -23482,7 +23483,7 @@ unsafe impl Sync for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
@@ -23584,7 +23585,7 @@ unsafe impl Sync for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
@@ -23628,7 +23629,7 @@ unsafe impl Sync for PhysicalDeviceMeshShaderFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderFeaturesNV<'a> {
@@ -23676,7 +23677,7 @@ unsafe impl Sync for PhysicalDeviceMeshShaderPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderPropertiesNV<'a> {
@@ -23797,7 +23798,7 @@ unsafe impl Sync for PhysicalDeviceMeshShaderFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderFeaturesEXT<'a> {
@@ -23879,7 +23880,7 @@ unsafe impl Sync for PhysicalDeviceMeshShaderPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderPropertiesEXT<'a> {
@@ -24106,7 +24107,7 @@ unsafe impl Sync for RayTracingShaderGroupCreateInfoNV<'_> {}
 impl ::core::default::Default for RayTracingShaderGroupCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingShaderGroupCreateInfoNV<'a> {
@@ -24160,7 +24161,7 @@ unsafe impl Sync for RayTracingShaderGroupCreateInfoKHR<'_> {}
 impl ::core::default::Default for RayTracingShaderGroupCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingShaderGroupCreateInfoKHR<'a> {
@@ -24225,7 +24226,7 @@ unsafe impl Sync for RayTracingPipelineCreateInfoNV<'_> {}
 impl ::core::default::Default for RayTracingPipelineCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineCreateInfoNV<'a> {
@@ -24297,7 +24298,7 @@ unsafe impl Sync for RayTracingPipelineCreateInfoKHR<'_> {}
 impl ::core::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineCreateInfoKHR<'a> {
@@ -24389,7 +24390,7 @@ unsafe impl Sync for GeometryTrianglesNV<'_> {}
 impl ::core::default::Default for GeometryTrianglesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeometryTrianglesNV<'a> {
@@ -24471,7 +24472,7 @@ unsafe impl Sync for GeometryAABBNV<'_> {}
 impl ::core::default::Default for GeometryAABBNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeometryAABBNV<'a> {
@@ -24539,7 +24540,7 @@ unsafe impl Sync for GeometryNV<'_> {}
 impl ::core::default::Default for GeometryNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeometryNV<'a> {
@@ -24582,7 +24583,7 @@ unsafe impl Sync for AccelerationStructureInfoNV<'_> {}
 impl ::core::default::Default for AccelerationStructureInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureInfoNV<'a> {
@@ -24628,7 +24629,7 @@ unsafe impl Sync for AccelerationStructureCreateInfoNV<'_> {}
 impl ::core::default::Default for AccelerationStructureCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfoNV<'a> {
@@ -24666,7 +24667,7 @@ unsafe impl Sync for BindAccelerationStructureMemoryInfoNV<'_> {}
 impl ::core::default::Default for BindAccelerationStructureMemoryInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindAccelerationStructureMemoryInfoNV<'a> {
@@ -24715,7 +24716,7 @@ unsafe impl Sync for WriteDescriptorSetAccelerationStructureKHR<'_> {}
 impl ::core::default::Default for WriteDescriptorSetAccelerationStructureKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetAccelerationStructureKHR<'a> {
@@ -24751,7 +24752,7 @@ unsafe impl Sync for WriteDescriptorSetAccelerationStructureNV<'_> {}
 impl ::core::default::Default for WriteDescriptorSetAccelerationStructureNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetAccelerationStructureNV<'a> {
@@ -24787,7 +24788,7 @@ unsafe impl Sync for AccelerationStructureMemoryRequirementsInfoNV<'_> {}
 impl ::core::default::Default for AccelerationStructureMemoryRequirementsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureMemoryRequirementsInfoNV<'a> {
@@ -24829,7 +24830,7 @@ unsafe impl Sync for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
@@ -24901,7 +24902,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
@@ -24971,7 +24972,7 @@ unsafe impl Sync for PhysicalDeviceRayQueryFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayQueryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayQueryFeaturesKHR<'a> {
@@ -25009,7 +25010,7 @@ unsafe impl Sync for PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
@@ -25105,7 +25106,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
@@ -25187,7 +25188,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPropertiesNV<'a> {
@@ -25434,7 +25435,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
@@ -25479,7 +25480,7 @@ unsafe impl Sync for DrmFormatModifierPropertiesListEXT<'_> {}
 impl ::core::default::Default for DrmFormatModifierPropertiesListEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DrmFormatModifierPropertiesListEXT<'a> {
@@ -25546,7 +25547,7 @@ unsafe impl Sync for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
@@ -25592,7 +25593,7 @@ unsafe impl Sync for ImageDrmFormatModifierListCreateInfoEXT<'_> {}
 impl ::core::default::Default for ImageDrmFormatModifierListCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierListCreateInfoEXT<'a> {
@@ -25626,7 +25627,7 @@ unsafe impl Sync for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {}
 impl ::core::default::Default for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
@@ -25663,7 +25664,7 @@ unsafe impl Sync for ImageDrmFormatModifierPropertiesEXT<'_> {}
 impl ::core::default::Default for ImageDrmFormatModifierPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierPropertiesEXT<'a> {
@@ -25692,7 +25693,7 @@ unsafe impl Sync for ImageStencilUsageCreateInfo<'_> {}
 impl ::core::default::Default for ImageStencilUsageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageStencilUsageCreateInfo<'a> {
@@ -25723,7 +25724,7 @@ unsafe impl Sync for DeviceMemoryOverallocationCreateInfoAMD<'_> {}
 impl ::core::default::Default for DeviceMemoryOverallocationCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryOverallocationCreateInfoAMD<'a> {
@@ -25759,7 +25760,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
@@ -25808,7 +25809,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
@@ -25843,7 +25844,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {
@@ -25883,7 +25884,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
@@ -25936,7 +25937,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
@@ -25992,7 +25993,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {
@@ -26029,7 +26030,7 @@ unsafe impl Sync for RenderPassFragmentDensityMapCreateInfoEXT<'_> {}
 impl ::core::default::Default for RenderPassFragmentDensityMapCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassFragmentDensityMapCreateInfoEXT<'a> {
@@ -26065,7 +26066,7 @@ unsafe impl Sync for RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {}
 impl ::core::default::Default for RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {
@@ -26098,7 +26099,7 @@ unsafe impl Sync for PhysicalDeviceScalarBlockLayoutFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceScalarBlockLayoutFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceScalarBlockLayoutFeatures<'a> {
@@ -26130,7 +26131,7 @@ unsafe impl Sync for SurfaceProtectedCapabilitiesKHR<'_> {}
 impl ::core::default::Default for SurfaceProtectedCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceProtectedCapabilitiesKHR<'a> {
@@ -26160,7 +26161,7 @@ unsafe impl Sync for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
@@ -26198,7 +26199,7 @@ unsafe impl Sync for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
@@ -26231,7 +26232,7 @@ unsafe impl Sync for PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
@@ -26271,7 +26272,7 @@ unsafe impl Sync for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
@@ -26310,7 +26311,7 @@ unsafe impl Sync for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
@@ -26342,7 +26343,7 @@ unsafe impl Sync for MemoryPriorityAllocateInfoEXT<'_> {}
 impl ::core::default::Default for MemoryPriorityAllocateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryPriorityAllocateInfoEXT<'a> {
@@ -26372,7 +26373,7 @@ unsafe impl Sync for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
@@ -26412,7 +26413,7 @@ unsafe impl Sync for PhysicalDeviceBufferDeviceAddressFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBufferDeviceAddressFeatures<'a> {
@@ -26462,7 +26463,7 @@ unsafe impl Sync for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
@@ -26513,7 +26514,7 @@ unsafe impl Sync for BufferDeviceAddressInfo<'_> {}
 impl ::core::default::Default for BufferDeviceAddressInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferDeviceAddressInfo<'a> {
@@ -26542,7 +26543,7 @@ unsafe impl Sync for BufferOpaqueCaptureAddressCreateInfo<'_> {}
 impl ::core::default::Default for BufferOpaqueCaptureAddressCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferOpaqueCaptureAddressCreateInfo<'a> {
@@ -26572,7 +26573,7 @@ unsafe impl Sync for BufferDeviceAddressCreateInfoEXT<'_> {}
 impl ::core::default::Default for BufferDeviceAddressCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferDeviceAddressCreateInfoEXT<'a> {
@@ -26602,7 +26603,7 @@ unsafe impl Sync for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
@@ -26637,7 +26638,7 @@ unsafe impl Sync for FilterCubicImageViewImageFormatPropertiesEXT<'_> {}
 impl ::core::default::Default for FilterCubicImageViewImageFormatPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FilterCubicImageViewImageFormatPropertiesEXT<'a> {
@@ -26676,7 +26677,7 @@ unsafe impl Sync for PhysicalDeviceImagelessFramebufferFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceImagelessFramebufferFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImagelessFramebufferFeatures<'a> {
@@ -26712,7 +26713,7 @@ unsafe impl Sync for FramebufferAttachmentsCreateInfo<'_> {}
 impl ::core::default::Default for FramebufferAttachmentsCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferAttachmentsCreateInfo<'a> {
@@ -26752,7 +26753,7 @@ unsafe impl Sync for FramebufferAttachmentImageInfo<'_> {}
 impl ::core::default::Default for FramebufferAttachmentImageInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferAttachmentImageInfo<'a> {
@@ -26808,7 +26809,7 @@ unsafe impl Sync for RenderPassAttachmentBeginInfo<'_> {}
 impl ::core::default::Default for RenderPassAttachmentBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassAttachmentBeginInfo<'a> {
@@ -26839,7 +26840,7 @@ unsafe impl Sync for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
@@ -26875,7 +26876,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
@@ -26916,7 +26917,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
@@ -26960,7 +26961,7 @@ unsafe impl Sync for CooperativeMatrixPropertiesNV<'_> {}
 impl ::core::default::Default for CooperativeMatrixPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixPropertiesNV<'a> {
@@ -27024,7 +27025,7 @@ unsafe impl Sync for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
@@ -27058,7 +27059,7 @@ unsafe impl Sync for ImageViewHandleInfoNVX<'_> {}
 impl ::core::default::Default for ImageViewHandleInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewHandleInfoNVX<'a> {
@@ -27098,7 +27099,7 @@ unsafe impl Sync for ImageViewAddressPropertiesNVX<'_> {}
 impl ::core::default::Default for ImageViewAddressPropertiesNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewAddressPropertiesNVX<'a> {
@@ -27132,7 +27133,7 @@ unsafe impl Sync for PresentFrameTokenGGP<'_> {}
 impl ::core::default::Default for PresentFrameTokenGGP<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentFrameTokenGGP<'a> {
@@ -27185,7 +27186,7 @@ unsafe impl Sync for PipelineCreationFeedbackCreateInfo<'_> {}
 impl ::core::default::Default for PipelineCreationFeedbackCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCreationFeedbackCreateInfo<'a> {
@@ -27239,7 +27240,7 @@ unsafe impl Sync for SurfaceFullScreenExclusiveInfoEXT<'_> {}
 impl ::core::default::Default for SurfaceFullScreenExclusiveInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceFullScreenExclusiveInfoEXT<'a> {
@@ -27270,7 +27271,7 @@ unsafe impl Sync for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {}
 impl ::core::default::Default for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
@@ -27305,7 +27306,7 @@ unsafe impl Sync for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {}
 impl ::core::default::Default for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
@@ -27339,7 +27340,7 @@ unsafe impl Sync for PhysicalDevicePresentBarrierFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentBarrierFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentBarrierFeaturesNV<'a> {
@@ -27371,7 +27372,7 @@ unsafe impl Sync for SurfaceCapabilitiesPresentBarrierNV<'_> {}
 impl ::core::default::Default for SurfaceCapabilitiesPresentBarrierNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentBarrierNV<'a> {
@@ -27401,7 +27402,7 @@ unsafe impl Sync for SwapchainPresentBarrierCreateInfoNV<'_> {}
 impl ::core::default::Default for SwapchainPresentBarrierCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentBarrierCreateInfoNV<'a> {
@@ -27432,7 +27433,7 @@ unsafe impl Sync for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
@@ -27476,7 +27477,7 @@ unsafe impl Sync for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
@@ -27516,7 +27517,7 @@ unsafe impl Sync for PerformanceCounterKHR<'_> {}
 impl ::core::default::Default for PerformanceCounterKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterKHR<'a> {
@@ -27575,7 +27576,7 @@ impl fmt::Debug for PerformanceCounterDescriptionKHR<'_> {
 impl ::core::default::Default for PerformanceCounterDescriptionKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterDescriptionKHR<'a> {
@@ -27636,7 +27637,7 @@ unsafe impl Sync for QueryPoolPerformanceCreateInfoKHR<'_> {}
 impl ::core::default::Default for QueryPoolPerformanceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolPerformanceCreateInfoKHR<'a> {
@@ -27690,7 +27691,7 @@ unsafe impl Sync for AcquireProfilingLockInfoKHR<'_> {}
 impl ::core::default::Default for AcquireProfilingLockInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AcquireProfilingLockInfoKHR<'a> {
@@ -27724,7 +27725,7 @@ unsafe impl Sync for PerformanceQuerySubmitInfoKHR<'_> {}
 impl ::core::default::Default for PerformanceQuerySubmitInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceQuerySubmitInfoKHR<'a> {
@@ -27755,7 +27756,7 @@ unsafe impl Sync for HeadlessSurfaceCreateInfoEXT<'_> {}
 impl ::core::default::Default for HeadlessSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HeadlessSurfaceCreateInfoEXT<'a> {
@@ -27784,7 +27785,7 @@ unsafe impl Sync for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
@@ -27820,7 +27821,7 @@ unsafe impl Sync for PipelineCoverageReductionStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineCoverageReductionStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageReductionStateCreateInfoNV<'a> {
@@ -27865,7 +27866,7 @@ unsafe impl Sync for FramebufferMixedSamplesCombinationNV<'_> {}
 impl ::core::default::Default for FramebufferMixedSamplesCombinationNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferMixedSamplesCombinationNV<'a> {
@@ -27912,7 +27913,7 @@ unsafe impl Sync for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
@@ -27995,7 +27996,7 @@ unsafe impl Sync for InitializePerformanceApiInfoINTEL<'_> {}
 impl ::core::default::Default for InitializePerformanceApiInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for InitializePerformanceApiInfoINTEL<'a> {
@@ -28024,7 +28025,7 @@ unsafe impl Sync for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {}
 impl ::core::default::Default for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
@@ -28058,7 +28059,7 @@ unsafe impl Sync for PerformanceMarkerInfoINTEL<'_> {}
 impl ::core::default::Default for PerformanceMarkerInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceMarkerInfoINTEL<'a> {
@@ -28087,7 +28088,7 @@ unsafe impl Sync for PerformanceStreamMarkerInfoINTEL<'_> {}
 impl ::core::default::Default for PerformanceStreamMarkerInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceStreamMarkerInfoINTEL<'a> {
@@ -28118,7 +28119,7 @@ unsafe impl Sync for PerformanceOverrideInfoINTEL<'_> {}
 impl ::core::default::Default for PerformanceOverrideInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceOverrideInfoINTEL<'a> {
@@ -28157,7 +28158,7 @@ unsafe impl Sync for PerformanceConfigurationAcquireInfoINTEL<'_> {}
 impl ::core::default::Default for PerformanceConfigurationAcquireInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceConfigurationAcquireInfoINTEL<'a> {
@@ -28188,7 +28189,7 @@ unsafe impl Sync for PhysicalDeviceShaderClockFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderClockFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderClockFeaturesKHR<'a> {
@@ -28224,7 +28225,7 @@ unsafe impl Sync for PhysicalDeviceIndexTypeUint8Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceIndexTypeUint8Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceIndexTypeUint8Features<'a> {
@@ -28256,7 +28257,7 @@ unsafe impl Sync for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
@@ -28295,7 +28296,7 @@ unsafe impl Sync for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
@@ -28329,7 +28330,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
@@ -28383,7 +28384,7 @@ unsafe impl Sync for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
@@ -28421,7 +28422,7 @@ unsafe impl Sync for AttachmentReferenceStencilLayout<'_> {}
 impl ::core::default::Default for AttachmentReferenceStencilLayout<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentReferenceStencilLayout<'a> {
@@ -28452,7 +28453,7 @@ unsafe impl Sync for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {
 impl ::core::default::Default for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
@@ -28502,7 +28503,7 @@ unsafe impl Sync for AttachmentDescriptionStencilLayout<'_> {}
 impl ::core::default::Default for AttachmentDescriptionStencilLayout<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentDescriptionStencilLayout<'a> {
@@ -28537,7 +28538,7 @@ unsafe impl Sync for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {
 impl ::core::default::Default for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
@@ -28575,7 +28576,7 @@ unsafe impl Sync for PipelineInfoKHR<'_> {}
 impl ::core::default::Default for PipelineInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineInfoKHR<'a> {
@@ -28619,7 +28620,7 @@ impl fmt::Debug for PipelineExecutablePropertiesKHR<'_> {
 impl ::core::default::Default for PipelineExecutablePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutablePropertiesKHR<'a> {
@@ -28673,7 +28674,7 @@ unsafe impl Sync for PipelineExecutableInfoKHR<'_> {}
 impl ::core::default::Default for PipelineExecutableInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableInfoKHR<'a> {
@@ -28737,7 +28738,7 @@ impl fmt::Debug for PipelineExecutableStatisticKHR<'_> {
 impl ::core::default::Default for PipelineExecutableStatisticKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableStatisticKHR<'a> {
@@ -28807,7 +28808,7 @@ impl fmt::Debug for PipelineExecutableInternalRepresentationKHR<'_> {
 impl ::core::default::Default for PipelineExecutableInternalRepresentationKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableInternalRepresentationKHR<'a> {
@@ -28862,7 +28863,7 @@ unsafe impl Sync for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
@@ -28903,7 +28904,7 @@ unsafe impl Sync for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
@@ -28941,7 +28942,7 @@ unsafe impl Sync for PhysicalDeviceTexelBufferAlignmentProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTexelBufferAlignmentProperties<'a> {
@@ -29007,7 +29008,7 @@ unsafe impl Sync for PhysicalDeviceSubgroupSizeControlFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupSizeControlFeatures<'a> {
@@ -29047,7 +29048,7 @@ unsafe impl Sync for PhysicalDeviceSubgroupSizeControlProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupSizeControlProperties<'a> {
@@ -29099,7 +29100,7 @@ unsafe impl Sync for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {}
 impl ::core::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
@@ -29138,7 +29139,7 @@ unsafe impl Sync for SubpassShadingPipelineCreateInfoHUAWEI<'_> {}
 impl ::core::default::Default for SubpassShadingPipelineCreateInfoHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassShadingPipelineCreateInfoHUAWEI<'a> {
@@ -29174,7 +29175,7 @@ unsafe impl Sync for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
@@ -29215,7 +29216,7 @@ unsafe impl Sync for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
@@ -29267,7 +29268,7 @@ unsafe impl Sync for MemoryOpaqueCaptureAddressAllocateInfo<'_> {}
 impl ::core::default::Default for MemoryOpaqueCaptureAddressAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryOpaqueCaptureAddressAllocateInfo<'a> {
@@ -29298,7 +29299,7 @@ unsafe impl Sync for DeviceMemoryOpaqueCaptureAddressInfo<'_> {}
 impl ::core::default::Default for DeviceMemoryOpaqueCaptureAddressInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryOpaqueCaptureAddressInfo<'a> {
@@ -29332,7 +29333,7 @@ unsafe impl Sync for PhysicalDeviceLineRasterizationFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceLineRasterizationFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLineRasterizationFeatures<'a> {
@@ -29389,7 +29390,7 @@ unsafe impl Sync for PhysicalDeviceLineRasterizationProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceLineRasterizationProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLineRasterizationProperties<'a> {
@@ -29426,7 +29427,7 @@ unsafe impl Sync for PipelineRasterizationLineStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineRasterizationLineStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationLineStateCreateInfo<'a> {
@@ -29478,7 +29479,7 @@ unsafe impl Sync for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
@@ -29530,7 +29531,7 @@ unsafe impl Sync for PhysicalDeviceVulkan11Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan11Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan11Features<'a> {
@@ -29637,7 +29638,7 @@ unsafe impl Sync for PhysicalDeviceVulkan11Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan11Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan11Properties<'a> {
@@ -29795,7 +29796,7 @@ unsafe impl Sync for PhysicalDeviceVulkan12Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan12Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan12Features<'a> {
@@ -30396,7 +30397,7 @@ impl fmt::Debug for PhysicalDeviceVulkan12Properties<'_> {
 impl ::core::default::Default for PhysicalDeviceVulkan12Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan12Properties<'a> {
@@ -30856,7 +30857,7 @@ unsafe impl Sync for PhysicalDeviceVulkan13Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan13Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan13Features<'a> {
@@ -31016,7 +31017,7 @@ unsafe impl Sync for PhysicalDeviceVulkan13Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan13Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan13Properties<'a> {
@@ -31439,7 +31440,7 @@ unsafe impl Sync for PhysicalDeviceVulkan14Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan14Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan14Features<'a> {
@@ -31604,7 +31605,7 @@ unsafe impl Sync for PhysicalDeviceVulkan14Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan14Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan14Properties<'a> {
@@ -31806,7 +31807,7 @@ unsafe impl Sync for PipelineCompilerControlCreateInfoAMD<'_> {}
 impl ::core::default::Default for PipelineCompilerControlCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCompilerControlCreateInfoAMD<'a> {
@@ -31845,7 +31846,7 @@ unsafe impl Sync for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
@@ -31931,7 +31932,7 @@ unsafe impl Sync for PhysicalDeviceGpaFeaturesAMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceGpaFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaFeaturesAMD<'a> {
@@ -31981,7 +31982,7 @@ unsafe impl Sync for PhysicalDeviceGpaPropertiesAMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceGpaPropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaPropertiesAMD<'a> {
@@ -32027,7 +32028,7 @@ unsafe impl Sync for PhysicalDeviceGpaProperties2AMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceGpaProperties2AMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaProperties2AMD<'a> {
@@ -32097,7 +32098,7 @@ unsafe impl Sync for GpaSampleBeginInfoAMD<'_> {}
 impl ::core::default::Default for GpaSampleBeginInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaSampleBeginInfoAMD<'a> {
@@ -32205,7 +32206,7 @@ unsafe impl Sync for GpaDeviceClockModeInfoAMD<'_> {}
 impl ::core::default::Default for GpaDeviceClockModeInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaDeviceClockModeInfoAMD<'a> {
@@ -32247,7 +32248,7 @@ unsafe impl Sync for GpaDeviceGetClockInfoAMD<'_> {}
 impl ::core::default::Default for GpaDeviceGetClockInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaDeviceGetClockInfoAMD<'a> {
@@ -32291,7 +32292,7 @@ unsafe impl Sync for GpaSessionCreateInfoAMD<'_> {}
 impl ::core::default::Default for GpaSessionCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaSessionCreateInfoAMD<'a> {
@@ -32337,7 +32338,7 @@ impl fmt::Debug for PhysicalDeviceToolProperties<'_> {
 impl ::core::default::Default for PhysicalDeviceToolProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceToolProperties<'a> {
@@ -32415,7 +32416,7 @@ impl fmt::Debug for SamplerCustomBorderColorCreateInfoEXT<'_> {
 impl ::core::default::Default for SamplerCustomBorderColorCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCustomBorderColorCreateInfoEXT<'a> {
@@ -32451,7 +32452,7 @@ unsafe impl Sync for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
@@ -32489,7 +32490,7 @@ unsafe impl Sync for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
@@ -32533,7 +32534,7 @@ unsafe impl Sync for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {}
 impl ::core::default::Default for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
@@ -32570,7 +32571,7 @@ unsafe impl Sync for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
@@ -32675,7 +32676,7 @@ impl fmt::Debug for AccelerationStructureGeometryTrianglesDataKHR<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryTrianglesDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryTrianglesDataKHR<'a> {
@@ -32746,7 +32747,7 @@ impl fmt::Debug for AccelerationStructureGeometryAabbsDataKHR<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryAabbsDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryAabbsDataKHR<'a> {
@@ -32792,7 +32793,7 @@ impl fmt::Debug for AccelerationStructureGeometryInstancesDataKHR<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryInstancesDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryInstancesDataKHR<'a> {
@@ -32856,7 +32857,7 @@ impl fmt::Debug for AccelerationStructureGeometryLinearSweptSpheresDataNV<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryLinearSweptSpheresDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
@@ -32965,7 +32966,7 @@ impl fmt::Debug for AccelerationStructureGeometrySpheresDataNV<'_> {
 impl ::core::default::Default for AccelerationStructureGeometrySpheresDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometrySpheresDataNV<'a> {
@@ -33066,7 +33067,7 @@ impl fmt::Debug for AccelerationStructureGeometryKHR<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryKHR<'a> {
@@ -33136,7 +33137,7 @@ impl fmt::Debug for AccelerationStructureBuildGeometryInfoKHR<'_> {
 impl ::core::default::Default for AccelerationStructureBuildGeometryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureBuildGeometryInfoKHR<'a> {
@@ -33250,7 +33251,7 @@ unsafe impl Sync for AccelerationStructureCreateInfoKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfoKHR<'a> {
@@ -33377,7 +33378,7 @@ unsafe impl Sync for AccelerationStructureDeviceAddressInfoKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureDeviceAddressInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureDeviceAddressInfoKHR<'a> {
@@ -33410,7 +33411,7 @@ unsafe impl Sync for AccelerationStructureVersionInfoKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureVersionInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureVersionInfoKHR<'a> {
@@ -33441,7 +33442,7 @@ unsafe impl Sync for CopyAccelerationStructureInfoKHR<'_> {}
 impl ::core::default::Default for CopyAccelerationStructureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyAccelerationStructureInfoKHR<'a> {
@@ -33493,7 +33494,7 @@ impl fmt::Debug for CopyAccelerationStructureToMemoryInfoKHR<'_> {
 impl ::core::default::Default for CopyAccelerationStructureToMemoryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyAccelerationStructureToMemoryInfoKHR<'a> {
@@ -33546,7 +33547,7 @@ impl fmt::Debug for CopyMemoryToAccelerationStructureInfoKHR<'_> {
 impl ::core::default::Default for CopyMemoryToAccelerationStructureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToAccelerationStructureInfoKHR<'a> {
@@ -33587,7 +33588,7 @@ unsafe impl Sync for RayTracingPipelineInterfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for RayTracingPipelineInterfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineInterfaceCreateInfoKHR<'a> {
@@ -33626,7 +33627,7 @@ unsafe impl Sync for PipelineLibraryCreateInfoKHR<'_> {}
 impl ::core::default::Default for PipelineLibraryCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineLibraryCreateInfoKHR<'a> {
@@ -33657,7 +33658,7 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
@@ -33694,7 +33695,7 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
@@ -33776,7 +33777,7 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
@@ -34083,7 +34084,7 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
@@ -34205,7 +34206,7 @@ unsafe impl Sync for RenderPassTransformBeginInfoQCOM<'_> {}
 impl ::core::default::Default for RenderPassTransformBeginInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassTransformBeginInfoQCOM<'a> {
@@ -34235,7 +34236,7 @@ unsafe impl Sync for CopyCommandTransformInfoQCOM<'_> {}
 impl ::core::default::Default for CopyCommandTransformInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyCommandTransformInfoQCOM<'a> {
@@ -34268,7 +34269,7 @@ unsafe impl Sync for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
@@ -34307,7 +34308,7 @@ unsafe impl Sync for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'_
 impl ::core::default::Default for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -34350,7 +34351,7 @@ unsafe impl Sync for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<
 impl ::core::default::Default for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -34413,7 +34414,7 @@ unsafe impl Sync for PartitionedAccelerationStructureFlagsNV<'_> {}
 impl ::core::default::Default for PartitionedAccelerationStructureFlagsNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PartitionedAccelerationStructureFlagsNV<'a> {
@@ -34580,7 +34581,7 @@ unsafe impl Sync for WriteDescriptorSetPartitionedAccelerationStructureNV<'_> {}
 impl ::core::default::Default for WriteDescriptorSetPartitionedAccelerationStructureNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {
@@ -34619,7 +34620,7 @@ unsafe impl Sync for PartitionedAccelerationStructureInstancesInputNV<'_> {}
 impl ::core::default::Default for PartitionedAccelerationStructureInstancesInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PartitionedAccelerationStructureInstancesInputNV<'a> {
@@ -34680,7 +34681,7 @@ unsafe impl Sync for BuildPartitionedAccelerationStructureInfoNV<'_> {}
 impl ::core::default::Default for BuildPartitionedAccelerationStructureInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BuildPartitionedAccelerationStructureInfoNV<'a> {
@@ -34741,7 +34742,7 @@ unsafe impl Sync for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
@@ -34773,7 +34774,7 @@ unsafe impl Sync for DeviceDiagnosticsConfigCreateInfoNV<'_> {}
 impl ::core::default::Default for DeviceDiagnosticsConfigCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceDiagnosticsConfigCreateInfoNV<'a> {
@@ -34803,7 +34804,7 @@ unsafe impl Sync for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
@@ -34845,7 +34846,7 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -34890,7 +34891,7 @@ unsafe impl Sync for PhysicalDeviceRobustness2FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRobustness2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRobustness2FeaturesKHR<'a> {
@@ -34932,7 +34933,7 @@ unsafe impl Sync for PhysicalDeviceRobustness2PropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRobustness2PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRobustness2PropertiesKHR<'a> {
@@ -34976,7 +34977,7 @@ unsafe impl Sync for PhysicalDeviceImageRobustnessFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageRobustnessFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageRobustnessFeatures<'a> {
@@ -35010,7 +35011,7 @@ unsafe impl Sync for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> 
 impl ::core::default::Default for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
@@ -35096,7 +35097,7 @@ unsafe impl Sync for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -35222,7 +35223,7 @@ unsafe impl Sync for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -35263,7 +35264,7 @@ unsafe impl Sync for PhysicalDevice4444FormatsFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevice4444FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice4444FormatsFeaturesEXT<'a> {
@@ -35299,7 +35300,7 @@ unsafe impl Sync for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
@@ -35335,7 +35336,7 @@ unsafe impl Sync for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
@@ -35378,7 +35379,7 @@ unsafe impl Sync for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
@@ -35414,7 +35415,7 @@ unsafe impl Sync for BufferCopy2<'_> {}
 impl ::core::default::Default for BufferCopy2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCopy2<'a> {
@@ -35457,7 +35458,7 @@ unsafe impl Sync for ImageCopy2<'_> {}
 impl ::core::default::Default for ImageCopy2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCopy2<'a> {
@@ -35509,7 +35510,7 @@ unsafe impl Sync for ImageBlit2<'_> {}
 impl ::core::default::Default for ImageBlit2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageBlit2<'a> {
@@ -35558,7 +35559,7 @@ unsafe impl Sync for BufferImageCopy2<'_> {}
 impl ::core::default::Default for BufferImageCopy2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferImageCopy2<'a> {
@@ -35616,7 +35617,7 @@ unsafe impl Sync for ImageResolve2<'_> {}
 impl ::core::default::Default for ImageResolve2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageResolve2<'a> {
@@ -35668,7 +35669,7 @@ unsafe impl Sync for CopyBufferInfo2<'_> {}
 impl ::core::default::Default for CopyBufferInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyBufferInfo2<'a> {
@@ -35713,7 +35714,7 @@ unsafe impl Sync for CopyImageInfo2<'_> {}
 impl ::core::default::Default for CopyImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageInfo2<'a> {
@@ -35769,7 +35770,7 @@ unsafe impl Sync for BlitImageInfo2<'_> {}
 impl ::core::default::Default for BlitImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BlitImageInfo2<'a> {
@@ -35828,7 +35829,7 @@ unsafe impl Sync for CopyBufferToImageInfo2<'_> {}
 impl ::core::default::Default for CopyBufferToImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyBufferToImageInfo2<'a> {
@@ -35877,7 +35878,7 @@ unsafe impl Sync for CopyImageToBufferInfo2<'_> {}
 impl ::core::default::Default for CopyImageToBufferInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageToBufferInfo2<'a> {
@@ -35927,7 +35928,7 @@ unsafe impl Sync for ResolveImageInfo2<'_> {}
 impl ::core::default::Default for ResolveImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ResolveImageInfo2<'a> {
@@ -35978,7 +35979,7 @@ unsafe impl Sync for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
@@ -36019,7 +36020,7 @@ unsafe impl Sync for FragmentShadingRateAttachmentInfoKHR<'_> {}
 impl ::core::default::Default for FragmentShadingRateAttachmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FragmentShadingRateAttachmentInfoKHR<'a> {
@@ -36061,7 +36062,7 @@ unsafe impl Sync for PipelineFragmentShadingRateStateCreateInfoKHR<'_> {}
 impl ::core::default::Default for PipelineFragmentShadingRateStateCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
@@ -36102,7 +36103,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
@@ -36169,7 +36170,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
@@ -36342,7 +36343,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateKHR<'a> {
@@ -36376,7 +36377,7 @@ unsafe impl Sync for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
@@ -36413,7 +36414,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
@@ -36464,7 +36465,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
@@ -36504,7 +36505,7 @@ unsafe impl Sync for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
@@ -36550,7 +36551,7 @@ unsafe impl Sync for AccelerationStructureBuildSizesInfoKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureBuildSizesInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureBuildSizesInfoKHR<'a> {
@@ -36591,7 +36592,7 @@ unsafe impl Sync for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
@@ -36628,7 +36629,7 @@ unsafe impl Sync for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
@@ -36663,7 +36664,7 @@ unsafe impl Sync for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT
 impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -36706,7 +36707,7 @@ unsafe impl Sync for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
@@ -36741,7 +36742,7 @@ unsafe impl Sync for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
@@ -36775,7 +36776,7 @@ unsafe impl Sync for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
@@ -36837,7 +36838,7 @@ unsafe impl Sync for MutableDescriptorTypeCreateInfoEXT<'_> {}
 impl ::core::default::Default for MutableDescriptorTypeCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MutableDescriptorTypeCreateInfoEXT<'a> {
@@ -36872,7 +36873,7 @@ unsafe impl Sync for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
@@ -36904,7 +36905,7 @@ unsafe impl Sync for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a> {
@@ -36941,7 +36942,7 @@ unsafe impl Sync for BeginCustomResolveInfoEXT<'_> {}
 impl ::core::default::Default for BeginCustomResolveInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BeginCustomResolveInfoEXT<'a> {
@@ -36964,7 +36965,7 @@ unsafe impl Sync for PhysicalDeviceCustomResolveFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceCustomResolveFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomResolveFeaturesEXT<'a> {
@@ -37000,7 +37001,7 @@ unsafe impl Sync for CustomResolveCreateInfoEXT<'_> {}
 impl ::core::default::Default for CustomResolveCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CustomResolveCreateInfoEXT<'a> {
@@ -37049,7 +37050,7 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
@@ -37103,7 +37104,7 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
@@ -37226,7 +37227,7 @@ unsafe impl Sync for GeneratedCommandsPipelineInfoEXT<'_> {}
 impl ::core::default::Default for GeneratedCommandsPipelineInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsPipelineInfoEXT<'a> {
@@ -37261,7 +37262,7 @@ unsafe impl Sync for GeneratedCommandsShaderInfoEXT<'_> {}
 impl ::core::default::Default for GeneratedCommandsShaderInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsShaderInfoEXT<'a> {
@@ -37299,7 +37300,7 @@ unsafe impl Sync for GeneratedCommandsMemoryRequirementsInfoEXT<'_> {}
 impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
@@ -37351,7 +37352,7 @@ unsafe impl Sync for IndirectExecutionSetPipelineInfoEXT<'_> {}
 impl ::core::default::Default for IndirectExecutionSetPipelineInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetPipelineInfoEXT<'a> {
@@ -37386,7 +37387,7 @@ unsafe impl Sync for IndirectExecutionSetShaderLayoutInfoEXT<'_> {}
 impl ::core::default::Default for IndirectExecutionSetShaderLayoutInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetShaderLayoutInfoEXT<'a> {
@@ -37422,7 +37423,7 @@ unsafe impl Sync for IndirectExecutionSetShaderInfoEXT<'_> {}
 impl ::core::default::Default for IndirectExecutionSetShaderInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetShaderInfoEXT<'a> {
@@ -37496,7 +37497,7 @@ impl fmt::Debug for IndirectExecutionSetCreateInfoEXT<'_> {
 impl ::core::default::Default for IndirectExecutionSetCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetCreateInfoEXT<'a> {
@@ -37539,7 +37540,7 @@ unsafe impl Sync for GeneratedCommandsInfoEXT<'_> {}
 impl ::core::default::Default for GeneratedCommandsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsInfoEXT<'a> {
@@ -37620,7 +37621,7 @@ unsafe impl Sync for WriteIndirectExecutionSetPipelineEXT<'_> {}
 impl ::core::default::Default for WriteIndirectExecutionSetPipelineEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteIndirectExecutionSetPipelineEXT<'a> {
@@ -37655,7 +37656,7 @@ unsafe impl Sync for WriteIndirectExecutionSetShaderEXT<'_> {}
 impl ::core::default::Default for WriteIndirectExecutionSetShaderEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteIndirectExecutionSetShaderEXT<'a> {
@@ -37694,7 +37695,7 @@ unsafe impl Sync for IndirectCommandsLayoutCreateInfoEXT<'_> {}
 impl ::core::default::Default for IndirectCommandsLayoutCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutCreateInfoEXT<'a> {
@@ -37757,7 +37758,7 @@ impl fmt::Debug for IndirectCommandsLayoutTokenEXT<'_> {
 impl ::core::default::Default for IndirectCommandsLayoutTokenEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutTokenEXT<'a> {
@@ -37958,7 +37959,7 @@ unsafe impl Sync for PipelineViewportDepthClipControlCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineViewportDepthClipControlCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportDepthClipControlCreateInfoEXT<'a> {
@@ -37992,7 +37993,7 @@ unsafe impl Sync for PhysicalDeviceDepthClampControlFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthClampControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
@@ -38028,7 +38029,7 @@ unsafe impl Sync for PipelineViewportDepthClampControlCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineViewportDepthClampControlCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportDepthClampControlCreateInfoEXT<'a> {
@@ -38067,7 +38068,7 @@ unsafe impl Sync for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
@@ -38102,7 +38103,7 @@ unsafe impl Sync for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
@@ -38137,7 +38138,7 @@ unsafe impl Sync for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'
 impl ::core::default::Default for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -38183,7 +38184,7 @@ unsafe impl Sync for VertexInputBindingDescription2EXT<'_> {}
 impl ::core::default::Default for VertexInputBindingDescription2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VertexInputBindingDescription2EXT<'a> {
@@ -38230,7 +38231,7 @@ unsafe impl Sync for VertexInputAttributeDescription2EXT<'_> {}
 impl ::core::default::Default for VertexInputAttributeDescription2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VertexInputAttributeDescription2EXT<'a> {
@@ -38274,7 +38275,7 @@ unsafe impl Sync for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
@@ -38307,7 +38308,7 @@ unsafe impl Sync for PipelineColorWriteCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineColorWriteCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineColorWriteCreateInfoEXT<'a> {
@@ -38341,7 +38342,7 @@ unsafe impl Sync for MemoryBarrier2<'_> {}
 impl ::core::default::Default for MemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryBarrier2<'a> {
@@ -38395,7 +38396,7 @@ unsafe impl Sync for ImageMemoryBarrier2<'_> {}
 impl ::core::default::Default for ImageMemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageMemoryBarrier2<'a> {
@@ -38477,7 +38478,7 @@ unsafe impl Sync for BufferMemoryBarrier2<'_> {}
 impl ::core::default::Default for BufferMemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferMemoryBarrier2<'a> {
@@ -38547,7 +38548,7 @@ unsafe impl Sync for MemoryBarrierAccessFlags3KHR<'_> {}
 impl ::core::default::Default for MemoryBarrierAccessFlags3KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryBarrierAccessFlags3KHR<'a> {
@@ -38591,7 +38592,7 @@ unsafe impl Sync for DependencyInfo<'_> {}
 impl ::core::default::Default for DependencyInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DependencyInfo<'a> {
@@ -38647,7 +38648,7 @@ unsafe impl Sync for SemaphoreSubmitInfo<'_> {}
 impl ::core::default::Default for SemaphoreSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreSubmitInfo<'a> {
@@ -38692,7 +38693,7 @@ unsafe impl Sync for CommandBufferSubmitInfo<'_> {}
 impl ::core::default::Default for CommandBufferSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferSubmitInfo<'a> {
@@ -38732,7 +38733,7 @@ unsafe impl Sync for SubmitInfo2<'_> {}
 impl ::core::default::Default for SubmitInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubmitInfo2<'a> {
@@ -38788,7 +38789,7 @@ unsafe impl Sync for QueueFamilyCheckpointProperties2NV<'_> {}
 impl ::core::default::Default for QueueFamilyCheckpointProperties2NV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyCheckpointProperties2NV<'a> {
@@ -38822,7 +38823,7 @@ unsafe impl Sync for CheckpointData2NV<'_> {}
 impl ::core::default::Default for CheckpointData2NV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CheckpointData2NV<'a> {
@@ -38856,7 +38857,7 @@ unsafe impl Sync for PhysicalDeviceSynchronization2Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceSynchronization2Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSynchronization2Features<'a> {
@@ -38888,7 +38889,7 @@ unsafe impl Sync for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'a> {
@@ -38928,7 +38929,7 @@ unsafe impl Sync for PhysicalDeviceHostImageCopyFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceHostImageCopyFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostImageCopyFeatures<'a> {
@@ -38964,7 +38965,7 @@ unsafe impl Sync for PhysicalDeviceHostImageCopyProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceHostImageCopyProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostImageCopyProperties<'a> {
@@ -39022,7 +39023,7 @@ unsafe impl Sync for MemoryToImageCopy<'_> {}
 impl ::core::default::Default for MemoryToImageCopy<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryToImageCopy<'a> {
@@ -39081,7 +39082,7 @@ unsafe impl Sync for ImageToMemoryCopy<'_> {}
 impl ::core::default::Default for ImageToMemoryCopy<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageToMemoryCopy<'a> {
@@ -39139,7 +39140,7 @@ unsafe impl Sync for CopyMemoryToImageInfo<'_> {}
 impl ::core::default::Default for CopyMemoryToImageInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToImageInfo<'a> {
@@ -39188,7 +39189,7 @@ unsafe impl Sync for CopyImageToMemoryInfo<'_> {}
 impl ::core::default::Default for CopyImageToMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageToMemoryInfo<'a> {
@@ -39239,7 +39240,7 @@ unsafe impl Sync for CopyImageToImageInfo<'_> {}
 impl ::core::default::Default for CopyImageToImageInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageToImageInfo<'a> {
@@ -39297,7 +39298,7 @@ unsafe impl Sync for HostImageLayoutTransitionInfo<'_> {}
 impl ::core::default::Default for HostImageLayoutTransitionInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HostImageLayoutTransitionInfo<'a> {
@@ -39341,7 +39342,7 @@ unsafe impl Sync for SubresourceHostMemcpySize<'_> {}
 impl ::core::default::Default for SubresourceHostMemcpySize<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubresourceHostMemcpySize<'a> {
@@ -39372,7 +39373,7 @@ unsafe impl Sync for HostImageCopyDevicePerformanceQuery<'_> {}
 impl ::core::default::Default for HostImageCopyDevicePerformanceQuery<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HostImageCopyDevicePerformanceQuery<'a> {
@@ -39409,7 +39410,7 @@ unsafe impl Sync for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
@@ -39465,7 +39466,7 @@ unsafe impl Sync for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
@@ -39497,7 +39498,7 @@ unsafe impl Sync for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<
 impl ::core::default::Default for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -39540,7 +39541,7 @@ unsafe impl Sync for SurfaceCapabilitiesPresentId2KHR<'_> {}
 impl ::core::default::Default for SurfaceCapabilitiesPresentId2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentId2KHR<'a> {
@@ -39570,7 +39571,7 @@ unsafe impl Sync for SurfaceCapabilitiesPresentWait2KHR<'_> {}
 impl ::core::default::Default for SurfaceCapabilitiesPresentWait2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentWait2KHR<'a> {
@@ -39600,7 +39601,7 @@ unsafe impl Sync for SubpassResolvePerformanceQueryEXT<'_> {}
 impl ::core::default::Default for SubpassResolvePerformanceQueryEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassResolvePerformanceQueryEXT<'a> {
@@ -39631,7 +39632,7 @@ unsafe impl Sync for MultisampledRenderToSingleSampledInfoEXT<'_> {}
 impl ::core::default::Default for MultisampledRenderToSingleSampledInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MultisampledRenderToSingleSampledInfoEXT<'a> {
@@ -39672,7 +39673,7 @@ unsafe impl Sync for PhysicalDevicePipelineProtectedAccessFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineProtectedAccessFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineProtectedAccessFeatures<'a> {
@@ -39707,7 +39708,7 @@ unsafe impl Sync for QueueFamilyVideoPropertiesKHR<'_> {}
 impl ::core::default::Default for QueueFamilyVideoPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyVideoPropertiesKHR<'a> {
@@ -39740,7 +39741,7 @@ unsafe impl Sync for QueueFamilyQueryResultStatusPropertiesKHR<'_> {}
 impl ::core::default::Default for QueueFamilyQueryResultStatusPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyQueryResultStatusPropertiesKHR<'a> {
@@ -39772,7 +39773,7 @@ unsafe impl Sync for VideoProfileListInfoKHR<'_> {}
 impl ::core::default::Default for VideoProfileListInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoProfileListInfoKHR<'a> {
@@ -39806,7 +39807,7 @@ unsafe impl Sync for PhysicalDeviceVideoFormatInfoKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoFormatInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoFormatInfoKHR<'a> {
@@ -39840,7 +39841,7 @@ unsafe impl Sync for VideoFormatPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoFormatPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatPropertiesKHR<'a> {
@@ -39894,7 +39895,7 @@ unsafe impl Sync for VideoEncodeQuantizationMapCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeQuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQuantizationMapCapabilitiesKHR<'a> {
@@ -39926,7 +39927,7 @@ unsafe impl Sync for VideoEncodeH264QuantizationMapCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264QuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264QuantizationMapCapabilitiesKHR<'a> {
@@ -39966,7 +39967,7 @@ unsafe impl Sync for VideoEncodeH265QuantizationMapCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265QuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265QuantizationMapCapabilitiesKHR<'a> {
@@ -40006,7 +40007,7 @@ unsafe impl Sync for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'a> {
@@ -40042,7 +40043,7 @@ unsafe impl Sync for VideoFormatQuantizationMapPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoFormatQuantizationMapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatQuantizationMapPropertiesKHR<'a> {
@@ -40073,7 +40074,7 @@ unsafe impl Sync for VideoFormatH265QuantizationMapPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoFormatH265QuantizationMapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatH265QuantizationMapPropertiesKHR<'a> {
@@ -40110,7 +40111,7 @@ unsafe impl Sync for VideoFormatAV1QuantizationMapPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoFormatAV1QuantizationMapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatAV1QuantizationMapPropertiesKHR<'a> {
@@ -40150,7 +40151,7 @@ unsafe impl Sync for VideoProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoProfileInfoKHR<'a> {
@@ -40209,7 +40210,7 @@ unsafe impl Sync for VideoCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoCapabilitiesKHR<'a> {
@@ -40285,7 +40286,7 @@ unsafe impl Sync for VideoSessionMemoryRequirementsKHR<'_> {}
 impl ::core::default::Default for VideoSessionMemoryRequirementsKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionMemoryRequirementsKHR<'a> {
@@ -40322,7 +40323,7 @@ unsafe impl Sync for BindVideoSessionMemoryInfoKHR<'_> {}
 impl ::core::default::Default for BindVideoSessionMemoryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindVideoSessionMemoryInfoKHR<'a> {
@@ -40369,7 +40370,7 @@ unsafe impl Sync for VideoPictureResourceInfoKHR<'_> {}
 impl ::core::default::Default for VideoPictureResourceInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoPictureResourceInfoKHR<'a> {
@@ -40414,7 +40415,7 @@ unsafe impl Sync for VideoReferenceSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoReferenceSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoReferenceSlotInfoKHR<'a> {
@@ -40451,7 +40452,7 @@ unsafe impl Sync for VideoDecodeCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoDecodeCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeCapabilitiesKHR<'a> {
@@ -40481,7 +40482,7 @@ unsafe impl Sync for VideoDecodeUsageInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeUsageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeUsageInfoKHR<'a> {
@@ -40519,7 +40520,7 @@ unsafe impl Sync for VideoDecodeInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeInfoKHR<'a> {
@@ -40585,7 +40586,7 @@ unsafe impl Sync for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoMaintenance1FeaturesKHR<'a> {
@@ -40620,7 +40621,7 @@ unsafe impl Sync for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoMaintenance2FeaturesKHR<'a> {
@@ -40657,7 +40658,7 @@ unsafe impl Sync for VideoInlineQueryInfoKHR<'_> {}
 impl ::core::default::Default for VideoInlineQueryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoInlineQueryInfoKHR<'a> {
@@ -40699,7 +40700,7 @@ unsafe impl Sync for VideoDecodeH264ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264ProfileInfoKHR<'a> {
@@ -40736,7 +40737,7 @@ unsafe impl Sync for VideoDecodeH264CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264CapabilitiesKHR<'a> {
@@ -40774,7 +40775,7 @@ unsafe impl Sync for VideoDecodeH264SessionParametersAddInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264SessionParametersAddInfoKHR<'a> {
@@ -40817,7 +40818,7 @@ unsafe impl Sync for VideoDecodeH264SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
@@ -40865,7 +40866,7 @@ unsafe impl Sync for VideoDecodeH264InlineSessionParametersInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264InlineSessionParametersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264InlineSessionParametersInfoKHR<'a> {
@@ -40903,7 +40904,7 @@ unsafe impl Sync for VideoDecodeH264PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264PictureInfoKHR<'a> {
@@ -40939,7 +40940,7 @@ unsafe impl Sync for VideoDecodeH264DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264DpbSlotInfoKHR<'a> {
@@ -40972,7 +40973,7 @@ unsafe impl Sync for VideoDecodeH265ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265ProfileInfoKHR<'a> {
@@ -41003,7 +41004,7 @@ unsafe impl Sync for VideoDecodeH265CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265CapabilitiesKHR<'a> {
@@ -41038,7 +41039,7 @@ unsafe impl Sync for VideoDecodeH265SessionParametersAddInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265SessionParametersAddInfoKHR<'a> {
@@ -41088,7 +41089,7 @@ unsafe impl Sync for VideoDecodeH265SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
@@ -41142,7 +41143,7 @@ unsafe impl Sync for VideoDecodeH265InlineSessionParametersInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265InlineSessionParametersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265InlineSessionParametersInfoKHR<'a> {
@@ -41185,7 +41186,7 @@ unsafe impl Sync for VideoDecodeH265PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265PictureInfoKHR<'a> {
@@ -41221,7 +41222,7 @@ unsafe impl Sync for VideoDecodeH265DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265DpbSlotInfoKHR<'a> {
@@ -41254,7 +41255,7 @@ unsafe impl Sync for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'a> {
@@ -41286,7 +41287,7 @@ unsafe impl Sync for VideoDecodeVP9ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeVP9ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeVP9ProfileInfoKHR<'a> {
@@ -41317,7 +41318,7 @@ unsafe impl Sync for VideoDecodeVP9CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoDecodeVP9CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeVP9CapabilitiesKHR<'a> {
@@ -41351,7 +41352,7 @@ unsafe impl Sync for VideoDecodeVP9PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeVP9PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeVP9PictureInfoKHR<'a> {
@@ -41405,7 +41406,7 @@ unsafe impl Sync for VideoDecodeAV1ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1ProfileInfoKHR<'a> {
@@ -41441,7 +41442,7 @@ unsafe impl Sync for VideoDecodeAV1CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1CapabilitiesKHR<'a> {
@@ -41471,7 +41472,7 @@ unsafe impl Sync for VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
@@ -41508,7 +41509,7 @@ unsafe impl Sync for VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1InlineSessionParametersInfoKHR<'a> {
@@ -41547,7 +41548,7 @@ unsafe impl Sync for VideoDecodeAV1PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1PictureInfoKHR<'a> {
@@ -41602,7 +41603,7 @@ unsafe impl Sync for VideoDecodeAV1DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1DpbSlotInfoKHR<'a> {
@@ -41643,7 +41644,7 @@ unsafe impl Sync for VideoSessionCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoSessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionCreateInfoKHR<'a> {
@@ -41714,7 +41715,7 @@ unsafe impl Sync for VideoSessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoSessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionParametersCreateInfoKHR<'a> {
@@ -41756,7 +41757,7 @@ unsafe impl Sync for VideoSessionParametersUpdateInfoKHR<'_> {}
 impl ::core::default::Default for VideoSessionParametersUpdateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionParametersUpdateInfoKHR<'a> {
@@ -41785,7 +41786,7 @@ unsafe impl Sync for VideoEncodeSessionParametersGetInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeSessionParametersGetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionParametersGetInfoKHR<'a> {
@@ -41818,7 +41819,7 @@ unsafe impl Sync for VideoEncodeSessionParametersFeedbackInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeSessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
@@ -41852,7 +41853,7 @@ unsafe impl Sync for VideoBeginCodingInfoKHR<'_> {}
 impl ::core::default::Default for VideoBeginCodingInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoBeginCodingInfoKHR<'a> {
@@ -41900,7 +41901,7 @@ unsafe impl Sync for VideoEndCodingInfoKHR<'_> {}
 impl ::core::default::Default for VideoEndCodingInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEndCodingInfoKHR<'a> {
@@ -41929,7 +41930,7 @@ unsafe impl Sync for VideoCodingControlInfoKHR<'_> {}
 impl ::core::default::Default for VideoCodingControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoCodingControlInfoKHR<'a> {
@@ -41960,7 +41961,7 @@ unsafe impl Sync for VideoEncodeUsageInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeUsageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeUsageInfoKHR<'a> {
@@ -42009,7 +42010,7 @@ unsafe impl Sync for VideoEncodeInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeInfoKHR<'a> {
@@ -42084,7 +42085,7 @@ unsafe impl Sync for VideoEncodeQuantizationMapInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeQuantizationMapInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQuantizationMapInfoKHR<'a> {
@@ -42119,7 +42120,7 @@ unsafe impl Sync for VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'_
 impl ::core::default::Default for VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -42155,7 +42156,7 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'a> {
@@ -42193,7 +42194,7 @@ unsafe impl Sync for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {}
 impl ::core::default::Default for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
@@ -42227,7 +42228,7 @@ unsafe impl Sync for VideoEncodeQualityLevelInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeQualityLevelInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQualityLevelInfoKHR<'a> {
@@ -42262,7 +42263,7 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
@@ -42298,7 +42299,7 @@ unsafe impl Sync for VideoEncodeQualityLevelPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeQualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQualityLevelPropertiesKHR<'a> {
@@ -42343,7 +42344,7 @@ unsafe impl Sync for VideoEncodeRateControlInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeRateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRateControlInfoKHR<'a> {
@@ -42404,7 +42405,7 @@ unsafe impl Sync for VideoEncodeRateControlLayerInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRateControlLayerInfoKHR<'a> {
@@ -42454,7 +42455,7 @@ unsafe impl Sync for VideoEncodeCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeCapabilitiesKHR<'a> {
@@ -42535,7 +42536,7 @@ unsafe impl Sync for VideoEncodeH264CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264CapabilitiesKHR<'a> {
@@ -42642,7 +42643,7 @@ unsafe impl Sync for VideoEncodeH264QualityLevelPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264QualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264QualityLevelPropertiesKHR<'a> {
@@ -42732,7 +42733,7 @@ unsafe impl Sync for VideoEncodeH264SessionCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264SessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionCreateInfoKHR<'a> {
@@ -42770,7 +42771,7 @@ unsafe impl Sync for VideoEncodeH264SessionParametersAddInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersAddInfoKHR<'a> {
@@ -42813,7 +42814,7 @@ unsafe impl Sync for VideoEncodeH264SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersCreateInfoKHR<'a> {
@@ -42863,7 +42864,7 @@ unsafe impl Sync for VideoEncodeH264SessionParametersGetInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264SessionParametersGetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersGetInfoKHR<'a> {
@@ -42913,7 +42914,7 @@ unsafe impl Sync for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {
@@ -42952,7 +42953,7 @@ unsafe impl Sync for VideoEncodeH264DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264DpbSlotInfoKHR<'a> {
@@ -42988,7 +42989,7 @@ unsafe impl Sync for VideoEncodeH264PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264PictureInfoKHR<'a> {
@@ -43032,7 +43033,7 @@ unsafe impl Sync for VideoEncodeH264ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264ProfileInfoKHR<'a> {
@@ -43064,7 +43065,7 @@ unsafe impl Sync for VideoEncodeH264NaluSliceInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264NaluSliceInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264NaluSliceInfoKHR<'a> {
@@ -43102,7 +43103,7 @@ unsafe impl Sync for VideoEncodeH264RateControlInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264RateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264RateControlInfoKHR<'a> {
@@ -43210,7 +43211,7 @@ unsafe impl Sync for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264GopRemainingFrameInfoKHR<'a> {
@@ -43261,7 +43262,7 @@ unsafe impl Sync for VideoEncodeH264RateControlLayerInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264RateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264RateControlLayerInfoKHR<'a> {
@@ -43335,7 +43336,7 @@ unsafe impl Sync for VideoEncodeH265CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265CapabilitiesKHR<'a> {
@@ -43460,7 +43461,7 @@ unsafe impl Sync for VideoEncodeH265QualityLevelPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265QualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265QualityLevelPropertiesKHR<'a> {
@@ -43542,7 +43543,7 @@ unsafe impl Sync for VideoEncodeH265SessionCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265SessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionCreateInfoKHR<'a> {
@@ -43582,7 +43583,7 @@ unsafe impl Sync for VideoEncodeH265SessionParametersAddInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersAddInfoKHR<'a> {
@@ -43632,7 +43633,7 @@ unsafe impl Sync for VideoEncodeH265SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersCreateInfoKHR<'a> {
@@ -43689,7 +43690,7 @@ unsafe impl Sync for VideoEncodeH265SessionParametersGetInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265SessionParametersGetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersGetInfoKHR<'a> {
@@ -43750,7 +43751,7 @@ unsafe impl Sync for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {
@@ -43796,7 +43797,7 @@ unsafe impl Sync for VideoEncodeH265PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265PictureInfoKHR<'a> {
@@ -43836,7 +43837,7 @@ unsafe impl Sync for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265NaluSliceSegmentInfoKHR<'a> {
@@ -43878,7 +43879,7 @@ unsafe impl Sync for VideoEncodeH265RateControlInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265RateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265RateControlInfoKHR<'a> {
@@ -43986,7 +43987,7 @@ unsafe impl Sync for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265GopRemainingFrameInfoKHR<'a> {
@@ -44037,7 +44038,7 @@ unsafe impl Sync for VideoEncodeH265RateControlLayerInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265RateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265RateControlLayerInfoKHR<'a> {
@@ -44096,7 +44097,7 @@ unsafe impl Sync for VideoEncodeH265ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265ProfileInfoKHR<'a> {
@@ -44127,7 +44128,7 @@ unsafe impl Sync for VideoEncodeH265DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265DpbSlotInfoKHR<'a> {
@@ -44183,7 +44184,7 @@ unsafe impl Sync for VideoEncodeAV1CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1CapabilitiesKHR<'a> {
@@ -44373,7 +44374,7 @@ unsafe impl Sync for VideoEncodeAV1QualityLevelPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1QualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1QualityLevelPropertiesKHR<'a> {
@@ -44521,7 +44522,7 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'a> {
@@ -44554,7 +44555,7 @@ unsafe impl Sync for VideoEncodeAV1SessionCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1SessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1SessionCreateInfoKHR<'a> {
@@ -44592,7 +44593,7 @@ unsafe impl Sync for VideoEncodeAV1SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1SessionParametersCreateInfoKHR<'a> {
@@ -44646,7 +44647,7 @@ unsafe impl Sync for VideoEncodeAV1DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1DpbSlotInfoKHR<'a> {
@@ -44685,7 +44686,7 @@ unsafe impl Sync for VideoEncodeAV1PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1PictureInfoKHR<'a> {
@@ -44751,7 +44752,7 @@ unsafe impl Sync for VideoEncodeAV1ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1ProfileInfoKHR<'a> {
@@ -44786,7 +44787,7 @@ unsafe impl Sync for VideoEncodeAV1RateControlInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1RateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1RateControlInfoKHR<'a> {
@@ -44897,7 +44898,7 @@ unsafe impl Sync for VideoEncodeAV1GopRemainingFrameInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1GopRemainingFrameInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1GopRemainingFrameInfoKHR<'a> {
@@ -44948,7 +44949,7 @@ unsafe impl Sync for VideoEncodeAV1RateControlLayerInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1RateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1RateControlLayerInfoKHR<'a> {
@@ -45007,7 +45008,7 @@ unsafe impl Sync for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
@@ -45044,7 +45045,7 @@ unsafe impl Sync for CommandBufferInheritanceViewportScissorInfoNV<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceViewportScissorInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceViewportScissorInfoNV<'a> {
@@ -45088,7 +45089,7 @@ unsafe impl Sync for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
@@ -45124,7 +45125,7 @@ unsafe impl Sync for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
@@ -45166,7 +45167,7 @@ unsafe impl Sync for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
@@ -45212,7 +45213,7 @@ unsafe impl Sync for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> 
 impl ::core::default::Default for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
@@ -45250,7 +45251,7 @@ unsafe impl Sync for VideoEncodeIntraRefreshCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeIntraRefreshCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeIntraRefreshCapabilitiesKHR<'a> {
@@ -45318,7 +45319,7 @@ unsafe impl Sync for VideoEncodeSessionIntraRefreshCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeSessionIntraRefreshCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionIntraRefreshCreateInfoKHR<'a> {
@@ -45356,7 +45357,7 @@ unsafe impl Sync for VideoEncodeIntraRefreshInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeIntraRefreshInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeIntraRefreshInfoKHR<'a> {
@@ -45391,7 +45392,7 @@ unsafe impl Sync for VideoReferenceIntraRefreshInfoKHR<'_> {}
 impl ::core::default::Default for VideoReferenceIntraRefreshInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoReferenceIntraRefreshInfoKHR<'a> {
@@ -45421,7 +45422,7 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'a> {
@@ -45457,7 +45458,7 @@ unsafe impl Sync for CuModuleCreateInfoNVX<'_> {}
 impl ::core::default::Default for CuModuleCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CuModuleCreateInfoNVX<'a> {
@@ -45487,7 +45488,7 @@ unsafe impl Sync for CuModuleTexturingModeCreateInfoNVX<'_> {}
 impl ::core::default::Default for CuModuleTexturingModeCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CuModuleTexturingModeCreateInfoNVX<'a> {
@@ -45518,7 +45519,7 @@ unsafe impl Sync for CuFunctionCreateInfoNVX<'_> {}
 impl ::core::default::Default for CuFunctionCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CuFunctionCreateInfoNVX<'a> {
@@ -45571,7 +45572,7 @@ unsafe impl Sync for CuLaunchInfoNVX<'_> {}
 impl ::core::default::Default for CuLaunchInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CuLaunchInfoNVX<'a> {
@@ -45650,7 +45651,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
@@ -45738,7 +45739,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
@@ -46017,7 +46018,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
@@ -46057,7 +46058,7 @@ unsafe impl Sync for DescriptorAddressInfoEXT<'_> {}
 impl ::core::default::Default for DescriptorAddressInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorAddressInfoEXT<'a> {
@@ -46097,7 +46098,7 @@ unsafe impl Sync for DescriptorBufferBindingInfoEXT<'_> {}
 impl ::core::default::Default for DescriptorBufferBindingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorBufferBindingInfoEXT<'a> {
@@ -46131,7 +46132,7 @@ unsafe impl Sync for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {}
 impl ::core::default::Default for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
@@ -46197,7 +46198,7 @@ impl fmt::Debug for DescriptorGetInfoEXT<'_> {
 impl ::core::default::Default for DescriptorGetInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorGetInfoEXT<'a> {
@@ -46231,7 +46232,7 @@ unsafe impl Sync for BufferCaptureDescriptorDataInfoEXT<'_> {}
 impl ::core::default::Default for BufferCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCaptureDescriptorDataInfoEXT<'a> {
@@ -46260,7 +46261,7 @@ unsafe impl Sync for ImageCaptureDescriptorDataInfoEXT<'_> {}
 impl ::core::default::Default for ImageCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCaptureDescriptorDataInfoEXT<'a> {
@@ -46289,7 +46290,7 @@ unsafe impl Sync for ImageViewCaptureDescriptorDataInfoEXT<'_> {}
 impl ::core::default::Default for ImageViewCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewCaptureDescriptorDataInfoEXT<'a> {
@@ -46319,7 +46320,7 @@ unsafe impl Sync for SamplerCaptureDescriptorDataInfoEXT<'_> {}
 impl ::core::default::Default for SamplerCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCaptureDescriptorDataInfoEXT<'a> {
@@ -46349,7 +46350,7 @@ unsafe impl Sync for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {}
 impl ::core::default::Default for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
@@ -46390,7 +46391,7 @@ unsafe impl Sync for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
 impl ::core::default::Default for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
@@ -46441,7 +46442,7 @@ unsafe impl Sync for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
@@ -46506,7 +46507,7 @@ unsafe impl Sync for PhysicalDeviceShaderIntegerDotProductProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerDotProductProperties<'a> {
@@ -46809,7 +46810,7 @@ unsafe impl Sync for PhysicalDeviceDrmPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDrmPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDrmPropertiesEXT<'a> {
@@ -46864,7 +46865,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
@@ -46902,7 +46903,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
@@ -46942,7 +46943,7 @@ unsafe impl Sync for PhysicalDeviceShaderFmaFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderFmaFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFmaFeaturesKHR<'a> {
@@ -46984,7 +46985,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
@@ -47028,7 +47029,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
@@ -47064,7 +47065,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {
@@ -47116,7 +47117,7 @@ impl fmt::Debug for AccelerationStructureGeometryMotionTrianglesDataNV<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryMotionTrianglesDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
@@ -47151,7 +47152,7 @@ unsafe impl Sync for AccelerationStructureMotionInfoNV<'_> {}
 impl ::core::default::Default for AccelerationStructureMotionInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureMotionInfoNV<'a> {
@@ -47373,7 +47374,7 @@ unsafe impl Sync for MemoryGetRemoteAddressInfoNV<'_> {}
 impl ::core::default::Default for MemoryGetRemoteAddressInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetRemoteAddressInfoNV<'a> {
@@ -47408,7 +47409,7 @@ unsafe impl Sync for ImportMemoryBufferCollectionFUCHSIA<'_> {}
 impl ::core::default::Default for ImportMemoryBufferCollectionFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryBufferCollectionFUCHSIA<'a> {
@@ -47444,7 +47445,7 @@ unsafe impl Sync for BufferCollectionImageCreateInfoFUCHSIA<'_> {}
 impl ::core::default::Default for BufferCollectionImageCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionImageCreateInfoFUCHSIA<'a> {
@@ -47481,7 +47482,7 @@ unsafe impl Sync for BufferCollectionBufferCreateInfoFUCHSIA<'_> {}
 impl ::core::default::Default for BufferCollectionBufferCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionBufferCreateInfoFUCHSIA<'a> {
@@ -47517,7 +47518,7 @@ unsafe impl Sync for BufferCollectionCreateInfoFUCHSIA<'_> {}
 impl ::core::default::Default for BufferCollectionCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionCreateInfoFUCHSIA<'a> {
@@ -47556,7 +47557,7 @@ unsafe impl Sync for BufferCollectionPropertiesFUCHSIA<'_> {}
 impl ::core::default::Default for BufferCollectionPropertiesFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionPropertiesFUCHSIA<'a> {
@@ -47646,7 +47647,7 @@ unsafe impl Sync for BufferConstraintsInfoFUCHSIA<'_> {}
 impl ::core::default::Default for BufferConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferConstraintsInfoFUCHSIA<'a> {
@@ -47691,7 +47692,7 @@ unsafe impl Sync for SysmemColorSpaceFUCHSIA<'_> {}
 impl ::core::default::Default for SysmemColorSpaceFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SysmemColorSpaceFUCHSIA<'a> {
@@ -47725,7 +47726,7 @@ unsafe impl Sync for ImageFormatConstraintsInfoFUCHSIA<'_> {}
 impl ::core::default::Default for ImageFormatConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageFormatConstraintsInfoFUCHSIA<'a> {
@@ -47781,7 +47782,7 @@ unsafe impl Sync for ImageConstraintsInfoFUCHSIA<'_> {}
 impl ::core::default::Default for ImageConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageConstraintsInfoFUCHSIA<'a> {
@@ -47831,7 +47832,7 @@ unsafe impl Sync for BufferCollectionConstraintsInfoFUCHSIA<'_> {}
 impl ::core::default::Default for BufferCollectionConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionConstraintsInfoFUCHSIA<'a> {
@@ -47903,7 +47904,7 @@ unsafe impl Sync for CudaModuleCreateInfoNV<'_> {}
 impl ::core::default::Default for CudaModuleCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -47940,7 +47941,7 @@ unsafe impl Sync for CudaFunctionCreateInfoNV<'_> {}
 impl ::core::default::Default for CudaFunctionCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -47999,7 +48000,7 @@ unsafe impl Sync for CudaLaunchInfoNV<'_> {}
 impl ::core::default::Default for CudaLaunchInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -48077,7 +48078,7 @@ unsafe impl Sync for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
@@ -48115,7 +48116,7 @@ unsafe impl Sync for FormatProperties3<'_> {}
 impl ::core::default::Default for FormatProperties3<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FormatProperties3<'a> {
@@ -48156,7 +48157,7 @@ unsafe impl Sync for DrmFormatModifierPropertiesList2EXT<'_> {}
 impl ::core::default::Default for DrmFormatModifierPropertiesList2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DrmFormatModifierPropertiesList2EXT<'a> {
@@ -48227,7 +48228,7 @@ unsafe impl Sync for AndroidHardwareBufferFormatProperties2ANDROID<'_> {}
 impl ::core::default::Default for AndroidHardwareBufferFormatProperties2ANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatProperties2ANDROID<'a> {
@@ -48306,7 +48307,7 @@ unsafe impl Sync for PipelineRenderingCreateInfo<'_> {}
 impl ::core::default::Default for PipelineRenderingCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRenderingCreateInfo<'a> {
@@ -48359,7 +48360,7 @@ unsafe impl Sync for RenderingInfo<'_> {}
 impl ::core::default::Default for RenderingInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingInfo<'a> {
@@ -48424,7 +48425,7 @@ unsafe impl Sync for RenderingEndInfoKHR<'_> {}
 impl ::core::default::Default for RenderingEndInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingEndInfoKHR<'a> {
@@ -48470,7 +48471,7 @@ impl fmt::Debug for RenderingAttachmentInfo<'_> {
 impl ::core::default::Default for RenderingAttachmentInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentInfo<'a> {
@@ -48536,7 +48537,7 @@ unsafe impl Sync for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {}
 impl ::core::default::Default for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
@@ -48581,7 +48582,7 @@ unsafe impl Sync for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {}
 impl ::core::default::Default for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
@@ -48617,7 +48618,7 @@ unsafe impl Sync for PhysicalDeviceDynamicRenderingFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceDynamicRenderingFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDynamicRenderingFeatures<'a> {
@@ -48654,7 +48655,7 @@ unsafe impl Sync for CommandBufferInheritanceRenderingInfo<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceRenderingInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceRenderingInfo<'a> {
@@ -48715,7 +48716,7 @@ unsafe impl Sync for AttachmentSampleCountInfoAMD<'_> {}
 impl ::core::default::Default for AttachmentSampleCountInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentSampleCountInfoAMD<'a> {
@@ -48759,7 +48760,7 @@ unsafe impl Sync for MultiviewPerViewAttributesInfoNVX<'_> {}
 impl ::core::default::Default for MultiviewPerViewAttributesInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MultiviewPerViewAttributesInfoNVX<'a> {
@@ -48799,7 +48800,7 @@ unsafe impl Sync for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
@@ -48831,7 +48832,7 @@ unsafe impl Sync for ImageViewMinLodCreateInfoEXT<'_> {}
 impl ::core::default::Default for ImageViewMinLodCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewMinLodCreateInfoEXT<'a> {
@@ -48863,7 +48864,7 @@ unsafe impl Sync for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT
 impl ::core::default::Default for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -48925,7 +48926,7 @@ unsafe impl Sync for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
@@ -48960,7 +48961,7 @@ unsafe impl Sync for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
@@ -48995,7 +48996,7 @@ unsafe impl Sync for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
@@ -49027,7 +49028,7 @@ unsafe impl Sync for DevicePipelineBinaryInternalCacheControlKHR<'_> {}
 impl ::core::default::Default for DevicePipelineBinaryInternalCacheControlKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DevicePipelineBinaryInternalCacheControlKHR<'a> {
@@ -49062,7 +49063,7 @@ unsafe impl Sync for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
@@ -49130,7 +49131,7 @@ unsafe impl Sync for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
@@ -49176,7 +49177,7 @@ unsafe impl Sync for GraphicsPipelineLibraryCreateInfoEXT<'_> {}
 impl ::core::default::Default for GraphicsPipelineLibraryCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineLibraryCreateInfoEXT<'a> {
@@ -49208,7 +49209,7 @@ impl ::core::default::Default
 {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -49252,7 +49253,7 @@ unsafe impl Sync for DataGraphPipelineNeuralStatisticsCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineNeuralStatisticsCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineNeuralStatisticsCreateInfoARM<'a> {
@@ -49286,7 +49287,7 @@ unsafe impl Sync for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'_> {
 impl ::core::default::Default for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'a> {
@@ -49320,7 +49321,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
@@ -49359,7 +49360,7 @@ unsafe impl Sync for DescriptorSetBindingReferenceVALVE<'_> {}
 impl ::core::default::Default for DescriptorSetBindingReferenceVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetBindingReferenceVALVE<'a> {
@@ -49394,7 +49395,7 @@ unsafe impl Sync for DescriptorSetLayoutHostMappingInfoVALVE<'_> {}
 impl ::core::default::Default for DescriptorSetLayoutHostMappingInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutHostMappingInfoVALVE<'a> {
@@ -49431,7 +49432,7 @@ unsafe impl Sync for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
@@ -49482,7 +49483,7 @@ unsafe impl Sync for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
@@ -49519,7 +49520,7 @@ unsafe impl Sync for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
@@ -49554,7 +49555,7 @@ unsafe impl Sync for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
@@ -49592,7 +49593,7 @@ unsafe impl Sync for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
@@ -49638,7 +49639,7 @@ impl fmt::Debug for ShaderModuleIdentifierEXT<'_> {
 impl ::core::default::Default for ShaderModuleIdentifierEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderModuleIdentifierEXT<'a> {
@@ -49674,7 +49675,7 @@ unsafe impl Sync for ImageCompressionControlEXT<'_> {}
 impl ::core::default::Default for ImageCompressionControlEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCompressionControlEXT<'a> {
@@ -49715,7 +49716,7 @@ unsafe impl Sync for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
@@ -49751,7 +49752,7 @@ unsafe impl Sync for ImageCompressionPropertiesEXT<'_> {}
 impl ::core::default::Default for ImageCompressionPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCompressionPropertiesEXT<'a> {
@@ -49794,7 +49795,7 @@ unsafe impl Sync for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'
 impl ::core::default::Default for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -49837,7 +49838,7 @@ unsafe impl Sync for ImageSubresource2<'_> {}
 impl ::core::default::Default for ImageSubresource2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageSubresource2<'a> {
@@ -49866,7 +49867,7 @@ unsafe impl Sync for SubresourceLayout2<'_> {}
 impl ::core::default::Default for SubresourceLayout2<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubresourceLayout2<'a> {
@@ -49895,7 +49896,7 @@ unsafe impl Sync for RenderPassCreationControlEXT<'_> {}
 impl ::core::default::Default for RenderPassCreationControlEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreationControlEXT<'a> {
@@ -49941,7 +49942,7 @@ unsafe impl Sync for RenderPassCreationFeedbackCreateInfoEXT<'_> {}
 impl ::core::default::Default for RenderPassCreationFeedbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreationFeedbackCreateInfoEXT<'a> {
@@ -50023,7 +50024,7 @@ unsafe impl Sync for RenderPassSubpassFeedbackCreateInfoEXT<'_> {}
 impl ::core::default::Default for RenderPassSubpassFeedbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassSubpassFeedbackCreateInfoEXT<'a> {
@@ -50057,7 +50058,7 @@ unsafe impl Sync for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
@@ -50121,7 +50122,7 @@ impl fmt::Debug for MicromapBuildInfoEXT<'_> {
 impl ::core::default::Default for MicromapBuildInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MicromapBuildInfoEXT<'a> {
@@ -50202,7 +50203,7 @@ unsafe impl Sync for AccelerationStructureGeometryMicromapDataKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureGeometryMicromapDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryMicromapDataKHR<'a> {
@@ -50263,7 +50264,7 @@ unsafe impl Sync for MicromapCreateInfoEXT<'_> {}
 impl ::core::default::Default for MicromapCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MicromapCreateInfoEXT<'a> {
@@ -50317,7 +50318,7 @@ unsafe impl Sync for MicromapVersionInfoEXT<'_> {}
 impl ::core::default::Default for MicromapVersionInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MicromapVersionInfoEXT<'a> {
@@ -50348,7 +50349,7 @@ unsafe impl Sync for CopyMicromapInfoEXT<'_> {}
 impl ::core::default::Default for CopyMicromapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMicromapInfoEXT<'a> {
@@ -50400,7 +50401,7 @@ impl fmt::Debug for CopyMicromapToMemoryInfoEXT<'_> {
 impl ::core::default::Default for CopyMicromapToMemoryInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMicromapToMemoryInfoEXT<'a> {
@@ -50452,7 +50453,7 @@ impl fmt::Debug for CopyMemoryToMicromapInfoEXT<'_> {
 impl ::core::default::Default for CopyMemoryToMicromapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToMicromapInfoEXT<'a> {
@@ -50493,7 +50494,7 @@ unsafe impl Sync for MicromapBuildSizesInfoEXT<'_> {}
 impl ::core::default::Default for MicromapBuildSizesInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MicromapBuildSizesInfoEXT<'a> {
@@ -50613,7 +50614,7 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapFeaturesKHR<'a> {
@@ -50647,7 +50648,7 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
@@ -50692,7 +50693,7 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapPropertiesKHR<'a> {
@@ -50752,7 +50753,7 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
@@ -50801,7 +50802,7 @@ unsafe impl Sync for AccelerationStructureTrianglesOpacityMicromapKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesOpacityMicromapKHR<'a> {
@@ -50883,7 +50884,7 @@ impl fmt::Debug for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
 impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
@@ -50958,7 +50959,7 @@ unsafe impl Sync for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -51001,7 +51002,7 @@ unsafe impl Sync for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -51101,7 +51102,7 @@ impl fmt::Debug for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
 impl ::core::default::Default for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -51228,7 +51229,7 @@ unsafe impl Sync for PipelinePropertiesIdentifierEXT<'_> {}
 impl ::core::default::Default for PipelinePropertiesIdentifierEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelinePropertiesIdentifierEXT<'a> {
@@ -51257,7 +51258,7 @@ unsafe impl Sync for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
@@ -51292,7 +51293,7 @@ unsafe impl Sync for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_
 impl ::core::default::Default for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -51335,7 +51336,7 @@ unsafe impl Sync for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
 impl ::core::default::Default for ExternalMemoryAcquireUnmodifiedEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryAcquireUnmodifiedEXT<'a> {
@@ -51368,7 +51369,7 @@ unsafe impl Sync for ExportMetalObjectCreateInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalObjectCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalObjectCreateInfoEXT<'a> {
@@ -51403,7 +51404,7 @@ unsafe impl Sync for ExportMetalObjectsInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalObjectsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalObjectsInfoEXT<'a> {
@@ -51426,7 +51427,7 @@ unsafe impl Sync for ExportMetalDeviceInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalDeviceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalDeviceInfoEXT<'a> {
@@ -51457,7 +51458,7 @@ unsafe impl Sync for ExportMetalCommandQueueInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalCommandQueueInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalCommandQueueInfoEXT<'a> {
@@ -51493,7 +51494,7 @@ unsafe impl Sync for ExportMetalBufferInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalBufferInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalBufferInfoEXT<'a> {
@@ -51528,7 +51529,7 @@ unsafe impl Sync for ImportMetalBufferInfoEXT<'_> {}
 impl ::core::default::Default for ImportMetalBufferInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalBufferInfoEXT<'a> {
@@ -51562,7 +51563,7 @@ unsafe impl Sync for ExportMetalTextureInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalTextureInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalTextureInfoEXT<'a> {
@@ -51613,7 +51614,7 @@ unsafe impl Sync for ImportMetalTextureInfoEXT<'_> {}
 impl ::core::default::Default for ImportMetalTextureInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalTextureInfoEXT<'a> {
@@ -51649,7 +51650,7 @@ unsafe impl Sync for ExportMetalIOSurfaceInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalIOSurfaceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalIOSurfaceInfoEXT<'a> {
@@ -51684,7 +51685,7 @@ unsafe impl Sync for ImportMetalIOSurfaceInfoEXT<'_> {}
 impl ::core::default::Default for ImportMetalIOSurfaceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalIOSurfaceInfoEXT<'a> {
@@ -51716,7 +51717,7 @@ unsafe impl Sync for ExportMetalSharedEventInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalSharedEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalSharedEventInfoEXT<'a> {
@@ -51756,7 +51757,7 @@ unsafe impl Sync for ImportMetalSharedEventInfoEXT<'_> {}
 impl ::core::default::Default for ImportMetalSharedEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalSharedEventInfoEXT<'a> {
@@ -51787,7 +51788,7 @@ unsafe impl Sync for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
@@ -51822,7 +51823,7 @@ unsafe impl Sync for PhysicalDevicePipelineRobustnessFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineRobustnessFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineRobustnessFeatures<'a> {
@@ -51857,7 +51858,7 @@ unsafe impl Sync for PipelineRobustnessCreateInfo<'_> {}
 impl ::core::default::Default for PipelineRobustnessCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRobustnessCreateInfo<'a> {
@@ -51908,7 +51909,7 @@ unsafe impl Sync for PhysicalDevicePipelineRobustnessProperties<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineRobustnessProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineRobustnessProperties<'a> {
@@ -51971,7 +51972,7 @@ unsafe impl Sync for ImageViewSampleWeightCreateInfoQCOM<'_> {}
 impl ::core::default::Default for ImageViewSampleWeightCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewSampleWeightCreateInfoQCOM<'a> {
@@ -52011,7 +52012,7 @@ unsafe impl Sync for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'a> {
@@ -52049,7 +52050,7 @@ unsafe impl Sync for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'a> {
@@ -52085,7 +52086,7 @@ unsafe impl Sync for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
@@ -52130,7 +52131,7 @@ unsafe impl Sync for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
@@ -52179,7 +52180,7 @@ unsafe impl Sync for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
@@ -52213,7 +52214,7 @@ unsafe impl Sync for TilePropertiesQCOM<'_> {}
 impl ::core::default::Default for TilePropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TilePropertiesQCOM<'a> {
@@ -52252,7 +52253,7 @@ unsafe impl Sync for TileMemoryBindInfoQCOM<'_> {}
 impl ::core::default::Default for TileMemoryBindInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TileMemoryBindInfoQCOM<'a> {
@@ -52282,7 +52283,7 @@ unsafe impl Sync for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {}
 impl ::core::default::Default for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
@@ -52315,7 +52316,7 @@ unsafe impl Sync for AmigoProfilingSubmitInfoSEC<'_> {}
 impl ::core::default::Default for AmigoProfilingSubmitInfoSEC<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AmigoProfilingSubmitInfoSEC<'a> {
@@ -52350,7 +52351,7 @@ unsafe impl Sync for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {
 impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
@@ -52391,7 +52392,7 @@ unsafe impl Sync for AttachmentFeedbackLoopInfoEXT<'_> {}
 impl ::core::default::Default for AttachmentFeedbackLoopInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentFeedbackLoopInfoEXT<'a> {
@@ -52421,7 +52422,7 @@ unsafe impl Sync for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
@@ -52456,7 +52457,7 @@ unsafe impl Sync for RenderingAttachmentFlagsInfoKHR<'_> {}
 impl ::core::default::Default for RenderingAttachmentFlagsInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentFlagsInfoKHR<'a> {
@@ -52488,7 +52489,7 @@ unsafe impl Sync for ResolveImageModeInfoKHR<'_> {}
 impl ::core::default::Default for ResolveImageModeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ResolveImageModeInfoKHR<'a> {
@@ -52531,7 +52532,7 @@ unsafe impl Sync for DeviceAddressBindingCallbackDataEXT<'_> {}
 impl ::core::default::Default for DeviceAddressBindingCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceAddressBindingCallbackDataEXT<'a> {
@@ -52579,7 +52580,7 @@ unsafe impl Sync for PhysicalDeviceOpticalFlowFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpticalFlowFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpticalFlowFeaturesNV<'a> {
@@ -52620,7 +52621,7 @@ unsafe impl Sync for PhysicalDeviceOpticalFlowPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpticalFlowPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpticalFlowPropertiesNV<'a> {
@@ -52706,7 +52707,7 @@ unsafe impl Sync for OpticalFlowImageFormatInfoNV<'_> {}
 impl ::core::default::Default for OpticalFlowImageFormatInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowImageFormatInfoNV<'a> {
@@ -52737,7 +52738,7 @@ unsafe impl Sync for OpticalFlowImageFormatPropertiesNV<'_> {}
 impl ::core::default::Default for OpticalFlowImageFormatPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowImageFormatPropertiesNV<'a> {
@@ -52774,7 +52775,7 @@ unsafe impl Sync for OpticalFlowSessionCreateInfoNV<'_> {}
 impl ::core::default::Default for OpticalFlowSessionCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowSessionCreateInfoNV<'a> {
@@ -52845,7 +52846,7 @@ unsafe impl Sync for OpticalFlowSessionCreatePrivateDataInfoNV<'_> {}
 impl ::core::default::Default for OpticalFlowSessionCreatePrivateDataInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
@@ -52891,7 +52892,7 @@ unsafe impl Sync for OpticalFlowExecuteInfoNV<'_> {}
 impl ::core::default::Default for OpticalFlowExecuteInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowExecuteInfoNV<'a> {
@@ -52927,7 +52928,7 @@ unsafe impl Sync for PhysicalDeviceFaultFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFaultFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultFeaturesEXT<'a> {
@@ -53057,7 +53058,7 @@ impl fmt::Debug for DeviceFaultInfoKHR<'_> {
 impl ::core::default::Default for DeviceFaultInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultInfoKHR<'a> {
@@ -53121,7 +53122,7 @@ unsafe impl Sync for DeviceFaultDebugInfoKHR<'_> {}
 impl ::core::default::Default for DeviceFaultDebugInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultDebugInfoKHR<'a> {
@@ -53153,7 +53154,7 @@ unsafe impl Sync for DeviceFaultCountsEXT<'_> {}
 impl ::core::default::Default for DeviceFaultCountsEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultCountsEXT<'a> {
@@ -53207,7 +53208,7 @@ impl fmt::Debug for DeviceFaultInfoEXT<'_> {
 impl ::core::default::Default for DeviceFaultInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultInfoEXT<'a> {
@@ -53344,7 +53345,7 @@ unsafe impl Sync for PhysicalDeviceFaultFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFaultFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultFeaturesKHR<'a> {
@@ -53393,7 +53394,7 @@ unsafe impl Sync for PhysicalDeviceFaultPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFaultPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultPropertiesKHR<'a> {
@@ -53423,7 +53424,7 @@ unsafe impl Sync for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
@@ -53463,7 +53464,7 @@ unsafe impl Sync for DepthBiasInfoEXT<'_> {}
 impl ::core::default::Default for DepthBiasInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DepthBiasInfoEXT<'a> {
@@ -53503,7 +53504,7 @@ unsafe impl Sync for DepthBiasRepresentationInfoEXT<'_> {}
 impl ::core::default::Default for DepthBiasRepresentationInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DepthBiasRepresentationInfoEXT<'a> {
@@ -53622,7 +53623,7 @@ unsafe impl Sync for DecompressMemoryInfoEXT<'_> {}
 impl ::core::default::Default for DecompressMemoryInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DecompressMemoryInfoEXT<'a> {
@@ -53662,7 +53663,7 @@ unsafe impl Sync for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
@@ -53706,7 +53707,7 @@ unsafe impl Sync for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
@@ -53749,7 +53750,7 @@ unsafe impl Sync for FrameBoundaryEXT<'_> {}
 impl ::core::default::Default for FrameBoundaryEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FrameBoundaryEXT<'a> {
@@ -53810,7 +53811,7 @@ unsafe impl Sync for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
@@ -53842,7 +53843,7 @@ unsafe impl Sync for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<
 impl ::core::default::Default for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -53885,7 +53886,7 @@ unsafe impl Sync for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'_> {
 impl ::core::default::Default for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'a> {
@@ -53923,7 +53924,7 @@ unsafe impl Sync for SurfacePresentModeKHR<'_> {}
 impl ::core::default::Default for SurfacePresentModeKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfacePresentModeKHR<'a> {
@@ -53957,7 +53958,7 @@ unsafe impl Sync for SurfacePresentScalingCapabilitiesKHR<'_> {}
 impl ::core::default::Default for SurfacePresentScalingCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfacePresentScalingCapabilitiesKHR<'a> {
@@ -54017,7 +54018,7 @@ unsafe impl Sync for SurfacePresentModeCompatibilityKHR<'_> {}
 impl ::core::default::Default for SurfacePresentModeCompatibilityKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfacePresentModeCompatibilityKHR<'a> {
@@ -54048,7 +54049,7 @@ unsafe impl Sync for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'a> {
@@ -54084,7 +54085,7 @@ unsafe impl Sync for SwapchainPresentFenceInfoKHR<'_> {}
 impl ::core::default::Default for SwapchainPresentFenceInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentFenceInfoKHR<'a> {
@@ -54116,7 +54117,7 @@ unsafe impl Sync for SwapchainPresentModesCreateInfoKHR<'_> {}
 impl ::core::default::Default for SwapchainPresentModesCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentModesCreateInfoKHR<'a> {
@@ -54148,7 +54149,7 @@ unsafe impl Sync for SwapchainPresentModeInfoKHR<'_> {}
 impl ::core::default::Default for SwapchainPresentModeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentModeInfoKHR<'a> {
@@ -54181,7 +54182,7 @@ unsafe impl Sync for SwapchainPresentScalingCreateInfoKHR<'_> {}
 impl ::core::default::Default for SwapchainPresentScalingCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentScalingCreateInfoKHR<'a> {
@@ -54223,7 +54224,7 @@ unsafe impl Sync for ReleaseSwapchainImagesInfoKHR<'_> {}
 impl ::core::default::Default for ReleaseSwapchainImagesInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ReleaseSwapchainImagesInfoKHR<'a> {
@@ -54261,7 +54262,7 @@ unsafe impl Sync for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
@@ -54312,7 +54313,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'a> {
@@ -54350,7 +54351,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
@@ -54389,7 +54390,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'_> 
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'a> {
@@ -54435,7 +54436,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
@@ -54473,7 +54474,7 @@ unsafe impl Sync for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
@@ -54513,7 +54514,7 @@ unsafe impl Sync for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
@@ -54580,7 +54581,7 @@ impl fmt::Debug for DirectDriverLoadingInfoLUNARG<'_> {
 impl ::core::default::Default for DirectDriverLoadingInfoLUNARG<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DirectDriverLoadingInfoLUNARG<'a> {
@@ -54619,7 +54620,7 @@ unsafe impl Sync for DirectDriverLoadingListLUNARG<'_> {}
 impl ::core::default::Default for DirectDriverLoadingListLUNARG<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DirectDriverLoadingListLUNARG<'a> {
@@ -54655,7 +54656,7 @@ unsafe impl Sync for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
@@ -54693,7 +54694,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
@@ -54729,7 +54730,7 @@ unsafe impl Sync for DeviceImageSubresourceInfo<'_> {}
 impl ::core::default::Default for DeviceImageSubresourceInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceImageSubresourceInfo<'a> {
@@ -54765,7 +54766,7 @@ unsafe impl Sync for PhysicalDeviceShaderCorePropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCorePropertiesARM<'a> {
@@ -54805,7 +54806,7 @@ unsafe impl Sync for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {
 impl ::core::default::Default for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
@@ -54847,7 +54848,7 @@ unsafe impl Sync for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {}
 impl ::core::default::Default for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
@@ -54883,7 +54884,7 @@ unsafe impl Sync for QueryLowLatencySupportNV<'_> {}
 impl ::core::default::Default for QueryLowLatencySupportNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryLowLatencySupportNV<'a> {
@@ -54916,7 +54917,7 @@ unsafe impl Sync for MemoryMapInfo<'_> {}
 impl ::core::default::Default for MemoryMapInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMapInfo<'a> {
@@ -54961,7 +54962,7 @@ unsafe impl Sync for MemoryUnmapInfo<'_> {}
 impl ::core::default::Default for MemoryUnmapInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryUnmapInfo<'a> {
@@ -54995,7 +54996,7 @@ unsafe impl Sync for PhysicalDeviceShaderObjectFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderObjectFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderObjectFeaturesEXT<'a> {
@@ -55027,7 +55028,7 @@ unsafe impl Sync for PhysicalDeviceShaderObjectPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderObjectPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderObjectPropertiesEXT<'a> {
@@ -55074,7 +55075,7 @@ unsafe impl Sync for ShaderCreateInfoEXT<'_> {}
 impl ::core::default::Default for ShaderCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderCreateInfoEXT<'a> {
@@ -55156,7 +55157,7 @@ unsafe impl Sync for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
@@ -55209,7 +55210,7 @@ unsafe impl Sync for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
@@ -55265,7 +55266,7 @@ unsafe impl Sync for ImportScreenBufferInfoQNX<'_> {}
 impl ::core::default::Default for ImportScreenBufferInfoQNX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportScreenBufferInfoQNX<'a> {
@@ -55296,7 +55297,7 @@ unsafe impl Sync for ScreenBufferPropertiesQNX<'_> {}
 impl ::core::default::Default for ScreenBufferPropertiesQNX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ScreenBufferPropertiesQNX<'a> {
@@ -55338,7 +55339,7 @@ unsafe impl Sync for ScreenBufferFormatPropertiesQNX<'_> {}
 impl ::core::default::Default for ScreenBufferFormatPropertiesQNX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ScreenBufferFormatPropertiesQNX<'a> {
@@ -55414,7 +55415,7 @@ unsafe impl Sync for ExternalFormatQNX<'_> {}
 impl ::core::default::Default for ExternalFormatQNX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFormatQNX<'a> {
@@ -55445,7 +55446,7 @@ unsafe impl Sync for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
@@ -55484,7 +55485,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
@@ -55536,7 +55537,7 @@ unsafe impl Sync for CooperativeMatrixPropertiesKHR<'_> {}
 impl ::core::default::Default for CooperativeMatrixPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixPropertiesKHR<'a> {
@@ -55605,7 +55606,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
@@ -55642,7 +55643,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'_> {
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'a> {
@@ -55690,7 +55691,7 @@ unsafe impl Sync for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -55778,7 +55779,7 @@ unsafe impl Sync for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -55829,7 +55830,7 @@ unsafe impl Sync for ExecutionGraphPipelineCreateInfoAMDX<'_> {}
 impl ::core::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -55891,7 +55892,7 @@ unsafe impl Sync for PipelineShaderStageNodeCreateInfoAMDX<'_> {}
 impl ::core::default::Default for PipelineShaderStageNodeCreateInfoAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -55947,7 +55948,7 @@ unsafe impl Sync for ExecutionGraphPipelineScratchSizeAMDX<'_> {}
 impl ::core::default::Default for ExecutionGraphPipelineScratchSizeAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -56073,7 +56074,7 @@ unsafe impl Sync for PhysicalDeviceAntiLagFeaturesAMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceAntiLagFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAntiLagFeaturesAMD<'a> {
@@ -56106,7 +56107,7 @@ unsafe impl Sync for AntiLagDataAMD<'_> {}
 impl ::core::default::Default for AntiLagDataAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AntiLagDataAMD<'a> {
@@ -56149,7 +56150,7 @@ unsafe impl Sync for AntiLagPresentationInfoAMD<'_> {}
 impl ::core::default::Default for AntiLagPresentationInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AntiLagPresentationInfoAMD<'a> {
@@ -56183,7 +56184,7 @@ unsafe impl Sync for BindMemoryStatus<'_> {}
 impl ::core::default::Default for BindMemoryStatus<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindMemoryStatus<'a> {
@@ -56214,7 +56215,7 @@ unsafe impl Sync for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'a> {
@@ -56247,7 +56248,7 @@ unsafe impl Sync for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'a> {
@@ -56286,7 +56287,7 @@ unsafe impl Sync for TileMemorySizeInfoQCOM<'_> {}
 impl ::core::default::Default for TileMemorySizeInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TileMemorySizeInfoQCOM<'a> {
@@ -56319,7 +56320,7 @@ unsafe impl Sync for TileMemoryRequirementsQCOM<'_> {}
 impl ::core::default::Default for TileMemoryRequirementsQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TileMemoryRequirementsQCOM<'a> {
@@ -56360,7 +56361,7 @@ unsafe impl Sync for BindDescriptorSetsInfo<'_> {}
 impl ::core::default::Default for BindDescriptorSetsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindDescriptorSetsInfo<'a> {
@@ -56415,7 +56416,7 @@ unsafe impl Sync for PushConstantsInfo<'_> {}
 impl ::core::default::Default for PushConstantsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushConstantsInfo<'a> {
@@ -56464,7 +56465,7 @@ unsafe impl Sync for PushDescriptorSetInfo<'_> {}
 impl ::core::default::Default for PushDescriptorSetInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushDescriptorSetInfo<'a> {
@@ -56512,7 +56513,7 @@ unsafe impl Sync for PushDescriptorSetWithTemplateInfo<'_> {}
 impl ::core::default::Default for PushDescriptorSetWithTemplateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushDescriptorSetWithTemplateInfo<'a> {
@@ -56564,7 +56565,7 @@ unsafe impl Sync for SetDescriptorBufferOffsetsInfoEXT<'_> {}
 impl ::core::default::Default for SetDescriptorBufferOffsetsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SetDescriptorBufferOffsetsInfoEXT<'a> {
@@ -56617,7 +56618,7 @@ unsafe impl Sync for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {}
 impl ::core::default::Default for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
@@ -56657,7 +56658,7 @@ unsafe impl Sync for PhysicalDeviceCubicClampFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceCubicClampFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCubicClampFeaturesQCOM<'a> {
@@ -56688,7 +56689,7 @@ unsafe impl Sync for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
@@ -56721,7 +56722,7 @@ unsafe impl Sync for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {}
 impl ::core::default::Default for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
@@ -56760,7 +56761,7 @@ unsafe impl Sync for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
@@ -56792,7 +56793,7 @@ unsafe impl Sync for SamplerCubicWeightsCreateInfoQCOM<'_> {}
 impl ::core::default::Default for SamplerCubicWeightsCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCubicWeightsCreateInfoQCOM<'a> {
@@ -56822,7 +56823,7 @@ unsafe impl Sync for BlitImageCubicWeightsInfoQCOM<'_> {}
 impl ::core::default::Default for BlitImageCubicWeightsInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BlitImageCubicWeightsInfoQCOM<'a> {
@@ -56852,7 +56853,7 @@ unsafe impl Sync for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
@@ -56887,7 +56888,7 @@ unsafe impl Sync for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
@@ -56922,7 +56923,7 @@ unsafe impl Sync for SamplerBlockMatchWindowCreateInfoQCOM<'_> {}
 impl ::core::default::Default for SamplerBlockMatchWindowCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerBlockMatchWindowCreateInfoQCOM<'a> {
@@ -56963,7 +56964,7 @@ unsafe impl Sync for PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing3FeaturesQCOM<'a> {
@@ -57011,7 +57012,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
@@ -57049,7 +57050,7 @@ unsafe impl Sync for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {}
 impl ::core::default::Default for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
@@ -57084,7 +57085,7 @@ unsafe impl Sync for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
@@ -57124,7 +57125,7 @@ unsafe impl Sync for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
@@ -57164,7 +57165,7 @@ unsafe impl Sync for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
@@ -57218,7 +57219,7 @@ unsafe impl Sync for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {}
 impl ::core::default::Default for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
@@ -57254,7 +57255,7 @@ unsafe impl Sync for LatencySleepModeInfoNV<'_> {}
 impl ::core::default::Default for LatencySleepModeInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySleepModeInfoNV<'a> {
@@ -57294,7 +57295,7 @@ unsafe impl Sync for LatencySleepInfoNV<'_> {}
 impl ::core::default::Default for LatencySleepInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySleepInfoNV<'a> {
@@ -57329,7 +57330,7 @@ unsafe impl Sync for SetLatencyMarkerInfoNV<'_> {}
 impl ::core::default::Default for SetLatencyMarkerInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SetLatencyMarkerInfoNV<'a> {
@@ -57364,7 +57365,7 @@ unsafe impl Sync for GetLatencyMarkerInfoNV<'_> {}
 impl ::core::default::Default for GetLatencyMarkerInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GetLatencyMarkerInfoNV<'a> {
@@ -57407,7 +57408,7 @@ unsafe impl Sync for LatencyTimingsFrameReportNV<'_> {}
 impl ::core::default::Default for LatencyTimingsFrameReportNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencyTimingsFrameReportNV<'a> {
@@ -57501,7 +57502,7 @@ unsafe impl Sync for OutOfBandQueueTypeInfoNV<'_> {}
 impl ::core::default::Default for OutOfBandQueueTypeInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OutOfBandQueueTypeInfoNV<'a> {
@@ -57530,7 +57531,7 @@ unsafe impl Sync for LatencySubmissionPresentIdNV<'_> {}
 impl ::core::default::Default for LatencySubmissionPresentIdNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySubmissionPresentIdNV<'a> {
@@ -57561,7 +57562,7 @@ unsafe impl Sync for SwapchainLatencyCreateInfoNV<'_> {}
 impl ::core::default::Default for SwapchainLatencyCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainLatencyCreateInfoNV<'a> {
@@ -57592,7 +57593,7 @@ unsafe impl Sync for LatencySurfaceCapabilitiesNV<'_> {}
 impl ::core::default::Default for LatencySurfaceCapabilitiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySurfaceCapabilitiesNV<'a> {
@@ -57627,7 +57628,7 @@ unsafe impl Sync for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -57668,7 +57669,7 @@ unsafe impl Sync for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -57710,7 +57711,7 @@ unsafe impl Sync for DeviceQueueShaderCoreControlCreateInfoARM<'_> {}
 impl ::core::default::Default for DeviceQueueShaderCoreControlCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueShaderCoreControlCreateInfoARM<'a> {
@@ -57742,7 +57743,7 @@ unsafe impl Sync for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
@@ -57777,7 +57778,7 @@ unsafe impl Sync for PhysicalDeviceSchedulingControlsPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceSchedulingControlsPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
@@ -57818,7 +57819,7 @@ impl ::core::default::Default
 {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -57877,7 +57878,7 @@ unsafe impl Sync for DispatchParametersARM<'_> {}
 impl ::core::default::Default for DispatchParametersARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DispatchParametersARM<'a> {
@@ -57916,7 +57917,7 @@ unsafe impl Sync for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {}
 impl ::core::default::Default for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
@@ -57954,7 +57955,7 @@ unsafe impl Sync for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
@@ -57990,7 +57991,7 @@ unsafe impl Sync for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
@@ -58032,7 +58033,7 @@ unsafe impl Sync for RenderPassStripeInfoARM<'_> {}
 impl ::core::default::Default for RenderPassStripeInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeInfoARM<'a> {
@@ -58062,7 +58063,7 @@ unsafe impl Sync for RenderPassStripeBeginInfoARM<'_> {}
 impl ::core::default::Default for RenderPassStripeBeginInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeBeginInfoARM<'a> {
@@ -58095,7 +58096,7 @@ unsafe impl Sync for RenderPassStripeSubmitInfoARM<'_> {}
 impl ::core::default::Default for RenderPassStripeSubmitInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeSubmitInfoARM<'a> {
@@ -58129,7 +58130,7 @@ unsafe impl Sync for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
@@ -58164,7 +58165,7 @@ unsafe impl Sync for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
@@ -58203,7 +58204,7 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupRotateFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupRotateFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupRotateFeatures<'a> {
@@ -58246,7 +58247,7 @@ unsafe impl Sync for PhysicalDeviceShaderExpectAssumeFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderExpectAssumeFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderExpectAssumeFeatures<'a> {
@@ -58278,7 +58279,7 @@ unsafe impl Sync for PhysicalDeviceShaderFloatControls2Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderFloatControls2Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloatControls2Features<'a> {
@@ -58313,7 +58314,7 @@ unsafe impl Sync for PhysicalDeviceDynamicRenderingLocalReadFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceDynamicRenderingLocalReadFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDynamicRenderingLocalReadFeatures<'a> {
@@ -58349,7 +58350,7 @@ unsafe impl Sync for RenderingAttachmentLocationInfo<'_> {}
 impl ::core::default::Default for RenderingAttachmentLocationInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentLocationInfo<'a> {
@@ -58384,7 +58385,7 @@ unsafe impl Sync for RenderingInputAttachmentIndexInfo<'_> {}
 impl ::core::default::Default for RenderingInputAttachmentIndexInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingInputAttachmentIndexInfo<'a> {
@@ -58432,7 +58433,7 @@ unsafe impl Sync for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
@@ -58467,7 +58468,7 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
@@ -58507,7 +58508,7 @@ unsafe impl Sync for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
@@ -58549,7 +58550,7 @@ unsafe impl Sync for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
@@ -58586,7 +58587,7 @@ unsafe impl Sync for MemoryMapPlacedInfoEXT<'_> {}
 impl ::core::default::Default for MemoryMapPlacedInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMapPlacedInfoEXT<'a> {
@@ -58618,7 +58619,7 @@ unsafe impl Sync for PhysicalDeviceShaderBfloat16FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderBfloat16FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {
@@ -58663,7 +58664,7 @@ unsafe impl Sync for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
@@ -58695,7 +58696,7 @@ unsafe impl Sync for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
@@ -58730,7 +58731,7 @@ unsafe impl Sync for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
@@ -58765,7 +58766,7 @@ unsafe impl Sync for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
@@ -58799,7 +58800,7 @@ unsafe impl Sync for ImageAlignmentControlCreateInfoMESA<'_> {}
 impl ::core::default::Default for ImageAlignmentControlCreateInfoMESA<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageAlignmentControlCreateInfoMESA<'a> {
@@ -58829,7 +58830,7 @@ unsafe impl Sync for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
@@ -58867,7 +58868,7 @@ unsafe impl Sync for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a> {
@@ -58932,7 +58933,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrix2FeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrix2FeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrix2FeaturesNV<'a> {
@@ -59012,7 +59013,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrix2PropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrix2PropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrix2PropertiesNV<'a> {
@@ -59077,7 +59078,7 @@ unsafe impl Sync for CooperativeMatrixFlexibleDimensionsPropertiesNV<'_> {}
 impl ::core::default::Default for CooperativeMatrixFlexibleDimensionsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixFlexibleDimensionsPropertiesNV<'a> {
@@ -59152,7 +59153,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'a> {
@@ -59193,7 +59194,7 @@ unsafe impl Sync for PhysicalDeviceHdrVividFeaturesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceHdrVividFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHdrVividFeaturesHUAWEI<'a> {
@@ -59224,7 +59225,7 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {
@@ -59266,7 +59267,7 @@ unsafe impl Sync for PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'_> {}
 impl ::core::default::Default for PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -59331,7 +59332,7 @@ impl fmt::Debug for AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'_
 impl ::core::default::Default for AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -59400,7 +59401,7 @@ unsafe impl Sync for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
@@ -59436,7 +59437,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeVectorFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeVectorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeVectorFeaturesNV<'a> {
@@ -59478,7 +59479,7 @@ unsafe impl Sync for CooperativeVectorPropertiesNV<'_> {}
 impl ::core::default::Default for CooperativeVectorPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeVectorPropertiesNV<'a> {
@@ -59535,7 +59536,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeVectorPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeVectorPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeVectorPropertiesNV<'a> {
@@ -59629,7 +59630,7 @@ impl fmt::Debug for ConvertCooperativeVectorMatrixInfoNV<'_> {
 impl ::core::default::Default for ConvertCooperativeVectorMatrixInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ConvertCooperativeVectorMatrixInfoNV<'a> {
@@ -59726,7 +59727,7 @@ unsafe impl Sync for PhysicalDeviceTileShadingFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTileShadingFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileShadingFeaturesQCOM<'a> {
@@ -59831,7 +59832,7 @@ unsafe impl Sync for PhysicalDeviceTileShadingPropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTileShadingPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileShadingPropertiesQCOM<'a> {
@@ -59878,7 +59879,7 @@ unsafe impl Sync for RenderPassTileShadingCreateInfoQCOM<'_> {}
 impl ::core::default::Default for RenderPassTileShadingCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassTileShadingCreateInfoQCOM<'a> {
@@ -59915,7 +59916,7 @@ unsafe impl Sync for PerTileBeginInfoQCOM<'_> {}
 impl ::core::default::Default for PerTileBeginInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerTileBeginInfoQCOM<'a> {
@@ -59937,7 +59938,7 @@ unsafe impl Sync for PerTileEndInfoQCOM<'_> {}
 impl ::core::default::Default for PerTileEndInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerTileEndInfoQCOM<'a> {
@@ -59959,7 +59960,7 @@ unsafe impl Sync for DispatchTileInfoQCOM<'_> {}
 impl ::core::default::Default for DispatchTileInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DispatchTileInfoQCOM<'a> {
@@ -59982,7 +59983,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'_> 
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'a> {
@@ -60016,7 +60017,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'a> {
@@ -60054,7 +60055,7 @@ unsafe impl Sync for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'_> {}
 impl ::core::default::Default for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'a> {
@@ -60089,7 +60090,7 @@ unsafe impl Sync for SetPresentConfigNV<'_> {}
 impl ::core::default::Default for SetPresentConfigNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SetPresentConfigNV<'a> {
@@ -60124,7 +60125,7 @@ unsafe impl Sync for PhysicalDevicePresentMeteringFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentMeteringFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentMeteringFeaturesNV<'a> {
@@ -60156,7 +60157,7 @@ unsafe impl Sync for ExternalComputeQueueDeviceCreateInfoNV<'_> {}
 impl ::core::default::Default for ExternalComputeQueueDeviceCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalComputeQueueDeviceCreateInfoNV<'a> {
@@ -60187,7 +60188,7 @@ unsafe impl Sync for ExternalComputeQueueCreateInfoNV<'_> {}
 impl ::core::default::Default for ExternalComputeQueueCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalComputeQueueCreateInfoNV<'a> {
@@ -60216,7 +60217,7 @@ unsafe impl Sync for ExternalComputeQueueDataParamsNV<'_> {}
 impl ::core::default::Default for ExternalComputeQueueDataParamsNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalComputeQueueDataParamsNV<'a> {
@@ -60246,7 +60247,7 @@ unsafe impl Sync for PhysicalDeviceExternalComputeQueuePropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalComputeQueuePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {
@@ -60290,7 +60291,7 @@ unsafe impl Sync for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_
 impl ::core::default::Default for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -60336,7 +60337,7 @@ unsafe impl Sync for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'_> {
 impl ::core::default::Default for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'a> {
@@ -60405,7 +60406,7 @@ unsafe impl Sync for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'a> {
@@ -60440,7 +60441,7 @@ unsafe impl Sync for PhysicalDeviceFormatPackFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceFormatPackFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFormatPackFeaturesARM<'a> {
@@ -60471,7 +60472,7 @@ unsafe impl Sync for PhysicalDeviceThrottleHintFeaturesSEC<'_> {}
 impl ::core::default::Default for PhysicalDeviceThrottleHintFeaturesSEC<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceThrottleHintFeaturesSEC<'a> {
@@ -60502,7 +60503,7 @@ unsafe impl Sync for ThrottleHintSubmitInfoSEC<'_> {}
 impl ::core::default::Default for ThrottleHintSubmitInfoSEC<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ThrottleHintSubmitInfoSEC<'a> {
@@ -60537,7 +60538,7 @@ unsafe impl Sync for TensorDescriptionARM<'_> {}
 impl ::core::default::Default for TensorDescriptionARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorDescriptionARM<'a> {
@@ -60594,7 +60595,7 @@ unsafe impl Sync for TensorCreateInfoARM<'_> {}
 impl ::core::default::Default for TensorCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorCreateInfoARM<'a> {
@@ -60641,7 +60642,7 @@ unsafe impl Sync for TensorViewCreateInfoARM<'_> {}
 impl ::core::default::Default for TensorViewCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorViewCreateInfoARM<'a> {
@@ -60680,7 +60681,7 @@ unsafe impl Sync for TensorMemoryRequirementsInfoARM<'_> {}
 impl ::core::default::Default for TensorMemoryRequirementsInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorMemoryRequirementsInfoARM<'a> {
@@ -60711,7 +60712,7 @@ unsafe impl Sync for BindTensorMemoryInfoARM<'_> {}
 impl ::core::default::Default for BindTensorMemoryInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindTensorMemoryInfoARM<'a> {
@@ -60751,7 +60752,7 @@ unsafe impl Sync for WriteDescriptorSetTensorARM<'_> {}
 impl ::core::default::Default for WriteDescriptorSetTensorARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetTensorARM<'a> {
@@ -60783,7 +60784,7 @@ unsafe impl Sync for TensorFormatPropertiesARM<'_> {}
 impl ::core::default::Default for TensorFormatPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorFormatPropertiesARM<'a> {
@@ -60836,7 +60837,7 @@ unsafe impl Sync for PhysicalDeviceTensorPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTensorPropertiesARM<'a> {
@@ -60960,7 +60961,7 @@ unsafe impl Sync for TensorMemoryBarrierARM<'_> {}
 impl ::core::default::Default for TensorMemoryBarrierARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorMemoryBarrierARM<'a> {
@@ -61021,7 +61022,7 @@ unsafe impl Sync for TensorDependencyInfoARM<'_> {}
 impl ::core::default::Default for TensorDependencyInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorDependencyInfoARM<'a> {
@@ -61060,7 +61061,7 @@ unsafe impl Sync for PhysicalDeviceTensorFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTensorFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTensorFeaturesARM<'a> {
@@ -61128,7 +61129,7 @@ unsafe impl Sync for DeviceTensorMemoryRequirementsARM<'_> {}
 impl ::core::default::Default for DeviceTensorMemoryRequirementsARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceTensorMemoryRequirementsARM<'a> {
@@ -61160,7 +61161,7 @@ unsafe impl Sync for CopyTensorInfoARM<'_> {}
 impl ::core::default::Default for CopyTensorInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyTensorInfoARM<'a> {
@@ -61203,7 +61204,7 @@ unsafe impl Sync for TensorCopyARM<'_> {}
 impl ::core::default::Default for TensorCopyARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorCopyARM<'a> {
@@ -61245,7 +61246,7 @@ unsafe impl Sync for MemoryDedicatedAllocateInfoTensorARM<'_> {}
 impl ::core::default::Default for MemoryDedicatedAllocateInfoTensorARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedAllocateInfoTensorARM<'a> {
@@ -61277,7 +61278,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
@@ -61329,7 +61330,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
@@ -61367,7 +61368,7 @@ unsafe impl Sync for TensorCaptureDescriptorDataInfoARM<'_> {}
 impl ::core::default::Default for TensorCaptureDescriptorDataInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorCaptureDescriptorDataInfoARM<'a> {
@@ -61396,7 +61397,7 @@ unsafe impl Sync for TensorViewCaptureDescriptorDataInfoARM<'_> {}
 impl ::core::default::Default for TensorViewCaptureDescriptorDataInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorViewCaptureDescriptorDataInfoARM<'a> {
@@ -61426,7 +61427,7 @@ unsafe impl Sync for DescriptorGetTensorInfoARM<'_> {}
 impl ::core::default::Default for DescriptorGetTensorInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorGetTensorInfoARM<'a> {
@@ -61457,7 +61458,7 @@ unsafe impl Sync for FrameBoundaryTensorsARM<'_> {}
 impl ::core::default::Default for FrameBoundaryTensorsARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FrameBoundaryTensorsARM<'a> {
@@ -61493,7 +61494,7 @@ unsafe impl Sync for PhysicalDeviceExternalTensorInfoARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalTensorInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalTensorInfoARM<'a> {
@@ -61532,7 +61533,7 @@ unsafe impl Sync for ExternalTensorPropertiesARM<'_> {}
 impl ::core::default::Default for ExternalTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalTensorPropertiesARM<'a> {
@@ -61564,7 +61565,7 @@ unsafe impl Sync for ExternalMemoryTensorCreateInfoARM<'_> {}
 impl ::core::default::Default for ExternalMemoryTensorCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryTensorCreateInfoARM<'a> {
@@ -61595,7 +61596,7 @@ unsafe impl Sync for PhysicalDeviceShaderFloat8FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderFloat8FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloat8FeaturesEXT<'a> {
@@ -61635,7 +61636,7 @@ unsafe impl Sync for SurfaceCreateInfoOHOS<'_> {}
 impl ::core::default::Default for SurfaceCreateInfoOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCreateInfoOHOS<'a> {
@@ -61673,7 +61674,7 @@ unsafe impl Sync for PhysicalDeviceDataGraphFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDataGraphFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDataGraphFeaturesARM<'a> {
@@ -61729,7 +61730,7 @@ unsafe impl Sync for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoAR
 impl ::core::default::Default for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -61776,7 +61777,7 @@ unsafe impl Sync for DataGraphPipelineConstantARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineConstantARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineConstantARM<'a> {
@@ -61812,7 +61813,7 @@ unsafe impl Sync for DataGraphPipelineResourceInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineResourceInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineResourceInfoARM<'a> {
@@ -61851,7 +61852,7 @@ unsafe impl Sync for DataGraphPipelineResourceInfoImageLayoutARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineResourceInfoImageLayoutARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineResourceInfoImageLayoutARM<'a> {
@@ -61885,7 +61886,7 @@ unsafe impl Sync for DataGraphPipelineCompilerControlCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineCompilerControlCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineCompilerControlCreateInfoARM<'a> {
@@ -61930,7 +61931,7 @@ unsafe impl Sync for DataGraphPipelineCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineCreateInfoARM<'a> {
@@ -61977,7 +61978,7 @@ unsafe impl Sync for DataGraphPipelineShaderModuleCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineShaderModuleCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineShaderModuleCreateInfoARM<'a> {
@@ -62036,7 +62037,7 @@ unsafe impl Sync for DataGraphPipelineSessionCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSessionCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionCreateInfoARM<'a> {
@@ -62071,7 +62072,7 @@ unsafe impl Sync for DataGraphPipelineSessionBindPointRequirementsInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSessionBindPointRequirementsInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionBindPointRequirementsInfoARM<'a> {
@@ -62103,7 +62104,7 @@ unsafe impl Sync for DataGraphPipelineSessionBindPointRequirementARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSessionBindPointRequirementARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionBindPointRequirementARM<'a> {
@@ -62148,7 +62149,7 @@ unsafe impl Sync for DataGraphPipelineSessionMemoryRequirementsInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSessionMemoryRequirementsInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionMemoryRequirementsInfoARM<'a> {
@@ -62192,7 +62193,7 @@ unsafe impl Sync for BindDataGraphPipelineSessionMemoryInfoARM<'_> {}
 impl ::core::default::Default for BindDataGraphPipelineSessionMemoryInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindDataGraphPipelineSessionMemoryInfoARM<'a> {
@@ -62242,7 +62243,7 @@ unsafe impl Sync for DataGraphPipelineInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineInfoARM<'a> {
@@ -62274,7 +62275,7 @@ unsafe impl Sync for DataGraphPipelinePropertyQueryResultARM<'_> {}
 impl ::core::default::Default for DataGraphPipelinePropertyQueryResultARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelinePropertyQueryResultARM<'a> {
@@ -62316,7 +62317,7 @@ unsafe impl Sync for DataGraphPipelineIdentifierCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineIdentifierCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineIdentifierCreateInfoARM<'a> {
@@ -62351,7 +62352,7 @@ unsafe impl Sync for DataGraphPipelineDispatchInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineDispatchInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineDispatchInfoARM<'a> {
@@ -62450,7 +62451,7 @@ unsafe impl Sync for QueueFamilyDataGraphPropertiesARM<'_> {}
 impl ::core::default::Default for QueueFamilyDataGraphPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphPropertiesARM<'a> {
@@ -62485,7 +62486,7 @@ unsafe impl Sync for PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'
 impl ::core::default::Default for PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -62526,7 +62527,7 @@ unsafe impl Sync for QueueFamilyDataGraphProcessingEnginePropertiesARM<'_> {}
 impl ::core::default::Default for QueueFamilyDataGraphProcessingEnginePropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphProcessingEnginePropertiesARM<'a> {
@@ -62568,7 +62569,7 @@ unsafe impl Sync for DataGraphProcessingEngineCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphProcessingEngineCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphProcessingEngineCreateInfoARM<'a> {
@@ -62608,7 +62609,7 @@ unsafe impl Sync for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'_> {
 impl ::core::default::Default for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'a> {
@@ -62649,7 +62650,7 @@ unsafe impl Sync for DataGraphPipelineBuiltinModelCreateInfoQCOM<'_> {}
 impl ::core::default::Default for DataGraphPipelineBuiltinModelCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineBuiltinModelCreateInfoQCOM<'a> {
@@ -62683,7 +62684,7 @@ unsafe impl Sync for PhysicalDeviceDataGraphModelFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDataGraphModelFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDataGraphModelFeaturesQCOM<'a> {
@@ -62715,7 +62716,7 @@ unsafe impl Sync for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'a> {
@@ -62750,7 +62751,7 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'a> {
@@ -62791,7 +62792,7 @@ unsafe impl Sync for VideoEncodeRgbConversionCapabilitiesVALVE<'_> {}
 impl ::core::default::Default for VideoEncodeRgbConversionCapabilitiesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRgbConversionCapabilitiesVALVE<'a> {
@@ -62843,7 +62844,7 @@ unsafe impl Sync for VideoEncodeProfileRgbConversionInfoVALVE<'_> {}
 impl ::core::default::Default for VideoEncodeProfileRgbConversionInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeProfileRgbConversionInfoVALVE<'a> {
@@ -62877,7 +62878,7 @@ unsafe impl Sync for VideoEncodeSessionRgbConversionCreateInfoVALVE<'_> {}
 impl ::core::default::Default for VideoEncodeSessionRgbConversionCreateInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionRgbConversionCreateInfoVALVE<'a> {
@@ -62932,7 +62933,7 @@ unsafe impl Sync for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShader64BitIndexingFeaturesEXT<'a> {
@@ -62967,7 +62968,7 @@ unsafe impl Sync for NativeBufferUsageOHOS<'_> {}
 impl ::core::default::Default for NativeBufferUsageOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferUsageOHOS<'a> {
@@ -62998,7 +62999,7 @@ unsafe impl Sync for NativeBufferPropertiesOHOS<'_> {}
 impl ::core::default::Default for NativeBufferPropertiesOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferPropertiesOHOS<'a> {
@@ -63039,7 +63040,7 @@ unsafe impl Sync for NativeBufferFormatPropertiesOHOS<'_> {}
 impl ::core::default::Default for NativeBufferFormatPropertiesOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferFormatPropertiesOHOS<'a> {
@@ -63110,7 +63111,7 @@ unsafe impl Sync for ImportNativeBufferInfoOHOS<'_> {}
 impl ::core::default::Default for ImportNativeBufferInfoOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportNativeBufferInfoOHOS<'a> {
@@ -63140,7 +63141,7 @@ unsafe impl Sync for MemoryGetNativeBufferInfoOHOS<'_> {}
 impl ::core::default::Default for MemoryGetNativeBufferInfoOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetNativeBufferInfoOHOS<'a> {
@@ -63169,7 +63170,7 @@ unsafe impl Sync for ExternalFormatOHOS<'_> {}
 impl ::core::default::Default for ExternalFormatOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFormatOHOS<'a> {
@@ -63204,7 +63205,7 @@ unsafe impl Sync for PerfHintInfoQCOM<'_> {}
 impl ::core::default::Default for PerfHintInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerfHintInfoQCOM<'a> {
@@ -63238,7 +63239,7 @@ unsafe impl Sync for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceQueuePerfHintFeaturesQCOM<'a> {
@@ -63270,7 +63271,7 @@ unsafe impl Sync for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceQueuePerfHintPropertiesQCOM<'a> {
@@ -63304,7 +63305,7 @@ unsafe impl Sync for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'a> {
@@ -63346,7 +63347,7 @@ unsafe impl Sync for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> 
 impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'a> {
@@ -63406,7 +63407,7 @@ unsafe impl Sync for PerformanceCounterARM<'_> {}
 impl ::core::default::Default for PerformanceCounterARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterARM<'a> {
@@ -63446,7 +63447,7 @@ impl fmt::Debug for PerformanceCounterDescriptionARM<'_> {
 impl ::core::default::Default for PerformanceCounterDescriptionARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterDescriptionARM<'a> {
@@ -63487,7 +63488,7 @@ unsafe impl Sync for RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {}
 impl ::core::default::Default for RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassPerformanceCountersByRegionBeginInfoARM<'a> {
@@ -63535,7 +63536,7 @@ unsafe impl Sync for ComputeOccupancyPriorityParametersNV<'_> {}
 impl ::core::default::Default for ComputeOccupancyPriorityParametersNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ComputeOccupancyPriorityParametersNV<'a> {
@@ -63569,7 +63570,7 @@ unsafe impl Sync for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'a> {
@@ -63604,7 +63605,7 @@ unsafe impl Sync for PhysicalDeviceShaderLongVectorFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderLongVectorFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderLongVectorFeaturesEXT<'a> {
@@ -63636,7 +63637,7 @@ unsafe impl Sync for PhysicalDeviceShaderLongVectorPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderLongVectorPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderLongVectorPropertiesEXT<'a> {
@@ -63670,7 +63671,7 @@ unsafe impl Sync for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'a> {
@@ -63708,7 +63709,7 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'a> {
@@ -63799,7 +63800,7 @@ unsafe impl Sync for TexelBufferDescriptorInfoEXT<'_> {}
 impl ::core::default::Default for TexelBufferDescriptorInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TexelBufferDescriptorInfoEXT<'a> {
@@ -63834,7 +63835,7 @@ unsafe impl Sync for ImageDescriptorInfoEXT<'_> {}
 impl ::core::default::Default for ImageDescriptorInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDescriptorInfoEXT<'a> {
@@ -63894,7 +63895,7 @@ impl fmt::Debug for ResourceDescriptorInfoEXT<'_> {
 impl ::core::default::Default for ResourceDescriptorInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ResourceDescriptorInfoEXT<'a> {
@@ -63930,7 +63931,7 @@ unsafe impl Sync for BindHeapInfoEXT<'_> {}
 impl ::core::default::Default for BindHeapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindHeapInfoEXT<'a> {
@@ -63970,7 +63971,7 @@ unsafe impl Sync for PushDataInfoEXT<'_> {}
 impl ::core::default::Default for PushDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushDataInfoEXT<'a> {
@@ -64471,7 +64472,7 @@ impl fmt::Debug for DescriptorSetAndBindingMappingEXT<'_> {
 impl ::core::default::Default for DescriptorSetAndBindingMappingEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetAndBindingMappingEXT<'a> {
@@ -64526,7 +64527,7 @@ unsafe impl Sync for ShaderDescriptorSetAndBindingMappingInfoEXT<'_> {}
 impl ::core::default::Default for ShaderDescriptorSetAndBindingMappingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderDescriptorSetAndBindingMappingInfoEXT<'a> {
@@ -64562,7 +64563,7 @@ unsafe impl Sync for SamplerCustomBorderColorIndexCreateInfoEXT<'_> {}
 impl ::core::default::Default for SamplerCustomBorderColorIndexCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCustomBorderColorIndexCreateInfoEXT<'a> {
@@ -64593,7 +64594,7 @@ unsafe impl Sync for OpaqueCaptureDataCreateInfoEXT<'_> {}
 impl ::core::default::Default for OpaqueCaptureDataCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpaqueCaptureDataCreateInfoEXT<'a> {
@@ -64625,7 +64626,7 @@ unsafe impl Sync for IndirectCommandsLayoutPushDataTokenNV<'_> {}
 impl ::core::default::Default for IndirectCommandsLayoutPushDataTokenNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutPushDataTokenNV<'a> {
@@ -64664,7 +64665,7 @@ unsafe impl Sync for SubsampledImageFormatPropertiesEXT<'_> {}
 impl ::core::default::Default for SubsampledImageFormatPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubsampledImageFormatPropertiesEXT<'a> {
@@ -64697,7 +64698,7 @@ unsafe impl Sync for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'a> {
@@ -64732,7 +64733,7 @@ unsafe impl Sync for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'a> {
@@ -64770,7 +64771,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorHeapFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorHeapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorHeapFeaturesEXT<'a> {
@@ -64825,7 +64826,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorHeapPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorHeapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorHeapPropertiesEXT<'a> {
@@ -64969,7 +64970,7 @@ unsafe impl Sync for CommandBufferInheritanceDescriptorHeapInfoEXT<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceDescriptorHeapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceDescriptorHeapInfoEXT<'a> {
@@ -65016,7 +65017,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'a> {
@@ -65063,7 +65064,7 @@ unsafe impl Sync for PhysicalDeviceShaderInstrumentationFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderInstrumentationFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderInstrumentationFeaturesARM<'a> {
@@ -65099,7 +65100,7 @@ unsafe impl Sync for PhysicalDeviceShaderInstrumentationPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderInstrumentationPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderInstrumentationPropertiesARM<'a> {
@@ -65137,7 +65138,7 @@ unsafe impl Sync for ShaderInstrumentationCreateInfoARM<'_> {}
 impl ::core::default::Default for ShaderInstrumentationCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderInstrumentationCreateInfoARM<'a> {
@@ -65171,7 +65172,7 @@ impl fmt::Debug for ShaderInstrumentationMetricDescriptionARM<'_> {
 impl ::core::default::Default for ShaderInstrumentationMetricDescriptionARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderInstrumentationMetricDescriptionARM<'a> {
@@ -65272,7 +65273,7 @@ unsafe impl Sync for DeviceMemoryCopyKHR<'_> {}
 impl ::core::default::Default for DeviceMemoryCopyKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryCopyKHR<'a> {
@@ -65317,7 +65318,7 @@ unsafe impl Sync for CopyDeviceMemoryInfoKHR<'_> {}
 impl ::core::default::Default for CopyDeviceMemoryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyDeviceMemoryInfoKHR<'a> {
@@ -65354,7 +65355,7 @@ unsafe impl Sync for DeviceMemoryImageCopyKHR<'_> {}
 impl ::core::default::Default for DeviceMemoryImageCopyKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryImageCopyKHR<'a> {
@@ -65420,7 +65421,7 @@ unsafe impl Sync for CopyDeviceMemoryImageInfoKHR<'_> {}
 impl ::core::default::Default for CopyDeviceMemoryImageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyDeviceMemoryImageInfoKHR<'a> {
@@ -65456,7 +65457,7 @@ unsafe impl Sync for MemoryRangeBarriersInfoKHR<'_> {}
 impl ::core::default::Default for MemoryRangeBarriersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryRangeBarriersInfoKHR<'a> {
@@ -65497,7 +65498,7 @@ unsafe impl Sync for MemoryRangeBarrierKHR<'_> {}
 impl ::core::default::Default for MemoryRangeBarrierKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryRangeBarrierKHR<'a> {
@@ -65561,7 +65562,7 @@ unsafe impl Sync for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'a> {
@@ -65598,7 +65599,7 @@ unsafe impl Sync for ConditionalRenderingBeginInfo2EXT<'_> {}
 impl ::core::default::Default for ConditionalRenderingBeginInfo2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ConditionalRenderingBeginInfo2EXT<'a> {
@@ -65640,7 +65641,7 @@ unsafe impl Sync for AccelerationStructureCreateInfo2KHR<'_> {}
 impl ::core::default::Default for AccelerationStructureCreateInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfo2KHR<'a> {
@@ -65686,7 +65687,7 @@ unsafe impl Sync for BindIndexBuffer3InfoKHR<'_> {}
 impl ::core::default::Default for BindIndexBuffer3InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindIndexBuffer3InfoKHR<'a> {
@@ -65727,7 +65728,7 @@ unsafe impl Sync for BindVertexBuffer3InfoKHR<'_> {}
 impl ::core::default::Default for BindVertexBuffer3InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindVertexBuffer3InfoKHR<'a> {
@@ -65768,7 +65769,7 @@ unsafe impl Sync for DrawIndirect2InfoKHR<'_> {}
 impl ::core::default::Default for DrawIndirect2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DrawIndirect2InfoKHR<'a> {
@@ -65811,7 +65812,7 @@ unsafe impl Sync for DrawIndirectCount2InfoKHR<'_> {}
 impl ::core::default::Default for DrawIndirectCount2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DrawIndirectCount2InfoKHR<'a> {
@@ -65861,7 +65862,7 @@ unsafe impl Sync for DispatchIndirect2InfoKHR<'_> {}
 impl ::core::default::Default for DispatchIndirect2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DispatchIndirect2InfoKHR<'a> {
@@ -65896,7 +65897,7 @@ unsafe impl Sync for BindTransformFeedbackBuffer2InfoEXT<'_> {}
 impl ::core::default::Default for BindTransformFeedbackBuffer2InfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindTransformFeedbackBuffer2InfoEXT<'a> {
@@ -65933,7 +65934,7 @@ unsafe impl Sync for MemoryMarkerInfoAMD<'_> {}
 impl ::core::default::Default for MemoryMarkerInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMarkerInfoAMD<'a> {
@@ -65977,7 +65978,7 @@ unsafe impl Sync for PhysicalDeviceShaderConstantDataFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderConstantDataFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderConstantDataFeaturesKHR<'a> {
@@ -66012,7 +66013,7 @@ unsafe impl Sync for PhysicalDeviceShaderAbortFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAbortFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAbortFeaturesKHR<'a> {
@@ -66043,7 +66044,7 @@ unsafe impl Sync for PhysicalDeviceShaderAbortPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAbortPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAbortPropertiesKHR<'a> {
@@ -66075,7 +66076,7 @@ unsafe impl Sync for DeviceFaultShaderAbortMessageInfoKHR<'_> {}
 impl ::core::default::Default for DeviceFaultShaderAbortMessageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultShaderAbortMessageInfoKHR<'a> {
@@ -66148,7 +66149,7 @@ unsafe impl Sync for QueueFamilyDataGraphTOSAPropertiesARM<'_> {}
 impl ::core::default::Default for QueueFamilyDataGraphTOSAPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphTOSAPropertiesARM<'a> {
@@ -66192,7 +66193,7 @@ unsafe impl Sync for DataGraphPipelineSingleNodeConnectionARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSingleNodeConnectionARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSingleNodeConnectionARM<'a> {
@@ -66232,7 +66233,7 @@ unsafe impl Sync for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'a> {
@@ -66274,7 +66275,7 @@ unsafe impl Sync for QueueFamilyDataGraphOpticalFlowPropertiesARM<'_> {}
 impl ::core::default::Default for QueueFamilyDataGraphOpticalFlowPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphOpticalFlowPropertiesARM<'a> {
@@ -66345,7 +66346,7 @@ unsafe impl Sync for DataGraphOpticalFlowImageFormatInfoARM<'_> {}
 impl ::core::default::Default for DataGraphOpticalFlowImageFormatInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphOpticalFlowImageFormatInfoARM<'a> {
@@ -66380,7 +66381,7 @@ unsafe impl Sync for DataGraphOpticalFlowImageFormatPropertiesARM<'_> {}
 impl ::core::default::Default for DataGraphOpticalFlowImageFormatPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphOpticalFlowImageFormatPropertiesARM<'a> {
@@ -66412,7 +66413,7 @@ unsafe impl Sync for DataGraphPipelineSingleNodeCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSingleNodeCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSingleNodeCreateInfoARM<'a> {
@@ -66463,7 +66464,7 @@ unsafe impl Sync for DataGraphPipelineOpticalFlowCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineOpticalFlowCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineOpticalFlowCreateInfoARM<'a> {
@@ -66544,7 +66545,7 @@ unsafe impl Sync for DataGraphPipelineOpticalFlowDispatchInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineOpticalFlowDispatchInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self::init_tagged_structure()
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineOpticalFlowDispatchInfoARM<'a> {

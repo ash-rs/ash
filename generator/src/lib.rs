@@ -1910,7 +1910,7 @@ fn derive_default(
     let lifetime = has_lifetime.then(|| quote!(<'_>));
 
     let initializer = if contains_structure_type {
-        quote!(Self::init_tagged_structure())
+        quote!(init_tagged_structure())
     } else {
         quote! {
             // SAFETY: All Vulkan structures support zero-initialization
@@ -3628,7 +3628,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use super::native::*;
         use super::platform_types::*;
         use super::{
-            wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
+            init_tagged_structure, wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
             Handle, Packed24_5_3, Packed24_8, Packed9_9_6_4_4, TaggedStructure,
         };
         use core::ffi::*;
