@@ -135,7 +135,7 @@ pub unsafe trait TaggedStructure<'a>: Sized {
 /// [`BaseOutStructure::s_type`] field.
 ///
 /// All Vulkan structures support zero-initialization.
-fn init_tagged_structure<'a, T: TaggedStructure<'a>>() -> T {
+pub const fn init_tagged_structure<'a, T: TaggedStructure<'a>>() -> T {
     let mut slf = unsafe { core::mem::zeroed() };
     // SAFETY: All implementers of `TaggedStructure` are required to have the `BaseOutStructure` layout
     let slf_base = unsafe { &mut *<*mut _>::cast::<BaseOutStructure<'_>>(&mut slf) };

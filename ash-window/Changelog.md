@@ -2,6 +2,7 @@
 
 - Added support for `VK_OHOS_surface` (#1016)
 - Keep loaded `Surface` extensions around via a new `SurfaceFactory` object on which `create_surface()` is called (#1019)
+- Bumped MSRV from 1.69 to 1.75 (#TODO)
 
 ## [0.13.0] - 2024-03-31
 

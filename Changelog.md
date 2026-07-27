@@ -50,6 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `extensions::khr::acceleration_structure` now takes `Option`al references in the following arguments (#1041):
   - `max_primitive_counts` in `get_acceleration_structure_build_sizes_khr()`;
   - `build_range_infos` in `cmd_build_acceleration_structures()`.
+- Bumped MSRV from 1.69 to 1.75 (#TODO)
 
 ### Removed
 
