@@ -1955,6 +1955,7 @@ fn derive_default(
                     )*
                     #marker
                 }
+                // Self::const_default()
             }
         }
     })
@@ -2678,13 +2679,21 @@ pub fn generate_struct(
     });
 
     let has_lifetime = has_lifetimes.contains(&name);
-    let (lifetimes, marker) = match has_lifetime {
+    let (lifetime, marker) = match has_lifetime {
         true => (quote!(<'a>), quote!(pub _marker: PhantomData<&'a ()>,)),
         false => (quote!(), quote!()),
     };
 
     let debug_tokens = derive_debug(struct_, &members, union_types, has_lifetime, &provisional);
-    let default_tokens = derive_default(struct_, &members, has_lifetime, &provisional);
+    // These don't have a valid initializer, since they'll end up as
+    // vk::StructureType::APPLICATION_INFO (0) on zero-init.
+    let may_have_default = !matches!(
+        struct_.name.as_ref(),
+        "VkBaseInStructure" | "VkBaseOutStructure"
+    );
+    let default_tokens = may_have_default
+        .then(|| derive_default(struct_, &members, has_lifetime, &provisional))
+        .flatten();
     let send_sync_tokens = derive_send_sync(struct_, has_lifetime, &provisional);
     let setter_tokens = derive_getters_and_setters(
         struct_,
@@ -2699,11 +2708,34 @@ pub fn generate_struct(
     } else {
         quote!()
     };
-    let derive_default = if default_tokens.is_none() {
+    let derive_default = if may_have_default && default_tokens.is_none() {
         quote!(Default,)
     } else {
         quote!()
     };
+    let is_structure_type = |field: &vkxml::Field| field.basetype == "VkStructureType";
+    let contains_structure_type = members
+        .iter()
+        .any(|member| is_structure_type(member.vkxml_field));
+    let initializer = if contains_structure_type {
+        quote!(init_tagged_structure())
+    } else {
+        quote! {
+            // SAFETY: All Vulkan structures support zero-initialization
+            unsafe { ::core::mem::zeroed() }
+        }
+    };
+    let const_default_tokens = may_have_default.then(|| {
+        quote! {
+            #provisional
+            impl #lifetime #name #lifetime {
+                #[inline]
+                pub const fn const_default() -> Self {
+                    #initializer
+                }
+            }
+        }
+    });
     quote! {
         #provisional
         #[repr(C)]
@@ -2711,13 +2743,14 @@ pub fn generate_struct(
         #[derive(Copy, Clone, #derive_default #manual_derive_tokens)]
         #[doc = #khronos_link]
         #[must_use]
-        pub struct #name #lifetimes {
+        pub struct #name #lifetime {
             #(#params,)*
             #marker
         }
         #send_sync_tokens
         #debug_tokens
         #default_tokens
+        #const_default_tokens
         #setter_tokens
     }
 }
@@ -3659,8 +3692,9 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use super::native::*;
         use super::platform_types::*;
         use super::{
-            wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
-            Handle, Packed24_5_3, Packed24_8, Packed9_9_6_4_4, TaggedStructure,
+            init_tagged_structure, wrap_c_str_slice_until_nul, write_c_str_slice_with_nul,
+            CStrTooLargeForStaticArray, Extends, Handle, Packed24_5_3, Packed24_8, Packed9_9_6_4_4,
+            TaggedStructure,
         };
         use core::ffi::*;
         use core::fmt;

@@ -6,8 +6,9 @@ use super::enums::*;
 use super::native::*;
 use super::platform_types::*;
 use super::{
-    wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
-    Handle, Packed24_5_3, Packed24_8, Packed9_9_6_4_4, TaggedStructure,
+    init_tagged_structure, wrap_c_str_slice_until_nul, write_c_str_slice_with_nul,
+    CStrTooLargeForStaticArray, Extends, Handle, Packed24_5_3, Packed24_8, Packed9_9_6_4_4,
+    TaggedStructure,
 };
 use core::ffi::*;
 use core::fmt;
@@ -706,16 +707,6 @@ pub struct BaseOutStructure<'a> {
 }
 unsafe impl Send for BaseOutStructure<'_> {}
 unsafe impl Sync for BaseOutStructure<'_> {}
-impl ::core::default::Default for BaseOutStructure<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: unsafe { ::core::mem::zeroed() },
-            p_next: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
-    }
-}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -728,16 +719,6 @@ pub struct BaseInStructure<'a> {
 }
 unsafe impl Send for BaseInStructure<'_> {}
 unsafe impl Sync for BaseInStructure<'_> {}
-impl ::core::default::Default for BaseInStructure<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: unsafe { ::core::mem::zeroed() },
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
-    }
-}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default, PartialEq, Eq, Hash)]
@@ -746,6 +727,12 @@ impl ::core::default::Default for BaseInStructure<'_> {
 pub struct Offset2D {
     pub x: i32,
     pub y: i32,
+}
+impl Offset2D {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl Offset2D {
     #[inline]
@@ -768,6 +755,12 @@ pub struct Offset3D {
     pub x: i32,
     pub y: i32,
     pub z: i32,
+}
+impl Offset3D {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl Offset3D {
     #[inline]
@@ -797,6 +790,12 @@ pub struct Extent2D {
 }
 impl Extent2D {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl Extent2D {
+    #[inline]
     pub fn width(mut self, width: u32) -> Self {
         self.width = width;
         self
@@ -816,6 +815,12 @@ pub struct Extent3D {
     pub width: u32,
     pub height: u32,
     pub depth: u32,
+}
+impl Extent3D {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl Extent3D {
     #[inline]
@@ -846,6 +851,12 @@ pub struct Viewport {
     pub height: f32,
     pub min_depth: f32,
     pub max_depth: f32,
+}
+impl Viewport {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl Viewport {
     #[inline]
@@ -890,6 +901,12 @@ pub struct Rect2D {
 }
 impl Rect2D {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl Rect2D {
+    #[inline]
     pub fn offset(mut self, offset: Offset2D) -> Self {
         self.offset = offset;
         self
@@ -909,6 +926,12 @@ pub struct ClearRect {
     pub rect: Rect2D,
     pub base_array_layer: u32,
     pub layer_count: u32,
+}
+impl ClearRect {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ClearRect {
     #[inline]
@@ -937,6 +960,12 @@ pub struct ComponentMapping {
     pub g: ComponentSwizzle,
     pub b: ComponentSwizzle,
     pub a: ComponentSwizzle,
+}
+impl ComponentMapping {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ComponentMapping {
     #[inline]
@@ -1005,6 +1034,12 @@ impl ::core::default::Default for PhysicalDeviceProperties {
             limits: PhysicalDeviceLimits::default(),
             sparse_properties: PhysicalDeviceSparseProperties::default(),
         }
+    }
+}
+impl PhysicalDeviceProperties {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PhysicalDeviceProperties {
@@ -1088,6 +1123,12 @@ impl ::core::default::Default for ExtensionProperties {
 }
 impl ExtensionProperties {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl ExtensionProperties {
+    #[inline]
     pub fn extension_name(
         mut self,
         extension_name: &CStr,
@@ -1134,6 +1175,12 @@ impl ::core::default::Default for LayerProperties {
             implementation_version: u32::default(),
             description: unsafe { ::core::mem::zeroed() },
         }
+    }
+}
+impl LayerProperties {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl LayerProperties {
@@ -1200,6 +1247,12 @@ impl ::core::default::Default for ApplicationInfo<'_> {
             api_version: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ApplicationInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ApplicationInfo<'a> {
@@ -1302,6 +1355,12 @@ impl ::core::default::Default for AllocationCallbacks {
 }
 impl AllocationCallbacks {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl AllocationCallbacks {
+    #[inline]
     pub fn user_data(mut self, user_data: *mut c_void) -> Self {
         self.p_user_data = user_data;
         self
@@ -1365,6 +1424,12 @@ impl ::core::default::Default for DeviceQueueCreateInfo<'_> {
         }
     }
 }
+impl<'a> DeviceQueueCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_QUEUE_CREATE_INFO;
 }
@@ -1425,6 +1490,12 @@ impl ::core::default::Default for DeviceCreateInfo<'_> {
             p_enabled_features: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceCreateInfo<'a> {
@@ -1499,6 +1570,12 @@ impl ::core::default::Default for InstanceCreateInfo<'_> {
         }
     }
 }
+impl<'a> InstanceCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for InstanceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INSTANCE_CREATE_INFO;
 }
@@ -1536,6 +1613,12 @@ pub struct QueueFamilyProperties {
     pub queue_count: u32,
     pub timestamp_valid_bits: u32,
     pub min_image_transfer_granularity: Extent3D,
+}
+impl QueueFamilyProperties {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl QueueFamilyProperties {
     #[inline]
@@ -1596,6 +1679,12 @@ impl ::core::default::Default for PhysicalDeviceMemoryProperties {
 }
 impl PhysicalDeviceMemoryProperties {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl PhysicalDeviceMemoryProperties {
+    #[inline]
     pub fn memory_types(mut self, memory_types: &'_ [MemoryType]) -> Self {
         self.memory_type_count = memory_types.len() as _;
         self.memory_types[..memory_types.len()].copy_from_slice(memory_types);
@@ -1642,6 +1731,12 @@ impl ::core::default::Default for MemoryAllocateInfo<'_> {
         }
     }
 }
+impl<'a> MemoryAllocateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_ALLOCATE_INFO;
 }
@@ -1666,6 +1761,12 @@ pub struct MemoryRequirements {
     pub size: DeviceSize,
     pub alignment: DeviceSize,
     pub memory_type_bits: u32,
+}
+impl MemoryRequirements {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl MemoryRequirements {
     #[inline]
@@ -1696,6 +1797,12 @@ pub struct SparseImageFormatProperties {
 }
 impl SparseImageFormatProperties {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl SparseImageFormatProperties {
+    #[inline]
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.aspect_mask = aspect_mask;
         self
@@ -1722,6 +1829,12 @@ pub struct SparseImageMemoryRequirements {
     pub image_mip_tail_size: DeviceSize,
     pub image_mip_tail_offset: DeviceSize,
     pub image_mip_tail_stride: DeviceSize,
+}
+impl SparseImageMemoryRequirements {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SparseImageMemoryRequirements {
     #[inline]
@@ -1761,6 +1874,12 @@ pub struct MemoryType {
 }
 impl MemoryType {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl MemoryType {
+    #[inline]
     pub fn property_flags(mut self, property_flags: MemoryPropertyFlags) -> Self {
         self.property_flags = property_flags;
         self
@@ -1779,6 +1898,12 @@ impl MemoryType {
 pub struct MemoryHeap {
     pub size: DeviceSize,
     pub flags: MemoryHeapFlags,
+}
+impl MemoryHeap {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl MemoryHeap {
     #[inline]
@@ -1820,6 +1945,12 @@ impl ::core::default::Default for MappedMemoryRange<'_> {
         }
     }
 }
+impl<'a> MappedMemoryRange<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MappedMemoryRange<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MAPPED_MEMORY_RANGE;
 }
@@ -1852,6 +1983,12 @@ pub struct FormatProperties {
 }
 impl FormatProperties {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl FormatProperties {
+    #[inline]
     pub fn linear_tiling_features(mut self, linear_tiling_features: FormatFeatureFlags) -> Self {
         self.linear_tiling_features = linear_tiling_features;
         self
@@ -1878,6 +2015,12 @@ pub struct ImageFormatProperties {
     pub max_array_layers: u32,
     pub sample_counts: SampleCountFlags,
     pub max_resource_size: DeviceSize,
+}
+impl ImageFormatProperties {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ImageFormatProperties {
     #[inline]
@@ -1918,6 +2061,12 @@ pub struct DescriptorBufferInfo {
 }
 impl DescriptorBufferInfo {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl DescriptorBufferInfo {
+    #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.buffer = buffer;
         self
@@ -1942,6 +2091,12 @@ pub struct DescriptorImageInfo {
     pub sampler: Sampler,
     pub image_view: ImageView,
     pub image_layout: ImageLayout,
+}
+impl DescriptorImageInfo {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DescriptorImageInfo {
     #[inline]
@@ -1996,6 +2151,12 @@ impl ::core::default::Default for WriteDescriptorSet<'_> {
             p_texel_buffer_view: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> WriteDescriptorSet<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSet<'a> {
@@ -2082,6 +2243,12 @@ impl ::core::default::Default for CopyDescriptorSet<'_> {
         }
     }
 }
+impl<'a> CopyDescriptorSet<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyDescriptorSet<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_DESCRIPTOR_SET;
 }
@@ -2146,6 +2313,12 @@ impl ::core::default::Default for BufferUsageFlags2CreateInfo<'_> {
         }
     }
 }
+impl<'a> BufferUsageFlags2CreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferUsageFlags2CreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_USAGE_FLAGS_2_CREATE_INFO;
 }
@@ -2192,6 +2365,12 @@ impl ::core::default::Default for BufferCreateInfo<'_> {
             p_queue_family_indices: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BufferCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCreateInfo<'a> {
@@ -2257,6 +2436,12 @@ impl ::core::default::Default for BufferViewCreateInfo<'_> {
         }
     }
 }
+impl<'a> BufferViewCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferViewCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_VIEW_CREATE_INFO;
 }
@@ -2299,6 +2484,12 @@ pub struct ImageSubresource {
 }
 impl ImageSubresource {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl ImageSubresource {
+    #[inline]
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.aspect_mask = aspect_mask;
         self
@@ -2324,6 +2515,12 @@ pub struct ImageSubresourceLayers {
     pub mip_level: u32,
     pub base_array_layer: u32,
     pub layer_count: u32,
+}
+impl ImageSubresourceLayers {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ImageSubresourceLayers {
     #[inline]
@@ -2358,6 +2555,12 @@ pub struct ImageSubresourceRange {
     pub level_count: u32,
     pub base_array_layer: u32,
     pub layer_count: u32,
+}
+impl ImageSubresourceRange {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ImageSubresourceRange {
     #[inline]
@@ -2412,6 +2615,12 @@ impl ::core::default::Default for MemoryBarrier<'_> {
         }
     }
 }
+impl<'a> MemoryBarrier<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryBarrier<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_BARRIER;
 }
@@ -2461,6 +2670,12 @@ impl ::core::default::Default for BufferMemoryBarrier<'_> {
             size: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BufferMemoryBarrier<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferMemoryBarrier<'a> {
@@ -2539,6 +2754,12 @@ impl ::core::default::Default for ImageMemoryBarrier<'_> {
             subresource_range: ImageSubresourceRange::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImageMemoryBarrier<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageMemoryBarrier<'a> {
@@ -2634,6 +2855,12 @@ impl ::core::default::Default for ImageCreateInfo<'_> {
         }
     }
 }
+impl<'a> ImageCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CREATE_INFO;
 }
@@ -2714,6 +2941,12 @@ pub struct SubresourceLayout {
 }
 impl SubresourceLayout {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl SubresourceLayout {
+    #[inline]
     pub fn offset(mut self, offset: DeviceSize) -> Self {
         self.offset = offset;
         self
@@ -2773,6 +3006,12 @@ impl ::core::default::Default for ImageViewCreateInfo<'_> {
         }
     }
 }
+impl<'a> ImageViewCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageViewCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_CREATE_INFO;
 }
@@ -2820,6 +3059,12 @@ pub struct BufferCopy {
 }
 impl BufferCopy {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl BufferCopy {
+    #[inline]
     pub fn src_offset(mut self, src_offset: DeviceSize) -> Self {
         self.src_offset = src_offset;
         self
@@ -2846,6 +3091,12 @@ pub struct SparseMemoryBind {
     pub memory: DeviceMemory,
     pub memory_offset: DeviceSize,
     pub flags: SparseMemoryBindFlags,
+}
+impl SparseMemoryBind {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SparseMemoryBind {
     #[inline]
@@ -2886,6 +3137,12 @@ pub struct SparseImageMemoryBind {
     pub memory: DeviceMemory,
     pub memory_offset: DeviceSize,
     pub flags: SparseMemoryBindFlags,
+}
+impl SparseImageMemoryBind {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SparseImageMemoryBind {
     #[inline]
@@ -2945,6 +3202,12 @@ impl ::core::default::Default for SparseBufferMemoryBindInfo<'_> {
 }
 impl<'a> SparseBufferMemoryBindInfo<'a> {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl<'a> SparseBufferMemoryBindInfo<'a> {
+    #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.buffer = buffer;
         self
@@ -2982,6 +3245,12 @@ impl ::core::default::Default for SparseImageOpaqueMemoryBindInfo<'_> {
 }
 impl<'a> SparseImageOpaqueMemoryBindInfo<'a> {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl<'a> SparseImageOpaqueMemoryBindInfo<'a> {
+    #[inline]
     pub fn image(mut self, image: Image) -> Self {
         self.image = image;
         self
@@ -3015,6 +3284,12 @@ impl ::core::default::Default for SparseImageMemoryBindInfo<'_> {
             p_binds: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SparseImageMemoryBindInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> SparseImageMemoryBindInfo<'a> {
@@ -3072,6 +3347,12 @@ impl ::core::default::Default for BindSparseInfo<'_> {
         }
     }
 }
+impl<'a> BindSparseInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BindSparseInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_SPARSE_INFO;
 }
@@ -3124,6 +3405,12 @@ pub struct ImageCopy {
 }
 impl ImageCopy {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl ImageCopy {
+    #[inline]
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.src_subresource = src_subresource;
         self
@@ -3173,6 +3460,12 @@ impl ::core::default::Default for ImageBlit {
 }
 impl ImageBlit {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl ImageBlit {
+    #[inline]
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.src_subresource = src_subresource;
         self
@@ -3205,6 +3498,12 @@ pub struct BufferImageCopy {
     pub image_subresource: ImageSubresourceLayers,
     pub image_offset: Offset3D,
     pub image_extent: Extent3D,
+}
+impl BufferImageCopy {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl BufferImageCopy {
     #[inline]
@@ -3250,6 +3549,12 @@ pub struct StridedDeviceAddressRangeKHR {
 }
 impl StridedDeviceAddressRangeKHR {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl StridedDeviceAddressRangeKHR {
+    #[inline]
     pub fn address(mut self, address: DeviceAddress) -> Self {
         self.address = address;
         self
@@ -3274,6 +3579,12 @@ pub struct CopyMemoryIndirectCommandKHR {
     pub src_address: DeviceAddress,
     pub dst_address: DeviceAddress,
     pub size: DeviceSize,
+}
+impl CopyMemoryIndirectCommandKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl CopyMemoryIndirectCommandKHR {
     #[inline]
@@ -3322,6 +3633,12 @@ impl ::core::default::Default for CopyMemoryIndirectInfoKHR<'_> {
         }
     }
 }
+impl<'a> CopyMemoryIndirectInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryIndirectInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MEMORY_INDIRECT_INFO_KHR;
 }
@@ -3359,6 +3676,12 @@ pub struct CopyMemoryToImageIndirectCommandKHR {
     pub image_subresource: ImageSubresourceLayers,
     pub image_offset: Offset3D,
     pub image_extent: Extent3D,
+}
+impl CopyMemoryToImageIndirectCommandKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl CopyMemoryToImageIndirectCommandKHR {
     #[inline]
@@ -3426,6 +3749,12 @@ impl ::core::default::Default for CopyMemoryToImageIndirectInfoKHR<'_> {
         }
     }
 }
+impl<'a> CopyMemoryToImageIndirectInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToImageIndirectInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MEMORY_TO_IMAGE_INDIRECT_INFO_KHR;
 }
@@ -3468,6 +3797,12 @@ pub struct ImageResolve {
     pub dst_subresource: ImageSubresourceLayers,
     pub dst_offset: Offset3D,
     pub extent: Extent3D,
+}
+impl ImageResolve {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ImageResolve {
     #[inline]
@@ -3524,6 +3859,12 @@ impl ::core::default::Default for ShaderModuleCreateInfo<'_> {
         }
     }
 }
+impl<'a> ShaderModuleCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ShaderModuleCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_MODULE_CREATE_INFO;
 }
@@ -3568,6 +3909,12 @@ impl ::core::default::Default for DescriptorSetLayoutBinding<'_> {
             p_immutable_samplers: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DescriptorSetLayoutBinding<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorSetLayoutBinding<'a> {
@@ -3626,6 +3973,12 @@ impl ::core::default::Default for DescriptorSetLayoutCreateInfo<'_> {
         }
     }
 }
+impl<'a> DescriptorSetLayoutCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
 }
@@ -3650,6 +4003,12 @@ impl<'a> DescriptorSetLayoutCreateInfo<'a> {
 pub struct DescriptorPoolSize {
     pub ty: DescriptorType,
     pub descriptor_count: u32,
+}
+impl DescriptorPoolSize {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DescriptorPoolSize {
     #[inline]
@@ -3691,6 +4050,12 @@ impl ::core::default::Default for DescriptorPoolCreateInfo<'_> {
             p_pool_sizes: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DescriptorPoolCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorPoolCreateInfo<'a> {
@@ -3742,6 +4107,12 @@ impl ::core::default::Default for DescriptorSetAllocateInfo<'_> {
         }
     }
 }
+impl<'a> DescriptorSetAllocateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_ALLOCATE_INFO;
 }
@@ -3767,6 +4138,12 @@ pub struct SpecializationMapEntry {
     pub constant_id: u32,
     pub offset: u32,
     pub size: usize,
+}
+impl SpecializationMapEntry {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SpecializationMapEntry {
     #[inline]
@@ -3813,6 +4190,12 @@ impl ::core::default::Default for SpecializationInfo<'_> {
 }
 impl<'a> SpecializationInfo<'a> {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl<'a> SpecializationInfo<'a> {
+    #[inline]
     pub fn map_entries(mut self, map_entries: &'a [SpecializationMapEntry]) -> Self {
         self.map_entry_count = map_entries.len() as _;
         self.p_map_entries = map_entries.as_ptr();
@@ -3855,6 +4238,12 @@ impl ::core::default::Default for PipelineShaderStageCreateInfo<'_> {
             p_specialization_info: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineShaderStageCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageCreateInfo<'a> {
@@ -3927,6 +4316,12 @@ impl ::core::default::Default for ComputePipelineCreateInfo<'_> {
         }
     }
 }
+impl<'a> ComputePipelineCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ComputePipelineCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_PIPELINE_CREATE_INFO;
 }
@@ -3985,6 +4380,12 @@ impl ::core::default::Default for ComputePipelineIndirectBufferInfoNV<'_> {
         }
     }
 }
+impl<'a> ComputePipelineIndirectBufferInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ComputePipelineIndirectBufferInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_PIPELINE_INDIRECT_BUFFER_INFO_NV;
 }
@@ -4033,6 +4434,12 @@ impl ::core::default::Default for PipelineCreateFlags2CreateInfo<'_> {
         }
     }
 }
+impl<'a> PipelineCreateFlags2CreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineCreateFlags2CreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CREATE_FLAGS_2_CREATE_INFO;
 }
@@ -4056,6 +4463,12 @@ pub struct VertexInputBindingDescription {
     pub binding: u32,
     pub stride: u32,
     pub input_rate: VertexInputRate,
+}
+impl VertexInputBindingDescription {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl VertexInputBindingDescription {
     #[inline]
@@ -4084,6 +4497,12 @@ pub struct VertexInputAttributeDescription {
     pub binding: u32,
     pub format: Format,
     pub offset: u32,
+}
+impl VertexInputAttributeDescription {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl VertexInputAttributeDescription {
     #[inline]
@@ -4137,6 +4556,12 @@ impl ::core::default::Default for PipelineVertexInputStateCreateInfo<'_> {
             p_vertex_attribute_descriptions: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineVertexInputStateCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineVertexInputStateCreateInfo<'a> {
@@ -4195,6 +4620,12 @@ impl ::core::default::Default for PipelineInputAssemblyStateCreateInfo<'_> {
         }
     }
 }
+impl<'a> PipelineInputAssemblyStateCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineInputAssemblyStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 }
@@ -4239,6 +4670,12 @@ impl ::core::default::Default for PipelineTessellationStateCreateInfo<'_> {
             patch_control_points: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineTessellationStateCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineTessellationStateCreateInfo<'a> {
@@ -4286,6 +4723,12 @@ impl ::core::default::Default for PipelineViewportStateCreateInfo<'_> {
             p_scissors: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineViewportStateCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportStateCreateInfo<'a> {
@@ -4362,6 +4805,12 @@ impl ::core::default::Default for PipelineRasterizationStateCreateInfo<'_> {
             line_width: f32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineRasterizationStateCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateCreateInfo<'a> {
@@ -4460,6 +4909,12 @@ impl ::core::default::Default for PipelineMultisampleStateCreateInfo<'_> {
         }
     }
 }
+impl<'a> PipelineMultisampleStateCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineMultisampleStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 }
@@ -4523,6 +4978,12 @@ pub struct PipelineColorBlendAttachmentState {
     pub dst_alpha_blend_factor: BlendFactor,
     pub alpha_blend_op: BlendOp,
     pub color_write_mask: ColorComponentFlags,
+}
+impl PipelineColorBlendAttachmentState {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PipelineColorBlendAttachmentState {
     #[inline]
@@ -4600,6 +5061,12 @@ impl ::core::default::Default for PipelineColorBlendStateCreateInfo<'_> {
         }
     }
 }
+impl<'a> PipelineColorBlendStateCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineColorBlendStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
 }
@@ -4659,6 +5126,12 @@ impl ::core::default::Default for PipelineDynamicStateCreateInfo<'_> {
         }
     }
 }
+impl<'a> PipelineDynamicStateCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineDynamicStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 }
@@ -4688,6 +5161,12 @@ pub struct StencilOpState {
     pub compare_mask: u32,
     pub write_mask: u32,
     pub reference: u32,
+}
+impl StencilOpState {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl StencilOpState {
     #[inline]
@@ -4766,6 +5245,12 @@ impl ::core::default::Default for PipelineDepthStencilStateCreateInfo<'_> {
             max_depth_bounds: f32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineDepthStencilStateCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineDepthStencilStateCreateInfo<'a> {
@@ -4877,6 +5362,12 @@ impl ::core::default::Default for GraphicsPipelineCreateInfo<'_> {
             base_pipeline_index: i32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> GraphicsPipelineCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineCreateInfo<'a> {
@@ -5017,6 +5508,12 @@ impl ::core::default::Default for PipelineCacheCreateInfo<'_> {
         }
     }
 }
+impl<'a> PipelineCacheCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineCacheCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CACHE_CREATE_INFO;
 }
@@ -5055,6 +5552,12 @@ impl ::core::default::Default for PipelineCacheHeaderVersionOne {
             device_id: u32::default(),
             pipeline_cache_uuid: unsafe { ::core::mem::zeroed() },
         }
+    }
+}
+impl PipelineCacheHeaderVersionOne {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PipelineCacheHeaderVersionOne {
@@ -5110,6 +5613,12 @@ impl ::core::default::Default for PipelineCacheHeaderVersionDataGraphQCOM {
 }
 impl PipelineCacheHeaderVersionDataGraphQCOM {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl PipelineCacheHeaderVersionDataGraphQCOM {
+    #[inline]
     pub fn header_size(mut self, header_size: u32) -> Self {
         self.header_size = header_size;
         self
@@ -5147,6 +5656,12 @@ pub struct PushConstantRange {
     pub stage_flags: ShaderStageFlags,
     pub offset: u32,
     pub size: u32,
+}
+impl PushConstantRange {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PushConstantRange {
     #[inline]
@@ -5191,6 +5706,12 @@ impl ::core::default::Default for PipelineBinaryCreateInfoKHR<'_> {
             p_pipeline_create_info: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineBinaryCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryCreateInfoKHR<'a> {
@@ -5245,6 +5766,12 @@ impl ::core::default::Default for PipelineBinaryHandlesInfoKHR<'_> {
         }
     }
 }
+impl<'a> PipelineBinaryHandlesInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryHandlesInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_HANDLES_INFO_KHR;
 }
@@ -5280,6 +5807,12 @@ impl ::core::default::Default for PipelineBinaryDataKHR<'_> {
 }
 impl<'a> PipelineBinaryDataKHR<'a> {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl<'a> PipelineBinaryDataKHR<'a> {
+    #[inline]
     pub fn data(mut self, data: &'a mut [u8]) -> Self {
         self.data_size = data.len();
         self.p_data = data.as_mut_ptr().cast();
@@ -5308,6 +5841,12 @@ impl ::core::default::Default for PipelineBinaryKeysAndDataKHR<'_> {
             p_pipeline_binary_data: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineBinaryKeysAndDataKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> PipelineBinaryKeysAndDataKHR<'a> {
@@ -5356,6 +5895,12 @@ impl ::core::default::Default for PipelineBinaryKeyKHR<'_> {
         }
     }
 }
+impl<'a> PipelineBinaryKeyKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryKeyKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_KEY_KHR;
 }
@@ -5397,6 +5942,12 @@ impl ::core::default::Default for PipelineBinaryInfoKHR<'_> {
         }
     }
 }
+impl<'a> PipelineBinaryInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_INFO_KHR;
 }
@@ -5435,6 +5986,12 @@ impl ::core::default::Default for ReleaseCapturedPipelineDataInfoKHR<'_> {
         }
     }
 }
+impl<'a> ReleaseCapturedPipelineDataInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ReleaseCapturedPipelineDataInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RELEASE_CAPTURED_PIPELINE_DATA_INFO_KHR;
 }
@@ -5469,6 +6026,12 @@ impl ::core::default::Default for PipelineBinaryDataInfoKHR<'_> {
         }
     }
 }
+impl<'a> PipelineBinaryDataInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryDataInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_DATA_INFO_KHR;
 }
@@ -5499,6 +6062,12 @@ impl ::core::default::Default for PipelineCreateInfoKHR<'_> {
             p_next: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCreateInfoKHR<'a> {
@@ -5535,6 +6104,12 @@ impl ::core::default::Default for PipelineLayoutCreateInfo<'_> {
             p_push_constant_ranges: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineLayoutCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineLayoutCreateInfo<'a> {
@@ -5621,6 +6196,12 @@ impl ::core::default::Default for SamplerCreateInfo<'_> {
             unnormalized_coordinates: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SamplerCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCreateInfo<'a> {
@@ -5734,6 +6315,12 @@ impl ::core::default::Default for CommandPoolCreateInfo<'_> {
         }
     }
 }
+impl<'a> CommandPoolCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CommandPoolCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_POOL_CREATE_INFO;
 }
@@ -5775,6 +6362,12 @@ impl ::core::default::Default for CommandBufferAllocateInfo<'_> {
             command_buffer_count: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CommandBufferAllocateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferAllocateInfo<'a> {
@@ -5829,6 +6422,12 @@ impl ::core::default::Default for CommandBufferInheritanceInfo<'_> {
             pipeline_statistics: QueryPipelineStatisticFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CommandBufferInheritanceInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceInfo<'a> {
@@ -5890,6 +6489,12 @@ impl ::core::default::Default for CommandBufferBeginInfo<'_> {
             p_inheritance_info: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CommandBufferBeginInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferBeginInfo<'a> {
@@ -5955,6 +6560,12 @@ impl ::core::default::Default for RenderPassBeginInfo<'_> {
         }
     }
 }
+impl<'a> RenderPassBeginInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_BEGIN_INFO;
 }
@@ -6006,6 +6617,12 @@ pub struct ClearDepthStencilValue {
 }
 impl ClearDepthStencilValue {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl ClearDepthStencilValue {
+    #[inline]
     pub fn depth(mut self, depth: f32) -> Self {
         self.depth = depth;
         self
@@ -6050,6 +6667,12 @@ impl fmt::Debug for ClearAttachment {
 }
 impl ClearAttachment {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl ClearAttachment {
+    #[inline]
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.aspect_mask = aspect_mask;
         self
@@ -6080,6 +6703,12 @@ pub struct AttachmentDescription {
     pub stencil_store_op: AttachmentStoreOp,
     pub initial_layout: ImageLayout,
     pub final_layout: ImageLayout,
+}
+impl AttachmentDescription {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl AttachmentDescription {
     #[inline]
@@ -6139,6 +6768,12 @@ pub struct AttachmentReference {
 }
 impl AttachmentReference {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl AttachmentReference {
+    #[inline]
     pub fn attachment(mut self, attachment: u32) -> Self {
         self.attachment = attachment;
         self
@@ -6185,6 +6820,12 @@ impl ::core::default::Default for SubpassDescription<'_> {
             p_preserve_attachments: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SubpassDescription<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> SubpassDescription<'a> {
@@ -6244,6 +6885,12 @@ pub struct SubpassDependency {
     pub src_access_mask: AccessFlags,
     pub dst_access_mask: AccessFlags,
     pub dependency_flags: DependencyFlags,
+}
+impl SubpassDependency {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SubpassDependency {
     #[inline]
@@ -6318,6 +6965,12 @@ impl ::core::default::Default for RenderPassCreateInfo<'_> {
         }
     }
 }
+impl<'a> RenderPassCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_CREATE_INFO;
 }
@@ -6370,6 +7023,12 @@ impl ::core::default::Default for EventCreateInfo<'_> {
         }
     }
 }
+impl<'a> EventCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for EventCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EVENT_CREATE_INFO;
 }
@@ -6402,6 +7061,12 @@ impl ::core::default::Default for FenceCreateInfo<'_> {
             flags: FenceCreateFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> FenceCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FenceCreateInfo<'a> {
@@ -6475,6 +7140,12 @@ pub struct PhysicalDeviceFeatures {
     pub sparse_residency_aliased: Bool32,
     pub variable_multisample_rate: Bool32,
     pub inherited_queries: Bool32,
+}
+impl PhysicalDeviceFeatures {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PhysicalDeviceFeatures {
     #[inline]
@@ -6804,6 +7475,12 @@ pub struct PhysicalDeviceSparseProperties {
 }
 impl PhysicalDeviceSparseProperties {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl PhysicalDeviceSparseProperties {
+    #[inline]
     pub fn residency_standard2_d_block_shape(
         mut self,
         residency_standard2_d_block_shape: bool,
@@ -7063,6 +7740,12 @@ impl ::core::default::Default for PhysicalDeviceLimits {
             optimal_buffer_copy_row_pitch_alignment: DeviceSize::default(),
             non_coherent_atom_size: DeviceSize::default(),
         }
+    }
+}
+impl PhysicalDeviceLimits {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PhysicalDeviceLimits {
@@ -7753,6 +8436,12 @@ impl ::core::default::Default for SemaphoreCreateInfo<'_> {
         }
     }
 }
+impl<'a> SemaphoreCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_CREATE_INFO;
 }
@@ -7791,6 +8480,12 @@ impl ::core::default::Default for QueryPoolCreateInfo<'_> {
             pipeline_statistics: QueryPipelineStatisticFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> QueryPoolCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolCreateInfo<'a> {
@@ -7854,6 +8549,12 @@ impl ::core::default::Default for FramebufferCreateInfo<'_> {
         }
     }
 }
+impl<'a> FramebufferCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for FramebufferCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_CREATE_INFO;
 }
@@ -7908,6 +8609,12 @@ pub struct DrawIndirectCommand {
 }
 impl DrawIndirectCommand {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl DrawIndirectCommand {
+    #[inline]
     pub fn vertex_count(mut self, vertex_count: u32) -> Self {
         self.vertex_count = vertex_count;
         self
@@ -7939,6 +8646,12 @@ pub struct DrawIndexedIndirectCommand {
     pub first_index: u32,
     pub vertex_offset: i32,
     pub first_instance: u32,
+}
+impl DrawIndexedIndirectCommand {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DrawIndexedIndirectCommand {
     #[inline]
@@ -7979,6 +8692,12 @@ pub struct DispatchIndirectCommand {
 }
 impl DispatchIndirectCommand {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl DispatchIndirectCommand {
+    #[inline]
     pub fn x(mut self, x: u32) -> Self {
         self.x = x;
         self
@@ -8005,6 +8724,12 @@ pub struct MultiDrawInfoEXT {
 }
 impl MultiDrawInfoEXT {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl MultiDrawInfoEXT {
+    #[inline]
     pub fn first_vertex(mut self, first_vertex: u32) -> Self {
         self.first_vertex = first_vertex;
         self
@@ -8024,6 +8749,12 @@ pub struct MultiDrawIndexedInfoEXT {
     pub first_index: u32,
     pub index_count: u32,
     pub vertex_offset: i32,
+}
+impl MultiDrawIndexedInfoEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl MultiDrawIndexedInfoEXT {
     #[inline]
@@ -8076,6 +8807,12 @@ impl ::core::default::Default for SubmitInfo<'_> {
             p_signal_semaphores: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SubmitInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubmitInfo<'a> {
@@ -8141,6 +8878,12 @@ impl ::core::default::Default for DisplayPropertiesKHR<'_> {
 }
 impl<'a> DisplayPropertiesKHR<'a> {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl<'a> DisplayPropertiesKHR<'a> {
+    #[inline]
     pub fn display(mut self, display: DisplayKHR) -> Self {
         self.display = display;
         self
@@ -8195,6 +8938,12 @@ pub struct DisplayPlanePropertiesKHR {
 }
 impl DisplayPlanePropertiesKHR {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl DisplayPlanePropertiesKHR {
+    #[inline]
     pub fn current_display(mut self, current_display: DisplayKHR) -> Self {
         self.current_display = current_display;
         self
@@ -8216,6 +8965,12 @@ pub struct DisplayModeParametersKHR {
 }
 impl DisplayModeParametersKHR {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl DisplayModeParametersKHR {
+    #[inline]
     pub fn visible_region(mut self, visible_region: Extent2D) -> Self {
         self.visible_region = visible_region;
         self
@@ -8234,6 +8989,12 @@ impl DisplayModeParametersKHR {
 pub struct DisplayModePropertiesKHR {
     pub display_mode: DisplayModeKHR,
     pub parameters: DisplayModeParametersKHR,
+}
+impl DisplayModePropertiesKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DisplayModePropertiesKHR {
     #[inline]
@@ -8273,6 +9034,12 @@ impl ::core::default::Default for DisplayModeCreateInfoKHR<'_> {
         }
     }
 }
+impl<'a> DisplayModeCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayModeCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_MODE_CREATE_INFO_KHR;
 }
@@ -8303,6 +9070,12 @@ pub struct DisplayPlaneCapabilitiesKHR {
     pub max_dst_position: Offset2D,
     pub min_dst_extent: Extent2D,
     pub max_dst_extent: Extent2D,
+}
+impl DisplayPlaneCapabilitiesKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DisplayPlaneCapabilitiesKHR {
     #[inline]
@@ -8389,6 +9162,12 @@ impl ::core::default::Default for DisplaySurfaceCreateInfoKHR<'_> {
         }
     }
 }
+impl<'a> DisplaySurfaceCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplaySurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_SURFACE_CREATE_INFO_KHR;
 }
@@ -8458,6 +9237,12 @@ impl ::core::default::Default for DisplaySurfaceStereoCreateInfoNV<'_> {
         }
     }
 }
+impl<'a> DisplaySurfaceStereoCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplaySurfaceStereoCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_SURFACE_STEREO_CREATE_INFO_NV;
 }
@@ -8497,6 +9282,12 @@ impl ::core::default::Default for DisplayPresentInfoKHR<'_> {
         }
     }
 }
+impl<'a> DisplayPresentInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayPresentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PRESENT_INFO_KHR;
 }
@@ -8534,6 +9325,12 @@ pub struct SurfaceCapabilitiesKHR {
     pub current_transform: SurfaceTransformFlagsKHR,
     pub supported_composite_alpha: CompositeAlphaFlagsKHR,
     pub supported_usage_flags: ImageUsageFlags,
+}
+impl SurfaceCapabilitiesKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SurfaceCapabilitiesKHR {
     #[inline]
@@ -8616,6 +9413,12 @@ impl ::core::default::Default for AndroidSurfaceCreateInfoKHR<'_> {
         }
     }
 }
+impl<'a> AndroidSurfaceCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AndroidSurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANDROID_SURFACE_CREATE_INFO_KHR;
 }
@@ -8655,6 +9458,12 @@ impl ::core::default::Default for ViSurfaceCreateInfoNN<'_> {
             window: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ViSurfaceCreateInfoNN<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ViSurfaceCreateInfoNN<'a> {
@@ -8698,6 +9507,12 @@ impl ::core::default::Default for WaylandSurfaceCreateInfoKHR<'_> {
             surface: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> WaylandSurfaceCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WaylandSurfaceCreateInfoKHR<'a> {
@@ -8748,6 +9563,12 @@ impl ::core::default::Default for UbmSurfaceCreateInfoSEC<'_> {
         }
     }
 }
+impl<'a> UbmSurfaceCreateInfoSEC<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for UbmSurfaceCreateInfoSEC<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::UBM_SURFACE_CREATE_INFO_SEC;
 }
@@ -8794,6 +9615,12 @@ impl ::core::default::Default for Win32SurfaceCreateInfoKHR<'_> {
             hwnd: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> Win32SurfaceCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for Win32SurfaceCreateInfoKHR<'a> {
@@ -8844,6 +9671,12 @@ impl ::core::default::Default for XlibSurfaceCreateInfoKHR<'_> {
         }
     }
 }
+impl<'a> XlibSurfaceCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for XlibSurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::XLIB_SURFACE_CREATE_INFO_KHR;
 }
@@ -8890,6 +9723,12 @@ impl ::core::default::Default for XcbSurfaceCreateInfoKHR<'_> {
             window: xcb_window_t::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> XcbSurfaceCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for XcbSurfaceCreateInfoKHR<'a> {
@@ -8940,6 +9779,12 @@ impl ::core::default::Default for DirectFBSurfaceCreateInfoEXT<'_> {
         }
     }
 }
+impl<'a> DirectFBSurfaceCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DirectFBSurfaceCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DIRECTFB_SURFACE_CREATE_INFO_EXT;
 }
@@ -8986,6 +9831,12 @@ impl ::core::default::Default for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {
         }
     }
 }
+impl<'a> ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA;
 }
@@ -9025,6 +9876,12 @@ impl ::core::default::Default for StreamDescriptorSurfaceCreateInfoGGP<'_> {
             stream_descriptor: GgpStreamDescriptor::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> StreamDescriptorSurfaceCreateInfoGGP<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for StreamDescriptorSurfaceCreateInfoGGP<'a> {
@@ -9070,6 +9927,12 @@ impl ::core::default::Default for ScreenSurfaceCreateInfoQNX<'_> {
         }
     }
 }
+impl<'a> ScreenSurfaceCreateInfoQNX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ScreenSurfaceCreateInfoQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SCREEN_SURFACE_CREATE_INFO_QNX;
 }
@@ -9098,6 +9961,12 @@ impl<'a> ScreenSurfaceCreateInfoQNX<'a> {
 pub struct SurfaceFormatKHR {
     pub format: Format,
     pub color_space: ColorSpaceKHR,
+}
+impl SurfaceFormatKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SurfaceFormatKHR {
     #[inline]
@@ -9163,6 +10032,12 @@ impl ::core::default::Default for SwapchainCreateInfoKHR<'_> {
             old_swapchain: SwapchainKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SwapchainCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainCreateInfoKHR<'a> {
@@ -9280,6 +10155,12 @@ impl ::core::default::Default for PresentInfoKHR<'_> {
         }
     }
 }
+impl<'a> PresentInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PresentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_INFO_KHR;
 }
@@ -9348,6 +10229,12 @@ impl ::core::default::Default for DebugReportCallbackCreateInfoEXT<'_> {
         }
     }
 }
+impl<'a> DebugReportCallbackCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DebugReportCallbackCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
 }
@@ -9395,6 +10282,12 @@ impl ::core::default::Default for ValidationFlagsEXT<'_> {
         }
     }
 }
+impl<'a> ValidationFlagsEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ValidationFlagsEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VALIDATION_FLAGS_EXT;
 }
@@ -9438,6 +10331,12 @@ impl ::core::default::Default for ValidationFeaturesEXT<'_> {
             p_disabled_validation_features: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ValidationFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ValidationFeaturesEXT<'a> {
@@ -9492,6 +10391,12 @@ impl ::core::default::Default for LayerSettingsCreateInfoEXT<'_> {
         }
     }
 }
+impl<'a> LayerSettingsCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for LayerSettingsCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LAYER_SETTINGS_CREATE_INFO_EXT;
 }
@@ -9530,6 +10435,12 @@ impl ::core::default::Default for LayerSettingEXT<'_> {
             p_values: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> LayerSettingEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> LayerSettingEXT<'a> {
@@ -9595,6 +10506,12 @@ impl ::core::default::Default for PipelineRasterizationStateRasterizationOrderAM
         }
     }
 }
+impl<'a> PipelineRasterizationStateRasterizationOrderAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateRasterizationOrderAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD;
@@ -9636,6 +10553,12 @@ impl ::core::default::Default for DebugMarkerObjectNameInfoEXT<'_> {
             p_object_name: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DebugMarkerObjectNameInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugMarkerObjectNameInfoEXT<'a> {
@@ -9698,6 +10621,12 @@ impl ::core::default::Default for DebugMarkerObjectTagInfoEXT<'_> {
         }
     }
 }
+impl<'a> DebugMarkerObjectTagInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DebugMarkerObjectTagInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_MARKER_OBJECT_TAG_INFO_EXT;
 }
@@ -9750,6 +10679,12 @@ impl ::core::default::Default for DebugMarkerMarkerInfoEXT<'_> {
         }
     }
 }
+impl<'a> DebugMarkerMarkerInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DebugMarkerMarkerInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_MARKER_MARKER_INFO_EXT;
 }
@@ -9797,6 +10732,12 @@ impl ::core::default::Default for DedicatedAllocationImageCreateInfoNV<'_> {
         }
     }
 }
+impl<'a> DedicatedAllocationImageCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationImageCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV;
 }
@@ -9830,6 +10771,12 @@ impl ::core::default::Default for DedicatedAllocationBufferCreateInfoNV<'_> {
             dedicated_allocation: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DedicatedAllocationBufferCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationBufferCreateInfoNV<'a> {
@@ -9869,6 +10816,12 @@ impl ::core::default::Default for DedicatedAllocationMemoryAllocateInfoNV<'_> {
         }
     }
 }
+impl<'a> DedicatedAllocationMemoryAllocateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationMemoryAllocateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV;
@@ -9896,6 +10849,12 @@ pub struct ExternalImageFormatPropertiesNV {
     pub external_memory_features: ExternalMemoryFeatureFlagsNV,
     pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlagsNV,
     pub compatible_handle_types: ExternalMemoryHandleTypeFlagsNV,
+}
+impl ExternalImageFormatPropertiesNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ExternalImageFormatPropertiesNV {
     #[inline]
@@ -9955,6 +10914,12 @@ impl ::core::default::Default for ExternalMemoryImageCreateInfoNV<'_> {
         }
     }
 }
+impl<'a> ExternalMemoryImageCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryImageCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV;
 }
@@ -9988,6 +10953,12 @@ impl ::core::default::Default for ExportMemoryAllocateInfoNV<'_> {
             handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ExportMemoryAllocateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryAllocateInfoNV<'a> {
@@ -10025,6 +10996,12 @@ impl ::core::default::Default for ImportMemoryWin32HandleInfoNV<'_> {
             handle: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImportMemoryWin32HandleInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryWin32HandleInfoNV<'a> {
@@ -10067,6 +11044,12 @@ impl ::core::default::Default for ExportMemoryWin32HandleInfoNV<'_> {
             dw_access: DWORD::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ExportMemoryWin32HandleInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoNV<'a> {
@@ -10119,6 +11102,12 @@ impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoNV<'_> {
             p_release_keys: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> Win32KeyedMutexAcquireReleaseInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for Win32KeyedMutexAcquireReleaseInfoNV<'a> {
@@ -10182,6 +11171,12 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesN
         }
     }
 }
+impl<'a> PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_FEATURES_NV;
@@ -10222,6 +11217,12 @@ impl ::core::default::Default for PushConstantBankInfoNV<'_> {
         }
     }
 }
+impl<'a> PushConstantBankInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PushConstantBankInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_CONSTANT_BANK_INFO_NV;
 }
@@ -10258,6 +11259,12 @@ impl ::core::default::Default for PhysicalDevicePushConstantBankFeaturesNV<'_> {
             push_constant_bank: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePushConstantBankFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushConstantBankFeaturesNV<'a> {
@@ -10301,6 +11308,12 @@ impl ::core::default::Default for PhysicalDevicePushConstantBankPropertiesNV<'_>
             max_compute_push_data_banks: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePushConstantBankPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushConstantBankPropertiesNV<'a> {
@@ -10364,6 +11377,12 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsComputeFe
         }
     }
 }
+impl<'a> PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_COMPUTE_FEATURES_NV;
@@ -10424,6 +11443,12 @@ impl ::core::default::Default for DevicePrivateDataCreateInfo<'_> {
         }
     }
 }
+impl<'a> DevicePrivateDataCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DevicePrivateDataCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_PRIVATE_DATA_CREATE_INFO;
 }
@@ -10459,6 +11484,12 @@ impl ::core::default::Default for PrivateDataSlotCreateInfo<'_> {
         }
     }
 }
+impl<'a> PrivateDataSlotCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PrivateDataSlotCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRIVATE_DATA_SLOT_CREATE_INFO;
 }
@@ -10491,6 +11522,12 @@ impl ::core::default::Default for PhysicalDevicePrivateDataFeatures<'_> {
             private_data: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePrivateDataFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrivateDataFeatures<'a> {
@@ -10543,6 +11580,12 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertie
             min_indirect_commands_buffer_offset_alignment: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
@@ -10648,6 +11691,12 @@ impl ::core::default::Default for PhysicalDeviceClusterAccelerationStructureFeat
         }
     }
 }
+impl<'a> PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CLUSTER_ACCELERATION_STRUCTURE_FEATURES_NV;
@@ -10703,6 +11752,12 @@ impl ::core::default::Default for PhysicalDeviceClusterAccelerationStructureProp
             max_cluster_geometry_index: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
@@ -10772,6 +11827,12 @@ pub struct StridedDeviceAddressNV {
 }
 impl StridedDeviceAddressNV {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl StridedDeviceAddressNV {
+    #[inline]
     pub fn start_address(mut self, start_address: DeviceAddress) -> Self {
         self.start_address = start_address;
         self
@@ -10804,6 +11865,12 @@ impl ::core::default::Default for RayTracingPipelineClusterAccelerationStructure
             allow_cluster_acceleration_structure: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -10845,6 +11912,12 @@ pub struct ClusterAccelerationStructureMoveObjectsInfoNV {
 }
 impl ClusterAccelerationStructureMoveObjectsInfoNV {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl ClusterAccelerationStructureMoveObjectsInfoNV {
+    #[inline]
     pub fn src_acceleration_structure(mut self, src_acceleration_structure: DeviceAddress) -> Self {
         self.src_acceleration_structure = src_acceleration_structure;
         self
@@ -10859,6 +11932,12 @@ pub struct ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
     pub cluster_references_count: u32,
     pub cluster_references_stride: u32,
     pub cluster_references: DeviceAddress,
+}
+impl ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
     #[inline]
@@ -10884,6 +11963,12 @@ impl ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
 #[must_use]
 pub struct ClusterAccelerationStructureGetTemplateIndicesInfoNV {
     pub cluster_template_address: DeviceAddress,
+}
+impl ClusterAccelerationStructureGetTemplateIndicesInfoNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ClusterAccelerationStructureGetTemplateIndicesInfoNV {
     #[inline]
@@ -10975,6 +12060,12 @@ impl ::core::default::Default for ClusterAccelerationStructureClustersBottomLeve
         }
     }
 }
+impl<'a> ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::CLUSTER_ACCELERATION_STRUCTURE_CLUSTERS_BOTTOM_LEVEL_INPUT_NV;
@@ -11031,6 +12122,12 @@ impl ::core::default::Default for ClusterAccelerationStructureTriangleClusterInp
             min_position_truncate_bit_count: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ClusterAccelerationStructureTriangleClusterInputNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureTriangleClusterInputNV<'a> {
@@ -11108,6 +12205,12 @@ impl ::core::default::Default for ClusterAccelerationStructureMoveObjectsInputNV
             max_moved_bytes: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ClusterAccelerationStructureMoveObjectsInputNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureMoveObjectsInputNV<'a> {
@@ -11193,6 +12296,12 @@ impl ::core::default::Default for ClusterAccelerationStructureInputInfoNV<'_> {
         }
     }
 }
+impl<'a> ClusterAccelerationStructureInputInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureInputInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::CLUSTER_ACCELERATION_STRUCTURE_INPUT_INFO_NV;
@@ -11264,6 +12373,12 @@ impl ::core::default::Default for ClusterAccelerationStructureCommandsInfoNV<'_>
             ),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ClusterAccelerationStructureCommandsInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureCommandsInfoNV<'a> {
@@ -11342,6 +12457,12 @@ impl ::core::default::Default for PhysicalDeviceMultiDrawPropertiesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceMultiDrawPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiDrawPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT;
 }
@@ -11381,6 +12502,12 @@ impl ::core::default::Default for GraphicsShaderGroupCreateInfoNV<'_> {
             p_tessellation_state: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> GraphicsShaderGroupCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsShaderGroupCreateInfoNV<'a> {
@@ -11440,6 +12567,12 @@ impl ::core::default::Default for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {
         }
     }
 }
+impl<'a> GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::GRAPHICS_PIPELINE_SHADER_GROUPS_CREATE_INFO_NV;
@@ -11472,6 +12605,12 @@ pub struct BindShaderGroupIndirectCommandNV {
 }
 impl BindShaderGroupIndirectCommandNV {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl BindShaderGroupIndirectCommandNV {
+    #[inline]
     pub fn group_index(mut self, group_index: u32) -> Self {
         self.group_index = group_index;
         self
@@ -11486,6 +12625,12 @@ pub struct BindIndexBufferIndirectCommandNV {
     pub buffer_address: DeviceAddress,
     pub size: u32,
     pub index_type: IndexType,
+}
+impl BindIndexBufferIndirectCommandNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl BindIndexBufferIndirectCommandNV {
     #[inline]
@@ -11516,6 +12661,12 @@ pub struct BindVertexBufferIndirectCommandNV {
 }
 impl BindVertexBufferIndirectCommandNV {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl BindVertexBufferIndirectCommandNV {
+    #[inline]
     pub fn buffer_address(mut self, buffer_address: DeviceAddress) -> Self {
         self.buffer_address = buffer_address;
         self
@@ -11541,6 +12692,12 @@ pub struct SetStateFlagsIndirectCommandNV {
 }
 impl SetStateFlagsIndirectCommandNV {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl SetStateFlagsIndirectCommandNV {
+    #[inline]
     pub fn data(mut self, data: u32) -> Self {
         self.data = data;
         self
@@ -11554,6 +12711,12 @@ impl SetStateFlagsIndirectCommandNV {
 pub struct IndirectCommandsStreamNV {
     pub buffer: Buffer,
     pub offset: DeviceSize,
+}
+impl IndirectCommandsStreamNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl IndirectCommandsStreamNV {
     #[inline]
@@ -11613,6 +12776,12 @@ impl ::core::default::Default for IndirectCommandsLayoutTokenNV<'_> {
             p_index_type_values: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> IndirectCommandsLayoutTokenNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutTokenNV<'a> {
@@ -11722,6 +12891,12 @@ impl ::core::default::Default for IndirectCommandsLayoutCreateInfoNV<'_> {
         }
     }
 }
+impl<'a> IndirectCommandsLayoutCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NV;
 }
@@ -11795,6 +12970,12 @@ impl ::core::default::Default for GeneratedCommandsInfoNV<'_> {
             sequences_index_offset: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> GeneratedCommandsInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsInfoNV<'a> {
@@ -11896,6 +13077,12 @@ impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoNV<'_> 
         }
     }
 }
+impl<'a> GeneratedCommandsMemoryRequirementsInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsMemoryRequirementsInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::GENERATED_COMMANDS_MEMORY_REQUIREMENTS_INFO_NV;
@@ -11951,6 +13138,12 @@ impl ::core::default::Default for PipelineIndirectDeviceAddressInfoNV<'_> {
         }
     }
 }
+impl<'a> PipelineIndirectDeviceAddressInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineIndirectDeviceAddressInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_INDIRECT_DEVICE_ADDRESS_INFO_NV;
 }
@@ -11973,6 +13166,12 @@ impl<'a> PipelineIndirectDeviceAddressInfoNV<'a> {
 #[must_use]
 pub struct BindPipelineIndirectCommandNV {
     pub pipeline_address: DeviceAddress,
+}
+impl BindPipelineIndirectCommandNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl BindPipelineIndirectCommandNV {
     #[inline]
@@ -12003,6 +13202,12 @@ impl ::core::default::Default for PhysicalDeviceFeatures2<'_> {
             features: PhysicalDeviceFeatures::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceFeatures2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFeatures2<'a> {
@@ -12040,6 +13245,12 @@ impl ::core::default::Default for PhysicalDeviceProperties2<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceProperties2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PROPERTIES_2;
 }
@@ -12074,6 +13285,12 @@ impl ::core::default::Default for FormatProperties2<'_> {
         }
     }
 }
+impl<'a> FormatProperties2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for FormatProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FORMAT_PROPERTIES_2;
 }
@@ -12106,6 +13323,12 @@ impl ::core::default::Default for ImageFormatProperties2<'_> {
             image_format_properties: ImageFormatProperties::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImageFormatProperties2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageFormatProperties2<'a> {
@@ -12151,6 +13374,12 @@ impl ::core::default::Default for PhysicalDeviceImageFormatInfo2<'_> {
             flags: ImageCreateFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceImageFormatInfo2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageFormatInfo2<'a> {
@@ -12207,6 +13436,12 @@ impl ::core::default::Default for QueueFamilyProperties2<'_> {
         }
     }
 }
+impl<'a> QueueFamilyProperties2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_PROPERTIES_2;
 }
@@ -12244,6 +13479,12 @@ impl ::core::default::Default for PhysicalDeviceMemoryProperties2<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceMemoryProperties2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MEMORY_PROPERTIES_2;
 }
@@ -12276,6 +13517,12 @@ impl ::core::default::Default for SparseImageFormatProperties2<'_> {
             properties: SparseImageFormatProperties::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SparseImageFormatProperties2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SparseImageFormatProperties2<'a> {
@@ -12318,6 +13565,12 @@ impl ::core::default::Default for PhysicalDeviceSparseImageFormatInfo2<'_> {
             tiling: ImageTiling::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceSparseImageFormatInfo2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSparseImageFormatInfo2<'a> {
@@ -12374,6 +13627,12 @@ impl ::core::default::Default for PhysicalDevicePushDescriptorProperties<'_> {
         }
     }
 }
+impl<'a> PhysicalDevicePushDescriptorProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushDescriptorProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES;
 }
@@ -12395,6 +13654,12 @@ pub struct ConformanceVersion {
     pub minor: u8,
     pub subminor: u8,
     pub patch: u8,
+}
+impl ConformanceVersion {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ConformanceVersion {
     #[inline]
@@ -12458,6 +13723,12 @@ impl ::core::default::Default for PhysicalDeviceDriverProperties<'_> {
             conformance_version: ConformanceVersion::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDriverProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDriverProperties<'a> {
@@ -12524,6 +13795,12 @@ impl ::core::default::Default for PresentRegionsKHR<'_> {
         }
     }
 }
+impl<'a> PresentRegionsKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PresentRegionsKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_REGIONS_KHR;
 }
@@ -12560,6 +13837,12 @@ impl ::core::default::Default for PresentRegionKHR<'_> {
 }
 impl<'a> PresentRegionKHR<'a> {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl<'a> PresentRegionKHR<'a> {
+    #[inline]
     pub fn rectangles(mut self, rectangles: &'a [RectLayerKHR]) -> Self {
         self.rectangle_count = rectangles.len() as _;
         self.p_rectangles = rectangles.as_ptr();
@@ -12575,6 +13858,12 @@ pub struct RectLayerKHR {
     pub offset: Offset2D,
     pub extent: Extent2D,
     pub layer: u32,
+}
+impl RectLayerKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl RectLayerKHR {
     #[inline]
@@ -12619,6 +13908,12 @@ impl ::core::default::Default for PhysicalDeviceVariablePointersFeatures<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceVariablePointersFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVariablePointersFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES;
 }
@@ -12648,6 +13943,12 @@ pub struct ExternalMemoryProperties {
     pub external_memory_features: ExternalMemoryFeatureFlags,
     pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlags,
     pub compatible_handle_types: ExternalMemoryHandleTypeFlags,
+}
+impl ExternalMemoryProperties {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ExternalMemoryProperties {
     #[inline]
@@ -12699,6 +14000,12 @@ impl ::core::default::Default for PhysicalDeviceExternalImageFormatInfo<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceExternalImageFormatInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalImageFormatInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO;
 }
@@ -12735,6 +14042,12 @@ impl ::core::default::Default for ExternalImageFormatProperties<'_> {
             external_memory_properties: ExternalMemoryProperties::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ExternalImageFormatProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalImageFormatProperties<'a> {
@@ -12777,6 +14090,12 @@ impl ::core::default::Default for PhysicalDeviceExternalBufferInfo<'_> {
             handle_type: ExternalMemoryHandleTypeFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceExternalBufferInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalBufferInfo<'a> {
@@ -12823,6 +14142,12 @@ impl ::core::default::Default for ExternalBufferProperties<'_> {
         }
     }
 }
+impl<'a> ExternalBufferProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalBufferProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_BUFFER_PROPERTIES;
 }
@@ -12866,6 +14191,12 @@ impl ::core::default::Default for PhysicalDeviceIDProperties<'_> {
             device_luid_valid: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceIDProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceIDProperties<'a> {
@@ -12923,6 +14254,12 @@ impl ::core::default::Default for ExternalMemoryImageCreateInfo<'_> {
         }
     }
 }
+impl<'a> ExternalMemoryImageCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryImageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO;
 }
@@ -12958,6 +14295,12 @@ impl ::core::default::Default for ExternalMemoryBufferCreateInfo<'_> {
         }
     }
 }
+impl<'a> ExternalMemoryBufferCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryBufferCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_BUFFER_CREATE_INFO;
 }
@@ -12991,6 +14334,12 @@ impl ::core::default::Default for ExportMemoryAllocateInfo<'_> {
             handle_types: ExternalMemoryHandleTypeFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ExportMemoryAllocateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryAllocateInfo<'a> {
@@ -13030,6 +14379,12 @@ impl ::core::default::Default for ImportMemoryWin32HandleInfoKHR<'_> {
             name: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImportMemoryWin32HandleInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryWin32HandleInfoKHR<'a> {
@@ -13081,6 +14436,12 @@ impl ::core::default::Default for ExportMemoryWin32HandleInfoKHR<'_> {
         }
     }
 }
+impl<'a> ExportMemoryWin32HandleInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_KHR;
 }
@@ -13128,6 +14489,12 @@ impl ::core::default::Default for ImportMemoryZirconHandleInfoFUCHSIA<'_> {
         }
     }
 }
+impl<'a> ImportMemoryZirconHandleInfoFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_ZIRCON_HANDLE_INFO_FUCHSIA;
 }
@@ -13168,6 +14535,12 @@ impl ::core::default::Default for MemoryZirconHandlePropertiesFUCHSIA<'_> {
         }
     }
 }
+impl<'a> MemoryZirconHandlePropertiesFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryZirconHandlePropertiesFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_ZIRCON_HANDLE_PROPERTIES_FUCHSIA;
 }
@@ -13202,6 +14575,12 @@ impl ::core::default::Default for MemoryGetZirconHandleInfoFUCHSIA<'_> {
             handle_type: ExternalMemoryHandleTypeFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> MemoryGetZirconHandleInfoFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetZirconHandleInfoFUCHSIA<'a> {
@@ -13243,6 +14622,12 @@ impl ::core::default::Default for MemoryWin32HandlePropertiesKHR<'_> {
         }
     }
 }
+impl<'a> MemoryWin32HandlePropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryWin32HandlePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_WIN32_HANDLE_PROPERTIES_KHR;
 }
@@ -13277,6 +14662,12 @@ impl ::core::default::Default for MemoryGetWin32HandleInfoKHR<'_> {
             handle_type: ExternalMemoryHandleTypeFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> MemoryGetWin32HandleInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetWin32HandleInfoKHR<'a> {
@@ -13320,6 +14711,12 @@ impl ::core::default::Default for ImportMemoryFdInfoKHR<'_> {
         }
     }
 }
+impl<'a> ImportMemoryFdInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_FD_INFO_KHR;
 }
@@ -13360,6 +14757,12 @@ impl ::core::default::Default for MemoryFdPropertiesKHR<'_> {
         }
     }
 }
+impl<'a> MemoryFdPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryFdPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_FD_PROPERTIES_KHR;
 }
@@ -13394,6 +14797,12 @@ impl ::core::default::Default for MemoryGetFdInfoKHR<'_> {
             handle_type: ExternalMemoryHandleTypeFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> MemoryGetFdInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetFdInfoKHR<'a> {
@@ -13445,6 +14854,12 @@ impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {
             p_release_keys: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
@@ -13510,6 +14925,12 @@ impl ::core::default::Default for ImportMemoryMetalHandleInfoEXT<'_> {
         }
     }
 }
+impl<'a> ImportMemoryMetalHandleInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryMetalHandleInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_METAL_HANDLE_INFO_EXT;
 }
@@ -13550,6 +14971,12 @@ impl ::core::default::Default for MemoryMetalHandlePropertiesEXT<'_> {
         }
     }
 }
+impl<'a> MemoryMetalHandlePropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryMetalHandlePropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_METAL_HANDLE_PROPERTIES_EXT;
 }
@@ -13584,6 +15011,12 @@ impl ::core::default::Default for MemoryGetMetalHandleInfoEXT<'_> {
             handle_type: ExternalMemoryHandleTypeFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> MemoryGetMetalHandleInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetMetalHandleInfoEXT<'a> {
@@ -13625,6 +15058,12 @@ impl ::core::default::Default for PhysicalDeviceExternalSemaphoreInfo<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceExternalSemaphoreInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalSemaphoreInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO;
 }
@@ -13661,6 +15100,12 @@ impl ::core::default::Default for ExternalSemaphoreProperties<'_> {
             external_semaphore_features: ExternalSemaphoreFeatureFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ExternalSemaphoreProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalSemaphoreProperties<'a> {
@@ -13716,6 +15161,12 @@ impl ::core::default::Default for ExportSemaphoreCreateInfo<'_> {
         }
     }
 }
+impl<'a> ExportSemaphoreCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportSemaphoreCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_SEMAPHORE_CREATE_INFO;
 }
@@ -13757,6 +15208,12 @@ impl ::core::default::Default for ImportSemaphoreWin32HandleInfoKHR<'_> {
             name: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImportSemaphoreWin32HandleInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreWin32HandleInfoKHR<'a> {
@@ -13817,6 +15274,12 @@ impl ::core::default::Default for ExportSemaphoreWin32HandleInfoKHR<'_> {
         }
     }
 }
+impl<'a> ExportSemaphoreWin32HandleInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportSemaphoreWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR;
 }
@@ -13868,6 +15331,12 @@ impl ::core::default::Default for D3D12FenceSubmitInfoKHR<'_> {
         }
     }
 }
+impl<'a> D3D12FenceSubmitInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for D3D12FenceSubmitInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::D3D12_FENCE_SUBMIT_INFO_KHR;
 }
@@ -13910,6 +15379,12 @@ impl ::core::default::Default for SemaphoreGetWin32HandleInfoKHR<'_> {
             handle_type: ExternalSemaphoreHandleTypeFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SemaphoreGetWin32HandleInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetWin32HandleInfoKHR<'a> {
@@ -13955,6 +15430,12 @@ impl ::core::default::Default for ImportSemaphoreFdInfoKHR<'_> {
             fd: c_int::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImportSemaphoreFdInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreFdInfoKHR<'a> {
@@ -14008,6 +15489,12 @@ impl ::core::default::Default for SemaphoreGetFdInfoKHR<'_> {
         }
     }
 }
+impl<'a> SemaphoreGetFdInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_GET_FD_INFO_KHR;
 }
@@ -14051,6 +15538,12 @@ impl ::core::default::Default for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {
             zircon_handle: zx_handle_t::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
@@ -14105,6 +15598,12 @@ impl ::core::default::Default for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {
         }
     }
 }
+impl<'a> SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA;
 }
@@ -14144,6 +15643,12 @@ impl ::core::default::Default for PhysicalDeviceExternalFenceInfo<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceExternalFenceInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFenceInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO;
 }
@@ -14180,6 +15685,12 @@ impl ::core::default::Default for ExternalFenceProperties<'_> {
             external_fence_features: ExternalFenceFeatureFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ExternalFenceProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFenceProperties<'a> {
@@ -14235,6 +15746,12 @@ impl ::core::default::Default for ExportFenceCreateInfo<'_> {
         }
     }
 }
+impl<'a> ExportFenceCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportFenceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_FENCE_CREATE_INFO;
 }
@@ -14276,6 +15793,12 @@ impl ::core::default::Default for ImportFenceWin32HandleInfoKHR<'_> {
             name: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImportFenceWin32HandleInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportFenceWin32HandleInfoKHR<'a> {
@@ -14336,6 +15859,12 @@ impl ::core::default::Default for ExportFenceWin32HandleInfoKHR<'_> {
         }
     }
 }
+impl<'a> ExportFenceWin32HandleInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportFenceWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_FENCE_WIN32_HANDLE_INFO_KHR;
 }
@@ -14383,6 +15912,12 @@ impl ::core::default::Default for FenceGetWin32HandleInfoKHR<'_> {
         }
     }
 }
+impl<'a> FenceGetWin32HandleInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for FenceGetWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FENCE_GET_WIN32_HANDLE_INFO_KHR;
 }
@@ -14426,6 +15961,12 @@ impl ::core::default::Default for ImportFenceFdInfoKHR<'_> {
             fd: c_int::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImportFenceFdInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportFenceFdInfoKHR<'a> {
@@ -14479,6 +16020,12 @@ impl ::core::default::Default for FenceGetFdInfoKHR<'_> {
         }
     }
 }
+impl<'a> FenceGetFdInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for FenceGetFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FENCE_GET_FD_INFO_KHR;
 }
@@ -14520,6 +16067,12 @@ impl ::core::default::Default for PhysicalDeviceMultiviewFeatures<'_> {
             multiview_tessellation_shader: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMultiviewFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewFeatures<'a> {
@@ -14570,6 +16123,12 @@ impl ::core::default::Default for PhysicalDeviceMultiviewProperties<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceMultiviewProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES;
 }
@@ -14618,6 +16177,12 @@ impl ::core::default::Default for RenderPassMultiviewCreateInfo<'_> {
             p_correlation_masks: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> RenderPassMultiviewCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassMultiviewCreateInfo<'a> {
@@ -14686,6 +16251,12 @@ impl ::core::default::Default for SurfaceCapabilities2EXT<'_> {
             supported_surface_counters: SurfaceCounterFlagsEXT::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SurfaceCapabilities2EXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilities2EXT<'a> {
@@ -14778,6 +16349,12 @@ impl ::core::default::Default for DisplayPowerInfoEXT<'_> {
         }
     }
 }
+impl<'a> DisplayPowerInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayPowerInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_POWER_INFO_EXT;
 }
@@ -14810,6 +16387,12 @@ impl ::core::default::Default for DeviceEventInfoEXT<'_> {
             device_event: DeviceEventTypeEXT::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceEventInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceEventInfoEXT<'a> {
@@ -14846,6 +16429,12 @@ impl ::core::default::Default for DisplayEventInfoEXT<'_> {
         }
     }
 }
+impl<'a> DisplayEventInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayEventInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_EVENT_INFO_EXT;
 }
@@ -14878,6 +16467,12 @@ impl ::core::default::Default for SwapchainCounterCreateInfoEXT<'_> {
             surface_counters: SurfaceCounterFlagsEXT::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SwapchainCounterCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainCounterCreateInfoEXT<'a> {
@@ -14930,6 +16525,12 @@ impl ::core::default::Default for PhysicalDeviceGroupProperties<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceGroupProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGroupProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_GROUP_PROPERTIES;
 }
@@ -14976,6 +16577,12 @@ impl ::core::default::Default for MemoryAllocateFlagsInfo<'_> {
         }
     }
 }
+impl<'a> MemoryAllocateFlagsInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryAllocateFlagsInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_ALLOCATE_FLAGS_INFO;
 }
@@ -15018,6 +16625,12 @@ impl ::core::default::Default for BindBufferMemoryInfo<'_> {
             memory_offset: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BindBufferMemoryInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindBufferMemoryInfo<'a> {
@@ -15066,6 +16679,12 @@ impl ::core::default::Default for BindBufferMemoryDeviceGroupInfo<'_> {
         }
     }
 }
+impl<'a> BindBufferMemoryDeviceGroupInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BindBufferMemoryDeviceGroupInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO;
 }
@@ -15104,6 +16723,12 @@ impl ::core::default::Default for BindImageMemoryInfo<'_> {
             memory_offset: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BindImageMemoryInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImageMemoryInfo<'a> {
@@ -15156,6 +16781,12 @@ impl ::core::default::Default for BindImageMemoryDeviceGroupInfo<'_> {
         }
     }
 }
+impl<'a> BindImageMemoryDeviceGroupInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BindImageMemoryDeviceGroupInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO;
 }
@@ -15205,6 +16836,12 @@ impl ::core::default::Default for DeviceGroupRenderPassBeginInfo<'_> {
         }
     }
 }
+impl<'a> DeviceGroupRenderPassBeginInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupRenderPassBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_RENDER_PASS_BEGIN_INFO;
 }
@@ -15245,6 +16882,12 @@ impl ::core::default::Default for DeviceGroupCommandBufferBeginInfo<'_> {
             device_mask: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceGroupCommandBufferBeginInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupCommandBufferBeginInfo<'a> {
@@ -15290,6 +16933,12 @@ impl ::core::default::Default for DeviceGroupSubmitInfo<'_> {
             p_signal_semaphore_device_indices: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceGroupSubmitInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupSubmitInfo<'a> {
@@ -15348,6 +16997,12 @@ impl ::core::default::Default for DeviceGroupBindSparseInfo<'_> {
         }
     }
 }
+impl<'a> DeviceGroupBindSparseInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupBindSparseInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_BIND_SPARSE_INFO;
 }
@@ -15390,6 +17045,12 @@ impl ::core::default::Default for DeviceGroupPresentCapabilitiesKHR<'_> {
         }
     }
 }
+impl<'a> DeviceGroupPresentCapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupPresentCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_PRESENT_CAPABILITIES_KHR;
 }
@@ -15429,6 +17090,12 @@ impl ::core::default::Default for ImageSwapchainCreateInfoKHR<'_> {
         }
     }
 }
+impl<'a> ImageSwapchainCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageSwapchainCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_SWAPCHAIN_CREATE_INFO_KHR;
 }
@@ -15464,6 +17131,12 @@ impl ::core::default::Default for BindImageMemorySwapchainInfoKHR<'_> {
             image_index: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BindImageMemorySwapchainInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImageMemorySwapchainInfoKHR<'a> {
@@ -15512,6 +17185,12 @@ impl ::core::default::Default for AcquireNextImageInfoKHR<'_> {
             device_mask: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> AcquireNextImageInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AcquireNextImageInfoKHR<'a> {
@@ -15572,6 +17251,12 @@ impl ::core::default::Default for DeviceGroupPresentInfoKHR<'_> {
         }
     }
 }
+impl<'a> DeviceGroupPresentInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupPresentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_PRESENT_INFO_KHR;
 }
@@ -15615,6 +17300,12 @@ impl ::core::default::Default for DeviceGroupDeviceCreateInfo<'_> {
         }
     }
 }
+impl<'a> DeviceGroupDeviceCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupDeviceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_DEVICE_CREATE_INFO;
 }
@@ -15651,6 +17342,12 @@ impl ::core::default::Default for DeviceGroupSwapchainCreateInfoKHR<'_> {
         }
     }
 }
+impl<'a> DeviceGroupSwapchainCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupSwapchainCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR;
 }
@@ -15674,6 +17371,12 @@ pub struct DescriptorUpdateTemplateEntry {
     pub descriptor_type: DescriptorType,
     pub offset: usize,
     pub stride: usize,
+}
+impl DescriptorUpdateTemplateEntry {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DescriptorUpdateTemplateEntry {
     #[inline]
@@ -15745,6 +17448,12 @@ impl ::core::default::Default for DescriptorUpdateTemplateCreateInfo<'_> {
         }
     }
 }
+impl<'a> DescriptorUpdateTemplateCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorUpdateTemplateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO;
 }
@@ -15800,6 +17509,12 @@ pub struct XYColorEXT {
 }
 impl XYColorEXT {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl XYColorEXT {
+    #[inline]
     pub fn x(mut self, x: f32) -> Self {
         self.x = x;
         self
@@ -15832,6 +17547,12 @@ impl ::core::default::Default for PhysicalDevicePresentIdFeaturesKHR<'_> {
             present_id: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePresentIdFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentIdFeaturesKHR<'a> {
@@ -15872,6 +17593,12 @@ impl ::core::default::Default for PresentIdKHR<'_> {
         }
     }
 }
+impl<'a> PresentIdKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PresentIdKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_ID_KHR;
 }
@@ -15906,6 +17633,12 @@ impl ::core::default::Default for PhysicalDevicePresentId2FeaturesKHR<'_> {
             present_id2: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePresentId2FeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentId2FeaturesKHR<'a> {
@@ -15946,6 +17679,12 @@ impl ::core::default::Default for PresentId2KHR<'_> {
         }
     }
 }
+impl<'a> PresentId2KHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PresentId2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_ID_2_KHR;
 }
@@ -15982,6 +17721,12 @@ impl ::core::default::Default for PresentWait2InfoKHR<'_> {
             timeout: u64::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PresentWait2InfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentWait2InfoKHR<'a> {
@@ -16023,6 +17768,12 @@ impl ::core::default::Default for PhysicalDevicePresentWaitFeaturesKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDevicePresentWaitFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentWaitFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PRESENT_WAIT_FEATURES_KHR;
 }
@@ -16057,6 +17808,12 @@ impl ::core::default::Default for PhysicalDevicePresentWait2FeaturesKHR<'_> {
             present_wait2: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePresentWait2FeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentWait2FeaturesKHR<'a> {
@@ -16098,6 +17855,12 @@ impl ::core::default::Default for PhysicalDevicePresentTimingFeaturesEXT<'_> {
             present_at_relative_time: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePresentTimingFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentTimingFeaturesEXT<'a> {
@@ -16151,6 +17914,12 @@ impl ::core::default::Default for PresentTimingSurfaceCapabilitiesEXT<'_> {
             present_stage_queries: PresentStageFlagsEXT::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PresentTimingSurfaceCapabilitiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimingSurfaceCapabilitiesEXT<'a> {
@@ -16211,6 +17980,12 @@ impl ::core::default::Default for SwapchainTimingPropertiesEXT<'_> {
         }
     }
 }
+impl<'a> SwapchainTimingPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainTimingPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_TIMING_PROPERTIES_EXT;
 }
@@ -16254,6 +18029,12 @@ impl ::core::default::Default for SwapchainTimeDomainPropertiesEXT<'_> {
         }
     }
 }
+impl<'a> SwapchainTimeDomainPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainTimeDomainPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_TIME_DOMAIN_PROPERTIES_EXT;
 }
@@ -16279,6 +18060,12 @@ impl<'a> SwapchainTimeDomainPropertiesEXT<'a> {
 pub struct PresentStageTimeEXT {
     pub stage: PresentStageFlagsEXT,
     pub time: u64,
+}
+impl PresentStageTimeEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PresentStageTimeEXT {
     #[inline]
@@ -16316,6 +18103,12 @@ impl ::core::default::Default for PastPresentationTimingInfoEXT<'_> {
             swapchain: SwapchainKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PastPresentationTimingInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PastPresentationTimingInfoEXT<'a> {
@@ -16361,6 +18154,12 @@ impl ::core::default::Default for PastPresentationTimingPropertiesEXT<'_> {
             p_presentation_timings: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PastPresentationTimingPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PastPresentationTimingPropertiesEXT<'a> {
@@ -16421,6 +18220,12 @@ impl ::core::default::Default for PastPresentationTimingEXT<'_> {
             report_complete: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PastPresentationTimingEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PastPresentationTimingEXT<'a> {
@@ -16485,6 +18290,12 @@ impl ::core::default::Default for PresentTimingsInfoEXT<'_> {
         }
     }
 }
+impl<'a> PresentTimingsInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PresentTimingsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_TIMINGS_INFO_EXT;
 }
@@ -16527,6 +18338,12 @@ impl ::core::default::Default for PresentTimingInfoEXT<'_> {
             target_time_domain_present_stage: PresentStageFlagsEXT::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PresentTimingInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimingInfoEXT<'a> {
@@ -16590,6 +18407,12 @@ impl ::core::default::Default for SwapchainCalibratedTimestampInfoEXT<'_> {
         }
     }
 }
+impl<'a> SwapchainCalibratedTimestampInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainCalibratedTimestampInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_CALIBRATED_TIMESTAMP_INFO_EXT;
 }
@@ -16647,6 +18470,12 @@ impl ::core::default::Default for HdrMetadataEXT<'_> {
             max_frame_average_light_level: f32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> HdrMetadataEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HdrMetadataEXT<'a> {
@@ -16720,6 +18549,12 @@ impl ::core::default::Default for HdrVividDynamicMetadataHUAWEI<'_> {
         }
     }
 }
+impl<'a> HdrVividDynamicMetadataHUAWEI<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for HdrVividDynamicMetadataHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::HDR_VIVID_DYNAMIC_METADATA_HUAWEI;
 }
@@ -16754,6 +18589,12 @@ impl ::core::default::Default for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {
             local_dimming_support: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
@@ -16792,6 +18633,12 @@ impl ::core::default::Default for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {
         }
     }
 }
+impl<'a> SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SWAPCHAIN_DISPLAY_NATIVE_HDR_CREATE_INFO_AMD;
@@ -16814,6 +18661,12 @@ pub struct RefreshCycleDurationGOOGLE {
 }
 impl RefreshCycleDurationGOOGLE {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl RefreshCycleDurationGOOGLE {
+    #[inline]
     pub fn refresh_duration(mut self, refresh_duration: u64) -> Self {
         self.refresh_duration = refresh_duration;
         self
@@ -16830,6 +18683,12 @@ pub struct PastPresentationTimingGOOGLE {
     pub actual_present_time: u64,
     pub earliest_present_time: u64,
     pub present_margin: u64,
+}
+impl PastPresentationTimingGOOGLE {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PastPresentationTimingGOOGLE {
     #[inline]
@@ -16884,6 +18743,12 @@ impl ::core::default::Default for PresentTimesInfoGOOGLE<'_> {
         }
     }
 }
+impl<'a> PresentTimesInfoGOOGLE<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PresentTimesInfoGOOGLE<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_TIMES_INFO_GOOGLE;
 }
@@ -16904,6 +18769,12 @@ impl<'a> PresentTimesInfoGOOGLE<'a> {
 pub struct PresentTimeGOOGLE {
     pub present_id: u32,
     pub desired_present_time: u64,
+}
+impl PresentTimeGOOGLE {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PresentTimeGOOGLE {
     #[inline]
@@ -16941,6 +18812,12 @@ impl ::core::default::Default for IOSSurfaceCreateInfoMVK<'_> {
             p_view: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> IOSSurfaceCreateInfoMVK<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IOSSurfaceCreateInfoMVK<'a> {
@@ -16984,6 +18861,12 @@ impl ::core::default::Default for MacOSSurfaceCreateInfoMVK<'_> {
         }
     }
 }
+impl<'a> MacOSSurfaceCreateInfoMVK<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MacOSSurfaceCreateInfoMVK<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MACOS_SURFACE_CREATE_INFO_MVK;
 }
@@ -17025,6 +18908,12 @@ impl ::core::default::Default for MetalSurfaceCreateInfoEXT<'_> {
         }
     }
 }
+impl<'a> MetalSurfaceCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MetalSurfaceCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::METAL_SURFACE_CREATE_INFO_EXT;
 }
@@ -17048,6 +18937,12 @@ impl<'a> MetalSurfaceCreateInfoEXT<'a> {
 pub struct ViewportWScalingNV {
     pub xcoeff: f32,
     pub ycoeff: f32,
+}
+impl ViewportWScalingNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ViewportWScalingNV {
     #[inline]
@@ -17089,6 +18984,12 @@ impl ::core::default::Default for PipelineViewportWScalingStateCreateInfoNV<'_> 
         }
     }
 }
+impl<'a> PipelineViewportWScalingStateCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportWScalingStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV;
@@ -17120,6 +19021,12 @@ pub struct ViewportSwizzleNV {
     pub y: ViewportCoordinateSwizzleNV,
     pub z: ViewportCoordinateSwizzleNV,
     pub w: ViewportCoordinateSwizzleNV,
+}
+impl ViewportSwizzleNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ViewportSwizzleNV {
     #[inline]
@@ -17171,6 +19078,12 @@ impl ::core::default::Default for PipelineViewportSwizzleStateCreateInfoNV<'_> {
         }
     }
 }
+impl<'a> PipelineViewportSwizzleStateCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportSwizzleStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV;
@@ -17216,6 +19129,12 @@ impl ::core::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT<'_
         }
     }
 }
+impl<'a> PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT;
@@ -17259,6 +19178,12 @@ impl ::core::default::Default for PipelineDiscardRectangleStateCreateInfoEXT<'_>
             p_discard_rectangles: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineDiscardRectangleStateCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineDiscardRectangleStateCreateInfoEXT<'a> {
@@ -17314,6 +19239,12 @@ impl ::core::default::Default for PhysicalDeviceMultiviewPerViewAttributesProper
         }
     }
 }
+impl<'a> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX;
@@ -17341,6 +19272,12 @@ pub struct InputAttachmentAspectReference {
     pub subpass: u32,
     pub input_attachment_index: u32,
     pub aspect_mask: ImageAspectFlags,
+}
+impl InputAttachmentAspectReference {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl InputAttachmentAspectReference {
     #[inline]
@@ -17385,6 +19322,12 @@ impl ::core::default::Default for RenderPassInputAttachmentAspectCreateInfo<'_> 
         }
     }
 }
+impl<'a> RenderPassInputAttachmentAspectCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassInputAttachmentAspectCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO;
@@ -17425,6 +19368,12 @@ impl ::core::default::Default for PhysicalDeviceSurfaceInfo2KHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceSurfaceInfo2KHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSurfaceInfo2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SURFACE_INFO_2_KHR;
 }
@@ -17457,6 +19406,12 @@ impl ::core::default::Default for SurfaceCapabilities2KHR<'_> {
             surface_capabilities: SurfaceCapabilitiesKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SurfaceCapabilities2KHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilities2KHR<'a> {
@@ -17493,6 +19448,12 @@ impl ::core::default::Default for SurfaceFormat2KHR<'_> {
         }
     }
 }
+impl<'a> SurfaceFormat2KHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfaceFormat2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_FORMAT_2_KHR;
 }
@@ -17527,6 +19488,12 @@ impl ::core::default::Default for DisplayProperties2KHR<'_> {
         }
     }
 }
+impl<'a> DisplayProperties2KHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayProperties2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PROPERTIES_2_KHR;
 }
@@ -17559,6 +19526,12 @@ impl ::core::default::Default for DisplayPlaneProperties2KHR<'_> {
             display_plane_properties: DisplayPlanePropertiesKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DisplayPlaneProperties2KHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneProperties2KHR<'a> {
@@ -17598,6 +19571,12 @@ impl ::core::default::Default for DisplayModeProperties2KHR<'_> {
         }
     }
 }
+impl<'a> DisplayModeProperties2KHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayModeProperties2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_MODE_PROPERTIES_2_KHR;
 }
@@ -17635,6 +19614,12 @@ impl ::core::default::Default for DisplayModeStereoPropertiesNV<'_> {
         }
     }
 }
+impl<'a> DisplayModeStereoPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayModeStereoPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_MODE_STEREO_PROPERTIES_NV;
 }
@@ -17670,6 +19655,12 @@ impl ::core::default::Default for DisplayPlaneInfo2KHR<'_> {
             plane_index: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DisplayPlaneInfo2KHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneInfo2KHR<'a> {
@@ -17711,6 +19702,12 @@ impl ::core::default::Default for DisplayPlaneCapabilities2KHR<'_> {
         }
     }
 }
+impl<'a> DisplayPlaneCapabilities2KHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneCapabilities2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PLANE_CAPABILITIES_2_KHR;
 }
@@ -17743,6 +19740,12 @@ impl ::core::default::Default for SharedPresentSurfaceCapabilitiesKHR<'_> {
             shared_present_supported_usage_flags: ImageUsageFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SharedPresentSurfaceCapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SharedPresentSurfaceCapabilitiesKHR<'a> {
@@ -17787,6 +19790,12 @@ impl ::core::default::Default for PhysicalDevice16BitStorageFeatures<'_> {
             storage_input_output16: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevice16BitStorageFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice16BitStorageFeatures<'a> {
@@ -17850,6 +19859,12 @@ impl ::core::default::Default for PhysicalDeviceSubgroupProperties<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceSubgroupProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES;
 }
@@ -17900,6 +19915,12 @@ impl ::core::default::Default for PhysicalDeviceShaderSubgroupExtendedTypesFeatu
         }
     }
 }
+impl<'a> PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES;
@@ -17943,6 +19964,12 @@ impl ::core::default::Default for BufferMemoryRequirementsInfo2<'_> {
         }
     }
 }
+impl<'a> BufferMemoryRequirementsInfo2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferMemoryRequirementsInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_MEMORY_REQUIREMENTS_INFO_2;
 }
@@ -17975,6 +20002,12 @@ impl ::core::default::Default for DeviceBufferMemoryRequirements<'_> {
             p_create_info: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceBufferMemoryRequirements<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceBufferMemoryRequirements<'a> {
@@ -18011,6 +20044,12 @@ impl ::core::default::Default for ImageMemoryRequirementsInfo2<'_> {
         }
     }
 }
+impl<'a> ImageMemoryRequirementsInfo2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageMemoryRequirementsInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_MEMORY_REQUIREMENTS_INFO_2;
 }
@@ -18043,6 +20082,12 @@ impl ::core::default::Default for ImageSparseMemoryRequirementsInfo2<'_> {
             image: Image::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImageSparseMemoryRequirementsInfo2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageSparseMemoryRequirementsInfo2<'a> {
@@ -18079,6 +20124,12 @@ impl ::core::default::Default for DeviceImageMemoryRequirements<'_> {
             plane_aspect: ImageAspectFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceImageMemoryRequirements<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceImageMemoryRequirements<'a> {
@@ -18120,6 +20171,12 @@ impl ::core::default::Default for MemoryRequirements2<'_> {
         }
     }
 }
+impl<'a> MemoryRequirements2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryRequirements2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_REQUIREMENTS_2;
 }
@@ -18152,6 +20209,12 @@ impl ::core::default::Default for SparseImageMemoryRequirements2<'_> {
             memory_requirements: SparseImageMemoryRequirements::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SparseImageMemoryRequirements2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SparseImageMemoryRequirements2<'a> {
@@ -18189,6 +20252,12 @@ impl ::core::default::Default for PhysicalDevicePointClippingProperties<'_> {
             point_clipping_behavior: PointClippingBehavior::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePointClippingProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePointClippingProperties<'a> {
@@ -18229,6 +20298,12 @@ impl ::core::default::Default for MemoryDedicatedRequirements<'_> {
             requires_dedicated_allocation: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> MemoryDedicatedRequirements<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedRequirements<'a> {
@@ -18273,6 +20348,12 @@ impl ::core::default::Default for MemoryDedicatedAllocateInfo<'_> {
         }
     }
 }
+impl<'a> MemoryDedicatedAllocateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_DEDICATED_ALLOCATE_INFO;
 }
@@ -18313,6 +20394,12 @@ impl ::core::default::Default for ImageViewUsageCreateInfo<'_> {
         }
     }
 }
+impl<'a> ImageViewUsageCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageViewUsageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_USAGE_CREATE_INFO;
 }
@@ -18348,6 +20435,12 @@ impl ::core::default::Default for ImageViewSlicedCreateInfoEXT<'_> {
             slice_count: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImageViewSlicedCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewSlicedCreateInfoEXT<'a> {
@@ -18390,6 +20483,12 @@ impl ::core::default::Default for PipelineTessellationDomainOriginStateCreateInf
         }
     }
 }
+impl<'a> PipelineTessellationDomainOriginStateCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineTessellationDomainOriginStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO;
@@ -18427,6 +20526,12 @@ impl ::core::default::Default for SamplerYcbcrConversionInfo<'_> {
             conversion: SamplerYcbcrConversion::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SamplerYcbcrConversionInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionInfo<'a> {
@@ -18477,6 +20582,12 @@ impl ::core::default::Default for SamplerYcbcrConversionCreateInfo<'_> {
             force_explicit_reconstruction: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SamplerYcbcrConversionCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionCreateInfo<'a> {
@@ -18548,6 +20659,12 @@ impl ::core::default::Default for BindImagePlaneMemoryInfo<'_> {
         }
     }
 }
+impl<'a> BindImagePlaneMemoryInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BindImagePlaneMemoryInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_IMAGE_PLANE_MEMORY_INFO;
 }
@@ -18583,6 +20700,12 @@ impl ::core::default::Default for ImagePlaneMemoryRequirementsInfo<'_> {
         }
     }
 }
+impl<'a> ImagePlaneMemoryRequirementsInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImagePlaneMemoryRequirementsInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO;
 }
@@ -18616,6 +20739,12 @@ impl ::core::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures<'
             sampler_ycbcr_conversion: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
@@ -18656,6 +20785,12 @@ impl ::core::default::Default for SamplerYcbcrConversionImageFormatProperties<'_
             combined_image_sampler_descriptor_count: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SamplerYcbcrConversionImageFormatProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionImageFormatProperties<'a> {
@@ -18700,6 +20835,12 @@ impl ::core::default::Default for TextureLODGatherFormatPropertiesAMD<'_> {
         }
     }
 }
+impl<'a> TextureLODGatherFormatPropertiesAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for TextureLODGatherFormatPropertiesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD;
 }
@@ -18740,6 +20881,12 @@ impl ::core::default::Default for ConditionalRenderingBeginInfoEXT<'_> {
             flags: ConditionalRenderingFlagsEXT::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ConditionalRenderingBeginInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ConditionalRenderingBeginInfoEXT<'a> {
@@ -18786,6 +20933,12 @@ impl ::core::default::Default for ProtectedSubmitInfo<'_> {
         }
     }
 }
+impl<'a> ProtectedSubmitInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ProtectedSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PROTECTED_SUBMIT_INFO;
 }
@@ -18819,6 +20972,12 @@ impl ::core::default::Default for PhysicalDeviceProtectedMemoryFeatures<'_> {
             protected_memory: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceProtectedMemoryFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProtectedMemoryFeatures<'a> {
@@ -18855,6 +21014,12 @@ impl ::core::default::Default for PhysicalDeviceProtectedMemoryProperties<'_> {
             protected_no_fault: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceProtectedMemoryProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProtectedMemoryProperties<'a> {
@@ -18895,6 +21060,12 @@ impl ::core::default::Default for DeviceQueueInfo2<'_> {
             queue_index: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceQueueInfo2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueInfo2<'a> {
@@ -18943,6 +21114,12 @@ impl ::core::default::Default for PipelineCoverageToColorStateCreateInfoNV<'_> {
             coverage_to_color_location: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineCoverageToColorStateCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageToColorStateCreateInfoNV<'a> {
@@ -18996,6 +21173,12 @@ impl ::core::default::Default for PhysicalDeviceSamplerFilterMinmaxProperties<'_
         }
     }
 }
+impl<'a> PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES;
@@ -19030,6 +21213,12 @@ impl<'a> PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
 pub struct SampleLocationEXT {
     pub x: f32,
     pub y: f32,
+}
+impl SampleLocationEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SampleLocationEXT {
     #[inline]
@@ -19073,6 +21262,12 @@ impl ::core::default::Default for SampleLocationsInfoEXT<'_> {
         }
     }
 }
+impl<'a> SampleLocationsInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SampleLocationsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLE_LOCATIONS_INFO_EXT;
 }
@@ -19111,6 +21306,12 @@ pub struct AttachmentSampleLocationsEXT<'a> {
 }
 impl<'a> AttachmentSampleLocationsEXT<'a> {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl<'a> AttachmentSampleLocationsEXT<'a> {
+    #[inline]
     pub fn attachment_index(mut self, attachment_index: u32) -> Self {
         self.attachment_index = attachment_index;
         self
@@ -19133,6 +21334,12 @@ pub struct SubpassSampleLocationsEXT<'a> {
     pub subpass_index: u32,
     pub sample_locations_info: SampleLocationsInfoEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
+}
+impl<'a> SubpassSampleLocationsEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl<'a> SubpassSampleLocationsEXT<'a> {
     #[inline]
@@ -19177,6 +21384,12 @@ impl ::core::default::Default for RenderPassSampleLocationsBeginInfoEXT<'_> {
             p_post_subpass_sample_locations: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> RenderPassSampleLocationsBeginInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassSampleLocationsBeginInfoEXT<'a> {
@@ -19229,6 +21442,12 @@ impl ::core::default::Default for PipelineSampleLocationsStateCreateInfoEXT<'_> 
             sample_locations_info: SampleLocationsInfoEXT::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineSampleLocationsStateCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineSampleLocationsStateCreateInfoEXT<'a> {
@@ -19284,6 +21503,12 @@ impl ::core::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT<'_>
             variable_sample_locations: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
@@ -19354,6 +21579,12 @@ impl ::core::default::Default for MultisamplePropertiesEXT<'_> {
         }
     }
 }
+impl<'a> MultisamplePropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MultisamplePropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MULTISAMPLE_PROPERTIES_EXT;
 }
@@ -19391,6 +21622,12 @@ impl ::core::default::Default for SamplerReductionModeCreateInfo<'_> {
         }
     }
 }
+impl<'a> SamplerReductionModeCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SamplerReductionModeCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_REDUCTION_MODE_CREATE_INFO;
 }
@@ -19424,6 +21661,12 @@ impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEX
             advanced_blend_coherent_operations: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
@@ -19467,6 +21710,12 @@ impl ::core::default::Default for PhysicalDeviceMultiDrawFeaturesEXT<'_> {
             multi_draw: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMultiDrawFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiDrawFeaturesEXT<'a> {
@@ -19513,6 +21762,12 @@ impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedProperties
             advanced_blend_all_operations: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
@@ -19600,6 +21855,12 @@ impl ::core::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT<'
         }
     }
 }
+impl<'a> PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT;
@@ -19649,6 +21910,12 @@ impl ::core::default::Default for PhysicalDeviceInlineUniformBlockFeatures<'_> {
             descriptor_binding_inline_uniform_block_update_after_bind: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceInlineUniformBlockFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInlineUniformBlockFeatures<'a> {
@@ -19703,6 +21970,12 @@ impl ::core::default::Default for PhysicalDeviceInlineUniformBlockProperties<'_>
             max_descriptor_set_update_after_bind_inline_uniform_blocks: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceInlineUniformBlockProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInlineUniformBlockProperties<'a> {
@@ -19781,6 +22054,12 @@ impl ::core::default::Default for WriteDescriptorSetInlineUniformBlock<'_> {
         }
     }
 }
+impl<'a> WriteDescriptorSetInlineUniformBlock<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetInlineUniformBlock<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK;
 }
@@ -19815,6 +22094,12 @@ impl ::core::default::Default for DescriptorPoolInlineUniformBlockCreateInfo<'_>
             max_inline_uniform_block_bindings: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DescriptorPoolInlineUniformBlockCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorPoolInlineUniformBlockCreateInfo<'a> {
@@ -19865,6 +22150,12 @@ impl ::core::default::Default for PipelineCoverageModulationStateCreateInfoNV<'_
             p_coverage_modulation_table: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineCoverageModulationStateCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageModulationStateCreateInfoNV<'a> {
@@ -19930,6 +22221,12 @@ impl ::core::default::Default for ImageFormatListCreateInfo<'_> {
         }
     }
 }
+impl<'a> ImageFormatListCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageFormatListCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_FORMAT_LIST_CREATE_INFO;
 }
@@ -19972,6 +22269,12 @@ impl ::core::default::Default for ValidationCacheCreateInfoEXT<'_> {
         }
     }
 }
+impl<'a> ValidationCacheCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ValidationCacheCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VALIDATION_CACHE_CREATE_INFO_EXT;
 }
@@ -20010,6 +22313,12 @@ impl ::core::default::Default for ShaderModuleValidationCacheCreateInfoEXT<'_> {
             validation_cache: ValidationCacheEXT::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ShaderModuleValidationCacheCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderModuleValidationCacheCreateInfoEXT<'a> {
@@ -20054,6 +22363,12 @@ impl ::core::default::Default for PhysicalDeviceMaintenance3Properties<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceMaintenance3Properties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance3Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES;
 }
@@ -20094,6 +22409,12 @@ impl ::core::default::Default for PhysicalDeviceMaintenance4Features<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceMaintenance4Features<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance4Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES;
 }
@@ -20130,6 +22451,12 @@ impl ::core::default::Default for PhysicalDeviceMaintenance4Properties<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceMaintenance4Properties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance4Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES;
 }
@@ -20163,6 +22490,12 @@ impl ::core::default::Default for PhysicalDeviceMaintenance5Features<'_> {
             maintenance5: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMaintenance5Features<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance5Features<'a> {
@@ -20209,6 +22542,12 @@ impl ::core::default::Default for PhysicalDeviceMaintenance5Properties<'_> {
             non_strict_wide_lines_use_parallelogram: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMaintenance5Properties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance5Properties<'a> {
@@ -20290,6 +22629,12 @@ impl ::core::default::Default for PhysicalDeviceMaintenance6Features<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceMaintenance6Features<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance6Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_6_FEATURES;
 }
@@ -20328,6 +22673,12 @@ impl ::core::default::Default for PhysicalDeviceMaintenance6Properties<'_> {
             fragment_shading_rate_clamp_combiner_inputs: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMaintenance6Properties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance6Properties<'a> {
@@ -20387,6 +22738,12 @@ impl ::core::default::Default for PhysicalDeviceMaintenance7FeaturesKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceMaintenance7FeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance7FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_7_FEATURES_KHR;
 }
@@ -20435,6 +22792,12 @@ impl ::core::default::Default for PhysicalDeviceMaintenance7PropertiesKHR<'_> {
             max_descriptor_set_update_after_bind_total_buffers_dynamic: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMaintenance7PropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance7PropertiesKHR<'a> {
@@ -20541,6 +22904,12 @@ impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesListKHR<'_> 
         }
     }
 }
+impl<'a> PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_LIST_KHR;
@@ -20602,6 +22971,12 @@ impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceLayeredApiPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_KHR;
 }
@@ -20657,6 +23032,12 @@ impl ::core::default::Default for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_
         }
     }
 }
+impl<'a> PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LAYERED_API_VULKAN_PROPERTIES_KHR;
@@ -20696,6 +23077,12 @@ impl ::core::default::Default for PhysicalDeviceMaintenance8FeaturesKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceMaintenance8FeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance8FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_8_FEATURES_KHR;
 }
@@ -20730,6 +23117,12 @@ impl ::core::default::Default for PhysicalDeviceMaintenance9FeaturesKHR<'_> {
             maintenance9: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMaintenance9FeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance9FeaturesKHR<'a> {
@@ -20768,6 +23161,12 @@ impl ::core::default::Default for PhysicalDeviceMaintenance9PropertiesKHR<'_> {
             default_vertex_attribute_value: DefaultVertexAttributeValueKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMaintenance9PropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance9PropertiesKHR<'a> {
@@ -20814,6 +23213,12 @@ impl ::core::default::Default for PhysicalDeviceMaintenance11FeaturesKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceMaintenance11FeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance11FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAINTENANCE_11_FEATURES_KHR;
@@ -20853,6 +23258,12 @@ impl ::core::default::Default for PhysicalDeviceMaintenance10PropertiesKHR<'_> {
             resolve_srgb_format_supports_transfer_function_control: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMaintenance10PropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance10PropertiesKHR<'a> {
@@ -20912,6 +23323,12 @@ impl ::core::default::Default for PhysicalDeviceMaintenance10FeaturesKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceMaintenance10FeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance10FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAINTENANCE_10_FEATURES_KHR;
@@ -20947,6 +23364,12 @@ impl ::core::default::Default for QueueFamilyOwnershipTransferPropertiesKHR<'_> 
             optimal_image_transfer_to_queue_families: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> QueueFamilyOwnershipTransferPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyOwnershipTransferPropertiesKHR<'a> {
@@ -20986,6 +23409,12 @@ impl ::core::default::Default for QueueFamilyOptimalImageTransferGranularityProp
             optimal_image_transfer_granularity: Extent3D::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -21040,6 +23469,12 @@ impl ::core::default::Default for RenderingAreaInfo<'_> {
         }
     }
 }
+impl<'a> RenderingAreaInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderingAreaInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_AREA_INFO;
 }
@@ -21090,6 +23525,12 @@ impl ::core::default::Default for DescriptorSetLayoutSupport<'_> {
         }
     }
 }
+impl<'a> DescriptorSetLayoutSupport<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutSupport<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_LAYOUT_SUPPORT;
 }
@@ -21122,6 +23563,12 @@ impl ::core::default::Default for PhysicalDeviceShaderDrawParametersFeatures<'_>
             shader_draw_parameters: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderDrawParametersFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderDrawParametersFeatures<'a> {
@@ -21164,6 +23611,12 @@ impl ::core::default::Default for PhysicalDeviceShaderFloat16Int8Features<'_> {
             shader_int8: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderFloat16Int8Features<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloat16Int8Features<'a> {
@@ -21238,6 +23691,12 @@ impl ::core::default::Default for PhysicalDeviceFloatControlsProperties<'_> {
             shader_rounding_mode_rtz_float64: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFloatControlsProperties<'a> {
@@ -21400,6 +23859,12 @@ impl ::core::default::Default for PhysicalDeviceHostQueryResetFeatures<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceHostQueryResetFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostQueryResetFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES;
 }
@@ -21420,6 +23885,12 @@ impl<'a> PhysicalDeviceHostQueryResetFeatures<'a> {
 pub struct NativeBufferUsage2ANDROID {
     pub consumer: u64,
     pub producer: u64,
+}
+impl NativeBufferUsage2ANDROID {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl NativeBufferUsage2ANDROID {
     #[inline]
@@ -21463,6 +23934,12 @@ impl ::core::default::Default for NativeBufferANDROID<'_> {
             usage2: NativeBufferUsage2ANDROID::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> NativeBufferANDROID<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferANDROID<'a> {
@@ -21521,6 +23998,12 @@ impl ::core::default::Default for SwapchainImageCreateInfoANDROID<'_> {
         }
     }
 }
+impl<'a> SwapchainImageCreateInfoANDROID<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainImageCreateInfoANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_IMAGE_CREATE_INFO_ANDROID;
 }
@@ -21556,6 +24039,12 @@ impl ::core::default::Default for PhysicalDevicePresentationPropertiesANDROID<'_
         }
     }
 }
+impl<'a> PhysicalDevicePresentationPropertiesANDROID<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentationPropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRESENTATION_PROPERTIES_ANDROID;
@@ -21582,6 +24071,12 @@ pub struct ShaderResourceUsageAMD {
     pub lds_size_per_local_work_group: u32,
     pub lds_usage_size_in_bytes: usize,
     pub scratch_mem_usage_in_bytes: usize,
+}
+impl ShaderResourceUsageAMD {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ShaderResourceUsageAMD {
     #[inline]
@@ -21636,6 +24131,12 @@ impl ::core::default::Default for ShaderStatisticsInfoAMD {
             num_available_sgprs: u32::default(),
             compute_work_group_size: unsafe { ::core::mem::zeroed() },
         }
+    }
+}
+impl ShaderStatisticsInfoAMD {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl ShaderStatisticsInfoAMD {
@@ -21699,6 +24200,12 @@ impl ::core::default::Default for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_
         }
     }
 }
+impl<'a> PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_ELAPSED_TIMER_QUERY_FEATURES_QCOM;
@@ -21739,6 +24246,12 @@ impl ::core::default::Default for DeviceQueueGlobalPriorityCreateInfo<'_> {
         }
     }
 }
+impl<'a> DeviceQueueGlobalPriorityCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueGlobalPriorityCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO;
 }
@@ -21772,6 +24285,12 @@ impl ::core::default::Default for PhysicalDeviceGlobalPriorityQueryFeatures<'_> 
             global_priority_query: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceGlobalPriorityQueryFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGlobalPriorityQueryFeatures<'a> {
@@ -21823,6 +24342,12 @@ impl ::core::default::Default for QueueFamilyGlobalPriorityProperties<'_> {
         }
     }
 }
+impl<'a> QueueFamilyGlobalPriorityProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyGlobalPriorityProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES;
 }
@@ -21865,6 +24390,12 @@ impl ::core::default::Default for DebugUtilsObjectNameInfoEXT<'_> {
             p_object_name: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DebugUtilsObjectNameInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsObjectNameInfoEXT<'a> {
@@ -21926,6 +24457,12 @@ impl ::core::default::Default for DebugUtilsObjectTagInfoEXT<'_> {
         }
     }
 }
+impl<'a> DebugUtilsObjectTagInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsObjectTagInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_OBJECT_TAG_INFO_EXT;
 }
@@ -21972,6 +24509,12 @@ impl ::core::default::Default for DebugUtilsLabelEXT<'_> {
             color: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DebugUtilsLabelEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsLabelEXT<'a> {
@@ -22043,6 +24586,12 @@ impl ::core::default::Default for DebugUtilsMessengerCreateInfoEXT<'_> {
             p_user_data: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DebugUtilsMessengerCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsMessengerCreateInfoEXT<'a> {
@@ -22119,6 +24668,12 @@ impl ::core::default::Default for DebugUtilsMessengerCallbackDataEXT<'_> {
             p_objects: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsMessengerCallbackDataEXT<'a> {
@@ -22204,6 +24759,12 @@ impl ::core::default::Default for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_
         }
     }
 }
+impl<'a> PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_MEMORY_REPORT_FEATURES_EXT;
@@ -22260,6 +24821,12 @@ impl ::core::default::Default for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
             p_user_data: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceDeviceMemoryReportCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceDeviceMemoryReportCreateInfoEXT<'a> {
@@ -22321,6 +24888,12 @@ impl ::core::default::Default for DeviceMemoryReportCallbackDataEXT<'_> {
             heap_index: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceMemoryReportCallbackDataEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryReportCallbackDataEXT<'a> {
@@ -22385,6 +24958,12 @@ impl ::core::default::Default for ImportMemoryHostPointerInfoEXT<'_> {
         }
     }
 }
+impl<'a> ImportMemoryHostPointerInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryHostPointerInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_HOST_POINTER_INFO_EXT;
 }
@@ -22425,6 +25004,12 @@ impl ::core::default::Default for MemoryHostPointerPropertiesEXT<'_> {
         }
     }
 }
+impl<'a> MemoryHostPointerPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryHostPointerPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_HOST_POINTER_PROPERTIES_EXT;
 }
@@ -22457,6 +25042,12 @@ impl ::core::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT<
             min_imported_host_pointer_alignment: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
@@ -22515,6 +25106,12 @@ impl ::core::default::Default for PhysicalDeviceConservativeRasterizationPropert
             conservative_rasterization_post_depth_coverage: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
@@ -22618,6 +25215,12 @@ impl ::core::default::Default for CalibratedTimestampInfoKHR<'_> {
         }
     }
 }
+impl<'a> CalibratedTimestampInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CalibratedTimestampInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CALIBRATED_TIMESTAMP_INFO_KHR;
 }
@@ -22676,6 +25279,12 @@ impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesAMD<'_> {
             vgpr_allocation_granularity: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderCorePropertiesAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCorePropertiesAMD<'a> {
@@ -22780,6 +25389,12 @@ impl ::core::default::Default for PhysicalDeviceShaderCoreProperties2AMD<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceShaderCoreProperties2AMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreProperties2AMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_2_AMD;
@@ -22826,6 +25441,12 @@ impl ::core::default::Default for PipelineRasterizationConservativeStateCreateIn
             extra_primitive_overestimation_size: f32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
@@ -22919,6 +25540,12 @@ impl ::core::default::Default for PhysicalDeviceDescriptorIndexingFeatures<'_> {
             runtime_descriptor_array: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorIndexingFeatures<'a> {
@@ -23172,6 +25799,12 @@ impl ::core::default::Default for PhysicalDeviceDescriptorIndexingProperties<'_>
         }
     }
 }
+impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorIndexingProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES;
@@ -23409,6 +26042,12 @@ impl ::core::default::Default for DescriptorSetLayoutBindingFlagsCreateInfo<'_> 
         }
     }
 }
+impl<'a> DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO;
@@ -23451,6 +26090,12 @@ impl ::core::default::Default for DescriptorSetVariableDescriptorCountAllocateIn
         }
     }
 }
+impl<'a> DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO;
@@ -23489,6 +26134,12 @@ impl ::core::default::Default for DescriptorSetVariableDescriptorCountLayoutSupp
             max_variable_descriptor_count: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
@@ -23544,6 +26195,12 @@ impl ::core::default::Default for AttachmentDescription2<'_> {
             final_layout: ImageLayout::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> AttachmentDescription2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentDescription2<'a> {
@@ -23624,6 +26281,12 @@ impl ::core::default::Default for AttachmentReference2<'_> {
         }
     }
 }
+impl<'a> AttachmentReference2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AttachmentReference2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_REFERENCE_2;
 }
@@ -23686,6 +26349,12 @@ impl ::core::default::Default for SubpassDescription2<'_> {
             p_preserve_attachments: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SubpassDescription2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassDescription2<'a> {
@@ -23781,6 +26450,12 @@ impl ::core::default::Default for SubpassDependency2<'_> {
         }
     }
 }
+impl<'a> SubpassDependency2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SubpassDependency2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_DEPENDENCY_2;
 }
@@ -23866,6 +26541,12 @@ impl ::core::default::Default for RenderPassCreateInfo2<'_> {
         }
     }
 }
+impl<'a> RenderPassCreateInfo2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreateInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_CREATE_INFO_2;
 }
@@ -23924,6 +26605,12 @@ impl ::core::default::Default for SubpassBeginInfo<'_> {
         }
     }
 }
+impl<'a> SubpassBeginInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SubpassBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_BEGIN_INFO;
 }
@@ -23956,6 +26643,12 @@ impl ::core::default::Default for SubpassEndInfo<'_> {
         }
     }
 }
+impl<'a> SubpassEndInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SubpassEndInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_END_INFO;
 }
@@ -23982,6 +26675,12 @@ impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreFeatures<'_> {
             timeline_semaphore: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceTimelineSemaphoreFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTimelineSemaphoreFeatures<'a> {
@@ -24019,6 +26718,12 @@ impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreProperties<'_> 
             max_timeline_semaphore_value_difference: u64::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceTimelineSemaphoreProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTimelineSemaphoreProperties<'a> {
@@ -24063,6 +26768,12 @@ impl ::core::default::Default for SemaphoreTypeCreateInfo<'_> {
             initial_value: u64::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SemaphoreTypeCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreTypeCreateInfo<'a> {
@@ -24110,6 +26821,12 @@ impl ::core::default::Default for TimelineSemaphoreSubmitInfo<'_> {
             p_signal_semaphore_values: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> TimelineSemaphoreSubmitInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TimelineSemaphoreSubmitInfo<'a> {
@@ -24161,6 +26878,12 @@ impl ::core::default::Default for SemaphoreWaitInfo<'_> {
         }
     }
 }
+impl<'a> SemaphoreWaitInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreWaitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_WAIT_INFO;
 }
@@ -24209,6 +26932,12 @@ impl ::core::default::Default for SemaphoreSignalInfo<'_> {
         }
     }
 }
+impl<'a> SemaphoreSignalInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreSignalInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_SIGNAL_INFO;
 }
@@ -24232,6 +26961,12 @@ impl<'a> SemaphoreSignalInfo<'a> {
 pub struct VertexInputBindingDivisorDescription {
     pub binding: u32,
     pub divisor: u32,
+}
+impl VertexInputBindingDivisorDescription {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl VertexInputBindingDivisorDescription {
     #[inline]
@@ -24269,6 +27004,12 @@ impl ::core::default::Default for PipelineVertexInputDivisorStateCreateInfo<'_> 
             p_vertex_binding_divisors: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineVertexInputDivisorStateCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineVertexInputDivisorStateCreateInfo<'a> {
@@ -24314,6 +27055,12 @@ impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorProperties
         }
     }
 }
+impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT;
@@ -24353,6 +27100,12 @@ impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorProperties
             supports_non_zero_first_instance: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceVertexAttributeDivisorProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorProperties<'a> {
@@ -24408,6 +27161,12 @@ impl ::core::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PCI_BUS_INFO_PROPERTIES_EXT;
@@ -24459,6 +27218,12 @@ impl ::core::default::Default for ImportAndroidHardwareBufferInfoANDROID<'_> {
         }
     }
 }
+impl<'a> ImportAndroidHardwareBufferInfoANDROID<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportAndroidHardwareBufferInfoANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID;
@@ -24493,6 +27258,12 @@ impl ::core::default::Default for AndroidHardwareBufferUsageANDROID<'_> {
             android_hardware_buffer_usage: u64::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> AndroidHardwareBufferUsageANDROID<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferUsageANDROID<'a> {
@@ -24532,6 +27303,12 @@ impl ::core::default::Default for AndroidHardwareBufferPropertiesANDROID<'_> {
         }
     }
 }
+impl<'a> AndroidHardwareBufferPropertiesANDROID<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferPropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID;
 }
@@ -24569,6 +27346,12 @@ impl ::core::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID<'_> 
             memory: DeviceMemory::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
@@ -24618,6 +27401,12 @@ impl ::core::default::Default for AndroidHardwareBufferFormatPropertiesANDROID<'
             suggested_y_chroma_offset: ChromaLocation::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> AndroidHardwareBufferFormatPropertiesANDROID<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatPropertiesANDROID<'a> {
@@ -24700,6 +27489,12 @@ impl ::core::default::Default for CommandBufferInheritanceConditionalRenderingIn
         }
     }
 }
+impl<'a> CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COMMAND_BUFFER_INHERITANCE_CONDITIONAL_RENDERING_INFO_EXT;
@@ -24737,6 +27532,12 @@ impl ::core::default::Default for ExternalFormatANDROID<'_> {
             external_format: u64::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ExternalFormatANDROID<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFormatANDROID<'a> {
@@ -24780,6 +27581,12 @@ impl ::core::default::Default for PhysicalDevice8BitStorageFeatures<'_> {
             storage_push_constant8: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevice8BitStorageFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice8BitStorageFeatures<'a> {
@@ -24833,6 +27640,12 @@ impl ::core::default::Default for PhysicalDeviceConditionalRenderingFeaturesEXT<
         }
     }
 }
+impl<'a> PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CONDITIONAL_RENDERING_FEATURES_EXT;
@@ -24883,6 +27696,12 @@ impl ::core::default::Default for PhysicalDeviceVulkanMemoryModelFeatures<'_> {
             vulkan_memory_model_availability_visibility_chains: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceVulkanMemoryModelFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkanMemoryModelFeatures<'a> {
@@ -24939,6 +27758,12 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicInt64Features<'_> {
             shader_shared_int64_atomics: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderAtomicInt64Features<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicInt64Features<'a> {
@@ -25003,6 +27828,12 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_>
             sparse_image_float32_atomic_add: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
@@ -25140,6 +27971,12 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_
         }
     }
 }
+impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT;
@@ -25267,6 +28104,12 @@ impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorFeatures<'
         }
     }
 }
+impl<'a> PhysicalDeviceVertexAttributeDivisorFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES;
@@ -25319,6 +28162,12 @@ impl ::core::default::Default for QueueFamilyCheckpointPropertiesNV<'_> {
         }
     }
 }
+impl<'a> QueueFamilyCheckpointPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyCheckpointPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV;
 }
@@ -25357,6 +28206,12 @@ impl ::core::default::Default for CheckpointDataNV<'_> {
             p_checkpoint_marker: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CheckpointDataNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CheckpointDataNV<'a> {
@@ -25402,6 +28257,12 @@ impl ::core::default::Default for PhysicalDeviceDepthStencilResolveProperties<'_
             independent_resolve: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDepthStencilResolveProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthStencilResolveProperties<'a> {
@@ -25468,6 +28329,12 @@ impl ::core::default::Default for SubpassDescriptionDepthStencilResolve<'_> {
         }
     }
 }
+impl<'a> SubpassDescriptionDepthStencilResolve<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SubpassDescriptionDepthStencilResolve<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE;
 }
@@ -25516,6 +28383,12 @@ impl ::core::default::Default for ImageViewASTCDecodeModeEXT<'_> {
         }
     }
 }
+impl<'a> ImageViewASTCDecodeModeEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageViewASTCDecodeModeEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_ASTC_DECODE_MODE_EXT;
 }
@@ -25549,6 +28422,12 @@ impl ::core::default::Default for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {
             decode_mode_shared_exponent: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
@@ -25587,6 +28466,12 @@ impl ::core::default::Default for PhysicalDeviceTransformFeedbackFeaturesEXT<'_>
             geometry_streams: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
@@ -25650,6 +28535,12 @@ impl ::core::default::Default for PhysicalDeviceTransformFeedbackPropertiesEXT<'
             transform_feedback_draw: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
@@ -25758,6 +28649,12 @@ impl ::core::default::Default for PipelineRasterizationStateStreamCreateInfoEXT<
         }
     }
 }
+impl<'a> PipelineRasterizationStateStreamCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateStreamCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_STATE_STREAM_CREATE_INFO_EXT;
@@ -25800,6 +28697,12 @@ impl ::core::default::Default for PhysicalDeviceRepresentativeFragmentTestFeatur
             representative_fragment_test: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
@@ -25845,6 +28748,12 @@ impl ::core::default::Default for PipelineRepresentativeFragmentTestStateCreateI
         }
     }
 }
+impl<'a> PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_REPRESENTATIVE_FRAGMENT_TEST_STATE_CREATE_INFO_NV;
@@ -25887,6 +28796,12 @@ impl ::core::default::Default for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXCLUSIVE_SCISSOR_FEATURES_NV;
@@ -25924,6 +28839,12 @@ impl ::core::default::Default for PipelineViewportExclusiveScissorStateCreateInf
             p_exclusive_scissors: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
@@ -25966,6 +28887,12 @@ impl ::core::default::Default for PhysicalDeviceCornerSampledImageFeaturesNV<'_>
         }
     }
 }
+impl<'a> PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CORNER_SAMPLED_IMAGE_FEATURES_NV;
@@ -26006,6 +28933,12 @@ impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesFeatures
             compute_derivative_group_linear: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
@@ -26059,6 +28992,12 @@ impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesProperti
         }
     }
 }
+impl<'a> PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_PROPERTIES_KHR;
@@ -26101,6 +29040,12 @@ impl ::core::default::Default for PhysicalDeviceShaderImageFootprintFeaturesNV<'
         }
     }
 }
+impl<'a> PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_IMAGE_FOOTPRINT_FEATURES_NV;
@@ -26139,6 +29084,12 @@ impl ::core::default::Default for PhysicalDeviceDedicatedAllocationImageAliasing
             dedicated_allocation_image_aliasing: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -26191,6 +29142,12 @@ impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'_
         }
     }
 }
+impl<'a> PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_KHR;
@@ -26236,6 +29193,12 @@ impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_>
         }
     }
 }
+impl<'a> PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_NV;
@@ -26276,6 +29239,12 @@ impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<
         }
     }
 }
+impl<'a> PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_KHR;
@@ -26313,6 +29282,12 @@ impl ::core::default::Default for PhysicalDeviceMemoryDecompressionFeaturesEXT<'
             memory_decompression: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMemoryDecompressionFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionFeaturesEXT<'a> {
@@ -26355,6 +29330,12 @@ impl ::core::default::Default for PhysicalDeviceMemoryDecompressionPropertiesEXT
             max_decompression_indirect_count: u64::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMemoryDecompressionPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionPropertiesEXT<'a> {
@@ -26407,6 +29388,12 @@ impl ::core::default::Default for ShadingRatePaletteNV<'_> {
 }
 impl<'a> ShadingRatePaletteNV<'a> {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl<'a> ShadingRatePaletteNV<'a> {
+    #[inline]
     pub fn shading_rate_palette_entries(
         mut self,
         shading_rate_palette_entries: &'a [ShadingRatePaletteEntryNV],
@@ -26442,6 +29429,12 @@ impl ::core::default::Default for PipelineViewportShadingRateImageStateCreateInf
             p_shading_rate_palettes: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
@@ -26494,6 +29487,12 @@ impl ::core::default::Default for PhysicalDeviceShadingRateImageFeaturesNV<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceShadingRateImageFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShadingRateImageFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADING_RATE_IMAGE_FEATURES_NV;
@@ -26541,6 +29540,12 @@ impl ::core::default::Default for PhysicalDeviceShadingRateImagePropertiesNV<'_>
             shading_rate_max_coarse_samples: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShadingRateImagePropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShadingRateImagePropertiesNV<'a> {
@@ -26592,6 +29597,12 @@ impl ::core::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_>
         }
     }
 }
+impl<'a> PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INVOCATION_MASK_FEATURES_HUAWEI;
@@ -26617,6 +29628,12 @@ pub struct CoarseSampleLocationNV {
     pub pixel_x: u32,
     pub pixel_y: u32,
     pub sample: u32,
+}
+impl CoarseSampleLocationNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl CoarseSampleLocationNV {
     #[inline]
@@ -26663,6 +29680,12 @@ impl ::core::default::Default for CoarseSampleOrderCustomNV<'_> {
 }
 impl<'a> CoarseSampleOrderCustomNV<'a> {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl<'a> CoarseSampleOrderCustomNV<'a> {
+    #[inline]
     pub fn shading_rate(mut self, shading_rate: ShadingRatePaletteEntryNV) -> Self {
         self.shading_rate = shading_rate;
         self
@@ -26705,6 +29728,12 @@ impl ::core::default::Default for PipelineViewportCoarseSampleOrderStateCreateIn
             p_custom_sample_orders: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
@@ -26755,6 +29784,12 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesNV<'_> {
             mesh_shader: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMeshShaderFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderFeaturesNV<'a> {
@@ -26820,6 +29855,12 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesNV<'_> {
             mesh_output_per_primitive_granularity: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMeshShaderPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderPropertiesNV<'a> {
@@ -26910,6 +29951,12 @@ pub struct DrawMeshTasksIndirectCommandNV {
 }
 impl DrawMeshTasksIndirectCommandNV {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl DrawMeshTasksIndirectCommandNV {
+    #[inline]
     pub fn task_count(mut self, task_count: u32) -> Self {
         self.task_count = task_count;
         self
@@ -26950,6 +29997,12 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesEXT<'_> {
             mesh_shader_queries: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMeshShaderFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderFeaturesEXT<'a> {
@@ -27064,6 +30117,12 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesEXT<'_> {
             prefers_compact_primitive_output: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMeshShaderPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderPropertiesEXT<'a> {
@@ -27255,6 +30314,12 @@ pub struct DrawMeshTasksIndirectCommandEXT {
 }
 impl DrawMeshTasksIndirectCommandEXT {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl DrawMeshTasksIndirectCommandEXT {
+    #[inline]
     pub fn group_count_x(mut self, group_count_x: u32) -> Self {
         self.group_count_x = group_count_x;
         self
@@ -27300,6 +30365,12 @@ impl ::core::default::Default for RayTracingShaderGroupCreateInfoNV<'_> {
             intersection_shader: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> RayTracingShaderGroupCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingShaderGroupCreateInfoNV<'a> {
@@ -27364,6 +30435,12 @@ impl ::core::default::Default for RayTracingShaderGroupCreateInfoKHR<'_> {
             p_shader_group_capture_replay_handle: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> RayTracingShaderGroupCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingShaderGroupCreateInfoKHR<'a> {
@@ -27442,6 +30519,12 @@ impl ::core::default::Default for RayTracingPipelineCreateInfoNV<'_> {
             base_pipeline_index: i32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> RayTracingPipelineCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineCreateInfoNV<'a> {
@@ -27530,6 +30613,12 @@ impl ::core::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
             base_pipeline_index: i32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineCreateInfoKHR<'a> {
@@ -27639,6 +30728,12 @@ impl ::core::default::Default for GeometryTrianglesNV<'_> {
         }
     }
 }
+impl<'a> GeometryTrianglesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for GeometryTrianglesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GEOMETRY_TRIANGLES_NV;
 }
@@ -27729,6 +30824,12 @@ impl ::core::default::Default for GeometryAABBNV<'_> {
         }
     }
 }
+impl<'a> GeometryAABBNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for GeometryAABBNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GEOMETRY_AABB_NV;
 }
@@ -27763,6 +30864,12 @@ pub struct GeometryDataNV<'a> {
     pub triangles: GeometryTrianglesNV<'a>,
     pub aabbs: GeometryAABBNV<'a>,
     pub _marker: PhantomData<&'a ()>,
+}
+impl<'a> GeometryDataNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl<'a> GeometryDataNV<'a> {
     #[inline]
@@ -27802,6 +30909,12 @@ impl ::core::default::Default for GeometryNV<'_> {
             flags: GeometryFlagsKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> GeometryNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeometryNV<'a> {
@@ -27856,6 +30969,12 @@ impl ::core::default::Default for AccelerationStructureInfoNV<'_> {
         }
     }
 }
+impl<'a> AccelerationStructureInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_INFO_NV;
 }
@@ -27908,6 +31027,12 @@ impl ::core::default::Default for AccelerationStructureCreateInfoNV<'_> {
         }
     }
 }
+impl<'a> AccelerationStructureCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_NV;
 }
@@ -27953,6 +31078,12 @@ impl ::core::default::Default for BindAccelerationStructureMemoryInfoNV<'_> {
             p_device_indices: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BindAccelerationStructureMemoryInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindAccelerationStructureMemoryInfoNV<'a> {
@@ -28010,6 +31141,12 @@ impl ::core::default::Default for WriteDescriptorSetAccelerationStructureKHR<'_>
         }
     }
 }
+impl<'a> WriteDescriptorSetAccelerationStructureKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetAccelerationStructureKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR;
@@ -28052,6 +31189,12 @@ impl ::core::default::Default for WriteDescriptorSetAccelerationStructureNV<'_> 
         }
     }
 }
+impl<'a> WriteDescriptorSetAccelerationStructureNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetAccelerationStructureNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_NV;
@@ -28092,6 +31235,12 @@ impl ::core::default::Default for AccelerationStructureMemoryRequirementsInfoNV<
             acceleration_structure: AccelerationStructureNV::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> AccelerationStructureMemoryRequirementsInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureMemoryRequirementsInfoNV<'a> {
@@ -28143,6 +31292,12 @@ impl ::core::default::Default for PhysicalDeviceAccelerationStructureFeaturesKHR
             descriptor_binding_acceleration_structure_update_after_bind: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
@@ -28226,6 +31381,12 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_
         }
     }
 }
+impl<'a> PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_FEATURES_KHR;
@@ -28301,6 +31462,12 @@ impl ::core::default::Default for PhysicalDeviceRayQueryFeaturesKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceRayQueryFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayQueryFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_RAY_QUERY_FEATURES_KHR;
 }
@@ -28349,6 +31516,12 @@ impl ::core::default::Default for PhysicalDeviceAccelerationStructurePropertiesK
             min_acceleration_structure_scratch_offset_alignment: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
@@ -28459,6 +31632,12 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPipelinePropertiesKHR<
         }
     }
 }
+impl<'a> PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_PROPERTIES_KHR;
@@ -28553,6 +31732,12 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPropertiesNV<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceRayTracingPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_RAY_TRACING_PROPERTIES_NV;
 }
@@ -28615,6 +31800,12 @@ pub struct StridedDeviceAddressRegionKHR {
 }
 impl StridedDeviceAddressRegionKHR {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl StridedDeviceAddressRegionKHR {
+    #[inline]
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
         self.device_address = device_address;
         self
@@ -28639,6 +31830,12 @@ pub struct TraceRaysIndirectCommandKHR {
     pub width: u32,
     pub height: u32,
     pub depth: u32,
+}
+impl TraceRaysIndirectCommandKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl TraceRaysIndirectCommandKHR {
     #[inline]
@@ -28677,6 +31874,12 @@ pub struct TraceRaysIndirectCommand2KHR {
     pub width: u32,
     pub height: u32,
     pub depth: u32,
+}
+impl TraceRaysIndirectCommand2KHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl TraceRaysIndirectCommand2KHR {
     #[inline]
@@ -28806,6 +32009,12 @@ impl ::core::default::Default for PhysicalDeviceRayTracingMaintenance1FeaturesKH
         }
     }
 }
+impl<'a> PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_MAINTENANCE_1_FEATURES_KHR;
@@ -28857,6 +32066,12 @@ impl ::core::default::Default for DrmFormatModifierPropertiesListEXT<'_> {
         }
     }
 }
+impl<'a> DrmFormatModifierPropertiesListEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DrmFormatModifierPropertiesListEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_EXT;
 }
@@ -28881,6 +32096,12 @@ pub struct DrmFormatModifierPropertiesEXT {
     pub drm_format_modifier: u64,
     pub drm_format_modifier_plane_count: u32,
     pub drm_format_modifier_tiling_features: FormatFeatureFlags,
+}
+impl DrmFormatModifierPropertiesEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DrmFormatModifierPropertiesEXT {
     #[inline]
@@ -28930,6 +32151,12 @@ impl ::core::default::Default for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_
             p_queue_family_indices: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
@@ -28984,6 +32211,12 @@ impl ::core::default::Default for ImageDrmFormatModifierListCreateInfoEXT<'_> {
         }
     }
 }
+impl<'a> ImageDrmFormatModifierListCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierListCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::IMAGE_DRM_FORMAT_MODIFIER_LIST_CREATE_INFO_EXT;
@@ -29023,6 +32256,12 @@ impl ::core::default::Default for ImageDrmFormatModifierExplicitCreateInfoEXT<'_
             p_plane_layouts: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
@@ -29067,6 +32306,12 @@ impl ::core::default::Default for ImageDrmFormatModifierPropertiesEXT<'_> {
         }
     }
 }
+impl<'a> ImageDrmFormatModifierPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT;
 }
@@ -29099,6 +32344,12 @@ impl ::core::default::Default for ImageStencilUsageCreateInfo<'_> {
             stencil_usage: ImageUsageFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImageStencilUsageCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageStencilUsageCreateInfo<'a> {
@@ -29135,6 +32386,12 @@ impl ::core::default::Default for DeviceMemoryOverallocationCreateInfoAMD<'_> {
             overallocation_behavior: MemoryOverallocationBehaviorAMD::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceMemoryOverallocationCreateInfoAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryOverallocationCreateInfoAMD<'a> {
@@ -29178,6 +32435,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_
             fragment_density_map_non_subsampled_images: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
@@ -29234,6 +32497,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'
         }
     }
 }
+impl<'a> PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_FEATURES_EXT;
@@ -29272,6 +32541,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetFeatures
             fragment_density_map_offset: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {
@@ -29319,6 +32594,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT<
             fragment_density_invocations: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
@@ -29382,6 +32663,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2PropertiesEXT
         }
     }
 }
+impl<'a> PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_PROPERTIES_EXT;
@@ -29443,6 +32730,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetProperti
         }
     }
 }
+impl<'a> PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_PROPERTIES_EXT;
@@ -29483,6 +32776,12 @@ impl ::core::default::Default for RenderPassFragmentDensityMapCreateInfoEXT<'_> 
             fragment_density_map_attachment: AttachmentReference::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> RenderPassFragmentDensityMapCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassFragmentDensityMapCreateInfoEXT<'a> {
@@ -29527,6 +32826,12 @@ impl ::core::default::Default for RenderPassFragmentDensityMapOffsetEndInfoEXT<'
         }
     }
 }
+impl<'a> RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_EXT;
@@ -29563,6 +32868,12 @@ impl ::core::default::Default for PhysicalDeviceScalarBlockLayoutFeatures<'_> {
             scalar_block_layout: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceScalarBlockLayoutFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceScalarBlockLayoutFeatures<'a> {
@@ -29602,6 +32913,12 @@ impl ::core::default::Default for SurfaceProtectedCapabilitiesKHR<'_> {
         }
     }
 }
+impl<'a> SurfaceProtectedCapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfaceProtectedCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PROTECTED_CAPABILITIES_KHR;
 }
@@ -29635,6 +32952,12 @@ impl ::core::default::Default for PhysicalDeviceUniformBufferStandardLayoutFeatu
             uniform_buffer_standard_layout: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
@@ -29680,6 +33003,12 @@ impl ::core::default::Default for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_CLIP_ENABLE_FEATURES_EXT;
@@ -29717,6 +33046,12 @@ impl ::core::default::Default for PipelineRasterizationDepthClipStateCreateInfoE
             depth_clip_enable: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
@@ -29765,6 +33100,12 @@ impl ::core::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT;
@@ -29809,6 +33150,12 @@ impl ::core::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT;
@@ -29846,6 +33193,12 @@ impl ::core::default::Default for MemoryPriorityAllocateInfoEXT<'_> {
         }
     }
 }
+impl<'a> MemoryPriorityAllocateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryPriorityAllocateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_PRIORITY_ALLOCATE_INFO_EXT;
 }
@@ -29879,6 +33232,12 @@ impl ::core::default::Default for PhysicalDevicePageableDeviceLocalMemoryFeature
             pageable_device_local_memory: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
@@ -29926,6 +33285,12 @@ impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeatures<'_> 
             buffer_device_address_multi_device: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceBufferDeviceAddressFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBufferDeviceAddressFeatures<'a> {
@@ -29985,6 +33350,12 @@ impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'
         }
     }
 }
+impl<'a> PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES_EXT;
@@ -30041,6 +33412,12 @@ impl ::core::default::Default for BufferDeviceAddressInfo<'_> {
         }
     }
 }
+impl<'a> BufferDeviceAddressInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferDeviceAddressInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_DEVICE_ADDRESS_INFO;
 }
@@ -30073,6 +33450,12 @@ impl ::core::default::Default for BufferOpaqueCaptureAddressCreateInfo<'_> {
             opaque_capture_address: u64::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BufferOpaqueCaptureAddressCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferOpaqueCaptureAddressCreateInfo<'a> {
@@ -30110,6 +33493,12 @@ impl ::core::default::Default for BufferDeviceAddressCreateInfoEXT<'_> {
         }
     }
 }
+impl<'a> BufferDeviceAddressCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferDeviceAddressCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT;
 }
@@ -30143,6 +33532,12 @@ impl ::core::default::Default for PhysicalDeviceImageViewImageFormatInfoEXT<'_> 
             image_view_type: ImageViewType::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
@@ -30184,6 +33579,12 @@ impl ::core::default::Default for FilterCubicImageViewImageFormatPropertiesEXT<'
             filter_cubic_minmax: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> FilterCubicImageViewImageFormatPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FilterCubicImageViewImageFormatPropertiesEXT<'a> {
@@ -30230,6 +33631,12 @@ impl ::core::default::Default for PhysicalDeviceImagelessFramebufferFeatures<'_>
         }
     }
 }
+impl<'a> PhysicalDeviceImagelessFramebufferFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImagelessFramebufferFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES;
@@ -30270,6 +33677,12 @@ impl ::core::default::Default for FramebufferAttachmentsCreateInfo<'_> {
             p_attachment_image_infos: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> FramebufferAttachmentsCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferAttachmentsCreateInfo<'a> {
@@ -30321,6 +33734,12 @@ impl ::core::default::Default for FramebufferAttachmentImageInfo<'_> {
             p_view_formats: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> FramebufferAttachmentImageInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferAttachmentImageInfo<'a> {
@@ -30385,6 +33804,12 @@ impl ::core::default::Default for RenderPassAttachmentBeginInfo<'_> {
         }
     }
 }
+impl<'a> RenderPassAttachmentBeginInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassAttachmentBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_ATTACHMENT_BEGIN_INFO;
 }
@@ -30419,6 +33844,12 @@ impl ::core::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeature
             texture_compression_astc_hdr: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
@@ -30461,6 +33892,12 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> 
             cooperative_matrix_robust_buffer_access: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
@@ -30507,6 +33944,12 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesNV<'_
             cooperative_matrix_supported_stages: ShaderStageFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
@@ -30563,6 +34006,12 @@ impl ::core::default::Default for CooperativeMatrixPropertiesNV<'_> {
             scope: ScopeNV::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CooperativeMatrixPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixPropertiesNV<'a> {
@@ -30634,6 +34083,12 @@ impl ::core::default::Default for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> 
         }
     }
 }
+impl<'a> PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_YCBCR_IMAGE_ARRAYS_FEATURES_EXT;
@@ -30673,6 +34128,12 @@ impl ::core::default::Default for ImageViewHandleInfoNVX<'_> {
             sampler: Sampler::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImageViewHandleInfoNVX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewHandleInfoNVX<'a> {
@@ -30721,6 +34182,12 @@ impl ::core::default::Default for ImageViewAddressPropertiesNVX<'_> {
         }
     }
 }
+impl<'a> ImageViewAddressPropertiesNVX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageViewAddressPropertiesNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_ADDRESS_PROPERTIES_NVX;
 }
@@ -30760,6 +34227,12 @@ impl ::core::default::Default for PresentFrameTokenGGP<'_> {
         }
     }
 }
+impl<'a> PresentFrameTokenGGP<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PresentFrameTokenGGP<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_FRAME_TOKEN_GGP;
 }
@@ -30779,6 +34252,12 @@ impl<'a> PresentFrameTokenGGP<'a> {
 pub struct PipelineCreationFeedback {
     pub flags: PipelineCreationFeedbackFlags,
     pub duration: u64,
+}
+impl PipelineCreationFeedback {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PipelineCreationFeedback {
     #[inline]
@@ -30818,6 +34297,12 @@ impl ::core::default::Default for PipelineCreationFeedbackCreateInfo<'_> {
             p_pipeline_stage_creation_feedbacks: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineCreationFeedbackCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCreationFeedbackCreateInfo<'a> {
@@ -30879,6 +34364,12 @@ impl ::core::default::Default for SurfaceFullScreenExclusiveInfoEXT<'_> {
         }
     }
 }
+impl<'a> SurfaceFullScreenExclusiveInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfaceFullScreenExclusiveInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_FULL_SCREEN_EXCLUSIVE_INFO_EXT;
 }
@@ -30913,6 +34404,12 @@ impl ::core::default::Default for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {
             hmonitor: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
@@ -30955,6 +34452,12 @@ impl ::core::default::Default for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> 
         }
     }
 }
+impl<'a> SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SURFACE_CAPABILITIES_FULL_SCREEN_EXCLUSIVE_EXT;
@@ -30994,6 +34497,12 @@ impl ::core::default::Default for PhysicalDevicePresentBarrierFeaturesNV<'_> {
         }
     }
 }
+impl<'a> PhysicalDevicePresentBarrierFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentBarrierFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRESENT_BARRIER_FEATURES_NV;
@@ -31031,6 +34540,12 @@ impl ::core::default::Default for SurfaceCapabilitiesPresentBarrierNV<'_> {
         }
     }
 }
+impl<'a> SurfaceCapabilitiesPresentBarrierNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentBarrierNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_PRESENT_BARRIER_NV;
 }
@@ -31064,6 +34579,12 @@ impl ::core::default::Default for SwapchainPresentBarrierCreateInfoNV<'_> {
             present_barrier_enable: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SwapchainPresentBarrierCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentBarrierCreateInfoNV<'a> {
@@ -31101,6 +34622,12 @@ impl ::core::default::Default for PhysicalDevicePerformanceQueryFeaturesKHR<'_> 
             performance_counter_multiple_query_pools: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
@@ -31152,6 +34679,12 @@ impl ::core::default::Default for PhysicalDevicePerformanceQueryPropertiesKHR<'_
         }
     }
 }
+impl<'a> PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PERFORMANCE_QUERY_PROPERTIES_KHR;
@@ -31198,6 +34731,12 @@ impl ::core::default::Default for PerformanceCounterKHR<'_> {
             uuid: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PerformanceCounterKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterKHR<'a> {
@@ -31265,6 +34804,12 @@ impl ::core::default::Default for PerformanceCounterDescriptionKHR<'_> {
             description: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PerformanceCounterDescriptionKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterDescriptionKHR<'a> {
@@ -31335,6 +34880,12 @@ impl ::core::default::Default for QueryPoolPerformanceCreateInfoKHR<'_> {
         }
     }
 }
+impl<'a> QueryPoolPerformanceCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolPerformanceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUERY_POOL_PERFORMANCE_CREATE_INFO_KHR;
 }
@@ -31395,6 +34946,12 @@ impl ::core::default::Default for AcquireProfilingLockInfoKHR<'_> {
         }
     }
 }
+impl<'a> AcquireProfilingLockInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AcquireProfilingLockInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACQUIRE_PROFILING_LOCK_INFO_KHR;
 }
@@ -31434,6 +34991,12 @@ impl ::core::default::Default for PerformanceQuerySubmitInfoKHR<'_> {
         }
     }
 }
+impl<'a> PerformanceQuerySubmitInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PerformanceQuerySubmitInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_QUERY_SUBMIT_INFO_KHR;
 }
@@ -31470,6 +35033,12 @@ impl ::core::default::Default for HeadlessSurfaceCreateInfoEXT<'_> {
         }
     }
 }
+impl<'a> HeadlessSurfaceCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for HeadlessSurfaceCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::HEADLESS_SURFACE_CREATE_INFO_EXT;
 }
@@ -31502,6 +35071,12 @@ impl ::core::default::Default for PhysicalDeviceCoverageReductionModeFeaturesNV<
             coverage_reduction_mode: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
@@ -31544,6 +35119,12 @@ impl ::core::default::Default for PipelineCoverageReductionStateCreateInfoNV<'_>
             coverage_reduction_mode: CoverageReductionModeNV::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineCoverageReductionStateCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageReductionStateCreateInfoNV<'a> {
@@ -31599,6 +35180,12 @@ impl ::core::default::Default for FramebufferMixedSamplesCombinationNV<'_> {
         }
     }
 }
+impl<'a> FramebufferMixedSamplesCombinationNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for FramebufferMixedSamplesCombinationNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_MIXED_SAMPLES_COMBINATION_NV;
 }
@@ -31649,6 +35236,12 @@ impl ::core::default::Default for PhysicalDeviceShaderIntegerFunctions2FeaturesI
             shader_integer_functions2: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
@@ -31705,6 +35298,12 @@ impl fmt::Debug for PerformanceValueINTEL {
 }
 impl PerformanceValueINTEL {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl PerformanceValueINTEL {
+    #[inline]
     pub fn ty(mut self, ty: PerformanceValueTypeINTEL) -> Self {
         self.ty = ty;
         self
@@ -31739,6 +35338,12 @@ impl ::core::default::Default for InitializePerformanceApiInfoINTEL<'_> {
         }
     }
 }
+impl<'a> InitializePerformanceApiInfoINTEL<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for InitializePerformanceApiInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INITIALIZE_PERFORMANCE_API_INFO_INTEL;
 }
@@ -31771,6 +35376,12 @@ impl ::core::default::Default for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {
             performance_counters_sampling: QueryPoolSamplingModeINTEL::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
@@ -31812,6 +35423,12 @@ impl ::core::default::Default for PerformanceMarkerInfoINTEL<'_> {
         }
     }
 }
+impl<'a> PerformanceMarkerInfoINTEL<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PerformanceMarkerInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_MARKER_INFO_INTEL;
 }
@@ -31844,6 +35461,12 @@ impl ::core::default::Default for PerformanceStreamMarkerInfoINTEL<'_> {
             marker: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PerformanceStreamMarkerInfoINTEL<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceStreamMarkerInfoINTEL<'a> {
@@ -31882,6 +35505,12 @@ impl ::core::default::Default for PerformanceOverrideInfoINTEL<'_> {
             parameter: u64::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PerformanceOverrideInfoINTEL<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceOverrideInfoINTEL<'a> {
@@ -31928,6 +35557,12 @@ impl ::core::default::Default for PerformanceConfigurationAcquireInfoINTEL<'_> {
         }
     }
 }
+impl<'a> PerformanceConfigurationAcquireInfoINTEL<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PerformanceConfigurationAcquireInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PERFORMANCE_CONFIGURATION_ACQUIRE_INFO_INTEL;
@@ -31963,6 +35598,12 @@ impl ::core::default::Default for PhysicalDeviceShaderClockFeaturesKHR<'_> {
             shader_device_clock: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderClockFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderClockFeaturesKHR<'a> {
@@ -32006,6 +35647,12 @@ impl ::core::default::Default for PhysicalDeviceIndexTypeUint8Features<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceIndexTypeUint8Features<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceIndexTypeUint8Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES;
 }
@@ -32042,6 +35689,12 @@ impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_>
             shader_warps_per_sm: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
@@ -32088,6 +35741,12 @@ impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SM_BUILTINS_FEATURES_NV;
@@ -32127,6 +35786,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentShaderInterlockFeaturesE
             fragment_shader_shading_rate_interlock: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
@@ -32188,6 +35853,12 @@ impl ::core::default::Default for PhysicalDeviceSeparateDepthStencilLayoutsFeatu
         }
     }
 }
+impl<'a> PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES;
@@ -32231,6 +35902,12 @@ impl ::core::default::Default for AttachmentReferenceStencilLayout<'_> {
         }
     }
 }
+impl<'a> AttachmentReferenceStencilLayout<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AttachmentReferenceStencilLayout<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_REFERENCE_STENCIL_LAYOUT;
 }
@@ -32266,6 +35943,12 @@ impl ::core::default::Default for PhysicalDevicePrimitiveTopologyListRestartFeat
             primitive_topology_patch_list_restart: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
@@ -32324,6 +36007,12 @@ impl ::core::default::Default for AttachmentDescriptionStencilLayout<'_> {
         }
     }
 }
+impl<'a> AttachmentDescriptionStencilLayout<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AttachmentDescriptionStencilLayout<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT;
 }
@@ -32362,6 +36051,12 @@ impl ::core::default::Default for PhysicalDevicePipelineExecutablePropertiesFeat
             pipeline_executable_info: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
@@ -32405,6 +36100,12 @@ impl ::core::default::Default for PipelineInfoKHR<'_> {
             pipeline: Pipeline::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineInfoKHR<'a> {
@@ -32457,6 +36158,12 @@ impl ::core::default::Default for PipelineExecutablePropertiesKHR<'_> {
             subgroup_size: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineExecutablePropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutablePropertiesKHR<'a> {
@@ -32517,6 +36224,12 @@ impl ::core::default::Default for PipelineExecutableInfoKHR<'_> {
             executable_index: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineExecutableInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableInfoKHR<'a> {
@@ -32589,6 +36302,12 @@ impl ::core::default::Default for PipelineExecutableStatisticKHR<'_> {
             value: PipelineExecutableStatisticValueKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineExecutableStatisticKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableStatisticKHR<'a> {
@@ -32670,6 +36389,12 @@ impl ::core::default::Default for PipelineExecutableInternalRepresentationKHR<'_
         }
     }
 }
+impl<'a> PipelineExecutableInternalRepresentationKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableInternalRepresentationKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR;
@@ -32730,6 +36455,12 @@ impl ::core::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFe
         }
     }
 }
+impl<'a> PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES;
@@ -32776,6 +36507,12 @@ impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<
         }
     }
 }
+impl<'a> PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_FEATURES_EXT;
@@ -32820,6 +36557,12 @@ impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentProperties<'
             uniform_texel_buffer_offset_single_texel_alignment: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceTexelBufferAlignmentProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTexelBufferAlignmentProperties<'a> {
@@ -32894,6 +36637,12 @@ impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlFeatures<'_> 
         }
     }
 }
+impl<'a> PhysicalDeviceSubgroupSizeControlFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupSizeControlFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES;
@@ -32940,6 +36689,12 @@ impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlProperties<'_
             required_subgroup_size_stages: ShaderStageFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceSubgroupSizeControlProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupSizeControlProperties<'a> {
@@ -32999,6 +36754,12 @@ impl ::core::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateI
         }
     }
 }
+impl<'a> PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO;
@@ -33044,6 +36805,12 @@ impl ::core::default::Default for SubpassShadingPipelineCreateInfoHUAWEI<'_> {
         }
     }
 }
+impl<'a> SubpassShadingPipelineCreateInfoHUAWEI<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SubpassShadingPipelineCreateInfoHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SUBPASS_SHADING_PIPELINE_CREATE_INFO_HUAWEI;
@@ -33083,6 +36850,12 @@ impl ::core::default::Default for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'
             max_subpass_shading_workgroup_size_aspect_ratio: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
@@ -33132,6 +36905,12 @@ impl ::core::default::Default for PhysicalDeviceClusterCullingShaderPropertiesHU
             indirect_buffer_offset_alignment: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
@@ -33191,6 +36970,12 @@ impl ::core::default::Default for MemoryOpaqueCaptureAddressAllocateInfo<'_> {
         }
     }
 }
+impl<'a> MemoryOpaqueCaptureAddressAllocateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryOpaqueCaptureAddressAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO;
@@ -33225,6 +37010,12 @@ impl ::core::default::Default for DeviceMemoryOpaqueCaptureAddressInfo<'_> {
             memory: DeviceMemory::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceMemoryOpaqueCaptureAddressInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryOpaqueCaptureAddressInfo<'a> {
@@ -33269,6 +37060,12 @@ impl ::core::default::Default for PhysicalDeviceLineRasterizationFeatures<'_> {
             stippled_smooth_lines: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceLineRasterizationFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLineRasterizationFeatures<'a> {
@@ -33333,6 +37130,12 @@ impl ::core::default::Default for PhysicalDeviceLineRasterizationProperties<'_> 
         }
     }
 }
+impl<'a> PhysicalDeviceLineRasterizationProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLineRasterizationProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES;
@@ -33376,6 +37179,12 @@ impl ::core::default::Default for PipelineRasterizationLineStateCreateInfo<'_> {
             line_stipple_pattern: u16::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineRasterizationLineStateCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationLineStateCreateInfo<'a> {
@@ -33433,6 +37242,12 @@ impl ::core::default::Default for PhysicalDevicePipelineCreationCacheControlFeat
             pipeline_creation_cache_control: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
@@ -33501,6 +37316,12 @@ impl ::core::default::Default for PhysicalDeviceVulkan11Features<'_> {
             shader_draw_parameters: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceVulkan11Features<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan11Features<'a> {
@@ -33627,6 +37448,12 @@ impl ::core::default::Default for PhysicalDeviceVulkan11Properties<'_> {
             max_memory_allocation_size: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceVulkan11Properties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan11Properties<'a> {
@@ -33836,6 +37663,12 @@ impl ::core::default::Default for PhysicalDeviceVulkan12Features<'_> {
             subgroup_broadcast_dynamic_id: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceVulkan12Features<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan12Features<'a> {
@@ -34495,6 +38328,12 @@ impl ::core::default::Default for PhysicalDeviceVulkan12Properties<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceVulkan12Properties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan12Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_2_PROPERTIES;
 }
@@ -34974,6 +38813,12 @@ impl ::core::default::Default for PhysicalDeviceVulkan13Features<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceVulkan13Features<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan13Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_3_FEATURES;
 }
@@ -35132,6 +38977,12 @@ impl ::core::default::Default for PhysicalDeviceVulkan13Properties<'_> {
     #[inline]
     fn default() -> Self {
         Self { s_type : Self :: STRUCTURE_TYPE , p_next : :: core :: ptr :: null_mut () , min_subgroup_size : u32 :: default () , max_subgroup_size : u32 :: default () , max_compute_workgroup_subgroups : u32 :: default () , required_subgroup_size_stages : ShaderStageFlags :: default () , max_inline_uniform_block_size : u32 :: default () , max_per_stage_descriptor_inline_uniform_blocks : u32 :: default () , max_per_stage_descriptor_update_after_bind_inline_uniform_blocks : u32 :: default () , max_descriptor_set_inline_uniform_blocks : u32 :: default () , max_descriptor_set_update_after_bind_inline_uniform_blocks : u32 :: default () , max_inline_uniform_total_size : u32 :: default () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , storage_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , storage_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , uniform_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , uniform_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , max_buffer_size : DeviceSize :: default () , _marker : PhantomData , }
+    }
+}
+impl<'a> PhysicalDeviceVulkan13Properties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan13Properties<'a> {
@@ -35582,6 +39433,12 @@ impl ::core::default::Default for PhysicalDeviceVulkan14Features<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceVulkan14Features<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan14Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_4_FEATURES;
 }
@@ -35774,6 +39631,12 @@ impl ::core::default::Default for PhysicalDeviceVulkan14Properties<'_> {
             identical_memory_type_requirements: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceVulkan14Properties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan14Properties<'a> {
@@ -35983,6 +39846,12 @@ impl ::core::default::Default for PipelineCompilerControlCreateInfoAMD<'_> {
         }
     }
 }
+impl<'a> PipelineCompilerControlCreateInfoAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineCompilerControlCreateInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_COMPILER_CONTROL_CREATE_INFO_AMD;
 }
@@ -36027,6 +39896,12 @@ impl ::core::default::Default for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD;
@@ -36053,6 +39928,12 @@ pub struct GpaPerfBlockPropertiesAMD {
     pub max_global_only_counters: u32,
     pub max_global_shared_counters: u32,
     pub max_streaming_counters: u32,
+}
+impl GpaPerfBlockPropertiesAMD {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl GpaPerfBlockPropertiesAMD {
     #[inline]
@@ -36121,6 +40002,12 @@ impl ::core::default::Default for PhysicalDeviceGpaFeaturesAMD<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceGpaFeaturesAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaFeaturesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_GPA_FEATURES_AMD;
 }
@@ -36180,6 +40067,12 @@ impl ::core::default::Default for PhysicalDeviceGpaPropertiesAMD<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceGpaPropertiesAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaPropertiesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_GPA_PROPERTIES_AMD;
 }
@@ -36231,6 +40124,12 @@ impl ::core::default::Default for PhysicalDeviceGpaProperties2AMD<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceGpaProperties2AMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaProperties2AMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_GPA_PROPERTIES_2_AMD;
 }
@@ -36251,6 +40150,12 @@ pub struct GpaPerfCounterAMD {
     pub block_type: GpaPerfBlockAMD,
     pub block_instance: u32,
     pub event_id: u32,
+}
+impl GpaPerfCounterAMD {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl GpaPerfCounterAMD {
     #[inline]
@@ -36317,6 +40222,12 @@ impl ::core::default::Default for GpaSampleBeginInfoAMD<'_> {
             timing_post_sample: PipelineStageFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> GpaSampleBeginInfoAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaSampleBeginInfoAMD<'a> {
@@ -36434,6 +40345,12 @@ impl ::core::default::Default for GpaDeviceClockModeInfoAMD<'_> {
         }
     }
 }
+impl<'a> GpaDeviceClockModeInfoAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for GpaDeviceClockModeInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GPA_DEVICE_CLOCK_MODE_INFO_AMD;
 }
@@ -36484,6 +40401,12 @@ impl ::core::default::Default for GpaDeviceGetClockInfoAMD<'_> {
         }
     }
 }
+impl<'a> GpaDeviceGetClockInfoAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for GpaDeviceGetClockInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GPA_DEVICE_GET_CLOCK_INFO_AMD;
 }
@@ -36531,6 +40454,12 @@ impl ::core::default::Default for GpaSessionCreateInfoAMD<'_> {
             secondary_copy_source: GpaSessionAMD::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> GpaSessionCreateInfoAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaSessionCreateInfoAMD<'a> {
@@ -36586,6 +40515,12 @@ impl ::core::default::Default for PhysicalDeviceToolProperties<'_> {
             layer: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceToolProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceToolProperties<'a> {
@@ -36672,6 +40607,12 @@ impl ::core::default::Default for SamplerCustomBorderColorCreateInfoEXT<'_> {
         }
     }
 }
+impl<'a> SamplerCustomBorderColorCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SamplerCustomBorderColorCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_CUSTOM_BORDER_COLOR_CREATE_INFO_EXT;
@@ -36711,6 +40652,12 @@ impl ::core::default::Default for PhysicalDeviceCustomBorderColorPropertiesEXT<'
             max_custom_border_color_samplers: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
@@ -36755,6 +40702,12 @@ impl ::core::default::Default for PhysicalDeviceCustomBorderColorFeaturesEXT<'_>
             custom_border_color_without_format: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
@@ -36807,6 +40760,12 @@ impl ::core::default::Default for SamplerBorderColorComponentMappingCreateInfoEX
         }
     }
 }
+impl<'a> SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_BORDER_COLOR_COMPONENT_MAPPING_CREATE_INFO_EXT;
@@ -36848,6 +40807,12 @@ impl ::core::default::Default for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_
             border_color_swizzle_from_image: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
@@ -36966,6 +40931,12 @@ impl ::core::default::Default for AccelerationStructureGeometryTrianglesDataKHR<
         }
     }
 }
+impl<'a> AccelerationStructureGeometryTrianglesDataKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryTrianglesDataKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_TRIANGLES_DATA_KHR;
@@ -37043,6 +41014,12 @@ impl ::core::default::Default for AccelerationStructureGeometryAabbsDataKHR<'_> 
         }
     }
 }
+impl<'a> AccelerationStructureGeometryAabbsDataKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryAabbsDataKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_AABBS_DATA_KHR;
@@ -37093,6 +41070,12 @@ impl ::core::default::Default for AccelerationStructureGeometryInstancesDataKHR<
             data: DeviceOrHostAddressConstKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> AccelerationStructureGeometryInstancesDataKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryInstancesDataKHR<'a> {
@@ -37172,6 +41155,12 @@ impl ::core::default::Default for AccelerationStructureGeometryLinearSweptSphere
             end_caps_mode: RayTracingLssPrimitiveEndCapsModeNV::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
@@ -37296,6 +41285,12 @@ impl ::core::default::Default for AccelerationStructureGeometrySpheresDataNV<'_>
         }
     }
 }
+impl<'a> AccelerationStructureGeometrySpheresDataNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometrySpheresDataNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_SPHERES_DATA_NV;
@@ -37404,6 +41399,12 @@ impl ::core::default::Default for AccelerationStructureGeometryKHR<'_> {
         }
     }
 }
+impl<'a> AccelerationStructureGeometryKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_GEOMETRY_KHR;
 }
@@ -37487,6 +41488,12 @@ impl ::core::default::Default for AccelerationStructureBuildGeometryInfoKHR<'_> 
         }
     }
 }
+impl<'a> AccelerationStructureBuildGeometryInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureBuildGeometryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_BUILD_GEOMETRY_INFO_KHR;
@@ -37557,6 +41564,12 @@ pub struct AccelerationStructureBuildRangeInfoKHR {
 }
 impl AccelerationStructureBuildRangeInfoKHR {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl AccelerationStructureBuildRangeInfoKHR {
+    #[inline]
     pub fn primitive_count(mut self, primitive_count: u32) -> Self {
         self.primitive_count = primitive_count;
         self
@@ -37611,6 +41624,12 @@ impl ::core::default::Default for AccelerationStructureCreateInfoKHR<'_> {
         }
     }
 }
+impl<'a> AccelerationStructureCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_KHR;
 }
@@ -37658,6 +41677,12 @@ pub struct AabbPositionsKHR {
     pub max_x: f32,
     pub max_y: f32,
     pub max_z: f32,
+}
+impl AabbPositionsKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl AabbPositionsKHR {
     #[inline]
@@ -37743,6 +41768,12 @@ impl ::core::default::Default for AccelerationStructureDeviceAddressInfoKHR<'_> 
         }
     }
 }
+impl<'a> AccelerationStructureDeviceAddressInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureDeviceAddressInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_DEVICE_ADDRESS_INFO_KHR;
@@ -37781,6 +41812,12 @@ impl ::core::default::Default for AccelerationStructureVersionInfoKHR<'_> {
         }
     }
 }
+impl<'a> AccelerationStructureVersionInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureVersionInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_VERSION_INFO_KHR;
 }
@@ -37817,6 +41854,12 @@ impl ::core::default::Default for CopyAccelerationStructureInfoKHR<'_> {
             mode: CopyAccelerationStructureModeKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CopyAccelerationStructureInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyAccelerationStructureInfoKHR<'a> {
@@ -37876,6 +41919,12 @@ impl ::core::default::Default for CopyAccelerationStructureToMemoryInfoKHR<'_> {
             mode: CopyAccelerationStructureModeKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CopyAccelerationStructureToMemoryInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyAccelerationStructureToMemoryInfoKHR<'a> {
@@ -37938,6 +41987,12 @@ impl ::core::default::Default for CopyMemoryToAccelerationStructureInfoKHR<'_> {
         }
     }
 }
+impl<'a> CopyMemoryToAccelerationStructureInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToAccelerationStructureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COPY_MEMORY_TO_ACCELERATION_STRUCTURE_INFO_KHR;
@@ -37985,6 +42040,12 @@ impl ::core::default::Default for RayTracingPipelineInterfaceCreateInfoKHR<'_> {
         }
     }
 }
+impl<'a> RayTracingPipelineInterfaceCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineInterfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RAY_TRACING_PIPELINE_INTERFACE_CREATE_INFO_KHR;
@@ -38030,6 +42091,12 @@ impl ::core::default::Default for PipelineLibraryCreateInfoKHR<'_> {
         }
     }
 }
+impl<'a> PipelineLibraryCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineLibraryCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_LIBRARY_CREATE_INFO_KHR;
 }
@@ -38064,6 +42131,12 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicStateFeaturesEXT<
             extended_dynamic_state: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
@@ -38108,6 +42181,12 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicState2FeaturesEXT
             extended_dynamic_state2_patch_control_points: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
@@ -38225,6 +42304,12 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3FeaturesEXT
             extended_dynamic_state3_shading_rate_image_enable: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
@@ -38539,6 +42624,12 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3PropertiesE
         }
     }
 }
+impl<'a> PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_PROPERTIES_EXT;
@@ -38570,6 +42661,12 @@ pub struct ColorBlendEquationEXT {
     pub src_alpha_blend_factor: BlendFactor,
     pub dst_alpha_blend_factor: BlendFactor,
     pub alpha_blend_op: BlendOp,
+}
+impl ColorBlendEquationEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ColorBlendEquationEXT {
     #[inline]
@@ -38614,6 +42711,12 @@ pub struct ColorBlendAdvancedEXT {
     pub dst_premultiplied: Bool32,
     pub blend_overlap: BlendOverlapEXT,
     pub clamp_results: Bool32,
+}
+impl ColorBlendAdvancedEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ColorBlendAdvancedEXT {
     #[inline]
@@ -38666,6 +42769,12 @@ impl ::core::default::Default for RenderPassTransformBeginInfoQCOM<'_> {
         }
     }
 }
+impl<'a> RenderPassTransformBeginInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassTransformBeginInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_TRANSFORM_BEGIN_INFO_QCOM;
 }
@@ -38699,6 +42808,12 @@ impl ::core::default::Default for CopyCommandTransformInfoQCOM<'_> {
             transform: SurfaceTransformFlagsKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CopyCommandTransformInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyCommandTransformInfoQCOM<'a> {
@@ -38738,6 +42853,12 @@ impl ::core::default::Default for CommandBufferInheritanceRenderPassTransformInf
             render_area: Rect2D::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
@@ -38782,6 +42903,12 @@ impl ::core::default::Default for PhysicalDevicePartitionedAccelerationStructure
             partitioned_acceleration_structure: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -38832,6 +42959,12 @@ impl ::core::default::Default for PhysicalDevicePartitionedAccelerationStructure
         }
     }
 }
+impl<'a> PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a>
 {
@@ -38858,6 +42991,12 @@ pub struct BuildPartitionedAccelerationStructureIndirectCommandNV {
     pub op_type: PartitionedAccelerationStructureOpTypeNV,
     pub arg_count: u32,
     pub arg_data: StridedDeviceAddressNV,
+}
+impl BuildPartitionedAccelerationStructureIndirectCommandNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl BuildPartitionedAccelerationStructureIndirectCommandNV {
     #[inline]
@@ -38898,6 +43037,12 @@ impl ::core::default::Default for PartitionedAccelerationStructureFlagsNV<'_> {
             enable_partition_translation: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PartitionedAccelerationStructureFlagsNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PartitionedAccelerationStructureFlagsNV<'a> {
@@ -38945,6 +43090,12 @@ impl ::core::default::Default for PartitionedAccelerationStructureWriteInstanceD
             partition_index: u32::default(),
             acceleration_structure: DeviceAddress::default(),
         }
+    }
+}
+impl PartitionedAccelerationStructureWriteInstanceDataNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PartitionedAccelerationStructureWriteInstanceDataNV {
@@ -39012,6 +43163,12 @@ pub struct PartitionedAccelerationStructureUpdateInstanceDataNV {
 }
 impl PartitionedAccelerationStructureUpdateInstanceDataNV {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl PartitionedAccelerationStructureUpdateInstanceDataNV {
+    #[inline]
     pub fn instance_index(mut self, instance_index: u32) -> Self {
         self.instance_index = instance_index;
         self
@@ -39050,6 +43207,12 @@ impl ::core::default::Default for PartitionedAccelerationStructureWritePartition
 }
 impl PartitionedAccelerationStructureWritePartitionTranslationDataNV {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl PartitionedAccelerationStructureWritePartitionTranslationDataNV {
+    #[inline]
     pub fn partition_index(mut self, partition_index: u32) -> Self {
         self.partition_index = partition_index;
         self
@@ -39084,6 +43247,12 @@ impl ::core::default::Default for WriteDescriptorSetPartitionedAccelerationStruc
             p_acceleration_structures: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {
@@ -39132,6 +43301,12 @@ impl ::core::default::Default for PartitionedAccelerationStructureInstancesInput
             max_instance_in_global_partition_count: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PartitionedAccelerationStructureInstancesInputNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PartitionedAccelerationStructureInstancesInputNV<'a> {
@@ -39205,6 +43380,12 @@ impl ::core::default::Default for BuildPartitionedAccelerationStructureInfoNV<'_
         }
     }
 }
+impl<'a> BuildPartitionedAccelerationStructureInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BuildPartitionedAccelerationStructureInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::BUILD_PARTITIONED_ACCELERATION_STRUCTURE_INFO_NV;
@@ -39271,6 +43452,12 @@ impl ::core::default::Default for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> 
         }
     }
 }
+impl<'a> PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DIAGNOSTICS_CONFIG_FEATURES_NV;
@@ -39308,6 +43495,12 @@ impl ::core::default::Default for DeviceDiagnosticsConfigCreateInfoNV<'_> {
         }
     }
 }
+impl<'a> DeviceDiagnosticsConfigCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceDiagnosticsConfigCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_DIAGNOSTICS_CONFIG_CREATE_INFO_NV;
 }
@@ -39341,6 +43534,12 @@ impl ::core::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFea
             shader_zero_initialize_workgroup_memory: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
@@ -39388,6 +43587,12 @@ impl ::core::default::Default for PhysicalDeviceShaderSubgroupUniformControlFlow
             shader_subgroup_uniform_control_flow: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -39442,6 +43647,12 @@ impl ::core::default::Default for PhysicalDeviceRobustness2FeaturesKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceRobustness2FeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRobustness2FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_KHR;
 }
@@ -39488,6 +43699,12 @@ impl ::core::default::Default for PhysicalDeviceRobustness2PropertiesKHR<'_> {
             robust_uniform_buffer_access_size_alignment: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceRobustness2PropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRobustness2PropertiesKHR<'a> {
@@ -39539,6 +43756,12 @@ impl ::core::default::Default for PhysicalDeviceImageRobustnessFeatures<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceImageRobustnessFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageRobustnessFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES;
 }
@@ -39579,6 +43802,12 @@ impl ::core::default::Default for PhysicalDeviceWorkgroupMemoryExplicitLayoutFea
             workgroup_memory_explicit_layout16_bit_access: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
@@ -39684,6 +43913,13 @@ impl ::core::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR<'_>
             vertex_attribute_access_beyond_stride: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+#[cfg(feature = "provisional")]
+impl<'a> PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -39818,6 +44054,13 @@ impl ::core::default::Default for PhysicalDevicePortabilitySubsetPropertiesKHR<'
     }
 }
 #[cfg(feature = "provisional")]
+impl<'a> PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PORTABILITY_SUBSET_PROPERTIES_KHR;
@@ -39864,6 +44107,12 @@ impl ::core::default::Default for PhysicalDevice4444FormatsFeaturesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDevice4444FormatsFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice4444FormatsFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT;
 }
@@ -39903,6 +44152,12 @@ impl ::core::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_>
             subpass_shading: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
@@ -39945,6 +44200,12 @@ impl ::core::default::Default for PhysicalDeviceClusterCullingShaderFeaturesHUAW
             multiview_cluster_culling_shader: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
@@ -39995,6 +44256,12 @@ impl ::core::default::Default for PhysicalDeviceClusterCullingShaderVrsFeaturesH
         }
     }
 }
+impl<'a> PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_VRS_FEATURES_HUAWEI;
@@ -40036,6 +44303,12 @@ impl ::core::default::Default for BufferCopy2<'_> {
             size: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BufferCopy2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCopy2<'a> {
@@ -40088,6 +44361,12 @@ impl ::core::default::Default for ImageCopy2<'_> {
             extent: Extent3D::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImageCopy2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCopy2<'a> {
@@ -40150,6 +44429,12 @@ impl ::core::default::Default for ImageBlit2<'_> {
         }
     }
 }
+impl<'a> ImageBlit2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageBlit2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_BLIT_2;
 }
@@ -40207,6 +44492,12 @@ impl ::core::default::Default for BufferImageCopy2<'_> {
             image_extent: Extent3D::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BufferImageCopy2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferImageCopy2<'a> {
@@ -40276,6 +44567,12 @@ impl ::core::default::Default for ImageResolve2<'_> {
         }
     }
 }
+impl<'a> ImageResolve2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageResolve2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_RESOLVE_2;
 }
@@ -40336,6 +44633,12 @@ impl ::core::default::Default for CopyBufferInfo2<'_> {
         }
     }
 }
+impl<'a> CopyBufferInfo2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyBufferInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_BUFFER_INFO_2;
 }
@@ -40389,6 +44692,12 @@ impl ::core::default::Default for CopyImageInfo2<'_> {
             p_regions: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CopyImageInfo2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageInfo2<'a> {
@@ -40456,6 +44765,12 @@ impl ::core::default::Default for BlitImageInfo2<'_> {
             filter: Filter::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BlitImageInfo2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BlitImageInfo2<'a> {
@@ -40526,6 +44841,12 @@ impl ::core::default::Default for CopyBufferToImageInfo2<'_> {
         }
     }
 }
+impl<'a> CopyBufferToImageInfo2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyBufferToImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_BUFFER_TO_IMAGE_INFO_2;
 }
@@ -40582,6 +44903,12 @@ impl ::core::default::Default for CopyImageToBufferInfo2<'_> {
             p_regions: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CopyImageToBufferInfo2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageToBufferInfo2<'a> {
@@ -40644,6 +44971,12 @@ impl ::core::default::Default for ResolveImageInfo2<'_> {
         }
     }
 }
+impl<'a> ResolveImageInfo2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ResolveImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RESOLVE_IMAGE_INFO_2;
 }
@@ -40701,6 +45034,12 @@ impl ::core::default::Default for PhysicalDeviceShaderImageAtomicInt64FeaturesEX
         }
     }
 }
+impl<'a> PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT;
@@ -40746,6 +45085,12 @@ impl ::core::default::Default for FragmentShadingRateAttachmentInfoKHR<'_> {
             shading_rate_attachment_texel_size: Extent2D::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> FragmentShadingRateAttachmentInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FragmentShadingRateAttachmentInfoKHR<'a> {
@@ -40796,6 +45141,12 @@ impl ::core::default::Default for PipelineFragmentShadingRateStateCreateInfoKHR<
         }
     }
 }
+impl<'a> PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_FRAGMENT_SHADING_RATE_STATE_CREATE_INFO_KHR;
@@ -40842,6 +45193,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateFeaturesKHR<'
             attachment_fragment_shading_rate: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
@@ -40930,6 +45287,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRatePropertiesKHR
             fragment_shading_rate_strict_multiply_combiner: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
@@ -41111,6 +45474,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceFragmentShadingRateKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_KHR;
 }
@@ -41148,6 +45517,12 @@ impl ::core::default::Default for PhysicalDeviceShaderTerminateInvocationFeature
             shader_terminate_invocation: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
@@ -41192,6 +45567,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsFeatures
             no_invocation_fragment_shading_rates: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
@@ -41250,6 +45631,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsProperti
         }
     }
 }
+impl<'a> PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_PROPERTIES_NV;
@@ -41295,6 +45682,12 @@ impl ::core::default::Default for PipelineFragmentShadingRateEnumStateCreateInfo
             combiner_ops: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
@@ -41350,6 +45743,12 @@ impl ::core::default::Default for AccelerationStructureBuildSizesInfoKHR<'_> {
         }
     }
 }
+impl<'a> AccelerationStructureBuildSizesInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureBuildSizesInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR;
@@ -41397,6 +45796,12 @@ impl ::core::default::Default for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_2D_VIEW_OF_3D_FEATURES_EXT;
@@ -41439,6 +45844,12 @@ impl ::core::default::Default for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'
         }
     }
 }
+impl<'a> PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_SLICED_VIEW_OF_3D_FEATURES_EXT;
@@ -41477,6 +45888,12 @@ impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopDynamicSta
             attachment_feedback_loop_dynamic_state: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -41527,6 +45944,12 @@ impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesFeaturesEX
         }
     }
 }
+impl<'a> PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_FEATURES_EXT;
@@ -41567,6 +45990,12 @@ impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesProperties
         }
     }
 }
+impl<'a> PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_PROPERTIES_EXT;
@@ -41604,6 +46033,12 @@ impl ::core::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesEXT
             mutable_descriptor_type: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
@@ -41646,6 +46081,12 @@ impl ::core::default::Default for MutableDescriptorTypeListEXT<'_> {
 }
 impl<'a> MutableDescriptorTypeListEXT<'a> {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl<'a> MutableDescriptorTypeListEXT<'a> {
+    #[inline]
     pub fn descriptor_types(mut self, descriptor_types: &'a [DescriptorType]) -> Self {
         self.descriptor_type_count = descriptor_types.len() as _;
         self.p_descriptor_types = descriptor_types.as_ptr();
@@ -41676,6 +46117,12 @@ impl ::core::default::Default for MutableDescriptorTypeCreateInfoEXT<'_> {
             p_mutable_descriptor_type_lists: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> MutableDescriptorTypeCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MutableDescriptorTypeCreateInfoEXT<'a> {
@@ -41718,6 +46165,12 @@ impl ::core::default::Default for PhysicalDeviceDepthClipControlFeaturesEXT<'_> 
         }
     }
 }
+impl<'a> PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT;
@@ -41753,6 +46206,12 @@ impl ::core::default::Default for PhysicalDeviceZeroInitializeDeviceMemoryFeatur
             zero_initialize_device_memory: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a> {
@@ -41796,6 +46255,12 @@ impl ::core::default::Default for BeginCustomResolveInfoEXT<'_> {
         }
     }
 }
+impl<'a> BeginCustomResolveInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BeginCustomResolveInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BEGIN_CUSTOM_RESOLVE_INFO_EXT;
 }
@@ -41822,6 +46287,12 @@ impl ::core::default::Default for PhysicalDeviceCustomResolveFeaturesEXT<'_> {
             custom_resolve: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceCustomResolveFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomResolveFeaturesEXT<'a> {
@@ -41867,6 +46338,12 @@ impl ::core::default::Default for CustomResolveCreateInfoEXT<'_> {
             stencil_attachment_format: Format::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CustomResolveCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CustomResolveCreateInfoEXT<'a> {
@@ -41922,6 +46399,12 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesE
             dynamic_generated_pipeline_layout: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
@@ -41992,6 +46475,12 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertie
             device_generated_commands_multi_draw_indirect_count: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
@@ -42122,6 +46611,12 @@ impl ::core::default::Default for GeneratedCommandsPipelineInfoEXT<'_> {
         }
     }
 }
+impl<'a> GeneratedCommandsPipelineInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsPipelineInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GENERATED_COMMANDS_PIPELINE_INFO_EXT;
 }
@@ -42161,6 +46656,12 @@ impl ::core::default::Default for GeneratedCommandsShaderInfoEXT<'_> {
             p_shaders: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> GeneratedCommandsShaderInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsShaderInfoEXT<'a> {
@@ -42207,6 +46708,12 @@ impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoEXT<'_>
             max_draw_count: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
@@ -42267,6 +46774,12 @@ impl ::core::default::Default for IndirectExecutionSetPipelineInfoEXT<'_> {
         }
     }
 }
+impl<'a> IndirectExecutionSetPipelineInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetPipelineInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_EXECUTION_SET_PIPELINE_INFO_EXT;
 }
@@ -42306,6 +46819,12 @@ impl ::core::default::Default for IndirectExecutionSetShaderLayoutInfoEXT<'_> {
             p_set_layouts: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> IndirectExecutionSetShaderLayoutInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetShaderLayoutInfoEXT<'a> {
@@ -42352,6 +46871,12 @@ impl ::core::default::Default for IndirectExecutionSetShaderInfoEXT<'_> {
             p_push_constant_ranges: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> IndirectExecutionSetShaderInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetShaderInfoEXT<'a> {
@@ -42434,6 +46959,12 @@ impl ::core::default::Default for IndirectExecutionSetCreateInfoEXT<'_> {
         }
     }
 }
+impl<'a> IndirectExecutionSetCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_EXECUTION_SET_CREATE_INFO_EXT;
 }
@@ -42489,6 +47020,12 @@ impl ::core::default::Default for GeneratedCommandsInfoEXT<'_> {
             max_draw_count: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> GeneratedCommandsInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsInfoEXT<'a> {
@@ -42578,6 +47115,12 @@ impl ::core::default::Default for WriteIndirectExecutionSetPipelineEXT<'_> {
         }
     }
 }
+impl<'a> WriteIndirectExecutionSetPipelineEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for WriteIndirectExecutionSetPipelineEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_INDIRECT_EXECUTION_SET_PIPELINE_EXT;
 }
@@ -42617,6 +47160,12 @@ impl ::core::default::Default for WriteIndirectExecutionSetShaderEXT<'_> {
             shader: ShaderEXT::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> WriteIndirectExecutionSetShaderEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteIndirectExecutionSetShaderEXT<'a> {
@@ -42666,6 +47215,12 @@ impl ::core::default::Default for IndirectCommandsLayoutCreateInfoEXT<'_> {
             p_tokens: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> IndirectCommandsLayoutCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutCreateInfoEXT<'a> {
@@ -42738,6 +47293,12 @@ impl ::core::default::Default for IndirectCommandsLayoutTokenEXT<'_> {
         }
     }
 }
+impl<'a> IndirectCommandsLayoutTokenEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutTokenEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_COMMANDS_LAYOUT_TOKEN_EXT;
 }
@@ -42770,6 +47331,12 @@ pub struct DrawIndirectCountIndirectCommandEXT {
 }
 impl DrawIndirectCountIndirectCommandEXT {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl DrawIndirectCountIndirectCommandEXT {
+    #[inline]
     pub fn buffer_address(mut self, buffer_address: DeviceAddress) -> Self {
         self.buffer_address = buffer_address;
         self
@@ -42795,6 +47362,12 @@ pub struct IndirectCommandsVertexBufferTokenEXT {
 }
 impl IndirectCommandsVertexBufferTokenEXT {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl IndirectCommandsVertexBufferTokenEXT {
+    #[inline]
     pub fn vertex_binding_unit(mut self, vertex_binding_unit: u32) -> Self {
         self.vertex_binding_unit = vertex_binding_unit;
         self
@@ -42809,6 +47382,12 @@ pub struct BindVertexBufferIndirectCommandEXT {
     pub buffer_address: DeviceAddress,
     pub size: u32,
     pub stride: u32,
+}
+impl BindVertexBufferIndirectCommandEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl BindVertexBufferIndirectCommandEXT {
     #[inline]
@@ -42837,6 +47416,12 @@ pub struct IndirectCommandsIndexBufferTokenEXT {
 }
 impl IndirectCommandsIndexBufferTokenEXT {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl IndirectCommandsIndexBufferTokenEXT {
+    #[inline]
     pub fn mode(mut self, mode: IndirectCommandsInputModeFlagsEXT) -> Self {
         self.mode = mode;
         self
@@ -42851,6 +47436,12 @@ pub struct BindIndexBufferIndirectCommandEXT {
     pub buffer_address: DeviceAddress,
     pub size: u32,
     pub index_type: IndexType,
+}
+impl BindIndexBufferIndirectCommandEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl BindIndexBufferIndirectCommandEXT {
     #[inline]
@@ -42879,6 +47470,12 @@ pub struct IndirectCommandsPushConstantTokenEXT {
 }
 impl IndirectCommandsPushConstantTokenEXT {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl IndirectCommandsPushConstantTokenEXT {
+    #[inline]
     pub fn update_range(mut self, update_range: PushConstantRange) -> Self {
         self.update_range = update_range;
         self
@@ -42892,6 +47489,12 @@ impl IndirectCommandsPushConstantTokenEXT {
 pub struct IndirectCommandsExecutionSetTokenEXT {
     pub ty: IndirectExecutionSetInfoTypeEXT,
     pub shader_stages: ShaderStageFlags,
+}
+impl IndirectCommandsExecutionSetTokenEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl IndirectCommandsExecutionSetTokenEXT {
     #[inline]
@@ -42944,6 +47547,12 @@ impl ::core::default::Default for PipelineViewportDepthClipControlCreateInfoEXT<
         }
     }
 }
+impl<'a> PipelineViewportDepthClipControlCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportDepthClipControlCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_DEPTH_CLIP_CONTROL_CREATE_INFO_EXT;
@@ -42981,6 +47590,12 @@ impl ::core::default::Default for PhysicalDeviceDepthClampControlFeaturesEXT<'_>
             depth_clamp_control: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
@@ -43023,6 +47638,12 @@ impl ::core::default::Default for PipelineViewportDepthClampControlCreateInfoEXT
             p_depth_clamp_range: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineViewportDepthClampControlCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportDepthClampControlCreateInfoEXT<'a> {
@@ -43069,6 +47690,12 @@ impl ::core::default::Default for PhysicalDeviceVertexInputDynamicStateFeaturesE
         }
     }
 }
+impl<'a> PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VERTEX_INPUT_DYNAMIC_STATE_FEATURES_EXT;
@@ -43109,6 +47736,12 @@ impl ::core::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_>
         }
     }
 }
+impl<'a> PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV;
@@ -43147,6 +47780,12 @@ impl ::core::default::Default for PhysicalDeviceShaderRelaxedExtendedInstruction
             shader_relaxed_extended_instruction: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -43201,6 +47840,12 @@ impl ::core::default::Default for VertexInputBindingDescription2EXT<'_> {
             divisor: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VertexInputBindingDescription2EXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VertexInputBindingDescription2EXT<'a> {
@@ -43258,6 +47903,12 @@ impl ::core::default::Default for VertexInputAttributeDescription2EXT<'_> {
         }
     }
 }
+impl<'a> VertexInputAttributeDescription2EXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VertexInputAttributeDescription2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VERTEX_INPUT_ATTRIBUTE_DESCRIPTION_2_EXT;
 }
@@ -43307,6 +47958,12 @@ impl ::core::default::Default for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> 
         }
     }
 }
+impl<'a> PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COLOR_WRITE_ENABLE_FEATURES_EXT;
@@ -43344,6 +48001,12 @@ impl ::core::default::Default for PipelineColorWriteCreateInfoEXT<'_> {
             p_color_write_enables: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineColorWriteCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineColorWriteCreateInfoEXT<'a> {
@@ -43386,6 +48049,12 @@ impl ::core::default::Default for MemoryBarrier2<'_> {
             dst_access_mask: AccessFlags2::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> MemoryBarrier2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryBarrier2<'a> {
@@ -43454,6 +48123,12 @@ impl ::core::default::Default for ImageMemoryBarrier2<'_> {
             subresource_range: ImageSubresourceRange::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImageMemoryBarrier2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageMemoryBarrier2<'a> {
@@ -43551,6 +48226,12 @@ impl ::core::default::Default for BufferMemoryBarrier2<'_> {
         }
     }
 }
+impl<'a> BufferMemoryBarrier2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferMemoryBarrier2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_MEMORY_BARRIER_2;
 }
@@ -43627,6 +48308,12 @@ impl ::core::default::Default for MemoryBarrierAccessFlags3KHR<'_> {
         }
     }
 }
+impl<'a> MemoryBarrierAccessFlags3KHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryBarrierAccessFlags3KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_BARRIER_ACCESS_FLAGS_3_KHR;
 }
@@ -43680,6 +48367,12 @@ impl ::core::default::Default for DependencyInfo<'_> {
             p_image_memory_barriers: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DependencyInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DependencyInfo<'a> {
@@ -43746,6 +48439,12 @@ impl ::core::default::Default for SemaphoreSubmitInfo<'_> {
         }
     }
 }
+impl<'a> SemaphoreSubmitInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_SUBMIT_INFO;
 }
@@ -43797,6 +48496,12 @@ impl ::core::default::Default for CommandBufferSubmitInfo<'_> {
         }
     }
 }
+impl<'a> CommandBufferSubmitInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_SUBMIT_INFO;
 }
@@ -43846,6 +48551,12 @@ impl ::core::default::Default for SubmitInfo2<'_> {
             p_signal_semaphore_infos: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SubmitInfo2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubmitInfo2<'a> {
@@ -43909,6 +48620,12 @@ impl ::core::default::Default for QueueFamilyCheckpointProperties2NV<'_> {
         }
     }
 }
+impl<'a> QueueFamilyCheckpointProperties2NV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyCheckpointProperties2NV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV;
 }
@@ -43947,6 +48664,12 @@ impl ::core::default::Default for CheckpointData2NV<'_> {
             p_checkpoint_marker: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CheckpointData2NV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CheckpointData2NV<'a> {
@@ -43988,6 +48711,12 @@ impl ::core::default::Default for PhysicalDeviceSynchronization2Features<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceSynchronization2Features<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSynchronization2Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES;
 }
@@ -44024,6 +48753,12 @@ impl ::core::default::Default for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'
             unified_image_layouts_video: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'a> {
@@ -44071,6 +48806,12 @@ impl ::core::default::Default for PhysicalDeviceHostImageCopyFeatures<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceHostImageCopyFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostImageCopyFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_HOST_IMAGE_COPY_FEATURES;
 }
@@ -44115,6 +48856,12 @@ impl ::core::default::Default for PhysicalDeviceHostImageCopyProperties<'_> {
             identical_memory_type_requirements: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceHostImageCopyProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostImageCopyProperties<'a> {
@@ -44183,6 +48930,12 @@ impl ::core::default::Default for MemoryToImageCopy<'_> {
             image_extent: Extent3D::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> MemoryToImageCopy<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryToImageCopy<'a> {
@@ -44254,6 +49007,12 @@ impl ::core::default::Default for ImageToMemoryCopy<'_> {
         }
     }
 }
+impl<'a> ImageToMemoryCopy<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageToMemoryCopy<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_TO_MEMORY_COPY;
 }
@@ -44321,6 +49080,12 @@ impl ::core::default::Default for CopyMemoryToImageInfo<'_> {
         }
     }
 }
+impl<'a> CopyMemoryToImageInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToImageInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MEMORY_TO_IMAGE_INFO;
 }
@@ -44377,6 +49142,12 @@ impl ::core::default::Default for CopyImageToMemoryInfo<'_> {
             p_regions: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CopyImageToMemoryInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageToMemoryInfo<'a> {
@@ -44439,6 +49210,12 @@ impl ::core::default::Default for CopyImageToImageInfo<'_> {
             p_regions: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CopyImageToImageInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageToImageInfo<'a> {
@@ -44507,6 +49284,12 @@ impl ::core::default::Default for HostImageLayoutTransitionInfo<'_> {
         }
     }
 }
+impl<'a> HostImageLayoutTransitionInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for HostImageLayoutTransitionInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::HOST_IMAGE_LAYOUT_TRANSITION_INFO;
 }
@@ -44556,6 +49339,12 @@ impl ::core::default::Default for SubresourceHostMemcpySize<'_> {
         }
     }
 }
+impl<'a> SubresourceHostMemcpySize<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SubresourceHostMemcpySize<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBRESOURCE_HOST_MEMCPY_SIZE;
 }
@@ -44591,6 +49380,12 @@ impl ::core::default::Default for HostImageCopyDevicePerformanceQuery<'_> {
             identical_memory_layout: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> HostImageCopyDevicePerformanceQuery<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HostImageCopyDevicePerformanceQuery<'a> {
@@ -44635,6 +49430,12 @@ impl ::core::default::Default for PhysicalDevicePrimitivesGeneratedQueryFeatures
             primitives_generated_query_with_non_zero_streams: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
@@ -44698,6 +49499,12 @@ impl ::core::default::Default for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LEGACY_DITHERING_FEATURES_EXT;
@@ -44733,6 +49540,12 @@ impl ::core::default::Default for PhysicalDeviceMultisampledRenderToSingleSample
             multisampled_render_to_single_sampled: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -44783,6 +49596,12 @@ impl ::core::default::Default for SurfaceCapabilitiesPresentId2KHR<'_> {
         }
     }
 }
+impl<'a> SurfaceCapabilitiesPresentId2KHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentId2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_PRESENT_ID_2_KHR;
 }
@@ -44816,6 +49635,12 @@ impl ::core::default::Default for SurfaceCapabilitiesPresentWait2KHR<'_> {
             present_wait2_supported: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SurfaceCapabilitiesPresentWait2KHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentWait2KHR<'a> {
@@ -44853,6 +49678,12 @@ impl ::core::default::Default for SubpassResolvePerformanceQueryEXT<'_> {
         }
     }
 }
+impl<'a> SubpassResolvePerformanceQueryEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SubpassResolvePerformanceQueryEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_RESOLVE_PERFORMANCE_QUERY_EXT;
 }
@@ -44888,6 +49719,12 @@ impl ::core::default::Default for MultisampledRenderToSingleSampledInfoEXT<'_> {
             rasterization_samples: SampleCountFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> MultisampledRenderToSingleSampledInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MultisampledRenderToSingleSampledInfoEXT<'a> {
@@ -44936,6 +49773,12 @@ impl ::core::default::Default for PhysicalDevicePipelineProtectedAccessFeatures<
         }
     }
 }
+impl<'a> PhysicalDevicePipelineProtectedAccessFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineProtectedAccessFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES;
@@ -44976,6 +49819,12 @@ impl ::core::default::Default for QueueFamilyVideoPropertiesKHR<'_> {
         }
     }
 }
+impl<'a> QueueFamilyVideoPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyVideoPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_VIDEO_PROPERTIES_KHR;
 }
@@ -45012,6 +49861,12 @@ impl ::core::default::Default for QueueFamilyQueryResultStatusPropertiesKHR<'_> 
             query_result_status_support: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> QueueFamilyQueryResultStatusPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyQueryResultStatusPropertiesKHR<'a> {
@@ -45052,6 +49907,12 @@ impl ::core::default::Default for VideoProfileListInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoProfileListInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoProfileListInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_PROFILE_LIST_INFO_KHR;
 }
@@ -45089,6 +49950,12 @@ impl ::core::default::Default for PhysicalDeviceVideoFormatInfoKHR<'_> {
             image_usage: ImageUsageFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceVideoFormatInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoFormatInfoKHR<'a> {
@@ -45133,6 +50000,12 @@ impl ::core::default::Default for VideoFormatPropertiesKHR<'_> {
             image_usage_flags: ImageUsageFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoFormatPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatPropertiesKHR<'a> {
@@ -45194,6 +50067,12 @@ impl ::core::default::Default for VideoEncodeQuantizationMapCapabilitiesKHR<'_> 
         }
     }
 }
+impl<'a> VideoEncodeQuantizationMapCapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQuantizationMapCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_QUANTIZATION_MAP_CAPABILITIES_KHR;
@@ -45230,6 +50109,12 @@ impl ::core::default::Default for VideoEncodeH264QuantizationMapCapabilitiesKHR<
             max_qp_delta: i32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH264QuantizationMapCapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264QuantizationMapCapabilitiesKHR<'a> {
@@ -45278,6 +50163,12 @@ impl ::core::default::Default for VideoEncodeH265QuantizationMapCapabilitiesKHR<
         }
     }
 }
+impl<'a> VideoEncodeH265QuantizationMapCapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265QuantizationMapCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_QUANTIZATION_MAP_CAPABILITIES_KHR;
@@ -45324,6 +50215,12 @@ impl ::core::default::Default for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'
         }
     }
 }
+impl<'a> VideoEncodeAV1QuantizationMapCapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_AV1_QUANTIZATION_MAP_CAPABILITIES_KHR;
@@ -45365,6 +50262,12 @@ impl ::core::default::Default for VideoFormatQuantizationMapPropertiesKHR<'_> {
         }
     }
 }
+impl<'a> VideoFormatQuantizationMapPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatQuantizationMapPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_FORMAT_QUANTIZATION_MAP_PROPERTIES_KHR;
@@ -45399,6 +50302,12 @@ impl ::core::default::Default for VideoFormatH265QuantizationMapPropertiesKHR<'_
             compatible_ctb_sizes: VideoEncodeH265CtbSizeFlagsKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoFormatH265QuantizationMapPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatH265QuantizationMapPropertiesKHR<'a> {
@@ -45441,6 +50350,12 @@ impl ::core::default::Default for VideoFormatAV1QuantizationMapPropertiesKHR<'_>
             compatible_superblock_sizes: VideoEncodeAV1SuperblockSizeFlagsKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoFormatAV1QuantizationMapPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatAV1QuantizationMapPropertiesKHR<'a> {
@@ -45489,6 +50404,12 @@ impl ::core::default::Default for VideoProfileInfoKHR<'_> {
             chroma_bit_depth: VideoComponentBitDepthFlagsKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoProfileInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoProfileInfoKHR<'a> {
@@ -45561,6 +50482,12 @@ impl ::core::default::Default for VideoCapabilitiesKHR<'_> {
             std_header_version: ExtensionProperties::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoCapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoCapabilitiesKHR<'a> {
@@ -45645,6 +50572,12 @@ impl ::core::default::Default for VideoSessionMemoryRequirementsKHR<'_> {
         }
     }
 }
+impl<'a> VideoSessionMemoryRequirementsKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionMemoryRequirementsKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_MEMORY_REQUIREMENTS_KHR;
 }
@@ -45688,6 +50621,12 @@ impl ::core::default::Default for BindVideoSessionMemoryInfoKHR<'_> {
             memory_size: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BindVideoSessionMemoryInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindVideoSessionMemoryInfoKHR<'a> {
@@ -45745,6 +50684,12 @@ impl ::core::default::Default for VideoPictureResourceInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoPictureResourceInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoPictureResourceInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_PICTURE_RESOURCE_INFO_KHR;
 }
@@ -45796,6 +50741,12 @@ impl ::core::default::Default for VideoReferenceSlotInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoReferenceSlotInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoReferenceSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_REFERENCE_SLOT_INFO_KHR;
 }
@@ -45838,6 +50789,12 @@ impl ::core::default::Default for VideoDecodeCapabilitiesKHR<'_> {
         }
     }
 }
+impl<'a> VideoDecodeCapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_CAPABILITIES_KHR;
 }
@@ -45871,6 +50828,12 @@ impl ::core::default::Default for VideoDecodeUsageInfoKHR<'_> {
             video_usage_hints: VideoDecodeUsageFlagsKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoDecodeUsageInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeUsageInfoKHR<'a> {
@@ -45921,6 +50884,12 @@ impl ::core::default::Default for VideoDecodeInfoKHR<'_> {
             p_reference_slots: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoDecodeInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeInfoKHR<'a> {
@@ -45994,6 +50963,12 @@ impl ::core::default::Default for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_>
         }
     }
 }
+impl<'a> PhysicalDeviceVideoMaintenance1FeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoMaintenance1FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VIDEO_MAINTENANCE_1_FEATURES_KHR;
@@ -46032,6 +51007,12 @@ impl ::core::default::Default for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_>
             video_maintenance2: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceVideoMaintenance2FeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoMaintenance2FeaturesKHR<'a> {
@@ -46076,6 +51057,12 @@ impl ::core::default::Default for VideoInlineQueryInfoKHR<'_> {
             query_count: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoInlineQueryInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoInlineQueryInfoKHR<'a> {
@@ -46126,6 +51113,12 @@ impl ::core::default::Default for VideoDecodeH264ProfileInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoDecodeH264ProfileInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_PROFILE_INFO_KHR;
 }
@@ -46167,6 +51160,12 @@ impl ::core::default::Default for VideoDecodeH264CapabilitiesKHR<'_> {
             field_offset_granularity: Offset2D::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoDecodeH264CapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264CapabilitiesKHR<'a> {
@@ -46213,6 +51212,12 @@ impl ::core::default::Default for VideoDecodeH264SessionParametersAddInfoKHR<'_>
             p_std_pp_ss: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoDecodeH264SessionParametersAddInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264SessionParametersAddInfoKHR<'a> {
@@ -46263,6 +51268,12 @@ impl ::core::default::Default for VideoDecodeH264SessionParametersCreateInfoKHR<
             p_parameters_add_info: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
@@ -46319,6 +51330,12 @@ impl ::core::default::Default for VideoDecodeH264InlineSessionParametersInfoKHR<
         }
     }
 }
+impl<'a> VideoDecodeH264InlineSessionParametersInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264InlineSessionParametersInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_DECODE_H264_INLINE_SESSION_PARAMETERS_INFO_KHR;
@@ -46364,6 +51381,12 @@ impl ::core::default::Default for VideoDecodeH264PictureInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoDecodeH264PictureInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_PICTURE_INFO_KHR;
 }
@@ -46405,6 +51428,12 @@ impl ::core::default::Default for VideoDecodeH264DpbSlotInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoDecodeH264DpbSlotInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_DPB_SLOT_INFO_KHR;
 }
@@ -46443,6 +51472,12 @@ impl ::core::default::Default for VideoDecodeH265ProfileInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoDecodeH265ProfileInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_PROFILE_INFO_KHR;
 }
@@ -46477,6 +51512,12 @@ impl ::core::default::Default for VideoDecodeH265CapabilitiesKHR<'_> {
             max_level_idc: StdVideoH265LevelIdc::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoDecodeH265CapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265CapabilitiesKHR<'a> {
@@ -46522,6 +51563,12 @@ impl ::core::default::Default for VideoDecodeH265SessionParametersAddInfoKHR<'_>
             p_std_pp_ss: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoDecodeH265SessionParametersAddInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265SessionParametersAddInfoKHR<'a> {
@@ -46580,6 +51627,12 @@ impl ::core::default::Default for VideoDecodeH265SessionParametersCreateInfoKHR<
             p_parameters_add_info: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
@@ -46643,6 +51696,12 @@ impl ::core::default::Default for VideoDecodeH265InlineSessionParametersInfoKHR<
         }
     }
 }
+impl<'a> VideoDecodeH265InlineSessionParametersInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265InlineSessionParametersInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_DECODE_H265_INLINE_SESSION_PARAMETERS_INFO_KHR;
@@ -46693,6 +51752,12 @@ impl ::core::default::Default for VideoDecodeH265PictureInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoDecodeH265PictureInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_PICTURE_INFO_KHR;
 }
@@ -46734,6 +51799,12 @@ impl ::core::default::Default for VideoDecodeH265DpbSlotInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoDecodeH265DpbSlotInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_DPB_SLOT_INFO_KHR;
 }
@@ -46770,6 +51841,12 @@ impl ::core::default::Default for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'_> {
             video_decode_vp9: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceVideoDecodeVP9FeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'a> {
@@ -46809,6 +51886,12 @@ impl ::core::default::Default for VideoDecodeVP9ProfileInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoDecodeVP9ProfileInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeVP9ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_VP9_PROFILE_INFO_KHR;
 }
@@ -46843,6 +51926,12 @@ impl ::core::default::Default for VideoDecodeVP9CapabilitiesKHR<'_> {
             max_level: StdVideoVP9Level::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoDecodeVP9CapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeVP9CapabilitiesKHR<'a> {
@@ -46886,6 +51975,12 @@ impl ::core::default::Default for VideoDecodeVP9PictureInfoKHR<'_> {
             tiles_offset: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoDecodeVP9PictureInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeVP9PictureInfoKHR<'a> {
@@ -46948,6 +52043,12 @@ impl ::core::default::Default for VideoDecodeAV1ProfileInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoDecodeAV1ProfileInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_PROFILE_INFO_KHR;
 }
@@ -46989,6 +52090,12 @@ impl ::core::default::Default for VideoDecodeAV1CapabilitiesKHR<'_> {
         }
     }
 }
+impl<'a> VideoDecodeAV1CapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_CAPABILITIES_KHR;
 }
@@ -47022,6 +52129,12 @@ impl ::core::default::Default for VideoDecodeAV1SessionParametersCreateInfoKHR<'
             p_std_sequence_header: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
@@ -47064,6 +52177,12 @@ impl ::core::default::Default for VideoDecodeAV1InlineSessionParametersInfoKHR<'
             p_std_sequence_header: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoDecodeAV1InlineSessionParametersInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1InlineSessionParametersInfoKHR<'a> {
@@ -47113,6 +52232,12 @@ impl ::core::default::Default for VideoDecodeAV1PictureInfoKHR<'_> {
             p_tile_sizes: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoDecodeAV1PictureInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1PictureInfoKHR<'a> {
@@ -47175,6 +52300,12 @@ impl ::core::default::Default for VideoDecodeAV1DpbSlotInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoDecodeAV1DpbSlotInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_DPB_SLOT_INFO_KHR;
 }
@@ -47227,6 +52358,12 @@ impl ::core::default::Default for VideoSessionCreateInfoKHR<'_> {
             p_std_header_version: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoSessionCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionCreateInfoKHR<'a> {
@@ -47307,6 +52444,12 @@ impl ::core::default::Default for VideoSessionParametersCreateInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoSessionParametersCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
@@ -47354,6 +52497,12 @@ impl ::core::default::Default for VideoSessionParametersUpdateInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoSessionParametersUpdateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionParametersUpdateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_PARAMETERS_UPDATE_INFO_KHR;
 }
@@ -47386,6 +52535,12 @@ impl ::core::default::Default for VideoEncodeSessionParametersGetInfoKHR<'_> {
             video_session_parameters: VideoSessionParametersKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeSessionParametersGetInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionParametersGetInfoKHR<'a> {
@@ -47424,6 +52579,12 @@ impl ::core::default::Default for VideoEncodeSessionParametersFeedbackInfoKHR<'_
             has_overrides: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
@@ -47467,6 +52628,12 @@ impl ::core::default::Default for VideoBeginCodingInfoKHR<'_> {
             p_reference_slots: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoBeginCodingInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoBeginCodingInfoKHR<'a> {
@@ -47522,6 +52689,12 @@ impl ::core::default::Default for VideoEndCodingInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoEndCodingInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEndCodingInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_END_CODING_INFO_KHR;
 }
@@ -47554,6 +52727,12 @@ impl ::core::default::Default for VideoCodingControlInfoKHR<'_> {
             flags: VideoCodingControlFlagsKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoCodingControlInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoCodingControlInfoKHR<'a> {
@@ -47592,6 +52771,12 @@ impl ::core::default::Default for VideoEncodeUsageInfoKHR<'_> {
             tuning_mode: VideoEncodeTuningModeKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeUsageInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeUsageInfoKHR<'a> {
@@ -47654,6 +52839,12 @@ impl ::core::default::Default for VideoEncodeInfoKHR<'_> {
             preceding_externally_encoded_bytes: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeInfoKHR<'a> {
@@ -47737,6 +52928,12 @@ impl ::core::default::Default for VideoEncodeQuantizationMapInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeQuantizationMapInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQuantizationMapInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_QUANTIZATION_MAP_INFO_KHR;
 }
@@ -47775,6 +52972,12 @@ impl ::core::default::Default for VideoEncodeQuantizationMapSessionParametersCre
             quantization_map_texel_size: Extent2D::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -47816,6 +53019,12 @@ impl ::core::default::Default for PhysicalDeviceVideoEncodeQuantizationMapFeatur
             video_encode_quantization_map: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'a> {
@@ -47861,6 +53070,12 @@ impl ::core::default::Default for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> 
         }
     }
 }
+impl<'a> QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::QUERY_POOL_VIDEO_ENCODE_FEEDBACK_CREATE_INFO_KHR;
@@ -47898,6 +53113,12 @@ impl ::core::default::Default for VideoEncodeQualityLevelInfoKHR<'_> {
             quality_level: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeQualityLevelInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQualityLevelInfoKHR<'a> {
@@ -47941,6 +53162,12 @@ impl ::core::default::Default for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'
         }
     }
 }
+impl<'a> PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VIDEO_ENCODE_QUALITY_LEVEL_INFO_KHR;
@@ -47981,6 +53208,12 @@ impl ::core::default::Default for VideoEncodeQualityLevelPropertiesKHR<'_> {
             preferred_rate_control_layer_count: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeQualityLevelPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQualityLevelPropertiesKHR<'a> {
@@ -48036,6 +53269,12 @@ impl ::core::default::Default for VideoEncodeRateControlInfoKHR<'_> {
             initial_virtual_buffer_size_in_ms: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeRateControlInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRateControlInfoKHR<'a> {
@@ -48107,6 +53346,12 @@ impl ::core::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRateControlLayerInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR;
 }
@@ -48166,6 +53411,12 @@ impl ::core::default::Default for VideoEncodeCapabilitiesKHR<'_> {
             supported_encode_feedback_flags: VideoEncodeFeedbackFlagsKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeCapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeCapabilitiesKHR<'a> {
@@ -48264,6 +53515,12 @@ impl ::core::default::Default for VideoEncodeH264CapabilitiesKHR<'_> {
             std_syntax_flags: VideoEncodeH264StdFlagsKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH264CapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264CapabilitiesKHR<'a> {
@@ -48386,6 +53643,12 @@ impl ::core::default::Default for VideoEncodeH264QualityLevelPropertiesKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeH264QualityLevelPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264QualityLevelPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_QUALITY_LEVEL_PROPERTIES_KHR;
@@ -48482,6 +53745,12 @@ impl ::core::default::Default for VideoEncodeH264SessionCreateInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeH264SessionCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_SESSION_CREATE_INFO_KHR;
 }
@@ -48526,6 +53795,12 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersAddInfoKHR<'_>
             p_std_pp_ss: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH264SessionParametersAddInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersAddInfoKHR<'a> {
@@ -48576,6 +53851,12 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersCreateInfoKHR<
             p_parameters_add_info: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH264SessionParametersCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersCreateInfoKHR<'a> {
@@ -48636,6 +53917,12 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersGetInfoKHR<'_>
         }
     }
 }
+impl<'a> VideoEncodeH264SessionParametersGetInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersGetInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_GET_INFO_KHR;
@@ -48692,6 +53979,12 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersFeedbackInfoKH
         }
     }
 }
+impl<'a> VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_FEEDBACK_INFO_KHR;
@@ -48736,6 +54029,12 @@ impl ::core::default::Default for VideoEncodeH264DpbSlotInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeH264DpbSlotInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_DPB_SLOT_INFO_KHR;
 }
@@ -48778,6 +54077,12 @@ impl ::core::default::Default for VideoEncodeH264PictureInfoKHR<'_> {
             generate_prefix_nalu: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH264PictureInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264PictureInfoKHR<'a> {
@@ -48829,6 +54134,12 @@ impl ::core::default::Default for VideoEncodeH264ProfileInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeH264ProfileInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_PROFILE_INFO_KHR;
 }
@@ -48865,6 +54176,12 @@ impl ::core::default::Default for VideoEncodeH264NaluSliceInfoKHR<'_> {
             p_std_slice_header: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH264NaluSliceInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264NaluSliceInfoKHR<'a> {
@@ -48914,6 +54231,12 @@ impl ::core::default::Default for VideoEncodeH264RateControlInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeH264RateControlInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264RateControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_RATE_CONTROL_INFO_KHR;
 }
@@ -48958,6 +54281,12 @@ pub struct VideoEncodeH264QpKHR {
 }
 impl VideoEncodeH264QpKHR {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl VideoEncodeH264QpKHR {
+    #[inline]
     pub fn qp_i(mut self, qp_i: i32) -> Self {
         self.qp_i = qp_i;
         self
@@ -48982,6 +54311,12 @@ pub struct VideoEncodeH264FrameSizeKHR {
     pub frame_i_size: u32,
     pub frame_p_size: u32,
     pub frame_b_size: u32,
+}
+impl VideoEncodeH264FrameSizeKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl VideoEncodeH264FrameSizeKHR {
     #[inline]
@@ -49028,6 +54363,12 @@ impl ::core::default::Default for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {
             gop_remaining_b: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH264GopRemainingFrameInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264GopRemainingFrameInfoKHR<'a> {
@@ -49089,6 +54430,12 @@ impl ::core::default::Default for VideoEncodeH264RateControlLayerInfoKHR<'_> {
             max_frame_size: VideoEncodeH264FrameSizeKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH264RateControlLayerInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264RateControlLayerInfoKHR<'a> {
@@ -49183,6 +54530,12 @@ impl ::core::default::Default for VideoEncodeH265CapabilitiesKHR<'_> {
             std_syntax_flags: VideoEncodeH265StdFlagsKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH265CapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265CapabilitiesKHR<'a> {
@@ -49322,6 +54675,12 @@ impl ::core::default::Default for VideoEncodeH265QualityLevelPropertiesKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeH265QualityLevelPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265QualityLevelPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_QUALITY_LEVEL_PROPERTIES_KHR;
@@ -49410,6 +54769,12 @@ impl ::core::default::Default for VideoEncodeH265SessionCreateInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeH265SessionCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_SESSION_CREATE_INFO_KHR;
 }
@@ -49458,6 +54823,12 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersAddInfoKHR<'_>
             p_std_pp_ss: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH265SessionParametersAddInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersAddInfoKHR<'a> {
@@ -49516,6 +54887,12 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersCreateInfoKHR<
             p_parameters_add_info: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH265SessionParametersCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersCreateInfoKHR<'a> {
@@ -49583,6 +54960,12 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersGetInfoKHR<'_>
             std_pps_id: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH265SessionParametersGetInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersGetInfoKHR<'a> {
@@ -49653,6 +55036,12 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersFeedbackInfoKH
         }
     }
 }
+impl<'a> VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_FEEDBACK_INFO_KHR;
@@ -49706,6 +55095,12 @@ impl ::core::default::Default for VideoEncodeH265PictureInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeH265PictureInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_PICTURE_INFO_KHR;
 }
@@ -49750,6 +55145,12 @@ impl ::core::default::Default for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {
             p_std_slice_segment_header: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH265NaluSliceSegmentInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265NaluSliceSegmentInfoKHR<'a> {
@@ -49803,6 +55204,12 @@ impl ::core::default::Default for VideoEncodeH265RateControlInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeH265RateControlInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265RateControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_RATE_CONTROL_INFO_KHR;
 }
@@ -49847,6 +55254,12 @@ pub struct VideoEncodeH265QpKHR {
 }
 impl VideoEncodeH265QpKHR {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl VideoEncodeH265QpKHR {
+    #[inline]
     pub fn qp_i(mut self, qp_i: i32) -> Self {
         self.qp_i = qp_i;
         self
@@ -49871,6 +55284,12 @@ pub struct VideoEncodeH265FrameSizeKHR {
     pub frame_i_size: u32,
     pub frame_p_size: u32,
     pub frame_b_size: u32,
+}
+impl VideoEncodeH265FrameSizeKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl VideoEncodeH265FrameSizeKHR {
     #[inline]
@@ -49917,6 +55336,12 @@ impl ::core::default::Default for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {
             gop_remaining_b: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH265GopRemainingFrameInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265GopRemainingFrameInfoKHR<'a> {
@@ -49978,6 +55403,12 @@ impl ::core::default::Default for VideoEncodeH265RateControlLayerInfoKHR<'_> {
             max_frame_size: VideoEncodeH265FrameSizeKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH265RateControlLayerInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265RateControlLayerInfoKHR<'a> {
@@ -50044,6 +55475,12 @@ impl ::core::default::Default for VideoEncodeH265ProfileInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeH265ProfileInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_PROFILE_INFO_KHR;
 }
@@ -50078,6 +55515,12 @@ impl ::core::default::Default for VideoEncodeH265DpbSlotInfoKHR<'_> {
             p_std_reference_info: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeH265DpbSlotInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265DpbSlotInfoKHR<'a> {
@@ -50162,6 +55605,12 @@ impl ::core::default::Default for VideoEncodeAV1CapabilitiesKHR<'_> {
             std_syntax_flags: VideoEncodeAV1StdFlagsKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeAV1CapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1CapabilitiesKHR<'a> {
@@ -50373,6 +55822,12 @@ impl ::core::default::Default for VideoEncodeAV1QualityLevelPropertiesKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeAV1QualityLevelPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1QualityLevelPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_AV1_QUALITY_LEVEL_PROPERTIES_KHR;
@@ -50526,6 +55981,12 @@ impl ::core::default::Default for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceVideoEncodeAV1FeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VIDEO_ENCODE_AV1_FEATURES_KHR;
@@ -50563,6 +56024,12 @@ impl ::core::default::Default for VideoEncodeAV1SessionCreateInfoKHR<'_> {
             max_level: StdVideoAV1Level::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeAV1SessionCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1SessionCreateInfoKHR<'a> {
@@ -50609,6 +56076,12 @@ impl ::core::default::Default for VideoEncodeAV1SessionParametersCreateInfoKHR<'
             p_std_operating_points: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeAV1SessionParametersCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1SessionParametersCreateInfoKHR<'a> {
@@ -50670,6 +56143,12 @@ impl ::core::default::Default for VideoEncodeAV1DpbSlotInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeAV1DpbSlotInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_AV1_DPB_SLOT_INFO_KHR;
 }
@@ -50718,6 +56197,12 @@ impl ::core::default::Default for VideoEncodeAV1PictureInfoKHR<'_> {
             generate_obu_extension_header: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeAV1PictureInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1PictureInfoKHR<'a> {
@@ -50791,6 +56276,12 @@ impl ::core::default::Default for VideoEncodeAV1ProfileInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeAV1ProfileInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_AV1_PROFILE_INFO_KHR;
 }
@@ -50833,6 +56324,12 @@ impl ::core::default::Default for VideoEncodeAV1RateControlInfoKHR<'_> {
             temporal_layer_count: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeAV1RateControlInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1RateControlInfoKHR<'a> {
@@ -50882,6 +56379,12 @@ pub struct VideoEncodeAV1QIndexKHR {
 }
 impl VideoEncodeAV1QIndexKHR {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl VideoEncodeAV1QIndexKHR {
+    #[inline]
     pub fn intra_q_index(mut self, intra_q_index: u32) -> Self {
         self.intra_q_index = intra_q_index;
         self
@@ -50906,6 +56409,12 @@ pub struct VideoEncodeAV1FrameSizeKHR {
     pub intra_frame_size: u32,
     pub predictive_frame_size: u32,
     pub bipredictive_frame_size: u32,
+}
+impl VideoEncodeAV1FrameSizeKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl VideoEncodeAV1FrameSizeKHR {
     #[inline]
@@ -50952,6 +56461,12 @@ impl ::core::default::Default for VideoEncodeAV1GopRemainingFrameInfoKHR<'_> {
             gop_remaining_bipredictive: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeAV1GopRemainingFrameInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1GopRemainingFrameInfoKHR<'a> {
@@ -51013,6 +56528,12 @@ impl ::core::default::Default for VideoEncodeAV1RateControlLayerInfoKHR<'_> {
             max_frame_size: VideoEncodeAV1FrameSizeKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeAV1RateControlLayerInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1RateControlLayerInfoKHR<'a> {
@@ -51079,6 +56600,12 @@ impl ::core::default::Default for PhysicalDeviceInheritedViewportScissorFeatures
         }
     }
 }
+impl<'a> PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INHERITED_VIEWPORT_SCISSOR_FEATURES_NV;
@@ -51121,6 +56648,12 @@ impl ::core::default::Default for CommandBufferInheritanceViewportScissorInfoNV<
             p_viewport_depths: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CommandBufferInheritanceViewportScissorInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceViewportScissorInfoNV<'a> {
@@ -51172,6 +56705,12 @@ impl ::core::default::Default for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT
         }
     }
 }
+impl<'a> PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_YCBCR_2_PLANE_444_FORMATS_FEATURES_EXT;
@@ -51212,6 +56751,12 @@ impl ::core::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {
             transform_feedback_preserves_provoking_vertex: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
@@ -51260,6 +56805,12 @@ impl ::core::default::Default for PhysicalDeviceProvokingVertexPropertiesEXT<'_>
             transform_feedback_preserves_triangle_fan_provoking_vertex: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
@@ -51313,6 +56864,12 @@ impl ::core::default::Default for PipelineRasterizationProvokingVertexStateCreat
         }
     }
 }
+impl<'a> PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_PROVOKING_VERTEX_STATE_CREATE_INFO_EXT;
@@ -51358,6 +56915,12 @@ impl ::core::default::Default for VideoEncodeIntraRefreshCapabilitiesKHR<'_> {
             non_rectangular_intra_refresh_regions: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeIntraRefreshCapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeIntraRefreshCapabilitiesKHR<'a> {
@@ -51433,6 +56996,12 @@ impl ::core::default::Default for VideoEncodeSessionIntraRefreshCreateInfoKHR<'_
         }
     }
 }
+impl<'a> VideoEncodeSessionIntraRefreshCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionIntraRefreshCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_SESSION_INTRA_REFRESH_CREATE_INFO_KHR;
@@ -51477,6 +57046,12 @@ impl ::core::default::Default for VideoEncodeIntraRefreshInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoEncodeIntraRefreshInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeIntraRefreshInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_INTRA_REFRESH_INFO_KHR;
 }
@@ -51517,6 +57092,12 @@ impl ::core::default::Default for VideoReferenceIntraRefreshInfoKHR<'_> {
         }
     }
 }
+impl<'a> VideoReferenceIntraRefreshInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoReferenceIntraRefreshInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_REFERENCE_INTRA_REFRESH_INFO_KHR;
 }
@@ -51550,6 +57131,12 @@ impl ::core::default::Default for PhysicalDeviceVideoEncodeIntraRefreshFeaturesK
             video_encode_intra_refresh: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'a> {
@@ -51594,6 +57181,12 @@ impl ::core::default::Default for CuModuleCreateInfoNVX<'_> {
         }
     }
 }
+impl<'a> CuModuleCreateInfoNVX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CuModuleCreateInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CU_MODULE_CREATE_INFO_NVX;
 }
@@ -51627,6 +57220,12 @@ impl ::core::default::Default for CuModuleTexturingModeCreateInfoNVX<'_> {
             use64bit_texturing: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CuModuleTexturingModeCreateInfoNVX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CuModuleTexturingModeCreateInfoNVX<'a> {
@@ -51664,6 +57263,12 @@ impl ::core::default::Default for CuFunctionCreateInfoNVX<'_> {
             p_name: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CuFunctionCreateInfoNVX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CuFunctionCreateInfoNVX<'a> {
@@ -51733,6 +57338,12 @@ impl ::core::default::Default for CuLaunchInfoNVX<'_> {
             p_extras: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CuLaunchInfoNVX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CuLaunchInfoNVX<'a> {
@@ -51820,6 +57431,12 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> 
             descriptor_buffer_push_descriptors: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
@@ -51945,6 +57562,12 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferPropertiesEXT<'_
             descriptor_buffer_address_space_size: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
@@ -52231,6 +57854,12 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferDensityMapProper
         }
     }
 }
+impl<'a> PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_DENSITY_MAP_PROPERTIES_EXT;
@@ -52276,6 +57905,12 @@ impl ::core::default::Default for DescriptorAddressInfoEXT<'_> {
             format: Format::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DescriptorAddressInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorAddressInfoEXT<'a> {
@@ -52324,6 +57959,12 @@ impl ::core::default::Default for DescriptorBufferBindingInfoEXT<'_> {
         }
     }
 }
+impl<'a> DescriptorBufferBindingInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorBufferBindingInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_BUFFER_BINDING_INFO_EXT;
 }
@@ -52361,6 +58002,12 @@ impl ::core::default::Default for DescriptorBufferBindingPushDescriptorBufferHan
             buffer: Buffer::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
@@ -52435,6 +58082,12 @@ impl ::core::default::Default for DescriptorGetInfoEXT<'_> {
         }
     }
 }
+impl<'a> DescriptorGetInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorGetInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_GET_INFO_EXT;
 }
@@ -52474,6 +58127,12 @@ impl ::core::default::Default for BufferCaptureDescriptorDataInfoEXT<'_> {
         }
     }
 }
+impl<'a> BufferCaptureDescriptorDataInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
@@ -52508,6 +58167,12 @@ impl ::core::default::Default for ImageCaptureDescriptorDataInfoEXT<'_> {
         }
     }
 }
+impl<'a> ImageCaptureDescriptorDataInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
@@ -52540,6 +58205,12 @@ impl ::core::default::Default for ImageViewCaptureDescriptorDataInfoEXT<'_> {
             image_view: ImageView::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImageViewCaptureDescriptorDataInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewCaptureDescriptorDataInfoEXT<'a> {
@@ -52577,6 +58248,12 @@ impl ::core::default::Default for SamplerCaptureDescriptorDataInfoEXT<'_> {
         }
     }
 }
+impl<'a> SamplerCaptureDescriptorDataInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SamplerCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
@@ -52611,6 +58288,12 @@ impl ::core::default::Default for AccelerationStructureCaptureDescriptorDataInfo
             acceleration_structure_nv: AccelerationStructureNV::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
@@ -52657,6 +58340,12 @@ impl ::core::default::Default for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {
             opaque_capture_descriptor_data: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
@@ -52713,6 +58402,12 @@ impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductFeatures<
             shader_integer_dot_product: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
@@ -52778,6 +58473,12 @@ impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductPropertie
     #[inline]
     fn default() -> Self {
         Self { s_type : Self :: STRUCTURE_TYPE , p_next : :: core :: ptr :: null_mut () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , _marker : PhantomData , }
+    }
+}
+impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerDotProductProperties<'a> {
@@ -53093,6 +58794,12 @@ impl ::core::default::Default for PhysicalDeviceDrmPropertiesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceDrmPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDrmPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_DRM_PROPERTIES_EXT;
 }
@@ -53153,6 +58860,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricFeature
         }
     }
 }
+impl<'a> PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_KHR;
@@ -53194,6 +58907,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricPropert
             tri_strip_vertex_order_independent_of_provoking_vertex: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
@@ -53243,6 +58962,12 @@ impl ::core::default::Default for PhysicalDeviceShaderFmaFeaturesKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceShaderFmaFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFmaFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_FMA_FEATURES_KHR;
 }
@@ -53289,6 +59014,12 @@ impl ::core::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'
             ray_tracing_motion_blur_pipeline_trace_rays_indirect: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
@@ -53340,6 +59071,12 @@ impl ::core::default::Default for PhysicalDeviceRayTracingValidationFeaturesNV<'
         }
     }
 }
+impl<'a> PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV;
@@ -53380,6 +59117,12 @@ impl ::core::default::Default for PhysicalDeviceRayTracingLinearSweptSpheresFeat
             linear_swept_spheres: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {
@@ -53439,6 +59182,12 @@ impl ::core::default::Default for AccelerationStructureGeometryMotionTrianglesDa
         }
     }
 }
+impl<'a> AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_MOTION_TRIANGLES_DATA_NV;
@@ -53478,6 +59227,12 @@ impl ::core::default::Default for AccelerationStructureMotionInfoNV<'_> {
             flags: AccelerationStructureMotionInfoFlagsNV::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> AccelerationStructureMotionInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureMotionInfoNV<'a> {
@@ -53521,6 +59276,12 @@ pub struct SRTDataNV {
     pub tx: f32,
     pub ty: f32,
     pub tz: f32,
+}
+impl SRTDataNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SRTDataNV {
     #[inline]
@@ -53665,6 +59426,12 @@ impl fmt::Debug for AccelerationStructureMotionInstanceNV {
 }
 impl AccelerationStructureMotionInstanceNV {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl AccelerationStructureMotionInstanceNV {
+    #[inline]
     pub fn ty(mut self, ty: AccelerationStructureMotionInstanceTypeNV) -> Self {
         self.ty = ty;
         self
@@ -53708,6 +59475,12 @@ impl ::core::default::Default for MemoryGetRemoteAddressInfoNV<'_> {
         }
     }
 }
+impl<'a> MemoryGetRemoteAddressInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetRemoteAddressInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_REMOTE_ADDRESS_INFO_NV;
 }
@@ -53747,6 +59520,12 @@ impl ::core::default::Default for ImportMemoryBufferCollectionFUCHSIA<'_> {
             index: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImportMemoryBufferCollectionFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryBufferCollectionFUCHSIA<'a> {
@@ -53789,6 +59568,12 @@ impl ::core::default::Default for BufferCollectionImageCreateInfoFUCHSIA<'_> {
             index: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BufferCollectionImageCreateInfoFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionImageCreateInfoFUCHSIA<'a> {
@@ -53834,6 +59619,12 @@ impl ::core::default::Default for BufferCollectionBufferCreateInfoFUCHSIA<'_> {
         }
     }
 }
+impl<'a> BufferCollectionBufferCreateInfoFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionBufferCreateInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::BUFFER_COLLECTION_BUFFER_CREATE_INFO_FUCHSIA;
@@ -53873,6 +59664,12 @@ impl ::core::default::Default for BufferCollectionCreateInfoFUCHSIA<'_> {
             collection_token: zx_handle_t::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BufferCollectionCreateInfoFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionCreateInfoFUCHSIA<'a> {
@@ -53927,6 +59724,12 @@ impl ::core::default::Default for BufferCollectionPropertiesFUCHSIA<'_> {
             suggested_y_chroma_offset: ChromaLocation::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BufferCollectionPropertiesFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionPropertiesFUCHSIA<'a> {
@@ -54026,6 +59829,12 @@ impl ::core::default::Default for BufferConstraintsInfoFUCHSIA<'_> {
         }
     }
 }
+impl<'a> BufferConstraintsInfoFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferConstraintsInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_CONSTRAINTS_INFO_FUCHSIA;
 }
@@ -54076,6 +59885,12 @@ impl ::core::default::Default for SysmemColorSpaceFUCHSIA<'_> {
         }
     }
 }
+impl<'a> SysmemColorSpaceFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SysmemColorSpaceFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SYSMEM_COLOR_SPACE_FUCHSIA;
 }
@@ -54118,6 +59933,12 @@ impl ::core::default::Default for ImageFormatConstraintsInfoFUCHSIA<'_> {
             p_color_spaces: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImageFormatConstraintsInfoFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageFormatConstraintsInfoFUCHSIA<'a> {
@@ -54184,6 +60005,12 @@ impl ::core::default::Default for ImageConstraintsInfoFUCHSIA<'_> {
         }
     }
 }
+impl<'a> ImageConstraintsInfoFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageConstraintsInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CONSTRAINTS_INFO_FUCHSIA;
 }
@@ -54241,6 +60068,12 @@ impl ::core::default::Default for BufferCollectionConstraintsInfoFUCHSIA<'_> {
             min_buffer_count_for_shared_slack: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BufferCollectionConstraintsInfoFUCHSIA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionConstraintsInfoFUCHSIA<'a> {
@@ -54322,6 +60155,13 @@ impl ::core::default::Default for CudaModuleCreateInfoNV<'_> {
     }
 }
 #[cfg(feature = "provisional")]
+impl<'a> CudaModuleCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for CudaModuleCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CUDA_MODULE_CREATE_INFO_NV;
 }
@@ -54362,6 +60202,13 @@ impl ::core::default::Default for CudaFunctionCreateInfoNV<'_> {
             p_name: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+#[cfg(feature = "provisional")]
+impl<'a> CudaFunctionCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -54437,6 +60284,13 @@ impl ::core::default::Default for CudaLaunchInfoNV<'_> {
             p_extras: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+#[cfg(feature = "provisional")]
+impl<'a> CudaLaunchInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -54522,6 +60376,12 @@ impl ::core::default::Default for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT;
@@ -54565,6 +60425,12 @@ impl ::core::default::Default for FormatProperties3<'_> {
             buffer_features: FormatFeatureFlags2::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> FormatProperties3<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FormatProperties3<'a> {
@@ -54614,6 +60480,12 @@ impl ::core::default::Default for DrmFormatModifierPropertiesList2EXT<'_> {
         }
     }
 }
+impl<'a> DrmFormatModifierPropertiesList2EXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DrmFormatModifierPropertiesList2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_2_EXT;
 }
@@ -54638,6 +60510,12 @@ pub struct DrmFormatModifierProperties2EXT {
     pub drm_format_modifier: u64,
     pub drm_format_modifier_plane_count: u32,
     pub drm_format_modifier_tiling_features: FormatFeatureFlags2,
+}
+impl DrmFormatModifierProperties2EXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DrmFormatModifierProperties2EXT {
     #[inline]
@@ -54695,6 +60573,12 @@ impl ::core::default::Default for AndroidHardwareBufferFormatProperties2ANDROID<
             suggested_y_chroma_offset: ChromaLocation::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> AndroidHardwareBufferFormatProperties2ANDROID<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatProperties2ANDROID<'a> {
@@ -54785,6 +60669,12 @@ impl ::core::default::Default for PipelineRenderingCreateInfo<'_> {
         }
     }
 }
+impl<'a> PipelineRenderingCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineRenderingCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_RENDERING_CREATE_INFO;
 }
@@ -54848,6 +60738,12 @@ impl ::core::default::Default for RenderingInfo<'_> {
             p_stencil_attachment: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> RenderingInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingInfo<'a> {
@@ -54919,6 +60815,12 @@ impl ::core::default::Default for RenderingEndInfoKHR<'_> {
         }
     }
 }
+impl<'a> RenderingEndInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderingEndInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_END_INFO_KHR;
 }
@@ -54975,6 +60877,12 @@ impl ::core::default::Default for RenderingAttachmentInfo<'_> {
             clear_value: ClearValue::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> RenderingAttachmentInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentInfo<'a> {
@@ -55050,6 +60958,12 @@ impl ::core::default::Default for RenderingFragmentShadingRateAttachmentInfoKHR<
         }
     }
 }
+impl<'a> RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR;
@@ -55101,6 +61015,12 @@ impl ::core::default::Default for RenderingFragmentDensityMapAttachmentInfoEXT<'
         }
     }
 }
+impl<'a> RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_INFO_EXT;
@@ -55140,6 +61060,12 @@ impl ::core::default::Default for PhysicalDeviceDynamicRenderingFeatures<'_> {
             dynamic_rendering: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDynamicRenderingFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDynamicRenderingFeatures<'a> {
@@ -55188,6 +61114,12 @@ impl ::core::default::Default for CommandBufferInheritanceRenderingInfo<'_> {
             rasterization_samples: SampleCountFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CommandBufferInheritanceRenderingInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceRenderingInfo<'a> {
@@ -55258,6 +61190,12 @@ impl ::core::default::Default for AttachmentSampleCountInfoAMD<'_> {
         }
     }
 }
+impl<'a> AttachmentSampleCountInfoAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AttachmentSampleCountInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_SAMPLE_COUNT_INFO_AMD;
 }
@@ -55308,6 +61246,12 @@ impl ::core::default::Default for MultiviewPerViewAttributesInfoNVX<'_> {
         }
     }
 }
+impl<'a> MultiviewPerViewAttributesInfoNVX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MultiviewPerViewAttributesInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MULTIVIEW_PER_VIEW_ATTRIBUTES_INFO_NVX;
 }
@@ -55353,6 +61297,12 @@ impl ::core::default::Default for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT;
@@ -55388,6 +61338,12 @@ impl ::core::default::Default for ImageViewMinLodCreateInfoEXT<'_> {
             min_lod: f32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImageViewMinLodCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewMinLodCreateInfoEXT<'a> {
@@ -55427,6 +61383,12 @@ impl ::core::default::Default for PhysicalDeviceRasterizationOrderAttachmentAcce
             rasterization_order_stencil_attachment_access: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -55496,6 +61458,12 @@ impl ::core::default::Default for PhysicalDeviceLinearColorAttachmentFeaturesNV<
         }
     }
 }
+impl<'a> PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV;
@@ -55534,6 +61502,12 @@ impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryFeaturesE
             graphics_pipeline_library: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
@@ -55576,6 +61550,12 @@ impl ::core::default::Default for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_BINARY_FEATURES_KHR;
@@ -55611,6 +61591,12 @@ impl ::core::default::Default for DevicePipelineBinaryInternalCacheControlKHR<'_
             disable_internal_cache: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DevicePipelineBinaryInternalCacheControlKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DevicePipelineBinaryInternalCacheControlKHR<'a> {
@@ -55655,6 +61641,12 @@ impl ::core::default::Default for PhysicalDevicePipelineBinaryPropertiesKHR<'_> 
             pipeline_binary_compressed_data: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
@@ -55731,6 +61723,12 @@ impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryPropertie
         }
     }
 }
+impl<'a> PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_PROPERTIES_EXT;
@@ -55782,6 +61780,12 @@ impl ::core::default::Default for GraphicsPipelineLibraryCreateInfoEXT<'_> {
         }
     }
 }
+impl<'a> GraphicsPipelineLibraryCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineLibraryCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GRAPHICS_PIPELINE_LIBRARY_CREATE_INFO_EXT;
 }
@@ -55817,6 +61821,12 @@ impl ::core::default::Default
             data_graph_neural_accelerator_statistics: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -55868,6 +61878,12 @@ impl ::core::default::Default for DataGraphPipelineNeuralStatisticsCreateInfoARM
         }
     }
 }
+impl<'a> DataGraphPipelineNeuralStatisticsCreateInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineNeuralStatisticsCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_NEURAL_STATISTICS_CREATE_INFO_ARM;
@@ -55907,6 +61923,12 @@ impl ::core::default::Default for DataGraphPipelineSessionNeuralStatisticsCreate
         }
     }
 }
+impl<'a> DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_SESSION_NEURAL_STATISTICS_CREATE_INFO_ARM;
@@ -55944,6 +61966,12 @@ impl ::core::default::Default for PhysicalDeviceDescriptorSetHostMappingFeatures
             descriptor_set_host_mapping: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
@@ -55991,6 +62019,12 @@ impl ::core::default::Default for DescriptorSetBindingReferenceVALVE<'_> {
         }
     }
 }
+impl<'a> DescriptorSetBindingReferenceVALVE<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetBindingReferenceVALVE<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_BINDING_REFERENCE_VALVE;
 }
@@ -56030,6 +62064,12 @@ impl ::core::default::Default for DescriptorSetLayoutHostMappingInfoVALVE<'_> {
             descriptor_size: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DescriptorSetLayoutHostMappingInfoVALVE<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutHostMappingInfoVALVE<'a> {
@@ -56074,6 +62114,12 @@ impl ::core::default::Default for PhysicalDeviceNestedCommandBufferFeaturesEXT<'
             nested_command_buffer_simultaneous_use: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
@@ -56132,6 +62178,12 @@ impl ::core::default::Default for PhysicalDeviceNestedCommandBufferPropertiesEXT
         }
     }
 }
+impl<'a> PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_PROPERTIES_EXT;
@@ -56174,6 +62226,12 @@ impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierFeaturesEX
         }
     }
 }
+impl<'a> PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_FEATURES_EXT;
@@ -56212,6 +62270,12 @@ impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierProperties
             shader_module_identifier_algorithm_uuid: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
@@ -56256,6 +62320,12 @@ impl ::core::default::Default for PipelineShaderStageModuleIdentifierCreateInfoE
             p_identifier: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
@@ -56310,6 +62380,12 @@ impl ::core::default::Default for ShaderModuleIdentifierEXT<'_> {
         }
     }
 }
+impl<'a> ShaderModuleIdentifierEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ShaderModuleIdentifierEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_MODULE_IDENTIFIER_EXT;
 }
@@ -56351,6 +62427,12 @@ impl ::core::default::Default for ImageCompressionControlEXT<'_> {
             p_fixed_rate_flags: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImageCompressionControlEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCompressionControlEXT<'a> {
@@ -56399,6 +62481,12 @@ impl ::core::default::Default for PhysicalDeviceImageCompressionControlFeaturesE
         }
     }
 }
+impl<'a> PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT;
@@ -56439,6 +62527,12 @@ impl ::core::default::Default for ImageCompressionPropertiesEXT<'_> {
             image_compression_fixed_rate_flags: ImageCompressionFixedRateFlagsEXT::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImageCompressionPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCompressionPropertiesEXT<'a> {
@@ -56489,6 +62583,12 @@ impl ::core::default::Default for PhysicalDeviceImageCompressionControlSwapchain
         }
     }
 }
+impl<'a> PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a>
 {
@@ -56537,6 +62637,12 @@ impl ::core::default::Default for ImageSubresource2<'_> {
         }
     }
 }
+impl<'a> ImageSubresource2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageSubresource2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_SUBRESOURCE_2;
 }
@@ -56569,6 +62675,12 @@ impl ::core::default::Default for SubresourceLayout2<'_> {
             subresource_layout: SubresourceLayout::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SubresourceLayout2<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubresourceLayout2<'a> {
@@ -56605,6 +62717,12 @@ impl ::core::default::Default for RenderPassCreationControlEXT<'_> {
         }
     }
 }
+impl<'a> RenderPassCreationControlEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreationControlEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_CREATION_CONTROL_EXT;
 }
@@ -56624,6 +62742,12 @@ impl<'a> RenderPassCreationControlEXT<'a> {
 #[must_use]
 pub struct RenderPassCreationFeedbackInfoEXT {
     pub post_merge_subpass_count: u32,
+}
+impl RenderPassCreationFeedbackInfoEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl RenderPassCreationFeedbackInfoEXT {
     #[inline]
@@ -56654,6 +62778,12 @@ impl ::core::default::Default for RenderPassCreationFeedbackCreateInfoEXT<'_> {
             p_render_pass_feedback: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> RenderPassCreationFeedbackCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreationFeedbackCreateInfoEXT<'a> {
@@ -56698,6 +62828,12 @@ impl ::core::default::Default for RenderPassSubpassFeedbackInfoEXT {
             description: unsafe { ::core::mem::zeroed() },
             post_merge_index: u32::default(),
         }
+    }
+}
+impl RenderPassSubpassFeedbackInfoEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl RenderPassSubpassFeedbackInfoEXT {
@@ -56747,6 +62883,12 @@ impl ::core::default::Default for RenderPassSubpassFeedbackCreateInfoEXT<'_> {
         }
     }
 }
+impl<'a> RenderPassSubpassFeedbackCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassSubpassFeedbackCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT;
@@ -56784,6 +62926,12 @@ impl ::core::default::Default for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<
             subpass_merge_feedback: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
@@ -56863,6 +63011,12 @@ impl ::core::default::Default for MicromapBuildInfoEXT<'_> {
             triangle_array_stride: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> MicromapBuildInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MicromapBuildInfoEXT<'a> {
@@ -56956,6 +63110,12 @@ impl ::core::default::Default for AccelerationStructureGeometryMicromapDataKHR<'
         }
     }
 }
+impl<'a> AccelerationStructureGeometryMicromapDataKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryMicromapDataKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_MICROMAP_DATA_KHR;
@@ -57027,6 +63187,12 @@ impl ::core::default::Default for MicromapCreateInfoEXT<'_> {
         }
     }
 }
+impl<'a> MicromapCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MicromapCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_CREATE_INFO_EXT;
 }
@@ -57086,6 +63252,12 @@ impl ::core::default::Default for MicromapVersionInfoEXT<'_> {
         }
     }
 }
+impl<'a> MicromapVersionInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MicromapVersionInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_VERSION_INFO_EXT;
 }
@@ -57122,6 +63294,12 @@ impl ::core::default::Default for CopyMicromapInfoEXT<'_> {
             mode: CopyMicromapModeEXT::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CopyMicromapInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMicromapInfoEXT<'a> {
@@ -57183,6 +63361,12 @@ impl ::core::default::Default for CopyMicromapToMemoryInfoEXT<'_> {
         }
     }
 }
+impl<'a> CopyMicromapToMemoryInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyMicromapToMemoryInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MICROMAP_TO_MEMORY_INFO_EXT;
 }
@@ -57242,6 +63426,12 @@ impl ::core::default::Default for CopyMemoryToMicromapInfoEXT<'_> {
         }
     }
 }
+impl<'a> CopyMemoryToMicromapInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToMicromapInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MEMORY_TO_MICROMAP_INFO_EXT;
 }
@@ -57290,6 +63480,12 @@ impl ::core::default::Default for MicromapBuildSizesInfoEXT<'_> {
         }
     }
 }
+impl<'a> MicromapBuildSizesInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MicromapBuildSizesInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_BUILD_SIZES_INFO_EXT;
 }
@@ -57322,6 +63518,12 @@ pub struct MicromapUsageKHR {
 }
 impl MicromapUsageKHR {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl MicromapUsageKHR {
+    #[inline]
     pub fn count(mut self, count: u32) -> Self {
         self.count = count;
         self
@@ -57349,6 +63551,12 @@ pub struct MicromapUsageEXT {
 }
 impl MicromapUsageEXT {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl MicromapUsageEXT {
+    #[inline]
     pub fn count(mut self, count: u32) -> Self {
         self.count = count;
         self
@@ -57373,6 +63581,12 @@ pub struct MicromapTriangleKHR {
     pub data_offset: u32,
     pub subdivision_level: u16,
     pub format: u16,
+}
+impl MicromapTriangleKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl MicromapTriangleKHR {
     #[inline]
@@ -57415,6 +63629,12 @@ impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceOpacityMicromapFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_OPACITY_MICROMAP_FEATURES_KHR;
@@ -57454,6 +63674,12 @@ impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {
             micromap_host_commands: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
@@ -57507,6 +63733,12 @@ impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesKHR<'_>
             max_micromap_triangles: u64::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceOpacityMicromapPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapPropertiesKHR<'a> {
@@ -57575,6 +63807,12 @@ impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesEXT<'_>
         }
     }
 }
+impl<'a> PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_OPACITY_MICROMAP_PROPERTIES_EXT;
@@ -57631,6 +63869,12 @@ impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapK
             micromap: AccelerationStructureKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> AccelerationStructureTrianglesOpacityMicromapKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesOpacityMicromapKHR<'a> {
@@ -57727,6 +63971,12 @@ impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapE
         }
     }
 }
+impl<'a> AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT;
@@ -57808,6 +64058,13 @@ impl ::core::default::Default for PhysicalDeviceDisplacementMicromapFeaturesNV<'
     }
 }
 #[cfg(feature = "provisional")]
+impl<'a> PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV;
@@ -57853,6 +64110,13 @@ impl ::core::default::Default for PhysicalDeviceDisplacementMicromapPropertiesNV
             max_displacement_micromap_subdivision_level: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+#[cfg(feature = "provisional")]
+impl<'a> PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -57973,6 +64237,13 @@ impl ::core::default::Default for AccelerationStructureTrianglesDisplacementMicr
             micromap: MicromapEXT::default(),
             _marker: PhantomData,
         }
+    }
+}
+#[cfg(feature = "provisional")]
+impl<'a> AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -58107,6 +64378,12 @@ impl ::core::default::Default for PipelinePropertiesIdentifierEXT<'_> {
         }
     }
 }
+impl<'a> PipelinePropertiesIdentifierEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelinePropertiesIdentifierEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_PROPERTIES_IDENTIFIER_EXT;
 }
@@ -58139,6 +64416,12 @@ impl ::core::default::Default for PhysicalDevicePipelinePropertiesFeaturesEXT<'_
             pipeline_properties_identifier: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
@@ -58179,6 +64462,12 @@ impl ::core::default::Default for PhysicalDeviceShaderEarlyAndLateFragmentTestsF
             shader_early_and_late_fragment_tests: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -58229,6 +64518,12 @@ impl ::core::default::Default for ExternalMemoryAcquireUnmodifiedEXT<'_> {
         }
     }
 }
+impl<'a> ExternalMemoryAcquireUnmodifiedEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryAcquireUnmodifiedEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_EXT;
 }
@@ -58265,6 +64560,12 @@ impl ::core::default::Default for ExportMetalObjectCreateInfoEXT<'_> {
             export_object_type: ExportMetalObjectTypeFlagsEXT::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ExportMetalObjectCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalObjectCreateInfoEXT<'a> {
@@ -58306,6 +64607,12 @@ impl ::core::default::Default for ExportMetalObjectsInfoEXT<'_> {
         }
     }
 }
+impl<'a> ExportMetalObjectsInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalObjectsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_OBJECTS_INFO_EXT;
 }
@@ -58332,6 +64639,12 @@ impl ::core::default::Default for ExportMetalDeviceInfoEXT<'_> {
             mtl_device: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ExportMetalDeviceInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalDeviceInfoEXT<'a> {
@@ -58369,6 +64682,12 @@ impl ::core::default::Default for ExportMetalCommandQueueInfoEXT<'_> {
             mtl_command_queue: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ExportMetalCommandQueueInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalCommandQueueInfoEXT<'a> {
@@ -58413,6 +64732,12 @@ impl ::core::default::Default for ExportMetalBufferInfoEXT<'_> {
         }
     }
 }
+impl<'a> ExportMetalBufferInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalBufferInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_BUFFER_INFO_EXT;
 }
@@ -58451,6 +64776,12 @@ impl ::core::default::Default for ImportMetalBufferInfoEXT<'_> {
             mtl_buffer: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImportMetalBufferInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalBufferInfoEXT<'a> {
@@ -58494,6 +64825,12 @@ impl ::core::default::Default for ExportMetalTextureInfoEXT<'_> {
             mtl_texture: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ExportMetalTextureInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalTextureInfoEXT<'a> {
@@ -58553,6 +64890,12 @@ impl ::core::default::Default for ImportMetalTextureInfoEXT<'_> {
         }
     }
 }
+impl<'a> ImportMetalTextureInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalTextureInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_METAL_TEXTURE_INFO_EXT;
 }
@@ -58595,6 +64938,12 @@ impl ::core::default::Default for ExportMetalIOSurfaceInfoEXT<'_> {
         }
     }
 }
+impl<'a> ExportMetalIOSurfaceInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalIOSurfaceInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_IO_SURFACE_INFO_EXT;
 }
@@ -58635,6 +64984,12 @@ impl ::core::default::Default for ImportMetalIOSurfaceInfoEXT<'_> {
         }
     }
 }
+impl<'a> ImportMetalIOSurfaceInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalIOSurfaceInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_METAL_IO_SURFACE_INFO_EXT;
 }
@@ -58672,6 +65027,12 @@ impl ::core::default::Default for ExportMetalSharedEventInfoEXT<'_> {
             mtl_shared_event: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ExportMetalSharedEventInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalSharedEventInfoEXT<'a> {
@@ -58719,6 +65080,12 @@ impl ::core::default::Default for ImportMetalSharedEventInfoEXT<'_> {
         }
     }
 }
+impl<'a> ImportMetalSharedEventInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalSharedEventInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_METAL_SHARED_EVENT_INFO_EXT;
 }
@@ -58753,6 +65120,12 @@ impl ::core::default::Default for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_
             non_seamless_cube_map: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
@@ -58793,6 +65166,12 @@ impl ::core::default::Default for PhysicalDevicePipelineRobustnessFeatures<'_> {
             pipeline_robustness: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePipelineRobustnessFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineRobustnessFeatures<'a> {
@@ -58836,6 +65215,12 @@ impl ::core::default::Default for PipelineRobustnessCreateInfo<'_> {
             images: PipelineRobustnessImageBehavior::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PipelineRobustnessCreateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRobustnessCreateInfo<'a> {
@@ -58895,6 +65280,12 @@ impl ::core::default::Default for PhysicalDevicePipelineRobustnessProperties<'_>
             default_robustness_images: PipelineRobustnessImageBehavior::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePipelineRobustnessProperties<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineRobustnessProperties<'a> {
@@ -58967,6 +65358,12 @@ impl ::core::default::Default for ImageViewSampleWeightCreateInfoQCOM<'_> {
         }
     }
 }
+impl<'a> ImageViewSampleWeightCreateInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageViewSampleWeightCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM;
 }
@@ -59012,6 +65409,12 @@ impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesFeatures
         }
     }
 }
+impl<'a> PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_MULTIPLE_WAIT_QUEUES_FEATURES_QCOM;
@@ -59055,6 +65458,12 @@ impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesProperti
         }
     }
 }
+impl<'a> PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_MULTIPLE_WAIT_QUEUES_PROPERTIES_QCOM;
@@ -59096,6 +65505,12 @@ impl ::core::default::Default for PhysicalDeviceImageProcessingFeaturesQCOM<'_> 
             texture_block_match: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
@@ -59149,6 +65564,12 @@ impl ::core::default::Default for PhysicalDeviceImageProcessingPropertiesQCOM<'_
             max_box_filter_block_size: Extent2D::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
@@ -59205,6 +65626,12 @@ impl ::core::default::Default for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM;
@@ -59244,6 +65671,12 @@ impl ::core::default::Default for TilePropertiesQCOM<'_> {
             origin: Offset2D::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> TilePropertiesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TilePropertiesQCOM<'a> {
@@ -59290,6 +65723,12 @@ impl ::core::default::Default for TileMemoryBindInfoQCOM<'_> {
         }
     }
 }
+impl<'a> TileMemoryBindInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for TileMemoryBindInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TILE_MEMORY_BIND_INFO_QCOM;
 }
@@ -59323,6 +65762,12 @@ impl ::core::default::Default for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {
             amigo_profiling: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
@@ -59364,6 +65809,12 @@ impl ::core::default::Default for AmigoProfilingSubmitInfoSEC<'_> {
         }
     }
 }
+impl<'a> AmigoProfilingSubmitInfoSEC<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AmigoProfilingSubmitInfoSEC<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::AMIGO_PROFILING_SUBMIT_INFO_SEC;
 }
@@ -59402,6 +65853,12 @@ impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopLayoutFeat
             attachment_feedback_loop_layout: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
@@ -59450,6 +65907,12 @@ impl ::core::default::Default for AttachmentFeedbackLoopInfoEXT<'_> {
         }
     }
 }
+impl<'a> AttachmentFeedbackLoopInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AttachmentFeedbackLoopInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_FEEDBACK_LOOP_INFO_EXT;
 }
@@ -59483,6 +65946,12 @@ impl ::core::default::Default for PhysicalDeviceAddressBindingReportFeaturesEXT<
             report_address_binding: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
@@ -59525,6 +65994,12 @@ impl ::core::default::Default for RenderingAttachmentFlagsInfoKHR<'_> {
         }
     }
 }
+impl<'a> RenderingAttachmentFlagsInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentFlagsInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_ATTACHMENT_FLAGS_INFO_KHR;
 }
@@ -59562,6 +66037,12 @@ impl ::core::default::Default for ResolveImageModeInfoKHR<'_> {
             stencil_resolve_mode: ResolveModeFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ResolveImageModeInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ResolveImageModeInfoKHR<'a> {
@@ -59615,6 +66096,12 @@ impl ::core::default::Default for DeviceAddressBindingCallbackDataEXT<'_> {
         }
     }
 }
+impl<'a> DeviceAddressBindingCallbackDataEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceAddressBindingCallbackDataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_ADDRESS_BINDING_CALLBACK_DATA_EXT;
 }
@@ -59666,6 +66153,12 @@ impl ::core::default::Default for PhysicalDeviceOpticalFlowFeaturesNV<'_> {
             optical_flow: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceOpticalFlowFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpticalFlowFeaturesNV<'a> {
@@ -59722,6 +66215,12 @@ impl ::core::default::Default for PhysicalDeviceOpticalFlowPropertiesNV<'_> {
             max_num_regions_of_interest: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceOpticalFlowPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpticalFlowPropertiesNV<'a> {
@@ -59815,6 +66314,12 @@ impl ::core::default::Default for OpticalFlowImageFormatInfoNV<'_> {
         }
     }
 }
+impl<'a> OpticalFlowImageFormatInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowImageFormatInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_IMAGE_FORMAT_INFO_NV;
 }
@@ -59849,6 +66354,12 @@ impl ::core::default::Default for OpticalFlowImageFormatPropertiesNV<'_> {
             format: Format::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> OpticalFlowImageFormatPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowImageFormatPropertiesNV<'a> {
@@ -59899,6 +66410,12 @@ impl ::core::default::Default for OpticalFlowSessionCreateInfoNV<'_> {
             flags: OpticalFlowSessionCreateFlagsNV::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> OpticalFlowSessionCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowSessionCreateInfoNV<'a> {
@@ -59979,6 +66496,12 @@ impl ::core::default::Default for OpticalFlowSessionCreatePrivateDataInfoNV<'_> 
         }
     }
 }
+impl<'a> OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::OPTICAL_FLOW_SESSION_CREATE_PRIVATE_DATA_INFO_NV;
@@ -60032,6 +66555,12 @@ impl ::core::default::Default for OpticalFlowExecuteInfoNV<'_> {
         }
     }
 }
+impl<'a> OpticalFlowExecuteInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowExecuteInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_EXECUTE_INFO_NV;
 }
@@ -60074,6 +66603,12 @@ impl ::core::default::Default for PhysicalDeviceFaultFeaturesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceFaultFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FAULT_FEATURES_EXT;
 }
@@ -60100,6 +66635,12 @@ pub struct DeviceFaultAddressInfoKHR {
     pub address_type: DeviceFaultAddressTypeKHR,
     pub reported_address: DeviceAddress,
     pub address_precision: DeviceSize,
+}
+impl DeviceFaultAddressInfoKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DeviceFaultAddressInfoKHR {
     #[inline]
@@ -60145,6 +66686,12 @@ impl ::core::default::Default for DeviceFaultVendorInfoKHR {
             vendor_fault_code: u64::default(),
             vendor_fault_data: u64::default(),
         }
+    }
+}
+impl DeviceFaultVendorInfoKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl DeviceFaultVendorInfoKHR {
@@ -60218,6 +66765,12 @@ impl ::core::default::Default for DeviceFaultInfoKHR<'_> {
         }
     }
 }
+impl<'a> DeviceFaultInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_FAULT_INFO_KHR;
 }
@@ -60288,6 +66841,12 @@ impl ::core::default::Default for DeviceFaultDebugInfoKHR<'_> {
         }
     }
 }
+impl<'a> DeviceFaultDebugInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultDebugInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_FAULT_DEBUG_INFO_KHR;
 }
@@ -60325,6 +66884,12 @@ impl ::core::default::Default for DeviceFaultCountsEXT<'_> {
             vendor_binary_size: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceFaultCountsEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultCountsEXT<'a> {
@@ -60387,6 +66952,12 @@ impl ::core::default::Default for DeviceFaultInfoEXT<'_> {
             p_vendor_binary_data: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceFaultInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultInfoEXT<'a> {
@@ -60454,6 +67025,12 @@ impl ::core::default::Default for DeviceFaultVendorBinaryHeaderVersionOneKHR {
             engine_version: u32::default(),
             api_version: u32::default(),
         }
+    }
+}
+impl DeviceFaultVendorBinaryHeaderVersionOneKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl DeviceFaultVendorBinaryHeaderVersionOneKHR {
@@ -60546,6 +67123,12 @@ impl ::core::default::Default for PhysicalDeviceFaultFeaturesKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceFaultFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FAULT_FEATURES_KHR;
 }
@@ -60600,6 +67183,12 @@ impl ::core::default::Default for PhysicalDeviceFaultPropertiesKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceFaultPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FAULT_PROPERTIES_KHR;
 }
@@ -60633,6 +67222,12 @@ impl ::core::default::Default for PhysicalDevicePipelineLibraryGroupHandlesFeatu
             pipeline_library_group_handles: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
@@ -60682,6 +67277,12 @@ impl ::core::default::Default for DepthBiasInfoEXT<'_> {
         }
     }
 }
+impl<'a> DepthBiasInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DepthBiasInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEPTH_BIAS_INFO_EXT;
 }
@@ -60728,6 +67329,12 @@ impl ::core::default::Default for DepthBiasRepresentationInfoEXT<'_> {
         }
     }
 }
+impl<'a> DepthBiasRepresentationInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DepthBiasRepresentationInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEPTH_BIAS_REPRESENTATION_INFO_EXT;
 }
@@ -60762,6 +67369,12 @@ pub struct DecompressMemoryRegionNV {
     pub compressed_size: DeviceSize,
     pub decompressed_size: DeviceSize,
     pub decompression_method: MemoryDecompressionMethodFlagsEXT,
+}
+impl DecompressMemoryRegionNV {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DecompressMemoryRegionNV {
     #[inline]
@@ -60803,6 +67416,12 @@ pub struct DecompressMemoryRegionEXT {
     pub dst_address: DeviceAddress,
     pub compressed_size: DeviceSize,
     pub decompressed_size: DeviceSize,
+}
+impl DecompressMemoryRegionEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DecompressMemoryRegionEXT {
     #[inline]
@@ -60854,6 +67473,12 @@ impl ::core::default::Default for DecompressMemoryInfoEXT<'_> {
         }
     }
 }
+impl<'a> DecompressMemoryInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DecompressMemoryInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DECOMPRESS_MEMORY_INFO_EXT;
 }
@@ -60899,6 +67524,12 @@ impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<
             shader_warps_per_core: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
@@ -60948,6 +67579,12 @@ impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_
             shader_core_builtins: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
@@ -61004,6 +67641,12 @@ impl ::core::default::Default for FrameBoundaryEXT<'_> {
             p_tag: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> FrameBoundaryEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FrameBoundaryEXT<'a> {
@@ -61072,6 +67715,12 @@ impl ::core::default::Default for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAME_BOUNDARY_FEATURES_EXT;
@@ -61107,6 +67756,12 @@ impl ::core::default::Default for PhysicalDeviceDynamicRenderingUnusedAttachment
             dynamic_rendering_unused_attachments: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -61157,6 +67812,12 @@ impl ::core::default::Default for PhysicalDeviceInternallySynchronizedQueuesFeat
         }
     }
 }
+impl<'a> PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INTERNALLY_SYNCHRONIZED_QUEUES_FEATURES_KHR;
@@ -61200,6 +67861,12 @@ impl ::core::default::Default for SurfacePresentModeKHR<'_> {
         }
     }
 }
+impl<'a> SurfacePresentModeKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfacePresentModeKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PRESENT_MODE_KHR;
 }
@@ -61241,6 +67908,12 @@ impl ::core::default::Default for SurfacePresentScalingCapabilitiesKHR<'_> {
             max_scaled_image_extent: Extent2D::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SurfacePresentScalingCapabilitiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfacePresentScalingCapabilitiesKHR<'a> {
@@ -61309,6 +67982,12 @@ impl ::core::default::Default for SurfacePresentModeCompatibilityKHR<'_> {
         }
     }
 }
+impl<'a> SurfacePresentModeCompatibilityKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfacePresentModeCompatibilityKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PRESENT_MODE_COMPATIBILITY_KHR;
 }
@@ -61343,6 +68022,12 @@ impl ::core::default::Default for PhysicalDeviceSwapchainMaintenance1FeaturesKHR
             swapchain_maintenance1: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'a> {
@@ -61387,6 +68072,12 @@ impl ::core::default::Default for SwapchainPresentFenceInfoKHR<'_> {
         }
     }
 }
+impl<'a> SwapchainPresentFenceInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentFenceInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_FENCE_INFO_KHR;
 }
@@ -61423,6 +68114,12 @@ impl ::core::default::Default for SwapchainPresentModesCreateInfoKHR<'_> {
             p_present_modes: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SwapchainPresentModesCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentModesCreateInfoKHR<'a> {
@@ -61463,6 +68160,12 @@ impl ::core::default::Default for SwapchainPresentModeInfoKHR<'_> {
         }
     }
 }
+impl<'a> SwapchainPresentModeInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentModeInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_MODE_INFO_KHR;
 }
@@ -61501,6 +68204,12 @@ impl ::core::default::Default for SwapchainPresentScalingCreateInfoKHR<'_> {
             present_gravity_y: PresentGravityFlagsKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SwapchainPresentScalingCreateInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentScalingCreateInfoKHR<'a> {
@@ -61552,6 +68261,12 @@ impl ::core::default::Default for ReleaseSwapchainImagesInfoKHR<'_> {
         }
     }
 }
+impl<'a> ReleaseSwapchainImagesInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ReleaseSwapchainImagesInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RELEASE_SWAPCHAIN_IMAGES_INFO_KHR;
 }
@@ -61596,6 +68311,12 @@ impl ::core::default::Default for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> 
             depth_bias_exact: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
@@ -61654,6 +68375,12 @@ impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeatu
         }
     }
 }
+impl<'a> PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_FEATURES_EXT;
@@ -61695,6 +68422,12 @@ impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeatu
             ray_tracing_invocation_reorder: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
@@ -61741,6 +68474,12 @@ impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPrope
             max_shader_binding_table_record_index: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'a> {
@@ -61795,6 +68534,12 @@ impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPrope
         }
     }
 }
+impl<'a> PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV;
@@ -61836,6 +68581,12 @@ impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpaceFeatur
             extended_sparse_address_space: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
@@ -61883,6 +68634,12 @@ impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpaceProper
             extended_sparse_buffer_usage_flags: BufferUsageFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
@@ -61958,6 +68715,12 @@ impl ::core::default::Default for DirectDriverLoadingInfoLUNARG<'_> {
         }
     }
 }
+impl<'a> DirectDriverLoadingInfoLUNARG<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DirectDriverLoadingInfoLUNARG<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DIRECT_DRIVER_LOADING_INFO_LUNARG;
 }
@@ -62004,6 +68767,12 @@ impl ::core::default::Default for DirectDriverLoadingListLUNARG<'_> {
         }
     }
 }
+impl<'a> DirectDriverLoadingListLUNARG<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DirectDriverLoadingListLUNARG<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DIRECT_DRIVER_LOADING_LIST_LUNARG;
 }
@@ -62043,6 +68812,12 @@ impl ::core::default::Default for PhysicalDeviceMultiviewPerViewViewportsFeature
             multiview_per_view_viewports: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
@@ -62088,6 +68863,12 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPositionFetchFeaturesK
         }
     }
 }
+impl<'a> PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR;
@@ -62128,6 +68909,12 @@ impl ::core::default::Default for DeviceImageSubresourceInfo<'_> {
             p_subresource: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceImageSubresourceInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceImageSubresourceInfo<'a> {
@@ -62173,6 +68960,12 @@ impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesARM<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceShaderCorePropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCorePropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM;
 }
@@ -62216,6 +69009,12 @@ impl ::core::default::Default for PhysicalDeviceMultiviewPerViewRenderAreasFeatu
             multiview_per_view_render_areas: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
@@ -62266,6 +69065,12 @@ impl ::core::default::Default for MultiviewPerViewRenderAreasRenderPassBeginInfo
         }
     }
 }
+impl<'a> MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM;
@@ -62307,6 +69112,12 @@ impl ::core::default::Default for QueryLowLatencySupportNV<'_> {
         }
     }
 }
+impl<'a> QueryLowLatencySupportNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for QueryLowLatencySupportNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUERY_LOW_LATENCY_SUPPORT_NV;
 }
@@ -62346,6 +69157,12 @@ impl ::core::default::Default for MemoryMapInfo<'_> {
             size: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> MemoryMapInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMapInfo<'a> {
@@ -62399,6 +69216,12 @@ impl ::core::default::Default for MemoryUnmapInfo<'_> {
         }
     }
 }
+impl<'a> MemoryUnmapInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryUnmapInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_UNMAP_INFO;
 }
@@ -62438,6 +69261,12 @@ impl ::core::default::Default for PhysicalDeviceShaderObjectFeaturesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceShaderObjectFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderObjectFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT;
 }
@@ -62474,6 +69303,12 @@ impl ::core::default::Default for PhysicalDeviceShaderObjectPropertiesEXT<'_> {
             shader_binary_version: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderObjectPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderObjectPropertiesEXT<'a> {
@@ -62537,6 +69372,12 @@ impl ::core::default::Default for ShaderCreateInfoEXT<'_> {
             p_specialization_info: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ShaderCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderCreateInfoEXT<'a> {
@@ -62628,6 +69469,12 @@ impl ::core::default::Default for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_FEATURES_EXT;
@@ -62686,6 +69533,12 @@ impl ::core::default::Default for PhysicalDeviceShaderTileImagePropertiesEXT<'_>
             shader_tile_image_read_from_helper_invocation: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
@@ -62749,6 +69602,12 @@ impl ::core::default::Default for ImportScreenBufferInfoQNX<'_> {
         }
     }
 }
+impl<'a> ImportScreenBufferInfoQNX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportScreenBufferInfoQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_SCREEN_BUFFER_INFO_QNX;
 }
@@ -62784,6 +69643,12 @@ impl ::core::default::Default for ScreenBufferPropertiesQNX<'_> {
             memory_type_bits: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ScreenBufferPropertiesQNX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ScreenBufferPropertiesQNX<'a> {
@@ -62839,6 +69704,12 @@ impl ::core::default::Default for ScreenBufferFormatPropertiesQNX<'_> {
             suggested_y_chroma_offset: ChromaLocation::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ScreenBufferFormatPropertiesQNX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ScreenBufferFormatPropertiesQNX<'a> {
@@ -62922,6 +69793,12 @@ impl ::core::default::Default for ExternalFormatQNX<'_> {
         }
     }
 }
+impl<'a> ExternalFormatQNX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalFormatQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_FORMAT_QNX;
 }
@@ -62956,6 +69833,12 @@ impl ::core::default::Default for PhysicalDeviceExternalMemoryScreenBufferFeatur
             screen_buffer_import: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
@@ -63001,6 +69884,12 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_>
             cooperative_matrix_robust_buffer_access: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
@@ -63066,6 +69955,12 @@ impl ::core::default::Default for CooperativeMatrixPropertiesKHR<'_> {
             scope: ScopeKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CooperativeMatrixPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixPropertiesKHR<'a> {
@@ -63142,6 +70037,12 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesKHR<'
         }
     }
 }
+impl<'a> PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_KHR;
@@ -63182,6 +70083,12 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixConversionFeatu
             cooperative_matrix_conversion: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'a> {
@@ -63241,6 +70148,13 @@ impl ::core::default::Default for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> 
             max_execution_graph_workgroups: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+#[cfg(feature = "provisional")]
+impl<'a> PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -63338,6 +70252,13 @@ impl ::core::default::Default for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {
     }
 }
 #[cfg(feature = "provisional")]
+impl<'a> PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ENQUEUE_FEATURES_AMDX;
@@ -63397,6 +70318,13 @@ impl ::core::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
             base_pipeline_index: i32::default(),
             _marker: PhantomData,
         }
+    }
+}
+#[cfg(feature = "provisional")]
+impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -63468,6 +70396,13 @@ impl ::core::default::Default for PipelineShaderStageNodeCreateInfoAMDX<'_> {
     }
 }
 #[cfg(feature = "provisional")]
+impl<'a> PipelineShaderStageNodeCreateInfoAMDX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageNodeCreateInfoAMDX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_SHADER_STAGE_NODE_CREATE_INFO_AMDX;
@@ -63531,6 +70466,13 @@ impl ::core::default::Default for ExecutionGraphPipelineScratchSizeAMDX<'_> {
     }
 }
 #[cfg(feature = "provisional")]
+impl<'a> ExecutionGraphPipelineScratchSizeAMDX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for ExecutionGraphPipelineScratchSizeAMDX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXECUTION_GRAPH_PIPELINE_SCRATCH_SIZE_AMDX;
 }
@@ -63573,6 +70515,13 @@ impl fmt::Debug for DispatchGraphInfoAMDX {
             .field("payloads", &"union")
             .field("payload_stride", &self.payload_stride)
             .finish()
+    }
+}
+#[cfg(feature = "provisional")]
+impl DispatchGraphInfoAMDX {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 #[cfg(feature = "provisional")]
@@ -63622,6 +70571,13 @@ impl fmt::Debug for DispatchGraphCountInfoAMDX {
 #[cfg(feature = "provisional")]
 impl DispatchGraphCountInfoAMDX {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[cfg(feature = "provisional")]
+impl DispatchGraphCountInfoAMDX {
+    #[inline]
     pub fn count(mut self, count: u32) -> Self {
         self.count = count;
         self
@@ -63659,6 +70615,12 @@ impl ::core::default::Default for PhysicalDeviceAntiLagFeaturesAMD<'_> {
             anti_lag: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceAntiLagFeaturesAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAntiLagFeaturesAMD<'a> {
@@ -63699,6 +70661,12 @@ impl ::core::default::Default for AntiLagDataAMD<'_> {
             p_presentation_info: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> AntiLagDataAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AntiLagDataAMD<'a> {
@@ -63750,6 +70718,12 @@ impl ::core::default::Default for AntiLagPresentationInfoAMD<'_> {
         }
     }
 }
+impl<'a> AntiLagPresentationInfoAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AntiLagPresentationInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANTI_LAG_PRESENTATION_INFO_AMD;
 }
@@ -63789,6 +70763,12 @@ impl ::core::default::Default for BindMemoryStatus<'_> {
         }
     }
 }
+impl<'a> BindMemoryStatus<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BindMemoryStatus<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_MEMORY_STATUS;
 }
@@ -63823,6 +70803,12 @@ impl ::core::default::Default for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'_> {
             tile_memory_heap: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceTileMemoryHeapFeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'a> {
@@ -63862,6 +70848,12 @@ impl ::core::default::Default for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'_>
             tile_buffer_transfers: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceTileMemoryHeapPropertiesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'a> {
@@ -63908,6 +70900,12 @@ impl ::core::default::Default for TileMemorySizeInfoQCOM<'_> {
         }
     }
 }
+impl<'a> TileMemorySizeInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for TileMemorySizeInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TILE_MEMORY_SIZE_INFO_QCOM;
 }
@@ -63945,6 +70943,12 @@ impl ::core::default::Default for TileMemoryRequirementsQCOM<'_> {
             alignment: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> TileMemoryRequirementsQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TileMemoryRequirementsQCOM<'a> {
@@ -63997,6 +71001,12 @@ impl ::core::default::Default for BindDescriptorSetsInfo<'_> {
             p_dynamic_offsets: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BindDescriptorSetsInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindDescriptorSetsInfo<'a> {
@@ -64063,6 +71073,12 @@ impl ::core::default::Default for PushConstantsInfo<'_> {
         }
     }
 }
+impl<'a> PushConstantsInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PushConstantsInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_CONSTANTS_INFO;
 }
@@ -64121,6 +71137,12 @@ impl ::core::default::Default for PushDescriptorSetInfo<'_> {
         }
     }
 }
+impl<'a> PushDescriptorSetInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PushDescriptorSetInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_DESCRIPTOR_SET_INFO;
 }
@@ -64175,6 +71197,12 @@ impl ::core::default::Default for PushDescriptorSetWithTemplateInfo<'_> {
             p_data: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PushDescriptorSetWithTemplateInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushDescriptorSetWithTemplateInfo<'a> {
@@ -64239,6 +71267,12 @@ impl ::core::default::Default for SetDescriptorBufferOffsetsInfoEXT<'_> {
         }
     }
 }
+impl<'a> SetDescriptorBufferOffsetsInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SetDescriptorBufferOffsetsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SET_DESCRIPTOR_BUFFER_OFFSETS_INFO_EXT;
 }
@@ -64299,6 +71333,12 @@ impl ::core::default::Default for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_
         }
     }
 }
+impl<'a> BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::BIND_DESCRIPTOR_BUFFER_EMBEDDED_SAMPLERS_INFO_EXT;
@@ -64344,6 +71384,12 @@ impl ::core::default::Default for PhysicalDeviceCubicClampFeaturesQCOM<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceCubicClampFeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCubicClampFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_CUBIC_CLAMP_FEATURES_QCOM;
 }
@@ -64378,6 +71424,12 @@ impl ::core::default::Default for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {
             ycbcr_degamma: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
@@ -64417,6 +71469,12 @@ impl ::core::default::Default for SamplerYcbcrConversionYcbcrDegammaCreateInfoQC
             enable_cb_cr_degamma: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
@@ -64463,6 +71521,12 @@ impl ::core::default::Default for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUBIC_WEIGHTS_FEATURES_QCOM;
@@ -64500,6 +71564,12 @@ impl ::core::default::Default for SamplerCubicWeightsCreateInfoQCOM<'_> {
         }
     }
 }
+impl<'a> SamplerCubicWeightsCreateInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SamplerCubicWeightsCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_CUBIC_WEIGHTS_CREATE_INFO_QCOM;
 }
@@ -64535,6 +71605,12 @@ impl ::core::default::Default for BlitImageCubicWeightsInfoQCOM<'_> {
         }
     }
 }
+impl<'a> BlitImageCubicWeightsInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BlitImageCubicWeightsInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BLIT_IMAGE_CUBIC_WEIGHTS_INFO_QCOM;
 }
@@ -64568,6 +71644,12 @@ impl ::core::default::Default for PhysicalDeviceImageProcessing2FeaturesQCOM<'_>
             texture_block_match2: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
@@ -64610,6 +71692,12 @@ impl ::core::default::Default for PhysicalDeviceImageProcessing2PropertiesQCOM<'
         }
     }
 }
+impl<'a> PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_2_PROPERTIES_QCOM;
@@ -64649,6 +71737,12 @@ impl ::core::default::Default for SamplerBlockMatchWindowCreateInfoQCOM<'_> {
             window_compare_mode: BlockMatchWindowCompareModeQCOM::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SamplerBlockMatchWindowCreateInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerBlockMatchWindowCreateInfoQCOM<'a> {
@@ -64697,6 +71791,12 @@ impl ::core::default::Default for PhysicalDeviceImageProcessing3FeaturesQCOM<'_>
             block_match_extended_clamp_to_edge: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceImageProcessing3FeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing3FeaturesQCOM<'a> {
@@ -64752,6 +71852,12 @@ impl ::core::default::Default for PhysicalDeviceDescriptorPoolOverallocationFeat
         }
     }
 }
+impl<'a> PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV;
@@ -64795,6 +71901,12 @@ impl ::core::default::Default for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> 
         }
     }
 }
+impl<'a> PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT;
@@ -64834,6 +71946,12 @@ impl ::core::default::Default for PhysicalDevicePerStageDescriptorSetFeaturesNV<
             dynamic_pipeline_layout: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
@@ -64881,6 +71999,12 @@ impl ::core::default::Default for PhysicalDeviceExternalFormatResolveFeaturesAND
         }
     }
 }
+impl<'a> PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_FORMAT_RESOLVE_FEATURES_ANDROID;
@@ -64926,6 +72050,12 @@ impl ::core::default::Default for PhysicalDeviceExternalFormatResolvePropertiesA
             external_format_resolve_chroma_offset_y: ChromaLocation::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
@@ -64987,6 +72117,12 @@ impl ::core::default::Default for AndroidHardwareBufferFormatResolvePropertiesAN
         }
     }
 }
+impl<'a> AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_RESOLVE_PROPERTIES_ANDROID;
@@ -65028,6 +72164,12 @@ impl ::core::default::Default for LatencySleepModeInfoNV<'_> {
             minimum_interval_us: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> LatencySleepModeInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySleepModeInfoNV<'a> {
@@ -65076,6 +72218,12 @@ impl ::core::default::Default for LatencySleepInfoNV<'_> {
         }
     }
 }
+impl<'a> LatencySleepInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for LatencySleepInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_SLEEP_INFO_NV;
 }
@@ -65117,6 +72265,12 @@ impl ::core::default::Default for SetLatencyMarkerInfoNV<'_> {
         }
     }
 }
+impl<'a> SetLatencyMarkerInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SetLatencyMarkerInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SET_LATENCY_MARKER_INFO_NV;
 }
@@ -65156,6 +72310,12 @@ impl ::core::default::Default for GetLatencyMarkerInfoNV<'_> {
             p_timings: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> GetLatencyMarkerInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GetLatencyMarkerInfoNV<'a> {
@@ -65217,6 +72377,12 @@ impl ::core::default::Default for LatencyTimingsFrameReportNV<'_> {
             gpu_render_end_time_us: u64::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> LatencyTimingsFrameReportNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencyTimingsFrameReportNV<'a> {
@@ -65318,6 +72484,12 @@ impl ::core::default::Default for OutOfBandQueueTypeInfoNV<'_> {
         }
     }
 }
+impl<'a> OutOfBandQueueTypeInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for OutOfBandQueueTypeInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OUT_OF_BAND_QUEUE_TYPE_INFO_NV;
 }
@@ -65350,6 +72522,12 @@ impl ::core::default::Default for LatencySubmissionPresentIdNV<'_> {
             present_id: u64::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> LatencySubmissionPresentIdNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySubmissionPresentIdNV<'a> {
@@ -65388,6 +72566,12 @@ impl ::core::default::Default for SwapchainLatencyCreateInfoNV<'_> {
         }
     }
 }
+impl<'a> SwapchainLatencyCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainLatencyCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_LATENCY_CREATE_INFO_NV;
 }
@@ -65423,6 +72607,12 @@ impl ::core::default::Default for LatencySurfaceCapabilitiesNV<'_> {
             p_present_modes: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> LatencySurfaceCapabilitiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySurfaceCapabilitiesNV<'a> {
@@ -65463,6 +72653,13 @@ impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {
             cuda_kernel_launch_features: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+#[cfg(feature = "provisional")]
+impl<'a> PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -65513,6 +72710,13 @@ impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_>
     }
 }
 #[cfg(feature = "provisional")]
+impl<'a> PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_PROPERTIES_NV;
@@ -65559,6 +72763,12 @@ impl ::core::default::Default for DeviceQueueShaderCoreControlCreateInfoARM<'_> 
         }
     }
 }
+impl<'a> DeviceQueueShaderCoreControlCreateInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueShaderCoreControlCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEVICE_QUEUE_SHADER_CORE_CONTROL_CREATE_INFO_ARM;
@@ -65594,6 +72804,12 @@ impl ::core::default::Default for PhysicalDeviceSchedulingControlsFeaturesARM<'_
             scheduling_controls: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
@@ -65634,6 +72850,12 @@ impl ::core::default::Default for PhysicalDeviceSchedulingControlsPropertiesARM<
             scheduling_controls_flags: PhysicalDeviceSchedulingControlsFlagsARM::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
@@ -65682,6 +72904,12 @@ impl ::core::default::Default
             scheduling_controls_max_work_group_batch_size: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -65750,6 +72978,12 @@ impl ::core::default::Default for DispatchParametersARM<'_> {
         }
     }
 }
+impl<'a> DispatchParametersARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DispatchParametersARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPATCH_PARAMETERS_ARM;
 }
@@ -65792,6 +73026,12 @@ impl ::core::default::Default for PhysicalDeviceRelaxedLineRasterizationFeatures
             relaxed_line_rasterization: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
@@ -65837,6 +73077,12 @@ impl ::core::default::Default for PhysicalDeviceRenderPassStripedFeaturesARM<'_>
         }
     }
 }
+impl<'a> PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RENDER_PASS_STRIPED_FEATURES_ARM;
@@ -65877,6 +73123,12 @@ impl ::core::default::Default for PhysicalDeviceRenderPassStripedPropertiesARM<'
             max_render_pass_stripes: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
@@ -65926,6 +73178,12 @@ impl ::core::default::Default for RenderPassStripeInfoARM<'_> {
         }
     }
 }
+impl<'a> RenderPassStripeInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_STRIPE_INFO_ARM;
 }
@@ -65960,6 +73218,12 @@ impl ::core::default::Default for RenderPassStripeBeginInfoARM<'_> {
             p_stripe_infos: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> RenderPassStripeBeginInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeBeginInfoARM<'a> {
@@ -66001,6 +73265,12 @@ impl ::core::default::Default for RenderPassStripeSubmitInfoARM<'_> {
         }
     }
 }
+impl<'a> RenderPassStripeSubmitInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeSubmitInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_STRIPE_SUBMIT_INFO_ARM;
 }
@@ -66038,6 +73308,12 @@ impl ::core::default::Default for PhysicalDevicePipelineOpacityMicromapFeaturesA
             pipeline_opacity_micromap: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
@@ -66078,6 +73354,12 @@ impl ::core::default::Default for PhysicalDeviceShaderMaximalReconvergenceFeatur
             shader_maximal_reconvergence: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
@@ -66123,6 +73405,12 @@ impl ::core::default::Default for PhysicalDeviceShaderSubgroupRotateFeatures<'_>
             shader_subgroup_rotate_clustered: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderSubgroupRotateFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupRotateFeatures<'a> {
@@ -66173,6 +73461,12 @@ impl ::core::default::Default for PhysicalDeviceShaderExpectAssumeFeatures<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceShaderExpectAssumeFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderExpectAssumeFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_EXPECT_ASSUME_FEATURES;
@@ -66208,6 +73502,12 @@ impl ::core::default::Default for PhysicalDeviceShaderFloatControls2Features<'_>
             shader_float_controls2: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderFloatControls2Features<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloatControls2Features<'a> {
@@ -66248,6 +73548,12 @@ impl ::core::default::Default for PhysicalDeviceDynamicRenderingLocalReadFeature
             dynamic_rendering_local_read: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDynamicRenderingLocalReadFeatures<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDynamicRenderingLocalReadFeatures<'a> {
@@ -66292,6 +73598,12 @@ impl ::core::default::Default for RenderingAttachmentLocationInfo<'_> {
         }
     }
 }
+impl<'a> RenderingAttachmentLocationInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentLocationInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_ATTACHMENT_LOCATION_INFO;
 }
@@ -66333,6 +73645,12 @@ impl ::core::default::Default for RenderingInputAttachmentIndexInfo<'_> {
             p_stencil_input_attachment_index: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> RenderingInputAttachmentIndexInfo<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingInputAttachmentIndexInfo<'a> {
@@ -66388,6 +73706,12 @@ impl ::core::default::Default for PhysicalDeviceShaderQuadControlFeaturesKHR<'_>
         }
     }
 }
+impl<'a> PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_QUAD_CONTROL_FEATURES_KHR;
@@ -66426,6 +73750,12 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat16VectorFeature
             shader_float16_vector_atomics: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
@@ -66475,6 +73805,12 @@ impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAP_MEMORY_PLACED_FEATURES_EXT;
@@ -66522,6 +73858,12 @@ impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_>
         }
     }
 }
+impl<'a> PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAP_MEMORY_PLACED_PROPERTIES_EXT;
@@ -66564,6 +73906,12 @@ impl ::core::default::Default for MemoryMapPlacedInfoEXT<'_> {
         }
     }
 }
+impl<'a> MemoryMapPlacedInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryMapPlacedInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_MAP_PLACED_INFO_EXT;
 }
@@ -66601,6 +73949,12 @@ impl ::core::default::Default for PhysicalDeviceShaderBfloat16FeaturesKHR<'_> {
             shader_b_float16_cooperative_matrix: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {
@@ -66653,6 +74007,12 @@ impl ::core::default::Default for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAW_ACCESS_CHAINS_FEATURES_NV;
@@ -66688,6 +74048,12 @@ impl ::core::default::Default for PhysicalDeviceCommandBufferInheritanceFeatures
             command_buffer_inheritance: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
@@ -66730,6 +74096,12 @@ impl ::core::default::Default for PhysicalDeviceImageAlignmentControlFeaturesMES
         }
     }
 }
+impl<'a> PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_FEATURES_MESA;
@@ -66768,6 +74140,12 @@ impl ::core::default::Default for PhysicalDeviceImageAlignmentControlPropertiesM
             supported_image_alignment_mask: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
@@ -66809,6 +74187,12 @@ impl ::core::default::Default for ImageAlignmentControlCreateInfoMESA<'_> {
         }
     }
 }
+impl<'a> ImageAlignmentControlCreateInfoMESA<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageAlignmentControlCreateInfoMESA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_ALIGNMENT_CONTROL_CREATE_INFO_MESA;
 }
@@ -66842,6 +74226,12 @@ impl ::core::default::Default for PhysicalDeviceShaderReplicatedCompositesFeatur
             shader_replicated_composites: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
@@ -66887,6 +74277,12 @@ impl ::core::default::Default for PhysicalDevicePresentModeFifoLatestReadyFeatur
         }
     }
 }
+impl<'a> PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRESENT_MODE_FIFO_LATEST_READY_FEATURES_KHR;
@@ -66914,6 +74310,12 @@ impl<'a> PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a> {
 pub struct DepthClampRangeEXT {
     pub min_depth_clamp: f32,
     pub max_depth_clamp: f32,
+}
+impl DepthClampRangeEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DepthClampRangeEXT {
     #[inline]
@@ -66961,6 +74363,12 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrix2FeaturesNV<'_>
             cooperative_matrix_block_loads: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceCooperativeMatrix2FeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrix2FeaturesNV<'a> {
@@ -67050,6 +74458,12 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrix2PropertiesNV<'
         }
     }
 }
+impl<'a> PhysicalDeviceCooperativeMatrix2PropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrix2PropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_2_PROPERTIES_NV;
@@ -67127,6 +74541,12 @@ impl ::core::default::Default for CooperativeMatrixFlexibleDimensionsPropertiesN
             workgroup_invocations: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CooperativeMatrixFlexibleDimensionsPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixFlexibleDimensionsPropertiesNV<'a> {
@@ -67209,6 +74629,12 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixDecodeVectorFea
         }
     }
 }
+impl<'a> PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_DECODE_VECTOR_FEATURES_NV;
@@ -67255,6 +74681,12 @@ impl ::core::default::Default for PhysicalDeviceHdrVividFeaturesHUAWEI<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceHdrVividFeaturesHUAWEI<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHdrVividFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_HDR_VIVID_FEATURES_HUAWEI;
 }
@@ -67289,6 +74721,12 @@ impl ::core::default::Default for PhysicalDeviceVertexAttributeRobustnessFeature
             vertex_attribute_robustness: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {
@@ -67336,6 +74774,13 @@ impl ::core::default::Default for PhysicalDeviceDenseGeometryFormatFeaturesAMDX<
             dense_geometry_format: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+#[cfg(feature = "provisional")]
+impl<'a> PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -67415,6 +74860,13 @@ impl ::core::default::Default for AccelerationStructureDenseGeometryFormatTriang
     }
 }
 #[cfg(feature = "provisional")]
+impl<'a> AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a>
     for AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'a>
 {
@@ -67488,6 +74940,12 @@ impl ::core::default::Default for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_>
         }
     }
 }
+impl<'a> PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_KHR;
@@ -67528,6 +74986,12 @@ impl ::core::default::Default for PhysicalDeviceCooperativeVectorFeaturesNV<'_> 
             cooperative_vector_training: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceCooperativeVectorFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeVectorFeaturesNV<'a> {
@@ -67580,6 +75044,12 @@ impl ::core::default::Default for CooperativeVectorPropertiesNV<'_> {
             transpose: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CooperativeVectorPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeVectorPropertiesNV<'a> {
@@ -67645,6 +75115,12 @@ impl ::core::default::Default for PhysicalDeviceCooperativeVectorPropertiesNV<'_
             max_cooperative_vector_components: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceCooperativeVectorPropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeVectorPropertiesNV<'a> {
@@ -67755,6 +75231,12 @@ impl ::core::default::Default for ConvertCooperativeVectorMatrixInfoNV<'_> {
             dst_stride: usize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ConvertCooperativeVectorMatrixInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ConvertCooperativeVectorMatrixInfoNV<'a> {
@@ -67872,6 +75354,12 @@ impl ::core::default::Default for PhysicalDeviceTileShadingFeaturesQCOM<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceTileShadingFeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileShadingFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_TILE_SHADING_FEATURES_QCOM;
 }
@@ -67985,6 +75473,12 @@ impl ::core::default::Default for PhysicalDeviceTileShadingPropertiesQCOM<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceTileShadingPropertiesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileShadingPropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TILE_SHADING_PROPERTIES_QCOM;
@@ -68038,6 +75532,12 @@ impl ::core::default::Default for RenderPassTileShadingCreateInfoQCOM<'_> {
         }
     }
 }
+impl<'a> RenderPassTileShadingCreateInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassTileShadingCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_TILE_SHADING_CREATE_INFO_QCOM;
 }
@@ -68079,6 +75579,12 @@ impl ::core::default::Default for PerTileBeginInfoQCOM<'_> {
         }
     }
 }
+impl<'a> PerTileBeginInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PerTileBeginInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PER_TILE_BEGIN_INFO_QCOM;
 }
@@ -68103,6 +75609,12 @@ impl ::core::default::Default for PerTileEndInfoQCOM<'_> {
             p_next: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PerTileEndInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerTileEndInfoQCOM<'a> {
@@ -68131,6 +75643,12 @@ impl ::core::default::Default for DispatchTileInfoQCOM<'_> {
         }
     }
 }
+impl<'a> DispatchTileInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DispatchTileInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPATCH_TILE_INFO_QCOM;
 }
@@ -68157,6 +75675,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapLayeredPropert
             max_fragment_density_map_layers: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'a> {
@@ -68196,6 +75720,12 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapLayeredFeature
             fragment_density_map_layered: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'a> {
@@ -68241,6 +75771,12 @@ impl ::core::default::Default for PipelineFragmentDensityMapLayeredCreateInfoVAL
         }
     }
 }
+impl<'a> PipelineFragmentDensityMapLayeredCreateInfoVALVE<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_FRAGMENT_DENSITY_MAP_LAYERED_CREATE_INFO_VALVE;
@@ -68280,6 +75816,12 @@ impl ::core::default::Default for SetPresentConfigNV<'_> {
             present_config_feedback: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> SetPresentConfigNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SetPresentConfigNV<'a> {
@@ -68322,6 +75864,12 @@ impl ::core::default::Default for PhysicalDevicePresentMeteringFeaturesNV<'_> {
         }
     }
 }
+impl<'a> PhysicalDevicePresentMeteringFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentMeteringFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRESENT_METERING_FEATURES_NV;
@@ -68357,6 +75905,12 @@ impl ::core::default::Default for ExternalComputeQueueDeviceCreateInfoNV<'_> {
             reserved_external_queues: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ExternalComputeQueueDeviceCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalComputeQueueDeviceCreateInfoNV<'a> {
@@ -68395,6 +75949,12 @@ impl ::core::default::Default for ExternalComputeQueueCreateInfoNV<'_> {
         }
     }
 }
+impl<'a> ExternalComputeQueueCreateInfoNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalComputeQueueCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_COMPUTE_QUEUE_CREATE_INFO_NV;
 }
@@ -68427,6 +75987,12 @@ impl ::core::default::Default for ExternalComputeQueueDataParamsNV<'_> {
             device_index: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ExternalComputeQueueDataParamsNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalComputeQueueDataParamsNV<'a> {
@@ -68463,6 +76029,12 @@ impl ::core::default::Default for PhysicalDeviceExternalComputeQueuePropertiesNV
             max_external_queues: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {
@@ -68512,6 +76084,12 @@ impl ::core::default::Default for PhysicalDeviceShaderUniformBufferUnsizedArrayF
             shader_uniform_buffer_unsized_array: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -68566,6 +76144,12 @@ impl ::core::default::Default for PhysicalDeviceShaderMixedFloatDotProductFeatur
             shader_mixed_float_dot_product_float8_acc_float32: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'a> {
@@ -68642,6 +76226,12 @@ impl ::core::default::Default for PhysicalDevicePrimitiveRestartIndexFeaturesEXT
         }
     }
 }
+impl<'a> PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRIMITIVE_RESTART_INDEX_FEATURES_EXT;
@@ -68682,6 +76272,12 @@ impl ::core::default::Default for PhysicalDeviceFormatPackFeaturesARM<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceFormatPackFeaturesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFormatPackFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FORMAT_PACK_FEATURES_ARM;
 }
@@ -68718,6 +76314,12 @@ impl ::core::default::Default for PhysicalDeviceThrottleHintFeaturesSEC<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceThrottleHintFeaturesSEC<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceThrottleHintFeaturesSEC<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_THROTTLE_HINT_FEATURES_SEC;
 }
@@ -68752,6 +76354,12 @@ impl ::core::default::Default for ThrottleHintSubmitInfoSEC<'_> {
             throttle_hint: ThrottleHintTypeSEC::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ThrottleHintSubmitInfoSEC<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ThrottleHintSubmitInfoSEC<'a> {
@@ -68797,6 +76405,12 @@ impl ::core::default::Default for TensorDescriptionARM<'_> {
             usage: TensorUsageFlagsARM::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> TensorDescriptionARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorDescriptionARM<'a> {
@@ -68865,6 +76479,12 @@ impl ::core::default::Default for TensorCreateInfoARM<'_> {
         }
     }
 }
+impl<'a> TensorCreateInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for TensorCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_CREATE_INFO_ARM;
 }
@@ -68919,6 +76539,12 @@ impl ::core::default::Default for TensorViewCreateInfoARM<'_> {
         }
     }
 }
+impl<'a> TensorViewCreateInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for TensorViewCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_VIEW_CREATE_INFO_ARM;
 }
@@ -68963,6 +76589,12 @@ impl ::core::default::Default for TensorMemoryRequirementsInfoARM<'_> {
         }
     }
 }
+impl<'a> TensorMemoryRequirementsInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for TensorMemoryRequirementsInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_MEMORY_REQUIREMENTS_INFO_ARM;
 }
@@ -68999,6 +76631,12 @@ impl ::core::default::Default for BindTensorMemoryInfoARM<'_> {
             memory_offset: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BindTensorMemoryInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindTensorMemoryInfoARM<'a> {
@@ -69047,6 +76685,12 @@ impl ::core::default::Default for WriteDescriptorSetTensorARM<'_> {
         }
     }
 }
+impl<'a> WriteDescriptorSetTensorARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetTensorARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_DESCRIPTOR_SET_TENSOR_ARM;
 }
@@ -69083,6 +76727,12 @@ impl ::core::default::Default for TensorFormatPropertiesARM<'_> {
             linear_tiling_tensor_features: FormatFeatureFlags2::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> TensorFormatPropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorFormatPropertiesARM<'a> {
@@ -69153,6 +76803,12 @@ impl ::core::default::Default for PhysicalDeviceTensorPropertiesARM<'_> {
             shader_tensor_supported_stages: ShaderStageFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceTensorPropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTensorPropertiesARM<'a> {
@@ -69290,6 +76946,12 @@ impl ::core::default::Default for TensorMemoryBarrierARM<'_> {
         }
     }
 }
+impl<'a> TensorMemoryBarrierARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for TensorMemoryBarrierARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_MEMORY_BARRIER_ARM;
 }
@@ -69357,6 +77019,12 @@ impl ::core::default::Default for TensorDependencyInfoARM<'_> {
         }
     }
 }
+impl<'a> TensorDependencyInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for TensorDependencyInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_DEPENDENCY_INFO_ARM;
 }
@@ -69404,6 +77072,12 @@ impl ::core::default::Default for PhysicalDeviceTensorFeaturesARM<'_> {
             tensors: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceTensorFeaturesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTensorFeaturesARM<'a> {
@@ -69479,6 +77153,12 @@ impl ::core::default::Default for DeviceTensorMemoryRequirementsARM<'_> {
         }
     }
 }
+impl<'a> DeviceTensorMemoryRequirementsARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceTensorMemoryRequirementsARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_TENSOR_MEMORY_REQUIREMENTS_ARM;
 }
@@ -69517,6 +77197,12 @@ impl ::core::default::Default for CopyTensorInfoARM<'_> {
             p_regions: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> CopyTensorInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyTensorInfoARM<'a> {
@@ -69570,6 +77256,12 @@ impl ::core::default::Default for TensorCopyARM<'_> {
         }
     }
 }
+impl<'a> TensorCopyARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for TensorCopyARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_COPY_ARM;
 }
@@ -69617,6 +77309,12 @@ impl ::core::default::Default for MemoryDedicatedAllocateInfoTensorARM<'_> {
         }
     }
 }
+impl<'a> MemoryDedicatedAllocateInfoTensorARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedAllocateInfoTensorARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_DEDICATED_ALLOCATE_INFO_TENSOR_ARM;
 }
@@ -69654,6 +77352,12 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferTensorProperties
             tensor_descriptor_size: usize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
@@ -69713,6 +77417,12 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferTensorFeaturesAR
         }
     }
 }
+impl<'a> PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_TENSOR_FEATURES_ARM;
@@ -69756,6 +77466,12 @@ impl ::core::default::Default for TensorCaptureDescriptorDataInfoARM<'_> {
         }
     }
 }
+impl<'a> TensorCaptureDescriptorDataInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for TensorCaptureDescriptorDataInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_CAPTURE_DESCRIPTOR_DATA_INFO_ARM;
 }
@@ -69788,6 +77504,12 @@ impl ::core::default::Default for TensorViewCaptureDescriptorDataInfoARM<'_> {
             tensor_view: TensorViewARM::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> TensorViewCaptureDescriptorDataInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorViewCaptureDescriptorDataInfoARM<'a> {
@@ -69825,6 +77547,12 @@ impl ::core::default::Default for DescriptorGetTensorInfoARM<'_> {
         }
     }
 }
+impl<'a> DescriptorGetTensorInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorGetTensorInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_GET_TENSOR_INFO_ARM;
 }
@@ -69860,6 +77588,12 @@ impl ::core::default::Default for FrameBoundaryTensorsARM<'_> {
             p_tensors: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> FrameBoundaryTensorsARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FrameBoundaryTensorsARM<'a> {
@@ -69903,6 +77637,12 @@ impl ::core::default::Default for PhysicalDeviceExternalTensorInfoARM<'_> {
             handle_type: ExternalMemoryHandleTypeFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceExternalTensorInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalTensorInfoARM<'a> {
@@ -69949,6 +77689,12 @@ impl ::core::default::Default for ExternalTensorPropertiesARM<'_> {
         }
     }
 }
+impl<'a> ExternalTensorPropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalTensorPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_TENSOR_PROPERTIES_ARM;
 }
@@ -69986,6 +77732,12 @@ impl ::core::default::Default for ExternalMemoryTensorCreateInfoARM<'_> {
         }
     }
 }
+impl<'a> ExternalMemoryTensorCreateInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryTensorCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_TENSOR_CREATE_INFO_ARM;
 }
@@ -70021,6 +77773,12 @@ impl ::core::default::Default for PhysicalDeviceShaderFloat8FeaturesEXT<'_> {
             shader_float8_cooperative_matrix: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderFloat8FeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloat8FeaturesEXT<'a> {
@@ -70069,6 +77827,12 @@ impl ::core::default::Default for SurfaceCreateInfoOHOS<'_> {
         }
     }
 }
+impl<'a> SurfaceCreateInfoOHOS<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCreateInfoOHOS<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CREATE_INFO_OHOS;
 }
@@ -70114,6 +77878,12 @@ impl ::core::default::Default for PhysicalDeviceDataGraphFeaturesARM<'_> {
             data_graph_shader_module: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDataGraphFeaturesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDataGraphFeaturesARM<'a> {
@@ -70179,6 +77949,12 @@ impl ::core::default::Default for DataGraphPipelineConstantTensorSemiStructuredS
         }
     }
 }
+impl<'a> DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a>
     for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a>
 {
@@ -70232,6 +78008,12 @@ impl ::core::default::Default for DataGraphPipelineConstantARM<'_> {
         }
     }
 }
+impl<'a> DataGraphPipelineConstantARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineConstantARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DATA_GRAPH_PIPELINE_CONSTANT_ARM;
 }
@@ -70273,6 +78055,12 @@ impl ::core::default::Default for DataGraphPipelineResourceInfoARM<'_> {
             array_element: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DataGraphPipelineResourceInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineResourceInfoARM<'a> {
@@ -70319,6 +78107,12 @@ impl ::core::default::Default for DataGraphPipelineResourceInfoImageLayoutARM<'_
         }
     }
 }
+impl<'a> DataGraphPipelineResourceInfoImageLayoutARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineResourceInfoImageLayoutARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_RESOURCE_INFO_IMAGE_LAYOUT_ARM;
@@ -70356,6 +78150,12 @@ impl ::core::default::Default for DataGraphPipelineCompilerControlCreateInfoARM<
             p_vendor_options: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DataGraphPipelineCompilerControlCreateInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineCompilerControlCreateInfoARM<'a> {
@@ -70409,6 +78209,12 @@ impl ::core::default::Default for DataGraphPipelineCreateInfoARM<'_> {
             p_resource_infos: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DataGraphPipelineCreateInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineCreateInfoARM<'a> {
@@ -70465,6 +78271,12 @@ impl ::core::default::Default for DataGraphPipelineShaderModuleCreateInfoARM<'_>
             p_constants: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DataGraphPipelineShaderModuleCreateInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineShaderModuleCreateInfoARM<'a> {
@@ -70532,6 +78344,12 @@ impl ::core::default::Default for DataGraphPipelineSessionCreateInfoARM<'_> {
         }
     }
 }
+impl<'a> DataGraphPipelineSessionCreateInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_SESSION_CREATE_INFO_ARM;
@@ -70572,6 +78390,12 @@ impl ::core::default::Default for DataGraphPipelineSessionBindPointRequirementsI
         }
     }
 }
+impl<'a> DataGraphPipelineSessionBindPointRequirementsInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionBindPointRequirementsInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_SESSION_BIND_POINT_REQUIREMENTS_INFO_ARM;
@@ -70609,6 +78433,12 @@ impl ::core::default::Default for DataGraphPipelineSessionBindPointRequirementAR
             num_objects: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DataGraphPipelineSessionBindPointRequirementARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionBindPointRequirementARM<'a> {
@@ -70663,6 +78493,12 @@ impl ::core::default::Default for DataGraphPipelineSessionMemoryRequirementsInfo
         }
     }
 }
+impl<'a> DataGraphPipelineSessionMemoryRequirementsInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionMemoryRequirementsInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_SESSION_MEMORY_REQUIREMENTS_INFO_ARM;
@@ -70714,6 +78550,12 @@ impl ::core::default::Default for BindDataGraphPipelineSessionMemoryInfoARM<'_> 
             memory_offset: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BindDataGraphPipelineSessionMemoryInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindDataGraphPipelineSessionMemoryInfoARM<'a> {
@@ -70771,6 +78613,12 @@ impl ::core::default::Default for DataGraphPipelineInfoARM<'_> {
         }
     }
 }
+impl<'a> DataGraphPipelineInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DATA_GRAPH_PIPELINE_INFO_ARM;
 }
@@ -70809,6 +78657,12 @@ impl ::core::default::Default for DataGraphPipelinePropertyQueryResultARM<'_> {
             p_data: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DataGraphPipelinePropertyQueryResultARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelinePropertyQueryResultARM<'a> {
@@ -70859,6 +78713,12 @@ impl ::core::default::Default for DataGraphPipelineIdentifierCreateInfoARM<'_> {
         }
     }
 }
+impl<'a> DataGraphPipelineIdentifierCreateInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineIdentifierCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_IDENTIFIER_CREATE_INFO_ARM;
@@ -70899,6 +78759,12 @@ impl ::core::default::Default for DataGraphPipelineDispatchInfoARM<'_> {
         }
     }
 }
+impl<'a> DataGraphPipelineDispatchInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineDispatchInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DATA_GRAPH_PIPELINE_DISPATCH_INFO_ARM;
 }
@@ -70917,6 +78783,12 @@ impl<'a> DataGraphPipelineDispatchInfoARM<'a> {
 pub struct PhysicalDeviceDataGraphProcessingEngineARM {
     pub ty: PhysicalDeviceDataGraphProcessingEngineTypeARM,
     pub is_foreign: Bool32,
+}
+impl PhysicalDeviceDataGraphProcessingEngineARM {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PhysicalDeviceDataGraphProcessingEngineARM {
     #[inline]
@@ -70957,6 +78829,12 @@ impl ::core::default::Default for PhysicalDeviceDataGraphOperationSupportARM {
             name: unsafe { ::core::mem::zeroed() },
             version: u32::default(),
         }
+    }
+}
+impl PhysicalDeviceDataGraphOperationSupportARM {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PhysicalDeviceDataGraphOperationSupportARM {
@@ -71008,6 +78886,12 @@ impl ::core::default::Default for QueueFamilyDataGraphPropertiesARM<'_> {
         }
     }
 }
+impl<'a> QueueFamilyDataGraphPropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_DATA_GRAPH_PROPERTIES_ARM;
 }
@@ -71047,6 +78931,12 @@ impl ::core::default::Default for PhysicalDeviceQueueFamilyDataGraphProcessingEn
             engine_type: PhysicalDeviceDataGraphProcessingEngineTypeARM::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -71094,6 +78984,12 @@ impl ::core::default::Default for QueueFamilyDataGraphProcessingEngineProperties
             foreign_memory_handle_types: ExternalMemoryHandleTypeFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> QueueFamilyDataGraphProcessingEnginePropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphProcessingEnginePropertiesARM<'a> {
@@ -71144,6 +79040,12 @@ impl ::core::default::Default for DataGraphProcessingEngineCreateInfoARM<'_> {
         }
     }
 }
+impl<'a> DataGraphProcessingEngineCreateInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphProcessingEngineCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PROCESSING_ENGINE_CREATE_INFO_ARM;
@@ -71187,6 +79089,12 @@ impl ::core::default::Default for PhysicalDevicePipelineCacheIncrementalModeFeat
             pipeline_cache_incremental_mode: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'a> {
@@ -71235,6 +79143,12 @@ impl ::core::default::Default for DataGraphPipelineBuiltinModelCreateInfoQCOM<'_
         }
     }
 }
+impl<'a> DataGraphPipelineBuiltinModelCreateInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineBuiltinModelCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_BUILTIN_MODEL_CREATE_INFO_QCOM;
@@ -71274,6 +79188,12 @@ impl ::core::default::Default for PhysicalDeviceDataGraphModelFeaturesQCOM<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceDataGraphModelFeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDataGraphModelFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DATA_GRAPH_MODEL_FEATURES_QCOM;
@@ -71309,6 +79229,12 @@ impl ::core::default::Default for PhysicalDeviceShaderUntypedPointersFeaturesKHR
             shader_untyped_pointers: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderUntypedPointersFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'a> {
@@ -71349,6 +79275,12 @@ impl ::core::default::Default for PhysicalDeviceVideoEncodeRgbConversionFeatures
             video_encode_rgb_conversion: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'a> {
@@ -71398,6 +79330,12 @@ impl ::core::default::Default for VideoEncodeRgbConversionCapabilitiesVALVE<'_> 
             y_chroma_offsets: VideoEncodeRgbChromaOffsetFlagsVALVE::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeRgbConversionCapabilitiesVALVE<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRgbConversionCapabilitiesVALVE<'a> {
@@ -71457,6 +79395,12 @@ impl ::core::default::Default for VideoEncodeProfileRgbConversionInfoVALVE<'_> {
         }
     }
 }
+impl<'a> VideoEncodeProfileRgbConversionInfoVALVE<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeProfileRgbConversionInfoVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_PROFILE_RGB_CONVERSION_INFO_VALVE;
@@ -71497,6 +79441,12 @@ impl ::core::default::Default for VideoEncodeSessionRgbConversionCreateInfoVALVE
             y_chroma_offset: VideoEncodeRgbChromaOffsetFlagsVALVE::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> VideoEncodeSessionRgbConversionCreateInfoVALVE<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionRgbConversionCreateInfoVALVE<'a> {
@@ -71559,6 +79509,12 @@ impl ::core::default::Default for PhysicalDeviceShader64BitIndexingFeaturesEXT<'
         }
     }
 }
+impl<'a> PhysicalDeviceShader64BitIndexingFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShader64BitIndexingFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_64_INDEXING_FEATURES_EXT;
@@ -71599,6 +79555,12 @@ impl ::core::default::Default for NativeBufferUsageOHOS<'_> {
         }
     }
 }
+impl<'a> NativeBufferUsageOHOS<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferUsageOHOS<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::NATIVE_BUFFER_USAGE_OHOS;
 }
@@ -71634,6 +79596,12 @@ impl ::core::default::Default for NativeBufferPropertiesOHOS<'_> {
             memory_type_bits: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> NativeBufferPropertiesOHOS<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferPropertiesOHOS<'a> {
@@ -71687,6 +79655,12 @@ impl ::core::default::Default for NativeBufferFormatPropertiesOHOS<'_> {
             suggested_y_chroma_offset: ChromaLocation::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> NativeBufferFormatPropertiesOHOS<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferFormatPropertiesOHOS<'a> {
@@ -71765,6 +79739,12 @@ impl ::core::default::Default for ImportNativeBufferInfoOHOS<'_> {
         }
     }
 }
+impl<'a> ImportNativeBufferInfoOHOS<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportNativeBufferInfoOHOS<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_NATIVE_BUFFER_INFO_OHOS;
 }
@@ -71800,6 +79780,12 @@ impl ::core::default::Default for MemoryGetNativeBufferInfoOHOS<'_> {
         }
     }
 }
+impl<'a> MemoryGetNativeBufferInfoOHOS<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetNativeBufferInfoOHOS<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_NATIVE_BUFFER_INFO_OHOS;
 }
@@ -71832,6 +79818,12 @@ impl ::core::default::Default for ExternalFormatOHOS<'_> {
             external_format: u64::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ExternalFormatOHOS<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFormatOHOS<'a> {
@@ -71875,6 +79867,12 @@ impl ::core::default::Default for PerfHintInfoQCOM<'_> {
         }
     }
 }
+impl<'a> PerfHintInfoQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PerfHintInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERF_HINT_INFO_QCOM;
 }
@@ -71914,6 +79912,12 @@ impl ::core::default::Default for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceQueuePerfHintFeaturesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceQueuePerfHintFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_QUEUE_PERF_HINT_FEATURES_QCOM;
@@ -71949,6 +79953,12 @@ impl ::core::default::Default for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> 
             supported_queues: QueueFlags::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceQueuePerfHintPropertiesQCOM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceQueuePerfHintPropertiesQCOM<'a> {
@@ -71988,6 +79998,12 @@ impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionFeatu
             performance_counters_by_region: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePerformanceCountersByRegionFeaturesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'a> {
@@ -72039,6 +80055,12 @@ impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionPrope
             identity_transform_order: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDevicePerformanceCountersByRegionPropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'a> {
@@ -72106,6 +80128,12 @@ impl ::core::default::Default for PerformanceCounterARM<'_> {
         }
     }
 }
+impl<'a> PerformanceCounterARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_COUNTER_ARM;
 }
@@ -72150,6 +80178,12 @@ impl ::core::default::Default for PerformanceCounterDescriptionARM<'_> {
             name: unsafe { ::core::mem::zeroed() },
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PerformanceCounterDescriptionARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterDescriptionARM<'a> {
@@ -72200,6 +80234,12 @@ impl ::core::default::Default for RenderPassPerformanceCountersByRegionBeginInfo
             p_counter_indices: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> RenderPassPerformanceCountersByRegionBeginInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassPerformanceCountersByRegionBeginInfoARM<'a> {
@@ -72256,6 +80296,12 @@ impl ::core::default::Default for ComputeOccupancyPriorityParametersNV<'_> {
         }
     }
 }
+impl<'a> ComputeOccupancyPriorityParametersNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ComputeOccupancyPriorityParametersNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_OCCUPANCY_PRIORITY_PARAMETERS_NV;
 }
@@ -72293,6 +80339,12 @@ impl ::core::default::Default for PhysicalDeviceComputeOccupancyPriorityFeatures
             compute_occupancy_priority: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'a> {
@@ -72335,6 +80387,12 @@ impl ::core::default::Default for PhysicalDeviceShaderLongVectorFeaturesEXT<'_> 
         }
     }
 }
+impl<'a> PhysicalDeviceShaderLongVectorFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderLongVectorFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_LONG_VECTOR_FEATURES_EXT;
@@ -72370,6 +80428,12 @@ impl ::core::default::Default for PhysicalDeviceShaderLongVectorPropertiesEXT<'_
             max_vector_components: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderLongVectorPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderLongVectorPropertiesEXT<'a> {
@@ -72409,6 +80473,12 @@ impl ::core::default::Default for PhysicalDeviceTextureCompressionASTC3DFeatures
             texture_compression_astc_3d: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'a> {
@@ -72454,6 +80524,12 @@ impl ::core::default::Default for PhysicalDeviceShaderSubgroupPartitionedFeature
         }
     }
 }
+impl<'a> PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SUBGROUP_PARTITIONED_FEATURES_EXT;
@@ -72497,6 +80573,12 @@ impl ::core::default::Default for HostAddressRangeEXT<'_> {
 }
 impl<'a> HostAddressRangeEXT<'a> {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl<'a> HostAddressRangeEXT<'a> {
+    #[inline]
     pub fn address(mut self, address: &'a mut [u8]) -> Self {
         self.size = address.len();
         self.address = address.as_mut_ptr().cast();
@@ -72523,6 +80605,12 @@ impl ::core::default::Default for HostAddressRangeConstEXT<'_> {
             size: usize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> HostAddressRangeConstEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> HostAddressRangeConstEXT<'a> {
@@ -72557,6 +80645,12 @@ impl ::core::default::Default for TexelBufferDescriptorInfoEXT<'_> {
             address_range: DeviceAddressRangeEXT::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> TexelBufferDescriptorInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TexelBufferDescriptorInfoEXT<'a> {
@@ -72598,6 +80692,12 @@ impl ::core::default::Default for ImageDescriptorInfoEXT<'_> {
             layout: ImageLayout::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ImageDescriptorInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDescriptorInfoEXT<'a> {
@@ -72666,6 +80766,12 @@ impl ::core::default::Default for ResourceDescriptorInfoEXT<'_> {
         }
     }
 }
+impl<'a> ResourceDescriptorInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ResourceDescriptorInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RESOURCE_DESCRIPTOR_INFO_EXT;
 }
@@ -72707,6 +80813,12 @@ impl ::core::default::Default for BindHeapInfoEXT<'_> {
             reserved_range_size: DeviceSize::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BindHeapInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindHeapInfoEXT<'a> {
@@ -72755,6 +80867,12 @@ impl ::core::default::Default for PushDataInfoEXT<'_> {
         }
     }
 }
+impl<'a> PushDataInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PushDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_DATA_INFO_EXT;
 }
@@ -72796,6 +80914,12 @@ impl ::core::default::Default for DescriptorMappingSourceConstantOffsetEXT<'_> {
             sampler_heap_array_stride: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DescriptorMappingSourceConstantOffsetEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorMappingSourceConstantOffsetEXT<'a> {
@@ -72861,6 +80985,12 @@ impl ::core::default::Default for DescriptorMappingSourcePushIndexEXT<'_> {
             sampler_heap_array_stride: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DescriptorMappingSourcePushIndexEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorMappingSourcePushIndexEXT<'a> {
@@ -72958,6 +81088,12 @@ impl ::core::default::Default for DescriptorMappingSourceIndirectIndexEXT<'_> {
             sampler_heap_array_stride: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DescriptorMappingSourceIndirectIndexEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorMappingSourceIndirectIndexEXT<'a> {
@@ -73065,6 +81201,12 @@ impl ::core::default::Default for DescriptorMappingSourceIndirectIndexArrayEXT<'
 }
 impl<'a> DescriptorMappingSourceIndirectIndexArrayEXT<'a> {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl<'a> DescriptorMappingSourceIndirectIndexArrayEXT<'a> {
+    #[inline]
     pub fn heap_offset(mut self, heap_offset: u32) -> Self {
         self.heap_offset = heap_offset;
         self
@@ -73129,6 +81271,12 @@ pub struct DescriptorMappingSourceHeapDataEXT {
 }
 impl DescriptorMappingSourceHeapDataEXT {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl DescriptorMappingSourceHeapDataEXT {
+    #[inline]
     pub fn heap_offset(mut self, heap_offset: u32) -> Self {
         self.heap_offset = heap_offset;
         self
@@ -73175,6 +81323,12 @@ impl ::core::default::Default for DescriptorMappingSourceShaderRecordIndexEXT<'_
             sampler_heap_array_stride: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DescriptorMappingSourceShaderRecordIndexEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorMappingSourceShaderRecordIndexEXT<'a> {
@@ -73240,6 +81394,12 @@ impl<'a> DescriptorMappingSourceShaderRecordIndexEXT<'a> {
 pub struct DescriptorMappingSourceIndirectAddressEXT {
     pub push_offset: u32,
     pub address_offset: u32,
+}
+impl DescriptorMappingSourceIndirectAddressEXT {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DescriptorMappingSourceIndirectAddressEXT {
     #[inline]
@@ -73323,6 +81483,12 @@ impl ::core::default::Default for DescriptorSetAndBindingMappingEXT<'_> {
         }
     }
 }
+impl<'a> DescriptorSetAndBindingMappingEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetAndBindingMappingEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_AND_BINDING_MAPPING_EXT;
 }
@@ -73384,6 +81550,12 @@ impl ::core::default::Default for ShaderDescriptorSetAndBindingMappingInfoEXT<'_
         }
     }
 }
+impl<'a> ShaderDescriptorSetAndBindingMappingInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ShaderDescriptorSetAndBindingMappingInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SHADER_DESCRIPTOR_SET_AND_BINDING_MAPPING_INFO_EXT;
@@ -73425,6 +81597,12 @@ impl ::core::default::Default for SamplerCustomBorderColorIndexCreateInfoEXT<'_>
         }
     }
 }
+impl<'a> SamplerCustomBorderColorIndexCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SamplerCustomBorderColorIndexCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_CUSTOM_BORDER_COLOR_INDEX_CREATE_INFO_EXT;
@@ -73459,6 +81637,12 @@ impl ::core::default::Default for OpaqueCaptureDataCreateInfoEXT<'_> {
             p_data: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> OpaqueCaptureDataCreateInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpaqueCaptureDataCreateInfoEXT<'a> {
@@ -73497,6 +81681,12 @@ impl ::core::default::Default for IndirectCommandsLayoutPushDataTokenNV<'_> {
             push_data_size: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> IndirectCommandsLayoutPushDataTokenNV<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutPushDataTokenNV<'a> {
@@ -73543,6 +81733,12 @@ impl ::core::default::Default for SubsampledImageFormatPropertiesEXT<'_> {
         }
     }
 }
+impl<'a> SubsampledImageFormatPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for SubsampledImageFormatPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBSAMPLED_IMAGE_FORMAT_PROPERTIES_EXT;
 }
@@ -73579,6 +81775,12 @@ impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_
             shader_split_barrier: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderSplitBarrierFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'a> {
@@ -73619,6 +81821,12 @@ impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierPropertiesEXT<
             split_barrier_reserved_shared_memory: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderSplitBarrierPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'a> {
@@ -73663,6 +81871,12 @@ impl ::core::default::Default for PhysicalDeviceDescriptorHeapFeaturesEXT<'_> {
             descriptor_heap_capture_replay: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDescriptorHeapFeaturesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorHeapFeaturesEXT<'a> {
@@ -73741,6 +81955,12 @@ impl ::core::default::Default for PhysicalDeviceDescriptorHeapPropertiesEXT<'_> 
             protected_descriptor_heaps: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDescriptorHeapPropertiesEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorHeapPropertiesEXT<'a> {
@@ -73893,6 +82113,12 @@ impl ::core::default::Default for CommandBufferInheritanceDescriptorHeapInfoEXT<
         }
     }
 }
+impl<'a> CommandBufferInheritanceDescriptorHeapInfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceDescriptorHeapInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COMMAND_BUFFER_INHERITANCE_DESCRIPTOR_HEAP_INFO_EXT;
@@ -73947,6 +82173,12 @@ impl ::core::default::Default for PhysicalDeviceDescriptorHeapTensorPropertiesAR
         }
     }
 }
+impl<'a> PhysicalDeviceDescriptorHeapTensorPropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_HEAP_TENSOR_PROPERTIES_ARM;
@@ -73999,6 +82231,12 @@ impl ::core::default::Default for PhysicalDeviceShaderInstrumentationFeaturesARM
         }
     }
 }
+impl<'a> PhysicalDeviceShaderInstrumentationFeaturesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderInstrumentationFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_INSTRUMENTATION_FEATURES_ARM;
@@ -74039,6 +82277,12 @@ impl ::core::default::Default for PhysicalDeviceShaderInstrumentationPropertiesA
             per_basic_block_granularity: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderInstrumentationPropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderInstrumentationPropertiesARM<'a> {
@@ -74083,6 +82327,12 @@ impl ::core::default::Default for ShaderInstrumentationCreateInfoARM<'_> {
         }
     }
 }
+impl<'a> ShaderInstrumentationCreateInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ShaderInstrumentationCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_INSTRUMENTATION_CREATE_INFO_ARM;
 }
@@ -74123,6 +82373,12 @@ impl ::core::default::Default for ShaderInstrumentationMetricDescriptionARM<'_> 
         }
     }
 }
+impl<'a> ShaderInstrumentationMetricDescriptionARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for ShaderInstrumentationMetricDescriptionARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SHADER_INSTRUMENTATION_METRIC_DESCRIPTION_ARM;
@@ -74161,6 +82417,12 @@ pub struct ShaderInstrumentationMetricDataHeaderARM {
 }
 impl ShaderInstrumentationMetricDataHeaderARM {
     #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+impl ShaderInstrumentationMetricDataHeaderARM {
+    #[inline]
     pub fn result_index(mut self, result_index: u32) -> Self {
         self.result_index = result_index;
         self
@@ -74189,6 +82451,12 @@ impl ShaderInstrumentationMetricDataHeaderARM {
 pub struct DeviceAddressRangeKHR {
     pub address: DeviceAddress,
     pub size: DeviceSize,
+}
+impl DeviceAddressRangeKHR {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DeviceAddressRangeKHR {
     #[inline]
@@ -74230,6 +82498,12 @@ impl ::core::default::Default for DeviceMemoryCopyKHR<'_> {
             dst_flags: AddressCommandFlagsKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceMemoryCopyKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryCopyKHR<'a> {
@@ -74283,6 +82557,12 @@ impl ::core::default::Default for CopyDeviceMemoryInfoKHR<'_> {
         }
     }
 }
+impl<'a> CopyDeviceMemoryInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyDeviceMemoryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_DEVICE_MEMORY_INFO_KHR;
 }
@@ -74330,6 +82610,12 @@ impl ::core::default::Default for DeviceMemoryImageCopyKHR<'_> {
             image_extent: Extent3D::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DeviceMemoryImageCopyKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryImageCopyKHR<'a> {
@@ -74405,6 +82691,12 @@ impl ::core::default::Default for CopyDeviceMemoryImageInfoKHR<'_> {
         }
     }
 }
+impl<'a> CopyDeviceMemoryImageInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyDeviceMemoryImageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_DEVICE_MEMORY_IMAGE_INFO_KHR;
 }
@@ -74445,6 +82737,12 @@ impl ::core::default::Default for MemoryRangeBarriersInfoKHR<'_> {
             p_memory_range_barriers: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> MemoryRangeBarriersInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryRangeBarriersInfoKHR<'a> {
@@ -74498,6 +82796,12 @@ impl ::core::default::Default for MemoryRangeBarrierKHR<'_> {
             address_flags: AddressCommandFlagsKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> MemoryRangeBarrierKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryRangeBarrierKHR<'a> {
@@ -74569,6 +82873,12 @@ impl ::core::default::Default for PhysicalDeviceDeviceAddressCommandsFeaturesKHR
         }
     }
 }
+impl<'a> PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_ADDRESS_COMMANDS_FEATURES_KHR;
@@ -74611,6 +82921,12 @@ impl ::core::default::Default for ConditionalRenderingBeginInfo2EXT<'_> {
             flags: ConditionalRenderingFlagsEXT::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> ConditionalRenderingBeginInfo2EXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ConditionalRenderingBeginInfo2EXT<'a> {
@@ -74661,6 +82977,12 @@ impl ::core::default::Default for AccelerationStructureCreateInfo2KHR<'_> {
             ty: AccelerationStructureTypeKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> AccelerationStructureCreateInfo2KHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfo2KHR<'a> {
@@ -74716,6 +83038,12 @@ impl ::core::default::Default for BindIndexBuffer3InfoKHR<'_> {
         }
     }
 }
+impl<'a> BindIndexBuffer3InfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BindIndexBuffer3InfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_INDEX_BUFFER_3_INFO_KHR;
 }
@@ -74764,6 +83092,12 @@ impl ::core::default::Default for BindVertexBuffer3InfoKHR<'_> {
         }
     }
 }
+impl<'a> BindVertexBuffer3InfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for BindVertexBuffer3InfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_VERTEX_BUFFER_3_INFO_KHR;
 }
@@ -74810,6 +83144,12 @@ impl ::core::default::Default for DrawIndirect2InfoKHR<'_> {
             draw_count: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DrawIndirect2InfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DrawIndirect2InfoKHR<'a> {
@@ -74862,6 +83202,12 @@ impl ::core::default::Default for DrawIndirectCount2InfoKHR<'_> {
             max_draw_count: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DrawIndirectCount2InfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DrawIndirectCount2InfoKHR<'a> {
@@ -74920,6 +83266,12 @@ impl ::core::default::Default for DispatchIndirect2InfoKHR<'_> {
         }
     }
 }
+impl<'a> DispatchIndirect2InfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DispatchIndirect2InfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPATCH_INDIRECT_2_INFO_KHR;
 }
@@ -74959,6 +83311,12 @@ impl ::core::default::Default for BindTransformFeedbackBuffer2InfoEXT<'_> {
             address_flags: AddressCommandFlagsKHR::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> BindTransformFeedbackBuffer2InfoEXT<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindTransformFeedbackBuffer2InfoEXT<'a> {
@@ -75004,6 +83362,12 @@ impl ::core::default::Default for MemoryMarkerInfoAMD<'_> {
             marker: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> MemoryMarkerInfoAMD<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMarkerInfoAMD<'a> {
@@ -75055,6 +83419,12 @@ impl ::core::default::Default for PhysicalDeviceShaderConstantDataFeaturesKHR<'_
         }
     }
 }
+impl<'a> PhysicalDeviceShaderConstantDataFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderConstantDataFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_CONSTANT_DATA_FEATURES_KHR;
@@ -75095,6 +83465,12 @@ impl ::core::default::Default for PhysicalDeviceShaderAbortFeaturesKHR<'_> {
         }
     }
 }
+impl<'a> PhysicalDeviceShaderAbortFeaturesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAbortFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_ABORT_FEATURES_KHR;
 }
@@ -75129,6 +83505,12 @@ impl ::core::default::Default for PhysicalDeviceShaderAbortPropertiesKHR<'_> {
             max_shader_abort_message_size: u64::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceShaderAbortPropertiesKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAbortPropertiesKHR<'a> {
@@ -75169,6 +83551,12 @@ impl ::core::default::Default for DeviceFaultShaderAbortMessageInfoKHR<'_> {
         }
     }
 }
+impl<'a> DeviceFaultShaderAbortMessageInfoKHR<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultShaderAbortMessageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_FAULT_SHADER_ABORT_MESSAGE_INFO_KHR;
 }
@@ -75205,6 +83593,12 @@ impl ::core::default::Default for DataGraphTOSANameQualityARM {
             name: unsafe { ::core::mem::zeroed() },
             quality_flags: DataGraphTOSAQualityFlagsARM::default(),
         }
+    }
+}
+impl DataGraphTOSANameQualityARM {
+    #[inline]
+    pub const fn const_default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl DataGraphTOSANameQualityARM {
@@ -75252,6 +83646,12 @@ impl ::core::default::Default for QueueFamilyDataGraphTOSAPropertiesARM<'_> {
             level: DataGraphTOSALevelARM::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> QueueFamilyDataGraphTOSAPropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphTOSAPropertiesARM<'a> {
@@ -75305,6 +83705,12 @@ impl ::core::default::Default for DataGraphPipelineSingleNodeConnectionARM<'_> {
         }
     }
 }
+impl<'a> DataGraphPipelineSingleNodeConnectionARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSingleNodeConnectionARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_SINGLE_NODE_CONNECTION_ARM;
@@ -75348,6 +83754,12 @@ impl ::core::default::Default for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<
             data_graph_optical_flow: Bool32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'a> {
@@ -75402,6 +83814,12 @@ impl ::core::default::Default for QueueFamilyDataGraphOpticalFlowPropertiesARM<'
             max_height: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> QueueFamilyDataGraphOpticalFlowPropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphOpticalFlowPropertiesARM<'a> {
@@ -75480,6 +83898,12 @@ impl ::core::default::Default for DataGraphOpticalFlowImageFormatInfoARM<'_> {
         }
     }
 }
+impl<'a> DataGraphOpticalFlowImageFormatInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphOpticalFlowImageFormatInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_OPTICAL_FLOW_IMAGE_FORMAT_INFO_ARM;
@@ -75520,6 +83944,12 @@ impl ::core::default::Default for DataGraphOpticalFlowImageFormatPropertiesARM<'
         }
     }
 }
+impl<'a> DataGraphOpticalFlowImageFormatPropertiesARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
+    }
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphOpticalFlowImageFormatPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_OPTICAL_FLOW_IMAGE_FORMAT_PROPERTIES_ARM;
@@ -75557,6 +83987,12 @@ impl ::core::default::Default for DataGraphPipelineSingleNodeCreateInfoARM<'_> {
             p_connections: ::core::ptr::null(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DataGraphPipelineSingleNodeCreateInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSingleNodeCreateInfoARM<'a> {
@@ -75621,6 +84057,12 @@ impl ::core::default::Default for DataGraphPipelineOpticalFlowCreateInfoARM<'_> 
             flags: DataGraphOpticalFlowCreateFlagsARM::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DataGraphPipelineOpticalFlowCreateInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineOpticalFlowCreateInfoARM<'a> {
@@ -75708,6 +84150,12 @@ impl ::core::default::Default for DataGraphPipelineOpticalFlowDispatchInfoARM<'_
             mean_flow_l1_norm_hint: u32::default(),
             _marker: PhantomData,
         }
+    }
+}
+impl<'a> DataGraphPipelineOpticalFlowDispatchInfoARM<'a> {
+    #[inline]
+    pub const fn const_default() -> Self {
+        init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineOpticalFlowDispatchInfoARM<'a> {
