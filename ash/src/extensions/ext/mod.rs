@@ -25,6 +25,7 @@ pub mod mesh_shader;
 pub mod metal_objects;
 pub mod metal_surface;
 pub mod pipeline_properties;
+pub mod present_timing;
 pub mod private_data;
 pub mod sample_locations;
 pub mod shader_object;
