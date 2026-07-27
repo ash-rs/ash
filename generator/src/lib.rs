@@ -1887,26 +1887,16 @@ fn derive_default(
     provisional: &Option<TokenStream>,
 ) -> Option<TokenStream> {
     if struct_.name == "VkBaseInStructure" || struct_.name == "VkBaseOutStructure" {
-        // TODO: These don't really have a valid initializer, since they'll
-        // end up as vk::StructureType::APPLICATION_INFO (0).
-        // TODO: Returning None just triggers derive(Default)
+        // These don't really have a valid initializer, since they'll end up as
+        // vk::StructureType::APPLICATION_INFO (0).
         return None;
     }
     let name = name_to_tokens(&struct_.name);
     let is_structure_type = |field: &vkxml::Field| field.basetype == "VkStructureType";
 
-    let contains_ptr = members
-        .iter()
-        .any(|member| member.vkxml_field.reference.is_some());
     let contains_structure_type = members
         .iter()
         .any(|member| is_structure_type(member.vkxml_field));
-    let contains_static_array = members
-        .iter()
-        .any(|member| is_static_array(member.vkxml_field));
-    if !(contains_ptr || contains_structure_type || contains_static_array) {
-        return None;
-    };
     let lifetime = has_lifetime.then(|| quote!(<'_>));
 
     let initializer = if contains_structure_type {
@@ -2668,16 +2658,11 @@ pub fn generate_struct(
     } else {
         quote!()
     };
-    let derive_default = if default_tokens.is_none() {
-        quote!(Default,)
-    } else {
-        quote!()
-    };
     quote! {
         #provisional
         #[repr(C)]
         #derive_debug
-        #[derive(Copy, Clone, #derive_default #manual_derive_tokens)]
+        #[derive(Copy, Clone, #manual_derive_tokens)]
         #[doc = #khronos_link]
         #[must_use]
         pub struct #name #lifetimes {
