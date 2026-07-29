@@ -15,7 +15,7 @@ publish = false
 # file is generated as currently checked in): 
 bindgen = "=0.69.4"
 heck = "0.5"
-itertools = "0.14"
+itertools = "0.15"
 nom = "8"
 proc-macro2 = "1.0"
 quote = "1.0"
