@@ -447,3 +447,13 @@ mod tests {
         assert_eq!(format!("{:?}", vk::ChromaLocation::MIDPOINT), "MIDPOINT");
     }
 }
+
+#[cfg(test)]
+pub(crate) fn bytes_struct_eq<T>(a: T, b: T) {
+    unsafe {
+        assert_eq!(
+            std::slice::from_raw_parts(&raw const a as *const u8, size_of_val(&a)),
+            std::slice::from_raw_parts(&raw const b as *const u8, size_of_val(&b)),
+        )
+    }
+}

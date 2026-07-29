@@ -2736,6 +2736,16 @@ pub fn generate_struct(
             }
         }
     });
+    let eq_name = format_ident!("eq_{}", struct_.name);
+    let default_eq_zeroed = may_have_default.then(|| {
+        quote! {
+            #provisional
+            #[test]
+            fn #eq_name() {
+                bytes_struct_eq(#name::default(), #name::const_default());
+            }
+        }
+    });
     quote! {
         #provisional
         #[repr(C)]
@@ -2751,6 +2761,7 @@ pub fn generate_struct(
         #debug_tokens
         #default_tokens
         #const_default_tokens
+        #default_eq_zeroed
         #setter_tokens
     }
 }
@@ -3696,6 +3707,8 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
             CStrTooLargeForStaticArray, Extends, Handle, Packed24_5_3, Packed24_8, Packed9_9_6_4_4,
             TaggedStructure,
         };
+        #[cfg(test)]
+        use super::bytes_struct_eq;
         use core::ffi::*;
         use core::fmt;
         use core::marker::PhantomData;

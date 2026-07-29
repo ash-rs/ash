@@ -1,6 +1,8 @@
 #![allow(clippy::needless_lifetimes)]
 use super::aliases::*;
 use super::bitflags::*;
+#[cfg(test)]
+use super::bytes_struct_eq;
 use super::constants::*;
 use super::enums::*;
 use super::native::*;
@@ -734,6 +736,10 @@ impl Offset2D {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkOffset2D() {
+    bytes_struct_eq(Offset2D::default(), Offset2D::const_default());
+}
 impl Offset2D {
     #[inline]
     pub fn x(mut self, x: i32) -> Self {
@@ -761,6 +767,10 @@ impl Offset3D {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkOffset3D() {
+    bytes_struct_eq(Offset3D::default(), Offset3D::const_default());
 }
 impl Offset3D {
     #[inline]
@@ -794,6 +804,10 @@ impl Extent2D {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkExtent2D() {
+    bytes_struct_eq(Extent2D::default(), Extent2D::const_default());
+}
 impl Extent2D {
     #[inline]
     pub fn width(mut self, width: u32) -> Self {
@@ -821,6 +835,10 @@ impl Extent3D {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkExtent3D() {
+    bytes_struct_eq(Extent3D::default(), Extent3D::const_default());
 }
 impl Extent3D {
     #[inline]
@@ -857,6 +875,10 @@ impl Viewport {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkViewport() {
+    bytes_struct_eq(Viewport::default(), Viewport::const_default());
 }
 impl Viewport {
     #[inline]
@@ -905,6 +927,10 @@ impl Rect2D {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkRect2D() {
+    bytes_struct_eq(Rect2D::default(), Rect2D::const_default());
+}
 impl Rect2D {
     #[inline]
     pub fn offset(mut self, offset: Offset2D) -> Self {
@@ -932,6 +958,10 @@ impl ClearRect {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkClearRect() {
+    bytes_struct_eq(ClearRect::default(), ClearRect::const_default());
 }
 impl ClearRect {
     #[inline]
@@ -966,6 +996,13 @@ impl ComponentMapping {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkComponentMapping() {
+    bytes_struct_eq(
+        ComponentMapping::default(),
+        ComponentMapping::const_default(),
+    );
 }
 impl ComponentMapping {
     #[inline]
@@ -1041,6 +1078,13 @@ impl PhysicalDeviceProperties {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceProperties::default(),
+        PhysicalDeviceProperties::const_default(),
+    );
 }
 impl PhysicalDeviceProperties {
     #[inline]
@@ -1127,6 +1171,13 @@ impl ExtensionProperties {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkExtensionProperties() {
+    bytes_struct_eq(
+        ExtensionProperties::default(),
+        ExtensionProperties::const_default(),
+    );
+}
 impl ExtensionProperties {
     #[inline]
     pub fn extension_name(
@@ -1182,6 +1233,10 @@ impl LayerProperties {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkLayerProperties() {
+    bytes_struct_eq(LayerProperties::default(), LayerProperties::const_default());
 }
 impl LayerProperties {
     #[inline]
@@ -1254,6 +1309,10 @@ impl<'a> ApplicationInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkApplicationInfo() {
+    bytes_struct_eq(ApplicationInfo::default(), ApplicationInfo::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for ApplicationInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::APPLICATION_INFO;
@@ -1359,6 +1418,13 @@ impl AllocationCallbacks {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkAllocationCallbacks() {
+    bytes_struct_eq(
+        AllocationCallbacks::default(),
+        AllocationCallbacks::const_default(),
+    );
+}
 impl AllocationCallbacks {
     #[inline]
     pub fn user_data(mut self, user_data: *mut c_void) -> Self {
@@ -1430,6 +1496,13 @@ impl<'a> DeviceQueueCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDeviceQueueCreateInfo() {
+    bytes_struct_eq(
+        DeviceQueueCreateInfo::default(),
+        DeviceQueueCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_QUEUE_CREATE_INFO;
 }
@@ -1497,6 +1570,13 @@ impl<'a> DeviceCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceCreateInfo() {
+    bytes_struct_eq(
+        DeviceCreateInfo::default(),
+        DeviceCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_CREATE_INFO;
@@ -1576,6 +1656,13 @@ impl<'a> InstanceCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkInstanceCreateInfo() {
+    bytes_struct_eq(
+        InstanceCreateInfo::default(),
+        InstanceCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for InstanceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INSTANCE_CREATE_INFO;
 }
@@ -1619,6 +1706,13 @@ impl QueueFamilyProperties {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkQueueFamilyProperties() {
+    bytes_struct_eq(
+        QueueFamilyProperties::default(),
+        QueueFamilyProperties::const_default(),
+    );
 }
 impl QueueFamilyProperties {
     #[inline]
@@ -1683,6 +1777,13 @@ impl PhysicalDeviceMemoryProperties {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMemoryProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceMemoryProperties::default(),
+        PhysicalDeviceMemoryProperties::const_default(),
+    );
+}
 impl PhysicalDeviceMemoryProperties {
     #[inline]
     pub fn memory_types(mut self, memory_types: &'_ [MemoryType]) -> Self {
@@ -1737,6 +1838,13 @@ impl<'a> MemoryAllocateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryAllocateInfo() {
+    bytes_struct_eq(
+        MemoryAllocateInfo::default(),
+        MemoryAllocateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_ALLOCATE_INFO;
 }
@@ -1767,6 +1875,13 @@ impl MemoryRequirements {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkMemoryRequirements() {
+    bytes_struct_eq(
+        MemoryRequirements::default(),
+        MemoryRequirements::const_default(),
+    );
 }
 impl MemoryRequirements {
     #[inline]
@@ -1800,6 +1915,13 @@ impl SparseImageFormatProperties {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkSparseImageFormatProperties() {
+    bytes_struct_eq(
+        SparseImageFormatProperties::default(),
+        SparseImageFormatProperties::const_default(),
+    );
 }
 impl SparseImageFormatProperties {
     #[inline]
@@ -1835,6 +1957,13 @@ impl SparseImageMemoryRequirements {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkSparseImageMemoryRequirements() {
+    bytes_struct_eq(
+        SparseImageMemoryRequirements::default(),
+        SparseImageMemoryRequirements::const_default(),
+    );
 }
 impl SparseImageMemoryRequirements {
     #[inline]
@@ -1878,6 +2007,10 @@ impl MemoryType {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkMemoryType() {
+    bytes_struct_eq(MemoryType::default(), MemoryType::const_default());
+}
 impl MemoryType {
     #[inline]
     pub fn property_flags(mut self, property_flags: MemoryPropertyFlags) -> Self {
@@ -1904,6 +2037,10 @@ impl MemoryHeap {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkMemoryHeap() {
+    bytes_struct_eq(MemoryHeap::default(), MemoryHeap::const_default());
 }
 impl MemoryHeap {
     #[inline]
@@ -1951,6 +2088,13 @@ impl<'a> MappedMemoryRange<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMappedMemoryRange() {
+    bytes_struct_eq(
+        MappedMemoryRange::default(),
+        MappedMemoryRange::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MappedMemoryRange<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MAPPED_MEMORY_RANGE;
 }
@@ -1987,6 +2131,13 @@ impl FormatProperties {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkFormatProperties() {
+    bytes_struct_eq(
+        FormatProperties::default(),
+        FormatProperties::const_default(),
+    );
+}
 impl FormatProperties {
     #[inline]
     pub fn linear_tiling_features(mut self, linear_tiling_features: FormatFeatureFlags) -> Self {
@@ -2021,6 +2172,13 @@ impl ImageFormatProperties {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkImageFormatProperties() {
+    bytes_struct_eq(
+        ImageFormatProperties::default(),
+        ImageFormatProperties::const_default(),
+    );
 }
 impl ImageFormatProperties {
     #[inline]
@@ -2065,6 +2223,13 @@ impl DescriptorBufferInfo {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkDescriptorBufferInfo() {
+    bytes_struct_eq(
+        DescriptorBufferInfo::default(),
+        DescriptorBufferInfo::const_default(),
+    );
+}
 impl DescriptorBufferInfo {
     #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
@@ -2097,6 +2262,13 @@ impl DescriptorImageInfo {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDescriptorImageInfo() {
+    bytes_struct_eq(
+        DescriptorImageInfo::default(),
+        DescriptorImageInfo::const_default(),
+    );
 }
 impl DescriptorImageInfo {
     #[inline]
@@ -2158,6 +2330,13 @@ impl<'a> WriteDescriptorSet<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkWriteDescriptorSet() {
+    bytes_struct_eq(
+        WriteDescriptorSet::default(),
+        WriteDescriptorSet::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSet<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_DESCRIPTOR_SET;
@@ -2249,6 +2428,13 @@ impl<'a> CopyDescriptorSet<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCopyDescriptorSet() {
+    bytes_struct_eq(
+        CopyDescriptorSet::default(),
+        CopyDescriptorSet::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyDescriptorSet<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_DESCRIPTOR_SET;
 }
@@ -2319,6 +2505,13 @@ impl<'a> BufferUsageFlags2CreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBufferUsageFlags2CreateInfo() {
+    bytes_struct_eq(
+        BufferUsageFlags2CreateInfo::default(),
+        BufferUsageFlags2CreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferUsageFlags2CreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_USAGE_FLAGS_2_CREATE_INFO;
 }
@@ -2372,6 +2565,13 @@ impl<'a> BufferCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBufferCreateInfo() {
+    bytes_struct_eq(
+        BufferCreateInfo::default(),
+        BufferCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_CREATE_INFO;
@@ -2442,6 +2642,13 @@ impl<'a> BufferViewCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBufferViewCreateInfo() {
+    bytes_struct_eq(
+        BufferViewCreateInfo::default(),
+        BufferViewCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferViewCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_VIEW_CREATE_INFO;
 }
@@ -2488,6 +2695,13 @@ impl ImageSubresource {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkImageSubresource() {
+    bytes_struct_eq(
+        ImageSubresource::default(),
+        ImageSubresource::const_default(),
+    );
+}
 impl ImageSubresource {
     #[inline]
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
@@ -2521,6 +2735,13 @@ impl ImageSubresourceLayers {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkImageSubresourceLayers() {
+    bytes_struct_eq(
+        ImageSubresourceLayers::default(),
+        ImageSubresourceLayers::const_default(),
+    );
 }
 impl ImageSubresourceLayers {
     #[inline]
@@ -2561,6 +2782,13 @@ impl ImageSubresourceRange {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkImageSubresourceRange() {
+    bytes_struct_eq(
+        ImageSubresourceRange::default(),
+        ImageSubresourceRange::const_default(),
+    );
 }
 impl ImageSubresourceRange {
     #[inline]
@@ -2621,6 +2849,10 @@ impl<'a> MemoryBarrier<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryBarrier() {
+    bytes_struct_eq(MemoryBarrier::default(), MemoryBarrier::const_default());
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryBarrier<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_BARRIER;
 }
@@ -2677,6 +2909,13 @@ impl<'a> BufferMemoryBarrier<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBufferMemoryBarrier() {
+    bytes_struct_eq(
+        BufferMemoryBarrier::default(),
+        BufferMemoryBarrier::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferMemoryBarrier<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_MEMORY_BARRIER;
@@ -2761,6 +3000,13 @@ impl<'a> ImageMemoryBarrier<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImageMemoryBarrier() {
+    bytes_struct_eq(
+        ImageMemoryBarrier::default(),
+        ImageMemoryBarrier::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageMemoryBarrier<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_MEMORY_BARRIER;
@@ -2861,6 +3107,10 @@ impl<'a> ImageCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageCreateInfo() {
+    bytes_struct_eq(ImageCreateInfo::default(), ImageCreateInfo::const_default());
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CREATE_INFO;
 }
@@ -2945,6 +3195,13 @@ impl SubresourceLayout {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkSubresourceLayout() {
+    bytes_struct_eq(
+        SubresourceLayout::default(),
+        SubresourceLayout::const_default(),
+    );
+}
 impl SubresourceLayout {
     #[inline]
     pub fn offset(mut self, offset: DeviceSize) -> Self {
@@ -3012,6 +3269,13 @@ impl<'a> ImageViewCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageViewCreateInfo() {
+    bytes_struct_eq(
+        ImageViewCreateInfo::default(),
+        ImageViewCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageViewCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_CREATE_INFO;
 }
@@ -3063,6 +3327,10 @@ impl BufferCopy {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkBufferCopy() {
+    bytes_struct_eq(BufferCopy::default(), BufferCopy::const_default());
+}
 impl BufferCopy {
     #[inline]
     pub fn src_offset(mut self, src_offset: DeviceSize) -> Self {
@@ -3097,6 +3365,13 @@ impl SparseMemoryBind {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkSparseMemoryBind() {
+    bytes_struct_eq(
+        SparseMemoryBind::default(),
+        SparseMemoryBind::const_default(),
+    );
 }
 impl SparseMemoryBind {
     #[inline]
@@ -3143,6 +3418,13 @@ impl SparseImageMemoryBind {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkSparseImageMemoryBind() {
+    bytes_struct_eq(
+        SparseImageMemoryBind::default(),
+        SparseImageMemoryBind::const_default(),
+    );
 }
 impl SparseImageMemoryBind {
     #[inline]
@@ -3206,6 +3488,13 @@ impl<'a> SparseBufferMemoryBindInfo<'a> {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkSparseBufferMemoryBindInfo() {
+    bytes_struct_eq(
+        SparseBufferMemoryBindInfo::default(),
+        SparseBufferMemoryBindInfo::const_default(),
+    );
+}
 impl<'a> SparseBufferMemoryBindInfo<'a> {
     #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
@@ -3249,6 +3538,13 @@ impl<'a> SparseImageOpaqueMemoryBindInfo<'a> {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkSparseImageOpaqueMemoryBindInfo() {
+    bytes_struct_eq(
+        SparseImageOpaqueMemoryBindInfo::default(),
+        SparseImageOpaqueMemoryBindInfo::const_default(),
+    );
+}
 impl<'a> SparseImageOpaqueMemoryBindInfo<'a> {
     #[inline]
     pub fn image(mut self, image: Image) -> Self {
@@ -3291,6 +3587,13 @@ impl<'a> SparseImageMemoryBindInfo<'a> {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkSparseImageMemoryBindInfo() {
+    bytes_struct_eq(
+        SparseImageMemoryBindInfo::default(),
+        SparseImageMemoryBindInfo::const_default(),
+    );
 }
 impl<'a> SparseImageMemoryBindInfo<'a> {
     #[inline]
@@ -3353,6 +3656,10 @@ impl<'a> BindSparseInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBindSparseInfo() {
+    bytes_struct_eq(BindSparseInfo::default(), BindSparseInfo::const_default());
+}
 unsafe impl<'a> TaggedStructure<'a> for BindSparseInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_SPARSE_INFO;
 }
@@ -3409,6 +3716,10 @@ impl ImageCopy {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkImageCopy() {
+    bytes_struct_eq(ImageCopy::default(), ImageCopy::const_default());
+}
 impl ImageCopy {
     #[inline]
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
@@ -3464,6 +3775,10 @@ impl ImageBlit {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkImageBlit() {
+    bytes_struct_eq(ImageBlit::default(), ImageBlit::const_default());
+}
 impl ImageBlit {
     #[inline]
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
@@ -3504,6 +3819,10 @@ impl BufferImageCopy {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkBufferImageCopy() {
+    bytes_struct_eq(BufferImageCopy::default(), BufferImageCopy::const_default());
 }
 impl BufferImageCopy {
     #[inline]
@@ -3553,6 +3872,13 @@ impl StridedDeviceAddressRangeKHR {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkStridedDeviceAddressRangeKHR() {
+    bytes_struct_eq(
+        StridedDeviceAddressRangeKHR::default(),
+        StridedDeviceAddressRangeKHR::const_default(),
+    );
+}
 impl StridedDeviceAddressRangeKHR {
     #[inline]
     pub fn address(mut self, address: DeviceAddress) -> Self {
@@ -3585,6 +3911,13 @@ impl CopyMemoryIndirectCommandKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkCopyMemoryIndirectCommandKHR() {
+    bytes_struct_eq(
+        CopyMemoryIndirectCommandKHR::default(),
+        CopyMemoryIndirectCommandKHR::const_default(),
+    );
 }
 impl CopyMemoryIndirectCommandKHR {
     #[inline]
@@ -3639,6 +3972,13 @@ impl<'a> CopyMemoryIndirectInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCopyMemoryIndirectInfoKHR() {
+    bytes_struct_eq(
+        CopyMemoryIndirectInfoKHR::default(),
+        CopyMemoryIndirectInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryIndirectInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MEMORY_INDIRECT_INFO_KHR;
 }
@@ -3682,6 +4022,13 @@ impl CopyMemoryToImageIndirectCommandKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkCopyMemoryToImageIndirectCommandKHR() {
+    bytes_struct_eq(
+        CopyMemoryToImageIndirectCommandKHR::default(),
+        CopyMemoryToImageIndirectCommandKHR::const_default(),
+    );
 }
 impl CopyMemoryToImageIndirectCommandKHR {
     #[inline]
@@ -3755,6 +4102,13 @@ impl<'a> CopyMemoryToImageIndirectInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCopyMemoryToImageIndirectInfoKHR() {
+    bytes_struct_eq(
+        CopyMemoryToImageIndirectInfoKHR::default(),
+        CopyMemoryToImageIndirectInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToImageIndirectInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MEMORY_TO_IMAGE_INDIRECT_INFO_KHR;
 }
@@ -3803,6 +4157,10 @@ impl ImageResolve {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkImageResolve() {
+    bytes_struct_eq(ImageResolve::default(), ImageResolve::const_default());
 }
 impl ImageResolve {
     #[inline]
@@ -3865,6 +4223,13 @@ impl<'a> ShaderModuleCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkShaderModuleCreateInfo() {
+    bytes_struct_eq(
+        ShaderModuleCreateInfo::default(),
+        ShaderModuleCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ShaderModuleCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_MODULE_CREATE_INFO;
 }
@@ -3916,6 +4281,13 @@ impl<'a> DescriptorSetLayoutBinding<'a> {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDescriptorSetLayoutBinding() {
+    bytes_struct_eq(
+        DescriptorSetLayoutBinding::default(),
+        DescriptorSetLayoutBinding::const_default(),
+    );
 }
 impl<'a> DescriptorSetLayoutBinding<'a> {
     #[inline]
@@ -3979,6 +4351,13 @@ impl<'a> DescriptorSetLayoutCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDescriptorSetLayoutCreateInfo() {
+    bytes_struct_eq(
+        DescriptorSetLayoutCreateInfo::default(),
+        DescriptorSetLayoutCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
 }
@@ -4009,6 +4388,13 @@ impl DescriptorPoolSize {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDescriptorPoolSize() {
+    bytes_struct_eq(
+        DescriptorPoolSize::default(),
+        DescriptorPoolSize::const_default(),
+    );
 }
 impl DescriptorPoolSize {
     #[inline]
@@ -4057,6 +4443,13 @@ impl<'a> DescriptorPoolCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDescriptorPoolCreateInfo() {
+    bytes_struct_eq(
+        DescriptorPoolCreateInfo::default(),
+        DescriptorPoolCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorPoolCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_POOL_CREATE_INFO;
@@ -4113,6 +4506,13 @@ impl<'a> DescriptorSetAllocateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDescriptorSetAllocateInfo() {
+    bytes_struct_eq(
+        DescriptorSetAllocateInfo::default(),
+        DescriptorSetAllocateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_ALLOCATE_INFO;
 }
@@ -4144,6 +4544,13 @@ impl SpecializationMapEntry {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkSpecializationMapEntry() {
+    bytes_struct_eq(
+        SpecializationMapEntry::default(),
+        SpecializationMapEntry::const_default(),
+    );
 }
 impl SpecializationMapEntry {
     #[inline]
@@ -4193,6 +4600,13 @@ impl<'a> SpecializationInfo<'a> {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkSpecializationInfo() {
+    bytes_struct_eq(
+        SpecializationInfo::default(),
+        SpecializationInfo::const_default(),
+    );
 }
 impl<'a> SpecializationInfo<'a> {
     #[inline]
@@ -4245,6 +4659,13 @@ impl<'a> PipelineShaderStageCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineShaderStageCreateInfo() {
+    bytes_struct_eq(
+        PipelineShaderStageCreateInfo::default(),
+        PipelineShaderStageCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -4322,6 +4743,13 @@ impl<'a> ComputePipelineCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkComputePipelineCreateInfo() {
+    bytes_struct_eq(
+        ComputePipelineCreateInfo::default(),
+        ComputePipelineCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ComputePipelineCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_PIPELINE_CREATE_INFO;
 }
@@ -4386,6 +4814,13 @@ impl<'a> ComputePipelineIndirectBufferInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkComputePipelineIndirectBufferInfoNV() {
+    bytes_struct_eq(
+        ComputePipelineIndirectBufferInfoNV::default(),
+        ComputePipelineIndirectBufferInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ComputePipelineIndirectBufferInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_PIPELINE_INDIRECT_BUFFER_INFO_NV;
 }
@@ -4440,6 +4875,13 @@ impl<'a> PipelineCreateFlags2CreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineCreateFlags2CreateInfo() {
+    bytes_struct_eq(
+        PipelineCreateFlags2CreateInfo::default(),
+        PipelineCreateFlags2CreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineCreateFlags2CreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CREATE_FLAGS_2_CREATE_INFO;
 }
@@ -4469,6 +4911,13 @@ impl VertexInputBindingDescription {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkVertexInputBindingDescription() {
+    bytes_struct_eq(
+        VertexInputBindingDescription::default(),
+        VertexInputBindingDescription::const_default(),
+    );
 }
 impl VertexInputBindingDescription {
     #[inline]
@@ -4503,6 +4952,13 @@ impl VertexInputAttributeDescription {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkVertexInputAttributeDescription() {
+    bytes_struct_eq(
+        VertexInputAttributeDescription::default(),
+        VertexInputAttributeDescription::const_default(),
+    );
 }
 impl VertexInputAttributeDescription {
     #[inline]
@@ -4563,6 +5019,13 @@ impl<'a> PipelineVertexInputStateCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineVertexInputStateCreateInfo() {
+    bytes_struct_eq(
+        PipelineVertexInputStateCreateInfo::default(),
+        PipelineVertexInputStateCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineVertexInputStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -4626,6 +5089,13 @@ impl<'a> PipelineInputAssemblyStateCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineInputAssemblyStateCreateInfo() {
+    bytes_struct_eq(
+        PipelineInputAssemblyStateCreateInfo::default(),
+        PipelineInputAssemblyStateCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineInputAssemblyStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 }
@@ -4677,6 +5147,13 @@ impl<'a> PipelineTessellationStateCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineTessellationStateCreateInfo() {
+    bytes_struct_eq(
+        PipelineTessellationStateCreateInfo::default(),
+        PipelineTessellationStateCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineTessellationStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_TESSELLATION_STATE_CREATE_INFO;
@@ -4730,6 +5207,13 @@ impl<'a> PipelineViewportStateCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineViewportStateCreateInfo() {
+    bytes_struct_eq(
+        PipelineViewportStateCreateInfo::default(),
+        PipelineViewportStateCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_VIEWPORT_STATE_CREATE_INFO;
@@ -4812,6 +5296,13 @@ impl<'a> PipelineRasterizationStateCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineRasterizationStateCreateInfo() {
+    bytes_struct_eq(
+        PipelineRasterizationStateCreateInfo::default(),
+        PipelineRasterizationStateCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
@@ -4915,6 +5406,13 @@ impl<'a> PipelineMultisampleStateCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineMultisampleStateCreateInfo() {
+    bytes_struct_eq(
+        PipelineMultisampleStateCreateInfo::default(),
+        PipelineMultisampleStateCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineMultisampleStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 }
@@ -4984,6 +5482,13 @@ impl PipelineColorBlendAttachmentState {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkPipelineColorBlendAttachmentState() {
+    bytes_struct_eq(
+        PipelineColorBlendAttachmentState::default(),
+        PipelineColorBlendAttachmentState::const_default(),
+    );
 }
 impl PipelineColorBlendAttachmentState {
     #[inline]
@@ -5067,6 +5572,13 @@ impl<'a> PipelineColorBlendStateCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineColorBlendStateCreateInfo() {
+    bytes_struct_eq(
+        PipelineColorBlendStateCreateInfo::default(),
+        PipelineColorBlendStateCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineColorBlendStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
 }
@@ -5132,6 +5644,13 @@ impl<'a> PipelineDynamicStateCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineDynamicStateCreateInfo() {
+    bytes_struct_eq(
+        PipelineDynamicStateCreateInfo::default(),
+        PipelineDynamicStateCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineDynamicStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 }
@@ -5167,6 +5686,10 @@ impl StencilOpState {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkStencilOpState() {
+    bytes_struct_eq(StencilOpState::default(), StencilOpState::const_default());
 }
 impl StencilOpState {
     #[inline]
@@ -5252,6 +5775,13 @@ impl<'a> PipelineDepthStencilStateCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineDepthStencilStateCreateInfo() {
+    bytes_struct_eq(
+        PipelineDepthStencilStateCreateInfo::default(),
+        PipelineDepthStencilStateCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineDepthStencilStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
@@ -5369,6 +5899,13 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkGraphicsPipelineCreateInfo() {
+    bytes_struct_eq(
+        GraphicsPipelineCreateInfo::default(),
+        GraphicsPipelineCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GRAPHICS_PIPELINE_CREATE_INFO;
@@ -5514,6 +6051,13 @@ impl<'a> PipelineCacheCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineCacheCreateInfo() {
+    bytes_struct_eq(
+        PipelineCacheCreateInfo::default(),
+        PipelineCacheCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineCacheCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CACHE_CREATE_INFO;
 }
@@ -5559,6 +6103,13 @@ impl PipelineCacheHeaderVersionOne {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkPipelineCacheHeaderVersionOne() {
+    bytes_struct_eq(
+        PipelineCacheHeaderVersionOne::default(),
+        PipelineCacheHeaderVersionOne::const_default(),
+    );
 }
 impl PipelineCacheHeaderVersionOne {
     #[inline]
@@ -5617,6 +6168,13 @@ impl PipelineCacheHeaderVersionDataGraphQCOM {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkPipelineCacheHeaderVersionDataGraphQCOM() {
+    bytes_struct_eq(
+        PipelineCacheHeaderVersionDataGraphQCOM::default(),
+        PipelineCacheHeaderVersionDataGraphQCOM::const_default(),
+    );
+}
 impl PipelineCacheHeaderVersionDataGraphQCOM {
     #[inline]
     pub fn header_size(mut self, header_size: u32) -> Self {
@@ -5662,6 +6220,13 @@ impl PushConstantRange {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkPushConstantRange() {
+    bytes_struct_eq(
+        PushConstantRange::default(),
+        PushConstantRange::const_default(),
+    );
 }
 impl PushConstantRange {
     #[inline]
@@ -5713,6 +6278,13 @@ impl<'a> PipelineBinaryCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineBinaryCreateInfoKHR() {
+    bytes_struct_eq(
+        PipelineBinaryCreateInfoKHR::default(),
+        PipelineBinaryCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_CREATE_INFO_KHR;
@@ -5772,6 +6344,13 @@ impl<'a> PipelineBinaryHandlesInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineBinaryHandlesInfoKHR() {
+    bytes_struct_eq(
+        PipelineBinaryHandlesInfoKHR::default(),
+        PipelineBinaryHandlesInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryHandlesInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_HANDLES_INFO_KHR;
 }
@@ -5811,6 +6390,13 @@ impl<'a> PipelineBinaryDataKHR<'a> {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkPipelineBinaryDataKHR() {
+    bytes_struct_eq(
+        PipelineBinaryDataKHR::default(),
+        PipelineBinaryDataKHR::const_default(),
+    );
+}
 impl<'a> PipelineBinaryDataKHR<'a> {
     #[inline]
     pub fn data(mut self, data: &'a mut [u8]) -> Self {
@@ -5848,6 +6434,13 @@ impl<'a> PipelineBinaryKeysAndDataKHR<'a> {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkPipelineBinaryKeysAndDataKHR() {
+    bytes_struct_eq(
+        PipelineBinaryKeysAndDataKHR::default(),
+        PipelineBinaryKeysAndDataKHR::const_default(),
+    );
 }
 impl<'a> PipelineBinaryKeysAndDataKHR<'a> {
     #[inline]
@@ -5901,6 +6494,13 @@ impl<'a> PipelineBinaryKeyKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineBinaryKeyKHR() {
+    bytes_struct_eq(
+        PipelineBinaryKeyKHR::default(),
+        PipelineBinaryKeyKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryKeyKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_KEY_KHR;
 }
@@ -5948,6 +6548,13 @@ impl<'a> PipelineBinaryInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineBinaryInfoKHR() {
+    bytes_struct_eq(
+        PipelineBinaryInfoKHR::default(),
+        PipelineBinaryInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_INFO_KHR;
 }
@@ -5992,6 +6599,13 @@ impl<'a> ReleaseCapturedPipelineDataInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkReleaseCapturedPipelineDataInfoKHR() {
+    bytes_struct_eq(
+        ReleaseCapturedPipelineDataInfoKHR::default(),
+        ReleaseCapturedPipelineDataInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ReleaseCapturedPipelineDataInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RELEASE_CAPTURED_PIPELINE_DATA_INFO_KHR;
 }
@@ -6032,6 +6646,13 @@ impl<'a> PipelineBinaryDataInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineBinaryDataInfoKHR() {
+    bytes_struct_eq(
+        PipelineBinaryDataInfoKHR::default(),
+        PipelineBinaryDataInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryDataInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_BINARY_DATA_INFO_KHR;
 }
@@ -6069,6 +6690,13 @@ impl<'a> PipelineCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineCreateInfoKHR() {
+    bytes_struct_eq(
+        PipelineCreateInfoKHR::default(),
+        PipelineCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CREATE_INFO_KHR;
@@ -6111,6 +6739,13 @@ impl<'a> PipelineLayoutCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineLayoutCreateInfo() {
+    bytes_struct_eq(
+        PipelineLayoutCreateInfo::default(),
+        PipelineLayoutCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineLayoutCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_LAYOUT_CREATE_INFO;
@@ -6203,6 +6838,13 @@ impl<'a> SamplerCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSamplerCreateInfo() {
+    bytes_struct_eq(
+        SamplerCreateInfo::default(),
+        SamplerCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_CREATE_INFO;
@@ -6321,6 +6963,13 @@ impl<'a> CommandPoolCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCommandPoolCreateInfo() {
+    bytes_struct_eq(
+        CommandPoolCreateInfo::default(),
+        CommandPoolCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CommandPoolCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_POOL_CREATE_INFO;
 }
@@ -6369,6 +7018,13 @@ impl<'a> CommandBufferAllocateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCommandBufferAllocateInfo() {
+    bytes_struct_eq(
+        CommandBufferAllocateInfo::default(),
+        CommandBufferAllocateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_ALLOCATE_INFO;
@@ -6429,6 +7085,13 @@ impl<'a> CommandBufferInheritanceInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCommandBufferInheritanceInfo() {
+    bytes_struct_eq(
+        CommandBufferInheritanceInfo::default(),
+        CommandBufferInheritanceInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_INHERITANCE_INFO;
@@ -6496,6 +7159,13 @@ impl<'a> CommandBufferBeginInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCommandBufferBeginInfo() {
+    bytes_struct_eq(
+        CommandBufferBeginInfo::default(),
+        CommandBufferBeginInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_BEGIN_INFO;
@@ -6566,6 +7236,13 @@ impl<'a> RenderPassBeginInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderPassBeginInfo() {
+    bytes_struct_eq(
+        RenderPassBeginInfo::default(),
+        RenderPassBeginInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_BEGIN_INFO;
 }
@@ -6621,6 +7298,13 @@ impl ClearDepthStencilValue {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkClearDepthStencilValue() {
+    bytes_struct_eq(
+        ClearDepthStencilValue::default(),
+        ClearDepthStencilValue::const_default(),
+    );
+}
 impl ClearDepthStencilValue {
     #[inline]
     pub fn depth(mut self, depth: f32) -> Self {
@@ -6671,6 +7355,10 @@ impl ClearAttachment {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkClearAttachment() {
+    bytes_struct_eq(ClearAttachment::default(), ClearAttachment::const_default());
+}
 impl ClearAttachment {
     #[inline]
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
@@ -6709,6 +7397,13 @@ impl AttachmentDescription {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkAttachmentDescription() {
+    bytes_struct_eq(
+        AttachmentDescription::default(),
+        AttachmentDescription::const_default(),
+    );
 }
 impl AttachmentDescription {
     #[inline]
@@ -6772,6 +7467,13 @@ impl AttachmentReference {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkAttachmentReference() {
+    bytes_struct_eq(
+        AttachmentReference::default(),
+        AttachmentReference::const_default(),
+    );
+}
 impl AttachmentReference {
     #[inline]
     pub fn attachment(mut self, attachment: u32) -> Self {
@@ -6827,6 +7529,13 @@ impl<'a> SubpassDescription<'a> {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkSubpassDescription() {
+    bytes_struct_eq(
+        SubpassDescription::default(),
+        SubpassDescription::const_default(),
+    );
 }
 impl<'a> SubpassDescription<'a> {
     #[inline]
@@ -6891,6 +7600,13 @@ impl SubpassDependency {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkSubpassDependency() {
+    bytes_struct_eq(
+        SubpassDependency::default(),
+        SubpassDependency::const_default(),
+    );
 }
 impl SubpassDependency {
     #[inline]
@@ -6971,6 +7687,13 @@ impl<'a> RenderPassCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderPassCreateInfo() {
+    bytes_struct_eq(
+        RenderPassCreateInfo::default(),
+        RenderPassCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_CREATE_INFO;
 }
@@ -7029,6 +7752,10 @@ impl<'a> EventCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkEventCreateInfo() {
+    bytes_struct_eq(EventCreateInfo::default(), EventCreateInfo::const_default());
+}
 unsafe impl<'a> TaggedStructure<'a> for EventCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EVENT_CREATE_INFO;
 }
@@ -7068,6 +7795,10 @@ impl<'a> FenceCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkFenceCreateInfo() {
+    bytes_struct_eq(FenceCreateInfo::default(), FenceCreateInfo::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for FenceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FENCE_CREATE_INFO;
@@ -7146,6 +7877,13 @@ impl PhysicalDeviceFeatures {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceFeatures::default(),
+        PhysicalDeviceFeatures::const_default(),
+    );
 }
 impl PhysicalDeviceFeatures {
     #[inline]
@@ -7479,6 +8217,13 @@ impl PhysicalDeviceSparseProperties {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceSparseProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceSparseProperties::default(),
+        PhysicalDeviceSparseProperties::const_default(),
+    );
+}
 impl PhysicalDeviceSparseProperties {
     #[inline]
     pub fn residency_standard2_d_block_shape(
@@ -7747,6 +8492,13 @@ impl PhysicalDeviceLimits {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceLimits() {
+    bytes_struct_eq(
+        PhysicalDeviceLimits::default(),
+        PhysicalDeviceLimits::const_default(),
+    );
 }
 impl PhysicalDeviceLimits {
     #[inline]
@@ -8442,6 +9194,13 @@ impl<'a> SemaphoreCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSemaphoreCreateInfo() {
+    bytes_struct_eq(
+        SemaphoreCreateInfo::default(),
+        SemaphoreCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_CREATE_INFO;
 }
@@ -8487,6 +9246,13 @@ impl<'a> QueryPoolCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkQueryPoolCreateInfo() {
+    bytes_struct_eq(
+        QueryPoolCreateInfo::default(),
+        QueryPoolCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUERY_POOL_CREATE_INFO;
@@ -8555,6 +9321,13 @@ impl<'a> FramebufferCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkFramebufferCreateInfo() {
+    bytes_struct_eq(
+        FramebufferCreateInfo::default(),
+        FramebufferCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for FramebufferCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_CREATE_INFO;
 }
@@ -8613,6 +9386,13 @@ impl DrawIndirectCommand {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkDrawIndirectCommand() {
+    bytes_struct_eq(
+        DrawIndirectCommand::default(),
+        DrawIndirectCommand::const_default(),
+    );
+}
 impl DrawIndirectCommand {
     #[inline]
     pub fn vertex_count(mut self, vertex_count: u32) -> Self {
@@ -8652,6 +9432,13 @@ impl DrawIndexedIndirectCommand {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDrawIndexedIndirectCommand() {
+    bytes_struct_eq(
+        DrawIndexedIndirectCommand::default(),
+        DrawIndexedIndirectCommand::const_default(),
+    );
 }
 impl DrawIndexedIndirectCommand {
     #[inline]
@@ -8696,6 +9483,13 @@ impl DispatchIndirectCommand {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkDispatchIndirectCommand() {
+    bytes_struct_eq(
+        DispatchIndirectCommand::default(),
+        DispatchIndirectCommand::const_default(),
+    );
+}
 impl DispatchIndirectCommand {
     #[inline]
     pub fn x(mut self, x: u32) -> Self {
@@ -8728,6 +9522,13 @@ impl MultiDrawInfoEXT {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkMultiDrawInfoEXT() {
+    bytes_struct_eq(
+        MultiDrawInfoEXT::default(),
+        MultiDrawInfoEXT::const_default(),
+    );
+}
 impl MultiDrawInfoEXT {
     #[inline]
     pub fn first_vertex(mut self, first_vertex: u32) -> Self {
@@ -8755,6 +9556,13 @@ impl MultiDrawIndexedInfoEXT {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkMultiDrawIndexedInfoEXT() {
+    bytes_struct_eq(
+        MultiDrawIndexedInfoEXT::default(),
+        MultiDrawIndexedInfoEXT::const_default(),
+    );
 }
 impl MultiDrawIndexedInfoEXT {
     #[inline]
@@ -8814,6 +9622,10 @@ impl<'a> SubmitInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSubmitInfo() {
+    bytes_struct_eq(SubmitInfo::default(), SubmitInfo::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for SubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBMIT_INFO;
@@ -8882,6 +9694,13 @@ impl<'a> DisplayPropertiesKHR<'a> {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkDisplayPropertiesKHR() {
+    bytes_struct_eq(
+        DisplayPropertiesKHR::default(),
+        DisplayPropertiesKHR::const_default(),
+    );
+}
 impl<'a> DisplayPropertiesKHR<'a> {
     #[inline]
     pub fn display(mut self, display: DisplayKHR) -> Self {
@@ -8942,6 +9761,13 @@ impl DisplayPlanePropertiesKHR {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkDisplayPlanePropertiesKHR() {
+    bytes_struct_eq(
+        DisplayPlanePropertiesKHR::default(),
+        DisplayPlanePropertiesKHR::const_default(),
+    );
+}
 impl DisplayPlanePropertiesKHR {
     #[inline]
     pub fn current_display(mut self, current_display: DisplayKHR) -> Self {
@@ -8969,6 +9795,13 @@ impl DisplayModeParametersKHR {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkDisplayModeParametersKHR() {
+    bytes_struct_eq(
+        DisplayModeParametersKHR::default(),
+        DisplayModeParametersKHR::const_default(),
+    );
+}
 impl DisplayModeParametersKHR {
     #[inline]
     pub fn visible_region(mut self, visible_region: Extent2D) -> Self {
@@ -8995,6 +9828,13 @@ impl DisplayModePropertiesKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDisplayModePropertiesKHR() {
+    bytes_struct_eq(
+        DisplayModePropertiesKHR::default(),
+        DisplayModePropertiesKHR::const_default(),
+    );
 }
 impl DisplayModePropertiesKHR {
     #[inline]
@@ -9040,6 +9880,13 @@ impl<'a> DisplayModeCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDisplayModeCreateInfoKHR() {
+    bytes_struct_eq(
+        DisplayModeCreateInfoKHR::default(),
+        DisplayModeCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayModeCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_MODE_CREATE_INFO_KHR;
 }
@@ -9076,6 +9923,13 @@ impl DisplayPlaneCapabilitiesKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDisplayPlaneCapabilitiesKHR() {
+    bytes_struct_eq(
+        DisplayPlaneCapabilitiesKHR::default(),
+        DisplayPlaneCapabilitiesKHR::const_default(),
+    );
 }
 impl DisplayPlaneCapabilitiesKHR {
     #[inline]
@@ -9168,6 +10022,13 @@ impl<'a> DisplaySurfaceCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDisplaySurfaceCreateInfoKHR() {
+    bytes_struct_eq(
+        DisplaySurfaceCreateInfoKHR::default(),
+        DisplaySurfaceCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplaySurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_SURFACE_CREATE_INFO_KHR;
 }
@@ -9243,6 +10104,13 @@ impl<'a> DisplaySurfaceStereoCreateInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDisplaySurfaceStereoCreateInfoNV() {
+    bytes_struct_eq(
+        DisplaySurfaceStereoCreateInfoNV::default(),
+        DisplaySurfaceStereoCreateInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplaySurfaceStereoCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_SURFACE_STEREO_CREATE_INFO_NV;
 }
@@ -9288,6 +10156,13 @@ impl<'a> DisplayPresentInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDisplayPresentInfoKHR() {
+    bytes_struct_eq(
+        DisplayPresentInfoKHR::default(),
+        DisplayPresentInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayPresentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PRESENT_INFO_KHR;
 }
@@ -9331,6 +10206,13 @@ impl SurfaceCapabilitiesKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkSurfaceCapabilitiesKHR() {
+    bytes_struct_eq(
+        SurfaceCapabilitiesKHR::default(),
+        SurfaceCapabilitiesKHR::const_default(),
+    );
 }
 impl SurfaceCapabilitiesKHR {
     #[inline]
@@ -9419,6 +10301,13 @@ impl<'a> AndroidSurfaceCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAndroidSurfaceCreateInfoKHR() {
+    bytes_struct_eq(
+        AndroidSurfaceCreateInfoKHR::default(),
+        AndroidSurfaceCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AndroidSurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANDROID_SURFACE_CREATE_INFO_KHR;
 }
@@ -9465,6 +10354,13 @@ impl<'a> ViSurfaceCreateInfoNN<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkViSurfaceCreateInfoNN() {
+    bytes_struct_eq(
+        ViSurfaceCreateInfoNN::default(),
+        ViSurfaceCreateInfoNN::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ViSurfaceCreateInfoNN<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VI_SURFACE_CREATE_INFO_NN;
@@ -9514,6 +10410,13 @@ impl<'a> WaylandSurfaceCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkWaylandSurfaceCreateInfoKHR() {
+    bytes_struct_eq(
+        WaylandSurfaceCreateInfoKHR::default(),
+        WaylandSurfaceCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for WaylandSurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WAYLAND_SURFACE_CREATE_INFO_KHR;
@@ -9569,6 +10472,13 @@ impl<'a> UbmSurfaceCreateInfoSEC<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkUbmSurfaceCreateInfoSEC() {
+    bytes_struct_eq(
+        UbmSurfaceCreateInfoSEC::default(),
+        UbmSurfaceCreateInfoSEC::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for UbmSurfaceCreateInfoSEC<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::UBM_SURFACE_CREATE_INFO_SEC;
 }
@@ -9622,6 +10532,13 @@ impl<'a> Win32SurfaceCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkWin32SurfaceCreateInfoKHR() {
+    bytes_struct_eq(
+        Win32SurfaceCreateInfoKHR::default(),
+        Win32SurfaceCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for Win32SurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WIN32_SURFACE_CREATE_INFO_KHR;
@@ -9677,6 +10594,13 @@ impl<'a> XlibSurfaceCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkXlibSurfaceCreateInfoKHR() {
+    bytes_struct_eq(
+        XlibSurfaceCreateInfoKHR::default(),
+        XlibSurfaceCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for XlibSurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::XLIB_SURFACE_CREATE_INFO_KHR;
 }
@@ -9730,6 +10654,13 @@ impl<'a> XcbSurfaceCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkXcbSurfaceCreateInfoKHR() {
+    bytes_struct_eq(
+        XcbSurfaceCreateInfoKHR::default(),
+        XcbSurfaceCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for XcbSurfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::XCB_SURFACE_CREATE_INFO_KHR;
@@ -9785,6 +10716,13 @@ impl<'a> DirectFBSurfaceCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDirectFBSurfaceCreateInfoEXT() {
+    bytes_struct_eq(
+        DirectFBSurfaceCreateInfoEXT::default(),
+        DirectFBSurfaceCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DirectFBSurfaceCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DIRECTFB_SURFACE_CREATE_INFO_EXT;
 }
@@ -9837,6 +10775,13 @@ impl<'a> ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImagePipeSurfaceCreateInfoFUCHSIA() {
+    bytes_struct_eq(
+        ImagePipeSurfaceCreateInfoFUCHSIA::default(),
+        ImagePipeSurfaceCreateInfoFUCHSIA::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA;
 }
@@ -9883,6 +10828,13 @@ impl<'a> StreamDescriptorSurfaceCreateInfoGGP<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkStreamDescriptorSurfaceCreateInfoGGP() {
+    bytes_struct_eq(
+        StreamDescriptorSurfaceCreateInfoGGP::default(),
+        StreamDescriptorSurfaceCreateInfoGGP::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for StreamDescriptorSurfaceCreateInfoGGP<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::STREAM_DESCRIPTOR_SURFACE_CREATE_INFO_GGP;
@@ -9933,6 +10885,13 @@ impl<'a> ScreenSurfaceCreateInfoQNX<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkScreenSurfaceCreateInfoQNX() {
+    bytes_struct_eq(
+        ScreenSurfaceCreateInfoQNX::default(),
+        ScreenSurfaceCreateInfoQNX::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ScreenSurfaceCreateInfoQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SCREEN_SURFACE_CREATE_INFO_QNX;
 }
@@ -9967,6 +10926,13 @@ impl SurfaceFormatKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkSurfaceFormatKHR() {
+    bytes_struct_eq(
+        SurfaceFormatKHR::default(),
+        SurfaceFormatKHR::const_default(),
+    );
 }
 impl SurfaceFormatKHR {
     #[inline]
@@ -10039,6 +11005,13 @@ impl<'a> SwapchainCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSwapchainCreateInfoKHR() {
+    bytes_struct_eq(
+        SwapchainCreateInfoKHR::default(),
+        SwapchainCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_CREATE_INFO_KHR;
@@ -10161,6 +11134,10 @@ impl<'a> PresentInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPresentInfoKHR() {
+    bytes_struct_eq(PresentInfoKHR::default(), PresentInfoKHR::const_default());
+}
 unsafe impl<'a> TaggedStructure<'a> for PresentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_INFO_KHR;
 }
@@ -10235,6 +11212,13 @@ impl<'a> DebugReportCallbackCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDebugReportCallbackCreateInfoEXT() {
+    bytes_struct_eq(
+        DebugReportCallbackCreateInfoEXT::default(),
+        DebugReportCallbackCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DebugReportCallbackCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
 }
@@ -10288,6 +11272,13 @@ impl<'a> ValidationFlagsEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkValidationFlagsEXT() {
+    bytes_struct_eq(
+        ValidationFlagsEXT::default(),
+        ValidationFlagsEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ValidationFlagsEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VALIDATION_FLAGS_EXT;
 }
@@ -10338,6 +11329,13 @@ impl<'a> ValidationFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkValidationFeaturesEXT() {
+    bytes_struct_eq(
+        ValidationFeaturesEXT::default(),
+        ValidationFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ValidationFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VALIDATION_FEATURES_EXT;
@@ -10397,6 +11395,13 @@ impl<'a> LayerSettingsCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkLayerSettingsCreateInfoEXT() {
+    bytes_struct_eq(
+        LayerSettingsCreateInfoEXT::default(),
+        LayerSettingsCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for LayerSettingsCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LAYER_SETTINGS_CREATE_INFO_EXT;
 }
@@ -10442,6 +11447,10 @@ impl<'a> LayerSettingEXT<'a> {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkLayerSettingEXT() {
+    bytes_struct_eq(LayerSettingEXT::default(), LayerSettingEXT::const_default());
 }
 impl<'a> LayerSettingEXT<'a> {
     #[inline]
@@ -10512,6 +11521,13 @@ impl<'a> PipelineRasterizationStateRasterizationOrderAMD<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineRasterizationStateRasterizationOrderAMD() {
+    bytes_struct_eq(
+        PipelineRasterizationStateRasterizationOrderAMD::default(),
+        PipelineRasterizationStateRasterizationOrderAMD::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateRasterizationOrderAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD;
@@ -10560,6 +11576,13 @@ impl<'a> DebugMarkerObjectNameInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDebugMarkerObjectNameInfoEXT() {
+    bytes_struct_eq(
+        DebugMarkerObjectNameInfoEXT::default(),
+        DebugMarkerObjectNameInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugMarkerObjectNameInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_MARKER_OBJECT_NAME_INFO_EXT;
@@ -10627,6 +11650,13 @@ impl<'a> DebugMarkerObjectTagInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDebugMarkerObjectTagInfoEXT() {
+    bytes_struct_eq(
+        DebugMarkerObjectTagInfoEXT::default(),
+        DebugMarkerObjectTagInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DebugMarkerObjectTagInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_MARKER_OBJECT_TAG_INFO_EXT;
 }
@@ -10685,6 +11715,13 @@ impl<'a> DebugMarkerMarkerInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDebugMarkerMarkerInfoEXT() {
+    bytes_struct_eq(
+        DebugMarkerMarkerInfoEXT::default(),
+        DebugMarkerMarkerInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DebugMarkerMarkerInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_MARKER_MARKER_INFO_EXT;
 }
@@ -10738,6 +11775,13 @@ impl<'a> DedicatedAllocationImageCreateInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDedicatedAllocationImageCreateInfoNV() {
+    bytes_struct_eq(
+        DedicatedAllocationImageCreateInfoNV::default(),
+        DedicatedAllocationImageCreateInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationImageCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV;
 }
@@ -10778,6 +11822,13 @@ impl<'a> DedicatedAllocationBufferCreateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDedicatedAllocationBufferCreateInfoNV() {
+    bytes_struct_eq(
+        DedicatedAllocationBufferCreateInfoNV::default(),
+        DedicatedAllocationBufferCreateInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationBufferCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV;
@@ -10822,6 +11873,13 @@ impl<'a> DedicatedAllocationMemoryAllocateInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDedicatedAllocationMemoryAllocateInfoNV() {
+    bytes_struct_eq(
+        DedicatedAllocationMemoryAllocateInfoNV::default(),
+        DedicatedAllocationMemoryAllocateInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationMemoryAllocateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV;
@@ -10855,6 +11913,13 @@ impl ExternalImageFormatPropertiesNV {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkExternalImageFormatPropertiesNV() {
+    bytes_struct_eq(
+        ExternalImageFormatPropertiesNV::default(),
+        ExternalImageFormatPropertiesNV::const_default(),
+    );
 }
 impl ExternalImageFormatPropertiesNV {
     #[inline]
@@ -10920,6 +11985,13 @@ impl<'a> ExternalMemoryImageCreateInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExternalMemoryImageCreateInfoNV() {
+    bytes_struct_eq(
+        ExternalMemoryImageCreateInfoNV::default(),
+        ExternalMemoryImageCreateInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryImageCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV;
 }
@@ -10960,6 +12032,13 @@ impl<'a> ExportMemoryAllocateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkExportMemoryAllocateInfoNV() {
+    bytes_struct_eq(
+        ExportMemoryAllocateInfoNV::default(),
+        ExportMemoryAllocateInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryAllocateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_MEMORY_ALLOCATE_INFO_NV;
@@ -11003,6 +12082,13 @@ impl<'a> ImportMemoryWin32HandleInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImportMemoryWin32HandleInfoNV() {
+    bytes_struct_eq(
+        ImportMemoryWin32HandleInfoNV::default(),
+        ImportMemoryWin32HandleInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryWin32HandleInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_NV;
@@ -11051,6 +12137,13 @@ impl<'a> ExportMemoryWin32HandleInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkExportMemoryWin32HandleInfoNV() {
+    bytes_struct_eq(
+        ExportMemoryWin32HandleInfoNV::default(),
+        ExportMemoryWin32HandleInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_NV;
@@ -11109,6 +12202,13 @@ impl<'a> Win32KeyedMutexAcquireReleaseInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkWin32KeyedMutexAcquireReleaseInfoNV() {
+    bytes_struct_eq(
+        Win32KeyedMutexAcquireReleaseInfoNV::default(),
+        Win32KeyedMutexAcquireReleaseInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for Win32KeyedMutexAcquireReleaseInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV;
@@ -11177,6 +12277,13 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceDeviceGeneratedCommandsFeaturesNV::default(),
+        PhysicalDeviceDeviceGeneratedCommandsFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_FEATURES_NV;
@@ -11223,6 +12330,13 @@ impl<'a> PushConstantBankInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPushConstantBankInfoNV() {
+    bytes_struct_eq(
+        PushConstantBankInfoNV::default(),
+        PushConstantBankInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PushConstantBankInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_CONSTANT_BANK_INFO_NV;
 }
@@ -11266,6 +12380,13 @@ impl<'a> PhysicalDevicePushConstantBankFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePushConstantBankFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDevicePushConstantBankFeaturesNV::default(),
+        PhysicalDevicePushConstantBankFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushConstantBankFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -11315,6 +12436,13 @@ impl<'a> PhysicalDevicePushConstantBankPropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePushConstantBankPropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDevicePushConstantBankPropertiesNV::default(),
+        PhysicalDevicePushConstantBankPropertiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushConstantBankPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -11383,6 +12511,13 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV::default(),
+        PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_COMPUTE_FEATURES_NV;
@@ -11449,6 +12584,13 @@ impl<'a> DevicePrivateDataCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDevicePrivateDataCreateInfo() {
+    bytes_struct_eq(
+        DevicePrivateDataCreateInfo::default(),
+        DevicePrivateDataCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DevicePrivateDataCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_PRIVATE_DATA_CREATE_INFO;
 }
@@ -11490,6 +12632,13 @@ impl<'a> PrivateDataSlotCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPrivateDataSlotCreateInfo() {
+    bytes_struct_eq(
+        PrivateDataSlotCreateInfo::default(),
+        PrivateDataSlotCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PrivateDataSlotCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRIVATE_DATA_SLOT_CREATE_INFO;
 }
@@ -11529,6 +12678,13 @@ impl<'a> PhysicalDevicePrivateDataFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePrivateDataFeatures() {
+    bytes_struct_eq(
+        PhysicalDevicePrivateDataFeatures::default(),
+        PhysicalDevicePrivateDataFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrivateDataFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES;
@@ -11587,6 +12743,13 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceDeviceGeneratedCommandsPropertiesNV::default(),
+        PhysicalDeviceDeviceGeneratedCommandsPropertiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -11697,6 +12860,13 @@ impl<'a> PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceClusterAccelerationStructureFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceClusterAccelerationStructureFeaturesNV::default(),
+        PhysicalDeviceClusterAccelerationStructureFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CLUSTER_ACCELERATION_STRUCTURE_FEATURES_NV;
@@ -11759,6 +12929,13 @@ impl<'a> PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceClusterAccelerationStructurePropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceClusterAccelerationStructurePropertiesNV::default(),
+        PhysicalDeviceClusterAccelerationStructurePropertiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -11831,6 +13008,13 @@ impl StridedDeviceAddressNV {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkStridedDeviceAddressNV() {
+    bytes_struct_eq(
+        StridedDeviceAddressNV::default(),
+        StridedDeviceAddressNV::const_default(),
+    );
+}
 impl StridedDeviceAddressNV {
     #[inline]
     pub fn start_address(mut self, start_address: DeviceAddress) -> Self {
@@ -11872,6 +13056,13 @@ impl<'a> RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkRayTracingPipelineClusterAccelerationStructureCreateInfoNV() {
+    bytes_struct_eq(
+        RayTracingPipelineClusterAccelerationStructureCreateInfoNV::default(),
+        RayTracingPipelineClusterAccelerationStructureCreateInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a>
@@ -11916,6 +13107,13 @@ impl ClusterAccelerationStructureMoveObjectsInfoNV {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkClusterAccelerationStructureMoveObjectsInfoNV() {
+    bytes_struct_eq(
+        ClusterAccelerationStructureMoveObjectsInfoNV::default(),
+        ClusterAccelerationStructureMoveObjectsInfoNV::const_default(),
+    );
+}
 impl ClusterAccelerationStructureMoveObjectsInfoNV {
     #[inline]
     pub fn src_acceleration_structure(mut self, src_acceleration_structure: DeviceAddress) -> Self {
@@ -11938,6 +13136,13 @@ impl ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkClusterAccelerationStructureBuildClustersBottomLevelInfoNV() {
+    bytes_struct_eq(
+        ClusterAccelerationStructureBuildClustersBottomLevelInfoNV::default(),
+        ClusterAccelerationStructureBuildClustersBottomLevelInfoNV::const_default(),
+    );
 }
 impl ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
     #[inline]
@@ -11969,6 +13174,13 @@ impl ClusterAccelerationStructureGetTemplateIndicesInfoNV {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkClusterAccelerationStructureGetTemplateIndicesInfoNV() {
+    bytes_struct_eq(
+        ClusterAccelerationStructureGetTemplateIndicesInfoNV::default(),
+        ClusterAccelerationStructureGetTemplateIndicesInfoNV::const_default(),
+    );
 }
 impl ClusterAccelerationStructureGetTemplateIndicesInfoNV {
     #[inline]
@@ -12066,6 +13278,13 @@ impl<'a> ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkClusterAccelerationStructureClustersBottomLevelInputNV() {
+    bytes_struct_eq(
+        ClusterAccelerationStructureClustersBottomLevelInputNV::default(),
+        ClusterAccelerationStructureClustersBottomLevelInputNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::CLUSTER_ACCELERATION_STRUCTURE_CLUSTERS_BOTTOM_LEVEL_INPUT_NV;
@@ -12129,6 +13348,13 @@ impl<'a> ClusterAccelerationStructureTriangleClusterInputNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkClusterAccelerationStructureTriangleClusterInputNV() {
+    bytes_struct_eq(
+        ClusterAccelerationStructureTriangleClusterInputNV::default(),
+        ClusterAccelerationStructureTriangleClusterInputNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureTriangleClusterInputNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -12212,6 +13438,13 @@ impl<'a> ClusterAccelerationStructureMoveObjectsInputNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkClusterAccelerationStructureMoveObjectsInputNV() {
+    bytes_struct_eq(
+        ClusterAccelerationStructureMoveObjectsInputNV::default(),
+        ClusterAccelerationStructureMoveObjectsInputNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureMoveObjectsInputNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -12302,6 +13535,13 @@ impl<'a> ClusterAccelerationStructureInputInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkClusterAccelerationStructureInputInfoNV() {
+    bytes_struct_eq(
+        ClusterAccelerationStructureInputInfoNV::default(),
+        ClusterAccelerationStructureInputInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureInputInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::CLUSTER_ACCELERATION_STRUCTURE_INPUT_INFO_NV;
@@ -12380,6 +13620,13 @@ impl<'a> ClusterAccelerationStructureCommandsInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkClusterAccelerationStructureCommandsInfoNV() {
+    bytes_struct_eq(
+        ClusterAccelerationStructureCommandsInfoNV::default(),
+        ClusterAccelerationStructureCommandsInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureCommandsInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -12463,6 +13710,13 @@ impl<'a> PhysicalDeviceMultiDrawPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMultiDrawPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceMultiDrawPropertiesEXT::default(),
+        PhysicalDeviceMultiDrawPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiDrawPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT;
 }
@@ -12509,6 +13763,13 @@ impl<'a> GraphicsShaderGroupCreateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkGraphicsShaderGroupCreateInfoNV() {
+    bytes_struct_eq(
+        GraphicsShaderGroupCreateInfoNV::default(),
+        GraphicsShaderGroupCreateInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsShaderGroupCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GRAPHICS_SHADER_GROUP_CREATE_INFO_NV;
@@ -12573,6 +13834,13 @@ impl<'a> GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkGraphicsPipelineShaderGroupsCreateInfoNV() {
+    bytes_struct_eq(
+        GraphicsPipelineShaderGroupsCreateInfoNV::default(),
+        GraphicsPipelineShaderGroupsCreateInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::GRAPHICS_PIPELINE_SHADER_GROUPS_CREATE_INFO_NV;
@@ -12609,6 +13877,13 @@ impl BindShaderGroupIndirectCommandNV {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkBindShaderGroupIndirectCommandNV() {
+    bytes_struct_eq(
+        BindShaderGroupIndirectCommandNV::default(),
+        BindShaderGroupIndirectCommandNV::const_default(),
+    );
+}
 impl BindShaderGroupIndirectCommandNV {
     #[inline]
     pub fn group_index(mut self, group_index: u32) -> Self {
@@ -12631,6 +13906,13 @@ impl BindIndexBufferIndirectCommandNV {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkBindIndexBufferIndirectCommandNV() {
+    bytes_struct_eq(
+        BindIndexBufferIndirectCommandNV::default(),
+        BindIndexBufferIndirectCommandNV::const_default(),
+    );
 }
 impl BindIndexBufferIndirectCommandNV {
     #[inline]
@@ -12665,6 +13947,13 @@ impl BindVertexBufferIndirectCommandNV {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkBindVertexBufferIndirectCommandNV() {
+    bytes_struct_eq(
+        BindVertexBufferIndirectCommandNV::default(),
+        BindVertexBufferIndirectCommandNV::const_default(),
+    );
+}
 impl BindVertexBufferIndirectCommandNV {
     #[inline]
     pub fn buffer_address(mut self, buffer_address: DeviceAddress) -> Self {
@@ -12696,6 +13985,13 @@ impl SetStateFlagsIndirectCommandNV {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkSetStateFlagsIndirectCommandNV() {
+    bytes_struct_eq(
+        SetStateFlagsIndirectCommandNV::default(),
+        SetStateFlagsIndirectCommandNV::const_default(),
+    );
+}
 impl SetStateFlagsIndirectCommandNV {
     #[inline]
     pub fn data(mut self, data: u32) -> Self {
@@ -12717,6 +14013,13 @@ impl IndirectCommandsStreamNV {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkIndirectCommandsStreamNV() {
+    bytes_struct_eq(
+        IndirectCommandsStreamNV::default(),
+        IndirectCommandsStreamNV::const_default(),
+    );
 }
 impl IndirectCommandsStreamNV {
     #[inline]
@@ -12783,6 +14086,13 @@ impl<'a> IndirectCommandsLayoutTokenNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkIndirectCommandsLayoutTokenNV() {
+    bytes_struct_eq(
+        IndirectCommandsLayoutTokenNV::default(),
+        IndirectCommandsLayoutTokenNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutTokenNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_COMMANDS_LAYOUT_TOKEN_NV;
@@ -12897,6 +14207,13 @@ impl<'a> IndirectCommandsLayoutCreateInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkIndirectCommandsLayoutCreateInfoNV() {
+    bytes_struct_eq(
+        IndirectCommandsLayoutCreateInfoNV::default(),
+        IndirectCommandsLayoutCreateInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NV;
 }
@@ -12977,6 +14294,13 @@ impl<'a> GeneratedCommandsInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkGeneratedCommandsInfoNV() {
+    bytes_struct_eq(
+        GeneratedCommandsInfoNV::default(),
+        GeneratedCommandsInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GENERATED_COMMANDS_INFO_NV;
@@ -13083,6 +14407,13 @@ impl<'a> GeneratedCommandsMemoryRequirementsInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkGeneratedCommandsMemoryRequirementsInfoNV() {
+    bytes_struct_eq(
+        GeneratedCommandsMemoryRequirementsInfoNV::default(),
+        GeneratedCommandsMemoryRequirementsInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsMemoryRequirementsInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::GENERATED_COMMANDS_MEMORY_REQUIREMENTS_INFO_NV;
@@ -13144,6 +14475,13 @@ impl<'a> PipelineIndirectDeviceAddressInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineIndirectDeviceAddressInfoNV() {
+    bytes_struct_eq(
+        PipelineIndirectDeviceAddressInfoNV::default(),
+        PipelineIndirectDeviceAddressInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineIndirectDeviceAddressInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_INDIRECT_DEVICE_ADDRESS_INFO_NV;
 }
@@ -13172,6 +14510,13 @@ impl BindPipelineIndirectCommandNV {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkBindPipelineIndirectCommandNV() {
+    bytes_struct_eq(
+        BindPipelineIndirectCommandNV::default(),
+        BindPipelineIndirectCommandNV::const_default(),
+    );
 }
 impl BindPipelineIndirectCommandNV {
     #[inline]
@@ -13209,6 +14554,13 @@ impl<'a> PhysicalDeviceFeatures2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceFeatures2() {
+    bytes_struct_eq(
+        PhysicalDeviceFeatures2::default(),
+        PhysicalDeviceFeatures2::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFeatures2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FEATURES_2;
@@ -13251,6 +14603,13 @@ impl<'a> PhysicalDeviceProperties2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceProperties2() {
+    bytes_struct_eq(
+        PhysicalDeviceProperties2::default(),
+        PhysicalDeviceProperties2::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PROPERTIES_2;
 }
@@ -13291,6 +14650,13 @@ impl<'a> FormatProperties2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkFormatProperties2() {
+    bytes_struct_eq(
+        FormatProperties2::default(),
+        FormatProperties2::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for FormatProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FORMAT_PROPERTIES_2;
 }
@@ -13330,6 +14696,13 @@ impl<'a> ImageFormatProperties2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImageFormatProperties2() {
+    bytes_struct_eq(
+        ImageFormatProperties2::default(),
+        ImageFormatProperties2::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageFormatProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_FORMAT_PROPERTIES_2;
@@ -13381,6 +14754,13 @@ impl<'a> PhysicalDeviceImageFormatInfo2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceImageFormatInfo2() {
+    bytes_struct_eq(
+        PhysicalDeviceImageFormatInfo2::default(),
+        PhysicalDeviceImageFormatInfo2::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageFormatInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2;
@@ -13442,6 +14822,13 @@ impl<'a> QueueFamilyProperties2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkQueueFamilyProperties2() {
+    bytes_struct_eq(
+        QueueFamilyProperties2::default(),
+        QueueFamilyProperties2::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_PROPERTIES_2;
 }
@@ -13485,6 +14872,13 @@ impl<'a> PhysicalDeviceMemoryProperties2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMemoryProperties2() {
+    bytes_struct_eq(
+        PhysicalDeviceMemoryProperties2::default(),
+        PhysicalDeviceMemoryProperties2::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MEMORY_PROPERTIES_2;
 }
@@ -13524,6 +14918,13 @@ impl<'a> SparseImageFormatProperties2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSparseImageFormatProperties2() {
+    bytes_struct_eq(
+        SparseImageFormatProperties2::default(),
+        SparseImageFormatProperties2::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SparseImageFormatProperties2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SPARSE_IMAGE_FORMAT_PROPERTIES_2;
@@ -13572,6 +14973,13 @@ impl<'a> PhysicalDeviceSparseImageFormatInfo2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceSparseImageFormatInfo2() {
+    bytes_struct_eq(
+        PhysicalDeviceSparseImageFormatInfo2::default(),
+        PhysicalDeviceSparseImageFormatInfo2::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSparseImageFormatInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2;
@@ -13633,6 +15041,13 @@ impl<'a> PhysicalDevicePushDescriptorProperties<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDevicePushDescriptorProperties() {
+    bytes_struct_eq(
+        PhysicalDevicePushDescriptorProperties::default(),
+        PhysicalDevicePushDescriptorProperties::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushDescriptorProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES;
 }
@@ -13660,6 +15075,13 @@ impl ConformanceVersion {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkConformanceVersion() {
+    bytes_struct_eq(
+        ConformanceVersion::default(),
+        ConformanceVersion::const_default(),
+    );
 }
 impl ConformanceVersion {
     #[inline]
@@ -13731,6 +15153,13 @@ impl<'a> PhysicalDeviceDriverProperties<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDriverProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceDriverProperties::default(),
+        PhysicalDeviceDriverProperties::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDriverProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_DRIVER_PROPERTIES;
 }
@@ -13801,6 +15230,13 @@ impl<'a> PresentRegionsKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPresentRegionsKHR() {
+    bytes_struct_eq(
+        PresentRegionsKHR::default(),
+        PresentRegionsKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PresentRegionsKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_REGIONS_KHR;
 }
@@ -13841,6 +15277,13 @@ impl<'a> PresentRegionKHR<'a> {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkPresentRegionKHR() {
+    bytes_struct_eq(
+        PresentRegionKHR::default(),
+        PresentRegionKHR::const_default(),
+    );
+}
 impl<'a> PresentRegionKHR<'a> {
     #[inline]
     pub fn rectangles(mut self, rectangles: &'a [RectLayerKHR]) -> Self {
@@ -13864,6 +15307,10 @@ impl RectLayerKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkRectLayerKHR() {
+    bytes_struct_eq(RectLayerKHR::default(), RectLayerKHR::const_default());
 }
 impl RectLayerKHR {
     #[inline]
@@ -13914,6 +15361,13 @@ impl<'a> PhysicalDeviceVariablePointersFeatures<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceVariablePointersFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceVariablePointersFeatures::default(),
+        PhysicalDeviceVariablePointersFeatures::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVariablePointersFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES;
 }
@@ -13949,6 +15403,13 @@ impl ExternalMemoryProperties {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkExternalMemoryProperties() {
+    bytes_struct_eq(
+        ExternalMemoryProperties::default(),
+        ExternalMemoryProperties::const_default(),
+    );
 }
 impl ExternalMemoryProperties {
     #[inline]
@@ -14006,6 +15467,13 @@ impl<'a> PhysicalDeviceExternalImageFormatInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceExternalImageFormatInfo() {
+    bytes_struct_eq(
+        PhysicalDeviceExternalImageFormatInfo::default(),
+        PhysicalDeviceExternalImageFormatInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalImageFormatInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO;
 }
@@ -14049,6 +15517,13 @@ impl<'a> ExternalImageFormatProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkExternalImageFormatProperties() {
+    bytes_struct_eq(
+        ExternalImageFormatProperties::default(),
+        ExternalImageFormatProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalImageFormatProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_IMAGE_FORMAT_PROPERTIES;
@@ -14097,6 +15572,13 @@ impl<'a> PhysicalDeviceExternalBufferInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceExternalBufferInfo() {
+    bytes_struct_eq(
+        PhysicalDeviceExternalBufferInfo::default(),
+        PhysicalDeviceExternalBufferInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalBufferInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO;
@@ -14148,6 +15630,13 @@ impl<'a> ExternalBufferProperties<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExternalBufferProperties() {
+    bytes_struct_eq(
+        ExternalBufferProperties::default(),
+        ExternalBufferProperties::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalBufferProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_BUFFER_PROPERTIES;
 }
@@ -14198,6 +15687,13 @@ impl<'a> PhysicalDeviceIDProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceIDProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceIDProperties::default(),
+        PhysicalDeviceIDProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceIDProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_ID_PROPERTIES;
@@ -14260,6 +15756,13 @@ impl<'a> ExternalMemoryImageCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExternalMemoryImageCreateInfo() {
+    bytes_struct_eq(
+        ExternalMemoryImageCreateInfo::default(),
+        ExternalMemoryImageCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryImageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO;
 }
@@ -14301,6 +15804,13 @@ impl<'a> ExternalMemoryBufferCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExternalMemoryBufferCreateInfo() {
+    bytes_struct_eq(
+        ExternalMemoryBufferCreateInfo::default(),
+        ExternalMemoryBufferCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryBufferCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_BUFFER_CREATE_INFO;
 }
@@ -14341,6 +15851,13 @@ impl<'a> ExportMemoryAllocateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkExportMemoryAllocateInfo() {
+    bytes_struct_eq(
+        ExportMemoryAllocateInfo::default(),
+        ExportMemoryAllocateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_MEMORY_ALLOCATE_INFO;
@@ -14386,6 +15903,13 @@ impl<'a> ImportMemoryWin32HandleInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImportMemoryWin32HandleInfoKHR() {
+    bytes_struct_eq(
+        ImportMemoryWin32HandleInfoKHR::default(),
+        ImportMemoryWin32HandleInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR;
@@ -14442,6 +15966,13 @@ impl<'a> ExportMemoryWin32HandleInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExportMemoryWin32HandleInfoKHR() {
+    bytes_struct_eq(
+        ExportMemoryWin32HandleInfoKHR::default(),
+        ExportMemoryWin32HandleInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_KHR;
 }
@@ -14495,6 +16026,13 @@ impl<'a> ImportMemoryZirconHandleInfoFUCHSIA<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImportMemoryZirconHandleInfoFUCHSIA() {
+    bytes_struct_eq(
+        ImportMemoryZirconHandleInfoFUCHSIA::default(),
+        ImportMemoryZirconHandleInfoFUCHSIA::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_ZIRCON_HANDLE_INFO_FUCHSIA;
 }
@@ -14541,6 +16079,13 @@ impl<'a> MemoryZirconHandlePropertiesFUCHSIA<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryZirconHandlePropertiesFUCHSIA() {
+    bytes_struct_eq(
+        MemoryZirconHandlePropertiesFUCHSIA::default(),
+        MemoryZirconHandlePropertiesFUCHSIA::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryZirconHandlePropertiesFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_ZIRCON_HANDLE_PROPERTIES_FUCHSIA;
 }
@@ -14582,6 +16127,13 @@ impl<'a> MemoryGetZirconHandleInfoFUCHSIA<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkMemoryGetZirconHandleInfoFUCHSIA() {
+    bytes_struct_eq(
+        MemoryGetZirconHandleInfoFUCHSIA::default(),
+        MemoryGetZirconHandleInfoFUCHSIA::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_ZIRCON_HANDLE_INFO_FUCHSIA;
@@ -14628,6 +16180,13 @@ impl<'a> MemoryWin32HandlePropertiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryWin32HandlePropertiesKHR() {
+    bytes_struct_eq(
+        MemoryWin32HandlePropertiesKHR::default(),
+        MemoryWin32HandlePropertiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryWin32HandlePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_WIN32_HANDLE_PROPERTIES_KHR;
 }
@@ -14669,6 +16228,13 @@ impl<'a> MemoryGetWin32HandleInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkMemoryGetWin32HandleInfoKHR() {
+    bytes_struct_eq(
+        MemoryGetWin32HandleInfoKHR::default(),
+        MemoryGetWin32HandleInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_WIN32_HANDLE_INFO_KHR;
@@ -14717,6 +16283,13 @@ impl<'a> ImportMemoryFdInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImportMemoryFdInfoKHR() {
+    bytes_struct_eq(
+        ImportMemoryFdInfoKHR::default(),
+        ImportMemoryFdInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_FD_INFO_KHR;
 }
@@ -14763,6 +16336,13 @@ impl<'a> MemoryFdPropertiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryFdPropertiesKHR() {
+    bytes_struct_eq(
+        MemoryFdPropertiesKHR::default(),
+        MemoryFdPropertiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryFdPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_FD_PROPERTIES_KHR;
 }
@@ -14804,6 +16384,13 @@ impl<'a> MemoryGetFdInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkMemoryGetFdInfoKHR() {
+    bytes_struct_eq(
+        MemoryGetFdInfoKHR::default(),
+        MemoryGetFdInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_FD_INFO_KHR;
@@ -14861,6 +16448,13 @@ impl<'a> Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkWin32KeyedMutexAcquireReleaseInfoKHR() {
+    bytes_struct_eq(
+        Win32KeyedMutexAcquireReleaseInfoKHR::default(),
+        Win32KeyedMutexAcquireReleaseInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR;
@@ -14931,6 +16525,13 @@ impl<'a> ImportMemoryMetalHandleInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImportMemoryMetalHandleInfoEXT() {
+    bytes_struct_eq(
+        ImportMemoryMetalHandleInfoEXT::default(),
+        ImportMemoryMetalHandleInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryMetalHandleInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_METAL_HANDLE_INFO_EXT;
 }
@@ -14977,6 +16578,13 @@ impl<'a> MemoryMetalHandlePropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryMetalHandlePropertiesEXT() {
+    bytes_struct_eq(
+        MemoryMetalHandlePropertiesEXT::default(),
+        MemoryMetalHandlePropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryMetalHandlePropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_METAL_HANDLE_PROPERTIES_EXT;
 }
@@ -15018,6 +16626,13 @@ impl<'a> MemoryGetMetalHandleInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkMemoryGetMetalHandleInfoEXT() {
+    bytes_struct_eq(
+        MemoryGetMetalHandleInfoEXT::default(),
+        MemoryGetMetalHandleInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetMetalHandleInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_METAL_HANDLE_INFO_EXT;
@@ -15064,6 +16679,13 @@ impl<'a> PhysicalDeviceExternalSemaphoreInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceExternalSemaphoreInfo() {
+    bytes_struct_eq(
+        PhysicalDeviceExternalSemaphoreInfo::default(),
+        PhysicalDeviceExternalSemaphoreInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalSemaphoreInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO;
 }
@@ -15107,6 +16729,13 @@ impl<'a> ExternalSemaphoreProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkExternalSemaphoreProperties() {
+    bytes_struct_eq(
+        ExternalSemaphoreProperties::default(),
+        ExternalSemaphoreProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalSemaphoreProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_SEMAPHORE_PROPERTIES;
@@ -15167,6 +16796,13 @@ impl<'a> ExportSemaphoreCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExportSemaphoreCreateInfo() {
+    bytes_struct_eq(
+        ExportSemaphoreCreateInfo::default(),
+        ExportSemaphoreCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportSemaphoreCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_SEMAPHORE_CREATE_INFO;
 }
@@ -15215,6 +16851,13 @@ impl<'a> ImportSemaphoreWin32HandleInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImportSemaphoreWin32HandleInfoKHR() {
+    bytes_struct_eq(
+        ImportSemaphoreWin32HandleInfoKHR::default(),
+        ImportSemaphoreWin32HandleInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR;
@@ -15280,6 +16923,13 @@ impl<'a> ExportSemaphoreWin32HandleInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExportSemaphoreWin32HandleInfoKHR() {
+    bytes_struct_eq(
+        ExportSemaphoreWin32HandleInfoKHR::default(),
+        ExportSemaphoreWin32HandleInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportSemaphoreWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR;
 }
@@ -15337,6 +16987,13 @@ impl<'a> D3D12FenceSubmitInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkD3D12FenceSubmitInfoKHR() {
+    bytes_struct_eq(
+        D3D12FenceSubmitInfoKHR::default(),
+        D3D12FenceSubmitInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for D3D12FenceSubmitInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::D3D12_FENCE_SUBMIT_INFO_KHR;
 }
@@ -15386,6 +17043,13 @@ impl<'a> SemaphoreGetWin32HandleInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSemaphoreGetWin32HandleInfoKHR() {
+    bytes_struct_eq(
+        SemaphoreGetWin32HandleInfoKHR::default(),
+        SemaphoreGetWin32HandleInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR;
@@ -15437,6 +17101,13 @@ impl<'a> ImportSemaphoreFdInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImportSemaphoreFdInfoKHR() {
+    bytes_struct_eq(
+        ImportSemaphoreFdInfoKHR::default(),
+        ImportSemaphoreFdInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_SEMAPHORE_FD_INFO_KHR;
@@ -15495,6 +17166,13 @@ impl<'a> SemaphoreGetFdInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSemaphoreGetFdInfoKHR() {
+    bytes_struct_eq(
+        SemaphoreGetFdInfoKHR::default(),
+        SemaphoreGetFdInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_GET_FD_INFO_KHR;
 }
@@ -15545,6 +17223,13 @@ impl<'a> ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImportSemaphoreZirconHandleInfoFUCHSIA() {
+    bytes_struct_eq(
+        ImportSemaphoreZirconHandleInfoFUCHSIA::default(),
+        ImportSemaphoreZirconHandleInfoFUCHSIA::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -15604,6 +17289,13 @@ impl<'a> SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSemaphoreGetZirconHandleInfoFUCHSIA() {
+    bytes_struct_eq(
+        SemaphoreGetZirconHandleInfoFUCHSIA::default(),
+        SemaphoreGetZirconHandleInfoFUCHSIA::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA;
 }
@@ -15649,6 +17341,13 @@ impl<'a> PhysicalDeviceExternalFenceInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceExternalFenceInfo() {
+    bytes_struct_eq(
+        PhysicalDeviceExternalFenceInfo::default(),
+        PhysicalDeviceExternalFenceInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFenceInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO;
 }
@@ -15692,6 +17391,13 @@ impl<'a> ExternalFenceProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkExternalFenceProperties() {
+    bytes_struct_eq(
+        ExternalFenceProperties::default(),
+        ExternalFenceProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFenceProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_FENCE_PROPERTIES;
@@ -15752,6 +17458,13 @@ impl<'a> ExportFenceCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExportFenceCreateInfo() {
+    bytes_struct_eq(
+        ExportFenceCreateInfo::default(),
+        ExportFenceCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportFenceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_FENCE_CREATE_INFO;
 }
@@ -15800,6 +17513,13 @@ impl<'a> ImportFenceWin32HandleInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImportFenceWin32HandleInfoKHR() {
+    bytes_struct_eq(
+        ImportFenceWin32HandleInfoKHR::default(),
+        ImportFenceWin32HandleInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportFenceWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_FENCE_WIN32_HANDLE_INFO_KHR;
@@ -15865,6 +17585,13 @@ impl<'a> ExportFenceWin32HandleInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExportFenceWin32HandleInfoKHR() {
+    bytes_struct_eq(
+        ExportFenceWin32HandleInfoKHR::default(),
+        ExportFenceWin32HandleInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportFenceWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_FENCE_WIN32_HANDLE_INFO_KHR;
 }
@@ -15918,6 +17645,13 @@ impl<'a> FenceGetWin32HandleInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkFenceGetWin32HandleInfoKHR() {
+    bytes_struct_eq(
+        FenceGetWin32HandleInfoKHR::default(),
+        FenceGetWin32HandleInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for FenceGetWin32HandleInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FENCE_GET_WIN32_HANDLE_INFO_KHR;
 }
@@ -15968,6 +17702,13 @@ impl<'a> ImportFenceFdInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImportFenceFdInfoKHR() {
+    bytes_struct_eq(
+        ImportFenceFdInfoKHR::default(),
+        ImportFenceFdInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportFenceFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_FENCE_FD_INFO_KHR;
@@ -16026,6 +17767,13 @@ impl<'a> FenceGetFdInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkFenceGetFdInfoKHR() {
+    bytes_struct_eq(
+        FenceGetFdInfoKHR::default(),
+        FenceGetFdInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for FenceGetFdInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FENCE_GET_FD_INFO_KHR;
 }
@@ -16074,6 +17822,13 @@ impl<'a> PhysicalDeviceMultiviewFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMultiviewFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceMultiviewFeatures::default(),
+        PhysicalDeviceMultiviewFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTIVIEW_FEATURES;
@@ -16128,6 +17883,13 @@ impl<'a> PhysicalDeviceMultiviewProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMultiviewProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceMultiviewProperties::default(),
+        PhysicalDeviceMultiviewProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES;
@@ -16184,6 +17946,13 @@ impl<'a> RenderPassMultiviewCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkRenderPassMultiviewCreateInfo() {
+    bytes_struct_eq(
+        RenderPassMultiviewCreateInfo::default(),
+        RenderPassMultiviewCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassMultiviewCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_MULTIVIEW_CREATE_INFO;
@@ -16258,6 +18027,13 @@ impl<'a> SurfaceCapabilities2EXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSurfaceCapabilities2EXT() {
+    bytes_struct_eq(
+        SurfaceCapabilities2EXT::default(),
+        SurfaceCapabilities2EXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilities2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_2_EXT;
@@ -16355,6 +18131,13 @@ impl<'a> DisplayPowerInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDisplayPowerInfoEXT() {
+    bytes_struct_eq(
+        DisplayPowerInfoEXT::default(),
+        DisplayPowerInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayPowerInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_POWER_INFO_EXT;
 }
@@ -16394,6 +18177,13 @@ impl<'a> DeviceEventInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceEventInfoEXT() {
+    bytes_struct_eq(
+        DeviceEventInfoEXT::default(),
+        DeviceEventInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceEventInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_EVENT_INFO_EXT;
@@ -16435,6 +18225,13 @@ impl<'a> DisplayEventInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDisplayEventInfoEXT() {
+    bytes_struct_eq(
+        DisplayEventInfoEXT::default(),
+        DisplayEventInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayEventInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_EVENT_INFO_EXT;
 }
@@ -16474,6 +18271,13 @@ impl<'a> SwapchainCounterCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSwapchainCounterCreateInfoEXT() {
+    bytes_struct_eq(
+        SwapchainCounterCreateInfoEXT::default(),
+        SwapchainCounterCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainCounterCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_COUNTER_CREATE_INFO_EXT;
@@ -16531,6 +18335,13 @@ impl<'a> PhysicalDeviceGroupProperties<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceGroupProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceGroupProperties::default(),
+        PhysicalDeviceGroupProperties::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGroupProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_GROUP_PROPERTIES;
 }
@@ -16583,6 +18394,13 @@ impl<'a> MemoryAllocateFlagsInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryAllocateFlagsInfo() {
+    bytes_struct_eq(
+        MemoryAllocateFlagsInfo::default(),
+        MemoryAllocateFlagsInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryAllocateFlagsInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_ALLOCATE_FLAGS_INFO;
 }
@@ -16632,6 +18450,13 @@ impl<'a> BindBufferMemoryInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBindBufferMemoryInfo() {
+    bytes_struct_eq(
+        BindBufferMemoryInfo::default(),
+        BindBufferMemoryInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BindBufferMemoryInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_BUFFER_MEMORY_INFO;
@@ -16685,6 +18510,13 @@ impl<'a> BindBufferMemoryDeviceGroupInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBindBufferMemoryDeviceGroupInfo() {
+    bytes_struct_eq(
+        BindBufferMemoryDeviceGroupInfo::default(),
+        BindBufferMemoryDeviceGroupInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BindBufferMemoryDeviceGroupInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO;
 }
@@ -16730,6 +18562,13 @@ impl<'a> BindImageMemoryInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBindImageMemoryInfo() {
+    bytes_struct_eq(
+        BindImageMemoryInfo::default(),
+        BindImageMemoryInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImageMemoryInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_IMAGE_MEMORY_INFO;
@@ -16787,6 +18626,13 @@ impl<'a> BindImageMemoryDeviceGroupInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBindImageMemoryDeviceGroupInfo() {
+    bytes_struct_eq(
+        BindImageMemoryDeviceGroupInfo::default(),
+        BindImageMemoryDeviceGroupInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BindImageMemoryDeviceGroupInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO;
 }
@@ -16842,6 +18688,13 @@ impl<'a> DeviceGroupRenderPassBeginInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDeviceGroupRenderPassBeginInfo() {
+    bytes_struct_eq(
+        DeviceGroupRenderPassBeginInfo::default(),
+        DeviceGroupRenderPassBeginInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupRenderPassBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_RENDER_PASS_BEGIN_INFO;
 }
@@ -16889,6 +18742,13 @@ impl<'a> DeviceGroupCommandBufferBeginInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceGroupCommandBufferBeginInfo() {
+    bytes_struct_eq(
+        DeviceGroupCommandBufferBeginInfo::default(),
+        DeviceGroupCommandBufferBeginInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupCommandBufferBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO;
@@ -16940,6 +18800,13 @@ impl<'a> DeviceGroupSubmitInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceGroupSubmitInfo() {
+    bytes_struct_eq(
+        DeviceGroupSubmitInfo::default(),
+        DeviceGroupSubmitInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_SUBMIT_INFO;
@@ -17003,6 +18870,13 @@ impl<'a> DeviceGroupBindSparseInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDeviceGroupBindSparseInfo() {
+    bytes_struct_eq(
+        DeviceGroupBindSparseInfo::default(),
+        DeviceGroupBindSparseInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupBindSparseInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_BIND_SPARSE_INFO;
 }
@@ -17051,6 +18925,13 @@ impl<'a> DeviceGroupPresentCapabilitiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDeviceGroupPresentCapabilitiesKHR() {
+    bytes_struct_eq(
+        DeviceGroupPresentCapabilitiesKHR::default(),
+        DeviceGroupPresentCapabilitiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupPresentCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_PRESENT_CAPABILITIES_KHR;
 }
@@ -17096,6 +18977,13 @@ impl<'a> ImageSwapchainCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageSwapchainCreateInfoKHR() {
+    bytes_struct_eq(
+        ImageSwapchainCreateInfoKHR::default(),
+        ImageSwapchainCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageSwapchainCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_SWAPCHAIN_CREATE_INFO_KHR;
 }
@@ -17138,6 +19026,13 @@ impl<'a> BindImageMemorySwapchainInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBindImageMemorySwapchainInfoKHR() {
+    bytes_struct_eq(
+        BindImageMemorySwapchainInfoKHR::default(),
+        BindImageMemorySwapchainInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImageMemorySwapchainInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR;
@@ -17192,6 +19087,13 @@ impl<'a> AcquireNextImageInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkAcquireNextImageInfoKHR() {
+    bytes_struct_eq(
+        AcquireNextImageInfoKHR::default(),
+        AcquireNextImageInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for AcquireNextImageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACQUIRE_NEXT_IMAGE_INFO_KHR;
@@ -17257,6 +19159,13 @@ impl<'a> DeviceGroupPresentInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDeviceGroupPresentInfoKHR() {
+    bytes_struct_eq(
+        DeviceGroupPresentInfoKHR::default(),
+        DeviceGroupPresentInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupPresentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_PRESENT_INFO_KHR;
 }
@@ -17306,6 +19215,13 @@ impl<'a> DeviceGroupDeviceCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDeviceGroupDeviceCreateInfo() {
+    bytes_struct_eq(
+        DeviceGroupDeviceCreateInfo::default(),
+        DeviceGroupDeviceCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupDeviceCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_DEVICE_CREATE_INFO;
 }
@@ -17348,6 +19264,13 @@ impl<'a> DeviceGroupSwapchainCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDeviceGroupSwapchainCreateInfoKHR() {
+    bytes_struct_eq(
+        DeviceGroupSwapchainCreateInfoKHR::default(),
+        DeviceGroupSwapchainCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupSwapchainCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR;
 }
@@ -17377,6 +19300,13 @@ impl DescriptorUpdateTemplateEntry {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDescriptorUpdateTemplateEntry() {
+    bytes_struct_eq(
+        DescriptorUpdateTemplateEntry::default(),
+        DescriptorUpdateTemplateEntry::const_default(),
+    );
 }
 impl DescriptorUpdateTemplateEntry {
     #[inline]
@@ -17454,6 +19384,13 @@ impl<'a> DescriptorUpdateTemplateCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDescriptorUpdateTemplateCreateInfo() {
+    bytes_struct_eq(
+        DescriptorUpdateTemplateCreateInfo::default(),
+        DescriptorUpdateTemplateCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorUpdateTemplateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO;
 }
@@ -17513,6 +19450,10 @@ impl XYColorEXT {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkXYColorEXT() {
+    bytes_struct_eq(XYColorEXT::default(), XYColorEXT::const_default());
+}
 impl XYColorEXT {
     #[inline]
     pub fn x(mut self, x: f32) -> Self {
@@ -17554,6 +19495,13 @@ impl<'a> PhysicalDevicePresentIdFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePresentIdFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDevicePresentIdFeaturesKHR::default(),
+        PhysicalDevicePresentIdFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentIdFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PRESENT_ID_FEATURES_KHR;
@@ -17599,6 +19547,10 @@ impl<'a> PresentIdKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPresentIdKHR() {
+    bytes_struct_eq(PresentIdKHR::default(), PresentIdKHR::const_default());
+}
 unsafe impl<'a> TaggedStructure<'a> for PresentIdKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_ID_KHR;
 }
@@ -17640,6 +19592,13 @@ impl<'a> PhysicalDevicePresentId2FeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePresentId2FeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDevicePresentId2FeaturesKHR::default(),
+        PhysicalDevicePresentId2FeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentId2FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PRESENT_ID_2_FEATURES_KHR;
@@ -17685,6 +19644,10 @@ impl<'a> PresentId2KHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPresentId2KHR() {
+    bytes_struct_eq(PresentId2KHR::default(), PresentId2KHR::const_default());
+}
 unsafe impl<'a> TaggedStructure<'a> for PresentId2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_ID_2_KHR;
 }
@@ -17728,6 +19691,13 @@ impl<'a> PresentWait2InfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPresentWait2InfoKHR() {
+    bytes_struct_eq(
+        PresentWait2InfoKHR::default(),
+        PresentWait2InfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentWait2InfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_WAIT_2_INFO_KHR;
@@ -17774,6 +19744,13 @@ impl<'a> PhysicalDevicePresentWaitFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDevicePresentWaitFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDevicePresentWaitFeaturesKHR::default(),
+        PhysicalDevicePresentWaitFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentWaitFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PRESENT_WAIT_FEATURES_KHR;
 }
@@ -17815,6 +19792,13 @@ impl<'a> PhysicalDevicePresentWait2FeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePresentWait2FeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDevicePresentWait2FeaturesKHR::default(),
+        PhysicalDevicePresentWait2FeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentWait2FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -17862,6 +19846,13 @@ impl<'a> PhysicalDevicePresentTimingFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePresentTimingFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDevicePresentTimingFeaturesEXT::default(),
+        PhysicalDevicePresentTimingFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentTimingFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -17921,6 +19912,13 @@ impl<'a> PresentTimingSurfaceCapabilitiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPresentTimingSurfaceCapabilitiesEXT() {
+    bytes_struct_eq(
+        PresentTimingSurfaceCapabilitiesEXT::default(),
+        PresentTimingSurfaceCapabilitiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimingSurfaceCapabilitiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_TIMING_SURFACE_CAPABILITIES_EXT;
@@ -17986,6 +19984,13 @@ impl<'a> SwapchainTimingPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSwapchainTimingPropertiesEXT() {
+    bytes_struct_eq(
+        SwapchainTimingPropertiesEXT::default(),
+        SwapchainTimingPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainTimingPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_TIMING_PROPERTIES_EXT;
 }
@@ -18035,6 +20040,13 @@ impl<'a> SwapchainTimeDomainPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSwapchainTimeDomainPropertiesEXT() {
+    bytes_struct_eq(
+        SwapchainTimeDomainPropertiesEXT::default(),
+        SwapchainTimeDomainPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainTimeDomainPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_TIME_DOMAIN_PROPERTIES_EXT;
 }
@@ -18066,6 +20078,13 @@ impl PresentStageTimeEXT {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkPresentStageTimeEXT() {
+    bytes_struct_eq(
+        PresentStageTimeEXT::default(),
+        PresentStageTimeEXT::const_default(),
+    );
 }
 impl PresentStageTimeEXT {
     #[inline]
@@ -18110,6 +20129,13 @@ impl<'a> PastPresentationTimingInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPastPresentationTimingInfoEXT() {
+    bytes_struct_eq(
+        PastPresentationTimingInfoEXT::default(),
+        PastPresentationTimingInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PastPresentationTimingInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PAST_PRESENTATION_TIMING_INFO_EXT;
@@ -18161,6 +20187,13 @@ impl<'a> PastPresentationTimingPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPastPresentationTimingPropertiesEXT() {
+    bytes_struct_eq(
+        PastPresentationTimingPropertiesEXT::default(),
+        PastPresentationTimingPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PastPresentationTimingPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PAST_PRESENTATION_TIMING_PROPERTIES_EXT;
@@ -18227,6 +20260,13 @@ impl<'a> PastPresentationTimingEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPastPresentationTimingEXT() {
+    bytes_struct_eq(
+        PastPresentationTimingEXT::default(),
+        PastPresentationTimingEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PastPresentationTimingEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PAST_PRESENTATION_TIMING_EXT;
@@ -18296,6 +20336,13 @@ impl<'a> PresentTimingsInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPresentTimingsInfoEXT() {
+    bytes_struct_eq(
+        PresentTimingsInfoEXT::default(),
+        PresentTimingsInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PresentTimingsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_TIMINGS_INFO_EXT;
 }
@@ -18345,6 +20392,13 @@ impl<'a> PresentTimingInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPresentTimingInfoEXT() {
+    bytes_struct_eq(
+        PresentTimingInfoEXT::default(),
+        PresentTimingInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimingInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_TIMING_INFO_EXT;
@@ -18413,6 +20467,13 @@ impl<'a> SwapchainCalibratedTimestampInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSwapchainCalibratedTimestampInfoEXT() {
+    bytes_struct_eq(
+        SwapchainCalibratedTimestampInfoEXT::default(),
+        SwapchainCalibratedTimestampInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainCalibratedTimestampInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_CALIBRATED_TIMESTAMP_INFO_EXT;
 }
@@ -18477,6 +20538,10 @@ impl<'a> HdrMetadataEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkHdrMetadataEXT() {
+    bytes_struct_eq(HdrMetadataEXT::default(), HdrMetadataEXT::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for HdrMetadataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::HDR_METADATA_EXT;
@@ -18555,6 +20620,13 @@ impl<'a> HdrVividDynamicMetadataHUAWEI<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkHdrVividDynamicMetadataHUAWEI() {
+    bytes_struct_eq(
+        HdrVividDynamicMetadataHUAWEI::default(),
+        HdrVividDynamicMetadataHUAWEI::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for HdrVividDynamicMetadataHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::HDR_VIVID_DYNAMIC_METADATA_HUAWEI;
 }
@@ -18596,6 +20668,13 @@ impl<'a> DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDisplayNativeHdrSurfaceCapabilitiesAMD() {
+    bytes_struct_eq(
+        DisplayNativeHdrSurfaceCapabilitiesAMD::default(),
+        DisplayNativeHdrSurfaceCapabilitiesAMD::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -18639,6 +20718,13 @@ impl<'a> SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSwapchainDisplayNativeHdrCreateInfoAMD() {
+    bytes_struct_eq(
+        SwapchainDisplayNativeHdrCreateInfoAMD::default(),
+        SwapchainDisplayNativeHdrCreateInfoAMD::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SWAPCHAIN_DISPLAY_NATIVE_HDR_CREATE_INFO_AMD;
@@ -18665,6 +20751,13 @@ impl RefreshCycleDurationGOOGLE {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkRefreshCycleDurationGOOGLE() {
+    bytes_struct_eq(
+        RefreshCycleDurationGOOGLE::default(),
+        RefreshCycleDurationGOOGLE::const_default(),
+    );
+}
 impl RefreshCycleDurationGOOGLE {
     #[inline]
     pub fn refresh_duration(mut self, refresh_duration: u64) -> Self {
@@ -18689,6 +20782,13 @@ impl PastPresentationTimingGOOGLE {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkPastPresentationTimingGOOGLE() {
+    bytes_struct_eq(
+        PastPresentationTimingGOOGLE::default(),
+        PastPresentationTimingGOOGLE::const_default(),
+    );
 }
 impl PastPresentationTimingGOOGLE {
     #[inline]
@@ -18749,6 +20849,13 @@ impl<'a> PresentTimesInfoGOOGLE<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPresentTimesInfoGOOGLE() {
+    bytes_struct_eq(
+        PresentTimesInfoGOOGLE::default(),
+        PresentTimesInfoGOOGLE::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PresentTimesInfoGOOGLE<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_TIMES_INFO_GOOGLE;
 }
@@ -18775,6 +20882,13 @@ impl PresentTimeGOOGLE {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkPresentTimeGOOGLE() {
+    bytes_struct_eq(
+        PresentTimeGOOGLE::default(),
+        PresentTimeGOOGLE::const_default(),
+    );
 }
 impl PresentTimeGOOGLE {
     #[inline]
@@ -18819,6 +20933,13 @@ impl<'a> IOSSurfaceCreateInfoMVK<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkIOSSurfaceCreateInfoMVK() {
+    bytes_struct_eq(
+        IOSSurfaceCreateInfoMVK::default(),
+        IOSSurfaceCreateInfoMVK::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for IOSSurfaceCreateInfoMVK<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IOS_SURFACE_CREATE_INFO_MVK;
@@ -18867,6 +20988,13 @@ impl<'a> MacOSSurfaceCreateInfoMVK<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMacOSSurfaceCreateInfoMVK() {
+    bytes_struct_eq(
+        MacOSSurfaceCreateInfoMVK::default(),
+        MacOSSurfaceCreateInfoMVK::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MacOSSurfaceCreateInfoMVK<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MACOS_SURFACE_CREATE_INFO_MVK;
 }
@@ -18914,6 +21042,13 @@ impl<'a> MetalSurfaceCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMetalSurfaceCreateInfoEXT() {
+    bytes_struct_eq(
+        MetalSurfaceCreateInfoEXT::default(),
+        MetalSurfaceCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MetalSurfaceCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::METAL_SURFACE_CREATE_INFO_EXT;
 }
@@ -18943,6 +21078,13 @@ impl ViewportWScalingNV {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkViewportWScalingNV() {
+    bytes_struct_eq(
+        ViewportWScalingNV::default(),
+        ViewportWScalingNV::const_default(),
+    );
 }
 impl ViewportWScalingNV {
     #[inline]
@@ -18990,6 +21132,13 @@ impl<'a> PipelineViewportWScalingStateCreateInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineViewportWScalingStateCreateInfoNV() {
+    bytes_struct_eq(
+        PipelineViewportWScalingStateCreateInfoNV::default(),
+        PipelineViewportWScalingStateCreateInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportWScalingStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV;
@@ -19027,6 +21176,13 @@ impl ViewportSwizzleNV {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkViewportSwizzleNV() {
+    bytes_struct_eq(
+        ViewportSwizzleNV::default(),
+        ViewportSwizzleNV::const_default(),
+    );
 }
 impl ViewportSwizzleNV {
     #[inline]
@@ -19084,6 +21240,13 @@ impl<'a> PipelineViewportSwizzleStateCreateInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineViewportSwizzleStateCreateInfoNV() {
+    bytes_struct_eq(
+        PipelineViewportSwizzleStateCreateInfoNV::default(),
+        PipelineViewportSwizzleStateCreateInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportSwizzleStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV;
@@ -19135,6 +21298,13 @@ impl<'a> PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDiscardRectanglePropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceDiscardRectanglePropertiesEXT::default(),
+        PhysicalDeviceDiscardRectanglePropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT;
@@ -19185,6 +21355,13 @@ impl<'a> PipelineDiscardRectangleStateCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineDiscardRectangleStateCreateInfoEXT() {
+    bytes_struct_eq(
+        PipelineDiscardRectangleStateCreateInfoEXT::default(),
+        PipelineDiscardRectangleStateCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineDiscardRectangleStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -19245,6 +21422,13 @@ impl<'a> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX() {
+    bytes_struct_eq(
+        PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX::default(),
+        PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX;
@@ -19278,6 +21462,13 @@ impl InputAttachmentAspectReference {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkInputAttachmentAspectReference() {
+    bytes_struct_eq(
+        InputAttachmentAspectReference::default(),
+        InputAttachmentAspectReference::const_default(),
+    );
 }
 impl InputAttachmentAspectReference {
     #[inline]
@@ -19328,6 +21519,13 @@ impl<'a> RenderPassInputAttachmentAspectCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderPassInputAttachmentAspectCreateInfo() {
+    bytes_struct_eq(
+        RenderPassInputAttachmentAspectCreateInfo::default(),
+        RenderPassInputAttachmentAspectCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassInputAttachmentAspectCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO;
@@ -19374,6 +21572,13 @@ impl<'a> PhysicalDeviceSurfaceInfo2KHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceSurfaceInfo2KHR() {
+    bytes_struct_eq(
+        PhysicalDeviceSurfaceInfo2KHR::default(),
+        PhysicalDeviceSurfaceInfo2KHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSurfaceInfo2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SURFACE_INFO_2_KHR;
 }
@@ -19413,6 +21618,13 @@ impl<'a> SurfaceCapabilities2KHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSurfaceCapabilities2KHR() {
+    bytes_struct_eq(
+        SurfaceCapabilities2KHR::default(),
+        SurfaceCapabilities2KHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilities2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_2_KHR;
@@ -19454,6 +21666,13 @@ impl<'a> SurfaceFormat2KHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSurfaceFormat2KHR() {
+    bytes_struct_eq(
+        SurfaceFormat2KHR::default(),
+        SurfaceFormat2KHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfaceFormat2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_FORMAT_2_KHR;
 }
@@ -19494,6 +21713,13 @@ impl<'a> DisplayProperties2KHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDisplayProperties2KHR() {
+    bytes_struct_eq(
+        DisplayProperties2KHR::default(),
+        DisplayProperties2KHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayProperties2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PROPERTIES_2_KHR;
 }
@@ -19533,6 +21759,13 @@ impl<'a> DisplayPlaneProperties2KHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDisplayPlaneProperties2KHR() {
+    bytes_struct_eq(
+        DisplayPlaneProperties2KHR::default(),
+        DisplayPlaneProperties2KHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneProperties2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PLANE_PROPERTIES_2_KHR;
@@ -19577,6 +21810,13 @@ impl<'a> DisplayModeProperties2KHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDisplayModeProperties2KHR() {
+    bytes_struct_eq(
+        DisplayModeProperties2KHR::default(),
+        DisplayModeProperties2KHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayModeProperties2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_MODE_PROPERTIES_2_KHR;
 }
@@ -19620,6 +21860,13 @@ impl<'a> DisplayModeStereoPropertiesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDisplayModeStereoPropertiesNV() {
+    bytes_struct_eq(
+        DisplayModeStereoPropertiesNV::default(),
+        DisplayModeStereoPropertiesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayModeStereoPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_MODE_STEREO_PROPERTIES_NV;
 }
@@ -19662,6 +21909,13 @@ impl<'a> DisplayPlaneInfo2KHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDisplayPlaneInfo2KHR() {
+    bytes_struct_eq(
+        DisplayPlaneInfo2KHR::default(),
+        DisplayPlaneInfo2KHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneInfo2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PLANE_INFO_2_KHR;
@@ -19708,6 +21962,13 @@ impl<'a> DisplayPlaneCapabilities2KHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDisplayPlaneCapabilities2KHR() {
+    bytes_struct_eq(
+        DisplayPlaneCapabilities2KHR::default(),
+        DisplayPlaneCapabilities2KHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneCapabilities2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPLAY_PLANE_CAPABILITIES_2_KHR;
 }
@@ -19747,6 +22008,13 @@ impl<'a> SharedPresentSurfaceCapabilitiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSharedPresentSurfaceCapabilitiesKHR() {
+    bytes_struct_eq(
+        SharedPresentSurfaceCapabilitiesKHR::default(),
+        SharedPresentSurfaceCapabilitiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SharedPresentSurfaceCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHARED_PRESENT_SURFACE_CAPABILITIES_KHR;
@@ -19797,6 +22065,13 @@ impl<'a> PhysicalDevice16BitStorageFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevice16BitStorageFeatures() {
+    bytes_struct_eq(
+        PhysicalDevice16BitStorageFeatures::default(),
+        PhysicalDevice16BitStorageFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice16BitStorageFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES;
@@ -19865,6 +22140,13 @@ impl<'a> PhysicalDeviceSubgroupProperties<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceSubgroupProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceSubgroupProperties::default(),
+        PhysicalDeviceSubgroupProperties::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES;
 }
@@ -19921,6 +22203,13 @@ impl<'a> PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderSubgroupExtendedTypesFeatures::default(),
+        PhysicalDeviceShaderSubgroupExtendedTypesFeatures::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES;
@@ -19970,6 +22259,13 @@ impl<'a> BufferMemoryRequirementsInfo2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBufferMemoryRequirementsInfo2() {
+    bytes_struct_eq(
+        BufferMemoryRequirementsInfo2::default(),
+        BufferMemoryRequirementsInfo2::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferMemoryRequirementsInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_MEMORY_REQUIREMENTS_INFO_2;
 }
@@ -20009,6 +22305,13 @@ impl<'a> DeviceBufferMemoryRequirements<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceBufferMemoryRequirements() {
+    bytes_struct_eq(
+        DeviceBufferMemoryRequirements::default(),
+        DeviceBufferMemoryRequirements::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceBufferMemoryRequirements<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_BUFFER_MEMORY_REQUIREMENTS;
@@ -20050,6 +22353,13 @@ impl<'a> ImageMemoryRequirementsInfo2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageMemoryRequirementsInfo2() {
+    bytes_struct_eq(
+        ImageMemoryRequirementsInfo2::default(),
+        ImageMemoryRequirementsInfo2::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageMemoryRequirementsInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_MEMORY_REQUIREMENTS_INFO_2;
 }
@@ -20089,6 +22399,13 @@ impl<'a> ImageSparseMemoryRequirementsInfo2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImageSparseMemoryRequirementsInfo2() {
+    bytes_struct_eq(
+        ImageSparseMemoryRequirementsInfo2::default(),
+        ImageSparseMemoryRequirementsInfo2::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageSparseMemoryRequirementsInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2;
@@ -20131,6 +22448,13 @@ impl<'a> DeviceImageMemoryRequirements<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceImageMemoryRequirements() {
+    bytes_struct_eq(
+        DeviceImageMemoryRequirements::default(),
+        DeviceImageMemoryRequirements::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceImageMemoryRequirements<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_IMAGE_MEMORY_REQUIREMENTS;
@@ -20177,6 +22501,13 @@ impl<'a> MemoryRequirements2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryRequirements2() {
+    bytes_struct_eq(
+        MemoryRequirements2::default(),
+        MemoryRequirements2::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryRequirements2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_REQUIREMENTS_2;
 }
@@ -20216,6 +22547,13 @@ impl<'a> SparseImageMemoryRequirements2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSparseImageMemoryRequirements2() {
+    bytes_struct_eq(
+        SparseImageMemoryRequirements2::default(),
+        SparseImageMemoryRequirements2::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SparseImageMemoryRequirements2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SPARSE_IMAGE_MEMORY_REQUIREMENTS_2;
@@ -20259,6 +22597,13 @@ impl<'a> PhysicalDevicePointClippingProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePointClippingProperties() {
+    bytes_struct_eq(
+        PhysicalDevicePointClippingProperties::default(),
+        PhysicalDevicePointClippingProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePointClippingProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES;
@@ -20305,6 +22650,13 @@ impl<'a> MemoryDedicatedRequirements<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkMemoryDedicatedRequirements() {
+    bytes_struct_eq(
+        MemoryDedicatedRequirements::default(),
+        MemoryDedicatedRequirements::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedRequirements<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_DEDICATED_REQUIREMENTS;
@@ -20354,6 +22706,13 @@ impl<'a> MemoryDedicatedAllocateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryDedicatedAllocateInfo() {
+    bytes_struct_eq(
+        MemoryDedicatedAllocateInfo::default(),
+        MemoryDedicatedAllocateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_DEDICATED_ALLOCATE_INFO;
 }
@@ -20400,6 +22759,13 @@ impl<'a> ImageViewUsageCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageViewUsageCreateInfo() {
+    bytes_struct_eq(
+        ImageViewUsageCreateInfo::default(),
+        ImageViewUsageCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageViewUsageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_USAGE_CREATE_INFO;
 }
@@ -20442,6 +22808,13 @@ impl<'a> ImageViewSlicedCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImageViewSlicedCreateInfoEXT() {
+    bytes_struct_eq(
+        ImageViewSlicedCreateInfoEXT::default(),
+        ImageViewSlicedCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewSlicedCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_SLICED_CREATE_INFO_EXT;
@@ -20489,6 +22862,13 @@ impl<'a> PipelineTessellationDomainOriginStateCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineTessellationDomainOriginStateCreateInfo() {
+    bytes_struct_eq(
+        PipelineTessellationDomainOriginStateCreateInfo::default(),
+        PipelineTessellationDomainOriginStateCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineTessellationDomainOriginStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO;
@@ -20533,6 +22913,13 @@ impl<'a> SamplerYcbcrConversionInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSamplerYcbcrConversionInfo() {
+    bytes_struct_eq(
+        SamplerYcbcrConversionInfo::default(),
+        SamplerYcbcrConversionInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_YCBCR_CONVERSION_INFO;
@@ -20589,6 +22976,13 @@ impl<'a> SamplerYcbcrConversionCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSamplerYcbcrConversionCreateInfo() {
+    bytes_struct_eq(
+        SamplerYcbcrConversionCreateInfo::default(),
+        SamplerYcbcrConversionCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_YCBCR_CONVERSION_CREATE_INFO;
@@ -20665,6 +23059,13 @@ impl<'a> BindImagePlaneMemoryInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBindImagePlaneMemoryInfo() {
+    bytes_struct_eq(
+        BindImagePlaneMemoryInfo::default(),
+        BindImagePlaneMemoryInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BindImagePlaneMemoryInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_IMAGE_PLANE_MEMORY_INFO;
 }
@@ -20706,6 +23107,13 @@ impl<'a> ImagePlaneMemoryRequirementsInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImagePlaneMemoryRequirementsInfo() {
+    bytes_struct_eq(
+        ImagePlaneMemoryRequirementsInfo::default(),
+        ImagePlaneMemoryRequirementsInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImagePlaneMemoryRequirementsInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO;
 }
@@ -20746,6 +23154,13 @@ impl<'a> PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceSamplerYcbcrConversionFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceSamplerYcbcrConversionFeatures::default(),
+        PhysicalDeviceSamplerYcbcrConversionFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -20792,6 +23207,13 @@ impl<'a> SamplerYcbcrConversionImageFormatProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSamplerYcbcrConversionImageFormatProperties() {
+    bytes_struct_eq(
+        SamplerYcbcrConversionImageFormatProperties::default(),
+        SamplerYcbcrConversionImageFormatProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionImageFormatProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -20841,6 +23263,13 @@ impl<'a> TextureLODGatherFormatPropertiesAMD<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkTextureLODGatherFormatPropertiesAMD() {
+    bytes_struct_eq(
+        TextureLODGatherFormatPropertiesAMD::default(),
+        TextureLODGatherFormatPropertiesAMD::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for TextureLODGatherFormatPropertiesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD;
 }
@@ -20888,6 +23317,13 @@ impl<'a> ConditionalRenderingBeginInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkConditionalRenderingBeginInfoEXT() {
+    bytes_struct_eq(
+        ConditionalRenderingBeginInfoEXT::default(),
+        ConditionalRenderingBeginInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ConditionalRenderingBeginInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CONDITIONAL_RENDERING_BEGIN_INFO_EXT;
@@ -20939,6 +23375,13 @@ impl<'a> ProtectedSubmitInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkProtectedSubmitInfo() {
+    bytes_struct_eq(
+        ProtectedSubmitInfo::default(),
+        ProtectedSubmitInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ProtectedSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PROTECTED_SUBMIT_INFO;
 }
@@ -20979,6 +23422,13 @@ impl<'a> PhysicalDeviceProtectedMemoryFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceProtectedMemoryFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceProtectedMemoryFeatures::default(),
+        PhysicalDeviceProtectedMemoryFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProtectedMemoryFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES;
@@ -21021,6 +23471,13 @@ impl<'a> PhysicalDeviceProtectedMemoryProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceProtectedMemoryProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceProtectedMemoryProperties::default(),
+        PhysicalDeviceProtectedMemoryProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProtectedMemoryProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -21067,6 +23524,13 @@ impl<'a> DeviceQueueInfo2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceQueueInfo2() {
+    bytes_struct_eq(
+        DeviceQueueInfo2::default(),
+        DeviceQueueInfo2::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_QUEUE_INFO_2;
@@ -21121,6 +23585,13 @@ impl<'a> PipelineCoverageToColorStateCreateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineCoverageToColorStateCreateInfoNV() {
+    bytes_struct_eq(
+        PipelineCoverageToColorStateCreateInfoNV::default(),
+        PipelineCoverageToColorStateCreateInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageToColorStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -21179,6 +23650,13 @@ impl<'a> PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceSamplerFilterMinmaxProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceSamplerFilterMinmaxProperties::default(),
+        PhysicalDeviceSamplerFilterMinmaxProperties::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES;
@@ -21219,6 +23697,13 @@ impl SampleLocationEXT {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkSampleLocationEXT() {
+    bytes_struct_eq(
+        SampleLocationEXT::default(),
+        SampleLocationEXT::const_default(),
+    );
 }
 impl SampleLocationEXT {
     #[inline]
@@ -21268,6 +23753,13 @@ impl<'a> SampleLocationsInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSampleLocationsInfoEXT() {
+    bytes_struct_eq(
+        SampleLocationsInfoEXT::default(),
+        SampleLocationsInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SampleLocationsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLE_LOCATIONS_INFO_EXT;
 }
@@ -21310,6 +23802,13 @@ impl<'a> AttachmentSampleLocationsEXT<'a> {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkAttachmentSampleLocationsEXT() {
+    bytes_struct_eq(
+        AttachmentSampleLocationsEXT::default(),
+        AttachmentSampleLocationsEXT::const_default(),
+    );
+}
 impl<'a> AttachmentSampleLocationsEXT<'a> {
     #[inline]
     pub fn attachment_index(mut self, attachment_index: u32) -> Self {
@@ -21340,6 +23839,13 @@ impl<'a> SubpassSampleLocationsEXT<'a> {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkSubpassSampleLocationsEXT() {
+    bytes_struct_eq(
+        SubpassSampleLocationsEXT::default(),
+        SubpassSampleLocationsEXT::const_default(),
+    );
 }
 impl<'a> SubpassSampleLocationsEXT<'a> {
     #[inline]
@@ -21391,6 +23897,13 @@ impl<'a> RenderPassSampleLocationsBeginInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkRenderPassSampleLocationsBeginInfoEXT() {
+    bytes_struct_eq(
+        RenderPassSampleLocationsBeginInfoEXT::default(),
+        RenderPassSampleLocationsBeginInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassSampleLocationsBeginInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -21449,6 +23962,13 @@ impl<'a> PipelineSampleLocationsStateCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineSampleLocationsStateCreateInfoEXT() {
+    bytes_struct_eq(
+        PipelineSampleLocationsStateCreateInfoEXT::default(),
+        PipelineSampleLocationsStateCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineSampleLocationsStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -21510,6 +24030,13 @@ impl<'a> PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceSampleLocationsPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceSampleLocationsPropertiesEXT::default(),
+        PhysicalDeviceSampleLocationsPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -21585,6 +24112,13 @@ impl<'a> MultisamplePropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMultisamplePropertiesEXT() {
+    bytes_struct_eq(
+        MultisamplePropertiesEXT::default(),
+        MultisamplePropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MultisamplePropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MULTISAMPLE_PROPERTIES_EXT;
 }
@@ -21628,6 +24162,13 @@ impl<'a> SamplerReductionModeCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSamplerReductionModeCreateInfo() {
+    bytes_struct_eq(
+        SamplerReductionModeCreateInfo::default(),
+        SamplerReductionModeCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SamplerReductionModeCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_REDUCTION_MODE_CREATE_INFO;
 }
@@ -21668,6 +24209,13 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceBlendOperationAdvancedFeaturesEXT::default(),
+        PhysicalDeviceBlendOperationAdvancedFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -21717,6 +24265,13 @@ impl<'a> PhysicalDeviceMultiDrawFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMultiDrawFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceMultiDrawFeaturesEXT::default(),
+        PhysicalDeviceMultiDrawFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiDrawFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT;
@@ -21769,6 +24324,13 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceBlendOperationAdvancedPropertiesEXT::default(),
+        PhysicalDeviceBlendOperationAdvancedPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -21861,6 +24423,13 @@ impl<'a> PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineColorBlendAdvancedStateCreateInfoEXT() {
+    bytes_struct_eq(
+        PipelineColorBlendAdvancedStateCreateInfoEXT::default(),
+        PipelineColorBlendAdvancedStateCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT;
@@ -21917,6 +24486,13 @@ impl<'a> PhysicalDeviceInlineUniformBlockFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceInlineUniformBlockFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceInlineUniformBlockFeatures::default(),
+        PhysicalDeviceInlineUniformBlockFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInlineUniformBlockFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -21977,6 +24553,13 @@ impl<'a> PhysicalDeviceInlineUniformBlockProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceInlineUniformBlockProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceInlineUniformBlockProperties::default(),
+        PhysicalDeviceInlineUniformBlockProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInlineUniformBlockProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -22060,6 +24643,13 @@ impl<'a> WriteDescriptorSetInlineUniformBlock<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkWriteDescriptorSetInlineUniformBlock() {
+    bytes_struct_eq(
+        WriteDescriptorSetInlineUniformBlock::default(),
+        WriteDescriptorSetInlineUniformBlock::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetInlineUniformBlock<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK;
 }
@@ -22101,6 +24691,13 @@ impl<'a> DescriptorPoolInlineUniformBlockCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDescriptorPoolInlineUniformBlockCreateInfo() {
+    bytes_struct_eq(
+        DescriptorPoolInlineUniformBlockCreateInfo::default(),
+        DescriptorPoolInlineUniformBlockCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorPoolInlineUniformBlockCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -22157,6 +24754,13 @@ impl<'a> PipelineCoverageModulationStateCreateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineCoverageModulationStateCreateInfoNV() {
+    bytes_struct_eq(
+        PipelineCoverageModulationStateCreateInfoNV::default(),
+        PipelineCoverageModulationStateCreateInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageModulationStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -22227,6 +24831,13 @@ impl<'a> ImageFormatListCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageFormatListCreateInfo() {
+    bytes_struct_eq(
+        ImageFormatListCreateInfo::default(),
+        ImageFormatListCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageFormatListCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_FORMAT_LIST_CREATE_INFO;
 }
@@ -22275,6 +24886,13 @@ impl<'a> ValidationCacheCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkValidationCacheCreateInfoEXT() {
+    bytes_struct_eq(
+        ValidationCacheCreateInfoEXT::default(),
+        ValidationCacheCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ValidationCacheCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VALIDATION_CACHE_CREATE_INFO_EXT;
 }
@@ -22320,6 +24938,13 @@ impl<'a> ShaderModuleValidationCacheCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkShaderModuleValidationCacheCreateInfoEXT() {
+    bytes_struct_eq(
+        ShaderModuleValidationCacheCreateInfoEXT::default(),
+        ShaderModuleValidationCacheCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderModuleValidationCacheCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -22369,6 +24994,13 @@ impl<'a> PhysicalDeviceMaintenance3Properties<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMaintenance3Properties() {
+    bytes_struct_eq(
+        PhysicalDeviceMaintenance3Properties::default(),
+        PhysicalDeviceMaintenance3Properties::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance3Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES;
 }
@@ -22415,6 +25047,13 @@ impl<'a> PhysicalDeviceMaintenance4Features<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMaintenance4Features() {
+    bytes_struct_eq(
+        PhysicalDeviceMaintenance4Features::default(),
+        PhysicalDeviceMaintenance4Features::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance4Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES;
 }
@@ -22457,6 +25096,13 @@ impl<'a> PhysicalDeviceMaintenance4Properties<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMaintenance4Properties() {
+    bytes_struct_eq(
+        PhysicalDeviceMaintenance4Properties::default(),
+        PhysicalDeviceMaintenance4Properties::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance4Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES;
 }
@@ -22497,6 +25143,13 @@ impl<'a> PhysicalDeviceMaintenance5Features<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMaintenance5Features() {
+    bytes_struct_eq(
+        PhysicalDeviceMaintenance5Features::default(),
+        PhysicalDeviceMaintenance5Features::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance5Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_5_FEATURES;
@@ -22549,6 +25202,13 @@ impl<'a> PhysicalDeviceMaintenance5Properties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMaintenance5Properties() {
+    bytes_struct_eq(
+        PhysicalDeviceMaintenance5Properties::default(),
+        PhysicalDeviceMaintenance5Properties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance5Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_5_PROPERTIES;
@@ -22635,6 +25295,13 @@ impl<'a> PhysicalDeviceMaintenance6Features<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMaintenance6Features() {
+    bytes_struct_eq(
+        PhysicalDeviceMaintenance6Features::default(),
+        PhysicalDeviceMaintenance6Features::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance6Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_6_FEATURES;
 }
@@ -22680,6 +25347,13 @@ impl<'a> PhysicalDeviceMaintenance6Properties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMaintenance6Properties() {
+    bytes_struct_eq(
+        PhysicalDeviceMaintenance6Properties::default(),
+        PhysicalDeviceMaintenance6Properties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance6Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_6_PROPERTIES;
@@ -22744,6 +25418,13 @@ impl<'a> PhysicalDeviceMaintenance7FeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMaintenance7FeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceMaintenance7FeaturesKHR::default(),
+        PhysicalDeviceMaintenance7FeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance7FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_7_FEATURES_KHR;
 }
@@ -22799,6 +25480,13 @@ impl<'a> PhysicalDeviceMaintenance7PropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMaintenance7PropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceMaintenance7PropertiesKHR::default(),
+        PhysicalDeviceMaintenance7PropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance7PropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -22910,6 +25598,13 @@ impl<'a> PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceLayeredApiPropertiesListKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceLayeredApiPropertiesListKHR::default(),
+        PhysicalDeviceLayeredApiPropertiesListKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_LIST_KHR;
@@ -22977,6 +25672,13 @@ impl<'a> PhysicalDeviceLayeredApiPropertiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceLayeredApiPropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceLayeredApiPropertiesKHR::default(),
+        PhysicalDeviceLayeredApiPropertiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_LAYERED_API_PROPERTIES_KHR;
 }
@@ -23038,6 +25740,13 @@ impl<'a> PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceLayeredApiVulkanPropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceLayeredApiVulkanPropertiesKHR::default(),
+        PhysicalDeviceLayeredApiVulkanPropertiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LAYERED_API_VULKAN_PROPERTIES_KHR;
@@ -23083,6 +25792,13 @@ impl<'a> PhysicalDeviceMaintenance8FeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMaintenance8FeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceMaintenance8FeaturesKHR::default(),
+        PhysicalDeviceMaintenance8FeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance8FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_8_FEATURES_KHR;
 }
@@ -23124,6 +25840,13 @@ impl<'a> PhysicalDeviceMaintenance9FeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMaintenance9FeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceMaintenance9FeaturesKHR::default(),
+        PhysicalDeviceMaintenance9FeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance9FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_9_FEATURES_KHR;
@@ -23168,6 +25891,13 @@ impl<'a> PhysicalDeviceMaintenance9PropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMaintenance9PropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceMaintenance9PropertiesKHR::default(),
+        PhysicalDeviceMaintenance9PropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance9PropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -23219,6 +25949,13 @@ impl<'a> PhysicalDeviceMaintenance11FeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMaintenance11FeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceMaintenance11FeaturesKHR::default(),
+        PhysicalDeviceMaintenance11FeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance11FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAINTENANCE_11_FEATURES_KHR;
@@ -23265,6 +26002,13 @@ impl<'a> PhysicalDeviceMaintenance10PropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMaintenance10PropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceMaintenance10PropertiesKHR::default(),
+        PhysicalDeviceMaintenance10PropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance10PropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -23329,6 +26073,13 @@ impl<'a> PhysicalDeviceMaintenance10FeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMaintenance10FeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceMaintenance10FeaturesKHR::default(),
+        PhysicalDeviceMaintenance10FeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance10FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAINTENANCE_10_FEATURES_KHR;
@@ -23371,6 +26122,13 @@ impl<'a> QueueFamilyOwnershipTransferPropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkQueueFamilyOwnershipTransferPropertiesKHR() {
+    bytes_struct_eq(
+        QueueFamilyOwnershipTransferPropertiesKHR::default(),
+        QueueFamilyOwnershipTransferPropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyOwnershipTransferPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -23416,6 +26174,13 @@ impl<'a> QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkQueueFamilyOptimalImageTransferGranularityPropertiesKHR() {
+    bytes_struct_eq(
+        QueueFamilyOptimalImageTransferGranularityPropertiesKHR::default(),
+        QueueFamilyOptimalImageTransferGranularityPropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'a>
@@ -23475,6 +26240,13 @@ impl<'a> RenderingAreaInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderingAreaInfo() {
+    bytes_struct_eq(
+        RenderingAreaInfo::default(),
+        RenderingAreaInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderingAreaInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_AREA_INFO;
 }
@@ -23531,6 +26303,13 @@ impl<'a> DescriptorSetLayoutSupport<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDescriptorSetLayoutSupport() {
+    bytes_struct_eq(
+        DescriptorSetLayoutSupport::default(),
+        DescriptorSetLayoutSupport::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutSupport<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_LAYOUT_SUPPORT;
 }
@@ -23570,6 +26349,13 @@ impl<'a> PhysicalDeviceShaderDrawParametersFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderDrawParametersFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderDrawParametersFeatures::default(),
+        PhysicalDeviceShaderDrawParametersFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderDrawParametersFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -23618,6 +26404,13 @@ impl<'a> PhysicalDeviceShaderFloat16Int8Features<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderFloat16Int8Features() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderFloat16Int8Features::default(),
+        PhysicalDeviceShaderFloat16Int8Features::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloat16Int8Features<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -23698,6 +26491,13 @@ impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceFloatControlsProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceFloatControlsProperties::default(),
+        PhysicalDeviceFloatControlsProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFloatControlsProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES;
@@ -23865,6 +26665,13 @@ impl<'a> PhysicalDeviceHostQueryResetFeatures<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceHostQueryResetFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceHostQueryResetFeatures::default(),
+        PhysicalDeviceHostQueryResetFeatures::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostQueryResetFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES;
 }
@@ -23891,6 +26698,13 @@ impl NativeBufferUsage2ANDROID {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkNativeBufferUsage2ANDROID() {
+    bytes_struct_eq(
+        NativeBufferUsage2ANDROID::default(),
+        NativeBufferUsage2ANDROID::const_default(),
+    );
 }
 impl NativeBufferUsage2ANDROID {
     #[inline]
@@ -23941,6 +26755,13 @@ impl<'a> NativeBufferANDROID<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkNativeBufferANDROID() {
+    bytes_struct_eq(
+        NativeBufferANDROID::default(),
+        NativeBufferANDROID::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::NATIVE_BUFFER_ANDROID;
@@ -24004,6 +26825,13 @@ impl<'a> SwapchainImageCreateInfoANDROID<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSwapchainImageCreateInfoANDROID() {
+    bytes_struct_eq(
+        SwapchainImageCreateInfoANDROID::default(),
+        SwapchainImageCreateInfoANDROID::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainImageCreateInfoANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_IMAGE_CREATE_INFO_ANDROID;
 }
@@ -24045,6 +26873,13 @@ impl<'a> PhysicalDevicePresentationPropertiesANDROID<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDevicePresentationPropertiesANDROID() {
+    bytes_struct_eq(
+        PhysicalDevicePresentationPropertiesANDROID::default(),
+        PhysicalDevicePresentationPropertiesANDROID::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentationPropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRESENTATION_PROPERTIES_ANDROID;
@@ -24077,6 +26912,13 @@ impl ShaderResourceUsageAMD {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkShaderResourceUsageAMD() {
+    bytes_struct_eq(
+        ShaderResourceUsageAMD::default(),
+        ShaderResourceUsageAMD::const_default(),
+    );
 }
 impl ShaderResourceUsageAMD {
     #[inline]
@@ -24138,6 +26980,13 @@ impl ShaderStatisticsInfoAMD {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkShaderStatisticsInfoAMD() {
+    bytes_struct_eq(
+        ShaderStatisticsInfoAMD::default(),
+        ShaderStatisticsInfoAMD::const_default(),
+    );
 }
 impl ShaderStatisticsInfoAMD {
     #[inline]
@@ -24206,6 +27055,13 @@ impl<'a> PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceElapsedTimerQueryFeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceElapsedTimerQueryFeaturesQCOM::default(),
+        PhysicalDeviceElapsedTimerQueryFeaturesQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_ELAPSED_TIMER_QUERY_FEATURES_QCOM;
@@ -24252,6 +27108,13 @@ impl<'a> DeviceQueueGlobalPriorityCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDeviceQueueGlobalPriorityCreateInfo() {
+    bytes_struct_eq(
+        DeviceQueueGlobalPriorityCreateInfo::default(),
+        DeviceQueueGlobalPriorityCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueGlobalPriorityCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO;
 }
@@ -24292,6 +27155,13 @@ impl<'a> PhysicalDeviceGlobalPriorityQueryFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceGlobalPriorityQueryFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceGlobalPriorityQueryFeatures::default(),
+        PhysicalDeviceGlobalPriorityQueryFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGlobalPriorityQueryFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -24348,6 +27218,13 @@ impl<'a> QueueFamilyGlobalPriorityProperties<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkQueueFamilyGlobalPriorityProperties() {
+    bytes_struct_eq(
+        QueueFamilyGlobalPriorityProperties::default(),
+        QueueFamilyGlobalPriorityProperties::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyGlobalPriorityProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES;
 }
@@ -24397,6 +27274,13 @@ impl<'a> DebugUtilsObjectNameInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDebugUtilsObjectNameInfoEXT() {
+    bytes_struct_eq(
+        DebugUtilsObjectNameInfoEXT::default(),
+        DebugUtilsObjectNameInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsObjectNameInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_OBJECT_NAME_INFO_EXT;
@@ -24463,6 +27347,13 @@ impl<'a> DebugUtilsObjectTagInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDebugUtilsObjectTagInfoEXT() {
+    bytes_struct_eq(
+        DebugUtilsObjectTagInfoEXT::default(),
+        DebugUtilsObjectTagInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsObjectTagInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_OBJECT_TAG_INFO_EXT;
 }
@@ -24516,6 +27407,13 @@ impl<'a> DebugUtilsLabelEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDebugUtilsLabelEXT() {
+    bytes_struct_eq(
+        DebugUtilsLabelEXT::default(),
+        DebugUtilsLabelEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsLabelEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_LABEL_EXT;
@@ -24593,6 +27491,13 @@ impl<'a> DebugUtilsMessengerCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDebugUtilsMessengerCreateInfoEXT() {
+    bytes_struct_eq(
+        DebugUtilsMessengerCreateInfoEXT::default(),
+        DebugUtilsMessengerCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsMessengerCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
@@ -24675,6 +27580,13 @@ impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDebugUtilsMessengerCallbackDataEXT() {
+    bytes_struct_eq(
+        DebugUtilsMessengerCallbackDataEXT::default(),
+        DebugUtilsMessengerCallbackDataEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsMessengerCallbackDataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT;
@@ -24765,6 +27677,13 @@ impl<'a> PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDeviceMemoryReportFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceDeviceMemoryReportFeaturesEXT::default(),
+        PhysicalDeviceDeviceMemoryReportFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_MEMORY_REPORT_FEATURES_EXT;
@@ -24828,6 +27747,13 @@ impl<'a> DeviceDeviceMemoryReportCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceDeviceMemoryReportCreateInfoEXT() {
+    bytes_struct_eq(
+        DeviceDeviceMemoryReportCreateInfoEXT::default(),
+        DeviceDeviceMemoryReportCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceDeviceMemoryReportCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -24895,6 +27821,13 @@ impl<'a> DeviceMemoryReportCallbackDataEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceMemoryReportCallbackDataEXT() {
+    bytes_struct_eq(
+        DeviceMemoryReportCallbackDataEXT::default(),
+        DeviceMemoryReportCallbackDataEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryReportCallbackDataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_MEMORY_REPORT_CALLBACK_DATA_EXT;
@@ -24964,6 +27897,13 @@ impl<'a> ImportMemoryHostPointerInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImportMemoryHostPointerInfoEXT() {
+    bytes_struct_eq(
+        ImportMemoryHostPointerInfoEXT::default(),
+        ImportMemoryHostPointerInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryHostPointerInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_HOST_POINTER_INFO_EXT;
 }
@@ -25010,6 +27950,13 @@ impl<'a> MemoryHostPointerPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryHostPointerPropertiesEXT() {
+    bytes_struct_eq(
+        MemoryHostPointerPropertiesEXT::default(),
+        MemoryHostPointerPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryHostPointerPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_HOST_POINTER_PROPERTIES_EXT;
 }
@@ -25049,6 +27996,13 @@ impl<'a> PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceExternalMemoryHostPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceExternalMemoryHostPropertiesEXT::default(),
+        PhysicalDeviceExternalMemoryHostPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -25113,6 +28067,13 @@ impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceConservativeRasterizationPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceConservativeRasterizationPropertiesEXT::default(),
+        PhysicalDeviceConservativeRasterizationPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -25221,6 +28182,13 @@ impl<'a> CalibratedTimestampInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCalibratedTimestampInfoKHR() {
+    bytes_struct_eq(
+        CalibratedTimestampInfoKHR::default(),
+        CalibratedTimestampInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CalibratedTimestampInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CALIBRATED_TIMESTAMP_INFO_KHR;
 }
@@ -25286,6 +28254,13 @@ impl<'a> PhysicalDeviceShaderCorePropertiesAMD<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderCorePropertiesAMD() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderCorePropertiesAMD::default(),
+        PhysicalDeviceShaderCorePropertiesAMD::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCorePropertiesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD;
@@ -25395,6 +28370,13 @@ impl<'a> PhysicalDeviceShaderCoreProperties2AMD<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderCoreProperties2AMD() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderCoreProperties2AMD::default(),
+        PhysicalDeviceShaderCoreProperties2AMD::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreProperties2AMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_2_AMD;
@@ -25448,6 +28430,13 @@ impl<'a> PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineRasterizationConservativeStateCreateInfoEXT() {
+    bytes_struct_eq(
+        PipelineRasterizationConservativeStateCreateInfoEXT::default(),
+        PipelineRasterizationConservativeStateCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -25547,6 +28536,13 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDescriptorIndexingFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceDescriptorIndexingFeatures::default(),
+        PhysicalDeviceDescriptorIndexingFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorIndexingFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -25805,6 +28801,13 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDescriptorIndexingProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceDescriptorIndexingProperties::default(),
+        PhysicalDeviceDescriptorIndexingProperties::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorIndexingProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES;
@@ -26048,6 +29051,13 @@ impl<'a> DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDescriptorSetLayoutBindingFlagsCreateInfo() {
+    bytes_struct_eq(
+        DescriptorSetLayoutBindingFlagsCreateInfo::default(),
+        DescriptorSetLayoutBindingFlagsCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO;
@@ -26096,6 +29106,13 @@ impl<'a> DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDescriptorSetVariableDescriptorCountAllocateInfo() {
+    bytes_struct_eq(
+        DescriptorSetVariableDescriptorCountAllocateInfo::default(),
+        DescriptorSetVariableDescriptorCountAllocateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO;
@@ -26141,6 +29158,13 @@ impl<'a> DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDescriptorSetVariableDescriptorCountLayoutSupport() {
+    bytes_struct_eq(
+        DescriptorSetVariableDescriptorCountLayoutSupport::default(),
+        DescriptorSetVariableDescriptorCountLayoutSupport::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -26202,6 +29226,13 @@ impl<'a> AttachmentDescription2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkAttachmentDescription2() {
+    bytes_struct_eq(
+        AttachmentDescription2::default(),
+        AttachmentDescription2::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentDescription2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_DESCRIPTION_2;
@@ -26287,6 +29318,13 @@ impl<'a> AttachmentReference2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAttachmentReference2() {
+    bytes_struct_eq(
+        AttachmentReference2::default(),
+        AttachmentReference2::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AttachmentReference2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_REFERENCE_2;
 }
@@ -26356,6 +29394,13 @@ impl<'a> SubpassDescription2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSubpassDescription2() {
+    bytes_struct_eq(
+        SubpassDescription2::default(),
+        SubpassDescription2::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassDescription2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_DESCRIPTION_2;
@@ -26456,6 +29501,13 @@ impl<'a> SubpassDependency2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSubpassDependency2() {
+    bytes_struct_eq(
+        SubpassDependency2::default(),
+        SubpassDependency2::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SubpassDependency2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_DEPENDENCY_2;
 }
@@ -26547,6 +29599,13 @@ impl<'a> RenderPassCreateInfo2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderPassCreateInfo2() {
+    bytes_struct_eq(
+        RenderPassCreateInfo2::default(),
+        RenderPassCreateInfo2::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreateInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_CREATE_INFO_2;
 }
@@ -26611,6 +29670,13 @@ impl<'a> SubpassBeginInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSubpassBeginInfo() {
+    bytes_struct_eq(
+        SubpassBeginInfo::default(),
+        SubpassBeginInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SubpassBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_BEGIN_INFO;
 }
@@ -26649,6 +29715,10 @@ impl<'a> SubpassEndInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSubpassEndInfo() {
+    bytes_struct_eq(SubpassEndInfo::default(), SubpassEndInfo::const_default());
+}
 unsafe impl<'a> TaggedStructure<'a> for SubpassEndInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_END_INFO;
 }
@@ -26682,6 +29752,13 @@ impl<'a> PhysicalDeviceTimelineSemaphoreFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceTimelineSemaphoreFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceTimelineSemaphoreFeatures::default(),
+        PhysicalDeviceTimelineSemaphoreFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTimelineSemaphoreFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -26725,6 +29802,13 @@ impl<'a> PhysicalDeviceTimelineSemaphoreProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceTimelineSemaphoreProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceTimelineSemaphoreProperties::default(),
+        PhysicalDeviceTimelineSemaphoreProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTimelineSemaphoreProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -26775,6 +29859,13 @@ impl<'a> SemaphoreTypeCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSemaphoreTypeCreateInfo() {
+    bytes_struct_eq(
+        SemaphoreTypeCreateInfo::default(),
+        SemaphoreTypeCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreTypeCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_TYPE_CREATE_INFO;
@@ -26828,6 +29919,13 @@ impl<'a> TimelineSemaphoreSubmitInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkTimelineSemaphoreSubmitInfo() {
+    bytes_struct_eq(
+        TimelineSemaphoreSubmitInfo::default(),
+        TimelineSemaphoreSubmitInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for TimelineSemaphoreSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TIMELINE_SEMAPHORE_SUBMIT_INFO;
@@ -26884,6 +29982,13 @@ impl<'a> SemaphoreWaitInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSemaphoreWaitInfo() {
+    bytes_struct_eq(
+        SemaphoreWaitInfo::default(),
+        SemaphoreWaitInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreWaitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_WAIT_INFO;
 }
@@ -26938,6 +30043,13 @@ impl<'a> SemaphoreSignalInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSemaphoreSignalInfo() {
+    bytes_struct_eq(
+        SemaphoreSignalInfo::default(),
+        SemaphoreSignalInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreSignalInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_SIGNAL_INFO;
 }
@@ -26967,6 +30079,13 @@ impl VertexInputBindingDivisorDescription {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkVertexInputBindingDivisorDescription() {
+    bytes_struct_eq(
+        VertexInputBindingDivisorDescription::default(),
+        VertexInputBindingDivisorDescription::const_default(),
+    );
 }
 impl VertexInputBindingDivisorDescription {
     #[inline]
@@ -27011,6 +30130,13 @@ impl<'a> PipelineVertexInputDivisorStateCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineVertexInputDivisorStateCreateInfo() {
+    bytes_struct_eq(
+        PipelineVertexInputDivisorStateCreateInfo::default(),
+        PipelineVertexInputDivisorStateCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineVertexInputDivisorStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -27061,6 +30187,13 @@ impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceVertexAttributeDivisorPropertiesEXT::default(),
+        PhysicalDeviceVertexAttributeDivisorPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT;
@@ -27107,6 +30240,13 @@ impl<'a> PhysicalDeviceVertexAttributeDivisorProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceVertexAttributeDivisorProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceVertexAttributeDivisorProperties::default(),
+        PhysicalDeviceVertexAttributeDivisorProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -27167,6 +30307,13 @@ impl<'a> PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDevicePCIBusInfoPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDevicePCIBusInfoPropertiesEXT::default(),
+        PhysicalDevicePCIBusInfoPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PCI_BUS_INFO_PROPERTIES_EXT;
@@ -27224,6 +30371,13 @@ impl<'a> ImportAndroidHardwareBufferInfoANDROID<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImportAndroidHardwareBufferInfoANDROID() {
+    bytes_struct_eq(
+        ImportAndroidHardwareBufferInfoANDROID::default(),
+        ImportAndroidHardwareBufferInfoANDROID::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportAndroidHardwareBufferInfoANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID;
@@ -27265,6 +30419,13 @@ impl<'a> AndroidHardwareBufferUsageANDROID<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkAndroidHardwareBufferUsageANDROID() {
+    bytes_struct_eq(
+        AndroidHardwareBufferUsageANDROID::default(),
+        AndroidHardwareBufferUsageANDROID::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferUsageANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANDROID_HARDWARE_BUFFER_USAGE_ANDROID;
@@ -27308,6 +30469,13 @@ impl<'a> AndroidHardwareBufferPropertiesANDROID<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkAndroidHardwareBufferPropertiesANDROID() {
+    bytes_struct_eq(
+        AndroidHardwareBufferPropertiesANDROID::default(),
+        AndroidHardwareBufferPropertiesANDROID::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferPropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID;
@@ -27353,6 +30521,13 @@ impl<'a> MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkMemoryGetAndroidHardwareBufferInfoANDROID() {
+    bytes_struct_eq(
+        MemoryGetAndroidHardwareBufferInfoANDROID::default(),
+        MemoryGetAndroidHardwareBufferInfoANDROID::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -27408,6 +30583,13 @@ impl<'a> AndroidHardwareBufferFormatPropertiesANDROID<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkAndroidHardwareBufferFormatPropertiesANDROID() {
+    bytes_struct_eq(
+        AndroidHardwareBufferFormatPropertiesANDROID::default(),
+        AndroidHardwareBufferFormatPropertiesANDROID::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatPropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -27495,6 +30677,13 @@ impl<'a> CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCommandBufferInheritanceConditionalRenderingInfoEXT() {
+    bytes_struct_eq(
+        CommandBufferInheritanceConditionalRenderingInfoEXT::default(),
+        CommandBufferInheritanceConditionalRenderingInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COMMAND_BUFFER_INHERITANCE_CONDITIONAL_RENDERING_INFO_EXT;
@@ -27539,6 +30728,13 @@ impl<'a> ExternalFormatANDROID<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkExternalFormatANDROID() {
+    bytes_struct_eq(
+        ExternalFormatANDROID::default(),
+        ExternalFormatANDROID::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFormatANDROID<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_FORMAT_ANDROID;
@@ -27588,6 +30784,13 @@ impl<'a> PhysicalDevice8BitStorageFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevice8BitStorageFeatures() {
+    bytes_struct_eq(
+        PhysicalDevice8BitStorageFeatures::default(),
+        PhysicalDevice8BitStorageFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice8BitStorageFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES;
@@ -27646,6 +30849,13 @@ impl<'a> PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceConditionalRenderingFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceConditionalRenderingFeaturesEXT::default(),
+        PhysicalDeviceConditionalRenderingFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CONDITIONAL_RENDERING_FEATURES_EXT;
@@ -27703,6 +30913,13 @@ impl<'a> PhysicalDeviceVulkanMemoryModelFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceVulkanMemoryModelFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceVulkanMemoryModelFeatures::default(),
+        PhysicalDeviceVulkanMemoryModelFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkanMemoryModelFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -27765,6 +30982,13 @@ impl<'a> PhysicalDeviceShaderAtomicInt64Features<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderAtomicInt64Features() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderAtomicInt64Features::default(),
+        PhysicalDeviceShaderAtomicInt64Features::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicInt64Features<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -27835,6 +31059,13 @@ impl<'a> PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderAtomicFloatFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderAtomicFloatFeaturesEXT::default(),
+        PhysicalDeviceShaderAtomicFloatFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -27977,6 +31208,13 @@ impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderAtomicFloat2FeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderAtomicFloat2FeaturesEXT::default(),
+        PhysicalDeviceShaderAtomicFloat2FeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT;
@@ -28110,6 +31348,13 @@ impl<'a> PhysicalDeviceVertexAttributeDivisorFeatures<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceVertexAttributeDivisorFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceVertexAttributeDivisorFeatures::default(),
+        PhysicalDeviceVertexAttributeDivisorFeatures::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES;
@@ -28168,6 +31413,13 @@ impl<'a> QueueFamilyCheckpointPropertiesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkQueueFamilyCheckpointPropertiesNV() {
+    bytes_struct_eq(
+        QueueFamilyCheckpointPropertiesNV::default(),
+        QueueFamilyCheckpointPropertiesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyCheckpointPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV;
 }
@@ -28213,6 +31465,13 @@ impl<'a> CheckpointDataNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCheckpointDataNV() {
+    bytes_struct_eq(
+        CheckpointDataNV::default(),
+        CheckpointDataNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CheckpointDataNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CHECKPOINT_DATA_NV;
@@ -28264,6 +31523,13 @@ impl<'a> PhysicalDeviceDepthStencilResolveProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDepthStencilResolveProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceDepthStencilResolveProperties::default(),
+        PhysicalDeviceDepthStencilResolveProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthStencilResolveProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -28335,6 +31601,13 @@ impl<'a> SubpassDescriptionDepthStencilResolve<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSubpassDescriptionDepthStencilResolve() {
+    bytes_struct_eq(
+        SubpassDescriptionDepthStencilResolve::default(),
+        SubpassDescriptionDepthStencilResolve::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SubpassDescriptionDepthStencilResolve<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE;
 }
@@ -28389,6 +31662,13 @@ impl<'a> ImageViewASTCDecodeModeEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageViewASTCDecodeModeEXT() {
+    bytes_struct_eq(
+        ImageViewASTCDecodeModeEXT::default(),
+        ImageViewASTCDecodeModeEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageViewASTCDecodeModeEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_ASTC_DECODE_MODE_EXT;
 }
@@ -28429,6 +31709,13 @@ impl<'a> PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceASTCDecodeFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceASTCDecodeFeaturesEXT::default(),
+        PhysicalDeviceASTCDecodeFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_ASTC_DECODE_FEATURES_EXT;
@@ -28473,6 +31760,13 @@ impl<'a> PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceTransformFeedbackFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceTransformFeedbackFeaturesEXT::default(),
+        PhysicalDeviceTransformFeedbackFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -28542,6 +31836,13 @@ impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceTransformFeedbackPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceTransformFeedbackPropertiesEXT::default(),
+        PhysicalDeviceTransformFeedbackPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -28655,6 +31956,13 @@ impl<'a> PipelineRasterizationStateStreamCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineRasterizationStateStreamCreateInfoEXT() {
+    bytes_struct_eq(
+        PipelineRasterizationStateStreamCreateInfoEXT::default(),
+        PipelineRasterizationStateStreamCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateStreamCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_STATE_STREAM_CREATE_INFO_EXT;
@@ -28705,6 +32013,13 @@ impl<'a> PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceRepresentativeFragmentTestFeaturesNV::default(),
+        PhysicalDeviceRepresentativeFragmentTestFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_REPRESENTATIVE_FRAGMENT_TEST_FEATURES_NV;
@@ -28754,6 +32069,13 @@ impl<'a> PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineRepresentativeFragmentTestStateCreateInfoNV() {
+    bytes_struct_eq(
+        PipelineRepresentativeFragmentTestStateCreateInfoNV::default(),
+        PipelineRepresentativeFragmentTestStateCreateInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_REPRESENTATIVE_FRAGMENT_TEST_STATE_CREATE_INFO_NV;
@@ -28802,6 +32124,13 @@ impl<'a> PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceExclusiveScissorFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceExclusiveScissorFeaturesNV::default(),
+        PhysicalDeviceExclusiveScissorFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXCLUSIVE_SCISSOR_FEATURES_NV;
@@ -28846,6 +32175,13 @@ impl<'a> PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineViewportExclusiveScissorStateCreateInfoNV() {
+    bytes_struct_eq(
+        PipelineViewportExclusiveScissorStateCreateInfoNV::default(),
+        PipelineViewportExclusiveScissorStateCreateInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -28892,6 +32228,13 @@ impl<'a> PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceCornerSampledImageFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceCornerSampledImageFeaturesNV::default(),
+        PhysicalDeviceCornerSampledImageFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -28940,6 +32283,13 @@ impl<'a> PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceComputeShaderDerivativesFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceComputeShaderDerivativesFeaturesKHR::default(),
+        PhysicalDeviceComputeShaderDerivativesFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -28998,6 +32348,13 @@ impl<'a> PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceComputeShaderDerivativesPropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceComputeShaderDerivativesPropertiesKHR::default(),
+        PhysicalDeviceComputeShaderDerivativesPropertiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_PROPERTIES_KHR;
@@ -29046,6 +32403,13 @@ impl<'a> PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderImageFootprintFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderImageFootprintFeaturesNV::default(),
+        PhysicalDeviceShaderImageFootprintFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_IMAGE_FOOTPRINT_FEATURES_NV;
@@ -29091,6 +32455,13 @@ impl<'a> PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV::default(),
+        PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a>
@@ -29148,6 +32519,13 @@ impl<'a> PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceCopyMemoryIndirectFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceCopyMemoryIndirectFeaturesKHR::default(),
+        PhysicalDeviceCopyMemoryIndirectFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_KHR;
@@ -29199,6 +32577,13 @@ impl<'a> PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceCopyMemoryIndirectFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceCopyMemoryIndirectFeaturesNV::default(),
+        PhysicalDeviceCopyMemoryIndirectFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_NV;
@@ -29245,6 +32630,13 @@ impl<'a> PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceCopyMemoryIndirectPropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceCopyMemoryIndirectPropertiesKHR::default(),
+        PhysicalDeviceCopyMemoryIndirectPropertiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_KHR;
@@ -29289,6 +32681,13 @@ impl<'a> PhysicalDeviceMemoryDecompressionFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMemoryDecompressionFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceMemoryDecompressionFeaturesEXT::default(),
+        PhysicalDeviceMemoryDecompressionFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -29337,6 +32736,13 @@ impl<'a> PhysicalDeviceMemoryDecompressionPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMemoryDecompressionPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceMemoryDecompressionPropertiesEXT::default(),
+        PhysicalDeviceMemoryDecompressionPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -29392,6 +32798,13 @@ impl<'a> ShadingRatePaletteNV<'a> {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkShadingRatePaletteNV() {
+    bytes_struct_eq(
+        ShadingRatePaletteNV::default(),
+        ShadingRatePaletteNV::const_default(),
+    );
+}
 impl<'a> ShadingRatePaletteNV<'a> {
     #[inline]
     pub fn shading_rate_palette_entries(
@@ -29436,6 +32849,13 @@ impl<'a> PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineViewportShadingRateImageStateCreateInfoNV() {
+    bytes_struct_eq(
+        PipelineViewportShadingRateImageStateCreateInfoNV::default(),
+        PipelineViewportShadingRateImageStateCreateInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -29493,6 +32913,13 @@ impl<'a> PhysicalDeviceShadingRateImageFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShadingRateImageFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceShadingRateImageFeaturesNV::default(),
+        PhysicalDeviceShadingRateImageFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShadingRateImageFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADING_RATE_IMAGE_FEATURES_NV;
@@ -29547,6 +32974,13 @@ impl<'a> PhysicalDeviceShadingRateImagePropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShadingRateImagePropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceShadingRateImagePropertiesNV::default(),
+        PhysicalDeviceShadingRateImagePropertiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShadingRateImagePropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -29603,6 +33037,13 @@ impl<'a> PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceInvocationMaskFeaturesHUAWEI() {
+    bytes_struct_eq(
+        PhysicalDeviceInvocationMaskFeaturesHUAWEI::default(),
+        PhysicalDeviceInvocationMaskFeaturesHUAWEI::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INVOCATION_MASK_FEATURES_HUAWEI;
@@ -29634,6 +33075,13 @@ impl CoarseSampleLocationNV {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkCoarseSampleLocationNV() {
+    bytes_struct_eq(
+        CoarseSampleLocationNV::default(),
+        CoarseSampleLocationNV::const_default(),
+    );
 }
 impl CoarseSampleLocationNV {
     #[inline]
@@ -29683,6 +33131,13 @@ impl<'a> CoarseSampleOrderCustomNV<'a> {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkCoarseSampleOrderCustomNV() {
+    bytes_struct_eq(
+        CoarseSampleOrderCustomNV::default(),
+        CoarseSampleOrderCustomNV::const_default(),
+    );
 }
 impl<'a> CoarseSampleOrderCustomNV<'a> {
     #[inline]
@@ -29735,6 +33190,13 @@ impl<'a> PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineViewportCoarseSampleOrderStateCreateInfoNV() {
+    bytes_struct_eq(
+        PipelineViewportCoarseSampleOrderStateCreateInfoNV::default(),
+        PipelineViewportCoarseSampleOrderStateCreateInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -29791,6 +33253,13 @@ impl<'a> PhysicalDeviceMeshShaderFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMeshShaderFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceMeshShaderFeaturesNV::default(),
+        PhysicalDeviceMeshShaderFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MESH_SHADER_FEATURES_NV;
@@ -29862,6 +33331,13 @@ impl<'a> PhysicalDeviceMeshShaderPropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMeshShaderPropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceMeshShaderPropertiesNV::default(),
+        PhysicalDeviceMeshShaderPropertiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_NV;
@@ -29955,6 +33431,13 @@ impl DrawMeshTasksIndirectCommandNV {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkDrawMeshTasksIndirectCommandNV() {
+    bytes_struct_eq(
+        DrawMeshTasksIndirectCommandNV::default(),
+        DrawMeshTasksIndirectCommandNV::const_default(),
+    );
+}
 impl DrawMeshTasksIndirectCommandNV {
     #[inline]
     pub fn task_count(mut self, task_count: u32) -> Self {
@@ -30004,6 +33487,13 @@ impl<'a> PhysicalDeviceMeshShaderFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMeshShaderFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceMeshShaderFeaturesEXT::default(),
+        PhysicalDeviceMeshShaderFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MESH_SHADER_FEATURES_EXT;
@@ -30124,6 +33614,13 @@ impl<'a> PhysicalDeviceMeshShaderPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMeshShaderPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceMeshShaderPropertiesEXT::default(),
+        PhysicalDeviceMeshShaderPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_EXT;
@@ -30318,6 +33815,13 @@ impl DrawMeshTasksIndirectCommandEXT {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkDrawMeshTasksIndirectCommandEXT() {
+    bytes_struct_eq(
+        DrawMeshTasksIndirectCommandEXT::default(),
+        DrawMeshTasksIndirectCommandEXT::const_default(),
+    );
+}
 impl DrawMeshTasksIndirectCommandEXT {
     #[inline]
     pub fn group_count_x(mut self, group_count_x: u32) -> Self {
@@ -30372,6 +33876,13 @@ impl<'a> RayTracingShaderGroupCreateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkRayTracingShaderGroupCreateInfoNV() {
+    bytes_struct_eq(
+        RayTracingShaderGroupCreateInfoNV::default(),
+        RayTracingShaderGroupCreateInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingShaderGroupCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_SHADER_GROUP_CREATE_INFO_NV;
@@ -30442,6 +33953,13 @@ impl<'a> RayTracingShaderGroupCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkRayTracingShaderGroupCreateInfoKHR() {
+    bytes_struct_eq(
+        RayTracingShaderGroupCreateInfoKHR::default(),
+        RayTracingShaderGroupCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingShaderGroupCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_SHADER_GROUP_CREATE_INFO_KHR;
@@ -30526,6 +34044,13 @@ impl<'a> RayTracingPipelineCreateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkRayTracingPipelineCreateInfoNV() {
+    bytes_struct_eq(
+        RayTracingPipelineCreateInfoNV::default(),
+        RayTracingPipelineCreateInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_NV;
@@ -30620,6 +34145,13 @@ impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkRayTracingPipelineCreateInfoKHR() {
+    bytes_struct_eq(
+        RayTracingPipelineCreateInfoKHR::default(),
+        RayTracingPipelineCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_KHR;
@@ -30734,6 +34266,13 @@ impl<'a> GeometryTrianglesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkGeometryTrianglesNV() {
+    bytes_struct_eq(
+        GeometryTrianglesNV::default(),
+        GeometryTrianglesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for GeometryTrianglesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GEOMETRY_TRIANGLES_NV;
 }
@@ -30830,6 +34369,10 @@ impl<'a> GeometryAABBNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkGeometryAABBNV() {
+    bytes_struct_eq(GeometryAABBNV::default(), GeometryAABBNV::const_default());
+}
 unsafe impl<'a> TaggedStructure<'a> for GeometryAABBNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GEOMETRY_AABB_NV;
 }
@@ -30870,6 +34413,10 @@ impl<'a> GeometryDataNV<'a> {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkGeometryDataNV() {
+    bytes_struct_eq(GeometryDataNV::default(), GeometryDataNV::const_default());
 }
 impl<'a> GeometryDataNV<'a> {
     #[inline]
@@ -30916,6 +34463,10 @@ impl<'a> GeometryNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkGeometryNV() {
+    bytes_struct_eq(GeometryNV::default(), GeometryNV::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for GeometryNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GEOMETRY_NV;
@@ -30975,6 +34526,13 @@ impl<'a> AccelerationStructureInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAccelerationStructureInfoNV() {
+    bytes_struct_eq(
+        AccelerationStructureInfoNV::default(),
+        AccelerationStructureInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_INFO_NV;
 }
@@ -31033,6 +34591,13 @@ impl<'a> AccelerationStructureCreateInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAccelerationStructureCreateInfoNV() {
+    bytes_struct_eq(
+        AccelerationStructureCreateInfoNV::default(),
+        AccelerationStructureCreateInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_NV;
 }
@@ -31085,6 +34650,13 @@ impl<'a> BindAccelerationStructureMemoryInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBindAccelerationStructureMemoryInfoNV() {
+    bytes_struct_eq(
+        BindAccelerationStructureMemoryInfoNV::default(),
+        BindAccelerationStructureMemoryInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BindAccelerationStructureMemoryInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_ACCELERATION_STRUCTURE_MEMORY_INFO_NV;
@@ -31147,6 +34719,13 @@ impl<'a> WriteDescriptorSetAccelerationStructureKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkWriteDescriptorSetAccelerationStructureKHR() {
+    bytes_struct_eq(
+        WriteDescriptorSetAccelerationStructureKHR::default(),
+        WriteDescriptorSetAccelerationStructureKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetAccelerationStructureKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR;
@@ -31195,6 +34774,13 @@ impl<'a> WriteDescriptorSetAccelerationStructureNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkWriteDescriptorSetAccelerationStructureNV() {
+    bytes_struct_eq(
+        WriteDescriptorSetAccelerationStructureNV::default(),
+        WriteDescriptorSetAccelerationStructureNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetAccelerationStructureNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_NV;
@@ -31242,6 +34828,13 @@ impl<'a> AccelerationStructureMemoryRequirementsInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkAccelerationStructureMemoryRequirementsInfoNV() {
+    bytes_struct_eq(
+        AccelerationStructureMemoryRequirementsInfoNV::default(),
+        AccelerationStructureMemoryRequirementsInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureMemoryRequirementsInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -31299,6 +34892,13 @@ impl<'a> PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceAccelerationStructureFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceAccelerationStructureFeaturesKHR::default(),
+        PhysicalDeviceAccelerationStructureFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -31387,6 +34987,13 @@ impl<'a> PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceRayTracingPipelineFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceRayTracingPipelineFeaturesKHR::default(),
+        PhysicalDeviceRayTracingPipelineFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_FEATURES_KHR;
@@ -31468,6 +35075,13 @@ impl<'a> PhysicalDeviceRayQueryFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceRayQueryFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceRayQueryFeaturesKHR::default(),
+        PhysicalDeviceRayQueryFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayQueryFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_RAY_QUERY_FEATURES_KHR;
 }
@@ -31523,6 +35137,13 @@ impl<'a> PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceAccelerationStructurePropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceAccelerationStructurePropertiesKHR::default(),
+        PhysicalDeviceAccelerationStructurePropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -31638,6 +35259,13 @@ impl<'a> PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceRayTracingPipelinePropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceRayTracingPipelinePropertiesKHR::default(),
+        PhysicalDeviceRayTracingPipelinePropertiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_PROPERTIES_KHR;
@@ -31738,6 +35366,13 @@ impl<'a> PhysicalDeviceRayTracingPropertiesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceRayTracingPropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceRayTracingPropertiesNV::default(),
+        PhysicalDeviceRayTracingPropertiesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_RAY_TRACING_PROPERTIES_NV;
 }
@@ -31804,6 +35439,13 @@ impl StridedDeviceAddressRegionKHR {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkStridedDeviceAddressRegionKHR() {
+    bytes_struct_eq(
+        StridedDeviceAddressRegionKHR::default(),
+        StridedDeviceAddressRegionKHR::const_default(),
+    );
+}
 impl StridedDeviceAddressRegionKHR {
     #[inline]
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
@@ -31836,6 +35478,13 @@ impl TraceRaysIndirectCommandKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkTraceRaysIndirectCommandKHR() {
+    bytes_struct_eq(
+        TraceRaysIndirectCommandKHR::default(),
+        TraceRaysIndirectCommandKHR::const_default(),
+    );
 }
 impl TraceRaysIndirectCommandKHR {
     #[inline]
@@ -31880,6 +35529,13 @@ impl TraceRaysIndirectCommand2KHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkTraceRaysIndirectCommand2KHR() {
+    bytes_struct_eq(
+        TraceRaysIndirectCommand2KHR::default(),
+        TraceRaysIndirectCommand2KHR::const_default(),
+    );
 }
 impl TraceRaysIndirectCommand2KHR {
     #[inline]
@@ -32015,6 +35671,13 @@ impl<'a> PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceRayTracingMaintenance1FeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceRayTracingMaintenance1FeaturesKHR::default(),
+        PhysicalDeviceRayTracingMaintenance1FeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_MAINTENANCE_1_FEATURES_KHR;
@@ -32072,6 +35735,13 @@ impl<'a> DrmFormatModifierPropertiesListEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDrmFormatModifierPropertiesListEXT() {
+    bytes_struct_eq(
+        DrmFormatModifierPropertiesListEXT::default(),
+        DrmFormatModifierPropertiesListEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DrmFormatModifierPropertiesListEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_EXT;
 }
@@ -32102,6 +35772,13 @@ impl DrmFormatModifierPropertiesEXT {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDrmFormatModifierPropertiesEXT() {
+    bytes_struct_eq(
+        DrmFormatModifierPropertiesEXT::default(),
+        DrmFormatModifierPropertiesEXT::const_default(),
+    );
 }
 impl DrmFormatModifierPropertiesEXT {
     #[inline]
@@ -32158,6 +35835,13 @@ impl<'a> PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceImageDrmFormatModifierInfoEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceImageDrmFormatModifierInfoEXT::default(),
+        PhysicalDeviceImageDrmFormatModifierInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -32217,6 +35901,13 @@ impl<'a> ImageDrmFormatModifierListCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageDrmFormatModifierListCreateInfoEXT() {
+    bytes_struct_eq(
+        ImageDrmFormatModifierListCreateInfoEXT::default(),
+        ImageDrmFormatModifierListCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierListCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::IMAGE_DRM_FORMAT_MODIFIER_LIST_CREATE_INFO_EXT;
@@ -32263,6 +35954,13 @@ impl<'a> ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImageDrmFormatModifierExplicitCreateInfoEXT() {
+    bytes_struct_eq(
+        ImageDrmFormatModifierExplicitCreateInfoEXT::default(),
+        ImageDrmFormatModifierExplicitCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -32312,6 +36010,13 @@ impl<'a> ImageDrmFormatModifierPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageDrmFormatModifierPropertiesEXT() {
+    bytes_struct_eq(
+        ImageDrmFormatModifierPropertiesEXT::default(),
+        ImageDrmFormatModifierPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT;
 }
@@ -32351,6 +36056,13 @@ impl<'a> ImageStencilUsageCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImageStencilUsageCreateInfo() {
+    bytes_struct_eq(
+        ImageStencilUsageCreateInfo::default(),
+        ImageStencilUsageCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageStencilUsageCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_STENCIL_USAGE_CREATE_INFO;
@@ -32393,6 +36105,13 @@ impl<'a> DeviceMemoryOverallocationCreateInfoAMD<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceMemoryOverallocationCreateInfoAMD() {
+    bytes_struct_eq(
+        DeviceMemoryOverallocationCreateInfoAMD::default(),
+        DeviceMemoryOverallocationCreateInfoAMD::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryOverallocationCreateInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -32442,6 +36161,13 @@ impl<'a> PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceFragmentDensityMapFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentDensityMapFeaturesEXT::default(),
+        PhysicalDeviceFragmentDensityMapFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -32503,6 +36229,13 @@ impl<'a> PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceFragmentDensityMap2FeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentDensityMap2FeaturesEXT::default(),
+        PhysicalDeviceFragmentDensityMap2FeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_FEATURES_EXT;
@@ -32548,6 +36281,13 @@ impl<'a> PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceFragmentDensityMapOffsetFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT::default(),
+        PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -32601,6 +36341,13 @@ impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceFragmentDensityMapPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentDensityMapPropertiesEXT::default(),
+        PhysicalDeviceFragmentDensityMapPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -32669,6 +36416,13 @@ impl<'a> PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceFragmentDensityMap2PropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentDensityMap2PropertiesEXT::default(),
+        PhysicalDeviceFragmentDensityMap2PropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_PROPERTIES_EXT;
@@ -32736,6 +36490,13 @@ impl<'a> PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceFragmentDensityMapOffsetPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT::default(),
+        PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_PROPERTIES_EXT;
@@ -32783,6 +36544,13 @@ impl<'a> RenderPassFragmentDensityMapCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkRenderPassFragmentDensityMapCreateInfoEXT() {
+    bytes_struct_eq(
+        RenderPassFragmentDensityMapCreateInfoEXT::default(),
+        RenderPassFragmentDensityMapCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassFragmentDensityMapCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -32832,6 +36600,13 @@ impl<'a> RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderPassFragmentDensityMapOffsetEndInfoEXT() {
+    bytes_struct_eq(
+        RenderPassFragmentDensityMapOffsetEndInfoEXT::default(),
+        RenderPassFragmentDensityMapOffsetEndInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_EXT;
@@ -32876,6 +36651,13 @@ impl<'a> PhysicalDeviceScalarBlockLayoutFeatures<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceScalarBlockLayoutFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceScalarBlockLayoutFeatures::default(),
+        PhysicalDeviceScalarBlockLayoutFeatures::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceScalarBlockLayoutFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES;
@@ -32919,6 +36701,13 @@ impl<'a> SurfaceProtectedCapabilitiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSurfaceProtectedCapabilitiesKHR() {
+    bytes_struct_eq(
+        SurfaceProtectedCapabilitiesKHR::default(),
+        SurfaceProtectedCapabilitiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfaceProtectedCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PROTECTED_CAPABILITIES_KHR;
 }
@@ -32959,6 +36748,13 @@ impl<'a> PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceUniformBufferStandardLayoutFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceUniformBufferStandardLayoutFeatures::default(),
+        PhysicalDeviceUniformBufferStandardLayoutFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -33009,6 +36805,13 @@ impl<'a> PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDepthClipEnableFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceDepthClipEnableFeaturesEXT::default(),
+        PhysicalDeviceDepthClipEnableFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_CLIP_ENABLE_FEATURES_EXT;
@@ -33053,6 +36856,13 @@ impl<'a> PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineRasterizationDepthClipStateCreateInfoEXT() {
+    bytes_struct_eq(
+        PipelineRasterizationDepthClipStateCreateInfoEXT::default(),
+        PipelineRasterizationDepthClipStateCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -33106,6 +36916,13 @@ impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMemoryBudgetPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceMemoryBudgetPropertiesEXT::default(),
+        PhysicalDeviceMemoryBudgetPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT;
@@ -33156,6 +36973,13 @@ impl<'a> PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMemoryPriorityFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceMemoryPriorityFeaturesEXT::default(),
+        PhysicalDeviceMemoryPriorityFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT;
@@ -33199,6 +37023,13 @@ impl<'a> MemoryPriorityAllocateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryPriorityAllocateInfoEXT() {
+    bytes_struct_eq(
+        MemoryPriorityAllocateInfoEXT::default(),
+        MemoryPriorityAllocateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryPriorityAllocateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_PRIORITY_ALLOCATE_INFO_EXT;
 }
@@ -33239,6 +37070,13 @@ impl<'a> PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT::default(),
+        PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -33292,6 +37130,13 @@ impl<'a> PhysicalDeviceBufferDeviceAddressFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceBufferDeviceAddressFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceBufferDeviceAddressFeatures::default(),
+        PhysicalDeviceBufferDeviceAddressFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBufferDeviceAddressFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -33356,6 +37201,13 @@ impl<'a> PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceBufferDeviceAddressFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceBufferDeviceAddressFeaturesEXT::default(),
+        PhysicalDeviceBufferDeviceAddressFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES_EXT;
@@ -33418,6 +37270,13 @@ impl<'a> BufferDeviceAddressInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBufferDeviceAddressInfo() {
+    bytes_struct_eq(
+        BufferDeviceAddressInfo::default(),
+        BufferDeviceAddressInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferDeviceAddressInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_DEVICE_ADDRESS_INFO;
 }
@@ -33457,6 +37316,13 @@ impl<'a> BufferOpaqueCaptureAddressCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBufferOpaqueCaptureAddressCreateInfo() {
+    bytes_struct_eq(
+        BufferOpaqueCaptureAddressCreateInfo::default(),
+        BufferOpaqueCaptureAddressCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferOpaqueCaptureAddressCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_OPAQUE_CAPTURE_ADDRESS_CREATE_INFO;
@@ -33499,6 +37365,13 @@ impl<'a> BufferDeviceAddressCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBufferDeviceAddressCreateInfoEXT() {
+    bytes_struct_eq(
+        BufferDeviceAddressCreateInfoEXT::default(),
+        BufferDeviceAddressCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferDeviceAddressCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT;
 }
@@ -33539,6 +37412,13 @@ impl<'a> PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceImageViewImageFormatInfoEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceImageViewImageFormatInfoEXT::default(),
+        PhysicalDeviceImageViewImageFormatInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -33586,6 +37466,13 @@ impl<'a> FilterCubicImageViewImageFormatPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkFilterCubicImageViewImageFormatPropertiesEXT() {
+    bytes_struct_eq(
+        FilterCubicImageViewImageFormatPropertiesEXT::default(),
+        FilterCubicImageViewImageFormatPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for FilterCubicImageViewImageFormatPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -33637,6 +37524,13 @@ impl<'a> PhysicalDeviceImagelessFramebufferFeatures<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceImagelessFramebufferFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceImagelessFramebufferFeatures::default(),
+        PhysicalDeviceImagelessFramebufferFeatures::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImagelessFramebufferFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES;
@@ -33684,6 +37578,13 @@ impl<'a> FramebufferAttachmentsCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkFramebufferAttachmentsCreateInfo() {
+    bytes_struct_eq(
+        FramebufferAttachmentsCreateInfo::default(),
+        FramebufferAttachmentsCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferAttachmentsCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_ATTACHMENTS_CREATE_INFO;
@@ -33741,6 +37642,13 @@ impl<'a> FramebufferAttachmentImageInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkFramebufferAttachmentImageInfo() {
+    bytes_struct_eq(
+        FramebufferAttachmentImageInfo::default(),
+        FramebufferAttachmentImageInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferAttachmentImageInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_ATTACHMENT_IMAGE_INFO;
@@ -33810,6 +37718,13 @@ impl<'a> RenderPassAttachmentBeginInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderPassAttachmentBeginInfo() {
+    bytes_struct_eq(
+        RenderPassAttachmentBeginInfo::default(),
+        RenderPassAttachmentBeginInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassAttachmentBeginInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_ATTACHMENT_BEGIN_INFO;
 }
@@ -33851,6 +37766,13 @@ impl<'a> PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceTextureCompressionASTCHDRFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceTextureCompressionASTCHDRFeatures::default(),
+        PhysicalDeviceTextureCompressionASTCHDRFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -33899,6 +37821,13 @@ impl<'a> PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceCooperativeMatrixFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceCooperativeMatrixFeaturesNV::default(),
+        PhysicalDeviceCooperativeMatrixFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -33951,6 +37880,13 @@ impl<'a> PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceCooperativeMatrixPropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceCooperativeMatrixPropertiesNV::default(),
+        PhysicalDeviceCooperativeMatrixPropertiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -34013,6 +37949,13 @@ impl<'a> CooperativeMatrixPropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCooperativeMatrixPropertiesNV() {
+    bytes_struct_eq(
+        CooperativeMatrixPropertiesNV::default(),
+        CooperativeMatrixPropertiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COOPERATIVE_MATRIX_PROPERTIES_NV;
@@ -34089,6 +38032,13 @@ impl<'a> PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceYcbcrImageArraysFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceYcbcrImageArraysFeaturesEXT::default(),
+        PhysicalDeviceYcbcrImageArraysFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_YCBCR_IMAGE_ARRAYS_FEATURES_EXT;
@@ -34135,6 +38085,13 @@ impl<'a> ImageViewHandleInfoNVX<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImageViewHandleInfoNVX() {
+    bytes_struct_eq(
+        ImageViewHandleInfoNVX::default(),
+        ImageViewHandleInfoNVX::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewHandleInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_HANDLE_INFO_NVX;
@@ -34188,6 +38145,13 @@ impl<'a> ImageViewAddressPropertiesNVX<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageViewAddressPropertiesNVX() {
+    bytes_struct_eq(
+        ImageViewAddressPropertiesNVX::default(),
+        ImageViewAddressPropertiesNVX::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageViewAddressPropertiesNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_ADDRESS_PROPERTIES_NVX;
 }
@@ -34233,6 +38197,13 @@ impl<'a> PresentFrameTokenGGP<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPresentFrameTokenGGP() {
+    bytes_struct_eq(
+        PresentFrameTokenGGP::default(),
+        PresentFrameTokenGGP::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PresentFrameTokenGGP<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PRESENT_FRAME_TOKEN_GGP;
 }
@@ -34258,6 +38229,13 @@ impl PipelineCreationFeedback {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkPipelineCreationFeedback() {
+    bytes_struct_eq(
+        PipelineCreationFeedback::default(),
+        PipelineCreationFeedback::const_default(),
+    );
 }
 impl PipelineCreationFeedback {
     #[inline]
@@ -34304,6 +38282,13 @@ impl<'a> PipelineCreationFeedbackCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineCreationFeedbackCreateInfo() {
+    bytes_struct_eq(
+        PipelineCreationFeedbackCreateInfo::default(),
+        PipelineCreationFeedbackCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCreationFeedbackCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CREATION_FEEDBACK_CREATE_INFO;
@@ -34370,6 +38355,13 @@ impl<'a> SurfaceFullScreenExclusiveInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSurfaceFullScreenExclusiveInfoEXT() {
+    bytes_struct_eq(
+        SurfaceFullScreenExclusiveInfoEXT::default(),
+        SurfaceFullScreenExclusiveInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfaceFullScreenExclusiveInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_FULL_SCREEN_EXCLUSIVE_INFO_EXT;
 }
@@ -34411,6 +38403,13 @@ impl<'a> SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSurfaceFullScreenExclusiveWin32InfoEXT() {
+    bytes_struct_eq(
+        SurfaceFullScreenExclusiveWin32InfoEXT::default(),
+        SurfaceFullScreenExclusiveWin32InfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -34458,6 +38457,13 @@ impl<'a> SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSurfaceCapabilitiesFullScreenExclusiveEXT() {
+    bytes_struct_eq(
+        SurfaceCapabilitiesFullScreenExclusiveEXT::default(),
+        SurfaceCapabilitiesFullScreenExclusiveEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SURFACE_CAPABILITIES_FULL_SCREEN_EXCLUSIVE_EXT;
@@ -34503,6 +38509,13 @@ impl<'a> PhysicalDevicePresentBarrierFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDevicePresentBarrierFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDevicePresentBarrierFeaturesNV::default(),
+        PhysicalDevicePresentBarrierFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentBarrierFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRESENT_BARRIER_FEATURES_NV;
@@ -34546,6 +38559,13 @@ impl<'a> SurfaceCapabilitiesPresentBarrierNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSurfaceCapabilitiesPresentBarrierNV() {
+    bytes_struct_eq(
+        SurfaceCapabilitiesPresentBarrierNV::default(),
+        SurfaceCapabilitiesPresentBarrierNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentBarrierNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_PRESENT_BARRIER_NV;
 }
@@ -34586,6 +38606,13 @@ impl<'a> SwapchainPresentBarrierCreateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSwapchainPresentBarrierCreateInfoNV() {
+    bytes_struct_eq(
+        SwapchainPresentBarrierCreateInfoNV::default(),
+        SwapchainPresentBarrierCreateInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentBarrierCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_BARRIER_CREATE_INFO_NV;
@@ -34629,6 +38656,13 @@ impl<'a> PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePerformanceQueryFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDevicePerformanceQueryFeaturesKHR::default(),
+        PhysicalDevicePerformanceQueryFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -34685,6 +38719,13 @@ impl<'a> PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDevicePerformanceQueryPropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDevicePerformanceQueryPropertiesKHR::default(),
+        PhysicalDevicePerformanceQueryPropertiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PERFORMANCE_QUERY_PROPERTIES_KHR;
@@ -34738,6 +38779,13 @@ impl<'a> PerformanceCounterKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPerformanceCounterKHR() {
+    bytes_struct_eq(
+        PerformanceCounterKHR::default(),
+        PerformanceCounterKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_COUNTER_KHR;
@@ -34811,6 +38859,13 @@ impl<'a> PerformanceCounterDescriptionKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPerformanceCounterDescriptionKHR() {
+    bytes_struct_eq(
+        PerformanceCounterDescriptionKHR::default(),
+        PerformanceCounterDescriptionKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterDescriptionKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_COUNTER_DESCRIPTION_KHR;
@@ -34886,6 +38941,13 @@ impl<'a> QueryPoolPerformanceCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkQueryPoolPerformanceCreateInfoKHR() {
+    bytes_struct_eq(
+        QueryPoolPerformanceCreateInfoKHR::default(),
+        QueryPoolPerformanceCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolPerformanceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUERY_POOL_PERFORMANCE_CREATE_INFO_KHR;
 }
@@ -34952,6 +39014,13 @@ impl<'a> AcquireProfilingLockInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAcquireProfilingLockInfoKHR() {
+    bytes_struct_eq(
+        AcquireProfilingLockInfoKHR::default(),
+        AcquireProfilingLockInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AcquireProfilingLockInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACQUIRE_PROFILING_LOCK_INFO_KHR;
 }
@@ -34997,6 +39066,13 @@ impl<'a> PerformanceQuerySubmitInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPerformanceQuerySubmitInfoKHR() {
+    bytes_struct_eq(
+        PerformanceQuerySubmitInfoKHR::default(),
+        PerformanceQuerySubmitInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PerformanceQuerySubmitInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_QUERY_SUBMIT_INFO_KHR;
 }
@@ -35039,6 +39115,13 @@ impl<'a> HeadlessSurfaceCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkHeadlessSurfaceCreateInfoEXT() {
+    bytes_struct_eq(
+        HeadlessSurfaceCreateInfoEXT::default(),
+        HeadlessSurfaceCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for HeadlessSurfaceCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::HEADLESS_SURFACE_CREATE_INFO_EXT;
 }
@@ -35078,6 +39161,13 @@ impl<'a> PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceCoverageReductionModeFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceCoverageReductionModeFeaturesNV::default(),
+        PhysicalDeviceCoverageReductionModeFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -35126,6 +39216,13 @@ impl<'a> PipelineCoverageReductionStateCreateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineCoverageReductionStateCreateInfoNV() {
+    bytes_struct_eq(
+        PipelineCoverageReductionStateCreateInfoNV::default(),
+        PipelineCoverageReductionStateCreateInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageReductionStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -35186,6 +39283,13 @@ impl<'a> FramebufferMixedSamplesCombinationNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkFramebufferMixedSamplesCombinationNV() {
+    bytes_struct_eq(
+        FramebufferMixedSamplesCombinationNV::default(),
+        FramebufferMixedSamplesCombinationNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for FramebufferMixedSamplesCombinationNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAMEBUFFER_MIXED_SAMPLES_COMBINATION_NV;
 }
@@ -35243,6 +39347,13 @@ impl<'a> PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL::default(),
+        PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -35302,6 +39413,13 @@ impl PerformanceValueINTEL {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkPerformanceValueINTEL() {
+    bytes_struct_eq(
+        PerformanceValueINTEL::default(),
+        PerformanceValueINTEL::const_default(),
+    );
+}
 impl PerformanceValueINTEL {
     #[inline]
     pub fn ty(mut self, ty: PerformanceValueTypeINTEL) -> Self {
@@ -35344,6 +39462,13 @@ impl<'a> InitializePerformanceApiInfoINTEL<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkInitializePerformanceApiInfoINTEL() {
+    bytes_struct_eq(
+        InitializePerformanceApiInfoINTEL::default(),
+        InitializePerformanceApiInfoINTEL::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for InitializePerformanceApiInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INITIALIZE_PERFORMANCE_API_INFO_INTEL;
 }
@@ -35383,6 +39508,13 @@ impl<'a> QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkQueryPoolPerformanceQueryCreateInfoINTEL() {
+    bytes_struct_eq(
+        QueryPoolPerformanceQueryCreateInfoINTEL::default(),
+        QueryPoolPerformanceQueryCreateInfoINTEL::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -35429,6 +39561,13 @@ impl<'a> PerformanceMarkerInfoINTEL<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPerformanceMarkerInfoINTEL() {
+    bytes_struct_eq(
+        PerformanceMarkerInfoINTEL::default(),
+        PerformanceMarkerInfoINTEL::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PerformanceMarkerInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_MARKER_INFO_INTEL;
 }
@@ -35468,6 +39607,13 @@ impl<'a> PerformanceStreamMarkerInfoINTEL<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPerformanceStreamMarkerInfoINTEL() {
+    bytes_struct_eq(
+        PerformanceStreamMarkerInfoINTEL::default(),
+        PerformanceStreamMarkerInfoINTEL::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceStreamMarkerInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_STREAM_MARKER_INFO_INTEL;
@@ -35512,6 +39658,13 @@ impl<'a> PerformanceOverrideInfoINTEL<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPerformanceOverrideInfoINTEL() {
+    bytes_struct_eq(
+        PerformanceOverrideInfoINTEL::default(),
+        PerformanceOverrideInfoINTEL::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceOverrideInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_OVERRIDE_INFO_INTEL;
@@ -35563,6 +39716,13 @@ impl<'a> PerformanceConfigurationAcquireInfoINTEL<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPerformanceConfigurationAcquireInfoINTEL() {
+    bytes_struct_eq(
+        PerformanceConfigurationAcquireInfoINTEL::default(),
+        PerformanceConfigurationAcquireInfoINTEL::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PerformanceConfigurationAcquireInfoINTEL<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PERFORMANCE_CONFIGURATION_ACQUIRE_INFO_INTEL;
@@ -35605,6 +39765,13 @@ impl<'a> PhysicalDeviceShaderClockFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderClockFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderClockFeaturesKHR::default(),
+        PhysicalDeviceShaderClockFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderClockFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_CLOCK_FEATURES_KHR;
@@ -35653,6 +39820,13 @@ impl<'a> PhysicalDeviceIndexTypeUint8Features<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceIndexTypeUint8Features() {
+    bytes_struct_eq(
+        PhysicalDeviceIndexTypeUint8Features::default(),
+        PhysicalDeviceIndexTypeUint8Features::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceIndexTypeUint8Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES;
 }
@@ -35696,6 +39870,13 @@ impl<'a> PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderSMBuiltinsPropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderSMBuiltinsPropertiesNV::default(),
+        PhysicalDeviceShaderSMBuiltinsPropertiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -35747,6 +39928,13 @@ impl<'a> PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderSMBuiltinsFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderSMBuiltinsFeaturesNV::default(),
+        PhysicalDeviceShaderSMBuiltinsFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SM_BUILTINS_FEATURES_NV;
@@ -35793,6 +39981,13 @@ impl<'a> PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentShaderInterlockFeaturesEXT::default(),
+        PhysicalDeviceFragmentShaderInterlockFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -35859,6 +40054,13 @@ impl<'a> PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceSeparateDepthStencilLayoutsFeatures::default(),
+        PhysicalDeviceSeparateDepthStencilLayoutsFeatures::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES;
@@ -35908,6 +40110,13 @@ impl<'a> AttachmentReferenceStencilLayout<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAttachmentReferenceStencilLayout() {
+    bytes_struct_eq(
+        AttachmentReferenceStencilLayout::default(),
+        AttachmentReferenceStencilLayout::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AttachmentReferenceStencilLayout<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_REFERENCE_STENCIL_LAYOUT;
 }
@@ -35950,6 +40159,13 @@ impl<'a> PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePrimitiveTopologyListRestartFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT::default(),
+        PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -36013,6 +40229,13 @@ impl<'a> AttachmentDescriptionStencilLayout<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAttachmentDescriptionStencilLayout() {
+    bytes_struct_eq(
+        AttachmentDescriptionStencilLayout::default(),
+        AttachmentDescriptionStencilLayout::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AttachmentDescriptionStencilLayout<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT;
 }
@@ -36058,6 +40281,13 @@ impl<'a> PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDevicePipelineExecutablePropertiesFeaturesKHR::default(),
+        PhysicalDevicePipelineExecutablePropertiesFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -36107,6 +40337,10 @@ impl<'a> PipelineInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineInfoKHR() {
+    bytes_struct_eq(PipelineInfoKHR::default(), PipelineInfoKHR::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_INFO_KHR;
@@ -36165,6 +40399,13 @@ impl<'a> PipelineExecutablePropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineExecutablePropertiesKHR() {
+    bytes_struct_eq(
+        PipelineExecutablePropertiesKHR::default(),
+        PipelineExecutablePropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutablePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_EXECUTABLE_PROPERTIES_KHR;
@@ -36231,6 +40472,13 @@ impl<'a> PipelineExecutableInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineExecutableInfoKHR() {
+    bytes_struct_eq(
+        PipelineExecutableInfoKHR::default(),
+        PipelineExecutableInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_EXECUTABLE_INFO_KHR;
@@ -36309,6 +40557,13 @@ impl<'a> PipelineExecutableStatisticKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineExecutableStatisticKHR() {
+    bytes_struct_eq(
+        PipelineExecutableStatisticKHR::default(),
+        PipelineExecutableStatisticKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableStatisticKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_EXECUTABLE_STATISTIC_KHR;
@@ -36395,6 +40650,13 @@ impl<'a> PipelineExecutableInternalRepresentationKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineExecutableInternalRepresentationKHR() {
+    bytes_struct_eq(
+        PipelineExecutableInternalRepresentationKHR::default(),
+        PipelineExecutableInternalRepresentationKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableInternalRepresentationKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR;
@@ -36461,6 +40723,13 @@ impl<'a> PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderDemoteToHelperInvocationFeatures::default(),
+        PhysicalDeviceShaderDemoteToHelperInvocationFeatures::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES;
@@ -36513,6 +40782,13 @@ impl<'a> PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceTexelBufferAlignmentFeaturesEXT::default(),
+        PhysicalDeviceTexelBufferAlignmentFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_FEATURES_EXT;
@@ -36564,6 +40840,13 @@ impl<'a> PhysicalDeviceTexelBufferAlignmentProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceTexelBufferAlignmentProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceTexelBufferAlignmentProperties::default(),
+        PhysicalDeviceTexelBufferAlignmentProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTexelBufferAlignmentProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -36643,6 +40926,13 @@ impl<'a> PhysicalDeviceSubgroupSizeControlFeatures<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceSubgroupSizeControlFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceSubgroupSizeControlFeatures::default(),
+        PhysicalDeviceSubgroupSizeControlFeatures::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupSizeControlFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES;
@@ -36696,6 +40986,13 @@ impl<'a> PhysicalDeviceSubgroupSizeControlProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceSubgroupSizeControlProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceSubgroupSizeControlProperties::default(),
+        PhysicalDeviceSubgroupSizeControlProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupSizeControlProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -36760,6 +41057,13 @@ impl<'a> PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineShaderStageRequiredSubgroupSizeCreateInfo() {
+    bytes_struct_eq(
+        PipelineShaderStageRequiredSubgroupSizeCreateInfo::default(),
+        PipelineShaderStageRequiredSubgroupSizeCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO;
@@ -36811,6 +41115,13 @@ impl<'a> SubpassShadingPipelineCreateInfoHUAWEI<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSubpassShadingPipelineCreateInfoHUAWEI() {
+    bytes_struct_eq(
+        SubpassShadingPipelineCreateInfoHUAWEI::default(),
+        SubpassShadingPipelineCreateInfoHUAWEI::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SubpassShadingPipelineCreateInfoHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SUBPASS_SHADING_PIPELINE_CREATE_INFO_HUAWEI;
@@ -36857,6 +41168,13 @@ impl<'a> PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceSubpassShadingPropertiesHUAWEI() {
+    bytes_struct_eq(
+        PhysicalDeviceSubpassShadingPropertiesHUAWEI::default(),
+        PhysicalDeviceSubpassShadingPropertiesHUAWEI::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -36912,6 +41230,13 @@ impl<'a> PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceClusterCullingShaderPropertiesHUAWEI() {
+    bytes_struct_eq(
+        PhysicalDeviceClusterCullingShaderPropertiesHUAWEI::default(),
+        PhysicalDeviceClusterCullingShaderPropertiesHUAWEI::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -36976,6 +41301,13 @@ impl<'a> MemoryOpaqueCaptureAddressAllocateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryOpaqueCaptureAddressAllocateInfo() {
+    bytes_struct_eq(
+        MemoryOpaqueCaptureAddressAllocateInfo::default(),
+        MemoryOpaqueCaptureAddressAllocateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryOpaqueCaptureAddressAllocateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO;
@@ -37017,6 +41349,13 @@ impl<'a> DeviceMemoryOpaqueCaptureAddressInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceMemoryOpaqueCaptureAddressInfo() {
+    bytes_struct_eq(
+        DeviceMemoryOpaqueCaptureAddressInfo::default(),
+        DeviceMemoryOpaqueCaptureAddressInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryOpaqueCaptureAddressInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO;
@@ -37067,6 +41406,13 @@ impl<'a> PhysicalDeviceLineRasterizationFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceLineRasterizationFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceLineRasterizationFeatures::default(),
+        PhysicalDeviceLineRasterizationFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLineRasterizationFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -37136,6 +41482,13 @@ impl<'a> PhysicalDeviceLineRasterizationProperties<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceLineRasterizationProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceLineRasterizationProperties::default(),
+        PhysicalDeviceLineRasterizationProperties::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLineRasterizationProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES;
@@ -37186,6 +41539,13 @@ impl<'a> PipelineRasterizationLineStateCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineRasterizationLineStateCreateInfo() {
+    bytes_struct_eq(
+        PipelineRasterizationLineStateCreateInfo::default(),
+        PipelineRasterizationLineStateCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationLineStateCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -37249,6 +41609,13 @@ impl<'a> PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePipelineCreationCacheControlFeatures() {
+    bytes_struct_eq(
+        PhysicalDevicePipelineCreationCacheControlFeatures::default(),
+        PhysicalDevicePipelineCreationCacheControlFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -37323,6 +41690,13 @@ impl<'a> PhysicalDeviceVulkan11Features<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceVulkan11Features() {
+    bytes_struct_eq(
+        PhysicalDeviceVulkan11Features::default(),
+        PhysicalDeviceVulkan11Features::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan11Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_1_FEATURES;
@@ -37455,6 +41829,13 @@ impl<'a> PhysicalDeviceVulkan11Properties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceVulkan11Properties() {
+    bytes_struct_eq(
+        PhysicalDeviceVulkan11Properties::default(),
+        PhysicalDeviceVulkan11Properties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan11Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_1_PROPERTIES;
@@ -37670,6 +42051,13 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceVulkan12Features() {
+    bytes_struct_eq(
+        PhysicalDeviceVulkan12Features::default(),
+        PhysicalDeviceVulkan12Features::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan12Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_2_FEATURES;
@@ -38334,6 +42722,13 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceVulkan12Properties() {
+    bytes_struct_eq(
+        PhysicalDeviceVulkan12Properties::default(),
+        PhysicalDeviceVulkan12Properties::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan12Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_2_PROPERTIES;
 }
@@ -38819,6 +43214,13 @@ impl<'a> PhysicalDeviceVulkan13Features<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceVulkan13Features() {
+    bytes_struct_eq(
+        PhysicalDeviceVulkan13Features::default(),
+        PhysicalDeviceVulkan13Features::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan13Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_3_FEATURES;
 }
@@ -38984,6 +43386,13 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceVulkan13Properties() {
+    bytes_struct_eq(
+        PhysicalDeviceVulkan13Properties::default(),
+        PhysicalDeviceVulkan13Properties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan13Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_3_PROPERTIES;
@@ -39439,6 +43848,13 @@ impl<'a> PhysicalDeviceVulkan14Features<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceVulkan14Features() {
+    bytes_struct_eq(
+        PhysicalDeviceVulkan14Features::default(),
+        PhysicalDeviceVulkan14Features::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan14Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_4_FEATURES;
 }
@@ -39638,6 +44054,13 @@ impl<'a> PhysicalDeviceVulkan14Properties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceVulkan14Properties() {
+    bytes_struct_eq(
+        PhysicalDeviceVulkan14Properties::default(),
+        PhysicalDeviceVulkan14Properties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan14Properties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VULKAN_1_4_PROPERTIES;
@@ -39852,6 +44275,13 @@ impl<'a> PipelineCompilerControlCreateInfoAMD<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineCompilerControlCreateInfoAMD() {
+    bytes_struct_eq(
+        PipelineCompilerControlCreateInfoAMD::default(),
+        PipelineCompilerControlCreateInfoAMD::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineCompilerControlCreateInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_COMPILER_CONTROL_CREATE_INFO_AMD;
 }
@@ -39902,6 +44332,13 @@ impl<'a> PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceCoherentMemoryFeaturesAMD() {
+    bytes_struct_eq(
+        PhysicalDeviceCoherentMemoryFeaturesAMD::default(),
+        PhysicalDeviceCoherentMemoryFeaturesAMD::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD;
@@ -39934,6 +44371,13 @@ impl GpaPerfBlockPropertiesAMD {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkGpaPerfBlockPropertiesAMD() {
+    bytes_struct_eq(
+        GpaPerfBlockPropertiesAMD::default(),
+        GpaPerfBlockPropertiesAMD::const_default(),
+    );
 }
 impl GpaPerfBlockPropertiesAMD {
     #[inline]
@@ -40008,6 +44452,13 @@ impl<'a> PhysicalDeviceGpaFeaturesAMD<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceGpaFeaturesAMD() {
+    bytes_struct_eq(
+        PhysicalDeviceGpaFeaturesAMD::default(),
+        PhysicalDeviceGpaFeaturesAMD::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaFeaturesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_GPA_FEATURES_AMD;
 }
@@ -40073,6 +44524,13 @@ impl<'a> PhysicalDeviceGpaPropertiesAMD<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceGpaPropertiesAMD() {
+    bytes_struct_eq(
+        PhysicalDeviceGpaPropertiesAMD::default(),
+        PhysicalDeviceGpaPropertiesAMD::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaPropertiesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_GPA_PROPERTIES_AMD;
 }
@@ -40130,6 +44588,13 @@ impl<'a> PhysicalDeviceGpaProperties2AMD<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceGpaProperties2AMD() {
+    bytes_struct_eq(
+        PhysicalDeviceGpaProperties2AMD::default(),
+        PhysicalDeviceGpaProperties2AMD::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaProperties2AMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_GPA_PROPERTIES_2_AMD;
 }
@@ -40156,6 +44621,13 @@ impl GpaPerfCounterAMD {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkGpaPerfCounterAMD() {
+    bytes_struct_eq(
+        GpaPerfCounterAMD::default(),
+        GpaPerfCounterAMD::const_default(),
+    );
 }
 impl GpaPerfCounterAMD {
     #[inline]
@@ -40229,6 +44701,13 @@ impl<'a> GpaSampleBeginInfoAMD<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkGpaSampleBeginInfoAMD() {
+    bytes_struct_eq(
+        GpaSampleBeginInfoAMD::default(),
+        GpaSampleBeginInfoAMD::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaSampleBeginInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GPA_SAMPLE_BEGIN_INFO_AMD;
@@ -40351,6 +44830,13 @@ impl<'a> GpaDeviceClockModeInfoAMD<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkGpaDeviceClockModeInfoAMD() {
+    bytes_struct_eq(
+        GpaDeviceClockModeInfoAMD::default(),
+        GpaDeviceClockModeInfoAMD::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for GpaDeviceClockModeInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GPA_DEVICE_CLOCK_MODE_INFO_AMD;
 }
@@ -40407,6 +44893,13 @@ impl<'a> GpaDeviceGetClockInfoAMD<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkGpaDeviceGetClockInfoAMD() {
+    bytes_struct_eq(
+        GpaDeviceGetClockInfoAMD::default(),
+        GpaDeviceGetClockInfoAMD::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for GpaDeviceGetClockInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GPA_DEVICE_GET_CLOCK_INFO_AMD;
 }
@@ -40461,6 +44954,13 @@ impl<'a> GpaSessionCreateInfoAMD<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkGpaSessionCreateInfoAMD() {
+    bytes_struct_eq(
+        GpaSessionCreateInfoAMD::default(),
+        GpaSessionCreateInfoAMD::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaSessionCreateInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GPA_SESSION_CREATE_INFO_AMD;
@@ -40522,6 +45022,13 @@ impl<'a> PhysicalDeviceToolProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceToolProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceToolProperties::default(),
+        PhysicalDeviceToolProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceToolProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_TOOL_PROPERTIES;
@@ -40613,6 +45120,13 @@ impl<'a> SamplerCustomBorderColorCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSamplerCustomBorderColorCreateInfoEXT() {
+    bytes_struct_eq(
+        SamplerCustomBorderColorCreateInfoEXT::default(),
+        SamplerCustomBorderColorCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SamplerCustomBorderColorCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_CUSTOM_BORDER_COLOR_CREATE_INFO_EXT;
@@ -40659,6 +45173,13 @@ impl<'a> PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceCustomBorderColorPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceCustomBorderColorPropertiesEXT::default(),
+        PhysicalDeviceCustomBorderColorPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -40709,6 +45230,13 @@ impl<'a> PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceCustomBorderColorFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceCustomBorderColorFeaturesEXT::default(),
+        PhysicalDeviceCustomBorderColorFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -40766,6 +45294,13 @@ impl<'a> SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSamplerBorderColorComponentMappingCreateInfoEXT() {
+    bytes_struct_eq(
+        SamplerBorderColorComponentMappingCreateInfoEXT::default(),
+        SamplerBorderColorComponentMappingCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_BORDER_COLOR_COMPONENT_MAPPING_CREATE_INFO_EXT;
@@ -40814,6 +45349,13 @@ impl<'a> PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceBorderColorSwizzleFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceBorderColorSwizzleFeaturesEXT::default(),
+        PhysicalDeviceBorderColorSwizzleFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -40937,6 +45479,13 @@ impl<'a> AccelerationStructureGeometryTrianglesDataKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAccelerationStructureGeometryTrianglesDataKHR() {
+    bytes_struct_eq(
+        AccelerationStructureGeometryTrianglesDataKHR::default(),
+        AccelerationStructureGeometryTrianglesDataKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryTrianglesDataKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_TRIANGLES_DATA_KHR;
@@ -41020,6 +45569,13 @@ impl<'a> AccelerationStructureGeometryAabbsDataKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAccelerationStructureGeometryAabbsDataKHR() {
+    bytes_struct_eq(
+        AccelerationStructureGeometryAabbsDataKHR::default(),
+        AccelerationStructureGeometryAabbsDataKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryAabbsDataKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_AABBS_DATA_KHR;
@@ -41077,6 +45633,13 @@ impl<'a> AccelerationStructureGeometryInstancesDataKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkAccelerationStructureGeometryInstancesDataKHR() {
+    bytes_struct_eq(
+        AccelerationStructureGeometryInstancesDataKHR::default(),
+        AccelerationStructureGeometryInstancesDataKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryInstancesDataKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -41162,6 +45725,13 @@ impl<'a> AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkAccelerationStructureGeometryLinearSweptSpheresDataNV() {
+    bytes_struct_eq(
+        AccelerationStructureGeometryLinearSweptSpheresDataNV::default(),
+        AccelerationStructureGeometryLinearSweptSpheresDataNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -41291,6 +45861,13 @@ impl<'a> AccelerationStructureGeometrySpheresDataNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAccelerationStructureGeometrySpheresDataNV() {
+    bytes_struct_eq(
+        AccelerationStructureGeometrySpheresDataNV::default(),
+        AccelerationStructureGeometrySpheresDataNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometrySpheresDataNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_SPHERES_DATA_NV;
@@ -41405,6 +45982,13 @@ impl<'a> AccelerationStructureGeometryKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAccelerationStructureGeometryKHR() {
+    bytes_struct_eq(
+        AccelerationStructureGeometryKHR::default(),
+        AccelerationStructureGeometryKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_GEOMETRY_KHR;
 }
@@ -41494,6 +46078,13 @@ impl<'a> AccelerationStructureBuildGeometryInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAccelerationStructureBuildGeometryInfoKHR() {
+    bytes_struct_eq(
+        AccelerationStructureBuildGeometryInfoKHR::default(),
+        AccelerationStructureBuildGeometryInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureBuildGeometryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_BUILD_GEOMETRY_INFO_KHR;
@@ -41568,6 +46159,13 @@ impl AccelerationStructureBuildRangeInfoKHR {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkAccelerationStructureBuildRangeInfoKHR() {
+    bytes_struct_eq(
+        AccelerationStructureBuildRangeInfoKHR::default(),
+        AccelerationStructureBuildRangeInfoKHR::const_default(),
+    );
+}
 impl AccelerationStructureBuildRangeInfoKHR {
     #[inline]
     pub fn primitive_count(mut self, primitive_count: u32) -> Self {
@@ -41630,6 +46228,13 @@ impl<'a> AccelerationStructureCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAccelerationStructureCreateInfoKHR() {
+    bytes_struct_eq(
+        AccelerationStructureCreateInfoKHR::default(),
+        AccelerationStructureCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_KHR;
 }
@@ -41683,6 +46288,13 @@ impl AabbPositionsKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkAabbPositionsKHR() {
+    bytes_struct_eq(
+        AabbPositionsKHR::default(),
+        AabbPositionsKHR::const_default(),
+    );
 }
 impl AabbPositionsKHR {
     #[inline]
@@ -41774,6 +46386,13 @@ impl<'a> AccelerationStructureDeviceAddressInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAccelerationStructureDeviceAddressInfoKHR() {
+    bytes_struct_eq(
+        AccelerationStructureDeviceAddressInfoKHR::default(),
+        AccelerationStructureDeviceAddressInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureDeviceAddressInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_DEVICE_ADDRESS_INFO_KHR;
@@ -41818,6 +46437,13 @@ impl<'a> AccelerationStructureVersionInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAccelerationStructureVersionInfoKHR() {
+    bytes_struct_eq(
+        AccelerationStructureVersionInfoKHR::default(),
+        AccelerationStructureVersionInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureVersionInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_VERSION_INFO_KHR;
 }
@@ -41861,6 +46487,13 @@ impl<'a> CopyAccelerationStructureInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCopyAccelerationStructureInfoKHR() {
+    bytes_struct_eq(
+        CopyAccelerationStructureInfoKHR::default(),
+        CopyAccelerationStructureInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyAccelerationStructureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_ACCELERATION_STRUCTURE_INFO_KHR;
@@ -41926,6 +46559,13 @@ impl<'a> CopyAccelerationStructureToMemoryInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCopyAccelerationStructureToMemoryInfoKHR() {
+    bytes_struct_eq(
+        CopyAccelerationStructureToMemoryInfoKHR::default(),
+        CopyAccelerationStructureToMemoryInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyAccelerationStructureToMemoryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -41993,6 +46633,13 @@ impl<'a> CopyMemoryToAccelerationStructureInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCopyMemoryToAccelerationStructureInfoKHR() {
+    bytes_struct_eq(
+        CopyMemoryToAccelerationStructureInfoKHR::default(),
+        CopyMemoryToAccelerationStructureInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToAccelerationStructureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COPY_MEMORY_TO_ACCELERATION_STRUCTURE_INFO_KHR;
@@ -42046,6 +46693,13 @@ impl<'a> RayTracingPipelineInterfaceCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRayTracingPipelineInterfaceCreateInfoKHR() {
+    bytes_struct_eq(
+        RayTracingPipelineInterfaceCreateInfoKHR::default(),
+        RayTracingPipelineInterfaceCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineInterfaceCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RAY_TRACING_PIPELINE_INTERFACE_CREATE_INFO_KHR;
@@ -42097,6 +46751,13 @@ impl<'a> PipelineLibraryCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineLibraryCreateInfoKHR() {
+    bytes_struct_eq(
+        PipelineLibraryCreateInfoKHR::default(),
+        PipelineLibraryCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineLibraryCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_LIBRARY_CREATE_INFO_KHR;
 }
@@ -42138,6 +46799,13 @@ impl<'a> PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceExtendedDynamicStateFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceExtendedDynamicStateFeaturesEXT::default(),
+        PhysicalDeviceExtendedDynamicStateFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -42188,6 +46856,13 @@ impl<'a> PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceExtendedDynamicState2FeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceExtendedDynamicState2FeaturesEXT::default(),
+        PhysicalDeviceExtendedDynamicState2FeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -42311,6 +46986,13 @@ impl<'a> PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceExtendedDynamicState3FeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceExtendedDynamicState3FeaturesEXT::default(),
+        PhysicalDeviceExtendedDynamicState3FeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -42630,6 +47312,13 @@ impl<'a> PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceExtendedDynamicState3PropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceExtendedDynamicState3PropertiesEXT::default(),
+        PhysicalDeviceExtendedDynamicState3PropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_PROPERTIES_EXT;
@@ -42667,6 +47356,13 @@ impl ColorBlendEquationEXT {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkColorBlendEquationEXT() {
+    bytes_struct_eq(
+        ColorBlendEquationEXT::default(),
+        ColorBlendEquationEXT::const_default(),
+    );
 }
 impl ColorBlendEquationEXT {
     #[inline]
@@ -42717,6 +47413,13 @@ impl ColorBlendAdvancedEXT {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkColorBlendAdvancedEXT() {
+    bytes_struct_eq(
+        ColorBlendAdvancedEXT::default(),
+        ColorBlendAdvancedEXT::const_default(),
+    );
 }
 impl ColorBlendAdvancedEXT {
     #[inline]
@@ -42775,6 +47478,13 @@ impl<'a> RenderPassTransformBeginInfoQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderPassTransformBeginInfoQCOM() {
+    bytes_struct_eq(
+        RenderPassTransformBeginInfoQCOM::default(),
+        RenderPassTransformBeginInfoQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassTransformBeginInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_TRANSFORM_BEGIN_INFO_QCOM;
 }
@@ -42815,6 +47525,13 @@ impl<'a> CopyCommandTransformInfoQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCopyCommandTransformInfoQCOM() {
+    bytes_struct_eq(
+        CopyCommandTransformInfoQCOM::default(),
+        CopyCommandTransformInfoQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyCommandTransformInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_COMMAND_TRANSFORM_INFO_QCOM;
@@ -42860,6 +47577,13 @@ impl<'a> CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCommandBufferInheritanceRenderPassTransformInfoQCOM() {
+    bytes_struct_eq(
+        CommandBufferInheritanceRenderPassTransformInfoQCOM::default(),
+        CommandBufferInheritanceRenderPassTransformInfoQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -42910,6 +47634,13 @@ impl<'a> PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePartitionedAccelerationStructureFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDevicePartitionedAccelerationStructureFeaturesNV::default(),
+        PhysicalDevicePartitionedAccelerationStructureFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a>
@@ -42965,6 +47696,13 @@ impl<'a> PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDevicePartitionedAccelerationStructurePropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDevicePartitionedAccelerationStructurePropertiesNV::default(),
+        PhysicalDevicePartitionedAccelerationStructurePropertiesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a>
 {
@@ -42997,6 +47735,13 @@ impl BuildPartitionedAccelerationStructureIndirectCommandNV {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkBuildPartitionedAccelerationStructureIndirectCommandNV() {
+    bytes_struct_eq(
+        BuildPartitionedAccelerationStructureIndirectCommandNV::default(),
+        BuildPartitionedAccelerationStructureIndirectCommandNV::const_default(),
+    );
 }
 impl BuildPartitionedAccelerationStructureIndirectCommandNV {
     #[inline]
@@ -43044,6 +47789,13 @@ impl<'a> PartitionedAccelerationStructureFlagsNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPartitionedAccelerationStructureFlagsNV() {
+    bytes_struct_eq(
+        PartitionedAccelerationStructureFlagsNV::default(),
+        PartitionedAccelerationStructureFlagsNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PartitionedAccelerationStructureFlagsNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -43097,6 +47849,13 @@ impl PartitionedAccelerationStructureWriteInstanceDataNV {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkPartitionedAccelerationStructureWriteInstanceDataNV() {
+    bytes_struct_eq(
+        PartitionedAccelerationStructureWriteInstanceDataNV::default(),
+        PartitionedAccelerationStructureWriteInstanceDataNV::const_default(),
+    );
 }
 impl PartitionedAccelerationStructureWriteInstanceDataNV {
     #[inline]
@@ -43167,6 +47926,13 @@ impl PartitionedAccelerationStructureUpdateInstanceDataNV {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkPartitionedAccelerationStructureUpdateInstanceDataNV() {
+    bytes_struct_eq(
+        PartitionedAccelerationStructureUpdateInstanceDataNV::default(),
+        PartitionedAccelerationStructureUpdateInstanceDataNV::const_default(),
+    );
+}
 impl PartitionedAccelerationStructureUpdateInstanceDataNV {
     #[inline]
     pub fn instance_index(mut self, instance_index: u32) -> Self {
@@ -43211,6 +47977,13 @@ impl PartitionedAccelerationStructureWritePartitionTranslationDataNV {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkPartitionedAccelerationStructureWritePartitionTranslationDataNV() {
+    bytes_struct_eq(
+        PartitionedAccelerationStructureWritePartitionTranslationDataNV::default(),
+        PartitionedAccelerationStructureWritePartitionTranslationDataNV::const_default(),
+    );
+}
 impl PartitionedAccelerationStructureWritePartitionTranslationDataNV {
     #[inline]
     pub fn partition_index(mut self, partition_index: u32) -> Self {
@@ -43254,6 +48027,13 @@ impl<'a> WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkWriteDescriptorSetPartitionedAccelerationStructureNV() {
+    bytes_struct_eq(
+        WriteDescriptorSetPartitionedAccelerationStructureNV::default(),
+        WriteDescriptorSetPartitionedAccelerationStructureNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -43308,6 +48088,13 @@ impl<'a> PartitionedAccelerationStructureInstancesInputNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPartitionedAccelerationStructureInstancesInputNV() {
+    bytes_struct_eq(
+        PartitionedAccelerationStructureInstancesInputNV::default(),
+        PartitionedAccelerationStructureInstancesInputNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PartitionedAccelerationStructureInstancesInputNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -43386,6 +48173,13 @@ impl<'a> BuildPartitionedAccelerationStructureInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBuildPartitionedAccelerationStructureInfoNV() {
+    bytes_struct_eq(
+        BuildPartitionedAccelerationStructureInfoNV::default(),
+        BuildPartitionedAccelerationStructureInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BuildPartitionedAccelerationStructureInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::BUILD_PARTITIONED_ACCELERATION_STRUCTURE_INFO_NV;
@@ -43458,6 +48252,13 @@ impl<'a> PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDiagnosticsConfigFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceDiagnosticsConfigFeaturesNV::default(),
+        PhysicalDeviceDiagnosticsConfigFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DIAGNOSTICS_CONFIG_FEATURES_NV;
@@ -43501,6 +48302,13 @@ impl<'a> DeviceDiagnosticsConfigCreateInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDeviceDiagnosticsConfigCreateInfoNV() {
+    bytes_struct_eq(
+        DeviceDiagnosticsConfigCreateInfoNV::default(),
+        DeviceDiagnosticsConfigCreateInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceDiagnosticsConfigCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_DIAGNOSTICS_CONFIG_CREATE_INFO_NV;
 }
@@ -43541,6 +48349,13 @@ impl<'a> PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures::default(),
+        PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -43594,6 +48409,13 @@ impl<'a> PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR::default(),
+        PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a>
@@ -43653,6 +48475,13 @@ impl<'a> PhysicalDeviceRobustness2FeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceRobustness2FeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceRobustness2FeaturesKHR::default(),
+        PhysicalDeviceRobustness2FeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRobustness2FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_KHR;
 }
@@ -43706,6 +48535,13 @@ impl<'a> PhysicalDeviceRobustness2PropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceRobustness2PropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceRobustness2PropertiesKHR::default(),
+        PhysicalDeviceRobustness2PropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRobustness2PropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -43762,6 +48598,13 @@ impl<'a> PhysicalDeviceImageRobustnessFeatures<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceImageRobustnessFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceImageRobustnessFeatures::default(),
+        PhysicalDeviceImageRobustnessFeatures::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageRobustnessFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES;
 }
@@ -43809,6 +48652,13 @@ impl<'a> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR::default(),
+        PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -43921,6 +48771,14 @@ impl<'a> PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[cfg(feature = "provisional")]
+#[test]
+fn eq_VkPhysicalDevicePortabilitySubsetFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDevicePortabilitySubsetFeaturesKHR::default(),
+        PhysicalDevicePortabilitySubsetFeaturesKHR::const_default(),
+    );
 }
 #[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
@@ -44061,6 +48919,14 @@ impl<'a> PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
     }
 }
 #[cfg(feature = "provisional")]
+#[test]
+fn eq_VkPhysicalDevicePortabilitySubsetPropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDevicePortabilitySubsetPropertiesKHR::default(),
+        PhysicalDevicePortabilitySubsetPropertiesKHR::const_default(),
+    );
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PORTABILITY_SUBSET_PROPERTIES_KHR;
@@ -44113,6 +48979,13 @@ impl<'a> PhysicalDevice4444FormatsFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDevice4444FormatsFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDevice4444FormatsFeaturesEXT::default(),
+        PhysicalDevice4444FormatsFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice4444FormatsFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT;
 }
@@ -44159,6 +49032,13 @@ impl<'a> PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceSubpassShadingFeaturesHUAWEI() {
+    bytes_struct_eq(
+        PhysicalDeviceSubpassShadingFeaturesHUAWEI::default(),
+        PhysicalDeviceSubpassShadingFeaturesHUAWEI::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -44207,6 +49087,13 @@ impl<'a> PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceClusterCullingShaderFeaturesHUAWEI() {
+    bytes_struct_eq(
+        PhysicalDeviceClusterCullingShaderFeaturesHUAWEI::default(),
+        PhysicalDeviceClusterCullingShaderFeaturesHUAWEI::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -44262,6 +49149,13 @@ impl<'a> PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI() {
+    bytes_struct_eq(
+        PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI::default(),
+        PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_VRS_FEATURES_HUAWEI;
@@ -44310,6 +49204,10 @@ impl<'a> BufferCopy2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBufferCopy2() {
+    bytes_struct_eq(BufferCopy2::default(), BufferCopy2::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCopy2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_COPY_2;
@@ -44368,6 +49266,10 @@ impl<'a> ImageCopy2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImageCopy2() {
+    bytes_struct_eq(ImageCopy2::default(), ImageCopy2::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCopy2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_COPY_2;
@@ -44435,6 +49337,10 @@ impl<'a> ImageBlit2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageBlit2() {
+    bytes_struct_eq(ImageBlit2::default(), ImageBlit2::const_default());
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageBlit2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_BLIT_2;
 }
@@ -44499,6 +49405,13 @@ impl<'a> BufferImageCopy2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBufferImageCopy2() {
+    bytes_struct_eq(
+        BufferImageCopy2::default(),
+        BufferImageCopy2::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferImageCopy2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_IMAGE_COPY_2;
@@ -44573,6 +49486,10 @@ impl<'a> ImageResolve2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageResolve2() {
+    bytes_struct_eq(ImageResolve2::default(), ImageResolve2::const_default());
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageResolve2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_RESOLVE_2;
 }
@@ -44639,6 +49556,10 @@ impl<'a> CopyBufferInfo2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCopyBufferInfo2() {
+    bytes_struct_eq(CopyBufferInfo2::default(), CopyBufferInfo2::const_default());
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyBufferInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_BUFFER_INFO_2;
 }
@@ -44699,6 +49620,10 @@ impl<'a> CopyImageInfo2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCopyImageInfo2() {
+    bytes_struct_eq(CopyImageInfo2::default(), CopyImageInfo2::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_IMAGE_INFO_2;
@@ -44772,6 +49697,10 @@ impl<'a> BlitImageInfo2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBlitImageInfo2() {
+    bytes_struct_eq(BlitImageInfo2::default(), BlitImageInfo2::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for BlitImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BLIT_IMAGE_INFO_2;
@@ -44847,6 +49776,13 @@ impl<'a> CopyBufferToImageInfo2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCopyBufferToImageInfo2() {
+    bytes_struct_eq(
+        CopyBufferToImageInfo2::default(),
+        CopyBufferToImageInfo2::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyBufferToImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_BUFFER_TO_IMAGE_INFO_2;
 }
@@ -44910,6 +49846,13 @@ impl<'a> CopyImageToBufferInfo2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCopyImageToBufferInfo2() {
+    bytes_struct_eq(
+        CopyImageToBufferInfo2::default(),
+        CopyImageToBufferInfo2::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageToBufferInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_IMAGE_TO_BUFFER_INFO_2;
@@ -44977,6 +49920,13 @@ impl<'a> ResolveImageInfo2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkResolveImageInfo2() {
+    bytes_struct_eq(
+        ResolveImageInfo2::default(),
+        ResolveImageInfo2::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ResolveImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RESOLVE_IMAGE_INFO_2;
 }
@@ -45040,6 +49990,13 @@ impl<'a> PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderImageAtomicInt64FeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderImageAtomicInt64FeaturesEXT::default(),
+        PhysicalDeviceShaderImageAtomicInt64FeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT;
@@ -45092,6 +50049,13 @@ impl<'a> FragmentShadingRateAttachmentInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkFragmentShadingRateAttachmentInfoKHR() {
+    bytes_struct_eq(
+        FragmentShadingRateAttachmentInfoKHR::default(),
+        FragmentShadingRateAttachmentInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for FragmentShadingRateAttachmentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR;
@@ -45147,6 +50111,13 @@ impl<'a> PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineFragmentShadingRateStateCreateInfoKHR() {
+    bytes_struct_eq(
+        PipelineFragmentShadingRateStateCreateInfoKHR::default(),
+        PipelineFragmentShadingRateStateCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_FRAGMENT_SHADING_RATE_STATE_CREATE_INFO_KHR;
@@ -45200,6 +50171,13 @@ impl<'a> PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceFragmentShadingRateFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentShadingRateFeaturesKHR::default(),
+        PhysicalDeviceFragmentShadingRateFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -45294,6 +50272,13 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceFragmentShadingRatePropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentShadingRatePropertiesKHR::default(),
+        PhysicalDeviceFragmentShadingRatePropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -45480,6 +50465,13 @@ impl<'a> PhysicalDeviceFragmentShadingRateKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceFragmentShadingRateKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentShadingRateKHR::default(),
+        PhysicalDeviceFragmentShadingRateKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_KHR;
 }
@@ -45524,6 +50516,13 @@ impl<'a> PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderTerminateInvocationFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderTerminateInvocationFeatures::default(),
+        PhysicalDeviceShaderTerminateInvocationFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -45574,6 +50573,13 @@ impl<'a> PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceFragmentShadingRateEnumsFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentShadingRateEnumsFeaturesNV::default(),
+        PhysicalDeviceFragmentShadingRateEnumsFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -45637,6 +50643,13 @@ impl<'a> PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceFragmentShadingRateEnumsPropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentShadingRateEnumsPropertiesNV::default(),
+        PhysicalDeviceFragmentShadingRateEnumsPropertiesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_PROPERTIES_NV;
@@ -45689,6 +50702,13 @@ impl<'a> PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineFragmentShadingRateEnumStateCreateInfoNV() {
+    bytes_struct_eq(
+        PipelineFragmentShadingRateEnumStateCreateInfoNV::default(),
+        PipelineFragmentShadingRateEnumStateCreateInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -45749,6 +50769,13 @@ impl<'a> AccelerationStructureBuildSizesInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAccelerationStructureBuildSizesInfoKHR() {
+    bytes_struct_eq(
+        AccelerationStructureBuildSizesInfoKHR::default(),
+        AccelerationStructureBuildSizesInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureBuildSizesInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR;
@@ -45802,6 +50829,13 @@ impl<'a> PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceImage2DViewOf3DFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceImage2DViewOf3DFeaturesEXT::default(),
+        PhysicalDeviceImage2DViewOf3DFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_2D_VIEW_OF_3D_FEATURES_EXT;
@@ -45850,6 +50884,13 @@ impl<'a> PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceImageSlicedViewOf3DFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceImageSlicedViewOf3DFeaturesEXT::default(),
+        PhysicalDeviceImageSlicedViewOf3DFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_SLICED_VIEW_OF_3D_FEATURES_EXT;
@@ -45895,6 +50936,13 @@ impl<'a> PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT::default(),
+        PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a>
@@ -45950,6 +50998,13 @@ impl<'a> PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceLegacyVertexAttributesFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceLegacyVertexAttributesFeaturesEXT::default(),
+        PhysicalDeviceLegacyVertexAttributesFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_FEATURES_EXT;
@@ -45996,6 +51051,13 @@ impl<'a> PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceLegacyVertexAttributesPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceLegacyVertexAttributesPropertiesEXT::default(),
+        PhysicalDeviceLegacyVertexAttributesPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LEGACY_VERTEX_ATTRIBUTES_PROPERTIES_EXT;
@@ -46041,6 +51103,13 @@ impl<'a> PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceMutableDescriptorTypeFeaturesEXT::default(),
+        PhysicalDeviceMutableDescriptorTypeFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT;
@@ -46085,6 +51154,13 @@ impl<'a> MutableDescriptorTypeListEXT<'a> {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkMutableDescriptorTypeListEXT() {
+    bytes_struct_eq(
+        MutableDescriptorTypeListEXT::default(),
+        MutableDescriptorTypeListEXT::const_default(),
+    );
+}
 impl<'a> MutableDescriptorTypeListEXT<'a> {
     #[inline]
     pub fn descriptor_types(mut self, descriptor_types: &'a [DescriptorType]) -> Self {
@@ -46124,6 +51200,13 @@ impl<'a> MutableDescriptorTypeCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkMutableDescriptorTypeCreateInfoEXT() {
+    bytes_struct_eq(
+        MutableDescriptorTypeCreateInfoEXT::default(),
+        MutableDescriptorTypeCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for MutableDescriptorTypeCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT;
@@ -46171,6 +51254,13 @@ impl<'a> PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDepthClipControlFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceDepthClipControlFeaturesEXT::default(),
+        PhysicalDeviceDepthClipControlFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT;
@@ -46213,6 +51303,13 @@ impl<'a> PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT::default(),
+        PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -46261,6 +51358,13 @@ impl<'a> BeginCustomResolveInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBeginCustomResolveInfoEXT() {
+    bytes_struct_eq(
+        BeginCustomResolveInfoEXT::default(),
+        BeginCustomResolveInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BeginCustomResolveInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BEGIN_CUSTOM_RESOLVE_INFO_EXT;
 }
@@ -46294,6 +51398,13 @@ impl<'a> PhysicalDeviceCustomResolveFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceCustomResolveFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceCustomResolveFeaturesEXT::default(),
+        PhysicalDeviceCustomResolveFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomResolveFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -46345,6 +51456,13 @@ impl<'a> CustomResolveCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCustomResolveCreateInfoEXT() {
+    bytes_struct_eq(
+        CustomResolveCreateInfoEXT::default(),
+        CustomResolveCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CustomResolveCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CUSTOM_RESOLVE_CREATE_INFO_EXT;
@@ -46406,6 +51524,13 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDeviceGeneratedCommandsFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT::default(),
+        PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -46482,6 +51607,13 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDeviceGeneratedCommandsPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT::default(),
+        PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -46617,6 +51749,13 @@ impl<'a> GeneratedCommandsPipelineInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkGeneratedCommandsPipelineInfoEXT() {
+    bytes_struct_eq(
+        GeneratedCommandsPipelineInfoEXT::default(),
+        GeneratedCommandsPipelineInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsPipelineInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GENERATED_COMMANDS_PIPELINE_INFO_EXT;
 }
@@ -46663,6 +51802,13 @@ impl<'a> GeneratedCommandsShaderInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkGeneratedCommandsShaderInfoEXT() {
+    bytes_struct_eq(
+        GeneratedCommandsShaderInfoEXT::default(),
+        GeneratedCommandsShaderInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsShaderInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GENERATED_COMMANDS_SHADER_INFO_EXT;
@@ -46715,6 +51861,13 @@ impl<'a> GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkGeneratedCommandsMemoryRequirementsInfoEXT() {
+    bytes_struct_eq(
+        GeneratedCommandsMemoryRequirementsInfoEXT::default(),
+        GeneratedCommandsMemoryRequirementsInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -46780,6 +51933,13 @@ impl<'a> IndirectExecutionSetPipelineInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkIndirectExecutionSetPipelineInfoEXT() {
+    bytes_struct_eq(
+        IndirectExecutionSetPipelineInfoEXT::default(),
+        IndirectExecutionSetPipelineInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetPipelineInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_EXECUTION_SET_PIPELINE_INFO_EXT;
 }
@@ -46826,6 +51986,13 @@ impl<'a> IndirectExecutionSetShaderLayoutInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkIndirectExecutionSetShaderLayoutInfoEXT() {
+    bytes_struct_eq(
+        IndirectExecutionSetShaderLayoutInfoEXT::default(),
+        IndirectExecutionSetShaderLayoutInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetShaderLayoutInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -46878,6 +52045,13 @@ impl<'a> IndirectExecutionSetShaderInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkIndirectExecutionSetShaderInfoEXT() {
+    bytes_struct_eq(
+        IndirectExecutionSetShaderInfoEXT::default(),
+        IndirectExecutionSetShaderInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetShaderInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_EXECUTION_SET_SHADER_INFO_EXT;
@@ -46965,6 +52139,13 @@ impl<'a> IndirectExecutionSetCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkIndirectExecutionSetCreateInfoEXT() {
+    bytes_struct_eq(
+        IndirectExecutionSetCreateInfoEXT::default(),
+        IndirectExecutionSetCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_EXECUTION_SET_CREATE_INFO_EXT;
 }
@@ -47027,6 +52208,13 @@ impl<'a> GeneratedCommandsInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkGeneratedCommandsInfoEXT() {
+    bytes_struct_eq(
+        GeneratedCommandsInfoEXT::default(),
+        GeneratedCommandsInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GENERATED_COMMANDS_INFO_EXT;
@@ -47121,6 +52309,13 @@ impl<'a> WriteIndirectExecutionSetPipelineEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkWriteIndirectExecutionSetPipelineEXT() {
+    bytes_struct_eq(
+        WriteIndirectExecutionSetPipelineEXT::default(),
+        WriteIndirectExecutionSetPipelineEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for WriteIndirectExecutionSetPipelineEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_INDIRECT_EXECUTION_SET_PIPELINE_EXT;
 }
@@ -47167,6 +52362,13 @@ impl<'a> WriteIndirectExecutionSetShaderEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkWriteIndirectExecutionSetShaderEXT() {
+    bytes_struct_eq(
+        WriteIndirectExecutionSetShaderEXT::default(),
+        WriteIndirectExecutionSetShaderEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteIndirectExecutionSetShaderEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_INDIRECT_EXECUTION_SET_SHADER_EXT;
@@ -47222,6 +52424,13 @@ impl<'a> IndirectCommandsLayoutCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkIndirectCommandsLayoutCreateInfoEXT() {
+    bytes_struct_eq(
+        IndirectCommandsLayoutCreateInfoEXT::default(),
+        IndirectCommandsLayoutCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_EXT;
@@ -47299,6 +52508,13 @@ impl<'a> IndirectCommandsLayoutTokenEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkIndirectCommandsLayoutTokenEXT() {
+    bytes_struct_eq(
+        IndirectCommandsLayoutTokenEXT::default(),
+        IndirectCommandsLayoutTokenEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutTokenEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::INDIRECT_COMMANDS_LAYOUT_TOKEN_EXT;
 }
@@ -47335,6 +52551,13 @@ impl DrawIndirectCountIndirectCommandEXT {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkDrawIndirectCountIndirectCommandEXT() {
+    bytes_struct_eq(
+        DrawIndirectCountIndirectCommandEXT::default(),
+        DrawIndirectCountIndirectCommandEXT::const_default(),
+    );
+}
 impl DrawIndirectCountIndirectCommandEXT {
     #[inline]
     pub fn buffer_address(mut self, buffer_address: DeviceAddress) -> Self {
@@ -47366,6 +52589,13 @@ impl IndirectCommandsVertexBufferTokenEXT {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkIndirectCommandsVertexBufferTokenEXT() {
+    bytes_struct_eq(
+        IndirectCommandsVertexBufferTokenEXT::default(),
+        IndirectCommandsVertexBufferTokenEXT::const_default(),
+    );
+}
 impl IndirectCommandsVertexBufferTokenEXT {
     #[inline]
     pub fn vertex_binding_unit(mut self, vertex_binding_unit: u32) -> Self {
@@ -47388,6 +52618,13 @@ impl BindVertexBufferIndirectCommandEXT {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkBindVertexBufferIndirectCommandEXT() {
+    bytes_struct_eq(
+        BindVertexBufferIndirectCommandEXT::default(),
+        BindVertexBufferIndirectCommandEXT::const_default(),
+    );
 }
 impl BindVertexBufferIndirectCommandEXT {
     #[inline]
@@ -47420,6 +52657,13 @@ impl IndirectCommandsIndexBufferTokenEXT {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkIndirectCommandsIndexBufferTokenEXT() {
+    bytes_struct_eq(
+        IndirectCommandsIndexBufferTokenEXT::default(),
+        IndirectCommandsIndexBufferTokenEXT::const_default(),
+    );
+}
 impl IndirectCommandsIndexBufferTokenEXT {
     #[inline]
     pub fn mode(mut self, mode: IndirectCommandsInputModeFlagsEXT) -> Self {
@@ -47442,6 +52686,13 @@ impl BindIndexBufferIndirectCommandEXT {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkBindIndexBufferIndirectCommandEXT() {
+    bytes_struct_eq(
+        BindIndexBufferIndirectCommandEXT::default(),
+        BindIndexBufferIndirectCommandEXT::const_default(),
+    );
 }
 impl BindIndexBufferIndirectCommandEXT {
     #[inline]
@@ -47474,6 +52725,13 @@ impl IndirectCommandsPushConstantTokenEXT {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkIndirectCommandsPushConstantTokenEXT() {
+    bytes_struct_eq(
+        IndirectCommandsPushConstantTokenEXT::default(),
+        IndirectCommandsPushConstantTokenEXT::const_default(),
+    );
+}
 impl IndirectCommandsPushConstantTokenEXT {
     #[inline]
     pub fn update_range(mut self, update_range: PushConstantRange) -> Self {
@@ -47495,6 +52753,13 @@ impl IndirectCommandsExecutionSetTokenEXT {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkIndirectCommandsExecutionSetTokenEXT() {
+    bytes_struct_eq(
+        IndirectCommandsExecutionSetTokenEXT::default(),
+        IndirectCommandsExecutionSetTokenEXT::const_default(),
+    );
 }
 impl IndirectCommandsExecutionSetTokenEXT {
     #[inline]
@@ -47553,6 +52818,13 @@ impl<'a> PipelineViewportDepthClipControlCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineViewportDepthClipControlCreateInfoEXT() {
+    bytes_struct_eq(
+        PipelineViewportDepthClipControlCreateInfoEXT::default(),
+        PipelineViewportDepthClipControlCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportDepthClipControlCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_VIEWPORT_DEPTH_CLIP_CONTROL_CREATE_INFO_EXT;
@@ -47597,6 +52869,13 @@ impl<'a> PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDepthClampControlFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceDepthClampControlFeaturesEXT::default(),
+        PhysicalDeviceDepthClampControlFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -47645,6 +52924,13 @@ impl<'a> PipelineViewportDepthClampControlCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineViewportDepthClampControlCreateInfoEXT() {
+    bytes_struct_eq(
+        PipelineViewportDepthClampControlCreateInfoEXT::default(),
+        PipelineViewportDepthClampControlCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportDepthClampControlCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -47696,6 +52982,13 @@ impl<'a> PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceVertexInputDynamicStateFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceVertexInputDynamicStateFeaturesEXT::default(),
+        PhysicalDeviceVertexInputDynamicStateFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VERTEX_INPUT_DYNAMIC_STATE_FEATURES_EXT;
@@ -47742,6 +53035,13 @@ impl<'a> PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceExternalMemoryRDMAFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceExternalMemoryRDMAFeaturesNV::default(),
+        PhysicalDeviceExternalMemoryRDMAFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV;
@@ -47787,6 +53087,13 @@ impl<'a> PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR::default(),
+        PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a>
@@ -47847,6 +53154,13 @@ impl<'a> VertexInputBindingDescription2EXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVertexInputBindingDescription2EXT() {
+    bytes_struct_eq(
+        VertexInputBindingDescription2EXT::default(),
+        VertexInputBindingDescription2EXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VertexInputBindingDescription2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VERTEX_INPUT_BINDING_DESCRIPTION_2_EXT;
@@ -47909,6 +53223,13 @@ impl<'a> VertexInputAttributeDescription2EXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVertexInputAttributeDescription2EXT() {
+    bytes_struct_eq(
+        VertexInputAttributeDescription2EXT::default(),
+        VertexInputAttributeDescription2EXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VertexInputAttributeDescription2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VERTEX_INPUT_ATTRIBUTE_DESCRIPTION_2_EXT;
 }
@@ -47964,6 +53285,13 @@ impl<'a> PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceColorWriteEnableFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceColorWriteEnableFeaturesEXT::default(),
+        PhysicalDeviceColorWriteEnableFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COLOR_WRITE_ENABLE_FEATURES_EXT;
@@ -48008,6 +53336,13 @@ impl<'a> PipelineColorWriteCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineColorWriteCreateInfoEXT() {
+    bytes_struct_eq(
+        PipelineColorWriteCreateInfoEXT::default(),
+        PipelineColorWriteCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineColorWriteCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_COLOR_WRITE_CREATE_INFO_EXT;
@@ -48056,6 +53391,10 @@ impl<'a> MemoryBarrier2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkMemoryBarrier2() {
+    bytes_struct_eq(MemoryBarrier2::default(), MemoryBarrier2::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryBarrier2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_BARRIER_2;
@@ -48130,6 +53469,13 @@ impl<'a> ImageMemoryBarrier2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImageMemoryBarrier2() {
+    bytes_struct_eq(
+        ImageMemoryBarrier2::default(),
+        ImageMemoryBarrier2::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageMemoryBarrier2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_MEMORY_BARRIER_2;
@@ -48232,6 +53578,13 @@ impl<'a> BufferMemoryBarrier2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBufferMemoryBarrier2() {
+    bytes_struct_eq(
+        BufferMemoryBarrier2::default(),
+        BufferMemoryBarrier2::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferMemoryBarrier2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_MEMORY_BARRIER_2;
 }
@@ -48314,6 +53667,13 @@ impl<'a> MemoryBarrierAccessFlags3KHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryBarrierAccessFlags3KHR() {
+    bytes_struct_eq(
+        MemoryBarrierAccessFlags3KHR::default(),
+        MemoryBarrierAccessFlags3KHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryBarrierAccessFlags3KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_BARRIER_ACCESS_FLAGS_3_KHR;
 }
@@ -48374,6 +53734,10 @@ impl<'a> DependencyInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDependencyInfo() {
+    bytes_struct_eq(DependencyInfo::default(), DependencyInfo::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for DependencyInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEPENDENCY_INFO;
@@ -48445,6 +53809,13 @@ impl<'a> SemaphoreSubmitInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSemaphoreSubmitInfo() {
+    bytes_struct_eq(
+        SemaphoreSubmitInfo::default(),
+        SemaphoreSubmitInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SEMAPHORE_SUBMIT_INFO;
 }
@@ -48502,6 +53873,13 @@ impl<'a> CommandBufferSubmitInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCommandBufferSubmitInfo() {
+    bytes_struct_eq(
+        CommandBufferSubmitInfo::default(),
+        CommandBufferSubmitInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_SUBMIT_INFO;
 }
@@ -48558,6 +53936,10 @@ impl<'a> SubmitInfo2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSubmitInfo2() {
+    bytes_struct_eq(SubmitInfo2::default(), SubmitInfo2::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for SubmitInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBMIT_INFO_2;
@@ -48626,6 +54008,13 @@ impl<'a> QueueFamilyCheckpointProperties2NV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkQueueFamilyCheckpointProperties2NV() {
+    bytes_struct_eq(
+        QueueFamilyCheckpointProperties2NV::default(),
+        QueueFamilyCheckpointProperties2NV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyCheckpointProperties2NV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV;
 }
@@ -48672,6 +54061,13 @@ impl<'a> CheckpointData2NV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCheckpointData2NV() {
+    bytes_struct_eq(
+        CheckpointData2NV::default(),
+        CheckpointData2NV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CheckpointData2NV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CHECKPOINT_DATA_2_NV;
 }
@@ -48717,6 +54113,13 @@ impl<'a> PhysicalDeviceSynchronization2Features<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceSynchronization2Features() {
+    bytes_struct_eq(
+        PhysicalDeviceSynchronization2Features::default(),
+        PhysicalDeviceSynchronization2Features::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSynchronization2Features<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES;
 }
@@ -48760,6 +54163,13 @@ impl<'a> PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceUnifiedImageLayoutsFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceUnifiedImageLayoutsFeaturesKHR::default(),
+        PhysicalDeviceUnifiedImageLayoutsFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -48812,6 +54222,13 @@ impl<'a> PhysicalDeviceHostImageCopyFeatures<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceHostImageCopyFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceHostImageCopyFeatures::default(),
+        PhysicalDeviceHostImageCopyFeatures::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostImageCopyFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_HOST_IMAGE_COPY_FEATURES;
 }
@@ -48863,6 +54280,13 @@ impl<'a> PhysicalDeviceHostImageCopyProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceHostImageCopyProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceHostImageCopyProperties::default(),
+        PhysicalDeviceHostImageCopyProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostImageCopyProperties<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_HOST_IMAGE_COPY_PROPERTIES;
@@ -48937,6 +54361,13 @@ impl<'a> MemoryToImageCopy<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkMemoryToImageCopy() {
+    bytes_struct_eq(
+        MemoryToImageCopy::default(),
+        MemoryToImageCopy::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryToImageCopy<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_TO_IMAGE_COPY;
@@ -49013,6 +54444,13 @@ impl<'a> ImageToMemoryCopy<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageToMemoryCopy() {
+    bytes_struct_eq(
+        ImageToMemoryCopy::default(),
+        ImageToMemoryCopy::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageToMemoryCopy<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_TO_MEMORY_COPY;
 }
@@ -49086,6 +54524,13 @@ impl<'a> CopyMemoryToImageInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCopyMemoryToImageInfo() {
+    bytes_struct_eq(
+        CopyMemoryToImageInfo::default(),
+        CopyMemoryToImageInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToImageInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MEMORY_TO_IMAGE_INFO;
 }
@@ -49149,6 +54594,13 @@ impl<'a> CopyImageToMemoryInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCopyImageToMemoryInfo() {
+    bytes_struct_eq(
+        CopyImageToMemoryInfo::default(),
+        CopyImageToMemoryInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageToMemoryInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_IMAGE_TO_MEMORY_INFO;
@@ -49217,6 +54669,13 @@ impl<'a> CopyImageToImageInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCopyImageToImageInfo() {
+    bytes_struct_eq(
+        CopyImageToImageInfo::default(),
+        CopyImageToImageInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageToImageInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_IMAGE_TO_IMAGE_INFO;
@@ -49290,6 +54749,13 @@ impl<'a> HostImageLayoutTransitionInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkHostImageLayoutTransitionInfo() {
+    bytes_struct_eq(
+        HostImageLayoutTransitionInfo::default(),
+        HostImageLayoutTransitionInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for HostImageLayoutTransitionInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::HOST_IMAGE_LAYOUT_TRANSITION_INFO;
 }
@@ -49345,6 +54811,13 @@ impl<'a> SubresourceHostMemcpySize<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSubresourceHostMemcpySize() {
+    bytes_struct_eq(
+        SubresourceHostMemcpySize::default(),
+        SubresourceHostMemcpySize::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SubresourceHostMemcpySize<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBRESOURCE_HOST_MEMCPY_SIZE;
 }
@@ -49387,6 +54860,13 @@ impl<'a> HostImageCopyDevicePerformanceQuery<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkHostImageCopyDevicePerformanceQuery() {
+    bytes_struct_eq(
+        HostImageCopyDevicePerformanceQuery::default(),
+        HostImageCopyDevicePerformanceQuery::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for HostImageCopyDevicePerformanceQuery<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::HOST_IMAGE_COPY_DEVICE_PERFORMANCE_QUERY;
@@ -49437,6 +54917,13 @@ impl<'a> PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePrimitivesGeneratedQueryFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT::default(),
+        PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -49505,6 +54992,13 @@ impl<'a> PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceLegacyDitheringFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceLegacyDitheringFeaturesEXT::default(),
+        PhysicalDeviceLegacyDitheringFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LEGACY_DITHERING_FEATURES_EXT;
@@ -49547,6 +55041,13 @@ impl<'a> PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT::default(),
+        PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a>
@@ -49602,6 +55103,13 @@ impl<'a> SurfaceCapabilitiesPresentId2KHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSurfaceCapabilitiesPresentId2KHR() {
+    bytes_struct_eq(
+        SurfaceCapabilitiesPresentId2KHR::default(),
+        SurfaceCapabilitiesPresentId2KHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentId2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_PRESENT_ID_2_KHR;
 }
@@ -49643,6 +55151,13 @@ impl<'a> SurfaceCapabilitiesPresentWait2KHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSurfaceCapabilitiesPresentWait2KHR() {
+    bytes_struct_eq(
+        SurfaceCapabilitiesPresentWait2KHR::default(),
+        SurfaceCapabilitiesPresentWait2KHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentWait2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_PRESENT_WAIT_2_KHR;
 }
@@ -49683,6 +55198,13 @@ impl<'a> SubpassResolvePerformanceQueryEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSubpassResolvePerformanceQueryEXT() {
+    bytes_struct_eq(
+        SubpassResolvePerformanceQueryEXT::default(),
+        SubpassResolvePerformanceQueryEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassResolvePerformanceQueryEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBPASS_RESOLVE_PERFORMANCE_QUERY_EXT;
@@ -49726,6 +55248,13 @@ impl<'a> MultisampledRenderToSingleSampledInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkMultisampledRenderToSingleSampledInfoEXT() {
+    bytes_struct_eq(
+        MultisampledRenderToSingleSampledInfoEXT::default(),
+        MultisampledRenderToSingleSampledInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for MultisampledRenderToSingleSampledInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -49779,6 +55308,13 @@ impl<'a> PhysicalDevicePipelineProtectedAccessFeatures<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDevicePipelineProtectedAccessFeatures() {
+    bytes_struct_eq(
+        PhysicalDevicePipelineProtectedAccessFeatures::default(),
+        PhysicalDevicePipelineProtectedAccessFeatures::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineProtectedAccessFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES;
@@ -49825,6 +55361,13 @@ impl<'a> QueueFamilyVideoPropertiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkQueueFamilyVideoPropertiesKHR() {
+    bytes_struct_eq(
+        QueueFamilyVideoPropertiesKHR::default(),
+        QueueFamilyVideoPropertiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyVideoPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_VIDEO_PROPERTIES_KHR;
 }
@@ -49868,6 +55411,13 @@ impl<'a> QueueFamilyQueryResultStatusPropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkQueueFamilyQueryResultStatusPropertiesKHR() {
+    bytes_struct_eq(
+        QueueFamilyQueryResultStatusPropertiesKHR::default(),
+        QueueFamilyQueryResultStatusPropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyQueryResultStatusPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -49913,6 +55463,13 @@ impl<'a> VideoProfileListInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoProfileListInfoKHR() {
+    bytes_struct_eq(
+        VideoProfileListInfoKHR::default(),
+        VideoProfileListInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoProfileListInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_PROFILE_LIST_INFO_KHR;
 }
@@ -49957,6 +55514,13 @@ impl<'a> PhysicalDeviceVideoFormatInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceVideoFormatInfoKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceVideoFormatInfoKHR::default(),
+        PhysicalDeviceVideoFormatInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoFormatInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_VIDEO_FORMAT_INFO_KHR;
@@ -50007,6 +55571,13 @@ impl<'a> VideoFormatPropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoFormatPropertiesKHR() {
+    bytes_struct_eq(
+        VideoFormatPropertiesKHR::default(),
+        VideoFormatPropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_FORMAT_PROPERTIES_KHR;
@@ -50073,6 +55644,13 @@ impl<'a> VideoEncodeQuantizationMapCapabilitiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeQuantizationMapCapabilitiesKHR() {
+    bytes_struct_eq(
+        VideoEncodeQuantizationMapCapabilitiesKHR::default(),
+        VideoEncodeQuantizationMapCapabilitiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQuantizationMapCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_QUANTIZATION_MAP_CAPABILITIES_KHR;
@@ -50116,6 +55694,13 @@ impl<'a> VideoEncodeH264QuantizationMapCapabilitiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH264QuantizationMapCapabilitiesKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264QuantizationMapCapabilitiesKHR::default(),
+        VideoEncodeH264QuantizationMapCapabilitiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264QuantizationMapCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -50169,6 +55754,13 @@ impl<'a> VideoEncodeH265QuantizationMapCapabilitiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeH265QuantizationMapCapabilitiesKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265QuantizationMapCapabilitiesKHR::default(),
+        VideoEncodeH265QuantizationMapCapabilitiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265QuantizationMapCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_QUANTIZATION_MAP_CAPABILITIES_KHR;
@@ -50221,6 +55813,13 @@ impl<'a> VideoEncodeAV1QuantizationMapCapabilitiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeAV1QuantizationMapCapabilitiesKHR() {
+    bytes_struct_eq(
+        VideoEncodeAV1QuantizationMapCapabilitiesKHR::default(),
+        VideoEncodeAV1QuantizationMapCapabilitiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_AV1_QUANTIZATION_MAP_CAPABILITIES_KHR;
@@ -50268,6 +55867,13 @@ impl<'a> VideoFormatQuantizationMapPropertiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoFormatQuantizationMapPropertiesKHR() {
+    bytes_struct_eq(
+        VideoFormatQuantizationMapPropertiesKHR::default(),
+        VideoFormatQuantizationMapPropertiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatQuantizationMapPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_FORMAT_QUANTIZATION_MAP_PROPERTIES_KHR;
@@ -50309,6 +55915,13 @@ impl<'a> VideoFormatH265QuantizationMapPropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoFormatH265QuantizationMapPropertiesKHR() {
+    bytes_struct_eq(
+        VideoFormatH265QuantizationMapPropertiesKHR::default(),
+        VideoFormatH265QuantizationMapPropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatH265QuantizationMapPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -50357,6 +55970,13 @@ impl<'a> VideoFormatAV1QuantizationMapPropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoFormatAV1QuantizationMapPropertiesKHR() {
+    bytes_struct_eq(
+        VideoFormatAV1QuantizationMapPropertiesKHR::default(),
+        VideoFormatAV1QuantizationMapPropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatAV1QuantizationMapPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -50411,6 +56031,13 @@ impl<'a> VideoProfileInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoProfileInfoKHR() {
+    bytes_struct_eq(
+        VideoProfileInfoKHR::default(),
+        VideoProfileInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_PROFILE_INFO_KHR;
@@ -50489,6 +56116,13 @@ impl<'a> VideoCapabilitiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoCapabilitiesKHR() {
+    bytes_struct_eq(
+        VideoCapabilitiesKHR::default(),
+        VideoCapabilitiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_CAPABILITIES_KHR;
@@ -50578,6 +56212,13 @@ impl<'a> VideoSessionMemoryRequirementsKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoSessionMemoryRequirementsKHR() {
+    bytes_struct_eq(
+        VideoSessionMemoryRequirementsKHR::default(),
+        VideoSessionMemoryRequirementsKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionMemoryRequirementsKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_MEMORY_REQUIREMENTS_KHR;
 }
@@ -50628,6 +56269,13 @@ impl<'a> BindVideoSessionMemoryInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBindVideoSessionMemoryInfoKHR() {
+    bytes_struct_eq(
+        BindVideoSessionMemoryInfoKHR::default(),
+        BindVideoSessionMemoryInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BindVideoSessionMemoryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_VIDEO_SESSION_MEMORY_INFO_KHR;
@@ -50690,6 +56338,13 @@ impl<'a> VideoPictureResourceInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoPictureResourceInfoKHR() {
+    bytes_struct_eq(
+        VideoPictureResourceInfoKHR::default(),
+        VideoPictureResourceInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoPictureResourceInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_PICTURE_RESOURCE_INFO_KHR;
 }
@@ -50747,6 +56402,13 @@ impl<'a> VideoReferenceSlotInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoReferenceSlotInfoKHR() {
+    bytes_struct_eq(
+        VideoReferenceSlotInfoKHR::default(),
+        VideoReferenceSlotInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoReferenceSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_REFERENCE_SLOT_INFO_KHR;
 }
@@ -50795,6 +56457,13 @@ impl<'a> VideoDecodeCapabilitiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoDecodeCapabilitiesKHR() {
+    bytes_struct_eq(
+        VideoDecodeCapabilitiesKHR::default(),
+        VideoDecodeCapabilitiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_CAPABILITIES_KHR;
 }
@@ -50835,6 +56504,13 @@ impl<'a> VideoDecodeUsageInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoDecodeUsageInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeUsageInfoKHR::default(),
+        VideoDecodeUsageInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeUsageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_USAGE_INFO_KHR;
@@ -50891,6 +56567,13 @@ impl<'a> VideoDecodeInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoDecodeInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeInfoKHR::default(),
+        VideoDecodeInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_INFO_KHR;
@@ -50969,6 +56652,13 @@ impl<'a> PhysicalDeviceVideoMaintenance1FeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceVideoMaintenance1FeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceVideoMaintenance1FeaturesKHR::default(),
+        PhysicalDeviceVideoMaintenance1FeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoMaintenance1FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VIDEO_MAINTENANCE_1_FEATURES_KHR;
@@ -51014,6 +56704,13 @@ impl<'a> PhysicalDeviceVideoMaintenance2FeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceVideoMaintenance2FeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceVideoMaintenance2FeaturesKHR::default(),
+        PhysicalDeviceVideoMaintenance2FeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoMaintenance2FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -51064,6 +56761,13 @@ impl<'a> VideoInlineQueryInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoInlineQueryInfoKHR() {
+    bytes_struct_eq(
+        VideoInlineQueryInfoKHR::default(),
+        VideoInlineQueryInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoInlineQueryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_INLINE_QUERY_INFO_KHR;
@@ -51119,6 +56823,13 @@ impl<'a> VideoDecodeH264ProfileInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoDecodeH264ProfileInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeH264ProfileInfoKHR::default(),
+        VideoDecodeH264ProfileInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_PROFILE_INFO_KHR;
 }
@@ -51167,6 +56878,13 @@ impl<'a> VideoDecodeH264CapabilitiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoDecodeH264CapabilitiesKHR() {
+    bytes_struct_eq(
+        VideoDecodeH264CapabilitiesKHR::default(),
+        VideoDecodeH264CapabilitiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_CAPABILITIES_KHR;
@@ -51219,6 +56937,13 @@ impl<'a> VideoDecodeH264SessionParametersAddInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoDecodeH264SessionParametersAddInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeH264SessionParametersAddInfoKHR::default(),
+        VideoDecodeH264SessionParametersAddInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264SessionParametersAddInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -51275,6 +57000,13 @@ impl<'a> VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoDecodeH264SessionParametersCreateInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeH264SessionParametersCreateInfoKHR::default(),
+        VideoDecodeH264SessionParametersCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -51336,6 +57068,13 @@ impl<'a> VideoDecodeH264InlineSessionParametersInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoDecodeH264InlineSessionParametersInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeH264InlineSessionParametersInfoKHR::default(),
+        VideoDecodeH264InlineSessionParametersInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264InlineSessionParametersInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_DECODE_H264_INLINE_SESSION_PARAMETERS_INFO_KHR;
@@ -51387,6 +57126,13 @@ impl<'a> VideoDecodeH264PictureInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoDecodeH264PictureInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeH264PictureInfoKHR::default(),
+        VideoDecodeH264PictureInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_PICTURE_INFO_KHR;
 }
@@ -51434,6 +57180,13 @@ impl<'a> VideoDecodeH264DpbSlotInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoDecodeH264DpbSlotInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeH264DpbSlotInfoKHR::default(),
+        VideoDecodeH264DpbSlotInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_DPB_SLOT_INFO_KHR;
 }
@@ -51478,6 +57231,13 @@ impl<'a> VideoDecodeH265ProfileInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoDecodeH265ProfileInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeH265ProfileInfoKHR::default(),
+        VideoDecodeH265ProfileInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_PROFILE_INFO_KHR;
 }
@@ -51519,6 +57279,13 @@ impl<'a> VideoDecodeH265CapabilitiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoDecodeH265CapabilitiesKHR() {
+    bytes_struct_eq(
+        VideoDecodeH265CapabilitiesKHR::default(),
+        VideoDecodeH265CapabilitiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_CAPABILITIES_KHR;
@@ -51570,6 +57337,13 @@ impl<'a> VideoDecodeH265SessionParametersAddInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoDecodeH265SessionParametersAddInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeH265SessionParametersAddInfoKHR::default(),
+        VideoDecodeH265SessionParametersAddInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265SessionParametersAddInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -51634,6 +57408,13 @@ impl<'a> VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoDecodeH265SessionParametersCreateInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeH265SessionParametersCreateInfoKHR::default(),
+        VideoDecodeH265SessionParametersCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -51702,6 +57483,13 @@ impl<'a> VideoDecodeH265InlineSessionParametersInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoDecodeH265InlineSessionParametersInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeH265InlineSessionParametersInfoKHR::default(),
+        VideoDecodeH265InlineSessionParametersInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265InlineSessionParametersInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_DECODE_H265_INLINE_SESSION_PARAMETERS_INFO_KHR;
@@ -51758,6 +57546,13 @@ impl<'a> VideoDecodeH265PictureInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoDecodeH265PictureInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeH265PictureInfoKHR::default(),
+        VideoDecodeH265PictureInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_PICTURE_INFO_KHR;
 }
@@ -51805,6 +57600,13 @@ impl<'a> VideoDecodeH265DpbSlotInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoDecodeH265DpbSlotInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeH265DpbSlotInfoKHR::default(),
+        VideoDecodeH265DpbSlotInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_DPB_SLOT_INFO_KHR;
 }
@@ -51849,6 +57651,13 @@ impl<'a> PhysicalDeviceVideoDecodeVP9FeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceVideoDecodeVP9FeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceVideoDecodeVP9FeaturesKHR::default(),
+        PhysicalDeviceVideoDecodeVP9FeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VIDEO_DECODE_VP9_FEATURES_KHR;
@@ -51892,6 +57701,13 @@ impl<'a> VideoDecodeVP9ProfileInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoDecodeVP9ProfileInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeVP9ProfileInfoKHR::default(),
+        VideoDecodeVP9ProfileInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeVP9ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_VP9_PROFILE_INFO_KHR;
 }
@@ -51933,6 +57749,13 @@ impl<'a> VideoDecodeVP9CapabilitiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoDecodeVP9CapabilitiesKHR() {
+    bytes_struct_eq(
+        VideoDecodeVP9CapabilitiesKHR::default(),
+        VideoDecodeVP9CapabilitiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeVP9CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_VP9_CAPABILITIES_KHR;
@@ -51982,6 +57805,13 @@ impl<'a> VideoDecodeVP9PictureInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoDecodeVP9PictureInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeVP9PictureInfoKHR::default(),
+        VideoDecodeVP9PictureInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeVP9PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_VP9_PICTURE_INFO_KHR;
@@ -52049,6 +57879,13 @@ impl<'a> VideoDecodeAV1ProfileInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoDecodeAV1ProfileInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeAV1ProfileInfoKHR::default(),
+        VideoDecodeAV1ProfileInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_PROFILE_INFO_KHR;
 }
@@ -52096,6 +57933,13 @@ impl<'a> VideoDecodeAV1CapabilitiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoDecodeAV1CapabilitiesKHR() {
+    bytes_struct_eq(
+        VideoDecodeAV1CapabilitiesKHR::default(),
+        VideoDecodeAV1CapabilitiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_CAPABILITIES_KHR;
 }
@@ -52136,6 +57980,13 @@ impl<'a> VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoDecodeAV1SessionParametersCreateInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeAV1SessionParametersCreateInfoKHR::default(),
+        VideoDecodeAV1SessionParametersCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -52184,6 +58035,13 @@ impl<'a> VideoDecodeAV1InlineSessionParametersInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoDecodeAV1InlineSessionParametersInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeAV1InlineSessionParametersInfoKHR::default(),
+        VideoDecodeAV1InlineSessionParametersInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1InlineSessionParametersInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -52239,6 +58097,13 @@ impl<'a> VideoDecodeAV1PictureInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoDecodeAV1PictureInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeAV1PictureInfoKHR::default(),
+        VideoDecodeAV1PictureInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_PICTURE_INFO_KHR;
@@ -52306,6 +58171,13 @@ impl<'a> VideoDecodeAV1DpbSlotInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoDecodeAV1DpbSlotInfoKHR() {
+    bytes_struct_eq(
+        VideoDecodeAV1DpbSlotInfoKHR::default(),
+        VideoDecodeAV1DpbSlotInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_DPB_SLOT_INFO_KHR;
 }
@@ -52365,6 +58237,13 @@ impl<'a> VideoSessionCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoSessionCreateInfoKHR() {
+    bytes_struct_eq(
+        VideoSessionCreateInfoKHR::default(),
+        VideoSessionCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_CREATE_INFO_KHR;
@@ -52450,6 +58329,13 @@ impl<'a> VideoSessionParametersCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoSessionParametersCreateInfoKHR() {
+    bytes_struct_eq(
+        VideoSessionParametersCreateInfoKHR::default(),
+        VideoSessionParametersCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
@@ -52503,6 +58389,13 @@ impl<'a> VideoSessionParametersUpdateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoSessionParametersUpdateInfoKHR() {
+    bytes_struct_eq(
+        VideoSessionParametersUpdateInfoKHR::default(),
+        VideoSessionParametersUpdateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionParametersUpdateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_PARAMETERS_UPDATE_INFO_KHR;
 }
@@ -52542,6 +58435,13 @@ impl<'a> VideoEncodeSessionParametersGetInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeSessionParametersGetInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeSessionParametersGetInfoKHR::default(),
+        VideoEncodeSessionParametersGetInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionParametersGetInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -52586,6 +58486,13 @@ impl<'a> VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeSessionParametersFeedbackInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeSessionParametersFeedbackInfoKHR::default(),
+        VideoEncodeSessionParametersFeedbackInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -52635,6 +58542,13 @@ impl<'a> VideoBeginCodingInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoBeginCodingInfoKHR() {
+    bytes_struct_eq(
+        VideoBeginCodingInfoKHR::default(),
+        VideoBeginCodingInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoBeginCodingInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_BEGIN_CODING_INFO_KHR;
@@ -52695,6 +58609,13 @@ impl<'a> VideoEndCodingInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEndCodingInfoKHR() {
+    bytes_struct_eq(
+        VideoEndCodingInfoKHR::default(),
+        VideoEndCodingInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEndCodingInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_END_CODING_INFO_KHR;
 }
@@ -52734,6 +58655,13 @@ impl<'a> VideoCodingControlInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoCodingControlInfoKHR() {
+    bytes_struct_eq(
+        VideoCodingControlInfoKHR::default(),
+        VideoCodingControlInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoCodingControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_CODING_CONTROL_INFO_KHR;
@@ -52778,6 +58706,13 @@ impl<'a> VideoEncodeUsageInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeUsageInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeUsageInfoKHR::default(),
+        VideoEncodeUsageInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeUsageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_USAGE_INFO_KHR;
@@ -52846,6 +58781,13 @@ impl<'a> VideoEncodeInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeInfoKHR::default(),
+        VideoEncodeInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_INFO_KHR;
@@ -52934,6 +58876,13 @@ impl<'a> VideoEncodeQuantizationMapInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeQuantizationMapInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeQuantizationMapInfoKHR::default(),
+        VideoEncodeQuantizationMapInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQuantizationMapInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_QUANTIZATION_MAP_INFO_KHR;
 }
@@ -52979,6 +58928,13 @@ impl<'a> VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeQuantizationMapSessionParametersCreateInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeQuantizationMapSessionParametersCreateInfoKHR::default(),
+        VideoEncodeQuantizationMapSessionParametersCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'a>
@@ -53026,6 +58982,13 @@ impl<'a> PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR::default(),
+        PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -53076,6 +59039,13 @@ impl<'a> QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkQueryPoolVideoEncodeFeedbackCreateInfoKHR() {
+    bytes_struct_eq(
+        QueryPoolVideoEncodeFeedbackCreateInfoKHR::default(),
+        QueryPoolVideoEncodeFeedbackCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::QUERY_POOL_VIDEO_ENCODE_FEEDBACK_CREATE_INFO_KHR;
@@ -53120,6 +59090,13 @@ impl<'a> VideoEncodeQualityLevelInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeQualityLevelInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeQualityLevelInfoKHR::default(),
+        VideoEncodeQualityLevelInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQualityLevelInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_QUALITY_LEVEL_INFO_KHR;
@@ -53168,6 +59145,13 @@ impl<'a> PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceVideoEncodeQualityLevelInfoKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceVideoEncodeQualityLevelInfoKHR::default(),
+        PhysicalDeviceVideoEncodeQualityLevelInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VIDEO_ENCODE_QUALITY_LEVEL_INFO_KHR;
@@ -53215,6 +59199,13 @@ impl<'a> VideoEncodeQualityLevelPropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeQualityLevelPropertiesKHR() {
+    bytes_struct_eq(
+        VideoEncodeQualityLevelPropertiesKHR::default(),
+        VideoEncodeQualityLevelPropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQualityLevelPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_QUALITY_LEVEL_PROPERTIES_KHR;
@@ -53276,6 +59267,13 @@ impl<'a> VideoEncodeRateControlInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeRateControlInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeRateControlInfoKHR::default(),
+        VideoEncodeRateControlInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRateControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_RATE_CONTROL_INFO_KHR;
@@ -53352,6 +59350,13 @@ impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeRateControlLayerInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeRateControlLayerInfoKHR::default(),
+        VideoEncodeRateControlLayerInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRateControlLayerInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR;
 }
@@ -53418,6 +59423,13 @@ impl<'a> VideoEncodeCapabilitiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeCapabilitiesKHR() {
+    bytes_struct_eq(
+        VideoEncodeCapabilitiesKHR::default(),
+        VideoEncodeCapabilitiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_CAPABILITIES_KHR;
@@ -53522,6 +59534,13 @@ impl<'a> VideoEncodeH264CapabilitiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH264CapabilitiesKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264CapabilitiesKHR::default(),
+        VideoEncodeH264CapabilitiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_CAPABILITIES_KHR;
@@ -53649,6 +59668,13 @@ impl<'a> VideoEncodeH264QualityLevelPropertiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeH264QualityLevelPropertiesKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264QualityLevelPropertiesKHR::default(),
+        VideoEncodeH264QualityLevelPropertiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264QualityLevelPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_QUALITY_LEVEL_PROPERTIES_KHR;
@@ -53751,6 +59777,13 @@ impl<'a> VideoEncodeH264SessionCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeH264SessionCreateInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264SessionCreateInfoKHR::default(),
+        VideoEncodeH264SessionCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_SESSION_CREATE_INFO_KHR;
 }
@@ -53802,6 +59835,13 @@ impl<'a> VideoEncodeH264SessionParametersAddInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH264SessionParametersAddInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264SessionParametersAddInfoKHR::default(),
+        VideoEncodeH264SessionParametersAddInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersAddInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -53858,6 +59898,13 @@ impl<'a> VideoEncodeH264SessionParametersCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH264SessionParametersCreateInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264SessionParametersCreateInfoKHR::default(),
+        VideoEncodeH264SessionParametersCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -53923,6 +59970,13 @@ impl<'a> VideoEncodeH264SessionParametersGetInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeH264SessionParametersGetInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264SessionParametersGetInfoKHR::default(),
+        VideoEncodeH264SessionParametersGetInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersGetInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_GET_INFO_KHR;
@@ -53985,6 +60039,13 @@ impl<'a> VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeH264SessionParametersFeedbackInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264SessionParametersFeedbackInfoKHR::default(),
+        VideoEncodeH264SessionParametersFeedbackInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_FEEDBACK_INFO_KHR;
@@ -54035,6 +60096,13 @@ impl<'a> VideoEncodeH264DpbSlotInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeH264DpbSlotInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264DpbSlotInfoKHR::default(),
+        VideoEncodeH264DpbSlotInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_DPB_SLOT_INFO_KHR;
 }
@@ -54084,6 +60152,13 @@ impl<'a> VideoEncodeH264PictureInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH264PictureInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264PictureInfoKHR::default(),
+        VideoEncodeH264PictureInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_PICTURE_INFO_KHR;
@@ -54140,6 +60215,13 @@ impl<'a> VideoEncodeH264ProfileInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeH264ProfileInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264ProfileInfoKHR::default(),
+        VideoEncodeH264ProfileInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_PROFILE_INFO_KHR;
 }
@@ -54183,6 +60265,13 @@ impl<'a> VideoEncodeH264NaluSliceInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH264NaluSliceInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264NaluSliceInfoKHR::default(),
+        VideoEncodeH264NaluSliceInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264NaluSliceInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_NALU_SLICE_INFO_KHR;
@@ -54237,6 +60326,13 @@ impl<'a> VideoEncodeH264RateControlInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeH264RateControlInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264RateControlInfoKHR::default(),
+        VideoEncodeH264RateControlInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264RateControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_RATE_CONTROL_INFO_KHR;
 }
@@ -54285,6 +60381,13 @@ impl VideoEncodeH264QpKHR {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkVideoEncodeH264QpKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264QpKHR::default(),
+        VideoEncodeH264QpKHR::const_default(),
+    );
+}
 impl VideoEncodeH264QpKHR {
     #[inline]
     pub fn qp_i(mut self, qp_i: i32) -> Self {
@@ -54317,6 +60420,13 @@ impl VideoEncodeH264FrameSizeKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkVideoEncodeH264FrameSizeKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264FrameSizeKHR::default(),
+        VideoEncodeH264FrameSizeKHR::const_default(),
+    );
 }
 impl VideoEncodeH264FrameSizeKHR {
     #[inline]
@@ -54370,6 +60480,13 @@ impl<'a> VideoEncodeH264GopRemainingFrameInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH264GopRemainingFrameInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264GopRemainingFrameInfoKHR::default(),
+        VideoEncodeH264GopRemainingFrameInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264GopRemainingFrameInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -54437,6 +60554,13 @@ impl<'a> VideoEncodeH264RateControlLayerInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH264RateControlLayerInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH264RateControlLayerInfoKHR::default(),
+        VideoEncodeH264RateControlLayerInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264RateControlLayerInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -54537,6 +60661,13 @@ impl<'a> VideoEncodeH265CapabilitiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH265CapabilitiesKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265CapabilitiesKHR::default(),
+        VideoEncodeH265CapabilitiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_CAPABILITIES_KHR;
@@ -54681,6 +60812,13 @@ impl<'a> VideoEncodeH265QualityLevelPropertiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeH265QualityLevelPropertiesKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265QualityLevelPropertiesKHR::default(),
+        VideoEncodeH265QualityLevelPropertiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265QualityLevelPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_QUALITY_LEVEL_PROPERTIES_KHR;
@@ -54775,6 +60913,13 @@ impl<'a> VideoEncodeH265SessionCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeH265SessionCreateInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265SessionCreateInfoKHR::default(),
+        VideoEncodeH265SessionCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_SESSION_CREATE_INFO_KHR;
 }
@@ -54830,6 +60975,13 @@ impl<'a> VideoEncodeH265SessionParametersAddInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH265SessionParametersAddInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265SessionParametersAddInfoKHR::default(),
+        VideoEncodeH265SessionParametersAddInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersAddInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -54894,6 +61046,13 @@ impl<'a> VideoEncodeH265SessionParametersCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH265SessionParametersCreateInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265SessionParametersCreateInfoKHR::default(),
+        VideoEncodeH265SessionParametersCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -54967,6 +61126,13 @@ impl<'a> VideoEncodeH265SessionParametersGetInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH265SessionParametersGetInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265SessionParametersGetInfoKHR::default(),
+        VideoEncodeH265SessionParametersGetInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersGetInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -55042,6 +61208,13 @@ impl<'a> VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeH265SessionParametersFeedbackInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265SessionParametersFeedbackInfoKHR::default(),
+        VideoEncodeH265SessionParametersFeedbackInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_FEEDBACK_INFO_KHR;
@@ -55101,6 +61274,13 @@ impl<'a> VideoEncodeH265PictureInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeH265PictureInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265PictureInfoKHR::default(),
+        VideoEncodeH265PictureInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_PICTURE_INFO_KHR;
 }
@@ -55152,6 +61332,13 @@ impl<'a> VideoEncodeH265NaluSliceSegmentInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH265NaluSliceSegmentInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265NaluSliceSegmentInfoKHR::default(),
+        VideoEncodeH265NaluSliceSegmentInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265NaluSliceSegmentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -55210,6 +61397,13 @@ impl<'a> VideoEncodeH265RateControlInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeH265RateControlInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265RateControlInfoKHR::default(),
+        VideoEncodeH265RateControlInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265RateControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_RATE_CONTROL_INFO_KHR;
 }
@@ -55258,6 +61452,13 @@ impl VideoEncodeH265QpKHR {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkVideoEncodeH265QpKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265QpKHR::default(),
+        VideoEncodeH265QpKHR::const_default(),
+    );
+}
 impl VideoEncodeH265QpKHR {
     #[inline]
     pub fn qp_i(mut self, qp_i: i32) -> Self {
@@ -55290,6 +61491,13 @@ impl VideoEncodeH265FrameSizeKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkVideoEncodeH265FrameSizeKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265FrameSizeKHR::default(),
+        VideoEncodeH265FrameSizeKHR::const_default(),
+    );
 }
 impl VideoEncodeH265FrameSizeKHR {
     #[inline]
@@ -55343,6 +61551,13 @@ impl<'a> VideoEncodeH265GopRemainingFrameInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH265GopRemainingFrameInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265GopRemainingFrameInfoKHR::default(),
+        VideoEncodeH265GopRemainingFrameInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265GopRemainingFrameInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -55410,6 +61625,13 @@ impl<'a> VideoEncodeH265RateControlLayerInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH265RateControlLayerInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265RateControlLayerInfoKHR::default(),
+        VideoEncodeH265RateControlLayerInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265RateControlLayerInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -55481,6 +61703,13 @@ impl<'a> VideoEncodeH265ProfileInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeH265ProfileInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265ProfileInfoKHR::default(),
+        VideoEncodeH265ProfileInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_PROFILE_INFO_KHR;
 }
@@ -55522,6 +61751,13 @@ impl<'a> VideoEncodeH265DpbSlotInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeH265DpbSlotInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeH265DpbSlotInfoKHR::default(),
+        VideoEncodeH265DpbSlotInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_DPB_SLOT_INFO_KHR;
@@ -55612,6 +61848,13 @@ impl<'a> VideoEncodeAV1CapabilitiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeAV1CapabilitiesKHR() {
+    bytes_struct_eq(
+        VideoEncodeAV1CapabilitiesKHR::default(),
+        VideoEncodeAV1CapabilitiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1CapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_AV1_CAPABILITIES_KHR;
@@ -55828,6 +62071,13 @@ impl<'a> VideoEncodeAV1QualityLevelPropertiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeAV1QualityLevelPropertiesKHR() {
+    bytes_struct_eq(
+        VideoEncodeAV1QualityLevelPropertiesKHR::default(),
+        VideoEncodeAV1QualityLevelPropertiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1QualityLevelPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_AV1_QUALITY_LEVEL_PROPERTIES_KHR;
@@ -55987,6 +62237,13 @@ impl<'a> PhysicalDeviceVideoEncodeAV1FeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceVideoEncodeAV1FeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceVideoEncodeAV1FeaturesKHR::default(),
+        PhysicalDeviceVideoEncodeAV1FeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_VIDEO_ENCODE_AV1_FEATURES_KHR;
@@ -56031,6 +62288,13 @@ impl<'a> VideoEncodeAV1SessionCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeAV1SessionCreateInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeAV1SessionCreateInfoKHR::default(),
+        VideoEncodeAV1SessionCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1SessionCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_AV1_SESSION_CREATE_INFO_KHR;
@@ -56083,6 +62347,13 @@ impl<'a> VideoEncodeAV1SessionParametersCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeAV1SessionParametersCreateInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeAV1SessionParametersCreateInfoKHR::default(),
+        VideoEncodeAV1SessionParametersCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -56149,6 +62420,13 @@ impl<'a> VideoEncodeAV1DpbSlotInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeAV1DpbSlotInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeAV1DpbSlotInfoKHR::default(),
+        VideoEncodeAV1DpbSlotInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1DpbSlotInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_AV1_DPB_SLOT_INFO_KHR;
 }
@@ -56204,6 +62482,13 @@ impl<'a> VideoEncodeAV1PictureInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeAV1PictureInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeAV1PictureInfoKHR::default(),
+        VideoEncodeAV1PictureInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1PictureInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_AV1_PICTURE_INFO_KHR;
@@ -56282,6 +62567,13 @@ impl<'a> VideoEncodeAV1ProfileInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeAV1ProfileInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeAV1ProfileInfoKHR::default(),
+        VideoEncodeAV1ProfileInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1ProfileInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_AV1_PROFILE_INFO_KHR;
 }
@@ -56331,6 +62623,13 @@ impl<'a> VideoEncodeAV1RateControlInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeAV1RateControlInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeAV1RateControlInfoKHR::default(),
+        VideoEncodeAV1RateControlInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1RateControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_AV1_RATE_CONTROL_INFO_KHR;
@@ -56383,6 +62682,13 @@ impl VideoEncodeAV1QIndexKHR {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkVideoEncodeAV1QIndexKHR() {
+    bytes_struct_eq(
+        VideoEncodeAV1QIndexKHR::default(),
+        VideoEncodeAV1QIndexKHR::const_default(),
+    );
+}
 impl VideoEncodeAV1QIndexKHR {
     #[inline]
     pub fn intra_q_index(mut self, intra_q_index: u32) -> Self {
@@ -56415,6 +62721,13 @@ impl VideoEncodeAV1FrameSizeKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkVideoEncodeAV1FrameSizeKHR() {
+    bytes_struct_eq(
+        VideoEncodeAV1FrameSizeKHR::default(),
+        VideoEncodeAV1FrameSizeKHR::const_default(),
+    );
 }
 impl VideoEncodeAV1FrameSizeKHR {
     #[inline]
@@ -56468,6 +62781,13 @@ impl<'a> VideoEncodeAV1GopRemainingFrameInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeAV1GopRemainingFrameInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeAV1GopRemainingFrameInfoKHR::default(),
+        VideoEncodeAV1GopRemainingFrameInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1GopRemainingFrameInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -56535,6 +62855,13 @@ impl<'a> VideoEncodeAV1RateControlLayerInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeAV1RateControlLayerInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeAV1RateControlLayerInfoKHR::default(),
+        VideoEncodeAV1RateControlLayerInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1RateControlLayerInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -56606,6 +62933,13 @@ impl<'a> PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceInheritedViewportScissorFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceInheritedViewportScissorFeaturesNV::default(),
+        PhysicalDeviceInheritedViewportScissorFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INHERITED_VIEWPORT_SCISSOR_FEATURES_NV;
@@ -56655,6 +62989,13 @@ impl<'a> CommandBufferInheritanceViewportScissorInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCommandBufferInheritanceViewportScissorInfoNV() {
+    bytes_struct_eq(
+        CommandBufferInheritanceViewportScissorInfoNV::default(),
+        CommandBufferInheritanceViewportScissorInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceViewportScissorInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -56711,6 +63052,13 @@ impl<'a> PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT::default(),
+        PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_YCBCR_2_PLANE_444_FORMATS_FEATURES_EXT;
@@ -56758,6 +63106,13 @@ impl<'a> PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceProvokingVertexFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceProvokingVertexFeaturesEXT::default(),
+        PhysicalDeviceProvokingVertexFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -56812,6 +63167,13 @@ impl<'a> PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceProvokingVertexPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceProvokingVertexPropertiesEXT::default(),
+        PhysicalDeviceProvokingVertexPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -56870,6 +63232,13 @@ impl<'a> PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineRasterizationProvokingVertexStateCreateInfoEXT() {
+    bytes_struct_eq(
+        PipelineRasterizationProvokingVertexStateCreateInfoEXT::default(),
+        PipelineRasterizationProvokingVertexStateCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_RASTERIZATION_PROVOKING_VERTEX_STATE_CREATE_INFO_EXT;
@@ -56922,6 +63291,13 @@ impl<'a> VideoEncodeIntraRefreshCapabilitiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeIntraRefreshCapabilitiesKHR() {
+    bytes_struct_eq(
+        VideoEncodeIntraRefreshCapabilitiesKHR::default(),
+        VideoEncodeIntraRefreshCapabilitiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeIntraRefreshCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -57002,6 +63378,13 @@ impl<'a> VideoEncodeSessionIntraRefreshCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeSessionIntraRefreshCreateInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeSessionIntraRefreshCreateInfoKHR::default(),
+        VideoEncodeSessionIntraRefreshCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionIntraRefreshCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_SESSION_INTRA_REFRESH_CREATE_INFO_KHR;
@@ -57052,6 +63435,13 @@ impl<'a> VideoEncodeIntraRefreshInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeIntraRefreshInfoKHR() {
+    bytes_struct_eq(
+        VideoEncodeIntraRefreshInfoKHR::default(),
+        VideoEncodeIntraRefreshInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeIntraRefreshInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_INTRA_REFRESH_INFO_KHR;
 }
@@ -57098,6 +63488,13 @@ impl<'a> VideoReferenceIntraRefreshInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoReferenceIntraRefreshInfoKHR() {
+    bytes_struct_eq(
+        VideoReferenceIntraRefreshInfoKHR::default(),
+        VideoReferenceIntraRefreshInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoReferenceIntraRefreshInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_REFERENCE_INTRA_REFRESH_INFO_KHR;
 }
@@ -57138,6 +63535,13 @@ impl<'a> PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR::default(),
+        PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -57187,6 +63591,13 @@ impl<'a> CuModuleCreateInfoNVX<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCuModuleCreateInfoNVX() {
+    bytes_struct_eq(
+        CuModuleCreateInfoNVX::default(),
+        CuModuleCreateInfoNVX::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CuModuleCreateInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CU_MODULE_CREATE_INFO_NVX;
 }
@@ -57227,6 +63638,13 @@ impl<'a> CuModuleTexturingModeCreateInfoNVX<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCuModuleTexturingModeCreateInfoNVX() {
+    bytes_struct_eq(
+        CuModuleTexturingModeCreateInfoNVX::default(),
+        CuModuleTexturingModeCreateInfoNVX::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CuModuleTexturingModeCreateInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CU_MODULE_TEXTURING_MODE_CREATE_INFO_NVX;
@@ -57270,6 +63688,13 @@ impl<'a> CuFunctionCreateInfoNVX<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCuFunctionCreateInfoNVX() {
+    bytes_struct_eq(
+        CuFunctionCreateInfoNVX::default(),
+        CuFunctionCreateInfoNVX::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CuFunctionCreateInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CU_FUNCTION_CREATE_INFO_NVX;
@@ -57345,6 +63770,10 @@ impl<'a> CuLaunchInfoNVX<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCuLaunchInfoNVX() {
+    bytes_struct_eq(CuLaunchInfoNVX::default(), CuLaunchInfoNVX::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for CuLaunchInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CU_LAUNCH_INFO_NVX;
@@ -57438,6 +63867,13 @@ impl<'a> PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDescriptorBufferFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceDescriptorBufferFeaturesEXT::default(),
+        PhysicalDeviceDescriptorBufferFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -57569,6 +64005,13 @@ impl<'a> PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDescriptorBufferPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceDescriptorBufferPropertiesEXT::default(),
+        PhysicalDeviceDescriptorBufferPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -57860,6 +64303,13 @@ impl<'a> PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT::default(),
+        PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_DENSITY_MAP_PROPERTIES_EXT;
@@ -57913,6 +64363,13 @@ impl<'a> DescriptorAddressInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDescriptorAddressInfoEXT() {
+    bytes_struct_eq(
+        DescriptorAddressInfoEXT::default(),
+        DescriptorAddressInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorAddressInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_ADDRESS_INFO_EXT;
 }
@@ -57965,6 +64422,13 @@ impl<'a> DescriptorBufferBindingInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDescriptorBufferBindingInfoEXT() {
+    bytes_struct_eq(
+        DescriptorBufferBindingInfoEXT::default(),
+        DescriptorBufferBindingInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorBufferBindingInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_BUFFER_BINDING_INFO_EXT;
 }
@@ -58009,6 +64473,13 @@ impl<'a> DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDescriptorBufferBindingPushDescriptorBufferHandleEXT() {
+    bytes_struct_eq(
+        DescriptorBufferBindingPushDescriptorBufferHandleEXT::default(),
+        DescriptorBufferBindingPushDescriptorBufferHandleEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -58088,6 +64559,13 @@ impl<'a> DescriptorGetInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDescriptorGetInfoEXT() {
+    bytes_struct_eq(
+        DescriptorGetInfoEXT::default(),
+        DescriptorGetInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorGetInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_GET_INFO_EXT;
 }
@@ -58133,6 +64611,13 @@ impl<'a> BufferCaptureDescriptorDataInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBufferCaptureDescriptorDataInfoEXT() {
+    bytes_struct_eq(
+        BufferCaptureDescriptorDataInfoEXT::default(),
+        BufferCaptureDescriptorDataInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
@@ -58173,6 +64658,13 @@ impl<'a> ImageCaptureDescriptorDataInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageCaptureDescriptorDataInfoEXT() {
+    bytes_struct_eq(
+        ImageCaptureDescriptorDataInfoEXT::default(),
+        ImageCaptureDescriptorDataInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
@@ -58212,6 +64704,13 @@ impl<'a> ImageViewCaptureDescriptorDataInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImageViewCaptureDescriptorDataInfoEXT() {
+    bytes_struct_eq(
+        ImageViewCaptureDescriptorDataInfoEXT::default(),
+        ImageViewCaptureDescriptorDataInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -58254,6 +64753,13 @@ impl<'a> SamplerCaptureDescriptorDataInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSamplerCaptureDescriptorDataInfoEXT() {
+    bytes_struct_eq(
+        SamplerCaptureDescriptorDataInfoEXT::default(),
+        SamplerCaptureDescriptorDataInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SamplerCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
 }
@@ -58295,6 +64801,13 @@ impl<'a> AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkAccelerationStructureCaptureDescriptorDataInfoEXT() {
+    bytes_struct_eq(
+        AccelerationStructureCaptureDescriptorDataInfoEXT::default(),
+        AccelerationStructureCaptureDescriptorDataInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -58347,6 +64860,13 @@ impl<'a> OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkOpaqueCaptureDescriptorDataCreateInfoEXT() {
+    bytes_struct_eq(
+        OpaqueCaptureDescriptorDataCreateInfoEXT::default(),
+        OpaqueCaptureDescriptorDataCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -58409,6 +64929,13 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderIntegerDotProductFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderIntegerDotProductFeatures::default(),
+        PhysicalDeviceShaderIntegerDotProductFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -58480,6 +65007,13 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderIntegerDotProductProperties() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderIntegerDotProductProperties::default(),
+        PhysicalDeviceShaderIntegerDotProductProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerDotProductProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -58800,6 +65334,13 @@ impl<'a> PhysicalDeviceDrmPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDrmPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceDrmPropertiesEXT::default(),
+        PhysicalDeviceDrmPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDrmPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_DRM_PROPERTIES_EXT;
 }
@@ -58866,6 +65407,13 @@ impl<'a> PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceFragmentShaderBarycentricFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentShaderBarycentricFeaturesKHR::default(),
+        PhysicalDeviceFragmentShaderBarycentricFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_KHR;
@@ -58914,6 +65462,13 @@ impl<'a> PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceFragmentShaderBarycentricPropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentShaderBarycentricPropertiesKHR::default(),
+        PhysicalDeviceFragmentShaderBarycentricPropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -58968,6 +65523,13 @@ impl<'a> PhysicalDeviceShaderFmaFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderFmaFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderFmaFeaturesKHR::default(),
+        PhysicalDeviceShaderFmaFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFmaFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_FMA_FEATURES_KHR;
 }
@@ -59021,6 +65583,13 @@ impl<'a> PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceRayTracingMotionBlurFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceRayTracingMotionBlurFeaturesNV::default(),
+        PhysicalDeviceRayTracingMotionBlurFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -59077,6 +65646,13 @@ impl<'a> PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceRayTracingValidationFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceRayTracingValidationFeaturesNV::default(),
+        PhysicalDeviceRayTracingValidationFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV;
@@ -59124,6 +65700,13 @@ impl<'a> PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV::default(),
+        PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -59188,6 +65771,13 @@ impl<'a> AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAccelerationStructureGeometryMotionTrianglesDataNV() {
+    bytes_struct_eq(
+        AccelerationStructureGeometryMotionTrianglesDataNV::default(),
+        AccelerationStructureGeometryMotionTrianglesDataNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_MOTION_TRIANGLES_DATA_NV;
@@ -59234,6 +65824,13 @@ impl<'a> AccelerationStructureMotionInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkAccelerationStructureMotionInfoNV() {
+    bytes_struct_eq(
+        AccelerationStructureMotionInfoNV::default(),
+        AccelerationStructureMotionInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureMotionInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_MOTION_INFO_NV;
@@ -59282,6 +65879,10 @@ impl SRTDataNV {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkSRTDataNV() {
+    bytes_struct_eq(SRTDataNV::default(), SRTDataNV::const_default());
 }
 impl SRTDataNV {
     #[inline]
@@ -59430,6 +66031,13 @@ impl AccelerationStructureMotionInstanceNV {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkAccelerationStructureMotionInstanceNV() {
+    bytes_struct_eq(
+        AccelerationStructureMotionInstanceNV::default(),
+        AccelerationStructureMotionInstanceNV::const_default(),
+    );
+}
 impl AccelerationStructureMotionInstanceNV {
     #[inline]
     pub fn ty(mut self, ty: AccelerationStructureMotionInstanceTypeNV) -> Self {
@@ -59481,6 +66089,13 @@ impl<'a> MemoryGetRemoteAddressInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryGetRemoteAddressInfoNV() {
+    bytes_struct_eq(
+        MemoryGetRemoteAddressInfoNV::default(),
+        MemoryGetRemoteAddressInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetRemoteAddressInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_REMOTE_ADDRESS_INFO_NV;
 }
@@ -59527,6 +66142,13 @@ impl<'a> ImportMemoryBufferCollectionFUCHSIA<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImportMemoryBufferCollectionFUCHSIA() {
+    bytes_struct_eq(
+        ImportMemoryBufferCollectionFUCHSIA::default(),
+        ImportMemoryBufferCollectionFUCHSIA::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryBufferCollectionFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_BUFFER_COLLECTION_FUCHSIA;
@@ -59575,6 +66197,13 @@ impl<'a> BufferCollectionImageCreateInfoFUCHSIA<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBufferCollectionImageCreateInfoFUCHSIA() {
+    bytes_struct_eq(
+        BufferCollectionImageCreateInfoFUCHSIA::default(),
+        BufferCollectionImageCreateInfoFUCHSIA::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionImageCreateInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -59625,6 +66254,13 @@ impl<'a> BufferCollectionBufferCreateInfoFUCHSIA<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBufferCollectionBufferCreateInfoFUCHSIA() {
+    bytes_struct_eq(
+        BufferCollectionBufferCreateInfoFUCHSIA::default(),
+        BufferCollectionBufferCreateInfoFUCHSIA::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionBufferCreateInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::BUFFER_COLLECTION_BUFFER_CREATE_INFO_FUCHSIA;
@@ -59671,6 +66307,13 @@ impl<'a> BufferCollectionCreateInfoFUCHSIA<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBufferCollectionCreateInfoFUCHSIA() {
+    bytes_struct_eq(
+        BufferCollectionCreateInfoFUCHSIA::default(),
+        BufferCollectionCreateInfoFUCHSIA::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionCreateInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_COLLECTION_CREATE_INFO_FUCHSIA;
@@ -59731,6 +66374,13 @@ impl<'a> BufferCollectionPropertiesFUCHSIA<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBufferCollectionPropertiesFUCHSIA() {
+    bytes_struct_eq(
+        BufferCollectionPropertiesFUCHSIA::default(),
+        BufferCollectionPropertiesFUCHSIA::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionPropertiesFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_COLLECTION_PROPERTIES_FUCHSIA;
@@ -59835,6 +66485,13 @@ impl<'a> BufferConstraintsInfoFUCHSIA<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBufferConstraintsInfoFUCHSIA() {
+    bytes_struct_eq(
+        BufferConstraintsInfoFUCHSIA::default(),
+        BufferConstraintsInfoFUCHSIA::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BufferConstraintsInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_CONSTRAINTS_INFO_FUCHSIA;
 }
@@ -59891,6 +66548,13 @@ impl<'a> SysmemColorSpaceFUCHSIA<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSysmemColorSpaceFUCHSIA() {
+    bytes_struct_eq(
+        SysmemColorSpaceFUCHSIA::default(),
+        SysmemColorSpaceFUCHSIA::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SysmemColorSpaceFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SYSMEM_COLOR_SPACE_FUCHSIA;
 }
@@ -59940,6 +66604,13 @@ impl<'a> ImageFormatConstraintsInfoFUCHSIA<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImageFormatConstraintsInfoFUCHSIA() {
+    bytes_struct_eq(
+        ImageFormatConstraintsInfoFUCHSIA::default(),
+        ImageFormatConstraintsInfoFUCHSIA::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageFormatConstraintsInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_FORMAT_CONSTRAINTS_INFO_FUCHSIA;
@@ -60011,6 +66682,13 @@ impl<'a> ImageConstraintsInfoFUCHSIA<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageConstraintsInfoFUCHSIA() {
+    bytes_struct_eq(
+        ImageConstraintsInfoFUCHSIA::default(),
+        ImageConstraintsInfoFUCHSIA::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageConstraintsInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CONSTRAINTS_INFO_FUCHSIA;
 }
@@ -60075,6 +66753,13 @@ impl<'a> BufferCollectionConstraintsInfoFUCHSIA<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBufferCollectionConstraintsInfoFUCHSIA() {
+    bytes_struct_eq(
+        BufferCollectionConstraintsInfoFUCHSIA::default(),
+        BufferCollectionConstraintsInfoFUCHSIA::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionConstraintsInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_COLLECTION_CONSTRAINTS_INFO_FUCHSIA;
@@ -60162,6 +66847,14 @@ impl<'a> CudaModuleCreateInfoNV<'a> {
     }
 }
 #[cfg(feature = "provisional")]
+#[test]
+fn eq_VkCudaModuleCreateInfoNV() {
+    bytes_struct_eq(
+        CudaModuleCreateInfoNV::default(),
+        CudaModuleCreateInfoNV::const_default(),
+    );
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for CudaModuleCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CUDA_MODULE_CREATE_INFO_NV;
 }
@@ -60210,6 +66903,14 @@ impl<'a> CudaFunctionCreateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[cfg(feature = "provisional")]
+#[test]
+fn eq_VkCudaFunctionCreateInfoNV() {
+    bytes_struct_eq(
+        CudaFunctionCreateInfoNV::default(),
+        CudaFunctionCreateInfoNV::const_default(),
+    );
 }
 #[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for CudaFunctionCreateInfoNV<'a> {
@@ -60292,6 +66993,14 @@ impl<'a> CudaLaunchInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[cfg(feature = "provisional")]
+#[test]
+fn eq_VkCudaLaunchInfoNV() {
+    bytes_struct_eq(
+        CudaLaunchInfoNV::default(),
+        CudaLaunchInfoNV::const_default(),
+    );
 }
 #[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for CudaLaunchInfoNV<'a> {
@@ -60382,6 +67091,13 @@ impl<'a> PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceRGBA10X6FormatsFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceRGBA10X6FormatsFeaturesEXT::default(),
+        PhysicalDeviceRGBA10X6FormatsFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT;
@@ -60432,6 +67148,13 @@ impl<'a> FormatProperties3<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkFormatProperties3() {
+    bytes_struct_eq(
+        FormatProperties3::default(),
+        FormatProperties3::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for FormatProperties3<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FORMAT_PROPERTIES_3;
@@ -60486,6 +67209,13 @@ impl<'a> DrmFormatModifierPropertiesList2EXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDrmFormatModifierPropertiesList2EXT() {
+    bytes_struct_eq(
+        DrmFormatModifierPropertiesList2EXT::default(),
+        DrmFormatModifierPropertiesList2EXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DrmFormatModifierPropertiesList2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_2_EXT;
 }
@@ -60516,6 +67246,13 @@ impl DrmFormatModifierProperties2EXT {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDrmFormatModifierProperties2EXT() {
+    bytes_struct_eq(
+        DrmFormatModifierProperties2EXT::default(),
+        DrmFormatModifierProperties2EXT::const_default(),
+    );
 }
 impl DrmFormatModifierProperties2EXT {
     #[inline]
@@ -60580,6 +67317,13 @@ impl<'a> AndroidHardwareBufferFormatProperties2ANDROID<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkAndroidHardwareBufferFormatProperties2ANDROID() {
+    bytes_struct_eq(
+        AndroidHardwareBufferFormatProperties2ANDROID::default(),
+        AndroidHardwareBufferFormatProperties2ANDROID::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatProperties2ANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -60675,6 +67419,13 @@ impl<'a> PipelineRenderingCreateInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineRenderingCreateInfo() {
+    bytes_struct_eq(
+        PipelineRenderingCreateInfo::default(),
+        PipelineRenderingCreateInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineRenderingCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_RENDERING_CREATE_INFO;
 }
@@ -60745,6 +67496,10 @@ impl<'a> RenderingInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkRenderingInfo() {
+    bytes_struct_eq(RenderingInfo::default(), RenderingInfo::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_INFO;
@@ -60821,6 +67576,13 @@ impl<'a> RenderingEndInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderingEndInfoKHR() {
+    bytes_struct_eq(
+        RenderingEndInfoKHR::default(),
+        RenderingEndInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderingEndInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_END_INFO_KHR;
 }
@@ -60884,6 +67646,13 @@ impl<'a> RenderingAttachmentInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkRenderingAttachmentInfo() {
+    bytes_struct_eq(
+        RenderingAttachmentInfo::default(),
+        RenderingAttachmentInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_ATTACHMENT_INFO;
@@ -60964,6 +67733,13 @@ impl<'a> RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderingFragmentShadingRateAttachmentInfoKHR() {
+    bytes_struct_eq(
+        RenderingFragmentShadingRateAttachmentInfoKHR::default(),
+        RenderingFragmentShadingRateAttachmentInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR;
@@ -61021,6 +67797,13 @@ impl<'a> RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderingFragmentDensityMapAttachmentInfoEXT() {
+    bytes_struct_eq(
+        RenderingFragmentDensityMapAttachmentInfoEXT::default(),
+        RenderingFragmentDensityMapAttachmentInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_INFO_EXT;
@@ -61067,6 +67850,13 @@ impl<'a> PhysicalDeviceDynamicRenderingFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDynamicRenderingFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceDynamicRenderingFeatures::default(),
+        PhysicalDeviceDynamicRenderingFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDynamicRenderingFeatures<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES;
@@ -61121,6 +67911,13 @@ impl<'a> CommandBufferInheritanceRenderingInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCommandBufferInheritanceRenderingInfo() {
+    bytes_struct_eq(
+        CommandBufferInheritanceRenderingInfo::default(),
+        CommandBufferInheritanceRenderingInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceRenderingInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_INHERITANCE_RENDERING_INFO;
@@ -61196,6 +67993,13 @@ impl<'a> AttachmentSampleCountInfoAMD<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAttachmentSampleCountInfoAMD() {
+    bytes_struct_eq(
+        AttachmentSampleCountInfoAMD::default(),
+        AttachmentSampleCountInfoAMD::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AttachmentSampleCountInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_SAMPLE_COUNT_INFO_AMD;
 }
@@ -61252,6 +68056,13 @@ impl<'a> MultiviewPerViewAttributesInfoNVX<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMultiviewPerViewAttributesInfoNVX() {
+    bytes_struct_eq(
+        MultiviewPerViewAttributesInfoNVX::default(),
+        MultiviewPerViewAttributesInfoNVX::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MultiviewPerViewAttributesInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MULTIVIEW_PER_VIEW_ATTRIBUTES_INFO_NVX;
 }
@@ -61303,6 +68114,13 @@ impl<'a> PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceImageViewMinLodFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceImageViewMinLodFeaturesEXT::default(),
+        PhysicalDeviceImageViewMinLodFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT;
@@ -61345,6 +68163,13 @@ impl<'a> ImageViewMinLodCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImageViewMinLodCreateInfoEXT() {
+    bytes_struct_eq(
+        ImageViewMinLodCreateInfoEXT::default(),
+        ImageViewMinLodCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewMinLodCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_MIN_LOD_CREATE_INFO_EXT;
@@ -61390,6 +68215,13 @@ impl<'a> PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT::default(),
+        PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a>
@@ -61464,6 +68296,13 @@ impl<'a> PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceLinearColorAttachmentFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceLinearColorAttachmentFeaturesNV::default(),
+        PhysicalDeviceLinearColorAttachmentFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV;
@@ -61509,6 +68348,13 @@ impl<'a> PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT::default(),
+        PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -61556,6 +68402,13 @@ impl<'a> PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDevicePipelineBinaryFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDevicePipelineBinaryFeaturesKHR::default(),
+        PhysicalDevicePipelineBinaryFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PIPELINE_BINARY_FEATURES_KHR;
@@ -61598,6 +68451,13 @@ impl<'a> DevicePipelineBinaryInternalCacheControlKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDevicePipelineBinaryInternalCacheControlKHR() {
+    bytes_struct_eq(
+        DevicePipelineBinaryInternalCacheControlKHR::default(),
+        DevicePipelineBinaryInternalCacheControlKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DevicePipelineBinaryInternalCacheControlKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -61648,6 +68508,13 @@ impl<'a> PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePipelineBinaryPropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDevicePipelineBinaryPropertiesKHR::default(),
+        PhysicalDevicePipelineBinaryPropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -61729,6 +68596,13 @@ impl<'a> PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceGraphicsPipelineLibraryPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT::default(),
+        PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_PROPERTIES_EXT;
@@ -61786,6 +68660,13 @@ impl<'a> GraphicsPipelineLibraryCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkGraphicsPipelineLibraryCreateInfoEXT() {
+    bytes_struct_eq(
+        GraphicsPipelineLibraryCreateInfoEXT::default(),
+        GraphicsPipelineLibraryCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineLibraryCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GRAPHICS_PIPELINE_LIBRARY_CREATE_INFO_EXT;
 }
@@ -61828,6 +68709,13 @@ impl<'a> PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM::default(),
+        PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM<'a>
@@ -61884,6 +68772,13 @@ impl<'a> DataGraphPipelineNeuralStatisticsCreateInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphPipelineNeuralStatisticsCreateInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineNeuralStatisticsCreateInfoARM::default(),
+        DataGraphPipelineNeuralStatisticsCreateInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineNeuralStatisticsCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_NEURAL_STATISTICS_CREATE_INFO_ARM;
@@ -61929,6 +68824,13 @@ impl<'a> DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphPipelineSessionNeuralStatisticsCreateInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineSessionNeuralStatisticsCreateInfoARM::default(),
+        DataGraphPipelineSessionNeuralStatisticsCreateInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_SESSION_NEURAL_STATISTICS_CREATE_INFO_ARM;
@@ -61973,6 +68875,13 @@ impl<'a> PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDescriptorSetHostMappingFeaturesVALVE() {
+    bytes_struct_eq(
+        PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE::default(),
+        PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -62025,6 +68934,13 @@ impl<'a> DescriptorSetBindingReferenceVALVE<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDescriptorSetBindingReferenceVALVE() {
+    bytes_struct_eq(
+        DescriptorSetBindingReferenceVALVE::default(),
+        DescriptorSetBindingReferenceVALVE::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetBindingReferenceVALVE<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_BINDING_REFERENCE_VALVE;
 }
@@ -62071,6 +68987,13 @@ impl<'a> DescriptorSetLayoutHostMappingInfoVALVE<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDescriptorSetLayoutHostMappingInfoVALVE() {
+    bytes_struct_eq(
+        DescriptorSetLayoutHostMappingInfoVALVE::default(),
+        DescriptorSetLayoutHostMappingInfoVALVE::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutHostMappingInfoVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -62121,6 +69044,13 @@ impl<'a> PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceNestedCommandBufferFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceNestedCommandBufferFeaturesEXT::default(),
+        PhysicalDeviceNestedCommandBufferFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -62184,6 +69114,13 @@ impl<'a> PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceNestedCommandBufferPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceNestedCommandBufferPropertiesEXT::default(),
+        PhysicalDeviceNestedCommandBufferPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_PROPERTIES_EXT;
@@ -62232,6 +69169,13 @@ impl<'a> PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderModuleIdentifierFeaturesEXT::default(),
+        PhysicalDeviceShaderModuleIdentifierFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_FEATURES_EXT;
@@ -62277,6 +69221,13 @@ impl<'a> PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderModuleIdentifierPropertiesEXT::default(),
+        PhysicalDeviceShaderModuleIdentifierPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -62327,6 +69278,13 @@ impl<'a> PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineShaderStageModuleIdentifierCreateInfoEXT() {
+    bytes_struct_eq(
+        PipelineShaderStageModuleIdentifierCreateInfoEXT::default(),
+        PipelineShaderStageModuleIdentifierCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -62386,6 +69344,13 @@ impl<'a> ShaderModuleIdentifierEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkShaderModuleIdentifierEXT() {
+    bytes_struct_eq(
+        ShaderModuleIdentifierEXT::default(),
+        ShaderModuleIdentifierEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ShaderModuleIdentifierEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_MODULE_IDENTIFIER_EXT;
 }
@@ -62434,6 +69399,13 @@ impl<'a> ImageCompressionControlEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImageCompressionControlEXT() {
+    bytes_struct_eq(
+        ImageCompressionControlEXT::default(),
+        ImageCompressionControlEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCompressionControlEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_COMPRESSION_CONTROL_EXT;
@@ -62487,6 +69459,13 @@ impl<'a> PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceImageCompressionControlFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceImageCompressionControlFeaturesEXT::default(),
+        PhysicalDeviceImageCompressionControlFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT;
@@ -62534,6 +69513,13 @@ impl<'a> ImageCompressionPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImageCompressionPropertiesEXT() {
+    bytes_struct_eq(
+        ImageCompressionPropertiesEXT::default(),
+        ImageCompressionPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCompressionPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_COMPRESSION_PROPERTIES_EXT;
@@ -62589,6 +69575,13 @@ impl<'a> PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT::default(),
+        PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a>
 {
@@ -62643,6 +69636,13 @@ impl<'a> ImageSubresource2<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageSubresource2() {
+    bytes_struct_eq(
+        ImageSubresource2::default(),
+        ImageSubresource2::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageSubresource2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_SUBRESOURCE_2;
 }
@@ -62682,6 +69682,13 @@ impl<'a> SubresourceLayout2<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSubresourceLayout2() {
+    bytes_struct_eq(
+        SubresourceLayout2::default(),
+        SubresourceLayout2::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SubresourceLayout2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBRESOURCE_LAYOUT_2;
@@ -62723,6 +69730,13 @@ impl<'a> RenderPassCreationControlEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderPassCreationControlEXT() {
+    bytes_struct_eq(
+        RenderPassCreationControlEXT::default(),
+        RenderPassCreationControlEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreationControlEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_CREATION_CONTROL_EXT;
 }
@@ -62748,6 +69762,13 @@ impl RenderPassCreationFeedbackInfoEXT {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkRenderPassCreationFeedbackInfoEXT() {
+    bytes_struct_eq(
+        RenderPassCreationFeedbackInfoEXT::default(),
+        RenderPassCreationFeedbackInfoEXT::const_default(),
+    );
 }
 impl RenderPassCreationFeedbackInfoEXT {
     #[inline]
@@ -62785,6 +69806,13 @@ impl<'a> RenderPassCreationFeedbackCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkRenderPassCreationFeedbackCreateInfoEXT() {
+    bytes_struct_eq(
+        RenderPassCreationFeedbackCreateInfoEXT::default(),
+        RenderPassCreationFeedbackCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreationFeedbackCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -62835,6 +69863,13 @@ impl RenderPassSubpassFeedbackInfoEXT {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkRenderPassSubpassFeedbackInfoEXT() {
+    bytes_struct_eq(
+        RenderPassSubpassFeedbackInfoEXT::default(),
+        RenderPassSubpassFeedbackInfoEXT::const_default(),
+    );
 }
 impl RenderPassSubpassFeedbackInfoEXT {
     #[inline]
@@ -62889,6 +69924,13 @@ impl<'a> RenderPassSubpassFeedbackCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderPassSubpassFeedbackCreateInfoEXT() {
+    bytes_struct_eq(
+        RenderPassSubpassFeedbackCreateInfoEXT::default(),
+        RenderPassSubpassFeedbackCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassSubpassFeedbackCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT;
@@ -62933,6 +69975,13 @@ impl<'a> PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceSubpassMergeFeedbackFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceSubpassMergeFeedbackFeaturesEXT::default(),
+        PhysicalDeviceSubpassMergeFeedbackFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -63018,6 +70067,13 @@ impl<'a> MicromapBuildInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkMicromapBuildInfoEXT() {
+    bytes_struct_eq(
+        MicromapBuildInfoEXT::default(),
+        MicromapBuildInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for MicromapBuildInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_BUILD_INFO_EXT;
@@ -63116,6 +70172,13 @@ impl<'a> AccelerationStructureGeometryMicromapDataKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAccelerationStructureGeometryMicromapDataKHR() {
+    bytes_struct_eq(
+        AccelerationStructureGeometryMicromapDataKHR::default(),
+        AccelerationStructureGeometryMicromapDataKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryMicromapDataKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_MICROMAP_DATA_KHR;
@@ -63193,6 +70256,13 @@ impl<'a> MicromapCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMicromapCreateInfoEXT() {
+    bytes_struct_eq(
+        MicromapCreateInfoEXT::default(),
+        MicromapCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MicromapCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_CREATE_INFO_EXT;
 }
@@ -63258,6 +70328,13 @@ impl<'a> MicromapVersionInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMicromapVersionInfoEXT() {
+    bytes_struct_eq(
+        MicromapVersionInfoEXT::default(),
+        MicromapVersionInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MicromapVersionInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_VERSION_INFO_EXT;
 }
@@ -63301,6 +70378,13 @@ impl<'a> CopyMicromapInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCopyMicromapInfoEXT() {
+    bytes_struct_eq(
+        CopyMicromapInfoEXT::default(),
+        CopyMicromapInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMicromapInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MICROMAP_INFO_EXT;
@@ -63367,6 +70451,13 @@ impl<'a> CopyMicromapToMemoryInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCopyMicromapToMemoryInfoEXT() {
+    bytes_struct_eq(
+        CopyMicromapToMemoryInfoEXT::default(),
+        CopyMicromapToMemoryInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyMicromapToMemoryInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MICROMAP_TO_MEMORY_INFO_EXT;
 }
@@ -63432,6 +70523,13 @@ impl<'a> CopyMemoryToMicromapInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCopyMemoryToMicromapInfoEXT() {
+    bytes_struct_eq(
+        CopyMemoryToMicromapInfoEXT::default(),
+        CopyMemoryToMicromapInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToMicromapInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_MEMORY_TO_MICROMAP_INFO_EXT;
 }
@@ -63486,6 +70584,13 @@ impl<'a> MicromapBuildSizesInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMicromapBuildSizesInfoEXT() {
+    bytes_struct_eq(
+        MicromapBuildSizesInfoEXT::default(),
+        MicromapBuildSizesInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MicromapBuildSizesInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_BUILD_SIZES_INFO_EXT;
 }
@@ -63522,6 +70627,13 @@ impl MicromapUsageKHR {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkMicromapUsageKHR() {
+    bytes_struct_eq(
+        MicromapUsageKHR::default(),
+        MicromapUsageKHR::const_default(),
+    );
+}
 impl MicromapUsageKHR {
     #[inline]
     pub fn count(mut self, count: u32) -> Self {
@@ -63555,6 +70667,13 @@ impl MicromapUsageEXT {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkMicromapUsageEXT() {
+    bytes_struct_eq(
+        MicromapUsageEXT::default(),
+        MicromapUsageEXT::const_default(),
+    );
+}
 impl MicromapUsageEXT {
     #[inline]
     pub fn count(mut self, count: u32) -> Self {
@@ -63587,6 +70706,13 @@ impl MicromapTriangleKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkMicromapTriangleKHR() {
+    bytes_struct_eq(
+        MicromapTriangleKHR::default(),
+        MicromapTriangleKHR::const_default(),
+    );
 }
 impl MicromapTriangleKHR {
     #[inline]
@@ -63635,6 +70761,13 @@ impl<'a> PhysicalDeviceOpacityMicromapFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceOpacityMicromapFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceOpacityMicromapFeaturesKHR::default(),
+        PhysicalDeviceOpacityMicromapFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_OPACITY_MICROMAP_FEATURES_KHR;
@@ -63681,6 +70814,13 @@ impl<'a> PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceOpacityMicromapFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceOpacityMicromapFeaturesEXT::default(),
+        PhysicalDeviceOpacityMicromapFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -63740,6 +70880,13 @@ impl<'a> PhysicalDeviceOpacityMicromapPropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceOpacityMicromapPropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceOpacityMicromapPropertiesKHR::default(),
+        PhysicalDeviceOpacityMicromapPropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -63813,6 +70960,13 @@ impl<'a> PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceOpacityMicromapPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceOpacityMicromapPropertiesEXT::default(),
+        PhysicalDeviceOpacityMicromapPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_OPACITY_MICROMAP_PROPERTIES_EXT;
@@ -63876,6 +71030,13 @@ impl<'a> AccelerationStructureTrianglesOpacityMicromapKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkAccelerationStructureTrianglesOpacityMicromapKHR() {
+    bytes_struct_eq(
+        AccelerationStructureTrianglesOpacityMicromapKHR::default(),
+        AccelerationStructureTrianglesOpacityMicromapKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesOpacityMicromapKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -63977,6 +71138,13 @@ impl<'a> AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAccelerationStructureTrianglesOpacityMicromapEXT() {
+    bytes_struct_eq(
+        AccelerationStructureTrianglesOpacityMicromapEXT::default(),
+        AccelerationStructureTrianglesOpacityMicromapEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT;
@@ -64065,6 +71233,14 @@ impl<'a> PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
     }
 }
 #[cfg(feature = "provisional")]
+#[test]
+fn eq_VkPhysicalDeviceDisplacementMicromapFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceDisplacementMicromapFeaturesNV::default(),
+        PhysicalDeviceDisplacementMicromapFeaturesNV::const_default(),
+    );
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV;
@@ -64118,6 +71294,14 @@ impl<'a> PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[cfg(feature = "provisional")]
+#[test]
+fn eq_VkPhysicalDeviceDisplacementMicromapPropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceDisplacementMicromapPropertiesNV::default(),
+        PhysicalDeviceDisplacementMicromapPropertiesNV::const_default(),
+    );
 }
 #[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
@@ -64245,6 +71429,14 @@ impl<'a> AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[cfg(feature = "provisional")]
+#[test]
+fn eq_VkAccelerationStructureTrianglesDisplacementMicromapNV() {
+    bytes_struct_eq(
+        AccelerationStructureTrianglesDisplacementMicromapNV::default(),
+        AccelerationStructureTrianglesDisplacementMicromapNV::const_default(),
+    );
 }
 #[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
@@ -64384,6 +71576,13 @@ impl<'a> PipelinePropertiesIdentifierEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelinePropertiesIdentifierEXT() {
+    bytes_struct_eq(
+        PipelinePropertiesIdentifierEXT::default(),
+        PipelinePropertiesIdentifierEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelinePropertiesIdentifierEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_PROPERTIES_IDENTIFIER_EXT;
 }
@@ -64423,6 +71622,13 @@ impl<'a> PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePipelinePropertiesFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDevicePipelinePropertiesFeaturesEXT::default(),
+        PhysicalDevicePipelinePropertiesFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -64469,6 +71675,13 @@ impl<'a> PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD::default(),
+        PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a>
@@ -64524,6 +71737,13 @@ impl<'a> ExternalMemoryAcquireUnmodifiedEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExternalMemoryAcquireUnmodifiedEXT() {
+    bytes_struct_eq(
+        ExternalMemoryAcquireUnmodifiedEXT::default(),
+        ExternalMemoryAcquireUnmodifiedEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryAcquireUnmodifiedEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_EXT;
 }
@@ -64567,6 +71787,13 @@ impl<'a> ExportMetalObjectCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkExportMetalObjectCreateInfoEXT() {
+    bytes_struct_eq(
+        ExportMetalObjectCreateInfoEXT::default(),
+        ExportMetalObjectCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalObjectCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_OBJECT_CREATE_INFO_EXT;
@@ -64613,6 +71840,13 @@ impl<'a> ExportMetalObjectsInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExportMetalObjectsInfoEXT() {
+    bytes_struct_eq(
+        ExportMetalObjectsInfoEXT::default(),
+        ExportMetalObjectsInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalObjectsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_OBJECTS_INFO_EXT;
 }
@@ -64646,6 +71880,13 @@ impl<'a> ExportMetalDeviceInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkExportMetalDeviceInfoEXT() {
+    bytes_struct_eq(
+        ExportMetalDeviceInfoEXT::default(),
+        ExportMetalDeviceInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalDeviceInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_DEVICE_INFO_EXT;
@@ -64689,6 +71930,13 @@ impl<'a> ExportMetalCommandQueueInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkExportMetalCommandQueueInfoEXT() {
+    bytes_struct_eq(
+        ExportMetalCommandQueueInfoEXT::default(),
+        ExportMetalCommandQueueInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalCommandQueueInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_COMMAND_QUEUE_INFO_EXT;
@@ -64738,6 +71986,13 @@ impl<'a> ExportMetalBufferInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExportMetalBufferInfoEXT() {
+    bytes_struct_eq(
+        ExportMetalBufferInfoEXT::default(),
+        ExportMetalBufferInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalBufferInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_BUFFER_INFO_EXT;
 }
@@ -64783,6 +72038,13 @@ impl<'a> ImportMetalBufferInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImportMetalBufferInfoEXT() {
+    bytes_struct_eq(
+        ImportMetalBufferInfoEXT::default(),
+        ImportMetalBufferInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalBufferInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_METAL_BUFFER_INFO_EXT;
@@ -64832,6 +72094,13 @@ impl<'a> ExportMetalTextureInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkExportMetalTextureInfoEXT() {
+    bytes_struct_eq(
+        ExportMetalTextureInfoEXT::default(),
+        ExportMetalTextureInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalTextureInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_TEXTURE_INFO_EXT;
@@ -64896,6 +72165,13 @@ impl<'a> ImportMetalTextureInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImportMetalTextureInfoEXT() {
+    bytes_struct_eq(
+        ImportMetalTextureInfoEXT::default(),
+        ImportMetalTextureInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalTextureInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_METAL_TEXTURE_INFO_EXT;
 }
@@ -64944,6 +72220,13 @@ impl<'a> ExportMetalIOSurfaceInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExportMetalIOSurfaceInfoEXT() {
+    bytes_struct_eq(
+        ExportMetalIOSurfaceInfoEXT::default(),
+        ExportMetalIOSurfaceInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalIOSurfaceInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_IO_SURFACE_INFO_EXT;
 }
@@ -64990,6 +72273,13 @@ impl<'a> ImportMetalIOSurfaceInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImportMetalIOSurfaceInfoEXT() {
+    bytes_struct_eq(
+        ImportMetalIOSurfaceInfoEXT::default(),
+        ImportMetalIOSurfaceInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalIOSurfaceInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_METAL_IO_SURFACE_INFO_EXT;
 }
@@ -65034,6 +72324,13 @@ impl<'a> ExportMetalSharedEventInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkExportMetalSharedEventInfoEXT() {
+    bytes_struct_eq(
+        ExportMetalSharedEventInfoEXT::default(),
+        ExportMetalSharedEventInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalSharedEventInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXPORT_METAL_SHARED_EVENT_INFO_EXT;
@@ -65086,6 +72383,13 @@ impl<'a> ImportMetalSharedEventInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImportMetalSharedEventInfoEXT() {
+    bytes_struct_eq(
+        ImportMetalSharedEventInfoEXT::default(),
+        ImportMetalSharedEventInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalSharedEventInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_METAL_SHARED_EVENT_INFO_EXT;
 }
@@ -65127,6 +72431,13 @@ impl<'a> PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceNonSeamlessCubeMapFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceNonSeamlessCubeMapFeaturesEXT::default(),
+        PhysicalDeviceNonSeamlessCubeMapFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -65173,6 +72484,13 @@ impl<'a> PhysicalDevicePipelineRobustnessFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePipelineRobustnessFeatures() {
+    bytes_struct_eq(
+        PhysicalDevicePipelineRobustnessFeatures::default(),
+        PhysicalDevicePipelineRobustnessFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineRobustnessFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -65222,6 +72540,13 @@ impl<'a> PipelineRobustnessCreateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPipelineRobustnessCreateInfo() {
+    bytes_struct_eq(
+        PipelineRobustnessCreateInfo::default(),
+        PipelineRobustnessCreateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRobustnessCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_ROBUSTNESS_CREATE_INFO;
@@ -65287,6 +72612,13 @@ impl<'a> PhysicalDevicePipelineRobustnessProperties<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePipelineRobustnessProperties() {
+    bytes_struct_eq(
+        PhysicalDevicePipelineRobustnessProperties::default(),
+        PhysicalDevicePipelineRobustnessProperties::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineRobustnessProperties<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -65364,6 +72696,13 @@ impl<'a> ImageViewSampleWeightCreateInfoQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageViewSampleWeightCreateInfoQCOM() {
+    bytes_struct_eq(
+        ImageViewSampleWeightCreateInfoQCOM::default(),
+        ImageViewSampleWeightCreateInfoQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageViewSampleWeightCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM;
 }
@@ -65415,6 +72754,13 @@ impl<'a> PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM::default(),
+        PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_MULTIPLE_WAIT_QUEUES_FEATURES_QCOM;
@@ -65464,6 +72810,13 @@ impl<'a> PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM::default(),
+        PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_MULTIPLE_WAIT_QUEUES_PROPERTIES_QCOM;
@@ -65512,6 +72865,13 @@ impl<'a> PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceImageProcessingFeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceImageProcessingFeaturesQCOM::default(),
+        PhysicalDeviceImageProcessingFeaturesQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -65571,6 +72931,13 @@ impl<'a> PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceImageProcessingPropertiesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceImageProcessingPropertiesQCOM::default(),
+        PhysicalDeviceImageProcessingPropertiesQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -65632,6 +72999,13 @@ impl<'a> PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceTilePropertiesFeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceTilePropertiesFeaturesQCOM::default(),
+        PhysicalDeviceTilePropertiesFeaturesQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM;
@@ -65678,6 +73052,13 @@ impl<'a> TilePropertiesQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkTilePropertiesQCOM() {
+    bytes_struct_eq(
+        TilePropertiesQCOM::default(),
+        TilePropertiesQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for TilePropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TILE_PROPERTIES_QCOM;
@@ -65729,6 +73110,13 @@ impl<'a> TileMemoryBindInfoQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkTileMemoryBindInfoQCOM() {
+    bytes_struct_eq(
+        TileMemoryBindInfoQCOM::default(),
+        TileMemoryBindInfoQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for TileMemoryBindInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TILE_MEMORY_BIND_INFO_QCOM;
 }
@@ -65769,6 +73157,13 @@ impl<'a> PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceAmigoProfilingFeaturesSEC() {
+    bytes_struct_eq(
+        PhysicalDeviceAmigoProfilingFeaturesSEC::default(),
+        PhysicalDeviceAmigoProfilingFeaturesSEC::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -65815,6 +73210,13 @@ impl<'a> AmigoProfilingSubmitInfoSEC<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAmigoProfilingSubmitInfoSEC() {
+    bytes_struct_eq(
+        AmigoProfilingSubmitInfoSEC::default(),
+        AmigoProfilingSubmitInfoSEC::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AmigoProfilingSubmitInfoSEC<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::AMIGO_PROFILING_SUBMIT_INFO_SEC;
 }
@@ -65860,6 +73262,13 @@ impl<'a> PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT::default(),
+        PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -65913,6 +73322,13 @@ impl<'a> AttachmentFeedbackLoopInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAttachmentFeedbackLoopInfoEXT() {
+    bytes_struct_eq(
+        AttachmentFeedbackLoopInfoEXT::default(),
+        AttachmentFeedbackLoopInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AttachmentFeedbackLoopInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ATTACHMENT_FEEDBACK_LOOP_INFO_EXT;
 }
@@ -65953,6 +73369,13 @@ impl<'a> PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceAddressBindingReportFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceAddressBindingReportFeaturesEXT::default(),
+        PhysicalDeviceAddressBindingReportFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -66000,6 +73423,13 @@ impl<'a> RenderingAttachmentFlagsInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderingAttachmentFlagsInfoKHR() {
+    bytes_struct_eq(
+        RenderingAttachmentFlagsInfoKHR::default(),
+        RenderingAttachmentFlagsInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentFlagsInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_ATTACHMENT_FLAGS_INFO_KHR;
 }
@@ -66044,6 +73474,13 @@ impl<'a> ResolveImageModeInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkResolveImageModeInfoKHR() {
+    bytes_struct_eq(
+        ResolveImageModeInfoKHR::default(),
+        ResolveImageModeInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ResolveImageModeInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RESOLVE_IMAGE_MODE_INFO_KHR;
@@ -66101,6 +73538,13 @@ impl<'a> DeviceAddressBindingCallbackDataEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceAddressBindingCallbackDataEXT() {
+    bytes_struct_eq(
+        DeviceAddressBindingCallbackDataEXT::default(),
+        DeviceAddressBindingCallbackDataEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceAddressBindingCallbackDataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_ADDRESS_BINDING_CALLBACK_DATA_EXT;
@@ -66160,6 +73604,13 @@ impl<'a> PhysicalDeviceOpticalFlowFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceOpticalFlowFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceOpticalFlowFeaturesNV::default(),
+        PhysicalDeviceOpticalFlowFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpticalFlowFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_OPTICAL_FLOW_FEATURES_NV;
@@ -66222,6 +73673,13 @@ impl<'a> PhysicalDeviceOpticalFlowPropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceOpticalFlowPropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceOpticalFlowPropertiesNV::default(),
+        PhysicalDeviceOpticalFlowPropertiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpticalFlowPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_OPTICAL_FLOW_PROPERTIES_NV;
@@ -66320,6 +73778,13 @@ impl<'a> OpticalFlowImageFormatInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkOpticalFlowImageFormatInfoNV() {
+    bytes_struct_eq(
+        OpticalFlowImageFormatInfoNV::default(),
+        OpticalFlowImageFormatInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowImageFormatInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_IMAGE_FORMAT_INFO_NV;
 }
@@ -66361,6 +73826,13 @@ impl<'a> OpticalFlowImageFormatPropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkOpticalFlowImageFormatPropertiesNV() {
+    bytes_struct_eq(
+        OpticalFlowImageFormatPropertiesNV::default(),
+        OpticalFlowImageFormatPropertiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowImageFormatPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_IMAGE_FORMAT_PROPERTIES_NV;
@@ -66417,6 +73889,13 @@ impl<'a> OpticalFlowSessionCreateInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkOpticalFlowSessionCreateInfoNV() {
+    bytes_struct_eq(
+        OpticalFlowSessionCreateInfoNV::default(),
+        OpticalFlowSessionCreateInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowSessionCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_SESSION_CREATE_INFO_NV;
@@ -66502,6 +73981,13 @@ impl<'a> OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkOpticalFlowSessionCreatePrivateDataInfoNV() {
+    bytes_struct_eq(
+        OpticalFlowSessionCreatePrivateDataInfoNV::default(),
+        OpticalFlowSessionCreatePrivateDataInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::OPTICAL_FLOW_SESSION_CREATE_PRIVATE_DATA_INFO_NV;
@@ -66561,6 +74047,13 @@ impl<'a> OpticalFlowExecuteInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkOpticalFlowExecuteInfoNV() {
+    bytes_struct_eq(
+        OpticalFlowExecuteInfoNV::default(),
+        OpticalFlowExecuteInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowExecuteInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_EXECUTE_INFO_NV;
 }
@@ -66609,6 +74102,13 @@ impl<'a> PhysicalDeviceFaultFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceFaultFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceFaultFeaturesEXT::default(),
+        PhysicalDeviceFaultFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FAULT_FEATURES_EXT;
 }
@@ -66641,6 +74141,13 @@ impl DeviceFaultAddressInfoKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDeviceFaultAddressInfoKHR() {
+    bytes_struct_eq(
+        DeviceFaultAddressInfoKHR::default(),
+        DeviceFaultAddressInfoKHR::const_default(),
+    );
 }
 impl DeviceFaultAddressInfoKHR {
     #[inline]
@@ -66693,6 +74200,13 @@ impl DeviceFaultVendorInfoKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDeviceFaultVendorInfoKHR() {
+    bytes_struct_eq(
+        DeviceFaultVendorInfoKHR::default(),
+        DeviceFaultVendorInfoKHR::const_default(),
+    );
 }
 impl DeviceFaultVendorInfoKHR {
     #[inline]
@@ -66771,6 +74285,13 @@ impl<'a> DeviceFaultInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDeviceFaultInfoKHR() {
+    bytes_struct_eq(
+        DeviceFaultInfoKHR::default(),
+        DeviceFaultInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_FAULT_INFO_KHR;
 }
@@ -66847,6 +74368,13 @@ impl<'a> DeviceFaultDebugInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDeviceFaultDebugInfoKHR() {
+    bytes_struct_eq(
+        DeviceFaultDebugInfoKHR::default(),
+        DeviceFaultDebugInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultDebugInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_FAULT_DEBUG_INFO_KHR;
 }
@@ -66891,6 +74419,13 @@ impl<'a> DeviceFaultCountsEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceFaultCountsEXT() {
+    bytes_struct_eq(
+        DeviceFaultCountsEXT::default(),
+        DeviceFaultCountsEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultCountsEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_FAULT_COUNTS_EXT;
@@ -66959,6 +74494,13 @@ impl<'a> DeviceFaultInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceFaultInfoEXT() {
+    bytes_struct_eq(
+        DeviceFaultInfoEXT::default(),
+        DeviceFaultInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_FAULT_INFO_EXT;
@@ -67032,6 +74574,13 @@ impl DeviceFaultVendorBinaryHeaderVersionOneKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDeviceFaultVendorBinaryHeaderVersionOneKHR() {
+    bytes_struct_eq(
+        DeviceFaultVendorBinaryHeaderVersionOneKHR::default(),
+        DeviceFaultVendorBinaryHeaderVersionOneKHR::const_default(),
+    );
 }
 impl DeviceFaultVendorBinaryHeaderVersionOneKHR {
     #[inline]
@@ -67129,6 +74678,13 @@ impl<'a> PhysicalDeviceFaultFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceFaultFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceFaultFeaturesKHR::default(),
+        PhysicalDeviceFaultFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FAULT_FEATURES_KHR;
 }
@@ -67189,6 +74745,13 @@ impl<'a> PhysicalDeviceFaultPropertiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceFaultPropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceFaultPropertiesKHR::default(),
+        PhysicalDeviceFaultPropertiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FAULT_PROPERTIES_KHR;
 }
@@ -67229,6 +74792,13 @@ impl<'a> PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT::default(),
+        PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -67283,6 +74853,13 @@ impl<'a> DepthBiasInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDepthBiasInfoEXT() {
+    bytes_struct_eq(
+        DepthBiasInfoEXT::default(),
+        DepthBiasInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DepthBiasInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEPTH_BIAS_INFO_EXT;
 }
@@ -67335,6 +74912,13 @@ impl<'a> DepthBiasRepresentationInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDepthBiasRepresentationInfoEXT() {
+    bytes_struct_eq(
+        DepthBiasRepresentationInfoEXT::default(),
+        DepthBiasRepresentationInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DepthBiasRepresentationInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEPTH_BIAS_REPRESENTATION_INFO_EXT;
 }
@@ -67375,6 +74959,13 @@ impl DecompressMemoryRegionNV {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDecompressMemoryRegionNV() {
+    bytes_struct_eq(
+        DecompressMemoryRegionNV::default(),
+        DecompressMemoryRegionNV::const_default(),
+    );
 }
 impl DecompressMemoryRegionNV {
     #[inline]
@@ -67422,6 +75013,13 @@ impl DecompressMemoryRegionEXT {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDecompressMemoryRegionEXT() {
+    bytes_struct_eq(
+        DecompressMemoryRegionEXT::default(),
+        DecompressMemoryRegionEXT::const_default(),
+    );
 }
 impl DecompressMemoryRegionEXT {
     #[inline]
@@ -67479,6 +75077,13 @@ impl<'a> DecompressMemoryInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDecompressMemoryInfoEXT() {
+    bytes_struct_eq(
+        DecompressMemoryInfoEXT::default(),
+        DecompressMemoryInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DecompressMemoryInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DECOMPRESS_MEMORY_INFO_EXT;
 }
@@ -67531,6 +75136,13 @@ impl<'a> PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderCoreBuiltinsPropertiesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderCoreBuiltinsPropertiesARM::default(),
+        PhysicalDeviceShaderCoreBuiltinsPropertiesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -67586,6 +75198,13 @@ impl<'a> PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderCoreBuiltinsFeaturesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderCoreBuiltinsFeaturesARM::default(),
+        PhysicalDeviceShaderCoreBuiltinsFeaturesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -67648,6 +75267,13 @@ impl<'a> FrameBoundaryEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkFrameBoundaryEXT() {
+    bytes_struct_eq(
+        FrameBoundaryEXT::default(),
+        FrameBoundaryEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for FrameBoundaryEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAME_BOUNDARY_EXT;
@@ -67721,6 +75347,13 @@ impl<'a> PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceFrameBoundaryFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceFrameBoundaryFeaturesEXT::default(),
+        PhysicalDeviceFrameBoundaryFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_FRAME_BOUNDARY_FEATURES_EXT;
@@ -67763,6 +75396,13 @@ impl<'a> PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT::default(),
+        PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a>
@@ -67818,6 +75458,13 @@ impl<'a> PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceInternallySynchronizedQueuesFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR::default(),
+        PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_INTERNALLY_SYNCHRONIZED_QUEUES_FEATURES_KHR;
@@ -67867,6 +75514,13 @@ impl<'a> SurfacePresentModeKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSurfacePresentModeKHR() {
+    bytes_struct_eq(
+        SurfacePresentModeKHR::default(),
+        SurfacePresentModeKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfacePresentModeKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PRESENT_MODE_KHR;
 }
@@ -67915,6 +75569,13 @@ impl<'a> SurfacePresentScalingCapabilitiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSurfacePresentScalingCapabilitiesKHR() {
+    bytes_struct_eq(
+        SurfacePresentScalingCapabilitiesKHR::default(),
+        SurfacePresentScalingCapabilitiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfacePresentScalingCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PRESENT_SCALING_CAPABILITIES_KHR;
@@ -67988,6 +75649,13 @@ impl<'a> SurfacePresentModeCompatibilityKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSurfacePresentModeCompatibilityKHR() {
+    bytes_struct_eq(
+        SurfacePresentModeCompatibilityKHR::default(),
+        SurfacePresentModeCompatibilityKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfacePresentModeCompatibilityKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PRESENT_MODE_COMPATIBILITY_KHR;
 }
@@ -68029,6 +75697,13 @@ impl<'a> PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceSwapchainMaintenance1FeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceSwapchainMaintenance1FeaturesKHR::default(),
+        PhysicalDeviceSwapchainMaintenance1FeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -68078,6 +75753,13 @@ impl<'a> SwapchainPresentFenceInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSwapchainPresentFenceInfoKHR() {
+    bytes_struct_eq(
+        SwapchainPresentFenceInfoKHR::default(),
+        SwapchainPresentFenceInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentFenceInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_FENCE_INFO_KHR;
 }
@@ -68122,6 +75804,13 @@ impl<'a> SwapchainPresentModesCreateInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSwapchainPresentModesCreateInfoKHR() {
+    bytes_struct_eq(
+        SwapchainPresentModesCreateInfoKHR::default(),
+        SwapchainPresentModesCreateInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentModesCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_MODES_CREATE_INFO_KHR;
 }
@@ -68165,6 +75854,13 @@ impl<'a> SwapchainPresentModeInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSwapchainPresentModeInfoKHR() {
+    bytes_struct_eq(
+        SwapchainPresentModeInfoKHR::default(),
+        SwapchainPresentModeInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentModeInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_MODE_INFO_KHR;
@@ -68211,6 +75907,13 @@ impl<'a> SwapchainPresentScalingCreateInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSwapchainPresentScalingCreateInfoKHR() {
+    bytes_struct_eq(
+        SwapchainPresentScalingCreateInfoKHR::default(),
+        SwapchainPresentScalingCreateInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentScalingCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_SCALING_CREATE_INFO_KHR;
@@ -68267,6 +75970,13 @@ impl<'a> ReleaseSwapchainImagesInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkReleaseSwapchainImagesInfoKHR() {
+    bytes_struct_eq(
+        ReleaseSwapchainImagesInfoKHR::default(),
+        ReleaseSwapchainImagesInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ReleaseSwapchainImagesInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RELEASE_SWAPCHAIN_IMAGES_INFO_KHR;
 }
@@ -68318,6 +76028,13 @@ impl<'a> PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDepthBiasControlFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceDepthBiasControlFeaturesEXT::default(),
+        PhysicalDeviceDepthBiasControlFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -68381,6 +76098,13 @@ impl<'a> PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceRayTracingInvocationReorderFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceRayTracingInvocationReorderFeaturesEXT::default(),
+        PhysicalDeviceRayTracingInvocationReorderFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_FEATURES_EXT;
@@ -68429,6 +76153,13 @@ impl<'a> PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceRayTracingInvocationReorderFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceRayTracingInvocationReorderFeaturesNV::default(),
+        PhysicalDeviceRayTracingInvocationReorderFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -68481,6 +76212,13 @@ impl<'a> PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceRayTracingInvocationReorderPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceRayTracingInvocationReorderPropertiesEXT::default(),
+        PhysicalDeviceRayTracingInvocationReorderPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -68540,6 +76278,13 @@ impl<'a> PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceRayTracingInvocationReorderPropertiesNV::default(),
+        PhysicalDeviceRayTracingInvocationReorderPropertiesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV;
@@ -68588,6 +76333,13 @@ impl<'a> PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceExtendedSparseAddressSpaceFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV::default(),
+        PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -68641,6 +76393,13 @@ impl<'a> PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceExtendedSparseAddressSpacePropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceExtendedSparseAddressSpacePropertiesNV::default(),
+        PhysicalDeviceExtendedSparseAddressSpacePropertiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -68721,6 +76480,13 @@ impl<'a> DirectDriverLoadingInfoLUNARG<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDirectDriverLoadingInfoLUNARG() {
+    bytes_struct_eq(
+        DirectDriverLoadingInfoLUNARG::default(),
+        DirectDriverLoadingInfoLUNARG::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DirectDriverLoadingInfoLUNARG<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DIRECT_DRIVER_LOADING_INFO_LUNARG;
 }
@@ -68773,6 +76539,13 @@ impl<'a> DirectDriverLoadingListLUNARG<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDirectDriverLoadingListLUNARG() {
+    bytes_struct_eq(
+        DirectDriverLoadingListLUNARG::default(),
+        DirectDriverLoadingListLUNARG::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DirectDriverLoadingListLUNARG<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DIRECT_DRIVER_LOADING_LIST_LUNARG;
 }
@@ -68819,6 +76592,13 @@ impl<'a> PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM::default(),
+        PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -68869,6 +76649,13 @@ impl<'a> PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceRayTracingPositionFetchFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceRayTracingPositionFetchFeaturesKHR::default(),
+        PhysicalDeviceRayTracingPositionFetchFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR;
@@ -68916,6 +76703,13 @@ impl<'a> DeviceImageSubresourceInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceImageSubresourceInfo() {
+    bytes_struct_eq(
+        DeviceImageSubresourceInfo::default(),
+        DeviceImageSubresourceInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceImageSubresourceInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_IMAGE_SUBRESOURCE_INFO;
@@ -68965,6 +76759,13 @@ impl<'a> PhysicalDeviceShaderCorePropertiesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderCorePropertiesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderCorePropertiesARM::default(),
+        PhysicalDeviceShaderCorePropertiesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCorePropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM;
@@ -69016,6 +76817,13 @@ impl<'a> PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM::default(),
+        PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -69071,6 +76879,13 @@ impl<'a> MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMultiviewPerViewRenderAreasRenderPassBeginInfoQCOM() {
+    bytes_struct_eq(
+        MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM::default(),
+        MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM;
@@ -69118,6 +76933,13 @@ impl<'a> QueryLowLatencySupportNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkQueryLowLatencySupportNV() {
+    bytes_struct_eq(
+        QueryLowLatencySupportNV::default(),
+        QueryLowLatencySupportNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for QueryLowLatencySupportNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUERY_LOW_LATENCY_SUPPORT_NV;
 }
@@ -69164,6 +76986,10 @@ impl<'a> MemoryMapInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkMemoryMapInfo() {
+    bytes_struct_eq(MemoryMapInfo::default(), MemoryMapInfo::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMapInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_MAP_INFO;
@@ -69222,6 +77048,10 @@ impl<'a> MemoryUnmapInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryUnmapInfo() {
+    bytes_struct_eq(MemoryUnmapInfo::default(), MemoryUnmapInfo::const_default());
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryUnmapInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_UNMAP_INFO;
 }
@@ -69267,6 +77097,13 @@ impl<'a> PhysicalDeviceShaderObjectFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderObjectFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderObjectFeaturesEXT::default(),
+        PhysicalDeviceShaderObjectFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderObjectFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT;
 }
@@ -69310,6 +77147,13 @@ impl<'a> PhysicalDeviceShaderObjectPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderObjectPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderObjectPropertiesEXT::default(),
+        PhysicalDeviceShaderObjectPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderObjectPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -69379,6 +77223,13 @@ impl<'a> ShaderCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkShaderCreateInfoEXT() {
+    bytes_struct_eq(
+        ShaderCreateInfoEXT::default(),
+        ShaderCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_CREATE_INFO_EXT;
@@ -69475,6 +77326,13 @@ impl<'a> PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderTileImageFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderTileImageFeaturesEXT::default(),
+        PhysicalDeviceShaderTileImageFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_FEATURES_EXT;
@@ -69540,6 +77398,13 @@ impl<'a> PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderTileImagePropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderTileImagePropertiesEXT::default(),
+        PhysicalDeviceShaderTileImagePropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -69608,6 +77473,13 @@ impl<'a> ImportScreenBufferInfoQNX<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImportScreenBufferInfoQNX() {
+    bytes_struct_eq(
+        ImportScreenBufferInfoQNX::default(),
+        ImportScreenBufferInfoQNX::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportScreenBufferInfoQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_SCREEN_BUFFER_INFO_QNX;
 }
@@ -69650,6 +77522,13 @@ impl<'a> ScreenBufferPropertiesQNX<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkScreenBufferPropertiesQNX() {
+    bytes_struct_eq(
+        ScreenBufferPropertiesQNX::default(),
+        ScreenBufferPropertiesQNX::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ScreenBufferPropertiesQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SCREEN_BUFFER_PROPERTIES_QNX;
@@ -69711,6 +77590,13 @@ impl<'a> ScreenBufferFormatPropertiesQNX<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkScreenBufferFormatPropertiesQNX() {
+    bytes_struct_eq(
+        ScreenBufferFormatPropertiesQNX::default(),
+        ScreenBufferFormatPropertiesQNX::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ScreenBufferFormatPropertiesQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SCREEN_BUFFER_FORMAT_PROPERTIES_QNX;
@@ -69799,6 +77685,13 @@ impl<'a> ExternalFormatQNX<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExternalFormatQNX() {
+    bytes_struct_eq(
+        ExternalFormatQNX::default(),
+        ExternalFormatQNX::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalFormatQNX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_FORMAT_QNX;
 }
@@ -69840,6 +77733,13 @@ impl<'a> PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceExternalMemoryScreenBufferFeaturesQNX() {
+    bytes_struct_eq(
+        PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX::default(),
+        PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -69891,6 +77791,13 @@ impl<'a> PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceCooperativeMatrixFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceCooperativeMatrixFeaturesKHR::default(),
+        PhysicalDeviceCooperativeMatrixFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -69962,6 +77869,13 @@ impl<'a> CooperativeMatrixPropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCooperativeMatrixPropertiesKHR() {
+    bytes_struct_eq(
+        CooperativeMatrixPropertiesKHR::default(),
+        CooperativeMatrixPropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COOPERATIVE_MATRIX_PROPERTIES_KHR;
@@ -70043,6 +77957,13 @@ impl<'a> PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceCooperativeMatrixPropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceCooperativeMatrixPropertiesKHR::default(),
+        PhysicalDeviceCooperativeMatrixPropertiesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_KHR;
@@ -70090,6 +78011,13 @@ impl<'a> PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceCooperativeMatrixConversionFeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM::default(),
+        PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -70156,6 +78084,14 @@ impl<'a> PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[cfg(feature = "provisional")]
+#[test]
+fn eq_VkPhysicalDeviceShaderEnqueuePropertiesAMDX() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderEnqueuePropertiesAMDX::default(),
+        PhysicalDeviceShaderEnqueuePropertiesAMDX::const_default(),
+    );
 }
 #[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
@@ -70259,6 +78195,14 @@ impl<'a> PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
     }
 }
 #[cfg(feature = "provisional")]
+#[test]
+fn eq_VkPhysicalDeviceShaderEnqueueFeaturesAMDX() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderEnqueueFeaturesAMDX::default(),
+        PhysicalDeviceShaderEnqueueFeaturesAMDX::const_default(),
+    );
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_ENQUEUE_FEATURES_AMDX;
@@ -70326,6 +78270,14 @@ impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[cfg(feature = "provisional")]
+#[test]
+fn eq_VkExecutionGraphPipelineCreateInfoAMDX() {
+    bytes_struct_eq(
+        ExecutionGraphPipelineCreateInfoAMDX::default(),
+        ExecutionGraphPipelineCreateInfoAMDX::const_default(),
+    );
 }
 #[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for ExecutionGraphPipelineCreateInfoAMDX<'a> {
@@ -70403,6 +78355,14 @@ impl<'a> PipelineShaderStageNodeCreateInfoAMDX<'a> {
     }
 }
 #[cfg(feature = "provisional")]
+#[test]
+fn eq_VkPipelineShaderStageNodeCreateInfoAMDX() {
+    bytes_struct_eq(
+        PipelineShaderStageNodeCreateInfoAMDX::default(),
+        PipelineShaderStageNodeCreateInfoAMDX::const_default(),
+    );
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageNodeCreateInfoAMDX<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_SHADER_STAGE_NODE_CREATE_INFO_AMDX;
@@ -70473,6 +78433,14 @@ impl<'a> ExecutionGraphPipelineScratchSizeAMDX<'a> {
     }
 }
 #[cfg(feature = "provisional")]
+#[test]
+fn eq_VkExecutionGraphPipelineScratchSizeAMDX() {
+    bytes_struct_eq(
+        ExecutionGraphPipelineScratchSizeAMDX::default(),
+        ExecutionGraphPipelineScratchSizeAMDX::const_default(),
+    );
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for ExecutionGraphPipelineScratchSizeAMDX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXECUTION_GRAPH_PIPELINE_SCRATCH_SIZE_AMDX;
 }
@@ -70523,6 +78491,14 @@ impl DispatchGraphInfoAMDX {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[cfg(feature = "provisional")]
+#[test]
+fn eq_VkDispatchGraphInfoAMDX() {
+    bytes_struct_eq(
+        DispatchGraphInfoAMDX::default(),
+        DispatchGraphInfoAMDX::const_default(),
+    );
 }
 #[cfg(feature = "provisional")]
 impl DispatchGraphInfoAMDX {
@@ -70576,6 +78552,14 @@ impl DispatchGraphCountInfoAMDX {
     }
 }
 #[cfg(feature = "provisional")]
+#[test]
+fn eq_VkDispatchGraphCountInfoAMDX() {
+    bytes_struct_eq(
+        DispatchGraphCountInfoAMDX::default(),
+        DispatchGraphCountInfoAMDX::const_default(),
+    );
+}
+#[cfg(feature = "provisional")]
 impl DispatchGraphCountInfoAMDX {
     #[inline]
     pub fn count(mut self, count: u32) -> Self {
@@ -70623,6 +78607,13 @@ impl<'a> PhysicalDeviceAntiLagFeaturesAMD<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceAntiLagFeaturesAMD() {
+    bytes_struct_eq(
+        PhysicalDeviceAntiLagFeaturesAMD::default(),
+        PhysicalDeviceAntiLagFeaturesAMD::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAntiLagFeaturesAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_ANTI_LAG_FEATURES_AMD;
 }
@@ -70668,6 +78659,10 @@ impl<'a> AntiLagDataAMD<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkAntiLagDataAMD() {
+    bytes_struct_eq(AntiLagDataAMD::default(), AntiLagDataAMD::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for AntiLagDataAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANTI_LAG_DATA_AMD;
@@ -70724,6 +78719,13 @@ impl<'a> AntiLagPresentationInfoAMD<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAntiLagPresentationInfoAMD() {
+    bytes_struct_eq(
+        AntiLagPresentationInfoAMD::default(),
+        AntiLagPresentationInfoAMD::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AntiLagPresentationInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ANTI_LAG_PRESENTATION_INFO_AMD;
 }
@@ -70769,6 +78771,13 @@ impl<'a> BindMemoryStatus<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBindMemoryStatus() {
+    bytes_struct_eq(
+        BindMemoryStatus::default(),
+        BindMemoryStatus::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BindMemoryStatus<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_MEMORY_STATUS;
 }
@@ -70810,6 +78819,13 @@ impl<'a> PhysicalDeviceTileMemoryHeapFeaturesQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceTileMemoryHeapFeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceTileMemoryHeapFeaturesQCOM::default(),
+        PhysicalDeviceTileMemoryHeapFeaturesQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -70855,6 +78871,13 @@ impl<'a> PhysicalDeviceTileMemoryHeapPropertiesQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceTileMemoryHeapPropertiesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceTileMemoryHeapPropertiesQCOM::default(),
+        PhysicalDeviceTileMemoryHeapPropertiesQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -70906,6 +78929,13 @@ impl<'a> TileMemorySizeInfoQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkTileMemorySizeInfoQCOM() {
+    bytes_struct_eq(
+        TileMemorySizeInfoQCOM::default(),
+        TileMemorySizeInfoQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for TileMemorySizeInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TILE_MEMORY_SIZE_INFO_QCOM;
 }
@@ -70950,6 +78980,13 @@ impl<'a> TileMemoryRequirementsQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkTileMemoryRequirementsQCOM() {
+    bytes_struct_eq(
+        TileMemoryRequirementsQCOM::default(),
+        TileMemoryRequirementsQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for TileMemoryRequirementsQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TILE_MEMORY_REQUIREMENTS_QCOM;
@@ -71008,6 +79045,13 @@ impl<'a> BindDescriptorSetsInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBindDescriptorSetsInfo() {
+    bytes_struct_eq(
+        BindDescriptorSetsInfo::default(),
+        BindDescriptorSetsInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BindDescriptorSetsInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_DESCRIPTOR_SETS_INFO;
@@ -71079,6 +79123,13 @@ impl<'a> PushConstantsInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPushConstantsInfo() {
+    bytes_struct_eq(
+        PushConstantsInfo::default(),
+        PushConstantsInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PushConstantsInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_CONSTANTS_INFO;
 }
@@ -71143,6 +79194,13 @@ impl<'a> PushDescriptorSetInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPushDescriptorSetInfo() {
+    bytes_struct_eq(
+        PushDescriptorSetInfo::default(),
+        PushDescriptorSetInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PushDescriptorSetInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_DESCRIPTOR_SET_INFO;
 }
@@ -71204,6 +79262,13 @@ impl<'a> PushDescriptorSetWithTemplateInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPushDescriptorSetWithTemplateInfo() {
+    bytes_struct_eq(
+        PushDescriptorSetWithTemplateInfo::default(),
+        PushDescriptorSetWithTemplateInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PushDescriptorSetWithTemplateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_DESCRIPTOR_SET_WITH_TEMPLATE_INFO;
@@ -71273,6 +79338,13 @@ impl<'a> SetDescriptorBufferOffsetsInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSetDescriptorBufferOffsetsInfoEXT() {
+    bytes_struct_eq(
+        SetDescriptorBufferOffsetsInfoEXT::default(),
+        SetDescriptorBufferOffsetsInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SetDescriptorBufferOffsetsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SET_DESCRIPTOR_BUFFER_OFFSETS_INFO_EXT;
 }
@@ -71339,6 +79411,13 @@ impl<'a> BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBindDescriptorBufferEmbeddedSamplersInfoEXT() {
+    bytes_struct_eq(
+        BindDescriptorBufferEmbeddedSamplersInfoEXT::default(),
+        BindDescriptorBufferEmbeddedSamplersInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::BIND_DESCRIPTOR_BUFFER_EMBEDDED_SAMPLERS_INFO_EXT;
@@ -71390,6 +79469,13 @@ impl<'a> PhysicalDeviceCubicClampFeaturesQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceCubicClampFeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceCubicClampFeaturesQCOM::default(),
+        PhysicalDeviceCubicClampFeaturesQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCubicClampFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_CUBIC_CLAMP_FEATURES_QCOM;
 }
@@ -71431,6 +79517,13 @@ impl<'a> PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceYcbcrDegammaFeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceYcbcrDegammaFeaturesQCOM::default(),
+        PhysicalDeviceYcbcrDegammaFeaturesQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -71476,6 +79569,13 @@ impl<'a> SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM() {
+    bytes_struct_eq(
+        SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM::default(),
+        SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -71527,6 +79627,13 @@ impl<'a> PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceCubicWeightsFeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceCubicWeightsFeaturesQCOM::default(),
+        PhysicalDeviceCubicWeightsFeaturesQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUBIC_WEIGHTS_FEATURES_QCOM;
@@ -71570,6 +79677,13 @@ impl<'a> SamplerCubicWeightsCreateInfoQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSamplerCubicWeightsCreateInfoQCOM() {
+    bytes_struct_eq(
+        SamplerCubicWeightsCreateInfoQCOM::default(),
+        SamplerCubicWeightsCreateInfoQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SamplerCubicWeightsCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_CUBIC_WEIGHTS_CREATE_INFO_QCOM;
 }
@@ -71611,6 +79725,13 @@ impl<'a> BlitImageCubicWeightsInfoQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBlitImageCubicWeightsInfoQCOM() {
+    bytes_struct_eq(
+        BlitImageCubicWeightsInfoQCOM::default(),
+        BlitImageCubicWeightsInfoQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BlitImageCubicWeightsInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BLIT_IMAGE_CUBIC_WEIGHTS_INFO_QCOM;
 }
@@ -71651,6 +79772,13 @@ impl<'a> PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceImageProcessing2FeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceImageProcessing2FeaturesQCOM::default(),
+        PhysicalDeviceImageProcessing2FeaturesQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -71698,6 +79826,13 @@ impl<'a> PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceImageProcessing2PropertiesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceImageProcessing2PropertiesQCOM::default(),
+        PhysicalDeviceImageProcessing2PropertiesQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_2_PROPERTIES_QCOM;
@@ -71744,6 +79879,13 @@ impl<'a> SamplerBlockMatchWindowCreateInfoQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkSamplerBlockMatchWindowCreateInfoQCOM() {
+    bytes_struct_eq(
+        SamplerBlockMatchWindowCreateInfoQCOM::default(),
+        SamplerBlockMatchWindowCreateInfoQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerBlockMatchWindowCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -71798,6 +79940,13 @@ impl<'a> PhysicalDeviceImageProcessing3FeaturesQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceImageProcessing3FeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceImageProcessing3FeaturesQCOM::default(),
+        PhysicalDeviceImageProcessing3FeaturesQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing3FeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -71858,6 +80007,13 @@ impl<'a> PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDescriptorPoolOverallocationFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceDescriptorPoolOverallocationFeaturesNV::default(),
+        PhysicalDeviceDescriptorPoolOverallocationFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV;
@@ -71907,6 +80063,13 @@ impl<'a> PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceLayeredDriverPropertiesMSFT() {
+    bytes_struct_eq(
+        PhysicalDeviceLayeredDriverPropertiesMSFT::default(),
+        PhysicalDeviceLayeredDriverPropertiesMSFT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT;
@@ -71953,6 +80116,13 @@ impl<'a> PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePerStageDescriptorSetFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDevicePerStageDescriptorSetFeaturesNV::default(),
+        PhysicalDevicePerStageDescriptorSetFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -72004,6 +80174,13 @@ impl<'a> PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceExternalFormatResolveFeaturesANDROID() {
+    bytes_struct_eq(
+        PhysicalDeviceExternalFormatResolveFeaturesANDROID::default(),
+        PhysicalDeviceExternalFormatResolveFeaturesANDROID::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -72057,6 +80234,13 @@ impl<'a> PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceExternalFormatResolvePropertiesANDROID() {
+    bytes_struct_eq(
+        PhysicalDeviceExternalFormatResolvePropertiesANDROID::default(),
+        PhysicalDeviceExternalFormatResolvePropertiesANDROID::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -72123,6 +80307,13 @@ impl<'a> AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkAndroidHardwareBufferFormatResolvePropertiesANDROID() {
+    bytes_struct_eq(
+        AndroidHardwareBufferFormatResolvePropertiesANDROID::default(),
+        AndroidHardwareBufferFormatResolvePropertiesANDROID::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_RESOLVE_PROPERTIES_ANDROID;
@@ -72171,6 +80362,13 @@ impl<'a> LatencySleepModeInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkLatencySleepModeInfoNV() {
+    bytes_struct_eq(
+        LatencySleepModeInfoNV::default(),
+        LatencySleepModeInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySleepModeInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_SLEEP_MODE_INFO_NV;
@@ -72224,6 +80422,13 @@ impl<'a> LatencySleepInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkLatencySleepInfoNV() {
+    bytes_struct_eq(
+        LatencySleepInfoNV::default(),
+        LatencySleepInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for LatencySleepInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_SLEEP_INFO_NV;
 }
@@ -72271,6 +80476,13 @@ impl<'a> SetLatencyMarkerInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSetLatencyMarkerInfoNV() {
+    bytes_struct_eq(
+        SetLatencyMarkerInfoNV::default(),
+        SetLatencyMarkerInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SetLatencyMarkerInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SET_LATENCY_MARKER_INFO_NV;
 }
@@ -72317,6 +80529,13 @@ impl<'a> GetLatencyMarkerInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkGetLatencyMarkerInfoNV() {
+    bytes_struct_eq(
+        GetLatencyMarkerInfoNV::default(),
+        GetLatencyMarkerInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for GetLatencyMarkerInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GET_LATENCY_MARKER_INFO_NV;
@@ -72384,6 +80603,13 @@ impl<'a> LatencyTimingsFrameReportNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkLatencyTimingsFrameReportNV() {
+    bytes_struct_eq(
+        LatencyTimingsFrameReportNV::default(),
+        LatencyTimingsFrameReportNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencyTimingsFrameReportNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_TIMINGS_FRAME_REPORT_NV;
@@ -72490,6 +80716,13 @@ impl<'a> OutOfBandQueueTypeInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkOutOfBandQueueTypeInfoNV() {
+    bytes_struct_eq(
+        OutOfBandQueueTypeInfoNV::default(),
+        OutOfBandQueueTypeInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for OutOfBandQueueTypeInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OUT_OF_BAND_QUEUE_TYPE_INFO_NV;
 }
@@ -72529,6 +80762,13 @@ impl<'a> LatencySubmissionPresentIdNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkLatencySubmissionPresentIdNV() {
+    bytes_struct_eq(
+        LatencySubmissionPresentIdNV::default(),
+        LatencySubmissionPresentIdNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySubmissionPresentIdNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_SUBMISSION_PRESENT_ID_NV;
@@ -72572,6 +80812,13 @@ impl<'a> SwapchainLatencyCreateInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSwapchainLatencyCreateInfoNV() {
+    bytes_struct_eq(
+        SwapchainLatencyCreateInfoNV::default(),
+        SwapchainLatencyCreateInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SwapchainLatencyCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_LATENCY_CREATE_INFO_NV;
 }
@@ -72614,6 +80861,13 @@ impl<'a> LatencySurfaceCapabilitiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkLatencySurfaceCapabilitiesNV() {
+    bytes_struct_eq(
+        LatencySurfaceCapabilitiesNV::default(),
+        LatencySurfaceCapabilitiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySurfaceCapabilitiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::LATENCY_SURFACE_CAPABILITIES_NV;
@@ -72661,6 +80915,14 @@ impl<'a> PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[cfg(feature = "provisional")]
+#[test]
+fn eq_VkPhysicalDeviceCudaKernelLaunchFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceCudaKernelLaunchFeaturesNV::default(),
+        PhysicalDeviceCudaKernelLaunchFeaturesNV::const_default(),
+    );
 }
 #[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
@@ -72717,6 +80979,14 @@ impl<'a> PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
     }
 }
 #[cfg(feature = "provisional")]
+#[test]
+fn eq_VkPhysicalDeviceCudaKernelLaunchPropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceCudaKernelLaunchPropertiesNV::default(),
+        PhysicalDeviceCudaKernelLaunchPropertiesNV::const_default(),
+    );
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_PROPERTIES_NV;
@@ -72769,6 +81039,13 @@ impl<'a> DeviceQueueShaderCoreControlCreateInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDeviceQueueShaderCoreControlCreateInfoARM() {
+    bytes_struct_eq(
+        DeviceQueueShaderCoreControlCreateInfoARM::default(),
+        DeviceQueueShaderCoreControlCreateInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueShaderCoreControlCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DEVICE_QUEUE_SHADER_CORE_CONTROL_CREATE_INFO_ARM;
@@ -72811,6 +81088,13 @@ impl<'a> PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceSchedulingControlsFeaturesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceSchedulingControlsFeaturesARM::default(),
+        PhysicalDeviceSchedulingControlsFeaturesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -72857,6 +81141,13 @@ impl<'a> PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceSchedulingControlsPropertiesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceSchedulingControlsPropertiesARM::default(),
+        PhysicalDeviceSchedulingControlsPropertiesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -72911,6 +81202,13 @@ impl<'a> PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM::default(),
+        PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'a>
@@ -72984,6 +81282,13 @@ impl<'a> DispatchParametersARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDispatchParametersARM() {
+    bytes_struct_eq(
+        DispatchParametersARM::default(),
+        DispatchParametersARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DispatchParametersARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPATCH_PARAMETERS_ARM;
 }
@@ -73034,6 +81339,13 @@ impl<'a> PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceRelaxedLineRasterizationFeaturesIMG() {
+    bytes_struct_eq(
+        PhysicalDeviceRelaxedLineRasterizationFeaturesIMG::default(),
+        PhysicalDeviceRelaxedLineRasterizationFeaturesIMG::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RELAXED_LINE_RASTERIZATION_FEATURES_IMG;
@@ -73083,6 +81395,13 @@ impl<'a> PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceRenderPassStripedFeaturesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceRenderPassStripedFeaturesARM::default(),
+        PhysicalDeviceRenderPassStripedFeaturesARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RENDER_PASS_STRIPED_FEATURES_ARM;
@@ -73130,6 +81449,13 @@ impl<'a> PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceRenderPassStripedPropertiesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceRenderPassStripedPropertiesARM::default(),
+        PhysicalDeviceRenderPassStripedPropertiesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -73184,6 +81510,13 @@ impl<'a> RenderPassStripeInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderPassStripeInfoARM() {
+    bytes_struct_eq(
+        RenderPassStripeInfoARM::default(),
+        RenderPassStripeInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_STRIPE_INFO_ARM;
 }
@@ -73225,6 +81558,13 @@ impl<'a> RenderPassStripeBeginInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkRenderPassStripeBeginInfoARM() {
+    bytes_struct_eq(
+        RenderPassStripeBeginInfoARM::default(),
+        RenderPassStripeBeginInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeBeginInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_STRIPE_BEGIN_INFO_ARM;
@@ -73271,6 +81611,13 @@ impl<'a> RenderPassStripeSubmitInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderPassStripeSubmitInfoARM() {
+    bytes_struct_eq(
+        RenderPassStripeSubmitInfoARM::default(),
+        RenderPassStripeSubmitInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeSubmitInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_STRIPE_SUBMIT_INFO_ARM;
 }
@@ -73315,6 +81662,13 @@ impl<'a> PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePipelineOpacityMicromapFeaturesARM() {
+    bytes_struct_eq(
+        PhysicalDevicePipelineOpacityMicromapFeaturesARM::default(),
+        PhysicalDevicePipelineOpacityMicromapFeaturesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -73361,6 +81715,13 @@ impl<'a> PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderMaximalReconvergenceFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR::default(),
+        PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -73412,6 +81773,13 @@ impl<'a> PhysicalDeviceShaderSubgroupRotateFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderSubgroupRotateFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderSubgroupRotateFeatures::default(),
+        PhysicalDeviceShaderSubgroupRotateFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupRotateFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -73467,6 +81835,13 @@ impl<'a> PhysicalDeviceShaderExpectAssumeFeatures<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderExpectAssumeFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderExpectAssumeFeatures::default(),
+        PhysicalDeviceShaderExpectAssumeFeatures::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderExpectAssumeFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_EXPECT_ASSUME_FEATURES;
@@ -73509,6 +81884,13 @@ impl<'a> PhysicalDeviceShaderFloatControls2Features<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderFloatControls2Features() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderFloatControls2Features::default(),
+        PhysicalDeviceShaderFloatControls2Features::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloatControls2Features<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -73555,6 +81937,13 @@ impl<'a> PhysicalDeviceDynamicRenderingLocalReadFeatures<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDynamicRenderingLocalReadFeatures() {
+    bytes_struct_eq(
+        PhysicalDeviceDynamicRenderingLocalReadFeatures::default(),
+        PhysicalDeviceDynamicRenderingLocalReadFeatures::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDynamicRenderingLocalReadFeatures<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -73604,6 +81993,13 @@ impl<'a> RenderingAttachmentLocationInfo<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderingAttachmentLocationInfo() {
+    bytes_struct_eq(
+        RenderingAttachmentLocationInfo::default(),
+        RenderingAttachmentLocationInfo::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentLocationInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_ATTACHMENT_LOCATION_INFO;
 }
@@ -73652,6 +82048,13 @@ impl<'a> RenderingInputAttachmentIndexInfo<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkRenderingInputAttachmentIndexInfo() {
+    bytes_struct_eq(
+        RenderingInputAttachmentIndexInfo::default(),
+        RenderingInputAttachmentIndexInfo::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingInputAttachmentIndexInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_INPUT_ATTACHMENT_INDEX_INFO;
@@ -73712,6 +82115,13 @@ impl<'a> PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderQuadControlFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderQuadControlFeaturesKHR::default(),
+        PhysicalDeviceShaderQuadControlFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_QUAD_CONTROL_FEATURES_KHR;
@@ -73757,6 +82167,13 @@ impl<'a> PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderAtomicFloat16VectorFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV::default(),
+        PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -73811,6 +82228,13 @@ impl<'a> PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMapMemoryPlacedFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceMapMemoryPlacedFeaturesEXT::default(),
+        PhysicalDeviceMapMemoryPlacedFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAP_MEMORY_PLACED_FEATURES_EXT;
@@ -73864,6 +82288,13 @@ impl<'a> PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceMapMemoryPlacedPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceMapMemoryPlacedPropertiesEXT::default(),
+        PhysicalDeviceMapMemoryPlacedPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_MAP_MEMORY_PLACED_PROPERTIES_EXT;
@@ -73912,6 +82343,13 @@ impl<'a> MemoryMapPlacedInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryMapPlacedInfoEXT() {
+    bytes_struct_eq(
+        MemoryMapPlacedInfoEXT::default(),
+        MemoryMapPlacedInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryMapPlacedInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_MAP_PLACED_INFO_EXT;
 }
@@ -73956,6 +82394,13 @@ impl<'a> PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderBfloat16FeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderBfloat16FeaturesKHR::default(),
+        PhysicalDeviceShaderBfloat16FeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -74013,6 +82458,13 @@ impl<'a> PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceRawAccessChainsFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceRawAccessChainsFeaturesNV::default(),
+        PhysicalDeviceRawAccessChainsFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_RAW_ACCESS_CHAINS_FEATURES_NV;
@@ -74055,6 +82507,13 @@ impl<'a> PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceCommandBufferInheritanceFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceCommandBufferInheritanceFeaturesNV::default(),
+        PhysicalDeviceCommandBufferInheritanceFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -74102,6 +82561,13 @@ impl<'a> PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceImageAlignmentControlFeaturesMESA() {
+    bytes_struct_eq(
+        PhysicalDeviceImageAlignmentControlFeaturesMESA::default(),
+        PhysicalDeviceImageAlignmentControlFeaturesMESA::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_FEATURES_MESA;
@@ -74148,6 +82614,13 @@ impl<'a> PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceImageAlignmentControlPropertiesMESA() {
+    bytes_struct_eq(
+        PhysicalDeviceImageAlignmentControlPropertiesMESA::default(),
+        PhysicalDeviceImageAlignmentControlPropertiesMESA::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_PROPERTIES_MESA;
@@ -74193,6 +82666,13 @@ impl<'a> ImageAlignmentControlCreateInfoMESA<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImageAlignmentControlCreateInfoMESA() {
+    bytes_struct_eq(
+        ImageAlignmentControlCreateInfoMESA::default(),
+        ImageAlignmentControlCreateInfoMESA::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImageAlignmentControlCreateInfoMESA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_ALIGNMENT_CONTROL_CREATE_INFO_MESA;
 }
@@ -74233,6 +82713,13 @@ impl<'a> PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderReplicatedCompositesFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderReplicatedCompositesFeaturesEXT::default(),
+        PhysicalDeviceShaderReplicatedCompositesFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -74283,6 +82770,13 @@ impl<'a> PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDevicePresentModeFifoLatestReadyFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR::default(),
+        PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRESENT_MODE_FIFO_LATEST_READY_FEATURES_KHR;
@@ -74316,6 +82810,13 @@ impl DepthClampRangeEXT {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDepthClampRangeEXT() {
+    bytes_struct_eq(
+        DepthClampRangeEXT::default(),
+        DepthClampRangeEXT::const_default(),
+    );
 }
 impl DepthClampRangeEXT {
     #[inline]
@@ -74370,6 +82871,13 @@ impl<'a> PhysicalDeviceCooperativeMatrix2FeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceCooperativeMatrix2FeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceCooperativeMatrix2FeaturesNV::default(),
+        PhysicalDeviceCooperativeMatrix2FeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrix2FeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -74464,6 +82972,13 @@ impl<'a> PhysicalDeviceCooperativeMatrix2PropertiesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceCooperativeMatrix2PropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceCooperativeMatrix2PropertiesNV::default(),
+        PhysicalDeviceCooperativeMatrix2PropertiesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrix2PropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_2_PROPERTIES_NV;
@@ -74548,6 +83063,13 @@ impl<'a> CooperativeMatrixFlexibleDimensionsPropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCooperativeMatrixFlexibleDimensionsPropertiesNV() {
+    bytes_struct_eq(
+        CooperativeMatrixFlexibleDimensionsPropertiesNV::default(),
+        CooperativeMatrixFlexibleDimensionsPropertiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixFlexibleDimensionsPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -74635,6 +83157,13 @@ impl<'a> PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV::default(),
+        PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_DECODE_VECTOR_FEATURES_NV;
@@ -74687,6 +83216,13 @@ impl<'a> PhysicalDeviceHdrVividFeaturesHUAWEI<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceHdrVividFeaturesHUAWEI() {
+    bytes_struct_eq(
+        PhysicalDeviceHdrVividFeaturesHUAWEI::default(),
+        PhysicalDeviceHdrVividFeaturesHUAWEI::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHdrVividFeaturesHUAWEI<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_HDR_VIVID_FEATURES_HUAWEI;
 }
@@ -74728,6 +83264,13 @@ impl<'a> PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceVertexAttributeRobustnessFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceVertexAttributeRobustnessFeaturesEXT::default(),
+        PhysicalDeviceVertexAttributeRobustnessFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -74782,6 +83325,14 @@ impl<'a> PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[cfg(feature = "provisional")]
+#[test]
+fn eq_VkPhysicalDeviceDenseGeometryFormatFeaturesAMDX() {
+    bytes_struct_eq(
+        PhysicalDeviceDenseGeometryFormatFeaturesAMDX::default(),
+        PhysicalDeviceDenseGeometryFormatFeaturesAMDX::const_default(),
+    );
 }
 #[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'a> {
@@ -74867,6 +83418,14 @@ impl<'a> AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'a> {
     }
 }
 #[cfg(feature = "provisional")]
+#[test]
+fn eq_VkAccelerationStructureDenseGeometryFormatTrianglesDataAMDX() {
+    bytes_struct_eq(
+        AccelerationStructureDenseGeometryFormatTrianglesDataAMDX::default(),
+        AccelerationStructureDenseGeometryFormatTrianglesDataAMDX::const_default(),
+    );
+}
+#[cfg(feature = "provisional")]
 unsafe impl<'a> TaggedStructure<'a>
     for AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'a>
 {
@@ -74946,6 +83505,13 @@ impl<'a> PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDepthClampZeroOneFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceDepthClampZeroOneFeaturesKHR::default(),
+        PhysicalDeviceDepthClampZeroOneFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_KHR;
@@ -74993,6 +83559,13 @@ impl<'a> PhysicalDeviceCooperativeVectorFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceCooperativeVectorFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceCooperativeVectorFeaturesNV::default(),
+        PhysicalDeviceCooperativeVectorFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeVectorFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -75051,6 +83624,13 @@ impl<'a> CooperativeVectorPropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCooperativeVectorPropertiesNV() {
+    bytes_struct_eq(
+        CooperativeVectorPropertiesNV::default(),
+        CooperativeVectorPropertiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeVectorPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COOPERATIVE_VECTOR_PROPERTIES_NV;
@@ -75122,6 +83702,13 @@ impl<'a> PhysicalDeviceCooperativeVectorPropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceCooperativeVectorPropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceCooperativeVectorPropertiesNV::default(),
+        PhysicalDeviceCooperativeVectorPropertiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeVectorPropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -75238,6 +83825,13 @@ impl<'a> ConvertCooperativeVectorMatrixInfoNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkConvertCooperativeVectorMatrixInfoNV() {
+    bytes_struct_eq(
+        ConvertCooperativeVectorMatrixInfoNV::default(),
+        ConvertCooperativeVectorMatrixInfoNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ConvertCooperativeVectorMatrixInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CONVERT_COOPERATIVE_VECTOR_MATRIX_INFO_NV;
@@ -75360,6 +83954,13 @@ impl<'a> PhysicalDeviceTileShadingFeaturesQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceTileShadingFeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceTileShadingFeaturesQCOM::default(),
+        PhysicalDeviceTileShadingFeaturesQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileShadingFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_TILE_SHADING_FEATURES_QCOM;
 }
@@ -75479,6 +84080,13 @@ impl<'a> PhysicalDeviceTileShadingPropertiesQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceTileShadingPropertiesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceTileShadingPropertiesQCOM::default(),
+        PhysicalDeviceTileShadingPropertiesQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileShadingPropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_TILE_SHADING_PROPERTIES_QCOM;
@@ -75538,6 +84146,13 @@ impl<'a> RenderPassTileShadingCreateInfoQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkRenderPassTileShadingCreateInfoQCOM() {
+    bytes_struct_eq(
+        RenderPassTileShadingCreateInfoQCOM::default(),
+        RenderPassTileShadingCreateInfoQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for RenderPassTileShadingCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_TILE_SHADING_CREATE_INFO_QCOM;
 }
@@ -75585,6 +84200,13 @@ impl<'a> PerTileBeginInfoQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPerTileBeginInfoQCOM() {
+    bytes_struct_eq(
+        PerTileBeginInfoQCOM::default(),
+        PerTileBeginInfoQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PerTileBeginInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PER_TILE_BEGIN_INFO_QCOM;
 }
@@ -75617,6 +84239,13 @@ impl<'a> PerTileEndInfoQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPerTileEndInfoQCOM() {
+    bytes_struct_eq(
+        PerTileEndInfoQCOM::default(),
+        PerTileEndInfoQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PerTileEndInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PER_TILE_END_INFO_QCOM;
 }
@@ -75648,6 +84277,13 @@ impl<'a> DispatchTileInfoQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDispatchTileInfoQCOM() {
+    bytes_struct_eq(
+        DispatchTileInfoQCOM::default(),
+        DispatchTileInfoQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DispatchTileInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPATCH_TILE_INFO_QCOM;
@@ -75682,6 +84318,13 @@ impl<'a> PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE::default(),
+        PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -75727,6 +84370,13 @@ impl<'a> PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE() {
+    bytes_struct_eq(
+        PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE::default(),
+        PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -75777,6 +84427,13 @@ impl<'a> PipelineFragmentDensityMapLayeredCreateInfoVALVE<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPipelineFragmentDensityMapLayeredCreateInfoVALVE() {
+    bytes_struct_eq(
+        PipelineFragmentDensityMapLayeredCreateInfoVALVE::default(),
+        PipelineFragmentDensityMapLayeredCreateInfoVALVE::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PIPELINE_FRAGMENT_DENSITY_MAP_LAYERED_CREATE_INFO_VALVE;
@@ -75824,6 +84481,13 @@ impl<'a> SetPresentConfigNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSetPresentConfigNV() {
+    bytes_struct_eq(
+        SetPresentConfigNV::default(),
+        SetPresentConfigNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SetPresentConfigNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SET_PRESENT_CONFIG_NV;
 }
@@ -75870,6 +84534,13 @@ impl<'a> PhysicalDevicePresentMeteringFeaturesNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDevicePresentMeteringFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDevicePresentMeteringFeaturesNV::default(),
+        PhysicalDevicePresentMeteringFeaturesNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentMeteringFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRESENT_METERING_FEATURES_NV;
@@ -75913,6 +84584,13 @@ impl<'a> ExternalComputeQueueDeviceCreateInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExternalComputeQueueDeviceCreateInfoNV() {
+    bytes_struct_eq(
+        ExternalComputeQueueDeviceCreateInfoNV::default(),
+        ExternalComputeQueueDeviceCreateInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalComputeQueueDeviceCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::EXTERNAL_COMPUTE_QUEUE_DEVICE_CREATE_INFO_NV;
@@ -75955,6 +84633,13 @@ impl<'a> ExternalComputeQueueCreateInfoNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExternalComputeQueueCreateInfoNV() {
+    bytes_struct_eq(
+        ExternalComputeQueueCreateInfoNV::default(),
+        ExternalComputeQueueCreateInfoNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalComputeQueueCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_COMPUTE_QUEUE_CREATE_INFO_NV;
 }
@@ -75994,6 +84679,13 @@ impl<'a> ExternalComputeQueueDataParamsNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkExternalComputeQueueDataParamsNV() {
+    bytes_struct_eq(
+        ExternalComputeQueueDataParamsNV::default(),
+        ExternalComputeQueueDataParamsNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalComputeQueueDataParamsNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_COMPUTE_QUEUE_DATA_PARAMS_NV;
@@ -76036,6 +84728,13 @@ impl<'a> PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceExternalComputeQueuePropertiesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceExternalComputeQueuePropertiesNV::default(),
+        PhysicalDeviceExternalComputeQueuePropertiesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -76091,6 +84790,13 @@ impl<'a> PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT::default(),
+        PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'a>
@@ -76151,6 +84857,13 @@ impl<'a> PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE::default(),
+        PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -76232,6 +84945,13 @@ impl<'a> PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDevicePrimitiveRestartIndexFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDevicePrimitiveRestartIndexFeaturesEXT::default(),
+        PhysicalDevicePrimitiveRestartIndexFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_PRIMITIVE_RESTART_INDEX_FEATURES_EXT;
@@ -76278,6 +84998,13 @@ impl<'a> PhysicalDeviceFormatPackFeaturesARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceFormatPackFeaturesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceFormatPackFeaturesARM::default(),
+        PhysicalDeviceFormatPackFeaturesARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFormatPackFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FORMAT_PACK_FEATURES_ARM;
 }
@@ -76320,6 +85047,13 @@ impl<'a> PhysicalDeviceThrottleHintFeaturesSEC<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceThrottleHintFeaturesSEC() {
+    bytes_struct_eq(
+        PhysicalDeviceThrottleHintFeaturesSEC::default(),
+        PhysicalDeviceThrottleHintFeaturesSEC::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceThrottleHintFeaturesSEC<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_THROTTLE_HINT_FEATURES_SEC;
 }
@@ -76361,6 +85095,13 @@ impl<'a> ThrottleHintSubmitInfoSEC<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkThrottleHintSubmitInfoSEC() {
+    bytes_struct_eq(
+        ThrottleHintSubmitInfoSEC::default(),
+        ThrottleHintSubmitInfoSEC::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ThrottleHintSubmitInfoSEC<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::THROTTLE_HINT_SUBMIT_INFO_SEC;
@@ -76412,6 +85153,13 @@ impl<'a> TensorDescriptionARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkTensorDescriptionARM() {
+    bytes_struct_eq(
+        TensorDescriptionARM::default(),
+        TensorDescriptionARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorDescriptionARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_DESCRIPTION_ARM;
@@ -76485,6 +85233,13 @@ impl<'a> TensorCreateInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkTensorCreateInfoARM() {
+    bytes_struct_eq(
+        TensorCreateInfoARM::default(),
+        TensorCreateInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for TensorCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_CREATE_INFO_ARM;
 }
@@ -76545,6 +85300,13 @@ impl<'a> TensorViewCreateInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkTensorViewCreateInfoARM() {
+    bytes_struct_eq(
+        TensorViewCreateInfoARM::default(),
+        TensorViewCreateInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for TensorViewCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_VIEW_CREATE_INFO_ARM;
 }
@@ -76595,6 +85357,13 @@ impl<'a> TensorMemoryRequirementsInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkTensorMemoryRequirementsInfoARM() {
+    bytes_struct_eq(
+        TensorMemoryRequirementsInfoARM::default(),
+        TensorMemoryRequirementsInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for TensorMemoryRequirementsInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_MEMORY_REQUIREMENTS_INFO_ARM;
 }
@@ -76638,6 +85407,13 @@ impl<'a> BindTensorMemoryInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBindTensorMemoryInfoARM() {
+    bytes_struct_eq(
+        BindTensorMemoryInfoARM::default(),
+        BindTensorMemoryInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BindTensorMemoryInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_TENSOR_MEMORY_INFO_ARM;
@@ -76691,6 +85467,13 @@ impl<'a> WriteDescriptorSetTensorARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkWriteDescriptorSetTensorARM() {
+    bytes_struct_eq(
+        WriteDescriptorSetTensorARM::default(),
+        WriteDescriptorSetTensorARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetTensorARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WRITE_DESCRIPTOR_SET_TENSOR_ARM;
 }
@@ -76734,6 +85517,13 @@ impl<'a> TensorFormatPropertiesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkTensorFormatPropertiesARM() {
+    bytes_struct_eq(
+        TensorFormatPropertiesARM::default(),
+        TensorFormatPropertiesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorFormatPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_FORMAT_PROPERTIES_ARM;
@@ -76810,6 +85600,13 @@ impl<'a> PhysicalDeviceTensorPropertiesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceTensorPropertiesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceTensorPropertiesARM::default(),
+        PhysicalDeviceTensorPropertiesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTensorPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_TENSOR_PROPERTIES_ARM;
@@ -76952,6 +85749,13 @@ impl<'a> TensorMemoryBarrierARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkTensorMemoryBarrierARM() {
+    bytes_struct_eq(
+        TensorMemoryBarrierARM::default(),
+        TensorMemoryBarrierARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for TensorMemoryBarrierARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_MEMORY_BARRIER_ARM;
 }
@@ -77025,6 +85829,13 @@ impl<'a> TensorDependencyInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkTensorDependencyInfoARM() {
+    bytes_struct_eq(
+        TensorDependencyInfoARM::default(),
+        TensorDependencyInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for TensorDependencyInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_DEPENDENCY_INFO_ARM;
 }
@@ -77079,6 +85890,13 @@ impl<'a> PhysicalDeviceTensorFeaturesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceTensorFeaturesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceTensorFeaturesARM::default(),
+        PhysicalDeviceTensorFeaturesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTensorFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_TENSOR_FEATURES_ARM;
@@ -77159,6 +85977,13 @@ impl<'a> DeviceTensorMemoryRequirementsARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDeviceTensorMemoryRequirementsARM() {
+    bytes_struct_eq(
+        DeviceTensorMemoryRequirementsARM::default(),
+        DeviceTensorMemoryRequirementsARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceTensorMemoryRequirementsARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_TENSOR_MEMORY_REQUIREMENTS_ARM;
 }
@@ -77204,6 +86029,13 @@ impl<'a> CopyTensorInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkCopyTensorInfoARM() {
+    bytes_struct_eq(
+        CopyTensorInfoARM::default(),
+        CopyTensorInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyTensorInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_TENSOR_INFO_ARM;
@@ -77262,6 +86094,10 @@ impl<'a> TensorCopyARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkTensorCopyARM() {
+    bytes_struct_eq(TensorCopyARM::default(), TensorCopyARM::const_default());
+}
 unsafe impl<'a> TaggedStructure<'a> for TensorCopyARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_COPY_ARM;
 }
@@ -77315,6 +86151,13 @@ impl<'a> MemoryDedicatedAllocateInfoTensorARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryDedicatedAllocateInfoTensorARM() {
+    bytes_struct_eq(
+        MemoryDedicatedAllocateInfoTensorARM::default(),
+        MemoryDedicatedAllocateInfoTensorARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedAllocateInfoTensorARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_DEDICATED_ALLOCATE_INFO_TENSOR_ARM;
 }
@@ -77359,6 +86202,13 @@ impl<'a> PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDescriptorBufferTensorPropertiesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceDescriptorBufferTensorPropertiesARM::default(),
+        PhysicalDeviceDescriptorBufferTensorPropertiesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -77423,6 +86273,13 @@ impl<'a> PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDescriptorBufferTensorFeaturesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceDescriptorBufferTensorFeaturesARM::default(),
+        PhysicalDeviceDescriptorBufferTensorFeaturesARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_TENSOR_FEATURES_ARM;
@@ -77472,6 +86329,13 @@ impl<'a> TensorCaptureDescriptorDataInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkTensorCaptureDescriptorDataInfoARM() {
+    bytes_struct_eq(
+        TensorCaptureDescriptorDataInfoARM::default(),
+        TensorCaptureDescriptorDataInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for TensorCaptureDescriptorDataInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TENSOR_CAPTURE_DESCRIPTOR_DATA_INFO_ARM;
 }
@@ -77511,6 +86375,13 @@ impl<'a> TensorViewCaptureDescriptorDataInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkTensorViewCaptureDescriptorDataInfoARM() {
+    bytes_struct_eq(
+        TensorViewCaptureDescriptorDataInfoARM::default(),
+        TensorViewCaptureDescriptorDataInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorViewCaptureDescriptorDataInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -77552,6 +86423,13 @@ impl<'a> DescriptorGetTensorInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDescriptorGetTensorInfoARM() {
+    bytes_struct_eq(
+        DescriptorGetTensorInfoARM::default(),
+        DescriptorGetTensorInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorGetTensorInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_GET_TENSOR_INFO_ARM;
@@ -77595,6 +86473,13 @@ impl<'a> FrameBoundaryTensorsARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkFrameBoundaryTensorsARM() {
+    bytes_struct_eq(
+        FrameBoundaryTensorsARM::default(),
+        FrameBoundaryTensorsARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for FrameBoundaryTensorsARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FRAME_BOUNDARY_TENSORS_ARM;
@@ -77644,6 +86529,13 @@ impl<'a> PhysicalDeviceExternalTensorInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceExternalTensorInfoARM() {
+    bytes_struct_eq(
+        PhysicalDeviceExternalTensorInfoARM::default(),
+        PhysicalDeviceExternalTensorInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalTensorInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_TENSOR_INFO_ARM;
@@ -77695,6 +86587,13 @@ impl<'a> ExternalTensorPropertiesARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExternalTensorPropertiesARM() {
+    bytes_struct_eq(
+        ExternalTensorPropertiesARM::default(),
+        ExternalTensorPropertiesARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalTensorPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_TENSOR_PROPERTIES_ARM;
 }
@@ -77738,6 +86637,13 @@ impl<'a> ExternalMemoryTensorCreateInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkExternalMemoryTensorCreateInfoARM() {
+    bytes_struct_eq(
+        ExternalMemoryTensorCreateInfoARM::default(),
+        ExternalMemoryTensorCreateInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryTensorCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_TENSOR_CREATE_INFO_ARM;
 }
@@ -77780,6 +86686,13 @@ impl<'a> PhysicalDeviceShaderFloat8FeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderFloat8FeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderFloat8FeaturesEXT::default(),
+        PhysicalDeviceShaderFloat8FeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloat8FeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_FLOAT8_FEATURES_EXT;
@@ -77833,6 +86746,13 @@ impl<'a> SurfaceCreateInfoOHOS<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSurfaceCreateInfoOHOS() {
+    bytes_struct_eq(
+        SurfaceCreateInfoOHOS::default(),
+        SurfaceCreateInfoOHOS::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCreateInfoOHOS<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CREATE_INFO_OHOS;
 }
@@ -77885,6 +86805,13 @@ impl<'a> PhysicalDeviceDataGraphFeaturesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDataGraphFeaturesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceDataGraphFeaturesARM::default(),
+        PhysicalDeviceDataGraphFeaturesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDataGraphFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_DATA_GRAPH_FEATURES_ARM;
@@ -77955,6 +86882,13 @@ impl<'a> DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM::default(),
+        DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a>
     for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a>
 {
@@ -78014,6 +86948,13 @@ impl<'a> DataGraphPipelineConstantARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphPipelineConstantARM() {
+    bytes_struct_eq(
+        DataGraphPipelineConstantARM::default(),
+        DataGraphPipelineConstantARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineConstantARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DATA_GRAPH_PIPELINE_CONSTANT_ARM;
 }
@@ -78062,6 +87003,13 @@ impl<'a> DataGraphPipelineResourceInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDataGraphPipelineResourceInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineResourceInfoARM::default(),
+        DataGraphPipelineResourceInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineResourceInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DATA_GRAPH_PIPELINE_RESOURCE_INFO_ARM;
@@ -78113,6 +87061,13 @@ impl<'a> DataGraphPipelineResourceInfoImageLayoutARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphPipelineResourceInfoImageLayoutARM() {
+    bytes_struct_eq(
+        DataGraphPipelineResourceInfoImageLayoutARM::default(),
+        DataGraphPipelineResourceInfoImageLayoutARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineResourceInfoImageLayoutARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_RESOURCE_INFO_IMAGE_LAYOUT_ARM;
@@ -78157,6 +87112,13 @@ impl<'a> DataGraphPipelineCompilerControlCreateInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDataGraphPipelineCompilerControlCreateInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineCompilerControlCreateInfoARM::default(),
+        DataGraphPipelineCompilerControlCreateInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineCompilerControlCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -78216,6 +87178,13 @@ impl<'a> DataGraphPipelineCreateInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDataGraphPipelineCreateInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineCreateInfoARM::default(),
+        DataGraphPipelineCreateInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DATA_GRAPH_PIPELINE_CREATE_INFO_ARM;
@@ -78278,6 +87247,13 @@ impl<'a> DataGraphPipelineShaderModuleCreateInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDataGraphPipelineShaderModuleCreateInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineShaderModuleCreateInfoARM::default(),
+        DataGraphPipelineShaderModuleCreateInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineShaderModuleCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -78350,6 +87326,13 @@ impl<'a> DataGraphPipelineSessionCreateInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphPipelineSessionCreateInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineSessionCreateInfoARM::default(),
+        DataGraphPipelineSessionCreateInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_SESSION_CREATE_INFO_ARM;
@@ -78396,6 +87379,13 @@ impl<'a> DataGraphPipelineSessionBindPointRequirementsInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphPipelineSessionBindPointRequirementsInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineSessionBindPointRequirementsInfoARM::default(),
+        DataGraphPipelineSessionBindPointRequirementsInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionBindPointRequirementsInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_SESSION_BIND_POINT_REQUIREMENTS_INFO_ARM;
@@ -78440,6 +87430,13 @@ impl<'a> DataGraphPipelineSessionBindPointRequirementARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDataGraphPipelineSessionBindPointRequirementARM() {
+    bytes_struct_eq(
+        DataGraphPipelineSessionBindPointRequirementARM::default(),
+        DataGraphPipelineSessionBindPointRequirementARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionBindPointRequirementARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -78499,6 +87496,13 @@ impl<'a> DataGraphPipelineSessionMemoryRequirementsInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphPipelineSessionMemoryRequirementsInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineSessionMemoryRequirementsInfoARM::default(),
+        DataGraphPipelineSessionMemoryRequirementsInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionMemoryRequirementsInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_SESSION_MEMORY_REQUIREMENTS_INFO_ARM;
@@ -78557,6 +87561,13 @@ impl<'a> BindDataGraphPipelineSessionMemoryInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBindDataGraphPipelineSessionMemoryInfoARM() {
+    bytes_struct_eq(
+        BindDataGraphPipelineSessionMemoryInfoARM::default(),
+        BindDataGraphPipelineSessionMemoryInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BindDataGraphPipelineSessionMemoryInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -78619,6 +87630,13 @@ impl<'a> DataGraphPipelineInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphPipelineInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineInfoARM::default(),
+        DataGraphPipelineInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DATA_GRAPH_PIPELINE_INFO_ARM;
 }
@@ -78664,6 +87682,13 @@ impl<'a> DataGraphPipelinePropertyQueryResultARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDataGraphPipelinePropertyQueryResultARM() {
+    bytes_struct_eq(
+        DataGraphPipelinePropertyQueryResultARM::default(),
+        DataGraphPipelinePropertyQueryResultARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelinePropertyQueryResultARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -78719,6 +87744,13 @@ impl<'a> DataGraphPipelineIdentifierCreateInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphPipelineIdentifierCreateInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineIdentifierCreateInfoARM::default(),
+        DataGraphPipelineIdentifierCreateInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineIdentifierCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_IDENTIFIER_CREATE_INFO_ARM;
@@ -78765,6 +87797,13 @@ impl<'a> DataGraphPipelineDispatchInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphPipelineDispatchInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineDispatchInfoARM::default(),
+        DataGraphPipelineDispatchInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineDispatchInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DATA_GRAPH_PIPELINE_DISPATCH_INFO_ARM;
 }
@@ -78789,6 +87828,13 @@ impl PhysicalDeviceDataGraphProcessingEngineARM {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDataGraphProcessingEngineARM() {
+    bytes_struct_eq(
+        PhysicalDeviceDataGraphProcessingEngineARM::default(),
+        PhysicalDeviceDataGraphProcessingEngineARM::const_default(),
+    );
 }
 impl PhysicalDeviceDataGraphProcessingEngineARM {
     #[inline]
@@ -78836,6 +87882,13 @@ impl PhysicalDeviceDataGraphOperationSupportARM {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDataGraphOperationSupportARM() {
+    bytes_struct_eq(
+        PhysicalDeviceDataGraphOperationSupportARM::default(),
+        PhysicalDeviceDataGraphOperationSupportARM::const_default(),
+    );
 }
 impl PhysicalDeviceDataGraphOperationSupportARM {
     #[inline]
@@ -78892,6 +87945,13 @@ impl<'a> QueueFamilyDataGraphPropertiesARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkQueueFamilyDataGraphPropertiesARM() {
+    bytes_struct_eq(
+        QueueFamilyDataGraphPropertiesARM::default(),
+        QueueFamilyDataGraphPropertiesARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QUEUE_FAMILY_DATA_GRAPH_PROPERTIES_ARM;
 }
@@ -78938,6 +87998,13 @@ impl<'a> PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM() {
+    bytes_struct_eq(
+        PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM::default(),
+        PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a>
     for PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'a>
@@ -78991,6 +88058,13 @@ impl<'a> QueueFamilyDataGraphProcessingEnginePropertiesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkQueueFamilyDataGraphProcessingEnginePropertiesARM() {
+    bytes_struct_eq(
+        QueueFamilyDataGraphProcessingEnginePropertiesARM::default(),
+        QueueFamilyDataGraphProcessingEnginePropertiesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphProcessingEnginePropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -79046,6 +88120,13 @@ impl<'a> DataGraphProcessingEngineCreateInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphProcessingEngineCreateInfoARM() {
+    bytes_struct_eq(
+        DataGraphProcessingEngineCreateInfoARM::default(),
+        DataGraphProcessingEngineCreateInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphProcessingEngineCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PROCESSING_ENGINE_CREATE_INFO_ARM;
@@ -79096,6 +88177,13 @@ impl<'a> PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePipelineCacheIncrementalModeFeaturesSEC() {
+    bytes_struct_eq(
+        PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC::default(),
+        PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -79149,6 +88237,13 @@ impl<'a> DataGraphPipelineBuiltinModelCreateInfoQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphPipelineBuiltinModelCreateInfoQCOM() {
+    bytes_struct_eq(
+        DataGraphPipelineBuiltinModelCreateInfoQCOM::default(),
+        DataGraphPipelineBuiltinModelCreateInfoQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineBuiltinModelCreateInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_BUILTIN_MODEL_CREATE_INFO_QCOM;
@@ -79194,6 +88289,13 @@ impl<'a> PhysicalDeviceDataGraphModelFeaturesQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDataGraphModelFeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceDataGraphModelFeaturesQCOM::default(),
+        PhysicalDeviceDataGraphModelFeaturesQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDataGraphModelFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DATA_GRAPH_MODEL_FEATURES_QCOM;
@@ -79236,6 +88338,13 @@ impl<'a> PhysicalDeviceShaderUntypedPointersFeaturesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderUntypedPointersFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderUntypedPointersFeaturesKHR::default(),
+        PhysicalDeviceShaderUntypedPointersFeaturesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -79282,6 +88391,13 @@ impl<'a> PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE() {
+    bytes_struct_eq(
+        PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE::default(),
+        PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -79337,6 +88453,13 @@ impl<'a> VideoEncodeRgbConversionCapabilitiesVALVE<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeRgbConversionCapabilitiesVALVE() {
+    bytes_struct_eq(
+        VideoEncodeRgbConversionCapabilitiesVALVE::default(),
+        VideoEncodeRgbConversionCapabilitiesVALVE::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRgbConversionCapabilitiesVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -79401,6 +88524,13 @@ impl<'a> VideoEncodeProfileRgbConversionInfoVALVE<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkVideoEncodeProfileRgbConversionInfoVALVE() {
+    bytes_struct_eq(
+        VideoEncodeProfileRgbConversionInfoVALVE::default(),
+        VideoEncodeProfileRgbConversionInfoVALVE::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeProfileRgbConversionInfoVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_PROFILE_RGB_CONVERSION_INFO_VALVE;
@@ -79448,6 +88578,13 @@ impl<'a> VideoEncodeSessionRgbConversionCreateInfoVALVE<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkVideoEncodeSessionRgbConversionCreateInfoVALVE() {
+    bytes_struct_eq(
+        VideoEncodeSessionRgbConversionCreateInfoVALVE::default(),
+        VideoEncodeSessionRgbConversionCreateInfoVALVE::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionRgbConversionCreateInfoVALVE<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -79515,6 +88652,13 @@ impl<'a> PhysicalDeviceShader64BitIndexingFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShader64BitIndexingFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShader64BitIndexingFeaturesEXT::default(),
+        PhysicalDeviceShader64BitIndexingFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShader64BitIndexingFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_64_INDEXING_FEATURES_EXT;
@@ -79561,6 +88705,13 @@ impl<'a> NativeBufferUsageOHOS<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkNativeBufferUsageOHOS() {
+    bytes_struct_eq(
+        NativeBufferUsageOHOS::default(),
+        NativeBufferUsageOHOS::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferUsageOHOS<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::NATIVE_BUFFER_USAGE_OHOS;
 }
@@ -79603,6 +88754,13 @@ impl<'a> NativeBufferPropertiesOHOS<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkNativeBufferPropertiesOHOS() {
+    bytes_struct_eq(
+        NativeBufferPropertiesOHOS::default(),
+        NativeBufferPropertiesOHOS::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferPropertiesOHOS<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::NATIVE_BUFFER_PROPERTIES_OHOS;
@@ -79662,6 +88820,13 @@ impl<'a> NativeBufferFormatPropertiesOHOS<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkNativeBufferFormatPropertiesOHOS() {
+    bytes_struct_eq(
+        NativeBufferFormatPropertiesOHOS::default(),
+        NativeBufferFormatPropertiesOHOS::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferFormatPropertiesOHOS<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::NATIVE_BUFFER_FORMAT_PROPERTIES_OHOS;
@@ -79745,6 +88910,13 @@ impl<'a> ImportNativeBufferInfoOHOS<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkImportNativeBufferInfoOHOS() {
+    bytes_struct_eq(
+        ImportNativeBufferInfoOHOS::default(),
+        ImportNativeBufferInfoOHOS::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ImportNativeBufferInfoOHOS<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_NATIVE_BUFFER_INFO_OHOS;
 }
@@ -79786,6 +88958,13 @@ impl<'a> MemoryGetNativeBufferInfoOHOS<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkMemoryGetNativeBufferInfoOHOS() {
+    bytes_struct_eq(
+        MemoryGetNativeBufferInfoOHOS::default(),
+        MemoryGetNativeBufferInfoOHOS::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetNativeBufferInfoOHOS<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_NATIVE_BUFFER_INFO_OHOS;
 }
@@ -79825,6 +89004,13 @@ impl<'a> ExternalFormatOHOS<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkExternalFormatOHOS() {
+    bytes_struct_eq(
+        ExternalFormatOHOS::default(),
+        ExternalFormatOHOS::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFormatOHOS<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_FORMAT_OHOS;
@@ -79873,6 +89059,13 @@ impl<'a> PerfHintInfoQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPerfHintInfoQCOM() {
+    bytes_struct_eq(
+        PerfHintInfoQCOM::default(),
+        PerfHintInfoQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PerfHintInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERF_HINT_INFO_QCOM;
 }
@@ -79918,6 +89111,13 @@ impl<'a> PhysicalDeviceQueuePerfHintFeaturesQCOM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceQueuePerfHintFeaturesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceQueuePerfHintFeaturesQCOM::default(),
+        PhysicalDeviceQueuePerfHintFeaturesQCOM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceQueuePerfHintFeaturesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_QUEUE_PERF_HINT_FEATURES_QCOM;
@@ -79960,6 +89160,13 @@ impl<'a> PhysicalDeviceQueuePerfHintPropertiesQCOM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceQueuePerfHintPropertiesQCOM() {
+    bytes_struct_eq(
+        PhysicalDeviceQueuePerfHintPropertiesQCOM::default(),
+        PhysicalDeviceQueuePerfHintPropertiesQCOM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceQueuePerfHintPropertiesQCOM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -80005,6 +89212,13 @@ impl<'a> PhysicalDevicePerformanceCountersByRegionFeaturesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePerformanceCountersByRegionFeaturesARM() {
+    bytes_struct_eq(
+        PhysicalDevicePerformanceCountersByRegionFeaturesARM::default(),
+        PhysicalDevicePerformanceCountersByRegionFeaturesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -80062,6 +89276,13 @@ impl<'a> PhysicalDevicePerformanceCountersByRegionPropertiesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDevicePerformanceCountersByRegionPropertiesARM() {
+    bytes_struct_eq(
+        PhysicalDevicePerformanceCountersByRegionPropertiesARM::default(),
+        PhysicalDevicePerformanceCountersByRegionPropertiesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -80134,6 +89355,13 @@ impl<'a> PerformanceCounterARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPerformanceCounterARM() {
+    bytes_struct_eq(
+        PerformanceCounterARM::default(),
+        PerformanceCounterARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_COUNTER_ARM;
 }
@@ -80185,6 +89413,13 @@ impl<'a> PerformanceCounterDescriptionARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPerformanceCounterDescriptionARM() {
+    bytes_struct_eq(
+        PerformanceCounterDescriptionARM::default(),
+        PerformanceCounterDescriptionARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterDescriptionARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PERFORMANCE_COUNTER_DESCRIPTION_ARM;
@@ -80241,6 +89476,13 @@ impl<'a> RenderPassPerformanceCountersByRegionBeginInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkRenderPassPerformanceCountersByRegionBeginInfoARM() {
+    bytes_struct_eq(
+        RenderPassPerformanceCountersByRegionBeginInfoARM::default(),
+        RenderPassPerformanceCountersByRegionBeginInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassPerformanceCountersByRegionBeginInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -80302,6 +89544,13 @@ impl<'a> ComputeOccupancyPriorityParametersNV<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkComputeOccupancyPriorityParametersNV() {
+    bytes_struct_eq(
+        ComputeOccupancyPriorityParametersNV::default(),
+        ComputeOccupancyPriorityParametersNV::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ComputeOccupancyPriorityParametersNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_OCCUPANCY_PRIORITY_PARAMETERS_NV;
 }
@@ -80346,6 +89595,13 @@ impl<'a> PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceComputeOccupancyPriorityFeaturesNV() {
+    bytes_struct_eq(
+        PhysicalDeviceComputeOccupancyPriorityFeaturesNV::default(),
+        PhysicalDeviceComputeOccupancyPriorityFeaturesNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -80393,6 +89649,13 @@ impl<'a> PhysicalDeviceShaderLongVectorFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderLongVectorFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderLongVectorFeaturesEXT::default(),
+        PhysicalDeviceShaderLongVectorFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderLongVectorFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_LONG_VECTOR_FEATURES_EXT;
@@ -80435,6 +89698,13 @@ impl<'a> PhysicalDeviceShaderLongVectorPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderLongVectorPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderLongVectorPropertiesEXT::default(),
+        PhysicalDeviceShaderLongVectorPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderLongVectorPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -80480,6 +89750,13 @@ impl<'a> PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceTextureCompressionASTC3DFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceTextureCompressionASTC3DFeaturesEXT::default(),
+        PhysicalDeviceTextureCompressionASTC3DFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -80530,6 +89807,13 @@ impl<'a> PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderSubgroupPartitionedFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT::default(),
+        PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_SUBGROUP_PARTITIONED_FEATURES_EXT;
@@ -80577,6 +89861,13 @@ impl<'a> HostAddressRangeEXT<'a> {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkHostAddressRangeEXT() {
+    bytes_struct_eq(
+        HostAddressRangeEXT::default(),
+        HostAddressRangeEXT::const_default(),
+    );
+}
 impl<'a> HostAddressRangeEXT<'a> {
     #[inline]
     pub fn address(mut self, address: &'a mut [u8]) -> Self {
@@ -80612,6 +89903,13 @@ impl<'a> HostAddressRangeConstEXT<'a> {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkHostAddressRangeConstEXT() {
+    bytes_struct_eq(
+        HostAddressRangeConstEXT::default(),
+        HostAddressRangeConstEXT::const_default(),
+    );
 }
 impl<'a> HostAddressRangeConstEXT<'a> {
     #[inline]
@@ -80652,6 +89950,13 @@ impl<'a> TexelBufferDescriptorInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkTexelBufferDescriptorInfoEXT() {
+    bytes_struct_eq(
+        TexelBufferDescriptorInfoEXT::default(),
+        TexelBufferDescriptorInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for TexelBufferDescriptorInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TEXEL_BUFFER_DESCRIPTOR_INFO_EXT;
@@ -80699,6 +90004,13 @@ impl<'a> ImageDescriptorInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkImageDescriptorInfoEXT() {
+    bytes_struct_eq(
+        ImageDescriptorInfoEXT::default(),
+        ImageDescriptorInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDescriptorInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_DESCRIPTOR_INFO_EXT;
@@ -80772,6 +90084,13 @@ impl<'a> ResourceDescriptorInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkResourceDescriptorInfoEXT() {
+    bytes_struct_eq(
+        ResourceDescriptorInfoEXT::default(),
+        ResourceDescriptorInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ResourceDescriptorInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RESOURCE_DESCRIPTOR_INFO_EXT;
 }
@@ -80820,6 +90139,10 @@ impl<'a> BindHeapInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBindHeapInfoEXT() {
+    bytes_struct_eq(BindHeapInfoEXT::default(), BindHeapInfoEXT::const_default());
 }
 unsafe impl<'a> TaggedStructure<'a> for BindHeapInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_HEAP_INFO_EXT;
@@ -80873,6 +90196,10 @@ impl<'a> PushDataInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPushDataInfoEXT() {
+    bytes_struct_eq(PushDataInfoEXT::default(), PushDataInfoEXT::const_default());
+}
 unsafe impl<'a> TaggedStructure<'a> for PushDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PUSH_DATA_INFO_EXT;
 }
@@ -80921,6 +90248,13 @@ impl<'a> DescriptorMappingSourceConstantOffsetEXT<'a> {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDescriptorMappingSourceConstantOffsetEXT() {
+    bytes_struct_eq(
+        DescriptorMappingSourceConstantOffsetEXT::default(),
+        DescriptorMappingSourceConstantOffsetEXT::const_default(),
+    );
 }
 impl<'a> DescriptorMappingSourceConstantOffsetEXT<'a> {
     #[inline]
@@ -80992,6 +90326,13 @@ impl<'a> DescriptorMappingSourcePushIndexEXT<'a> {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDescriptorMappingSourcePushIndexEXT() {
+    bytes_struct_eq(
+        DescriptorMappingSourcePushIndexEXT::default(),
+        DescriptorMappingSourcePushIndexEXT::const_default(),
+    );
 }
 impl<'a> DescriptorMappingSourcePushIndexEXT<'a> {
     #[inline]
@@ -81095,6 +90436,13 @@ impl<'a> DescriptorMappingSourceIndirectIndexEXT<'a> {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDescriptorMappingSourceIndirectIndexEXT() {
+    bytes_struct_eq(
+        DescriptorMappingSourceIndirectIndexEXT::default(),
+        DescriptorMappingSourceIndirectIndexEXT::const_default(),
+    );
 }
 impl<'a> DescriptorMappingSourceIndirectIndexEXT<'a> {
     #[inline]
@@ -81205,6 +90553,13 @@ impl<'a> DescriptorMappingSourceIndirectIndexArrayEXT<'a> {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkDescriptorMappingSourceIndirectIndexArrayEXT() {
+    bytes_struct_eq(
+        DescriptorMappingSourceIndirectIndexArrayEXT::default(),
+        DescriptorMappingSourceIndirectIndexArrayEXT::const_default(),
+    );
+}
 impl<'a> DescriptorMappingSourceIndirectIndexArrayEXT<'a> {
     #[inline]
     pub fn heap_offset(mut self, heap_offset: u32) -> Self {
@@ -81275,6 +90630,13 @@ impl DescriptorMappingSourceHeapDataEXT {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkDescriptorMappingSourceHeapDataEXT() {
+    bytes_struct_eq(
+        DescriptorMappingSourceHeapDataEXT::default(),
+        DescriptorMappingSourceHeapDataEXT::const_default(),
+    );
+}
 impl DescriptorMappingSourceHeapDataEXT {
     #[inline]
     pub fn heap_offset(mut self, heap_offset: u32) -> Self {
@@ -81330,6 +90692,13 @@ impl<'a> DescriptorMappingSourceShaderRecordIndexEXT<'a> {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDescriptorMappingSourceShaderRecordIndexEXT() {
+    bytes_struct_eq(
+        DescriptorMappingSourceShaderRecordIndexEXT::default(),
+        DescriptorMappingSourceShaderRecordIndexEXT::const_default(),
+    );
 }
 impl<'a> DescriptorMappingSourceShaderRecordIndexEXT<'a> {
     #[inline]
@@ -81400,6 +90769,13 @@ impl DescriptorMappingSourceIndirectAddressEXT {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDescriptorMappingSourceIndirectAddressEXT() {
+    bytes_struct_eq(
+        DescriptorMappingSourceIndirectAddressEXT::default(),
+        DescriptorMappingSourceIndirectAddressEXT::const_default(),
+    );
 }
 impl DescriptorMappingSourceIndirectAddressEXT {
     #[inline]
@@ -81489,6 +90865,13 @@ impl<'a> DescriptorSetAndBindingMappingEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDescriptorSetAndBindingMappingEXT() {
+    bytes_struct_eq(
+        DescriptorSetAndBindingMappingEXT::default(),
+        DescriptorSetAndBindingMappingEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetAndBindingMappingEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_SET_AND_BINDING_MAPPING_EXT;
 }
@@ -81556,6 +90939,13 @@ impl<'a> ShaderDescriptorSetAndBindingMappingInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkShaderDescriptorSetAndBindingMappingInfoEXT() {
+    bytes_struct_eq(
+        ShaderDescriptorSetAndBindingMappingInfoEXT::default(),
+        ShaderDescriptorSetAndBindingMappingInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ShaderDescriptorSetAndBindingMappingInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SHADER_DESCRIPTOR_SET_AND_BINDING_MAPPING_INFO_EXT;
@@ -81603,6 +90993,13 @@ impl<'a> SamplerCustomBorderColorIndexCreateInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSamplerCustomBorderColorIndexCreateInfoEXT() {
+    bytes_struct_eq(
+        SamplerCustomBorderColorIndexCreateInfoEXT::default(),
+        SamplerCustomBorderColorIndexCreateInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SamplerCustomBorderColorIndexCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SAMPLER_CUSTOM_BORDER_COLOR_INDEX_CREATE_INFO_EXT;
@@ -81644,6 +91041,13 @@ impl<'a> OpaqueCaptureDataCreateInfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkOpaqueCaptureDataCreateInfoEXT() {
+    bytes_struct_eq(
+        OpaqueCaptureDataCreateInfoEXT::default(),
+        OpaqueCaptureDataCreateInfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for OpaqueCaptureDataCreateInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OPAQUE_CAPTURE_DATA_CREATE_INFO_EXT;
@@ -81688,6 +91092,13 @@ impl<'a> IndirectCommandsLayoutPushDataTokenNV<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkIndirectCommandsLayoutPushDataTokenNV() {
+    bytes_struct_eq(
+        IndirectCommandsLayoutPushDataTokenNV::default(),
+        IndirectCommandsLayoutPushDataTokenNV::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutPushDataTokenNV<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -81739,6 +91150,13 @@ impl<'a> SubsampledImageFormatPropertiesEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkSubsampledImageFormatPropertiesEXT() {
+    bytes_struct_eq(
+        SubsampledImageFormatPropertiesEXT::default(),
+        SubsampledImageFormatPropertiesEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for SubsampledImageFormatPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBSAMPLED_IMAGE_FORMAT_PROPERTIES_EXT;
 }
@@ -81782,6 +91200,13 @@ impl<'a> PhysicalDeviceShaderSplitBarrierFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderSplitBarrierFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderSplitBarrierFeaturesEXT::default(),
+        PhysicalDeviceShaderSplitBarrierFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -81828,6 +91253,13 @@ impl<'a> PhysicalDeviceShaderSplitBarrierPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderSplitBarrierPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderSplitBarrierPropertiesEXT::default(),
+        PhysicalDeviceShaderSplitBarrierPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -81878,6 +91310,13 @@ impl<'a> PhysicalDeviceDescriptorHeapFeaturesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDescriptorHeapFeaturesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceDescriptorHeapFeaturesEXT::default(),
+        PhysicalDeviceDescriptorHeapFeaturesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorHeapFeaturesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -81962,6 +91401,13 @@ impl<'a> PhysicalDeviceDescriptorHeapPropertiesEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDescriptorHeapPropertiesEXT() {
+    bytes_struct_eq(
+        PhysicalDeviceDescriptorHeapPropertiesEXT::default(),
+        PhysicalDeviceDescriptorHeapPropertiesEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorHeapPropertiesEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -82119,6 +91565,13 @@ impl<'a> CommandBufferInheritanceDescriptorHeapInfoEXT<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCommandBufferInheritanceDescriptorHeapInfoEXT() {
+    bytes_struct_eq(
+        CommandBufferInheritanceDescriptorHeapInfoEXT::default(),
+        CommandBufferInheritanceDescriptorHeapInfoEXT::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceDescriptorHeapInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::COMMAND_BUFFER_INHERITANCE_DESCRIPTOR_HEAP_INFO_EXT;
@@ -82179,6 +91632,13 @@ impl<'a> PhysicalDeviceDescriptorHeapTensorPropertiesARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDescriptorHeapTensorPropertiesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceDescriptorHeapTensorPropertiesARM::default(),
+        PhysicalDeviceDescriptorHeapTensorPropertiesARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_HEAP_TENSOR_PROPERTIES_ARM;
@@ -82237,6 +91697,13 @@ impl<'a> PhysicalDeviceShaderInstrumentationFeaturesARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderInstrumentationFeaturesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderInstrumentationFeaturesARM::default(),
+        PhysicalDeviceShaderInstrumentationFeaturesARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderInstrumentationFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_INSTRUMENTATION_FEATURES_ARM;
@@ -82284,6 +91751,13 @@ impl<'a> PhysicalDeviceShaderInstrumentationPropertiesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderInstrumentationPropertiesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderInstrumentationPropertiesARM::default(),
+        PhysicalDeviceShaderInstrumentationPropertiesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderInstrumentationPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -82333,6 +91807,13 @@ impl<'a> ShaderInstrumentationCreateInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkShaderInstrumentationCreateInfoARM() {
+    bytes_struct_eq(
+        ShaderInstrumentationCreateInfoARM::default(),
+        ShaderInstrumentationCreateInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ShaderInstrumentationCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SHADER_INSTRUMENTATION_CREATE_INFO_ARM;
 }
@@ -82379,6 +91860,13 @@ impl<'a> ShaderInstrumentationMetricDescriptionARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkShaderInstrumentationMetricDescriptionARM() {
+    bytes_struct_eq(
+        ShaderInstrumentationMetricDescriptionARM::default(),
+        ShaderInstrumentationMetricDescriptionARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for ShaderInstrumentationMetricDescriptionARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::SHADER_INSTRUMENTATION_METRIC_DESCRIPTION_ARM;
@@ -82421,6 +91909,13 @@ impl ShaderInstrumentationMetricDataHeaderARM {
         unsafe { ::core::mem::zeroed() }
     }
 }
+#[test]
+fn eq_VkShaderInstrumentationMetricDataHeaderARM() {
+    bytes_struct_eq(
+        ShaderInstrumentationMetricDataHeaderARM::default(),
+        ShaderInstrumentationMetricDataHeaderARM::const_default(),
+    );
+}
 impl ShaderInstrumentationMetricDataHeaderARM {
     #[inline]
     pub fn result_index(mut self, result_index: u32) -> Self {
@@ -82457,6 +91952,13 @@ impl DeviceAddressRangeKHR {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDeviceAddressRangeKHR() {
+    bytes_struct_eq(
+        DeviceAddressRangeKHR::default(),
+        DeviceAddressRangeKHR::const_default(),
+    );
 }
 impl DeviceAddressRangeKHR {
     #[inline]
@@ -82505,6 +92007,13 @@ impl<'a> DeviceMemoryCopyKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceMemoryCopyKHR() {
+    bytes_struct_eq(
+        DeviceMemoryCopyKHR::default(),
+        DeviceMemoryCopyKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryCopyKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_MEMORY_COPY_KHR;
@@ -82563,6 +92072,13 @@ impl<'a> CopyDeviceMemoryInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCopyDeviceMemoryInfoKHR() {
+    bytes_struct_eq(
+        CopyDeviceMemoryInfoKHR::default(),
+        CopyDeviceMemoryInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyDeviceMemoryInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_DEVICE_MEMORY_INFO_KHR;
 }
@@ -82617,6 +92133,13 @@ impl<'a> DeviceMemoryImageCopyKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDeviceMemoryImageCopyKHR() {
+    bytes_struct_eq(
+        DeviceMemoryImageCopyKHR::default(),
+        DeviceMemoryImageCopyKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryImageCopyKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_MEMORY_IMAGE_COPY_KHR;
@@ -82697,6 +92220,13 @@ impl<'a> CopyDeviceMemoryImageInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkCopyDeviceMemoryImageInfoKHR() {
+    bytes_struct_eq(
+        CopyDeviceMemoryImageInfoKHR::default(),
+        CopyDeviceMemoryImageInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for CopyDeviceMemoryImageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COPY_DEVICE_MEMORY_IMAGE_INFO_KHR;
 }
@@ -82744,6 +92274,13 @@ impl<'a> MemoryRangeBarriersInfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkMemoryRangeBarriersInfoKHR() {
+    bytes_struct_eq(
+        MemoryRangeBarriersInfoKHR::default(),
+        MemoryRangeBarriersInfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryRangeBarriersInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_RANGE_BARRIERS_INFO_KHR;
@@ -82803,6 +92340,13 @@ impl<'a> MemoryRangeBarrierKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkMemoryRangeBarrierKHR() {
+    bytes_struct_eq(
+        MemoryRangeBarrierKHR::default(),
+        MemoryRangeBarrierKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryRangeBarrierKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_RANGE_BARRIER_KHR;
@@ -82879,6 +92423,13 @@ impl<'a> PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceDeviceAddressCommandsFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceDeviceAddressCommandsFeaturesKHR::default(),
+        PhysicalDeviceDeviceAddressCommandsFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_DEVICE_ADDRESS_COMMANDS_FEATURES_KHR;
@@ -82928,6 +92479,13 @@ impl<'a> ConditionalRenderingBeginInfo2EXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkConditionalRenderingBeginInfo2EXT() {
+    bytes_struct_eq(
+        ConditionalRenderingBeginInfo2EXT::default(),
+        ConditionalRenderingBeginInfo2EXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for ConditionalRenderingBeginInfo2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CONDITIONAL_RENDERING_BEGIN_INFO_2_EXT;
@@ -82984,6 +92542,13 @@ impl<'a> AccelerationStructureCreateInfo2KHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkAccelerationStructureCreateInfo2KHR() {
+    bytes_struct_eq(
+        AccelerationStructureCreateInfo2KHR::default(),
+        AccelerationStructureCreateInfo2KHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfo2KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_2_KHR;
@@ -83044,6 +92609,13 @@ impl<'a> BindIndexBuffer3InfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBindIndexBuffer3InfoKHR() {
+    bytes_struct_eq(
+        BindIndexBuffer3InfoKHR::default(),
+        BindIndexBuffer3InfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BindIndexBuffer3InfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_INDEX_BUFFER_3_INFO_KHR;
 }
@@ -83098,6 +92670,13 @@ impl<'a> BindVertexBuffer3InfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkBindVertexBuffer3InfoKHR() {
+    bytes_struct_eq(
+        BindVertexBuffer3InfoKHR::default(),
+        BindVertexBuffer3InfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for BindVertexBuffer3InfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_VERTEX_BUFFER_3_INFO_KHR;
 }
@@ -83151,6 +92730,13 @@ impl<'a> DrawIndirect2InfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDrawIndirect2InfoKHR() {
+    bytes_struct_eq(
+        DrawIndirect2InfoKHR::default(),
+        DrawIndirect2InfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DrawIndirect2InfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DRAW_INDIRECT_2_INFO_KHR;
@@ -83209,6 +92795,13 @@ impl<'a> DrawIndirectCount2InfoKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDrawIndirectCount2InfoKHR() {
+    bytes_struct_eq(
+        DrawIndirectCount2InfoKHR::default(),
+        DrawIndirectCount2InfoKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DrawIndirectCount2InfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DRAW_INDIRECT_COUNT_2_INFO_KHR;
@@ -83272,6 +92865,13 @@ impl<'a> DispatchIndirect2InfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDispatchIndirect2InfoKHR() {
+    bytes_struct_eq(
+        DispatchIndirect2InfoKHR::default(),
+        DispatchIndirect2InfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DispatchIndirect2InfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DISPATCH_INDIRECT_2_INFO_KHR;
 }
@@ -83318,6 +92918,13 @@ impl<'a> BindTransformFeedbackBuffer2InfoEXT<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkBindTransformFeedbackBuffer2InfoEXT() {
+    bytes_struct_eq(
+        BindTransformFeedbackBuffer2InfoEXT::default(),
+        BindTransformFeedbackBuffer2InfoEXT::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for BindTransformFeedbackBuffer2InfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BIND_TRANSFORM_FEEDBACK_BUFFER_2_INFO_EXT;
@@ -83369,6 +92976,13 @@ impl<'a> MemoryMarkerInfoAMD<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkMemoryMarkerInfoAMD() {
+    bytes_struct_eq(
+        MemoryMarkerInfoAMD::default(),
+        MemoryMarkerInfoAMD::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMarkerInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_MARKER_INFO_AMD;
@@ -83425,6 +93039,13 @@ impl<'a> PhysicalDeviceShaderConstantDataFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderConstantDataFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderConstantDataFeaturesKHR::default(),
+        PhysicalDeviceShaderConstantDataFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderConstantDataFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PHYSICAL_DEVICE_SHADER_CONSTANT_DATA_FEATURES_KHR;
@@ -83471,6 +93092,13 @@ impl<'a> PhysicalDeviceShaderAbortFeaturesKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkPhysicalDeviceShaderAbortFeaturesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderAbortFeaturesKHR::default(),
+        PhysicalDeviceShaderAbortFeaturesKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAbortFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_ABORT_FEATURES_KHR;
 }
@@ -83512,6 +93140,13 @@ impl<'a> PhysicalDeviceShaderAbortPropertiesKHR<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceShaderAbortPropertiesKHR() {
+    bytes_struct_eq(
+        PhysicalDeviceShaderAbortPropertiesKHR::default(),
+        PhysicalDeviceShaderAbortPropertiesKHR::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAbortPropertiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -83557,6 +93192,13 @@ impl<'a> DeviceFaultShaderAbortMessageInfoKHR<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDeviceFaultShaderAbortMessageInfoKHR() {
+    bytes_struct_eq(
+        DeviceFaultShaderAbortMessageInfoKHR::default(),
+        DeviceFaultShaderAbortMessageInfoKHR::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultShaderAbortMessageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_FAULT_SHADER_ABORT_MESSAGE_INFO_KHR;
 }
@@ -83600,6 +93242,13 @@ impl DataGraphTOSANameQualityARM {
     pub const fn const_default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
+}
+#[test]
+fn eq_VkDataGraphTOSANameQualityARM() {
+    bytes_struct_eq(
+        DataGraphTOSANameQualityARM::default(),
+        DataGraphTOSANameQualityARM::const_default(),
+    );
 }
 impl DataGraphTOSANameQualityARM {
     #[inline]
@@ -83653,6 +93302,13 @@ impl<'a> QueueFamilyDataGraphTOSAPropertiesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkQueueFamilyDataGraphTOSAPropertiesARM() {
+    bytes_struct_eq(
+        QueueFamilyDataGraphTOSAPropertiesARM::default(),
+        QueueFamilyDataGraphTOSAPropertiesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphTOSAPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -83711,6 +93367,13 @@ impl<'a> DataGraphPipelineSingleNodeConnectionARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphPipelineSingleNodeConnectionARM() {
+    bytes_struct_eq(
+        DataGraphPipelineSingleNodeConnectionARM::default(),
+        DataGraphPipelineSingleNodeConnectionARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSingleNodeConnectionARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_PIPELINE_SINGLE_NODE_CONNECTION_ARM;
@@ -83761,6 +93424,13 @@ impl<'a> PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkPhysicalDeviceDataGraphOpticalFlowFeaturesARM() {
+    bytes_struct_eq(
+        PhysicalDeviceDataGraphOpticalFlowFeaturesARM::default(),
+        PhysicalDeviceDataGraphOpticalFlowFeaturesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -83821,6 +93491,13 @@ impl<'a> QueueFamilyDataGraphOpticalFlowPropertiesARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkQueueFamilyDataGraphOpticalFlowPropertiesARM() {
+    bytes_struct_eq(
+        QueueFamilyDataGraphOpticalFlowPropertiesARM::default(),
+        QueueFamilyDataGraphOpticalFlowPropertiesARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphOpticalFlowPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -83904,6 +93581,13 @@ impl<'a> DataGraphOpticalFlowImageFormatInfoARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphOpticalFlowImageFormatInfoARM() {
+    bytes_struct_eq(
+        DataGraphOpticalFlowImageFormatInfoARM::default(),
+        DataGraphOpticalFlowImageFormatInfoARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphOpticalFlowImageFormatInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_OPTICAL_FLOW_IMAGE_FORMAT_INFO_ARM;
@@ -83950,6 +93634,13 @@ impl<'a> DataGraphOpticalFlowImageFormatPropertiesARM<'a> {
         init_tagged_structure()
     }
 }
+#[test]
+fn eq_VkDataGraphOpticalFlowImageFormatPropertiesARM() {
+    bytes_struct_eq(
+        DataGraphOpticalFlowImageFormatPropertiesARM::default(),
+        DataGraphOpticalFlowImageFormatPropertiesARM::const_default(),
+    );
+}
 unsafe impl<'a> TaggedStructure<'a> for DataGraphOpticalFlowImageFormatPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DATA_GRAPH_OPTICAL_FLOW_IMAGE_FORMAT_PROPERTIES_ARM;
@@ -83994,6 +93685,13 @@ impl<'a> DataGraphPipelineSingleNodeCreateInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDataGraphPipelineSingleNodeCreateInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineSingleNodeCreateInfoARM::default(),
+        DataGraphPipelineSingleNodeCreateInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSingleNodeCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -84064,6 +93762,13 @@ impl<'a> DataGraphPipelineOpticalFlowCreateInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDataGraphPipelineOpticalFlowCreateInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineOpticalFlowCreateInfoARM::default(),
+        DataGraphPipelineOpticalFlowCreateInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineOpticalFlowCreateInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
@@ -84157,6 +93862,13 @@ impl<'a> DataGraphPipelineOpticalFlowDispatchInfoARM<'a> {
     pub const fn const_default() -> Self {
         init_tagged_structure()
     }
+}
+#[test]
+fn eq_VkDataGraphPipelineOpticalFlowDispatchInfoARM() {
+    bytes_struct_eq(
+        DataGraphPipelineOpticalFlowDispatchInfoARM::default(),
+        DataGraphPipelineOpticalFlowDispatchInfoARM::const_default(),
+    );
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineOpticalFlowDispatchInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType =
