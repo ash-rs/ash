@@ -1887,7 +1887,6 @@ fn derive_default(
     provisional: &Option<TokenStream>,
 ) -> Option<TokenStream> {
     let name = name_to_tokens(&struct_.name);
-    let is_structure_type = |field: &vkxml::Field| field.basetype == "VkStructureType";
 
     // These are also pointers, and therefor also don't implement Default. The spec
     // also doesn't mark them as pointers
@@ -1904,58 +1903,44 @@ fn derive_default(
         "MTLSharedEvent_id",
         "MTLTexture_id",
     ];
-    let contains_ptr = members
-        .iter()
-        .any(|member| member.vkxml_field.reference.is_some());
-    let contains_structure_type = members
-        .iter()
-        .any(|member| is_structure_type(member.vkxml_field));
-    let contains_static_array = members
-        .iter()
-        .any(|member| is_static_array(member.vkxml_field));
     let contains_deprecated = members.iter().any(|member| member.deprecated.is_some());
     let allow_deprecated = contains_deprecated.then(|| quote!(#[allow(deprecated)]));
-    if !(contains_ptr || contains_structure_type || contains_static_array) {
-        return None;
-    };
+    // if !(contains_ptr || contains_structure_type || contains_static_array) {
+    //     return None;
+    // };
     let default_fields = members.iter().map(|member| {
         let param_ident = member.vkxml_field.param_ident();
-        if is_structure_type(member.vkxml_field) {
-            if member.vkxml_field.type_enums.is_some() {
-                quote!(#param_ident: Self::STRUCTURE_TYPE)
-            } else {
-                quote!(#param_ident: unsafe { ::core::mem::zeroed() })
-            }
+        let i = if member.vkxml_field.type_enums.is_some() {
+            quote!(Self::STRUCTURE_TYPE)
         } else if member.vkxml_field.reference.is_some() {
             if member.vkxml_field.is_const {
-                quote!(#param_ident: ::core::ptr::null())
+                quote!(::core::ptr::null())
             } else {
-                quote!(#param_ident: ::core::ptr::null_mut())
+                quote!(::core::ptr::null_mut())
             }
         } else if is_static_array(member.vkxml_field)
             || handles.contains(&member.vkxml_field.basetype.as_str())
         {
-            quote!(#param_ident: unsafe { ::core::mem::zeroed() })
+            quote!(unsafe { ::core::mem::zeroed() })
         } else {
             let ty = member.vkxml_field.type_tokens(false, None);
-            quote!(#param_ident: #ty::default())
-        }
+            quote!(#ty::default())
+        };
+        quote!(x.#param_ident = #i;)
     });
     let lifetime = has_lifetime.then(|| quote!(<'_>));
-    let marker = has_lifetime.then(|| quote!(_marker: PhantomData,));
+    // let marker = has_lifetime.then(|| quote!(_marker: PhantomData,));
     Some(quote! {
         #provisional
         impl ::core::default::Default for #name #lifetime {
             #[inline]
             fn default() -> Self {
                 #allow_deprecated
-                Self {
-                    #(
-                        #default_fields,
-                    )*
-                    #marker
-                }
-                // Self::const_default()
+                let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+                #(
+                    #default_fields;
+                )*
+                x
             }
         }
     })
@@ -2708,15 +2693,15 @@ pub fn generate_struct(
     } else {
         quote!()
     };
-    let derive_default = if may_have_default && default_tokens.is_none() {
-        quote!(Default,)
-    } else {
-        quote!()
-    };
-    let is_structure_type = |field: &vkxml::Field| field.basetype == "VkStructureType";
+    // let derive_default = if may_have_default && default_tokens.is_none() {
+    //     quote!(Default,)
+    // } else {
+    //     quote!()
+    // };
+    let derive_default = None::<TokenStream>;
     let contains_structure_type = members
         .iter()
-        .any(|member| is_structure_type(member.vkxml_field));
+        .any(|member| member.vkxml_field.type_enums.is_some());
     let initializer = if contains_structure_type {
         quote!(init_tagged_structure())
     } else {
