@@ -5063,7 +5063,10 @@ impl ::core::default::Default for ComputePipelineCreateInfo<'_> {
 impl<'a> ComputePipelineCreateInfo<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        init_tagged_structure()
+        Self {
+            stage: PipelineShaderStageCreateInfo::const_default(),
+            ..init_tagged_structure()
+        }
     }
 }
 #[test]
@@ -14211,7 +14214,10 @@ impl ::core::default::Default for ClusterAccelerationStructureCommandsInfoNV<'_>
 impl<'a> ClusterAccelerationStructureCommandsInfoNV<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        init_tagged_structure()
+        Self {
+            input: ClusterAccelerationStructureInputInfoNV::const_default(),
+            ..init_tagged_structure()
+        }
     }
 }
 #[test]
@@ -24423,7 +24429,10 @@ impl ::core::default::Default for AttachmentSampleLocationsEXT<'_> {
 impl<'a> AttachmentSampleLocationsEXT<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self {
+            sample_locations_info: SampleLocationsInfoEXT::const_default(),
+            ..unsafe { ::core::mem::zeroed() }
+        }
     }
 }
 #[test]
@@ -24470,7 +24479,10 @@ impl ::core::default::Default for SubpassSampleLocationsEXT<'_> {
 impl<'a> SubpassSampleLocationsEXT<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self {
+            sample_locations_info: SampleLocationsInfoEXT::const_default(),
+            ..unsafe { ::core::mem::zeroed() }
+        }
     }
 }
 #[test]
@@ -24591,7 +24603,10 @@ impl ::core::default::Default for PipelineSampleLocationsStateCreateInfoEXT<'_> 
 impl<'a> PipelineSampleLocationsStateCreateInfoEXT<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        init_tagged_structure()
+        Self {
+            sample_locations_info: SampleLocationsInfoEXT::const_default(),
+            ..init_tagged_structure()
+        }
     }
 }
 #[test]
@@ -26341,7 +26356,10 @@ impl ::core::default::Default for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_
 impl<'a> PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        init_tagged_structure()
+        Self {
+            properties: PhysicalDeviceProperties2::const_default(),
+            ..init_tagged_structure()
+        }
     }
 }
 #[test]
@@ -34970,7 +34988,11 @@ impl ::core::default::Default for GeometryDataNV<'_> {
 impl<'a> GeometryDataNV<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        unsafe { ::core::mem::zeroed() }
+        Self {
+            triangles: GeometryTrianglesNV::const_default(),
+            aabbs: GeometryAABBNV::const_default(),
+            ..unsafe { ::core::mem::zeroed() }
+        }
     }
 }
 #[test]
@@ -35019,7 +35041,10 @@ impl ::core::default::Default for GeometryNV<'_> {
 impl<'a> GeometryNV<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        init_tagged_structure()
+        Self {
+            geometry: GeometryDataNV::const_default(),
+            ..init_tagged_structure()
+        }
     }
 }
 #[test]
@@ -35144,7 +35169,10 @@ impl ::core::default::Default for AccelerationStructureCreateInfoNV<'_> {
 impl<'a> AccelerationStructureCreateInfoNV<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        init_tagged_structure()
+        Self {
+            info: AccelerationStructureInfoNV::const_default(),
+            ..init_tagged_structure()
+        }
     }
 }
 #[test]
@@ -48787,7 +48815,10 @@ impl ::core::default::Default for BuildPartitionedAccelerationStructureInfoNV<'_
 impl<'a> BuildPartitionedAccelerationStructureInfoNV<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        init_tagged_structure()
+        Self {
+            input: PartitionedAccelerationStructureInstancesInputNV::const_default(),
+            ..init_tagged_structure()
+        }
     }
 }
 #[test]
@@ -57121,7 +57152,10 @@ impl ::core::default::Default for VideoDecodeInfoKHR<'_> {
 impl<'a> VideoDecodeInfoKHR<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        init_tagged_structure()
+        Self {
+            dst_picture_resource: VideoPictureResourceInfoKHR::const_default(),
+            ..init_tagged_structure()
+        }
     }
 }
 #[test]
@@ -59298,7 +59332,10 @@ impl ::core::default::Default for VideoEncodeInfoKHR<'_> {
 impl<'a> VideoEncodeInfoKHR<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        init_tagged_structure()
+        Self {
+            src_picture_resource: VideoPictureResourceInfoKHR::const_default(),
+            ..init_tagged_structure()
+        }
     }
 }
 #[test]
@@ -66934,7 +66971,10 @@ impl ::core::default::Default for BufferCollectionPropertiesFUCHSIA<'_> {
 impl<'a> BufferCollectionPropertiesFUCHSIA<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        init_tagged_structure()
+        Self {
+            sysmem_color_space_index: SysmemColorSpaceFUCHSIA::const_default(),
+            ..init_tagged_structure()
+        }
     }
 }
 #[test]
@@ -67043,7 +67083,11 @@ impl ::core::default::Default for BufferConstraintsInfoFUCHSIA<'_> {
 impl<'a> BufferConstraintsInfoFUCHSIA<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        init_tagged_structure()
+        Self {
+            create_info: BufferCreateInfo::const_default(),
+            buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA::const_default(),
+            ..init_tagged_structure()
+        }
     }
 }
 #[test]
@@ -67161,7 +67205,10 @@ impl ::core::default::Default for ImageFormatConstraintsInfoFUCHSIA<'_> {
 impl<'a> ImageFormatConstraintsInfoFUCHSIA<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        init_tagged_structure()
+        Self {
+            image_create_info: ImageCreateInfo::const_default(),
+            ..init_tagged_structure()
+        }
     }
 }
 #[test]
@@ -67237,7 +67284,10 @@ impl ::core::default::Default for ImageConstraintsInfoFUCHSIA<'_> {
 impl<'a> ImageConstraintsInfoFUCHSIA<'a> {
     #[inline]
     pub const fn const_default() -> Self {
-        init_tagged_structure()
+        Self {
+            buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA::const_default(),
+            ..init_tagged_structure()
+        }
     }
 }
 #[test]

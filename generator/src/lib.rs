@@ -2436,6 +2436,7 @@ pub fn generate_struct(
     vk_parse_types: &HashMap<String, &vk_parse::Type>,
     union_types: &HashSet<&str>,
     has_lifetimes: &HashSet<Ident>,
+    has_struct_type: &HashSet<Ident>,
 ) -> TokenStream {
     let name = name_to_tokens(&struct_.name);
     let vk_parse_struct = vk_parse_types[&struct_.name];
@@ -2710,6 +2711,29 @@ pub fn generate_struct(
             unsafe { ::core::mem::zeroed() }
         }
     };
+
+    let stype_members = members
+        .iter()
+        .filter(|m| !m.vkxml_field.reference.is_some())
+        .filter_map(|m| {
+            let t = name_to_tokens(&m.vkxml_field.basetype);
+            has_struct_type.contains(&t).then(|| {
+                let i = m.vkxml_field.param_ident();
+                quote!(#i: #t::const_default())
+            })
+        })
+        .collect::<Vec<_>>();
+    let initializer = if !stype_members.is_empty() {
+        quote! {
+            Self {
+                #(#stype_members,)*
+                ..#initializer
+            }
+        }
+    } else {
+        initializer
+    };
+
     let const_default_tokens = may_have_default.then(|| {
         quote! {
             #provisional
@@ -2872,6 +2896,7 @@ pub fn generate_definition(
     allowed_types: &HashMap<&str, ProvidedBy<'_>>,
     union_types: &HashSet<&str>,
     has_lifetimes: &HashSet<Ident>,
+    has_struct_type: &HashSet<Ident>,
     vk_parse_types: &HashMap<String, &vk_parse::Type>,
     bitflags_cache: &mut HashSet<Ident>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
@@ -2891,6 +2916,7 @@ pub fn generate_definition(
                 vk_parse_types,
                 union_types,
                 has_lifetimes,
+                has_struct_type,
             ))
         }
         vkxml::DefinitionsElement::Bitmask(ref mask) => {
@@ -3515,6 +3541,50 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         }
     }
 
+    // Identify structures that need s_type initialization, even somewhere
+    // deep(er) inside the chain (i.e. via members)
+    let mut has_struct_type = definitions
+        .iter()
+        .filter_map(get_variant!(vkxml::DefinitionsElement::Struct))
+        .filter(|s| {
+            s.elements
+                .iter()
+                .filter_map(get_variant!(vkxml::StructElement::Member))
+                .any(|x| x.type_enums.is_some())
+        })
+        // TODO: Fragile after formatting!
+        .map(|s| name_to_tokens(&s.name))
+        .collect::<HashSet<Ident>>();
+    for def in &definitions {
+        match def {
+            // Only structs. Unions don't count as we don't know which of the fields' s_type to pick yet
+            vkxml::DefinitionsElement::Struct(s) => s
+                .elements
+                .iter()
+                .filter_map(get_variant!(vkxml::StructElement::Member))
+                .any(|field| {
+                    // Only owned fields
+                    field.reference.is_none()
+                        && has_struct_type.contains(&name_to_tokens(&field.basetype))
+                })
+                .then(|| has_struct_type.insert(name_to_tokens(&s.name))),
+            _ => continue,
+        };
+    }
+    for type_ in spec2
+        .0
+        .iter()
+        .filter_map(get_variant!(vk_parse::RegistryChild::Types))
+        .flat_map(|types| &types.children)
+        .filter_map(get_variant!(vk_parse::TypesChild::Type))
+    {
+        if let (Some(name), Some(alias)) = (&type_.name, &type_.alias) {
+            if has_struct_type.contains(&name_to_tokens(alias)) {
+                has_struct_type.insert(name_to_tokens(name));
+            }
+        }
+    }
+
     let extension_constants = extensions
         .iter()
         .map(|ext| {
@@ -3593,6 +3663,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
                 &required_types,
                 &union_types,
                 &has_lifetimes,
+                &has_struct_type,
                 &vk_parse_types,
                 &mut bitflags_cache,
                 &mut const_values,
