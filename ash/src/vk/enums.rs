@@ -3373,6 +3373,23 @@ impl NeuralAcceleratorStatisticsModeARM {
     pub const STATISTICS0: Self = Self(1);
     pub const STATISTICS1: Self = Self(2);
 }
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkImageTilingControlEXT.html>"]
+pub struct ImageTilingControlEXT(pub(crate) i32);
+impl ImageTilingControlEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+    pub const DEFAULT: Self = Self(0);
+    pub const MIN_SIZE: Self = Self(1);
+    pub const MAX_PERFORMANCE: Self = Self(2);
+}
 impl fmt::Debug for ObjectType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {

@@ -5731,6 +5731,11 @@ impl StructureType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_PRIMITIVE_RESTART_INDEX_FEATURES_EXT: Self = Self(1_000_678_000);
 }
+#[doc = "Generated from 'VK_EXT_image_tiling_control'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_IMAGE_TILING_CONTROL_FEATURES_EXT: Self = Self(1_000_687_000);
+    pub const IMAGE_TILING_CONTROL_CREATE_INFO_EXT: Self = Self(1_000_687_001);
+}
 #[doc = "Generated from 'VK_NV_cooperative_matrix_decode_vector'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_DECODE_VECTOR_FEATURES_NV: Self =
@@ -10858,6 +10863,9 @@ pub const EXT_PRIMITIVE_RESTART_INDEX_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetPrimitiveRestartIndexEXT =
     unsafe extern "system" fn(command_buffer: CommandBuffer, primitive_restart_index: u32);
+pub const EXT_IMAGE_TILING_CONTROL_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_tiling_control\0") };
+pub const EXT_IMAGE_TILING_CONTROL_SPEC_VERSION: u32 = 1u32;
 pub const NV_COOPERATIVE_MATRIX_DECODE_VECTOR_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_cooperative_matrix_decode_vector\0") };
 pub const NV_COOPERATIVE_MATRIX_DECODE_VECTOR_SPEC_VERSION: u32 = 1u32;

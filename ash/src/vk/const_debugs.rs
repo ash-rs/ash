@@ -3731,6 +3731,21 @@ impl fmt::Debug for ImageTiling {
         }
     }
 }
+impl fmt::Debug for ImageTilingControlEXT {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::DEFAULT => Some("DEFAULT"),
+            Self::MIN_SIZE => Some("MIN_SIZE"),
+            Self::MAX_PERFORMANCE => Some("MAX_PERFORMANCE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for ImageType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
@@ -8897,6 +8912,12 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_PRIMITIVE_RESTART_INDEX_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PRIMITIVE_RESTART_INDEX_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_IMAGE_TILING_CONTROL_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_IMAGE_TILING_CONTROL_FEATURES_EXT")
+            }
+            Self::IMAGE_TILING_CONTROL_CREATE_INFO_EXT => {
+                Some("IMAGE_TILING_CONTROL_CREATE_INFO_EXT")
             }
             Self::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_DECODE_VECTOR_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_COOPERATIVE_MATRIX_DECODE_VECTOR_FEATURES_NV")
