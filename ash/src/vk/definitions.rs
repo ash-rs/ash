@@ -733,7 +733,11 @@ pub struct Offset2D {
 impl ::core::default::Default for Offset2D {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.x = i32::default();
         x.y = i32::default();
         x
@@ -774,7 +778,11 @@ pub struct Offset3D {
 impl ::core::default::Default for Offset3D {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.x = i32::default();
         x.y = i32::default();
         x.z = i32::default();
@@ -820,7 +828,11 @@ pub struct Extent2D {
 impl ::core::default::Default for Extent2D {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.width = u32::default();
         x.height = u32::default();
         x
@@ -861,7 +873,11 @@ pub struct Extent3D {
 impl ::core::default::Default for Extent3D {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.width = u32::default();
         x.height = u32::default();
         x.depth = u32::default();
@@ -911,7 +927,11 @@ pub struct Viewport {
 impl ::core::default::Default for Viewport {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.x = f32::default();
         x.y = f32::default();
         x.width = f32::default();
@@ -975,7 +995,11 @@ pub struct Rect2D {
 impl ::core::default::Default for Rect2D {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.offset = Offset2D::default();
         x.extent = Extent2D::default();
         x
@@ -1016,7 +1040,11 @@ pub struct ClearRect {
 impl ::core::default::Default for ClearRect {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.rect = Rect2D::default();
         x.base_array_layer = u32::default();
         x.layer_count = u32::default();
@@ -1064,7 +1092,11 @@ pub struct ComponentMapping {
 impl ::core::default::Default for ComponentMapping {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.r = ComponentSwizzle::default();
         x.g = ComponentSwizzle::default();
         x.b = ComponentSwizzle::default();
@@ -1141,7 +1173,11 @@ impl fmt::Debug for PhysicalDeviceProperties {
 impl ::core::default::Default for PhysicalDeviceProperties {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.api_version = u32::default();
         x.driver_version = u32::default();
         x.vendor_id = u32::default();
@@ -1240,7 +1276,11 @@ impl fmt::Debug for ExtensionProperties {
 impl ::core::default::Default for ExtensionProperties {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.extension_name = unsafe { ::core::mem::zeroed() };
         x.spec_version = u32::default();
         x
@@ -1301,7 +1341,11 @@ impl fmt::Debug for LayerProperties {
 impl ::core::default::Default for LayerProperties {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.layer_name = unsafe { ::core::mem::zeroed() };
         x.spec_version = u32::default();
         x.implementation_version = u32::default();
@@ -1373,7 +1417,11 @@ unsafe impl Sync for ApplicationInfo<'_> {}
 impl ::core::default::Default for ApplicationInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_application_name = ::core::ptr::null();
@@ -1482,7 +1530,11 @@ impl fmt::Debug for AllocationCallbacks {
 impl ::core::default::Default for AllocationCallbacks {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.p_user_data = ::core::ptr::null_mut();
         x.pfn_allocation = PFN_vkAllocationFunction::default();
         x.pfn_reallocation = PFN_vkReallocationFunction::default();
@@ -1559,7 +1611,11 @@ unsafe impl Sync for DeviceQueueCreateInfo<'_> {}
 impl ::core::default::Default for DeviceQueueCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = DeviceQueueCreateFlags::default();
@@ -1629,7 +1685,11 @@ impl ::core::default::Default for DeviceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         #[allow(deprecated)]
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = DeviceCreateFlags::default();
@@ -1715,7 +1775,11 @@ unsafe impl Sync for InstanceCreateInfo<'_> {}
 impl ::core::default::Default for InstanceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = InstanceCreateFlags::default();
@@ -1781,7 +1845,11 @@ pub struct QueueFamilyProperties {
 impl ::core::default::Default for QueueFamilyProperties {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.queue_flags = QueueFlags::default();
         x.queue_count = u32::default();
         x.timestamp_valid_bits = u32::default();
@@ -1851,7 +1919,11 @@ impl fmt::Debug for PhysicalDeviceMemoryProperties {
 impl ::core::default::Default for PhysicalDeviceMemoryProperties {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.memory_type_count = u32::default();
         x.memory_types = unsafe { ::core::mem::zeroed() };
         x.memory_heap_count = u32::default();
@@ -1911,7 +1983,11 @@ unsafe impl Sync for MemoryAllocateInfo<'_> {}
 impl ::core::default::Default for MemoryAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.allocation_size = DeviceSize::default();
@@ -1960,7 +2036,11 @@ pub struct MemoryRequirements {
 impl ::core::default::Default for MemoryRequirements {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.size = DeviceSize::default();
         x.alignment = DeviceSize::default();
         x.memory_type_bits = u32::default();
@@ -2010,7 +2090,11 @@ pub struct SparseImageFormatProperties {
 impl ::core::default::Default for SparseImageFormatProperties {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.aspect_mask = ImageAspectFlags::default();
         x.image_granularity = Extent3D::default();
         x.flags = SparseImageFormatFlags::default();
@@ -2062,7 +2146,11 @@ pub struct SparseImageMemoryRequirements {
 impl ::core::default::Default for SparseImageMemoryRequirements {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.format_properties = SparseImageFormatProperties::default();
         x.image_mip_tail_first_lod = u32::default();
         x.image_mip_tail_size = DeviceSize::default();
@@ -2123,7 +2211,11 @@ pub struct MemoryType {
 impl ::core::default::Default for MemoryType {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.property_flags = MemoryPropertyFlags::default();
         x.heap_index = u32::default();
         x
@@ -2163,7 +2255,11 @@ pub struct MemoryHeap {
 impl ::core::default::Default for MemoryHeap {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.size = DeviceSize::default();
         x.flags = MemoryHeapFlags::default();
         x
@@ -2209,7 +2305,11 @@ unsafe impl Sync for MappedMemoryRange<'_> {}
 impl ::core::default::Default for MappedMemoryRange<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.memory = DeviceMemory::default();
@@ -2264,7 +2364,11 @@ pub struct FormatProperties {
 impl ::core::default::Default for FormatProperties {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.linear_tiling_features = FormatFeatureFlags::default();
         x.optimal_tiling_features = FormatFeatureFlags::default();
         x.buffer_features = FormatFeatureFlags::default();
@@ -2316,7 +2420,11 @@ pub struct ImageFormatProperties {
 impl ::core::default::Default for ImageFormatProperties {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.max_extent = Extent3D::default();
         x.max_mip_levels = u32::default();
         x.max_array_layers = u32::default();
@@ -2378,7 +2486,11 @@ pub struct DescriptorBufferInfo {
 impl ::core::default::Default for DescriptorBufferInfo {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.buffer = Buffer::default();
         x.offset = DeviceSize::default();
         x.range = DeviceSize::default();
@@ -2428,7 +2540,11 @@ pub struct DescriptorImageInfo {
 impl ::core::default::Default for DescriptorImageInfo {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.sampler = Sampler::default();
         x.image_view = ImageView::default();
         x.image_layout = ImageLayout::default();
@@ -2488,7 +2604,11 @@ unsafe impl Sync for WriteDescriptorSet<'_> {}
 impl ::core::default::Default for WriteDescriptorSet<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.dst_set = DescriptorSet::default();
@@ -2585,7 +2705,11 @@ unsafe impl Sync for CopyDescriptorSet<'_> {}
 impl ::core::default::Default for CopyDescriptorSet<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_set = DescriptorSet::default();
@@ -2667,7 +2791,11 @@ unsafe impl Sync for BufferUsageFlags2CreateInfo<'_> {}
 impl ::core::default::Default for BufferUsageFlags2CreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.usage = BufferUsageFlags2::default();
@@ -2722,7 +2850,11 @@ unsafe impl Sync for BufferCreateInfo<'_> {}
 impl ::core::default::Default for BufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = BufferCreateFlags::default();
@@ -2798,7 +2930,11 @@ unsafe impl Sync for BufferViewCreateInfo<'_> {}
 impl ::core::default::Default for BufferViewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = BufferViewCreateFlags::default();
@@ -2865,7 +3001,11 @@ pub struct ImageSubresource {
 impl ::core::default::Default for ImageSubresource {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.aspect_mask = ImageAspectFlags::default();
         x.mip_level = u32::default();
         x.array_layer = u32::default();
@@ -2916,7 +3056,11 @@ pub struct ImageSubresourceLayers {
 impl ::core::default::Default for ImageSubresourceLayers {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.aspect_mask = ImageAspectFlags::default();
         x.mip_level = u32::default();
         x.base_array_layer = u32::default();
@@ -2974,7 +3118,11 @@ pub struct ImageSubresourceRange {
 impl ::core::default::Default for ImageSubresourceRange {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.aspect_mask = ImageAspectFlags::default();
         x.base_mip_level = u32::default();
         x.level_count = u32::default();
@@ -3040,7 +3188,11 @@ unsafe impl Sync for MemoryBarrier<'_> {}
 impl ::core::default::Default for MemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_access_mask = AccessFlags::default();
@@ -3095,7 +3247,11 @@ unsafe impl Sync for BufferMemoryBarrier<'_> {}
 impl ::core::default::Default for BufferMemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_access_mask = AccessFlags::default();
@@ -3184,7 +3340,11 @@ unsafe impl Sync for ImageMemoryBarrier<'_> {}
 impl ::core::default::Default for ImageMemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_access_mask = AccessFlags::default();
@@ -3284,7 +3444,11 @@ unsafe impl Sync for ImageCreateInfo<'_> {}
 impl ::core::default::Default for ImageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = ImageCreateFlags::default();
@@ -3394,7 +3558,11 @@ pub struct SubresourceLayout {
 impl ::core::default::Default for SubresourceLayout {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.offset = DeviceSize::default();
         x.size = DeviceSize::default();
         x.row_pitch = DeviceSize::default();
@@ -3464,7 +3632,11 @@ unsafe impl Sync for ImageViewCreateInfo<'_> {}
 impl ::core::default::Default for ImageViewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = ImageViewCreateFlags::default();
@@ -3537,7 +3709,11 @@ pub struct BufferCopy {
 impl ::core::default::Default for BufferCopy {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.src_offset = DeviceSize::default();
         x.dst_offset = DeviceSize::default();
         x.size = DeviceSize::default();
@@ -3586,7 +3762,11 @@ pub struct SparseMemoryBind {
 impl ::core::default::Default for SparseMemoryBind {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.resource_offset = DeviceSize::default();
         x.size = DeviceSize::default();
         x.memory = DeviceMemory::default();
@@ -3651,7 +3831,11 @@ pub struct SparseImageMemoryBind {
 impl ::core::default::Default for SparseImageMemoryBind {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.subresource = ImageSubresource::default();
         x.offset = Offset3D::default();
         x.extent = Extent3D::default();
@@ -3722,7 +3906,11 @@ unsafe impl Sync for SparseBufferMemoryBindInfo<'_> {}
 impl ::core::default::Default for SparseBufferMemoryBindInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.buffer = Buffer::default();
         x.bind_count = u32::default();
         x.p_binds = ::core::ptr::null();
@@ -3771,7 +3959,11 @@ unsafe impl Sync for SparseImageOpaqueMemoryBindInfo<'_> {}
 impl ::core::default::Default for SparseImageOpaqueMemoryBindInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.image = Image::default();
         x.bind_count = u32::default();
         x.p_binds = ::core::ptr::null();
@@ -3820,7 +4012,11 @@ unsafe impl Sync for SparseImageMemoryBindInfo<'_> {}
 impl ::core::default::Default for SparseImageMemoryBindInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.image = Image::default();
         x.bind_count = u32::default();
         x.p_binds = ::core::ptr::null();
@@ -3878,7 +4074,11 @@ unsafe impl Sync for BindSparseInfo<'_> {}
 impl ::core::default::Default for BindSparseInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.wait_semaphore_count = u32::default();
@@ -3957,7 +4157,11 @@ pub struct ImageCopy {
 impl ::core::default::Default for ImageCopy {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.src_subresource = ImageSubresourceLayers::default();
         x.src_offset = Offset3D::default();
         x.dst_subresource = ImageSubresourceLayers::default();
@@ -4017,7 +4221,11 @@ pub struct ImageBlit {
 impl ::core::default::Default for ImageBlit {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.src_subresource = ImageSubresourceLayers::default();
         x.src_offsets = unsafe { ::core::mem::zeroed() };
         x.dst_subresource = ImageSubresourceLayers::default();
@@ -4073,7 +4281,11 @@ pub struct BufferImageCopy {
 impl ::core::default::Default for BufferImageCopy {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.buffer_offset = DeviceSize::default();
         x.buffer_row_length = u32::default();
         x.buffer_image_height = u32::default();
@@ -4138,7 +4350,11 @@ pub struct StridedDeviceAddressRangeKHR {
 impl ::core::default::Default for StridedDeviceAddressRangeKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.address = DeviceAddress::default();
         x.size = DeviceSize::default();
         x.stride = DeviceSize::default();
@@ -4188,7 +4404,11 @@ pub struct CopyMemoryIndirectCommandKHR {
 impl ::core::default::Default for CopyMemoryIndirectCommandKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.src_address = DeviceAddress::default();
         x.dst_address = DeviceAddress::default();
         x.size = DeviceSize::default();
@@ -4244,7 +4464,11 @@ unsafe impl Sync for CopyMemoryIndirectInfoKHR<'_> {}
 impl ::core::default::Default for CopyMemoryIndirectInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_copy_flags = AddressCopyFlagsKHR::default();
@@ -4308,7 +4532,11 @@ pub struct CopyMemoryToImageIndirectCommandKHR {
 impl ::core::default::Default for CopyMemoryToImageIndirectCommandKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.src_address = DeviceAddress::default();
         x.buffer_row_length = u32::default();
         x.buffer_image_height = u32::default();
@@ -4384,7 +4612,11 @@ unsafe impl Sync for CopyMemoryToImageIndirectInfoKHR<'_> {}
 impl ::core::default::Default for CopyMemoryToImageIndirectInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_copy_flags = AddressCopyFlagsKHR::default();
@@ -4455,7 +4687,11 @@ pub struct ImageResolve {
 impl ::core::default::Default for ImageResolve {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.src_subresource = ImageSubresourceLayers::default();
         x.src_offset = Offset3D::default();
         x.dst_subresource = ImageSubresourceLayers::default();
@@ -4519,7 +4755,11 @@ unsafe impl Sync for ShaderModuleCreateInfo<'_> {}
 impl ::core::default::Default for ShaderModuleCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = ShaderModuleCreateFlags::default();
@@ -4577,7 +4817,11 @@ unsafe impl Sync for DescriptorSetLayoutBinding<'_> {}
 impl ::core::default::Default for DescriptorSetLayoutBinding<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.binding = u32::default();
         x.descriptor_type = DescriptorType::default();
         x.descriptor_count = u32::default();
@@ -4645,7 +4889,11 @@ unsafe impl Sync for DescriptorSetLayoutCreateInfo<'_> {}
 impl ::core::default::Default for DescriptorSetLayoutCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = DescriptorSetLayoutCreateFlags::default();
@@ -4695,7 +4943,11 @@ pub struct DescriptorPoolSize {
 impl ::core::default::Default for DescriptorPoolSize {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.ty = DescriptorType::default();
         x.descriptor_count = u32::default();
         x
@@ -4745,7 +4997,11 @@ unsafe impl Sync for DescriptorPoolCreateInfo<'_> {}
 impl ::core::default::Default for DescriptorPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = DescriptorPoolCreateFlags::default();
@@ -4807,7 +5063,11 @@ unsafe impl Sync for DescriptorSetAllocateInfo<'_> {}
 impl ::core::default::Default for DescriptorSetAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.descriptor_pool = DescriptorPool::default();
@@ -4858,7 +5118,11 @@ pub struct SpecializationMapEntry {
 impl ::core::default::Default for SpecializationMapEntry {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.constant_id = u32::default();
         x.offset = u32::default();
         x.size = usize::default();
@@ -4912,7 +5176,11 @@ unsafe impl Sync for SpecializationInfo<'_> {}
 impl ::core::default::Default for SpecializationInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.map_entry_count = u32::default();
         x.p_map_entries = ::core::ptr::null();
         x.data_size = usize::default();
@@ -4967,7 +5235,11 @@ unsafe impl Sync for PipelineShaderStageCreateInfo<'_> {}
 impl ::core::default::Default for PipelineShaderStageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineShaderStageCreateFlags::default();
@@ -5049,7 +5321,11 @@ unsafe impl Sync for ComputePipelineCreateInfo<'_> {}
 impl ::core::default::Default for ComputePipelineCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineCreateFlags::default();
@@ -5124,7 +5400,11 @@ unsafe impl Sync for ComputePipelineIndirectBufferInfoNV<'_> {}
 impl ::core::default::Default for ComputePipelineIndirectBufferInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.device_address = DeviceAddress::default();
@@ -5186,7 +5466,11 @@ unsafe impl Sync for PipelineCreateFlags2CreateInfo<'_> {}
 impl ::core::default::Default for PipelineCreateFlags2CreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineCreateFlags2::default();
@@ -5233,7 +5517,11 @@ pub struct VertexInputBindingDescription {
 impl ::core::default::Default for VertexInputBindingDescription {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.binding = u32::default();
         x.stride = u32::default();
         x.input_rate = VertexInputRate::default();
@@ -5284,7 +5572,11 @@ pub struct VertexInputAttributeDescription {
 impl ::core::default::Default for VertexInputAttributeDescription {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.location = u32::default();
         x.binding = u32::default();
         x.format = Format::default();
@@ -5347,7 +5639,11 @@ unsafe impl Sync for PipelineVertexInputStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineVertexInputStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineVertexInputStateCreateFlags::default();
@@ -5417,7 +5713,11 @@ unsafe impl Sync for PipelineInputAssemblyStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineInputAssemblyStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineInputAssemblyStateCreateFlags::default();
@@ -5476,7 +5776,11 @@ unsafe impl Sync for PipelineTessellationStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineTessellationStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineTessellationStateCreateFlags::default();
@@ -5532,7 +5836,11 @@ unsafe impl Sync for PipelineViewportStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineViewportStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineViewportStateCreateFlags::default();
@@ -5614,7 +5922,11 @@ unsafe impl Sync for PipelineRasterizationStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineRasterizationStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineRasterizationStateCreateFlags::default();
@@ -5726,7 +6038,11 @@ unsafe impl Sync for PipelineMultisampleStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineMultisampleStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineMultisampleStateCreateFlags::default();
@@ -5819,7 +6135,11 @@ pub struct PipelineColorBlendAttachmentState {
 impl ::core::default::Default for PipelineColorBlendAttachmentState {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.blend_enable = Bool32::default();
         x.src_color_blend_factor = BlendFactor::default();
         x.dst_color_blend_factor = BlendFactor::default();
@@ -5907,7 +6227,11 @@ unsafe impl Sync for PipelineColorBlendStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineColorBlendStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineColorBlendStateCreateFlags::default();
@@ -5981,7 +6305,11 @@ unsafe impl Sync for PipelineDynamicStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineDynamicStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineDynamicStateCreateFlags::default();
@@ -6036,7 +6364,11 @@ pub struct StencilOpState {
 impl ::core::default::Default for StencilOpState {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.fail_op = StencilOp::default();
         x.pass_op = StencilOp::default();
         x.depth_fail_op = StencilOp::default();
@@ -6119,7 +6451,11 @@ unsafe impl Sync for PipelineDepthStencilStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineDepthStencilStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineDepthStencilStateCreateFlags::default();
@@ -6235,7 +6571,11 @@ unsafe impl Sync for GraphicsPipelineCreateInfo<'_> {}
 impl ::core::default::Default for GraphicsPipelineCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineCreateFlags::default();
@@ -6399,7 +6739,11 @@ unsafe impl Sync for PipelineCacheCreateInfo<'_> {}
 impl ::core::default::Default for PipelineCacheCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineCacheCreateFlags::default();
@@ -6452,7 +6796,11 @@ pub struct PipelineCacheHeaderVersionOne {
 impl ::core::default::Default for PipelineCacheHeaderVersionOne {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.header_size = u32::default();
         x.header_version = PipelineCacheHeaderVersion::default();
         x.vendor_id = u32::default();
@@ -6516,7 +6864,11 @@ pub struct PipelineCacheHeaderVersionDataGraphQCOM {
 impl ::core::default::Default for PipelineCacheHeaderVersionDataGraphQCOM {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.header_size = u32::default();
         x.header_version = PipelineCacheHeaderVersion::default();
         x.cache_type = DataGraphModelCacheTypeQCOM::default();
@@ -6581,7 +6933,11 @@ pub struct PushConstantRange {
 impl ::core::default::Default for PushConstantRange {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.stage_flags = ShaderStageFlags::default();
         x.offset = u32::default();
         x.size = u32::default();
@@ -6636,7 +6992,11 @@ unsafe impl Sync for PipelineBinaryCreateInfoKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_keys_and_data_info = ::core::ptr::null();
@@ -6701,7 +7061,11 @@ unsafe impl Sync for PipelineBinaryHandlesInfoKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryHandlesInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.pipeline_binary_count = u32::default();
@@ -6748,7 +7112,11 @@ unsafe impl Sync for PipelineBinaryDataKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.data_size = usize::default();
         x.p_data = ::core::ptr::null_mut();
         x
@@ -6791,7 +7159,11 @@ unsafe impl Sync for PipelineBinaryKeysAndDataKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryKeysAndDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.binary_count = u32::default();
         x.p_pipeline_binary_keys = ::core::ptr::null();
         x.p_pipeline_binary_data = ::core::ptr::null();
@@ -6848,7 +7220,11 @@ unsafe impl Sync for PipelineBinaryKeyKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryKeyKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.key_size = u32::default();
@@ -6901,7 +7277,11 @@ unsafe impl Sync for PipelineBinaryInfoKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.binary_count = u32::default();
@@ -6952,7 +7332,11 @@ unsafe impl Sync for ReleaseCapturedPipelineDataInfoKHR<'_> {}
 impl ::core::default::Default for ReleaseCapturedPipelineDataInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pipeline = Pipeline::default();
@@ -6998,7 +7382,11 @@ unsafe impl Sync for PipelineBinaryDataInfoKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryDataInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pipeline_binary = PipelineBinaryKHR::default();
@@ -7043,7 +7431,11 @@ unsafe impl Sync for PipelineCreateInfoKHR<'_> {}
 impl ::core::default::Default for PipelineCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x
@@ -7086,7 +7478,11 @@ unsafe impl Sync for PipelineLayoutCreateInfo<'_> {}
 impl ::core::default::Default for PipelineLayoutCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineLayoutCreateFlags::default();
@@ -7173,7 +7569,11 @@ unsafe impl Sync for SamplerCreateInfo<'_> {}
 impl ::core::default::Default for SamplerCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = SamplerCreateFlags::default();
@@ -7310,7 +7710,11 @@ unsafe impl Sync for CommandPoolCreateInfo<'_> {}
 impl ::core::default::Default for CommandPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = CommandPoolCreateFlags::default();
@@ -7364,7 +7768,11 @@ unsafe impl Sync for CommandBufferAllocateInfo<'_> {}
 impl ::core::default::Default for CommandBufferAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.command_pool = CommandPool::default();
@@ -7427,7 +7835,11 @@ unsafe impl Sync for CommandBufferInheritanceInfo<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.render_pass = RenderPass::default();
@@ -7504,7 +7916,11 @@ unsafe impl Sync for CommandBufferBeginInfo<'_> {}
 impl ::core::default::Default for CommandBufferBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = CommandBufferUsageFlags::default();
@@ -7576,7 +7992,11 @@ impl fmt::Debug for RenderPassBeginInfo<'_> {
 impl ::core::default::Default for RenderPassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.render_pass = RenderPass::default();
@@ -7652,7 +8072,11 @@ pub struct ClearDepthStencilValue {
 impl ::core::default::Default for ClearDepthStencilValue {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.depth = f32::default();
         x.stencil = u32::default();
         x
@@ -7718,7 +8142,11 @@ impl fmt::Debug for ClearAttachment {
 impl ::core::default::Default for ClearAttachment {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.aspect_mask = ImageAspectFlags::default();
         x.color_attachment = u32::default();
         x.clear_value = ClearValue::default();
@@ -7771,7 +8199,11 @@ pub struct AttachmentDescription {
 impl ::core::default::Default for AttachmentDescription {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.flags = AttachmentDescriptionFlags::default();
         x.format = Format::default();
         x.samples = SampleCountFlags::default();
@@ -7856,7 +8288,11 @@ pub struct AttachmentReference {
 impl ::core::default::Default for AttachmentReference {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.attachment = u32::default();
         x.layout = ImageLayout::default();
         x
@@ -7910,7 +8346,11 @@ unsafe impl Sync for SubpassDescription<'_> {}
 impl ::core::default::Default for SubpassDescription<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.flags = SubpassDescriptionFlags::default();
         x.pipeline_bind_point = PipelineBindPoint::default();
         x.input_attachment_count = u32::default();
@@ -7998,7 +8438,11 @@ pub struct SubpassDependency {
 impl ::core::default::Default for SubpassDependency {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.src_subpass = u32::default();
         x.dst_subpass = u32::default();
         x.src_stage_mask = PipelineStageFlags::default();
@@ -8081,7 +8525,11 @@ unsafe impl Sync for RenderPassCreateInfo<'_> {}
 impl ::core::default::Default for RenderPassCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = RenderPassCreateFlags::default();
@@ -8151,7 +8599,11 @@ unsafe impl Sync for EventCreateInfo<'_> {}
 impl ::core::default::Default for EventCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = EventCreateFlags::default();
@@ -8194,7 +8646,11 @@ unsafe impl Sync for FenceCreateInfo<'_> {}
 impl ::core::default::Default for FenceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = FenceCreateFlags::default();
@@ -8286,7 +8742,11 @@ pub struct PhysicalDeviceFeatures {
 impl ::core::default::Default for PhysicalDeviceFeatures {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.robust_buffer_access = Bool32::default();
         x.full_draw_index_uint32 = Bool32::default();
         x.image_cube_array = Bool32::default();
@@ -8687,7 +9147,11 @@ pub struct PhysicalDeviceSparseProperties {
 impl ::core::default::Default for PhysicalDeviceSparseProperties {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.residency_standard2_d_block_shape = Bool32::default();
         x.residency_standard2_d_multisample_block_shape = Bool32::default();
         x.residency_standard3_d_block_shape = Bool32::default();
@@ -8862,7 +9326,11 @@ pub struct PhysicalDeviceLimits {
 impl ::core::default::Default for PhysicalDeviceLimits {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.max_image_dimension1_d = u32::default();
         x.max_image_dimension2_d = u32::default();
         x.max_image_dimension3_d = u32::default();
@@ -9665,7 +10133,11 @@ unsafe impl Sync for SemaphoreCreateInfo<'_> {}
 impl ::core::default::Default for SemaphoreCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = SemaphoreCreateFlags::default();
@@ -9714,7 +10186,11 @@ unsafe impl Sync for QueryPoolCreateInfo<'_> {}
 impl ::core::default::Default for QueryPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = QueryPoolCreateFlags::default();
@@ -9784,7 +10260,11 @@ unsafe impl Sync for FramebufferCreateInfo<'_> {}
 impl ::core::default::Default for FramebufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = FramebufferCreateFlags::default();
@@ -9865,7 +10345,11 @@ pub struct DrawIndirectCommand {
 impl ::core::default::Default for DrawIndirectCommand {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.vertex_count = u32::default();
         x.instance_count = u32::default();
         x.first_vertex = u32::default();
@@ -9923,7 +10407,11 @@ pub struct DrawIndexedIndirectCommand {
 impl ::core::default::Default for DrawIndexedIndirectCommand {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.index_count = u32::default();
         x.instance_count = u32::default();
         x.first_index = u32::default();
@@ -9985,7 +10473,11 @@ pub struct DispatchIndirectCommand {
 impl ::core::default::Default for DispatchIndirectCommand {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.x = u32::default();
         x.y = u32::default();
         x.z = u32::default();
@@ -10034,7 +10526,11 @@ pub struct MultiDrawInfoEXT {
 impl ::core::default::Default for MultiDrawInfoEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.first_vertex = u32::default();
         x.vertex_count = u32::default();
         x
@@ -10078,7 +10574,11 @@ pub struct MultiDrawIndexedInfoEXT {
 impl ::core::default::Default for MultiDrawIndexedInfoEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.first_index = u32::default();
         x.index_count = u32::default();
         x.vertex_offset = i32::default();
@@ -10137,7 +10637,11 @@ unsafe impl Sync for SubmitInfo<'_> {}
 impl ::core::default::Default for SubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.wait_semaphore_count = u32::default();
@@ -10209,7 +10713,11 @@ unsafe impl Sync for DisplayPropertiesKHR<'_> {}
 impl ::core::default::Default for DisplayPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.display = DisplayKHR::default();
         x.display_name = ::core::ptr::null();
         x.physical_dimensions = Extent2D::default();
@@ -10290,7 +10798,11 @@ pub struct DisplayPlanePropertiesKHR {
 impl ::core::default::Default for DisplayPlanePropertiesKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.current_display = DisplayKHR::default();
         x.current_stack_index = u32::default();
         x
@@ -10333,7 +10845,11 @@ pub struct DisplayModeParametersKHR {
 impl ::core::default::Default for DisplayModeParametersKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.visible_region = Extent2D::default();
         x.refresh_rate = u32::default();
         x
@@ -10376,7 +10892,11 @@ pub struct DisplayModePropertiesKHR {
 impl ::core::default::Default for DisplayModePropertiesKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.display_mode = DisplayModeKHR::default();
         x.parameters = DisplayModeParametersKHR::default();
         x
@@ -10424,7 +10944,11 @@ unsafe impl Sync for DisplayModeCreateInfoKHR<'_> {}
 impl ::core::default::Default for DisplayModeCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = DisplayModeCreateFlagsKHR::default();
@@ -10479,7 +11003,11 @@ pub struct DisplayPlaneCapabilitiesKHR {
 impl ::core::default::Default for DisplayPlaneCapabilitiesKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.supported_alpha = DisplayPlaneAlphaFlagsKHR::default();
         x.min_src_position = Offset2D::default();
         x.max_src_position = Offset2D::default();
@@ -10575,7 +11103,11 @@ unsafe impl Sync for DisplaySurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for DisplaySurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = DisplaySurfaceCreateFlagsKHR::default();
@@ -10663,7 +11195,11 @@ unsafe impl Sync for DisplaySurfaceStereoCreateInfoNV<'_> {}
 impl ::core::default::Default for DisplaySurfaceStereoCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.stereo_type = DisplaySurfaceStereoTypeNV::default();
@@ -10712,7 +11248,11 @@ unsafe impl Sync for DisplayPresentInfoKHR<'_> {}
 impl ::core::default::Default for DisplayPresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_rect = Rect2D::default();
@@ -10775,7 +11315,11 @@ pub struct SurfaceCapabilitiesKHR {
 impl ::core::default::Default for SurfaceCapabilitiesKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.min_image_count = u32::default();
         x.max_image_count = u32::default();
         x.current_extent = Extent2D::default();
@@ -10874,7 +11418,11 @@ unsafe impl Sync for AndroidSurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for AndroidSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = AndroidSurfaceCreateFlagsKHR::default();
@@ -10927,7 +11475,11 @@ unsafe impl Sync for ViSurfaceCreateInfoNN<'_> {}
 impl ::core::default::Default for ViSurfaceCreateInfoNN<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = ViSurfaceCreateFlagsNN::default();
@@ -10981,7 +11533,11 @@ unsafe impl Sync for WaylandSurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for WaylandSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = WaylandSurfaceCreateFlagsKHR::default();
@@ -11041,7 +11597,11 @@ unsafe impl Sync for UbmSurfaceCreateInfoSEC<'_> {}
 impl ::core::default::Default for UbmSurfaceCreateInfoSEC<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = UbmSurfaceCreateFlagsSEC::default();
@@ -11101,7 +11661,11 @@ unsafe impl Sync for Win32SurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for Win32SurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = Win32SurfaceCreateFlagsKHR::default();
@@ -11161,7 +11725,11 @@ unsafe impl Sync for XlibSurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for XlibSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = XlibSurfaceCreateFlagsKHR::default();
@@ -11221,7 +11789,11 @@ unsafe impl Sync for XcbSurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for XcbSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = XcbSurfaceCreateFlagsKHR::default();
@@ -11281,7 +11853,11 @@ unsafe impl Sync for DirectFBSurfaceCreateInfoEXT<'_> {}
 impl ::core::default::Default for DirectFBSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = DirectFBSurfaceCreateFlagsEXT::default();
@@ -11340,7 +11916,11 @@ unsafe impl Sync for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {}
 impl ::core::default::Default for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = ImagePipeSurfaceCreateFlagsFUCHSIA::default();
@@ -11393,7 +11973,11 @@ unsafe impl Sync for StreamDescriptorSurfaceCreateInfoGGP<'_> {}
 impl ::core::default::Default for StreamDescriptorSurfaceCreateInfoGGP<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = StreamDescriptorSurfaceCreateFlagsGGP::default();
@@ -11447,7 +12031,11 @@ unsafe impl Sync for ScreenSurfaceCreateInfoQNX<'_> {}
 impl ::core::default::Default for ScreenSurfaceCreateInfoQNX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = ScreenSurfaceCreateFlagsQNX::default();
@@ -11501,7 +12089,11 @@ pub struct SurfaceFormatKHR {
 impl ::core::default::Default for SurfaceFormatKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.format = Format::default();
         x.color_space = ColorSpaceKHR::default();
         x
@@ -11563,7 +12155,11 @@ unsafe impl Sync for SwapchainCreateInfoKHR<'_> {}
 impl ::core::default::Default for SwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = SwapchainCreateFlagsKHR::default();
@@ -11700,7 +12296,11 @@ unsafe impl Sync for PresentInfoKHR<'_> {}
 impl ::core::default::Default for PresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.wait_semaphore_count = u32::default();
@@ -11780,7 +12380,11 @@ impl fmt::Debug for DebugReportCallbackCreateInfoEXT<'_> {
 impl ::core::default::Default for DebugReportCallbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = DebugReportFlagsEXT::default();
@@ -11840,7 +12444,11 @@ unsafe impl Sync for ValidationFlagsEXT<'_> {}
 impl ::core::default::Default for ValidationFlagsEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.disabled_validation_check_count = u32::default();
@@ -11895,7 +12503,11 @@ unsafe impl Sync for ValidationFeaturesEXT<'_> {}
 impl ::core::default::Default for ValidationFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.enabled_validation_feature_count = u32::default();
@@ -11961,7 +12573,11 @@ unsafe impl Sync for LayerSettingsCreateInfoEXT<'_> {}
 impl ::core::default::Default for LayerSettingsCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.setting_count = u32::default();
@@ -12012,7 +12628,11 @@ unsafe impl Sync for LayerSettingEXT<'_> {}
 impl ::core::default::Default for LayerSettingEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.p_layer_name = ::core::ptr::null();
         x.p_setting_name = ::core::ptr::null();
         x.ty = LayerSettingTypeEXT::default();
@@ -12086,7 +12706,11 @@ unsafe impl Sync for PipelineRasterizationStateRasterizationOrderAMD<'_> {}
 impl ::core::default::Default for PipelineRasterizationStateRasterizationOrderAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.rasterization_order = RasterizationOrderAMD::default();
@@ -12139,7 +12763,11 @@ unsafe impl Sync for DebugMarkerObjectNameInfoEXT<'_> {}
 impl ::core::default::Default for DebugMarkerObjectNameInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.object_type = DebugReportObjectTypeEXT::default();
@@ -12209,7 +12837,11 @@ unsafe impl Sync for DebugMarkerObjectTagInfoEXT<'_> {}
 impl ::core::default::Default for DebugMarkerObjectTagInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.object_type = DebugReportObjectTypeEXT::default();
@@ -12276,7 +12908,11 @@ unsafe impl Sync for DebugMarkerMarkerInfoEXT<'_> {}
 impl ::core::default::Default for DebugMarkerMarkerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_marker_name = ::core::ptr::null();
@@ -12336,7 +12972,11 @@ unsafe impl Sync for DedicatedAllocationImageCreateInfoNV<'_> {}
 impl ::core::default::Default for DedicatedAllocationImageCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.dedicated_allocation = Bool32::default();
@@ -12383,7 +13023,11 @@ unsafe impl Sync for DedicatedAllocationBufferCreateInfoNV<'_> {}
 impl ::core::default::Default for DedicatedAllocationBufferCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.dedicated_allocation = Bool32::default();
@@ -12431,7 +13075,11 @@ unsafe impl Sync for DedicatedAllocationMemoryAllocateInfoNV<'_> {}
 impl ::core::default::Default for DedicatedAllocationMemoryAllocateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image = Image::default();
@@ -12483,7 +13131,11 @@ pub struct ExternalImageFormatPropertiesNV {
 impl ::core::default::Default for ExternalImageFormatPropertiesNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.image_format_properties = ImageFormatProperties::default();
         x.external_memory_features = ExternalMemoryFeatureFlagsNV::default();
         x.export_from_imported_handle_types = ExternalMemoryHandleTypeFlagsNV::default();
@@ -12554,7 +13206,11 @@ unsafe impl Sync for ExternalMemoryImageCreateInfoNV<'_> {}
 impl ::core::default::Default for ExternalMemoryImageCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_types = ExternalMemoryHandleTypeFlagsNV::default();
@@ -12601,7 +13257,11 @@ unsafe impl Sync for ExportMemoryAllocateInfoNV<'_> {}
 impl ::core::default::Default for ExportMemoryAllocateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_types = ExternalMemoryHandleTypeFlagsNV::default();
@@ -12649,7 +13309,11 @@ unsafe impl Sync for ImportMemoryWin32HandleInfoNV<'_> {}
 impl ::core::default::Default for ImportMemoryWin32HandleInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_type = ExternalMemoryHandleTypeFlagsNV::default();
@@ -12703,7 +13367,11 @@ unsafe impl Sync for ExportMemoryWin32HandleInfoNV<'_> {}
 impl ::core::default::Default for ExportMemoryWin32HandleInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_attributes = ::core::ptr::null();
@@ -12762,7 +13430,11 @@ unsafe impl Sync for Win32KeyedMutexAcquireReleaseInfoNV<'_> {}
 impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.acquire_count = u32::default();
@@ -12841,7 +13513,11 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.device_generated_commands = Bool32::default();
@@ -12893,7 +13569,11 @@ unsafe impl Sync for PushConstantBankInfoNV<'_> {}
 impl ::core::default::Default for PushConstantBankInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.bank = u32::default();
@@ -12943,7 +13623,11 @@ unsafe impl Sync for PhysicalDevicePushConstantBankFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDevicePushConstantBankFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.push_constant_bank = Bool32::default();
@@ -12995,7 +13679,11 @@ unsafe impl Sync for PhysicalDevicePushConstantBankPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDevicePushConstantBankPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_graphics_push_constant_banks = u32::default();
@@ -13069,7 +13757,11 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> 
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.device_generated_compute = Bool32::default();
@@ -13143,7 +13835,11 @@ unsafe impl Sync for DevicePrivateDataCreateInfo<'_> {}
 impl ::core::default::Default for DevicePrivateDataCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.private_data_slot_request_count = u32::default();
@@ -13190,7 +13886,11 @@ unsafe impl Sync for PrivateDataSlotCreateInfo<'_> {}
 impl ::core::default::Default for PrivateDataSlotCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PrivateDataSlotCreateFlags::default();
@@ -13236,7 +13936,11 @@ unsafe impl Sync for PhysicalDevicePrivateDataFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevicePrivateDataFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.private_data = Bool32::default();
@@ -13292,7 +13996,11 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_graphics_shader_group_count = u32::default();
@@ -13415,7 +14123,11 @@ unsafe impl Sync for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.cluster_acceleration_structure = Bool32::default();
@@ -13477,7 +14189,11 @@ unsafe impl Sync for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'_> 
 impl ::core::default::Default for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_vertices_per_cluster = u32::default();
@@ -13572,7 +14288,11 @@ pub struct StridedDeviceAddressNV {
 impl ::core::default::Default for StridedDeviceAddressNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.start_address = DeviceAddress::default();
         x.stride_in_bytes = DeviceSize::default();
         x
@@ -13619,7 +14339,11 @@ unsafe impl Sync for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<
 impl ::core::default::Default for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.allow_cluster_acceleration_structure = Bool32::default();
@@ -13679,7 +14403,11 @@ pub struct ClusterAccelerationStructureMoveObjectsInfoNV {
 impl ::core::default::Default for ClusterAccelerationStructureMoveObjectsInfoNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.src_acceleration_structure = DeviceAddress::default();
         x
     }
@@ -13717,7 +14445,11 @@ pub struct ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
 impl ::core::default::Default for ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.cluster_references_count = u32::default();
         x.cluster_references_stride = u32::default();
         x.cluster_references = DeviceAddress::default();
@@ -13765,7 +14497,11 @@ pub struct ClusterAccelerationStructureGetTemplateIndicesInfoNV {
 impl ::core::default::Default for ClusterAccelerationStructureGetTemplateIndicesInfoNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.cluster_template_address = DeviceAddress::default();
         x
     }
@@ -13864,7 +14600,11 @@ unsafe impl Sync for ClusterAccelerationStructureClustersBottomLevelInputNV<'_> 
 impl ::core::default::Default for ClusterAccelerationStructureClustersBottomLevelInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_total_cluster_count = u32::default();
@@ -13928,7 +14668,11 @@ unsafe impl Sync for ClusterAccelerationStructureTriangleClusterInputNV<'_> {}
 impl ::core::default::Default for ClusterAccelerationStructureTriangleClusterInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.vertex_format = Format::default();
@@ -14022,7 +14766,11 @@ unsafe impl Sync for ClusterAccelerationStructureMoveObjectsInputNV<'_> {}
 impl ::core::default::Default for ClusterAccelerationStructureMoveObjectsInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ty = ClusterAccelerationStructureTypeNV::default();
@@ -14115,7 +14863,11 @@ impl fmt::Debug for ClusterAccelerationStructureInputInfoNV<'_> {
 impl ::core::default::Default for ClusterAccelerationStructureInputInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_acceleration_structure_count = u32::default();
@@ -14196,7 +14948,11 @@ unsafe impl Sync for ClusterAccelerationStructureCommandsInfoNV<'_> {}
 impl ::core::default::Default for ClusterAccelerationStructureCommandsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.input = ClusterAccelerationStructureInputInfoNV::default();
@@ -14295,7 +15051,11 @@ unsafe impl Sync for PhysicalDeviceMultiDrawPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMultiDrawPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_multi_draw_count = u32::default();
@@ -14345,7 +15105,11 @@ unsafe impl Sync for GraphicsShaderGroupCreateInfoNV<'_> {}
 impl ::core::default::Default for GraphicsShaderGroupCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.stage_count = u32::default();
@@ -14414,7 +15178,11 @@ unsafe impl Sync for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {}
 impl ::core::default::Default for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.group_count = u32::default();
@@ -14470,7 +15238,11 @@ pub struct BindShaderGroupIndirectCommandNV {
 impl ::core::default::Default for BindShaderGroupIndirectCommandNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.group_index = u32::default();
         x
     }
@@ -14508,7 +15280,11 @@ pub struct BindIndexBufferIndirectCommandNV {
 impl ::core::default::Default for BindIndexBufferIndirectCommandNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.buffer_address = DeviceAddress::default();
         x.size = u32::default();
         x.index_type = IndexType::default();
@@ -14558,7 +15334,11 @@ pub struct BindVertexBufferIndirectCommandNV {
 impl ::core::default::Default for BindVertexBufferIndirectCommandNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.buffer_address = DeviceAddress::default();
         x.size = u32::default();
         x.stride = u32::default();
@@ -14606,7 +15386,11 @@ pub struct SetStateFlagsIndirectCommandNV {
 impl ::core::default::Default for SetStateFlagsIndirectCommandNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.data = u32::default();
         x
     }
@@ -14643,7 +15427,11 @@ pub struct IndirectCommandsStreamNV {
 impl ::core::default::Default for IndirectCommandsStreamNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.buffer = Buffer::default();
         x.offset = DeviceSize::default();
         x
@@ -14702,7 +15490,11 @@ unsafe impl Sync for IndirectCommandsLayoutTokenNV<'_> {}
 impl ::core::default::Default for IndirectCommandsLayoutTokenNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.token_type = IndirectCommandsTokenTypeNV::default();
@@ -14828,7 +15620,11 @@ unsafe impl Sync for IndirectCommandsLayoutCreateInfoNV<'_> {}
 impl ::core::default::Default for IndirectCommandsLayoutCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = IndirectCommandsLayoutUsageFlagsNV::default();
@@ -14908,7 +15704,11 @@ unsafe impl Sync for GeneratedCommandsInfoNV<'_> {}
 impl ::core::default::Default for GeneratedCommandsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.pipeline_bind_point = PipelineBindPoint::default();
@@ -15028,7 +15828,11 @@ unsafe impl Sync for GeneratedCommandsMemoryRequirementsInfoNV<'_> {}
 impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.pipeline_bind_point = PipelineBindPoint::default();
@@ -15097,7 +15901,11 @@ unsafe impl Sync for PipelineIndirectDeviceAddressInfoNV<'_> {}
 impl ::core::default::Default for PipelineIndirectDeviceAddressInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.pipeline_bind_point = PipelineBindPoint::default();
@@ -15144,7 +15952,11 @@ pub struct BindPipelineIndirectCommandNV {
 impl ::core::default::Default for BindPipelineIndirectCommandNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.pipeline_address = DeviceAddress::default();
         x
     }
@@ -15185,7 +15997,11 @@ unsafe impl Sync for PhysicalDeviceFeatures2<'_> {}
 impl ::core::default::Default for PhysicalDeviceFeatures2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.features = PhysicalDeviceFeatures::default();
@@ -15232,7 +16048,11 @@ unsafe impl Sync for PhysicalDeviceProperties2<'_> {}
 impl ::core::default::Default for PhysicalDeviceProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.properties = PhysicalDeviceProperties::default();
@@ -15278,7 +16098,11 @@ unsafe impl Sync for FormatProperties2<'_> {}
 impl ::core::default::Default for FormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.format_properties = FormatProperties::default();
@@ -15324,7 +16148,11 @@ unsafe impl Sync for ImageFormatProperties2<'_> {}
 impl ::core::default::Default for ImageFormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.image_format_properties = ImageFormatProperties::default();
@@ -15377,7 +16205,11 @@ unsafe impl Sync for PhysicalDeviceImageFormatInfo2<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageFormatInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.format = Format::default();
@@ -15447,7 +16279,11 @@ unsafe impl Sync for QueueFamilyProperties2<'_> {}
 impl ::core::default::Default for QueueFamilyProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.queue_family_properties = QueueFamilyProperties::default();
@@ -15496,7 +16332,11 @@ unsafe impl Sync for PhysicalDeviceMemoryProperties2<'_> {}
 impl ::core::default::Default for PhysicalDeviceMemoryProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.memory_properties = PhysicalDeviceMemoryProperties::default();
@@ -15542,7 +16382,11 @@ unsafe impl Sync for SparseImageFormatProperties2<'_> {}
 impl ::core::default::Default for SparseImageFormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.properties = SparseImageFormatProperties::default();
@@ -15592,7 +16436,11 @@ unsafe impl Sync for PhysicalDeviceSparseImageFormatInfo2<'_> {}
 impl ::core::default::Default for PhysicalDeviceSparseImageFormatInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.format = Format::default();
@@ -15662,7 +16510,11 @@ unsafe impl Sync for PhysicalDevicePushDescriptorProperties<'_> {}
 impl ::core::default::Default for PhysicalDevicePushDescriptorProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_push_descriptors = u32::default();
@@ -15707,7 +16559,11 @@ pub struct ConformanceVersion {
 impl ::core::default::Default for ConformanceVersion {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.major = u8::default();
         x.minor = u8::default();
         x.subminor = u8::default();
@@ -15781,7 +16637,11 @@ impl fmt::Debug for PhysicalDeviceDriverProperties<'_> {
 impl ::core::default::Default for PhysicalDeviceDriverProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.driver_id = DriverId::default();
@@ -15859,7 +16719,11 @@ unsafe impl Sync for PresentRegionsKHR<'_> {}
 impl ::core::default::Default for PresentRegionsKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.swapchain_count = u32::default();
@@ -15907,7 +16771,11 @@ unsafe impl Sync for PresentRegionKHR<'_> {}
 impl ::core::default::Default for PresentRegionKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.rectangle_count = u32::default();
         x.p_rectangles = ::core::ptr::null();
         x
@@ -15947,7 +16815,11 @@ pub struct RectLayerKHR {
 impl ::core::default::Default for RectLayerKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.offset = Offset2D::default();
         x.extent = Extent2D::default();
         x.layer = u32::default();
@@ -15998,7 +16870,11 @@ unsafe impl Sync for PhysicalDeviceVariablePointersFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceVariablePointersFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.variable_pointers_storage_buffer = Bool32::default();
@@ -16052,7 +16928,11 @@ pub struct ExternalMemoryProperties {
 impl ::core::default::Default for ExternalMemoryProperties {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.external_memory_features = ExternalMemoryFeatureFlags::default();
         x.export_from_imported_handle_types = ExternalMemoryHandleTypeFlags::default();
         x.compatible_handle_types = ExternalMemoryHandleTypeFlags::default();
@@ -16114,7 +16994,11 @@ unsafe impl Sync for PhysicalDeviceExternalImageFormatInfo<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalImageFormatInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_type = ExternalMemoryHandleTypeFlags::default();
@@ -16164,7 +17048,11 @@ unsafe impl Sync for ExternalImageFormatProperties<'_> {}
 impl ::core::default::Default for ExternalImageFormatProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.external_memory_properties = ExternalMemoryProperties::default();
@@ -16216,7 +17104,11 @@ unsafe impl Sync for PhysicalDeviceExternalBufferInfo<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalBufferInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = BufferCreateFlags::default();
@@ -16274,7 +17166,11 @@ unsafe impl Sync for ExternalBufferProperties<'_> {}
 impl ::core::default::Default for ExternalBufferProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.external_memory_properties = ExternalMemoryProperties::default();
@@ -16327,7 +17223,11 @@ unsafe impl Sync for PhysicalDeviceIDProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceIDProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.device_uuid = unsafe { ::core::mem::zeroed() };
@@ -16398,7 +17298,11 @@ unsafe impl Sync for ExternalMemoryImageCreateInfo<'_> {}
 impl ::core::default::Default for ExternalMemoryImageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_types = ExternalMemoryHandleTypeFlags::default();
@@ -16445,7 +17349,11 @@ unsafe impl Sync for ExternalMemoryBufferCreateInfo<'_> {}
 impl ::core::default::Default for ExternalMemoryBufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_types = ExternalMemoryHandleTypeFlags::default();
@@ -16492,7 +17400,11 @@ unsafe impl Sync for ExportMemoryAllocateInfo<'_> {}
 impl ::core::default::Default for ExportMemoryAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_types = ExternalMemoryHandleTypeFlags::default();
@@ -16541,7 +17453,11 @@ unsafe impl Sync for ImportMemoryWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ImportMemoryWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_type = ExternalMemoryHandleTypeFlags::default();
@@ -16602,7 +17518,11 @@ unsafe impl Sync for ExportMemoryWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ExportMemoryWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_attributes = ::core::ptr::null();
@@ -16662,7 +17582,11 @@ unsafe impl Sync for ImportMemoryZirconHandleInfoFUCHSIA<'_> {}
 impl ::core::default::Default for ImportMemoryZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_type = ExternalMemoryHandleTypeFlags::default();
@@ -16715,7 +17639,11 @@ unsafe impl Sync for MemoryZirconHandlePropertiesFUCHSIA<'_> {}
 impl ::core::default::Default for MemoryZirconHandlePropertiesFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.memory_type_bits = u32::default();
@@ -16762,7 +17690,11 @@ unsafe impl Sync for MemoryGetZirconHandleInfoFUCHSIA<'_> {}
 impl ::core::default::Default for MemoryGetZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.memory = DeviceMemory::default();
@@ -16814,7 +17746,11 @@ unsafe impl Sync for MemoryWin32HandlePropertiesKHR<'_> {}
 impl ::core::default::Default for MemoryWin32HandlePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.memory_type_bits = u32::default();
@@ -16861,7 +17797,11 @@ unsafe impl Sync for MemoryGetWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for MemoryGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.memory = DeviceMemory::default();
@@ -16914,7 +17854,11 @@ unsafe impl Sync for ImportMemoryFdInfoKHR<'_> {}
 impl ::core::default::Default for ImportMemoryFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_type = ExternalMemoryHandleTypeFlags::default();
@@ -16967,7 +17911,11 @@ unsafe impl Sync for MemoryFdPropertiesKHR<'_> {}
 impl ::core::default::Default for MemoryFdPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.memory_type_bits = u32::default();
@@ -17014,7 +17962,11 @@ unsafe impl Sync for MemoryGetFdInfoKHR<'_> {}
 impl ::core::default::Default for MemoryGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.memory = DeviceMemory::default();
@@ -17072,7 +18024,11 @@ unsafe impl Sync for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {}
 impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.acquire_count = u32::default();
@@ -17152,7 +18108,11 @@ unsafe impl Sync for ImportMemoryMetalHandleInfoEXT<'_> {}
 impl ::core::default::Default for ImportMemoryMetalHandleInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_type = ExternalMemoryHandleTypeFlags::default();
@@ -17205,7 +18165,11 @@ unsafe impl Sync for MemoryMetalHandlePropertiesEXT<'_> {}
 impl ::core::default::Default for MemoryMetalHandlePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.memory_type_bits = u32::default();
@@ -17252,7 +18216,11 @@ unsafe impl Sync for MemoryGetMetalHandleInfoEXT<'_> {}
 impl ::core::default::Default for MemoryGetMetalHandleInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.memory = DeviceMemory::default();
@@ -17304,7 +18272,11 @@ unsafe impl Sync for PhysicalDeviceExternalSemaphoreInfo<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalSemaphoreInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_type = ExternalSemaphoreHandleTypeFlags::default();
@@ -17352,7 +18324,11 @@ unsafe impl Sync for ExternalSemaphoreProperties<'_> {}
 impl ::core::default::Default for ExternalSemaphoreProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.export_from_imported_handle_types = ExternalSemaphoreHandleTypeFlags::default();
@@ -17419,7 +18395,11 @@ unsafe impl Sync for ExportSemaphoreCreateInfo<'_> {}
 impl ::core::default::Default for ExportSemaphoreCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_types = ExternalSemaphoreHandleTypeFlags::default();
@@ -17470,7 +18450,11 @@ unsafe impl Sync for ImportSemaphoreWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ImportSemaphoreWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.semaphore = Semaphore::default();
@@ -17542,7 +18526,11 @@ unsafe impl Sync for ExportSemaphoreWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ExportSemaphoreWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_attributes = ::core::ptr::null();
@@ -17604,7 +18592,11 @@ unsafe impl Sync for D3D12FenceSubmitInfoKHR<'_> {}
 impl ::core::default::Default for D3D12FenceSubmitInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.wait_semaphore_values_count = u32::default();
@@ -17662,7 +18654,11 @@ unsafe impl Sync for SemaphoreGetWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for SemaphoreGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.semaphore = Semaphore::default();
@@ -17717,7 +18713,11 @@ unsafe impl Sync for ImportSemaphoreFdInfoKHR<'_> {}
 impl ::core::default::Default for ImportSemaphoreFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.semaphore = Semaphore::default();
@@ -17782,7 +18782,11 @@ unsafe impl Sync for SemaphoreGetFdInfoKHR<'_> {}
 impl ::core::default::Default for SemaphoreGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.semaphore = Semaphore::default();
@@ -17837,7 +18841,11 @@ unsafe impl Sync for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {}
 impl ::core::default::Default for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.semaphore = Semaphore::default();
@@ -17903,7 +18911,11 @@ unsafe impl Sync for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {}
 impl ::core::default::Default for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.semaphore = Semaphore::default();
@@ -17955,7 +18967,11 @@ unsafe impl Sync for PhysicalDeviceExternalFenceInfo<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalFenceInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_type = ExternalFenceHandleTypeFlags::default();
@@ -18003,7 +19019,11 @@ unsafe impl Sync for ExternalFenceProperties<'_> {}
 impl ::core::default::Default for ExternalFenceProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.export_from_imported_handle_types = ExternalFenceHandleTypeFlags::default();
@@ -18070,7 +19090,11 @@ unsafe impl Sync for ExportFenceCreateInfo<'_> {}
 impl ::core::default::Default for ExportFenceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_types = ExternalFenceHandleTypeFlags::default();
@@ -18121,7 +19145,11 @@ unsafe impl Sync for ImportFenceWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ImportFenceWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.fence = Fence::default();
@@ -18193,7 +19221,11 @@ unsafe impl Sync for ExportFenceWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ExportFenceWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_attributes = ::core::ptr::null();
@@ -18253,7 +19285,11 @@ unsafe impl Sync for FenceGetWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for FenceGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.fence = Fence::default();
@@ -18308,7 +19344,11 @@ unsafe impl Sync for ImportFenceFdInfoKHR<'_> {}
 impl ::core::default::Default for ImportFenceFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.fence = Fence::default();
@@ -18373,7 +19413,11 @@ unsafe impl Sync for FenceGetFdInfoKHR<'_> {}
 impl ::core::default::Default for FenceGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.fence = Fence::default();
@@ -18427,7 +19471,11 @@ unsafe impl Sync for PhysicalDeviceMultiviewFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceMultiviewFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.multiview = Bool32::default();
@@ -18488,7 +19536,11 @@ unsafe impl Sync for PhysicalDeviceMultiviewProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceMultiviewProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_multiview_view_count = u32::default();
@@ -18546,7 +19598,11 @@ unsafe impl Sync for RenderPassMultiviewCreateInfo<'_> {}
 impl ::core::default::Default for RenderPassMultiviewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.subpass_count = u32::default();
@@ -18621,7 +19677,11 @@ unsafe impl Sync for SurfaceCapabilities2EXT<'_> {}
 impl ::core::default::Default for SurfaceCapabilities2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.min_image_count = u32::default();
@@ -18733,7 +19793,11 @@ unsafe impl Sync for DisplayPowerInfoEXT<'_> {}
 impl ::core::default::Default for DisplayPowerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.power_state = DisplayPowerStateEXT::default();
@@ -18779,7 +19843,11 @@ unsafe impl Sync for DeviceEventInfoEXT<'_> {}
 impl ::core::default::Default for DeviceEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.device_event = DeviceEventTypeEXT::default();
@@ -18825,7 +19893,11 @@ unsafe impl Sync for DisplayEventInfoEXT<'_> {}
 impl ::core::default::Default for DisplayEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.display_event = DisplayEventTypeEXT::default();
@@ -18871,7 +19943,11 @@ unsafe impl Sync for SwapchainCounterCreateInfoEXT<'_> {}
 impl ::core::default::Default for SwapchainCounterCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.surface_counters = SurfaceCounterFlagsEXT::default();
@@ -18931,7 +20007,11 @@ impl fmt::Debug for PhysicalDeviceGroupProperties<'_> {
 impl ::core::default::Default for PhysicalDeviceGroupProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.physical_device_count = u32::default();
@@ -18990,7 +20070,11 @@ unsafe impl Sync for MemoryAllocateFlagsInfo<'_> {}
 impl ::core::default::Default for MemoryAllocateFlagsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = MemoryAllocateFlags::default();
@@ -19045,7 +20129,11 @@ unsafe impl Sync for BindBufferMemoryInfo<'_> {}
 impl ::core::default::Default for BindBufferMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.buffer = Buffer::default();
@@ -19104,7 +20192,11 @@ unsafe impl Sync for BindBufferMemoryDeviceGroupInfo<'_> {}
 impl ::core::default::Default for BindBufferMemoryDeviceGroupInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.device_index_count = u32::default();
@@ -19155,7 +20247,11 @@ unsafe impl Sync for BindImageMemoryInfo<'_> {}
 impl ::core::default::Default for BindImageMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image = Image::default();
@@ -19216,7 +20312,11 @@ unsafe impl Sync for BindImageMemoryDeviceGroupInfo<'_> {}
 impl ::core::default::Default for BindImageMemoryDeviceGroupInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.device_index_count = u32::default();
@@ -19278,7 +20378,11 @@ unsafe impl Sync for DeviceGroupRenderPassBeginInfo<'_> {}
 impl ::core::default::Default for DeviceGroupRenderPassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.device_mask = u32::default();
@@ -19334,7 +20438,11 @@ unsafe impl Sync for DeviceGroupCommandBufferBeginInfo<'_> {}
 impl ::core::default::Default for DeviceGroupCommandBufferBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.device_mask = u32::default();
@@ -19386,7 +20494,11 @@ unsafe impl Sync for DeviceGroupSubmitInfo<'_> {}
 impl ::core::default::Default for DeviceGroupSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.wait_semaphore_count = u32::default();
@@ -19458,7 +20570,11 @@ unsafe impl Sync for DeviceGroupBindSparseInfo<'_> {}
 impl ::core::default::Default for DeviceGroupBindSparseInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.resource_device_index = u32::default();
@@ -19512,7 +20628,11 @@ unsafe impl Sync for DeviceGroupPresentCapabilitiesKHR<'_> {}
 impl ::core::default::Default for DeviceGroupPresentCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_mask = unsafe { ::core::mem::zeroed() };
@@ -19564,7 +20684,11 @@ unsafe impl Sync for ImageSwapchainCreateInfoKHR<'_> {}
 impl ::core::default::Default for ImageSwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.swapchain = SwapchainKHR::default();
@@ -19612,7 +20736,11 @@ unsafe impl Sync for BindImageMemorySwapchainInfoKHR<'_> {}
 impl ::core::default::Default for BindImageMemorySwapchainInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.swapchain = SwapchainKHR::default();
@@ -19669,7 +20797,11 @@ unsafe impl Sync for AcquireNextImageInfoKHR<'_> {}
 impl ::core::default::Default for AcquireNextImageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.swapchain = SwapchainKHR::default();
@@ -19741,7 +20873,11 @@ unsafe impl Sync for DeviceGroupPresentInfoKHR<'_> {}
 impl ::core::default::Default for DeviceGroupPresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.swapchain_count = u32::default();
@@ -19797,7 +20933,11 @@ unsafe impl Sync for DeviceGroupDeviceCreateInfo<'_> {}
 impl ::core::default::Default for DeviceGroupDeviceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.physical_device_count = u32::default();
@@ -19846,7 +20986,11 @@ unsafe impl Sync for DeviceGroupSwapchainCreateInfoKHR<'_> {}
 impl ::core::default::Default for DeviceGroupSwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.modes = DeviceGroupPresentModeFlagsKHR::default();
@@ -19893,7 +21037,11 @@ pub struct DescriptorUpdateTemplateEntry {
 impl ::core::default::Default for DescriptorUpdateTemplateEntry {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.dst_binding = u32::default();
         x.dst_array_element = u32::default();
         x.descriptor_count = u32::default();
@@ -19971,7 +21119,11 @@ unsafe impl Sync for DescriptorUpdateTemplateCreateInfo<'_> {}
 impl ::core::default::Default for DescriptorUpdateTemplateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = DescriptorUpdateTemplateCreateFlags::default();
@@ -20054,7 +21206,11 @@ pub struct XYColorEXT {
 impl ::core::default::Default for XYColorEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.x = f32::default();
         x.y = f32::default();
         x
@@ -20098,7 +21254,11 @@ unsafe impl Sync for PhysicalDevicePresentIdFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentIdFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_id = Bool32::default();
@@ -20147,7 +21307,11 @@ unsafe impl Sync for PresentIdKHR<'_> {}
 impl ::core::default::Default for PresentIdKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.swapchain_count = u32::default();
@@ -20193,7 +21357,11 @@ unsafe impl Sync for PhysicalDevicePresentId2FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentId2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_id2 = Bool32::default();
@@ -20242,7 +21410,11 @@ unsafe impl Sync for PresentId2KHR<'_> {}
 impl ::core::default::Default for PresentId2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.swapchain_count = u32::default();
@@ -20289,7 +21461,11 @@ unsafe impl Sync for PresentWait2InfoKHR<'_> {}
 impl ::core::default::Default for PresentWait2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.present_id = u64::default();
@@ -20341,7 +21517,11 @@ unsafe impl Sync for PhysicalDevicePresentWaitFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentWaitFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_wait = Bool32::default();
@@ -20389,7 +21569,11 @@ unsafe impl Sync for PhysicalDevicePresentWait2FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentWait2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_wait2 = Bool32::default();
@@ -20440,7 +21624,11 @@ unsafe impl Sync for PhysicalDevicePresentTimingFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentTimingFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_timing = Bool32::default();
@@ -20504,7 +21692,11 @@ unsafe impl Sync for PresentTimingSurfaceCapabilitiesEXT<'_> {}
 impl ::core::default::Default for PresentTimingSurfaceCapabilitiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_timing_supported = Bool32::default();
@@ -20576,7 +21768,11 @@ unsafe impl Sync for SwapchainTimingPropertiesEXT<'_> {}
 impl ::core::default::Default for SwapchainTimingPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.refresh_duration = u64::default();
@@ -20630,7 +21826,11 @@ unsafe impl Sync for SwapchainTimeDomainPropertiesEXT<'_> {}
 impl ::core::default::Default for SwapchainTimeDomainPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.time_domain_count = u32::default();
@@ -20681,7 +21881,11 @@ pub struct PresentStageTimeEXT {
 impl ::core::default::Default for PresentStageTimeEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.stage = PresentStageFlagsEXT::default();
         x.time = u64::default();
         x
@@ -20729,7 +21933,11 @@ unsafe impl Sync for PastPresentationTimingInfoEXT<'_> {}
 impl ::core::default::Default for PastPresentationTimingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PastPresentationTimingFlagsEXT::default();
@@ -20784,7 +21992,11 @@ unsafe impl Sync for PastPresentationTimingPropertiesEXT<'_> {}
 impl ::core::default::Default for PastPresentationTimingPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.timing_properties_counter = u64::default();
@@ -20853,7 +22065,11 @@ unsafe impl Sync for PastPresentationTimingEXT<'_> {}
 impl ::core::default::Default for PastPresentationTimingEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_id = u64::default();
@@ -20932,7 +22148,11 @@ unsafe impl Sync for PresentTimingsInfoEXT<'_> {}
 impl ::core::default::Default for PresentTimingsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.swapchain_count = u32::default();
@@ -20985,7 +22205,11 @@ unsafe impl Sync for PresentTimingInfoEXT<'_> {}
 impl ::core::default::Default for PresentTimingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PresentTimingInfoFlagsEXT::default();
@@ -21060,7 +22284,11 @@ unsafe impl Sync for SwapchainCalibratedTimestampInfoEXT<'_> {}
 impl ::core::default::Default for SwapchainCalibratedTimestampInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.swapchain = SwapchainKHR::default();
@@ -21126,7 +22354,11 @@ unsafe impl Sync for HdrMetadataEXT<'_> {}
 impl ::core::default::Default for HdrMetadataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.display_primary_red = XYColorEXT::default();
@@ -21212,7 +22444,11 @@ unsafe impl Sync for HdrVividDynamicMetadataHUAWEI<'_> {}
 impl ::core::default::Default for HdrVividDynamicMetadataHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.dynamic_metadata_size = usize::default();
@@ -21261,7 +22497,11 @@ unsafe impl Sync for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {}
 impl ::core::default::Default for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.local_dimming_support = Bool32::default();
@@ -21309,7 +22549,11 @@ unsafe impl Sync for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {}
 impl ::core::default::Default for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.local_dimming_enable = Bool32::default();
@@ -21352,7 +22596,11 @@ pub struct RefreshCycleDurationGOOGLE {
 impl ::core::default::Default for RefreshCycleDurationGOOGLE {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.refresh_duration = u64::default();
         x
     }
@@ -21392,7 +22640,11 @@ pub struct PastPresentationTimingGOOGLE {
 impl ::core::default::Default for PastPresentationTimingGOOGLE {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.present_id = u32::default();
         x.desired_present_time = u64::default();
         x.actual_present_time = u64::default();
@@ -21458,7 +22710,11 @@ unsafe impl Sync for PresentTimesInfoGOOGLE<'_> {}
 impl ::core::default::Default for PresentTimesInfoGOOGLE<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.swapchain_count = u32::default();
@@ -21503,7 +22759,11 @@ pub struct PresentTimeGOOGLE {
 impl ::core::default::Default for PresentTimeGOOGLE {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.present_id = u32::default();
         x.desired_present_time = u64::default();
         x
@@ -21551,7 +22811,11 @@ unsafe impl Sync for IOSSurfaceCreateInfoMVK<'_> {}
 impl ::core::default::Default for IOSSurfaceCreateInfoMVK<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = IOSSurfaceCreateFlagsMVK::default();
@@ -21604,7 +22868,11 @@ unsafe impl Sync for MacOSSurfaceCreateInfoMVK<'_> {}
 impl ::core::default::Default for MacOSSurfaceCreateInfoMVK<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = MacOSSurfaceCreateFlagsMVK::default();
@@ -21657,7 +22925,11 @@ unsafe impl Sync for MetalSurfaceCreateInfoEXT<'_> {}
 impl ::core::default::Default for MetalSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = MetalSurfaceCreateFlagsEXT::default();
@@ -21705,7 +22977,11 @@ pub struct ViewportWScalingNV {
 impl ::core::default::Default for ViewportWScalingNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.xcoeff = f32::default();
         x.ycoeff = f32::default();
         x
@@ -21754,7 +23030,11 @@ unsafe impl Sync for PipelineViewportWScalingStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineViewportWScalingStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.viewport_w_scaling_enable = Bool32::default();
@@ -21811,7 +23091,11 @@ pub struct ViewportSwizzleNV {
 impl ::core::default::Default for ViewportSwizzleNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.x = ViewportCoordinateSwizzleNV::default();
         x.y = ViewportCoordinateSwizzleNV::default();
         x.z = ViewportCoordinateSwizzleNV::default();
@@ -21872,7 +23156,11 @@ unsafe impl Sync for PipelineViewportSwizzleStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineViewportSwizzleStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineViewportSwizzleStateCreateFlagsNV::default();
@@ -21931,7 +23219,11 @@ unsafe impl Sync for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_discard_rectangles = u32::default();
@@ -21985,7 +23277,11 @@ unsafe impl Sync for PipelineDiscardRectangleStateCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineDiscardRectangleStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineDiscardRectangleStateCreateFlagsEXT::default();
@@ -22053,7 +23349,11 @@ unsafe impl Sync for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {
 impl ::core::default::Default for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.per_view_position_all_components = Bool32::default();
@@ -22104,7 +23404,11 @@ pub struct InputAttachmentAspectReference {
 impl ::core::default::Default for InputAttachmentAspectReference {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.subpass = u32::default();
         x.input_attachment_index = u32::default();
         x.aspect_mask = ImageAspectFlags::default();
@@ -22158,7 +23462,11 @@ unsafe impl Sync for RenderPassInputAttachmentAspectCreateInfo<'_> {}
 impl ::core::default::Default for RenderPassInputAttachmentAspectCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.aspect_reference_count = u32::default();
@@ -22211,7 +23519,11 @@ unsafe impl Sync for PhysicalDeviceSurfaceInfo2KHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceSurfaceInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.surface = SurfaceKHR::default();
@@ -22257,7 +23569,11 @@ unsafe impl Sync for SurfaceCapabilities2KHR<'_> {}
 impl ::core::default::Default for SurfaceCapabilities2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.surface_capabilities = SurfaceCapabilitiesKHR::default();
@@ -22303,7 +23619,11 @@ unsafe impl Sync for SurfaceFormat2KHR<'_> {}
 impl ::core::default::Default for SurfaceFormat2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.surface_format = SurfaceFormatKHR::default();
@@ -22349,7 +23669,11 @@ unsafe impl Sync for DisplayProperties2KHR<'_> {}
 impl ::core::default::Default for DisplayProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.display_properties = DisplayPropertiesKHR::default();
@@ -22395,7 +23719,11 @@ unsafe impl Sync for DisplayPlaneProperties2KHR<'_> {}
 impl ::core::default::Default for DisplayPlaneProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.display_plane_properties = DisplayPlanePropertiesKHR::default();
@@ -22444,7 +23772,11 @@ unsafe impl Sync for DisplayModeProperties2KHR<'_> {}
 impl ::core::default::Default for DisplayModeProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.display_mode_properties = DisplayModePropertiesKHR::default();
@@ -22493,7 +23825,11 @@ unsafe impl Sync for DisplayModeStereoPropertiesNV<'_> {}
 impl ::core::default::Default for DisplayModeStereoPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.hdmi3_d_supported = Bool32::default();
@@ -22541,7 +23877,11 @@ unsafe impl Sync for DisplayPlaneInfo2KHR<'_> {}
 impl ::core::default::Default for DisplayPlaneInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.mode = DisplayModeKHR::default();
@@ -22593,7 +23933,11 @@ unsafe impl Sync for DisplayPlaneCapabilities2KHR<'_> {}
 impl ::core::default::Default for DisplayPlaneCapabilities2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.capabilities = DisplayPlaneCapabilitiesKHR::default();
@@ -22639,7 +23983,11 @@ unsafe impl Sync for SharedPresentSurfaceCapabilitiesKHR<'_> {}
 impl ::core::default::Default for SharedPresentSurfaceCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shared_present_supported_usage_flags = ImageUsageFlags::default();
@@ -22692,7 +24040,11 @@ unsafe impl Sync for PhysicalDevice16BitStorageFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevice16BitStorageFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.storage_buffer16_bit_access = Bool32::default();
@@ -22765,7 +24117,11 @@ unsafe impl Sync for PhysicalDeviceSubgroupProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubgroupProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.subgroup_size = u32::default();
@@ -22830,7 +24186,11 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_subgroup_extended_types = Bool32::default();
@@ -22885,7 +24245,11 @@ unsafe impl Sync for BufferMemoryRequirementsInfo2<'_> {}
 impl ::core::default::Default for BufferMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.buffer = Buffer::default();
@@ -22931,7 +24295,11 @@ unsafe impl Sync for DeviceBufferMemoryRequirements<'_> {}
 impl ::core::default::Default for DeviceBufferMemoryRequirements<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_create_info = ::core::ptr::null();
@@ -22977,7 +24345,11 @@ unsafe impl Sync for ImageMemoryRequirementsInfo2<'_> {}
 impl ::core::default::Default for ImageMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image = Image::default();
@@ -23023,7 +24395,11 @@ unsafe impl Sync for ImageSparseMemoryRequirementsInfo2<'_> {}
 impl ::core::default::Default for ImageSparseMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image = Image::default();
@@ -23070,7 +24446,11 @@ unsafe impl Sync for DeviceImageMemoryRequirements<'_> {}
 impl ::core::default::Default for DeviceImageMemoryRequirements<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_create_info = ::core::ptr::null();
@@ -23122,7 +24502,11 @@ unsafe impl Sync for MemoryRequirements2<'_> {}
 impl ::core::default::Default for MemoryRequirements2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.memory_requirements = MemoryRequirements::default();
@@ -23168,7 +24552,11 @@ unsafe impl Sync for SparseImageMemoryRequirements2<'_> {}
 impl ::core::default::Default for SparseImageMemoryRequirements2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.memory_requirements = SparseImageMemoryRequirements::default();
@@ -23217,7 +24605,11 @@ unsafe impl Sync for PhysicalDevicePointClippingProperties<'_> {}
 impl ::core::default::Default for PhysicalDevicePointClippingProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.point_clipping_behavior = PointClippingBehavior::default();
@@ -23268,7 +24660,11 @@ unsafe impl Sync for MemoryDedicatedRequirements<'_> {}
 impl ::core::default::Default for MemoryDedicatedRequirements<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.prefers_dedicated_allocation = Bool32::default();
@@ -23322,7 +24718,11 @@ unsafe impl Sync for MemoryDedicatedAllocateInfo<'_> {}
 impl ::core::default::Default for MemoryDedicatedAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image = Image::default();
@@ -23375,7 +24775,11 @@ unsafe impl Sync for ImageViewUsageCreateInfo<'_> {}
 impl ::core::default::Default for ImageViewUsageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.usage = ImageUsageFlags::default();
@@ -23423,7 +24827,11 @@ unsafe impl Sync for ImageViewSlicedCreateInfoEXT<'_> {}
 impl ::core::default::Default for ImageViewSlicedCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.slice_offset = u32::default();
@@ -23476,7 +24884,11 @@ unsafe impl Sync for PipelineTessellationDomainOriginStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineTessellationDomainOriginStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.domain_origin = TessellationDomainOrigin::default();
@@ -23527,7 +24939,11 @@ unsafe impl Sync for SamplerYcbcrConversionInfo<'_> {}
 impl ::core::default::Default for SamplerYcbcrConversionInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.conversion = SamplerYcbcrConversion::default();
@@ -23582,7 +24998,11 @@ unsafe impl Sync for SamplerYcbcrConversionCreateInfo<'_> {}
 impl ::core::default::Default for SamplerYcbcrConversionCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.format = Format::default();
@@ -23670,7 +25090,11 @@ unsafe impl Sync for BindImagePlaneMemoryInfo<'_> {}
 impl ::core::default::Default for BindImagePlaneMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.plane_aspect = ImageAspectFlags::default();
@@ -23717,7 +25141,11 @@ unsafe impl Sync for ImagePlaneMemoryRequirementsInfo<'_> {}
 impl ::core::default::Default for ImagePlaneMemoryRequirementsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.plane_aspect = ImageAspectFlags::default();
@@ -23764,7 +25192,11 @@ unsafe impl Sync for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.sampler_ycbcr_conversion = Bool32::default();
@@ -23816,7 +25248,11 @@ unsafe impl Sync for SamplerYcbcrConversionImageFormatProperties<'_> {}
 impl ::core::default::Default for SamplerYcbcrConversionImageFormatProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.combined_image_sampler_descriptor_count = u32::default();
@@ -23870,7 +25306,11 @@ unsafe impl Sync for TextureLODGatherFormatPropertiesAMD<'_> {}
 impl ::core::default::Default for TextureLODGatherFormatPropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.supports_texture_gather_lod_bias_amd = Bool32::default();
@@ -23922,7 +25362,11 @@ unsafe impl Sync for ConditionalRenderingBeginInfoEXT<'_> {}
 impl ::core::default::Default for ConditionalRenderingBeginInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.buffer = Buffer::default();
@@ -23980,7 +25424,11 @@ unsafe impl Sync for ProtectedSubmitInfo<'_> {}
 impl ::core::default::Default for ProtectedSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.protected_submit = Bool32::default();
@@ -24027,7 +25475,11 @@ unsafe impl Sync for PhysicalDeviceProtectedMemoryFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceProtectedMemoryFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.protected_memory = Bool32::default();
@@ -24075,7 +25527,11 @@ unsafe impl Sync for PhysicalDeviceProtectedMemoryProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceProtectedMemoryProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.protected_no_fault = Bool32::default();
@@ -24125,7 +25581,11 @@ unsafe impl Sync for DeviceQueueInfo2<'_> {}
 impl ::core::default::Default for DeviceQueueInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = DeviceQueueCreateFlags::default();
@@ -24185,7 +25645,11 @@ unsafe impl Sync for PipelineCoverageToColorStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineCoverageToColorStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineCoverageToColorStateCreateFlagsNV::default();
@@ -24249,7 +25713,11 @@ unsafe impl Sync for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.filter_minmax_single_component_formats = Bool32::default();
@@ -24308,7 +25776,11 @@ pub struct SampleLocationEXT {
 impl ::core::default::Default for SampleLocationEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.x = f32::default();
         x.y = f32::default();
         x
@@ -24358,7 +25830,11 @@ unsafe impl Sync for SampleLocationsInfoEXT<'_> {}
 impl ::core::default::Default for SampleLocationsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.sample_locations_per_pixel = SampleCountFlags::default();
@@ -24420,7 +25896,11 @@ pub struct AttachmentSampleLocationsEXT<'a> {
 impl ::core::default::Default for AttachmentSampleLocationsEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.attachment_index = u32::default();
         x.sample_locations_info = SampleLocationsInfoEXT::default();
         x
@@ -24470,7 +25950,11 @@ pub struct SubpassSampleLocationsEXT<'a> {
 impl ::core::default::Default for SubpassSampleLocationsEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.subpass_index = u32::default();
         x.sample_locations_info = SampleLocationsInfoEXT::default();
         x
@@ -24526,7 +26010,11 @@ unsafe impl Sync for RenderPassSampleLocationsBeginInfoEXT<'_> {}
 impl ::core::default::Default for RenderPassSampleLocationsBeginInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.attachment_initial_sample_locations_count = u32::default();
@@ -24592,7 +26080,11 @@ unsafe impl Sync for PipelineSampleLocationsStateCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineSampleLocationsStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.sample_locations_enable = Bool32::default();
@@ -24659,7 +26151,11 @@ unsafe impl Sync for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.sample_location_sample_counts = SampleCountFlags::default();
@@ -24743,7 +26239,11 @@ unsafe impl Sync for MultisamplePropertiesEXT<'_> {}
 impl ::core::default::Default for MultisamplePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_sample_location_grid_size = Extent2D::default();
@@ -24792,7 +26292,11 @@ unsafe impl Sync for SamplerReductionModeCreateInfo<'_> {}
 impl ::core::default::Default for SamplerReductionModeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.reduction_mode = SamplerReductionMode::default();
@@ -24839,7 +26343,11 @@ unsafe impl Sync for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.advanced_blend_coherent_operations = Bool32::default();
@@ -24894,7 +26402,11 @@ unsafe impl Sync for PhysicalDeviceMultiDrawFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMultiDrawFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.multi_draw = Bool32::default();
@@ -24947,7 +26459,11 @@ unsafe impl Sync for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.advanced_blend_max_color_attachments = u32::default();
@@ -25047,7 +26563,11 @@ unsafe impl Sync for PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_premultiplied = Bool32::default();
@@ -25111,7 +26631,11 @@ unsafe impl Sync for PhysicalDeviceInlineUniformBlockFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceInlineUniformBlockFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.inline_uniform_block = Bool32::default();
@@ -25174,7 +26698,11 @@ unsafe impl Sync for PhysicalDeviceInlineUniformBlockProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceInlineUniformBlockProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_inline_uniform_block_size = u32::default();
@@ -25265,7 +26793,11 @@ unsafe impl Sync for WriteDescriptorSetInlineUniformBlock<'_> {}
 impl ::core::default::Default for WriteDescriptorSetInlineUniformBlock<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.data_size = u32::default();
@@ -25314,7 +26846,11 @@ unsafe impl Sync for DescriptorPoolInlineUniformBlockCreateInfo<'_> {}
 impl ::core::default::Default for DescriptorPoolInlineUniformBlockCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.max_inline_uniform_block_bindings = u32::default();
@@ -25372,7 +26908,11 @@ unsafe impl Sync for PipelineCoverageModulationStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineCoverageModulationStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineCoverageModulationStateCreateFlagsNV::default();
@@ -25450,7 +26990,11 @@ unsafe impl Sync for ImageFormatListCreateInfo<'_> {}
 impl ::core::default::Default for ImageFormatListCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.view_format_count = u32::default();
@@ -25503,7 +27047,11 @@ unsafe impl Sync for ValidationCacheCreateInfoEXT<'_> {}
 impl ::core::default::Default for ValidationCacheCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = ValidationCacheCreateFlagsEXT::default();
@@ -25557,7 +27105,11 @@ unsafe impl Sync for ShaderModuleValidationCacheCreateInfoEXT<'_> {}
 impl ::core::default::Default for ShaderModuleValidationCacheCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.validation_cache = ValidationCacheEXT::default();
@@ -25610,7 +27162,11 @@ unsafe impl Sync for PhysicalDeviceMaintenance3Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance3Properties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_per_set_descriptors = u32::default();
@@ -25663,7 +27219,11 @@ unsafe impl Sync for PhysicalDeviceMaintenance4Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance4Features<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.maintenance4 = Bool32::default();
@@ -25711,7 +27271,11 @@ unsafe impl Sync for PhysicalDeviceMaintenance4Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance4Properties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_buffer_size = DeviceSize::default();
@@ -25758,7 +27322,11 @@ unsafe impl Sync for PhysicalDeviceMaintenance5Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance5Features<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.maintenance5 = Bool32::default();
@@ -25811,7 +27379,11 @@ unsafe impl Sync for PhysicalDeviceMaintenance5Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance5Properties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.early_fragment_multisample_coverage_after_sample_counting = Bool32::default();
@@ -25907,7 +27479,11 @@ unsafe impl Sync for PhysicalDeviceMaintenance6Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance6Features<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.maintenance6 = Bool32::default();
@@ -25957,7 +27533,11 @@ unsafe impl Sync for PhysicalDeviceMaintenance6Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance6Properties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.block_texel_view_compatible_multiple_layers = Bool32::default();
@@ -26028,7 +27608,11 @@ unsafe impl Sync for PhysicalDeviceMaintenance7FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance7FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.maintenance7 = Bool32::default();
@@ -26083,7 +27667,11 @@ unsafe impl Sync for PhysicalDeviceMaintenance7PropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance7PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.robust_fragment_shading_rate_attachment_access = Bool32::default();
@@ -26205,7 +27793,11 @@ unsafe impl Sync for PhysicalDeviceLayeredApiPropertiesListKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesListKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.layered_api_count = u32::default();
@@ -26276,7 +27868,11 @@ impl fmt::Debug for PhysicalDeviceLayeredApiPropertiesKHR<'_> {
 impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.vendor_id = u32::default();
@@ -26346,7 +27942,11 @@ unsafe impl Sync for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.properties = PhysicalDeviceProperties2::default();
@@ -26400,7 +28000,11 @@ unsafe impl Sync for PhysicalDeviceMaintenance8FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance8FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.maintenance8 = Bool32::default();
@@ -26448,7 +28052,11 @@ unsafe impl Sync for PhysicalDeviceMaintenance9FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance9FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.maintenance9 = Bool32::default();
@@ -26497,7 +28105,11 @@ unsafe impl Sync for PhysicalDeviceMaintenance9PropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance9PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.image2_d_view_of3_d_sparse = Bool32::default();
@@ -26554,7 +28166,11 @@ unsafe impl Sync for PhysicalDeviceMaintenance11FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance11FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.maintenance11 = Bool32::default();
@@ -26605,7 +28221,11 @@ unsafe impl Sync for PhysicalDeviceMaintenance10PropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance10PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.rgba4_opaque_black_swizzled = Bool32::default();
@@ -26676,7 +28296,11 @@ unsafe impl Sync for PhysicalDeviceMaintenance10FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance10FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.maintenance10 = Bool32::default();
@@ -26725,7 +28349,11 @@ unsafe impl Sync for QueueFamilyOwnershipTransferPropertiesKHR<'_> {}
 impl ::core::default::Default for QueueFamilyOwnershipTransferPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.optimal_image_transfer_to_queue_families = u32::default();
@@ -26776,7 +28404,11 @@ unsafe impl Sync for QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'_>
 impl ::core::default::Default for QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.optimal_image_transfer_granularity = Extent3D::default();
@@ -26836,7 +28468,11 @@ unsafe impl Sync for RenderingAreaInfo<'_> {}
 impl ::core::default::Default for RenderingAreaInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.view_mask = u32::default();
@@ -26902,7 +28538,11 @@ unsafe impl Sync for DescriptorSetLayoutSupport<'_> {}
 impl ::core::default::Default for DescriptorSetLayoutSupport<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.supported = Bool32::default();
@@ -26948,7 +28588,11 @@ unsafe impl Sync for PhysicalDeviceShaderDrawParametersFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderDrawParametersFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_draw_parameters = Bool32::default();
@@ -27001,7 +28645,11 @@ unsafe impl Sync for PhysicalDeviceShaderFloat16Int8Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderFloat16Int8Features<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_float16 = Bool32::default();
@@ -27072,7 +28720,11 @@ unsafe impl Sync for PhysicalDeviceFloatControlsProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceFloatControlsProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.denorm_behavior_independence = ShaderFloatControlsIndependence::default();
@@ -27260,7 +28912,11 @@ unsafe impl Sync for PhysicalDeviceHostQueryResetFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceHostQueryResetFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.host_query_reset = Bool32::default();
@@ -27304,7 +28960,11 @@ pub struct NativeBufferUsage2ANDROID {
 impl ::core::default::Default for NativeBufferUsage2ANDROID {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.consumer = u64::default();
         x.producer = u64::default();
         x
@@ -27355,7 +29015,11 @@ unsafe impl Sync for NativeBufferANDROID<'_> {}
 impl ::core::default::Default for NativeBufferANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle = ::core::ptr::null();
@@ -27427,7 +29091,11 @@ unsafe impl Sync for SwapchainImageCreateInfoANDROID<'_> {}
 impl ::core::default::Default for SwapchainImageCreateInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.usage = SwapchainImageUsageFlagsANDROID::default();
@@ -27474,7 +29142,11 @@ unsafe impl Sync for PhysicalDevicePresentationPropertiesANDROID<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentationPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shared_image = Bool32::default();
@@ -27524,7 +29196,11 @@ pub struct ShaderResourceUsageAMD {
 impl ::core::default::Default for ShaderResourceUsageAMD {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.num_used_vgprs = u32::default();
         x.num_used_sgprs = u32::default();
         x.lds_size_per_local_work_group = u32::default();
@@ -27590,7 +29266,11 @@ pub struct ShaderStatisticsInfoAMD {
 impl ::core::default::Default for ShaderStatisticsInfoAMD {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.shader_stage_mask = ShaderStageFlags::default();
         x.resource_usage = ShaderResourceUsageAMD::default();
         x.num_physical_vgprs = u32::default();
@@ -27667,7 +29347,11 @@ unsafe impl Sync for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.elapsed_timer_query = Bool32::default();
@@ -27719,7 +29403,11 @@ unsafe impl Sync for DeviceQueueGlobalPriorityCreateInfo<'_> {}
 impl ::core::default::Default for DeviceQueueGlobalPriorityCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.global_priority = QueueGlobalPriority::default();
@@ -27766,7 +29454,11 @@ unsafe impl Sync for PhysicalDeviceGlobalPriorityQueryFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceGlobalPriorityQueryFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.global_priority_query = Bool32::default();
@@ -27826,7 +29518,11 @@ impl fmt::Debug for QueueFamilyGlobalPriorityProperties<'_> {
 impl ::core::default::Default for QueueFamilyGlobalPriorityProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.priority_count = u32::default();
@@ -27881,7 +29577,11 @@ unsafe impl Sync for DebugUtilsObjectNameInfoEXT<'_> {}
 impl ::core::default::Default for DebugUtilsObjectNameInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.object_type = ObjectType::default();
@@ -27950,7 +29650,11 @@ unsafe impl Sync for DebugUtilsObjectTagInfoEXT<'_> {}
 impl ::core::default::Default for DebugUtilsObjectTagInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.object_type = ObjectType::default();
@@ -28013,7 +29717,11 @@ unsafe impl Sync for DebugUtilsLabelEXT<'_> {}
 impl ::core::default::Default for DebugUtilsLabelEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_label_name = ::core::ptr::null();
@@ -28093,7 +29801,11 @@ impl fmt::Debug for DebugUtilsMessengerCreateInfoEXT<'_> {
 impl ::core::default::Default for DebugUtilsMessengerCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = DebugUtilsMessengerCreateFlagsEXT::default();
@@ -28176,7 +29888,11 @@ unsafe impl Sync for DebugUtilsMessengerCallbackDataEXT<'_> {}
 impl ::core::default::Default for DebugUtilsMessengerCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = DebugUtilsMessengerCallbackDataFlagsEXT::default();
@@ -28280,7 +29996,11 @@ unsafe impl Sync for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.device_memory_report = Bool32::default();
@@ -28348,7 +30068,11 @@ impl fmt::Debug for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
 impl ::core::default::Default for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = DeviceMemoryReportFlagsEXT::default();
@@ -28417,7 +30141,11 @@ unsafe impl Sync for DeviceMemoryReportCallbackDataEXT<'_> {}
 impl ::core::default::Default for DeviceMemoryReportCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = DeviceMemoryReportFlagsEXT::default();
@@ -28496,7 +30224,11 @@ unsafe impl Sync for ImportMemoryHostPointerInfoEXT<'_> {}
 impl ::core::default::Default for ImportMemoryHostPointerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_type = ExternalMemoryHandleTypeFlags::default();
@@ -28549,7 +30281,11 @@ unsafe impl Sync for MemoryHostPointerPropertiesEXT<'_> {}
 impl ::core::default::Default for MemoryHostPointerPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.memory_type_bits = u32::default();
@@ -28595,7 +30331,11 @@ unsafe impl Sync for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.min_imported_host_pointer_alignment = DeviceSize::default();
@@ -28657,7 +30397,11 @@ unsafe impl Sync for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.primitive_overestimation_size = f32::default();
@@ -28778,7 +30522,11 @@ unsafe impl Sync for CalibratedTimestampInfoKHR<'_> {}
 impl ::core::default::Default for CalibratedTimestampInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.time_domain = TimeDomainKHR::default();
@@ -28837,7 +30585,11 @@ unsafe impl Sync for PhysicalDeviceShaderCorePropertiesAMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_engine_count = u32::default();
@@ -28963,7 +30715,11 @@ unsafe impl Sync for PhysicalDeviceShaderCoreProperties2AMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderCoreProperties2AMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_core_features = ShaderCorePropertiesFlagsAMD::default();
@@ -29022,7 +30778,11 @@ unsafe impl Sync for PipelineRasterizationConservativeStateCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineRasterizationConservativeStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineRasterizationConservativeStateCreateFlagsEXT::default();
@@ -29110,7 +30870,11 @@ unsafe impl Sync for PhysicalDeviceDescriptorIndexingFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorIndexingFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_input_attachment_array_dynamic_indexing = Bool32::default();
@@ -29370,7 +31134,11 @@ unsafe impl Sync for PhysicalDeviceDescriptorIndexingProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorIndexingProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_update_after_bind_descriptors_in_all_pools = u32::default();
@@ -29640,7 +31408,11 @@ unsafe impl Sync for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {}
 impl ::core::default::Default for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.binding_count = u32::default();
@@ -29694,7 +31466,11 @@ unsafe impl Sync for DescriptorSetVariableDescriptorCountAllocateInfo<'_> {}
 impl ::core::default::Default for DescriptorSetVariableDescriptorCountAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.descriptor_set_count = u32::default();
@@ -29747,7 +31523,11 @@ unsafe impl Sync for DescriptorSetVariableDescriptorCountLayoutSupport<'_> {}
 impl ::core::default::Default for DescriptorSetVariableDescriptorCountLayoutSupport<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_variable_descriptor_count = u32::default();
@@ -29806,7 +31586,11 @@ unsafe impl Sync for AttachmentDescription2<'_> {}
 impl ::core::default::Default for AttachmentDescription2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = AttachmentDescriptionFlags::default();
@@ -29902,7 +31686,11 @@ unsafe impl Sync for AttachmentReference2<'_> {}
 impl ::core::default::Default for AttachmentReference2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.attachment = u32::default();
@@ -29970,7 +31758,11 @@ unsafe impl Sync for SubpassDescription2<'_> {}
 impl ::core::default::Default for SubpassDescription2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = SubpassDescriptionFlags::default();
@@ -30078,7 +31870,11 @@ unsafe impl Sync for SubpassDependency2<'_> {}
 impl ::core::default::Default for SubpassDependency2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_subpass = u32::default();
@@ -30174,7 +31970,11 @@ unsafe impl Sync for RenderPassCreateInfo2<'_> {}
 impl ::core::default::Default for RenderPassCreateInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = RenderPassCreateFlags::default();
@@ -30252,7 +32052,11 @@ unsafe impl Sync for SubpassBeginInfo<'_> {}
 impl ::core::default::Default for SubpassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.contents = SubpassContents::default();
@@ -30297,7 +32101,11 @@ unsafe impl Sync for SubpassEndInfo<'_> {}
 impl ::core::default::Default for SubpassEndInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x
@@ -30333,7 +32141,11 @@ unsafe impl Sync for PhysicalDeviceTimelineSemaphoreFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.timeline_semaphore = Bool32::default();
@@ -30382,7 +32194,11 @@ unsafe impl Sync for PhysicalDeviceTimelineSemaphoreProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_timeline_semaphore_value_difference = u64::default();
@@ -30437,7 +32253,11 @@ unsafe impl Sync for SemaphoreTypeCreateInfo<'_> {}
 impl ::core::default::Default for SemaphoreTypeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.semaphore_type = SemaphoreType::default();
@@ -30494,7 +32314,11 @@ unsafe impl Sync for TimelineSemaphoreSubmitInfo<'_> {}
 impl ::core::default::Default for TimelineSemaphoreSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.wait_semaphore_value_count = u32::default();
@@ -30555,7 +32379,11 @@ unsafe impl Sync for SemaphoreWaitInfo<'_> {}
 impl ::core::default::Default for SemaphoreWaitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = SemaphoreWaitFlags::default();
@@ -30617,7 +32445,11 @@ unsafe impl Sync for SemaphoreSignalInfo<'_> {}
 impl ::core::default::Default for SemaphoreSignalInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.semaphore = Semaphore::default();
@@ -30665,7 +32497,11 @@ pub struct VertexInputBindingDivisorDescription {
 impl ::core::default::Default for VertexInputBindingDivisorDescription {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.binding = u32::default();
         x.divisor = u32::default();
         x
@@ -30713,7 +32549,11 @@ unsafe impl Sync for PipelineVertexInputDivisorStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineVertexInputDivisorStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.vertex_binding_divisor_count = u32::default();
@@ -30769,7 +32609,11 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_vertex_attrib_divisor = u32::default();
@@ -30821,7 +32665,11 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_vertex_attrib_divisor = u32::default();
@@ -30884,7 +32732,11 @@ unsafe impl Sync for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pci_domain = u32::default();
@@ -30950,7 +32802,11 @@ unsafe impl Sync for ImportAndroidHardwareBufferInfoANDROID<'_> {}
 impl ::core::default::Default for ImportAndroidHardwareBufferInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.buffer = ::core::ptr::null_mut();
@@ -30998,7 +32854,11 @@ unsafe impl Sync for AndroidHardwareBufferUsageANDROID<'_> {}
 impl ::core::default::Default for AndroidHardwareBufferUsageANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.android_hardware_buffer_usage = u64::default();
@@ -31046,7 +32906,11 @@ unsafe impl Sync for AndroidHardwareBufferPropertiesANDROID<'_> {}
 impl ::core::default::Default for AndroidHardwareBufferPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.allocation_size = DeviceSize::default();
@@ -31098,7 +32962,11 @@ unsafe impl Sync for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {}
 impl ::core::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.memory = DeviceMemory::default();
@@ -31152,7 +33020,11 @@ unsafe impl Sync for AndroidHardwareBufferFormatPropertiesANDROID<'_> {}
 impl ::core::default::Default for AndroidHardwareBufferFormatPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.format = Format::default();
@@ -31251,7 +33123,11 @@ unsafe impl Sync for CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.conditional_rendering_enable = Bool32::default();
@@ -31302,7 +33178,11 @@ unsafe impl Sync for ExternalFormatANDROID<'_> {}
 impl ::core::default::Default for ExternalFormatANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.external_format = u64::default();
@@ -31355,7 +33235,11 @@ unsafe impl Sync for PhysicalDevice8BitStorageFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevice8BitStorageFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.storage_buffer8_bit_access = Bool32::default();
@@ -31419,7 +33303,11 @@ unsafe impl Sync for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.conditional_rendering = Bool32::default();
@@ -31482,7 +33370,11 @@ unsafe impl Sync for PhysicalDeviceVulkanMemoryModelFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkanMemoryModelFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.vulkan_memory_model = Bool32::default();
@@ -31551,7 +33443,11 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicInt64Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicInt64Features<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_buffer_int64_atomics = Bool32::default();
@@ -31617,7 +33513,11 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_buffer_float32_atomics = Bool32::default();
@@ -31764,7 +33664,11 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_buffer_float16_atomics = Bool32::default();
@@ -31913,7 +33817,11 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.vertex_attribute_instance_rate_divisor = Bool32::default();
@@ -31978,7 +33886,11 @@ unsafe impl Sync for QueueFamilyCheckpointPropertiesNV<'_> {}
 impl ::core::default::Default for QueueFamilyCheckpointPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.checkpoint_execution_stage_mask = PipelineStageFlags::default();
@@ -32029,7 +33941,11 @@ unsafe impl Sync for CheckpointDataNV<'_> {}
 impl ::core::default::Default for CheckpointDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.stage = PipelineStageFlags::default();
@@ -32084,7 +34000,11 @@ unsafe impl Sync for PhysicalDeviceDepthStencilResolveProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthStencilResolveProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.supported_depth_resolve_modes = ResolveModeFlags::default();
@@ -32161,7 +34081,11 @@ unsafe impl Sync for SubpassDescriptionDepthStencilResolve<'_> {}
 impl ::core::default::Default for SubpassDescriptionDepthStencilResolve<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.depth_resolve_mode = ResolveModeFlags::default();
@@ -32223,7 +34147,11 @@ unsafe impl Sync for ImageViewASTCDecodeModeEXT<'_> {}
 impl ::core::default::Default for ImageViewASTCDecodeModeEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.decode_mode = Format::default();
@@ -32270,7 +34198,11 @@ unsafe impl Sync for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.decode_mode_shared_exponent = Bool32::default();
@@ -32319,7 +34251,11 @@ unsafe impl Sync for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.transform_feedback = Bool32::default();
@@ -32386,7 +34322,11 @@ unsafe impl Sync for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_transform_feedback_streams = u32::default();
@@ -32512,7 +34452,11 @@ unsafe impl Sync for PipelineRasterizationStateStreamCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineRasterizationStateStreamCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineRasterizationStateStreamCreateFlagsEXT::default();
@@ -32569,7 +34513,11 @@ unsafe impl Sync for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.representative_fragment_test = Bool32::default();
@@ -32624,7 +34572,11 @@ unsafe impl Sync for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.representative_fragment_test_enable = Bool32::default();
@@ -32678,7 +34630,11 @@ unsafe impl Sync for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.exclusive_scissor = Bool32::default();
@@ -32728,7 +34684,11 @@ unsafe impl Sync for PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.exclusive_scissor_count = u32::default();
@@ -32781,7 +34741,11 @@ unsafe impl Sync for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.corner_sampled_image = Bool32::default();
@@ -32834,7 +34798,11 @@ unsafe impl Sync for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.compute_derivative_group_quads = Bool32::default();
@@ -32898,7 +34866,11 @@ unsafe impl Sync for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.mesh_and_task_shader_derivatives = Bool32::default();
@@ -32952,7 +34924,11 @@ unsafe impl Sync for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.image_footprint = Bool32::default();
@@ -33004,7 +34980,11 @@ unsafe impl Sync for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_
 impl ::core::default::Default for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.dedicated_allocation_image_aliasing = Bool32::default();
@@ -33065,7 +35045,11 @@ unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.indirect_memory_copy = Bool32::default();
@@ -33123,7 +35107,11 @@ unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.indirect_copy = Bool32::default();
@@ -33175,7 +35163,11 @@ unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.supported_queues = QueueFlags::default();
@@ -33226,7 +35218,11 @@ unsafe impl Sync for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.memory_decompression = Bool32::default();
@@ -33279,7 +35275,11 @@ unsafe impl Sync for PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.decompression_methods = MemoryDecompressionMethodFlagsEXT::default();
@@ -33341,7 +35341,11 @@ unsafe impl Sync for ShadingRatePaletteNV<'_> {}
 impl ::core::default::Default for ShadingRatePaletteNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.shading_rate_palette_entry_count = u32::default();
         x.p_shading_rate_palette_entries = ::core::ptr::null();
         x
@@ -33389,7 +35393,11 @@ unsafe impl Sync for PipelineViewportShadingRateImageStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineViewportShadingRateImageStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.shading_rate_image_enable = Bool32::default();
@@ -33452,7 +35460,11 @@ unsafe impl Sync for PhysicalDeviceShadingRateImageFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShadingRateImageFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shading_rate_image = Bool32::default();
@@ -33512,7 +35524,11 @@ unsafe impl Sync for PhysicalDeviceShadingRateImagePropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShadingRateImagePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shading_rate_texel_size = Extent2D::default();
@@ -33575,7 +35591,11 @@ unsafe impl Sync for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.invocation_mask = Bool32::default();
@@ -33624,7 +35644,11 @@ pub struct CoarseSampleLocationNV {
 impl ::core::default::Default for CoarseSampleLocationNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.pixel_x = u32::default();
         x.pixel_y = u32::default();
         x.sample = u32::default();
@@ -33678,7 +35702,11 @@ unsafe impl Sync for CoarseSampleOrderCustomNV<'_> {}
 impl ::core::default::Default for CoarseSampleOrderCustomNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.shading_rate = ShadingRatePaletteEntryNV::default();
         x.sample_count = u32::default();
         x.sample_location_count = u32::default();
@@ -33735,7 +35763,11 @@ unsafe impl Sync for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.sample_order_type = CoarseSampleOrderTypeNV::default();
@@ -33798,7 +35830,11 @@ unsafe impl Sync for PhysicalDeviceMeshShaderFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.task_shader = Bool32::default();
@@ -33864,7 +35900,11 @@ unsafe impl Sync for PhysicalDeviceMeshShaderPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_draw_mesh_tasks_count = u32::default();
@@ -33985,7 +36025,11 @@ pub struct DrawMeshTasksIndirectCommandNV {
 impl ::core::default::Default for DrawMeshTasksIndirectCommandNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.task_count = u32::default();
         x.first_task = u32::default();
         x
@@ -34036,7 +36080,11 @@ unsafe impl Sync for PhysicalDeviceMeshShaderFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.task_shader = Bool32::default();
@@ -34139,7 +36187,11 @@ unsafe impl Sync for PhysicalDeviceMeshShaderPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_task_work_group_total_count = u32::default();
@@ -34376,7 +36428,11 @@ pub struct DrawMeshTasksIndirectCommandEXT {
 impl ::core::default::Default for DrawMeshTasksIndirectCommandEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.group_count_x = u32::default();
         x.group_count_y = u32::default();
         x.group_count_z = u32::default();
@@ -34433,7 +36489,11 @@ unsafe impl Sync for RayTracingShaderGroupCreateInfoNV<'_> {}
 impl ::core::default::Default for RayTracingShaderGroupCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.ty = RayTracingShaderGroupTypeKHR::default();
@@ -34508,7 +36568,11 @@ unsafe impl Sync for RayTracingShaderGroupCreateInfoKHR<'_> {}
 impl ::core::default::Default for RayTracingShaderGroupCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.ty = RayTracingShaderGroupTypeKHR::default();
@@ -34595,7 +36659,11 @@ unsafe impl Sync for RayTracingPipelineCreateInfoNV<'_> {}
 impl ::core::default::Default for RayTracingPipelineCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineCreateFlags::default();
@@ -34692,7 +36760,11 @@ unsafe impl Sync for RayTracingPipelineCreateInfoKHR<'_> {}
 impl ::core::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineCreateFlags::default();
@@ -34812,7 +36884,11 @@ unsafe impl Sync for GeometryTrianglesNV<'_> {}
 impl ::core::default::Default for GeometryTrianglesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.vertex_data = Buffer::default();
@@ -34921,7 +36997,11 @@ unsafe impl Sync for GeometryAABBNV<'_> {}
 impl ::core::default::Default for GeometryAABBNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.aabb_data = Buffer::default();
@@ -34979,7 +37059,11 @@ pub struct GeometryDataNV<'a> {
 impl ::core::default::Default for GeometryDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.triangles = GeometryTrianglesNV::default();
         x.aabbs = GeometryAABBNV::default();
         x
@@ -35029,7 +37113,11 @@ unsafe impl Sync for GeometryNV<'_> {}
 impl ::core::default::Default for GeometryNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.geometry_type = GeometryTypeKHR::default();
@@ -35091,7 +37179,11 @@ unsafe impl Sync for AccelerationStructureInfoNV<'_> {}
 impl ::core::default::Default for AccelerationStructureInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.ty = AccelerationStructureTypeNV::default();
@@ -35158,7 +37250,11 @@ unsafe impl Sync for AccelerationStructureCreateInfoNV<'_> {}
 impl ::core::default::Default for AccelerationStructureCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.compacted_size = DeviceSize::default();
@@ -35217,7 +37313,11 @@ unsafe impl Sync for BindAccelerationStructureMemoryInfoNV<'_> {}
 impl ::core::default::Default for BindAccelerationStructureMemoryInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.acceleration_structure = AccelerationStructureNV::default();
@@ -35287,7 +37387,11 @@ unsafe impl Sync for WriteDescriptorSetAccelerationStructureKHR<'_> {}
 impl ::core::default::Default for WriteDescriptorSetAccelerationStructureKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.acceleration_structure_count = u32::default();
@@ -35341,7 +37445,11 @@ unsafe impl Sync for WriteDescriptorSetAccelerationStructureNV<'_> {}
 impl ::core::default::Default for WriteDescriptorSetAccelerationStructureNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.acceleration_structure_count = u32::default();
@@ -35395,7 +37503,11 @@ unsafe impl Sync for AccelerationStructureMemoryRequirementsInfoNV<'_> {}
 impl ::core::default::Default for AccelerationStructureMemoryRequirementsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.ty = AccelerationStructureMemoryRequirementsTypeNV::default();
@@ -35455,7 +37567,11 @@ unsafe impl Sync for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.acceleration_structure = Bool32::default();
@@ -35548,7 +37664,11 @@ unsafe impl Sync for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ray_tracing_pipeline = Bool32::default();
@@ -35639,7 +37759,11 @@ unsafe impl Sync for PhysicalDeviceRayQueryFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayQueryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ray_query = Bool32::default();
@@ -35694,7 +37818,11 @@ unsafe impl Sync for PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_geometry_count = u64::default();
@@ -35814,7 +37942,11 @@ unsafe impl Sync for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_group_handle_size = u32::default();
@@ -35920,7 +38052,11 @@ unsafe impl Sync for PhysicalDeviceRayTracingPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_group_handle_size = u32::default();
@@ -36010,7 +38146,11 @@ pub struct StridedDeviceAddressRegionKHR {
 impl ::core::default::Default for StridedDeviceAddressRegionKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.device_address = DeviceAddress::default();
         x.stride = DeviceSize::default();
         x.size = DeviceSize::default();
@@ -36060,7 +38200,11 @@ pub struct TraceRaysIndirectCommandKHR {
 impl ::core::default::Default for TraceRaysIndirectCommandKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.width = u32::default();
         x.height = u32::default();
         x.depth = u32::default();
@@ -36121,7 +38265,11 @@ pub struct TraceRaysIndirectCommand2KHR {
 impl ::core::default::Default for TraceRaysIndirectCommand2KHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.raygen_shader_record_address = DeviceAddress::default();
         x.raygen_shader_record_size = DeviceSize::default();
         x.miss_shader_binding_table_address = DeviceAddress::default();
@@ -36271,7 +38419,11 @@ unsafe impl Sync for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ray_tracing_maintenance1 = Bool32::default();
@@ -36334,7 +38486,11 @@ unsafe impl Sync for DrmFormatModifierPropertiesListEXT<'_> {}
 impl ::core::default::Default for DrmFormatModifierPropertiesListEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.drm_format_modifier_count = u32::default();
@@ -36383,7 +38539,11 @@ pub struct DrmFormatModifierPropertiesEXT {
 impl ::core::default::Default for DrmFormatModifierPropertiesEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.drm_format_modifier = u64::default();
         x.drm_format_modifier_plane_count = u32::default();
         x.drm_format_modifier_tiling_features = FormatFeatureFlags::default();
@@ -36442,7 +38602,11 @@ unsafe impl Sync for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.drm_format_modifier = u64::default();
@@ -36508,7 +38672,11 @@ unsafe impl Sync for ImageDrmFormatModifierListCreateInfoEXT<'_> {}
 impl ::core::default::Default for ImageDrmFormatModifierListCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.drm_format_modifier_count = u32::default();
@@ -36560,7 +38728,11 @@ unsafe impl Sync for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {}
 impl ::core::default::Default for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.drm_format_modifier = u64::default();
@@ -36616,7 +38788,11 @@ unsafe impl Sync for ImageDrmFormatModifierPropertiesEXT<'_> {}
 impl ::core::default::Default for ImageDrmFormatModifierPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.drm_format_modifier = u64::default();
@@ -36662,7 +38838,11 @@ unsafe impl Sync for ImageStencilUsageCreateInfo<'_> {}
 impl ::core::default::Default for ImageStencilUsageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.stencil_usage = ImageUsageFlags::default();
@@ -36710,7 +38890,11 @@ unsafe impl Sync for DeviceMemoryOverallocationCreateInfoAMD<'_> {}
 impl ::core::default::Default for DeviceMemoryOverallocationCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.overallocation_behavior = MemoryOverallocationBehaviorAMD::default();
@@ -36763,7 +38947,11 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.fragment_density_map = Bool32::default();
@@ -36831,7 +39019,11 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.fragment_density_map_deferred = Bool32::default();
@@ -36883,7 +39075,11 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.fragment_density_map_offset = Bool32::default();
@@ -36940,7 +39136,11 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.min_fragment_density_texel_size = Extent2D::default();
@@ -37012,7 +39212,11 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.subsampled_loads = Bool32::default();
@@ -37088,7 +39292,11 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.fragment_density_offset_granularity = Extent2D::default();
@@ -37142,7 +39350,11 @@ unsafe impl Sync for RenderPassFragmentDensityMapCreateInfoEXT<'_> {}
 impl ::core::default::Default for RenderPassFragmentDensityMapCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.fragment_density_map_attachment = AttachmentReference::default();
@@ -37195,7 +39407,11 @@ unsafe impl Sync for RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {}
 impl ::core::default::Default for RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.fragment_density_offset_count = u32::default();
@@ -37246,7 +39462,11 @@ unsafe impl Sync for PhysicalDeviceScalarBlockLayoutFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceScalarBlockLayoutFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.scalar_block_layout = Bool32::default();
@@ -37295,7 +39515,11 @@ unsafe impl Sync for SurfaceProtectedCapabilitiesKHR<'_> {}
 impl ::core::default::Default for SurfaceProtectedCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.supports_protected = Bool32::default();
@@ -37342,7 +39566,11 @@ unsafe impl Sync for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.uniform_buffer_standard_layout = Bool32::default();
@@ -37397,7 +39625,11 @@ unsafe impl Sync for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.depth_clip_enable = Bool32::default();
@@ -37447,7 +39679,11 @@ unsafe impl Sync for PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineRasterizationDepthClipStateCreateFlagsEXT::default();
@@ -37505,7 +39741,11 @@ unsafe impl Sync for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.heap_budget = unsafe { ::core::mem::zeroed() };
@@ -37562,7 +39802,11 @@ unsafe impl Sync for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.memory_priority = Bool32::default();
@@ -37611,7 +39855,11 @@ unsafe impl Sync for MemoryPriorityAllocateInfoEXT<'_> {}
 impl ::core::default::Default for MemoryPriorityAllocateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.priority = f32::default();
@@ -37658,7 +39906,11 @@ unsafe impl Sync for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pageable_device_local_memory = Bool32::default();
@@ -37715,7 +39967,11 @@ unsafe impl Sync for PhysicalDeviceBufferDeviceAddressFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.buffer_device_address = Bool32::default();
@@ -37784,7 +40040,11 @@ unsafe impl Sync for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.buffer_device_address = Bool32::default();
@@ -37854,7 +40114,11 @@ unsafe impl Sync for BufferDeviceAddressInfo<'_> {}
 impl ::core::default::Default for BufferDeviceAddressInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.buffer = Buffer::default();
@@ -37900,7 +40164,11 @@ unsafe impl Sync for BufferOpaqueCaptureAddressCreateInfo<'_> {}
 impl ::core::default::Default for BufferOpaqueCaptureAddressCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.opaque_capture_address = u64::default();
@@ -37947,7 +40215,11 @@ unsafe impl Sync for BufferDeviceAddressCreateInfoEXT<'_> {}
 impl ::core::default::Default for BufferDeviceAddressCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.device_address = DeviceAddress::default();
@@ -37994,7 +40266,11 @@ unsafe impl Sync for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.image_view_type = ImageViewType::default();
@@ -38046,7 +40322,11 @@ unsafe impl Sync for FilterCubicImageViewImageFormatPropertiesEXT<'_> {}
 impl ::core::default::Default for FilterCubicImageViewImageFormatPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.filter_cubic = Bool32::default();
@@ -38103,7 +40383,11 @@ unsafe impl Sync for PhysicalDeviceImagelessFramebufferFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceImagelessFramebufferFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.imageless_framebuffer = Bool32::default();
@@ -38156,7 +40440,11 @@ unsafe impl Sync for FramebufferAttachmentsCreateInfo<'_> {}
 impl ::core::default::Default for FramebufferAttachmentsCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.attachment_image_info_count = u32::default();
@@ -38214,7 +40502,11 @@ unsafe impl Sync for FramebufferAttachmentImageInfo<'_> {}
 impl ::core::default::Default for FramebufferAttachmentImageInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = ImageCreateFlags::default();
@@ -38293,7 +40585,11 @@ unsafe impl Sync for RenderPassAttachmentBeginInfo<'_> {}
 impl ::core::default::Default for RenderPassAttachmentBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.attachment_count = u32::default();
@@ -38342,7 +40638,11 @@ unsafe impl Sync for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.texture_compression_astc_hdr = Bool32::default();
@@ -38395,7 +40695,11 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.cooperative_matrix = Bool32::default();
@@ -38454,7 +40758,11 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.cooperative_matrix_supported_stages = ShaderStageFlags::default();
@@ -38515,7 +40823,11 @@ unsafe impl Sync for CooperativeMatrixPropertiesNV<'_> {}
 impl ::core::default::Default for CooperativeMatrixPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.m_size = u32::default();
@@ -38603,7 +40915,11 @@ unsafe impl Sync for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ycbcr_image_arrays = Bool32::default();
@@ -38654,7 +40970,11 @@ unsafe impl Sync for ImageViewHandleInfoNVX<'_> {}
 impl ::core::default::Default for ImageViewHandleInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image_view = ImageView::default();
@@ -38713,7 +41033,11 @@ unsafe impl Sync for ImageViewAddressPropertiesNVX<'_> {}
 impl ::core::default::Default for ImageViewAddressPropertiesNVX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.device_address = DeviceAddress::default();
@@ -38765,7 +41089,11 @@ unsafe impl Sync for PresentFrameTokenGGP<'_> {}
 impl ::core::default::Default for PresentFrameTokenGGP<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.frame_token = GgpFrameToken::default();
@@ -38808,7 +41136,11 @@ pub struct PipelineCreationFeedback {
 impl ::core::default::Default for PipelineCreationFeedback {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.flags = PipelineCreationFeedbackFlags::default();
         x.duration = u64::default();
         x
@@ -38857,7 +41189,11 @@ unsafe impl Sync for PipelineCreationFeedbackCreateInfo<'_> {}
 impl ::core::default::Default for PipelineCreationFeedbackCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_pipeline_creation_feedback = ::core::ptr::null_mut();
@@ -38930,7 +41266,11 @@ unsafe impl Sync for SurfaceFullScreenExclusiveInfoEXT<'_> {}
 impl ::core::default::Default for SurfaceFullScreenExclusiveInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.full_screen_exclusive = FullScreenExclusiveEXT::default();
@@ -38978,7 +41318,11 @@ unsafe impl Sync for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {}
 impl ::core::default::Default for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.hmonitor = unsafe { ::core::mem::zeroed() };
@@ -39030,7 +41374,11 @@ unsafe impl Sync for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {}
 impl ::core::default::Default for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.full_screen_exclusive_supported = Bool32::default();
@@ -39081,7 +41429,11 @@ unsafe impl Sync for PhysicalDevicePresentBarrierFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentBarrierFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_barrier = Bool32::default();
@@ -39130,7 +41482,11 @@ unsafe impl Sync for SurfaceCapabilitiesPresentBarrierNV<'_> {}
 impl ::core::default::Default for SurfaceCapabilitiesPresentBarrierNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_barrier_supported = Bool32::default();
@@ -39177,7 +41533,11 @@ unsafe impl Sync for SwapchainPresentBarrierCreateInfoNV<'_> {}
 impl ::core::default::Default for SwapchainPresentBarrierCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_barrier_enable = Bool32::default();
@@ -39225,7 +41585,11 @@ unsafe impl Sync for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.performance_counter_query_pools = Bool32::default();
@@ -39287,7 +41651,11 @@ unsafe impl Sync for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.allow_command_buffer_query_copies = Bool32::default();
@@ -39344,7 +41712,11 @@ unsafe impl Sync for PerformanceCounterKHR<'_> {}
 impl ::core::default::Default for PerformanceCounterKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.unit = PerformanceCounterUnitKHR::default();
@@ -39423,7 +41795,11 @@ impl fmt::Debug for PerformanceCounterDescriptionKHR<'_> {
 impl ::core::default::Default for PerformanceCounterDescriptionKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = PerformanceCounterDescriptionFlagsKHR::default();
@@ -39504,7 +41880,11 @@ unsafe impl Sync for QueryPoolPerformanceCreateInfoKHR<'_> {}
 impl ::core::default::Default for QueryPoolPerformanceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.queue_family_index = u32::default();
@@ -39577,7 +41957,11 @@ unsafe impl Sync for AcquireProfilingLockInfoKHR<'_> {}
 impl ::core::default::Default for AcquireProfilingLockInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = AcquireProfilingLockFlagsKHR::default();
@@ -39629,7 +42013,11 @@ unsafe impl Sync for PerformanceQuerySubmitInfoKHR<'_> {}
 impl ::core::default::Default for PerformanceQuerySubmitInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.counter_pass_index = u32::default();
@@ -39677,7 +42065,11 @@ unsafe impl Sync for HeadlessSurfaceCreateInfoEXT<'_> {}
 impl ::core::default::Default for HeadlessSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = HeadlessSurfaceCreateFlagsEXT::default();
@@ -39723,7 +42115,11 @@ unsafe impl Sync for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.coverage_reduction_mode = Bool32::default();
@@ -39776,7 +42172,11 @@ unsafe impl Sync for PipelineCoverageReductionStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineCoverageReductionStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineCoverageReductionStateCreateFlagsNV::default();
@@ -39839,7 +42239,11 @@ unsafe impl Sync for FramebufferMixedSamplesCombinationNV<'_> {}
 impl ::core::default::Default for FramebufferMixedSamplesCombinationNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.coverage_reduction_mode = CoverageReductionModeNV::default();
@@ -39906,7 +42310,11 @@ unsafe impl Sync for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_integer_functions2 = Bool32::default();
@@ -39981,7 +42389,11 @@ impl fmt::Debug for PerformanceValueINTEL {
 impl ::core::default::Default for PerformanceValueINTEL {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.ty = PerformanceValueTypeINTEL::default();
         x.data = PerformanceValueDataINTEL::default();
         x
@@ -40028,7 +42440,11 @@ unsafe impl Sync for InitializePerformanceApiInfoINTEL<'_> {}
 impl ::core::default::Default for InitializePerformanceApiInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_user_data = ::core::ptr::null_mut();
@@ -40074,7 +42490,11 @@ unsafe impl Sync for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {}
 impl ::core::default::Default for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.performance_counters_sampling = QueryPoolSamplingModeINTEL::default();
@@ -40125,7 +42545,11 @@ unsafe impl Sync for PerformanceMarkerInfoINTEL<'_> {}
 impl ::core::default::Default for PerformanceMarkerInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.marker = u64::default();
@@ -40171,7 +42595,11 @@ unsafe impl Sync for PerformanceStreamMarkerInfoINTEL<'_> {}
 impl ::core::default::Default for PerformanceStreamMarkerInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.marker = u32::default();
@@ -40219,7 +42647,11 @@ unsafe impl Sync for PerformanceOverrideInfoINTEL<'_> {}
 impl ::core::default::Default for PerformanceOverrideInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.ty = PerformanceOverrideTypeINTEL::default();
@@ -40277,7 +42709,11 @@ unsafe impl Sync for PerformanceConfigurationAcquireInfoINTEL<'_> {}
 impl ::core::default::Default for PerformanceConfigurationAcquireInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.ty = PerformanceConfigurationTypeINTEL::default();
@@ -40325,7 +42761,11 @@ unsafe impl Sync for PhysicalDeviceShaderClockFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderClockFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_subgroup_clock = Bool32::default();
@@ -40379,7 +42819,11 @@ unsafe impl Sync for PhysicalDeviceIndexTypeUint8Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceIndexTypeUint8Features<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.index_type_uint8 = Bool32::default();
@@ -40428,7 +42872,11 @@ unsafe impl Sync for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_sm_count = u32::default();
@@ -40485,7 +42933,11 @@ unsafe impl Sync for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_sm_builtins = Bool32::default();
@@ -40536,7 +42988,11 @@ unsafe impl Sync for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.fragment_shader_sample_interlock = Bool32::default();
@@ -40609,7 +43065,11 @@ unsafe impl Sync for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.separate_depth_stencil_layouts = Bool32::default();
@@ -40664,7 +43124,11 @@ unsafe impl Sync for AttachmentReferenceStencilLayout<'_> {}
 impl ::core::default::Default for AttachmentReferenceStencilLayout<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.stencil_layout = ImageLayout::default();
@@ -40712,7 +43176,11 @@ unsafe impl Sync for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {
 impl ::core::default::Default for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.primitive_topology_list_restart = Bool32::default();
@@ -40780,7 +43248,11 @@ unsafe impl Sync for AttachmentDescriptionStencilLayout<'_> {}
 impl ::core::default::Default for AttachmentDescriptionStencilLayout<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.stencil_initial_layout = ImageLayout::default();
@@ -40833,7 +43305,11 @@ unsafe impl Sync for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {
 impl ::core::default::Default for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pipeline_executable_info = Bool32::default();
@@ -40888,7 +43364,11 @@ unsafe impl Sync for PipelineInfoKHR<'_> {}
 impl ::core::default::Default for PipelineInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.pipeline = Pipeline::default();
@@ -40946,7 +43426,11 @@ impl fmt::Debug for PipelineExecutablePropertiesKHR<'_> {
 impl ::core::default::Default for PipelineExecutablePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.stages = ShaderStageFlags::default();
@@ -41020,7 +43504,11 @@ unsafe impl Sync for PipelineExecutableInfoKHR<'_> {}
 impl ::core::default::Default for PipelineExecutableInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.pipeline = Pipeline::default();
@@ -41102,7 +43590,11 @@ impl fmt::Debug for PipelineExecutableStatisticKHR<'_> {
 impl ::core::default::Default for PipelineExecutableStatisticKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.name = unsafe { ::core::mem::zeroed() };
@@ -41192,7 +43684,11 @@ impl fmt::Debug for PipelineExecutableInternalRepresentationKHR<'_> {
 impl ::core::default::Default for PipelineExecutableInternalRepresentationKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.name = unsafe { ::core::mem::zeroed() };
@@ -41268,7 +43764,11 @@ unsafe impl Sync for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_demote_to_helper_invocation = Bool32::default();
@@ -41326,7 +43826,11 @@ unsafe impl Sync for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.texel_buffer_alignment = Bool32::default();
@@ -41381,7 +43885,11 @@ unsafe impl Sync for PhysicalDeviceTexelBufferAlignmentProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.storage_texel_buffer_offset_alignment_bytes = DeviceSize::default();
@@ -41467,7 +43975,11 @@ unsafe impl Sync for PhysicalDeviceSubgroupSizeControlFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.subgroup_size_control = Bool32::default();
@@ -41525,7 +44037,11 @@ unsafe impl Sync for PhysicalDeviceSubgroupSizeControlProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.min_subgroup_size = u32::default();
@@ -41597,7 +44113,11 @@ unsafe impl Sync for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {}
 impl ::core::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.required_subgroup_size = u32::default();
@@ -41653,7 +44173,11 @@ unsafe impl Sync for SubpassShadingPipelineCreateInfoHUAWEI<'_> {}
 impl ::core::default::Default for SubpassShadingPipelineCreateInfoHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.render_pass = RenderPass::default();
@@ -41707,7 +44231,11 @@ unsafe impl Sync for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_subpass_shading_workgroup_size_aspect_ratio = u32::default();
@@ -41765,7 +44293,11 @@ unsafe impl Sync for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_work_group_count = unsafe { ::core::mem::zeroed() };
@@ -41837,7 +44369,11 @@ unsafe impl Sync for MemoryOpaqueCaptureAddressAllocateInfo<'_> {}
 impl ::core::default::Default for MemoryOpaqueCaptureAddressAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.opaque_capture_address = u64::default();
@@ -41885,7 +44421,11 @@ unsafe impl Sync for DeviceMemoryOpaqueCaptureAddressInfo<'_> {}
 impl ::core::default::Default for DeviceMemoryOpaqueCaptureAddressInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.memory = DeviceMemory::default();
@@ -41936,7 +44476,11 @@ unsafe impl Sync for PhysicalDeviceLineRasterizationFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceLineRasterizationFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.rectangular_lines = Bool32::default();
@@ -42015,7 +44559,11 @@ unsafe impl Sync for PhysicalDeviceLineRasterizationProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceLineRasterizationProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.line_sub_pixel_precision_bits = u32::default();
@@ -42069,7 +44617,11 @@ unsafe impl Sync for PipelineRasterizationLineStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineRasterizationLineStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.line_rasterization_mode = LineRasterizationMode::default();
@@ -42141,7 +44693,11 @@ unsafe impl Sync for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pipeline_creation_cache_control = Bool32::default();
@@ -42210,7 +44766,11 @@ unsafe impl Sync for PhysicalDeviceVulkan11Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan11Features<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.storage_buffer16_bit_access = Bool32::default();
@@ -42345,7 +44905,11 @@ unsafe impl Sync for PhysicalDeviceVulkan11Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan11Properties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.device_uuid = unsafe { ::core::mem::zeroed() };
@@ -42534,7 +45098,11 @@ unsafe impl Sync for PhysicalDeviceVulkan12Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan12Features<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.sampler_mirror_clamp_to_edge = Bool32::default();
@@ -43198,7 +45766,11 @@ impl fmt::Debug for PhysicalDeviceVulkan12Properties<'_> {
 impl ::core::default::Default for PhysicalDeviceVulkan12Properties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.driver_id = DriverId::default();
@@ -43726,7 +46298,11 @@ unsafe impl Sync for PhysicalDeviceVulkan13Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan13Features<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.robust_image_access = Bool32::default();
@@ -43917,7 +46493,11 @@ unsafe impl Sync for PhysicalDeviceVulkan13Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan13Properties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.min_subgroup_size = u32::default();
@@ -44411,7 +46991,11 @@ unsafe impl Sync for PhysicalDeviceVulkan14Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan14Features<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.global_priority_query = Bool32::default();
@@ -44613,7 +47197,11 @@ unsafe impl Sync for PhysicalDeviceVulkan14Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan14Properties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.line_sub_pixel_precision_bits = u32::default();
@@ -44856,7 +47444,11 @@ unsafe impl Sync for PipelineCompilerControlCreateInfoAMD<'_> {}
 impl ::core::default::Default for PipelineCompilerControlCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.compiler_control_flags = PipelineCompilerControlFlagsAMD::default();
@@ -44912,7 +47504,11 @@ unsafe impl Sync for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.device_coherent_memory = Bool32::default();
@@ -44962,7 +47558,11 @@ pub struct GpaPerfBlockPropertiesAMD {
 impl ::core::default::Default for GpaPerfBlockPropertiesAMD {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.block_type = GpaPerfBlockAMD::default();
         x.flags = GpaPerfBlockPropertiesFlagsAMD::default();
         x.instance_count = u32::default();
@@ -45042,7 +47642,11 @@ unsafe impl Sync for PhysicalDeviceGpaFeaturesAMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceGpaFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.perf_counters = Bool32::default();
@@ -45112,7 +47716,11 @@ unsafe impl Sync for PhysicalDeviceGpaPropertiesAMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceGpaPropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = PhysicalDeviceGpaPropertiesFlagsAMD::default();
@@ -45179,7 +47787,11 @@ unsafe impl Sync for PhysicalDeviceGpaProperties2AMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceGpaProperties2AMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.revision_id = u32::default();
@@ -45223,7 +47835,11 @@ pub struct GpaPerfCounterAMD {
 impl ::core::default::Default for GpaPerfCounterAMD {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.block_type = GpaPerfBlockAMD::default();
         x.block_instance = u32::default();
         x.event_id = u32::default();
@@ -45289,7 +47905,11 @@ unsafe impl Sync for GpaSampleBeginInfoAMD<'_> {}
 impl ::core::default::Default for GpaSampleBeginInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.sample_type = GpaSampleTypeAMD::default();
@@ -45427,7 +48047,11 @@ unsafe impl Sync for GpaDeviceClockModeInfoAMD<'_> {}
 impl ::core::default::Default for GpaDeviceClockModeInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.clock_mode = GpaDeviceClockModeAMD::default();
@@ -45488,7 +48112,11 @@ unsafe impl Sync for GpaDeviceGetClockInfoAMD<'_> {}
 impl ::core::default::Default for GpaDeviceGetClockInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.memory_clock_ratio_to_peak = f32::default();
@@ -45552,7 +48180,11 @@ unsafe impl Sync for GpaSessionCreateInfoAMD<'_> {}
 impl ::core::default::Default for GpaSessionCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.secondary_copy_source = GpaSessionAMD::default();
@@ -45615,7 +48247,11 @@ impl fmt::Debug for PhysicalDeviceToolProperties<'_> {
 impl ::core::default::Default for PhysicalDeviceToolProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.name = unsafe { ::core::mem::zeroed() };
@@ -45714,7 +48350,11 @@ impl fmt::Debug for SamplerCustomBorderColorCreateInfoEXT<'_> {
 impl ::core::default::Default for SamplerCustomBorderColorCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.custom_border_color = ClearColorValue::default();
@@ -45768,7 +48408,11 @@ unsafe impl Sync for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_custom_border_color_samplers = u32::default();
@@ -45823,7 +48467,11 @@ unsafe impl Sync for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.custom_border_colors = Bool32::default();
@@ -45885,7 +48533,11 @@ unsafe impl Sync for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {}
 impl ::core::default::Default for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.components = ComponentMapping::default();
@@ -45940,7 +48592,11 @@ unsafe impl Sync for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.border_color_swizzle = Bool32::default();
@@ -46063,7 +48719,11 @@ impl fmt::Debug for AccelerationStructureGeometryTrianglesDataKHR<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryTrianglesDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.vertex_format = Format::default();
@@ -46157,7 +48817,11 @@ impl fmt::Debug for AccelerationStructureGeometryAabbsDataKHR<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryAabbsDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.data = DeviceOrHostAddressConstKHR::default();
@@ -46221,7 +48885,11 @@ impl fmt::Debug for AccelerationStructureGeometryInstancesDataKHR<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryInstancesDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.array_of_pointers = Bool32::default();
@@ -46303,7 +48971,11 @@ impl fmt::Debug for AccelerationStructureGeometryLinearSweptSpheresDataNV<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryLinearSweptSpheresDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.vertex_format = Format::default();
@@ -46439,7 +49111,11 @@ impl fmt::Debug for AccelerationStructureGeometrySpheresDataNV<'_> {
 impl ::core::default::Default for AccelerationStructureGeometrySpheresDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.vertex_format = Format::default();
@@ -46565,7 +49241,11 @@ impl fmt::Debug for AccelerationStructureGeometryKHR<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.geometry_type = GeometryTypeKHR::default();
@@ -46654,7 +49334,11 @@ impl fmt::Debug for AccelerationStructureBuildGeometryInfoKHR<'_> {
 impl ::core::default::Default for AccelerationStructureBuildGeometryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.ty = AccelerationStructureTypeKHR::default();
@@ -46753,7 +49437,11 @@ pub struct AccelerationStructureBuildRangeInfoKHR {
 impl ::core::default::Default for AccelerationStructureBuildRangeInfoKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.primitive_count = u32::default();
         x.primitive_offset = u32::default();
         x.first_vertex = u32::default();
@@ -46817,7 +49505,11 @@ unsafe impl Sync for AccelerationStructureCreateInfoKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.create_flags = AccelerationStructureCreateFlagsKHR::default();
@@ -46893,7 +49585,11 @@ pub struct AabbPositionsKHR {
 impl ::core::default::Default for AabbPositionsKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.min_x = f32::default();
         x.min_y = f32::default();
         x.min_z = f32::default();
@@ -46992,7 +49688,11 @@ unsafe impl Sync for AccelerationStructureDeviceAddressInfoKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureDeviceAddressInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.acceleration_structure = AccelerationStructureKHR::default();
@@ -47042,7 +49742,11 @@ unsafe impl Sync for AccelerationStructureVersionInfoKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureVersionInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_version_data = ::core::ptr::null();
@@ -47090,7 +49794,11 @@ unsafe impl Sync for CopyAccelerationStructureInfoKHR<'_> {}
 impl ::core::default::Default for CopyAccelerationStructureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src = AccelerationStructureKHR::default();
@@ -47161,7 +49869,11 @@ impl fmt::Debug for CopyAccelerationStructureToMemoryInfoKHR<'_> {
 impl ::core::default::Default for CopyAccelerationStructureToMemoryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src = AccelerationStructureKHR::default();
@@ -47233,7 +49945,11 @@ impl fmt::Debug for CopyMemoryToAccelerationStructureInfoKHR<'_> {
 impl ::core::default::Default for CopyMemoryToAccelerationStructureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src = DeviceOrHostAddressConstKHR::default();
@@ -47293,7 +50009,11 @@ unsafe impl Sync for RayTracingPipelineInterfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for RayTracingPipelineInterfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.max_pipeline_ray_payload_size = u32::default();
@@ -47350,7 +50070,11 @@ unsafe impl Sync for PipelineLibraryCreateInfoKHR<'_> {}
 impl ::core::default::Default for PipelineLibraryCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.library_count = u32::default();
@@ -47399,7 +50123,11 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.extended_dynamic_state = Bool32::default();
@@ -47453,7 +50181,11 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.extended_dynamic_state2 = Bool32::default();
@@ -47554,7 +50286,11 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.extended_dynamic_state3_tessellation_domain_origin = Bool32::default();
@@ -47908,7 +50644,11 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.dynamic_primitive_topology_unrestricted = Bool32::default();
@@ -47963,7 +50703,11 @@ pub struct ColorBlendEquationEXT {
 impl ::core::default::Default for ColorBlendEquationEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.src_color_blend_factor = BlendFactor::default();
         x.dst_color_blend_factor = BlendFactor::default();
         x.color_blend_op = BlendOp::default();
@@ -48033,7 +50777,11 @@ pub struct ColorBlendAdvancedEXT {
 impl ::core::default::Default for ColorBlendAdvancedEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.advanced_blend_op = BlendOp::default();
         x.src_premultiplied = Bool32::default();
         x.dst_premultiplied = Bool32::default();
@@ -48098,7 +50846,11 @@ unsafe impl Sync for RenderPassTransformBeginInfoQCOM<'_> {}
 impl ::core::default::Default for RenderPassTransformBeginInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.transform = SurfaceTransformFlagsKHR::default();
@@ -48145,7 +50897,11 @@ unsafe impl Sync for CopyCommandTransformInfoQCOM<'_> {}
 impl ::core::default::Default for CopyCommandTransformInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.transform = SurfaceTransformFlagsKHR::default();
@@ -48195,7 +50951,11 @@ unsafe impl Sync for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.transform = SurfaceTransformFlagsKHR::default();
@@ -48252,7 +51012,11 @@ unsafe impl Sync for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'_
 impl ::core::default::Default for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.partitioned_acceleration_structure = Bool32::default();
@@ -48312,7 +51076,11 @@ unsafe impl Sync for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<
 impl ::core::default::Default for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_partition_count = u32::default();
@@ -48362,7 +51130,11 @@ pub struct BuildPartitionedAccelerationStructureIndirectCommandNV {
 impl ::core::default::Default for BuildPartitionedAccelerationStructureIndirectCommandNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.op_type = PartitionedAccelerationStructureOpTypeNV::default();
         x.arg_count = u32::default();
         x.arg_data = StridedDeviceAddressNV::default();
@@ -48415,7 +51187,11 @@ unsafe impl Sync for PartitionedAccelerationStructureFlagsNV<'_> {}
 impl ::core::default::Default for PartitionedAccelerationStructureFlagsNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.enable_partition_translation = Bool32::default();
@@ -48469,7 +51245,11 @@ pub struct PartitionedAccelerationStructureWriteInstanceDataNV {
 impl ::core::default::Default for PartitionedAccelerationStructureWriteInstanceDataNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.transform = TransformMatrixKHR::default();
         x.explicit_aabb = unsafe { ::core::mem::zeroed() };
         x.instance_id = u32::default();
@@ -48561,7 +51341,11 @@ pub struct PartitionedAccelerationStructureUpdateInstanceDataNV {
 impl ::core::default::Default for PartitionedAccelerationStructureUpdateInstanceDataNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.instance_index = u32::default();
         x.instance_contribution_to_hit_group_index = u32::default();
         x.acceleration_structure = DeviceAddress::default();
@@ -48613,7 +51397,11 @@ pub struct PartitionedAccelerationStructureWritePartitionTranslationDataNV {
 impl ::core::default::Default for PartitionedAccelerationStructureWritePartitionTranslationDataNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.partition_index = u32::default();
         x.partition_translation = unsafe { ::core::mem::zeroed() };
         x
@@ -48661,7 +51449,11 @@ unsafe impl Sync for WriteDescriptorSetPartitionedAccelerationStructureNV<'_> {}
 impl ::core::default::Default for WriteDescriptorSetPartitionedAccelerationStructureNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.acceleration_structure_count = u32::default();
@@ -48718,7 +51510,11 @@ unsafe impl Sync for PartitionedAccelerationStructureInstancesInputNV<'_> {}
 impl ::core::default::Default for PartitionedAccelerationStructureInstancesInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = BuildAccelerationStructureFlagsKHR::default();
@@ -48800,7 +51596,11 @@ unsafe impl Sync for BuildPartitionedAccelerationStructureInfoNV<'_> {}
 impl ::core::default::Default for BuildPartitionedAccelerationStructureInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.input = PartitionedAccelerationStructureInstancesInputNV::default();
@@ -48886,7 +51686,11 @@ unsafe impl Sync for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.diagnostics_config = Bool32::default();
@@ -48935,7 +51739,11 @@ unsafe impl Sync for DeviceDiagnosticsConfigCreateInfoNV<'_> {}
 impl ::core::default::Default for DeviceDiagnosticsConfigCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = DeviceDiagnosticsConfigFlagsNV::default();
@@ -48982,7 +51790,11 @@ unsafe impl Sync for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_zero_initialize_workgroup_memory = Bool32::default();
@@ -49041,7 +51853,11 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_subgroup_uniform_control_flow = Bool32::default();
@@ -49103,7 +51919,11 @@ unsafe impl Sync for PhysicalDeviceRobustness2FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRobustness2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.robust_buffer_access2 = Bool32::default();
@@ -49164,7 +51984,11 @@ unsafe impl Sync for PhysicalDeviceRobustness2PropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRobustness2PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.robust_storage_buffer_access_size_alignment = DeviceSize::default();
@@ -49226,7 +52050,11 @@ unsafe impl Sync for PhysicalDeviceImageRobustnessFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageRobustnessFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.robust_image_access = Bool32::default();
@@ -49277,7 +52105,11 @@ unsafe impl Sync for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> 
 impl ::core::default::Default for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.workgroup_memory_explicit_layout = Bool32::default();
@@ -49383,7 +52215,11 @@ unsafe impl Sync for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.constant_alpha_color_blend_factors = Bool32::default();
@@ -49542,7 +52378,11 @@ unsafe impl Sync for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.min_vertex_input_binding_stride_alignment = u32::default();
@@ -49602,7 +52442,11 @@ unsafe impl Sync for PhysicalDevice4444FormatsFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevice4444FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.format_a4r4g4b4 = Bool32::default();
@@ -49656,7 +52500,11 @@ unsafe impl Sync for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.subpass_shading = Bool32::default();
@@ -49709,7 +52557,11 @@ unsafe impl Sync for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.clusterculling_shader = Bool32::default();
@@ -49770,7 +52622,11 @@ unsafe impl Sync for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.cluster_shading_rate = Bool32::default();
@@ -49823,7 +52679,11 @@ unsafe impl Sync for BufferCopy2<'_> {}
 impl ::core::default::Default for BufferCopy2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_offset = DeviceSize::default();
@@ -49882,7 +52742,11 @@ unsafe impl Sync for ImageCopy2<'_> {}
 impl ::core::default::Default for ImageCopy2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_subresource = ImageSubresourceLayers::default();
@@ -49952,7 +52816,11 @@ unsafe impl Sync for ImageBlit2<'_> {}
 impl ::core::default::Default for ImageBlit2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_subresource = ImageSubresourceLayers::default();
@@ -50018,7 +52886,11 @@ unsafe impl Sync for BufferImageCopy2<'_> {}
 impl ::core::default::Default for BufferImageCopy2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.buffer_offset = DeviceSize::default();
@@ -50098,7 +52970,11 @@ unsafe impl Sync for ImageResolve2<'_> {}
 impl ::core::default::Default for ImageResolve2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_subresource = ImageSubresourceLayers::default();
@@ -50168,7 +53044,11 @@ unsafe impl Sync for CopyBufferInfo2<'_> {}
 impl ::core::default::Default for CopyBufferInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_buffer = Buffer::default();
@@ -50230,7 +53110,11 @@ unsafe impl Sync for CopyImageInfo2<'_> {}
 impl ::core::default::Default for CopyImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_image = Image::default();
@@ -50305,7 +53189,11 @@ unsafe impl Sync for BlitImageInfo2<'_> {}
 impl ::core::default::Default for BlitImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_image = Image::default();
@@ -50384,7 +53272,11 @@ unsafe impl Sync for CopyBufferToImageInfo2<'_> {}
 impl ::core::default::Default for CopyBufferToImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_buffer = Buffer::default();
@@ -50454,7 +53346,11 @@ unsafe impl Sync for CopyImageToBufferInfo2<'_> {}
 impl ::core::default::Default for CopyImageToBufferInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_image = Image::default();
@@ -50525,7 +53421,11 @@ unsafe impl Sync for ResolveImageInfo2<'_> {}
 impl ::core::default::Default for ResolveImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_image = Image::default();
@@ -50598,7 +53498,11 @@ unsafe impl Sync for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_image_int64_atomics = Bool32::default();
@@ -50657,7 +53561,11 @@ unsafe impl Sync for FragmentShadingRateAttachmentInfoKHR<'_> {}
 impl ::core::default::Default for FragmentShadingRateAttachmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_fragment_shading_rate_attachment = ::core::ptr::null();
@@ -50717,7 +53625,11 @@ unsafe impl Sync for PipelineFragmentShadingRateStateCreateInfoKHR<'_> {}
 impl ::core::default::Default for PipelineFragmentShadingRateStateCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.fragment_size = Extent2D::default();
@@ -50776,7 +53688,11 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pipeline_fragment_shading_rate = Bool32::default();
@@ -50862,7 +53778,11 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.min_fragment_shading_rate_attachment_texel_size = Extent2D::default();
@@ -51068,7 +53988,11 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.sample_counts = SampleCountFlags::default();
@@ -51120,7 +54044,11 @@ unsafe impl Sync for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_terminate_invocation = Bool32::default();
@@ -51174,7 +54102,11 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.fragment_shading_rate_enums = Bool32::default();
@@ -51244,7 +54176,11 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_fragment_shading_rate_invocation_count = SampleCountFlags::default();
@@ -51301,7 +54237,11 @@ unsafe impl Sync for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.shading_rate_type = FragmentShadingRateTypeNV::default();
@@ -51366,7 +54306,11 @@ unsafe impl Sync for AccelerationStructureBuildSizesInfoKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureBuildSizesInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.acceleration_structure_size = DeviceSize::default();
@@ -51426,7 +54370,11 @@ unsafe impl Sync for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.image2_d_view_of3_d = Bool32::default();
@@ -51481,7 +54429,11 @@ unsafe impl Sync for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.image_sliced_view_of3_d = Bool32::default();
@@ -51533,7 +54485,11 @@ unsafe impl Sync for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT
 impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.attachment_feedback_loop_dynamic_state = Bool32::default();
@@ -51593,7 +54549,11 @@ unsafe impl Sync for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.legacy_vertex_attributes = Bool32::default();
@@ -51645,7 +54605,11 @@ unsafe impl Sync for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.native_unaligned_performance = Bool32::default();
@@ -51696,7 +54660,11 @@ unsafe impl Sync for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.mutable_descriptor_type = Bool32::default();
@@ -51747,7 +54715,11 @@ unsafe impl Sync for MutableDescriptorTypeListEXT<'_> {}
 impl ::core::default::Default for MutableDescriptorTypeListEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.descriptor_type_count = u32::default();
         x.p_descriptor_types = ::core::ptr::null();
         x
@@ -51791,7 +54763,11 @@ unsafe impl Sync for MutableDescriptorTypeCreateInfoEXT<'_> {}
 impl ::core::default::Default for MutableDescriptorTypeCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.mutable_descriptor_type_list_count = u32::default();
@@ -51844,7 +54820,11 @@ unsafe impl Sync for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.depth_clip_control = Bool32::default();
@@ -51893,7 +54873,11 @@ unsafe impl Sync for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.zero_initialize_device_memory = Bool32::default();
@@ -51947,7 +54931,11 @@ unsafe impl Sync for BeginCustomResolveInfoEXT<'_> {}
 impl ::core::default::Default for BeginCustomResolveInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x
@@ -51986,7 +54974,11 @@ unsafe impl Sync for PhysicalDeviceCustomResolveFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceCustomResolveFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.custom_resolve = Bool32::default();
@@ -52039,7 +55031,11 @@ unsafe impl Sync for CustomResolveCreateInfoEXT<'_> {}
 impl ::core::default::Default for CustomResolveCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.custom_resolve = Bool32::default();
@@ -52109,7 +55105,11 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.device_generated_commands = Bool32::default();
@@ -52181,7 +55181,11 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_indirect_pipeline_count = u32::default();
@@ -52332,7 +55336,11 @@ unsafe impl Sync for GeneratedCommandsPipelineInfoEXT<'_> {}
 impl ::core::default::Default for GeneratedCommandsPipelineInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pipeline = Pipeline::default();
@@ -52384,7 +55392,11 @@ unsafe impl Sync for GeneratedCommandsShaderInfoEXT<'_> {}
 impl ::core::default::Default for GeneratedCommandsShaderInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_count = u32::default();
@@ -52440,7 +55452,11 @@ unsafe impl Sync for GeneratedCommandsMemoryRequirementsInfoEXT<'_> {}
 impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.indirect_execution_set = IndirectExecutionSetEXT::default();
@@ -52512,7 +55528,11 @@ unsafe impl Sync for IndirectExecutionSetPipelineInfoEXT<'_> {}
 impl ::core::default::Default for IndirectExecutionSetPipelineInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.initial_pipeline = Pipeline::default();
@@ -52565,7 +55585,11 @@ unsafe impl Sync for IndirectExecutionSetShaderLayoutInfoEXT<'_> {}
 impl ::core::default::Default for IndirectExecutionSetShaderLayoutInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.set_layout_count = u32::default();
@@ -52619,7 +55643,11 @@ unsafe impl Sync for IndirectExecutionSetShaderInfoEXT<'_> {}
 impl ::core::default::Default for IndirectExecutionSetShaderInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.shader_count = u32::default();
@@ -52715,7 +55743,11 @@ impl fmt::Debug for IndirectExecutionSetCreateInfoEXT<'_> {
 impl ::core::default::Default for IndirectExecutionSetCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.ty = IndirectExecutionSetInfoTypeEXT::default();
@@ -52776,7 +55808,11 @@ unsafe impl Sync for GeneratedCommandsInfoEXT<'_> {}
 impl ::core::default::Default for GeneratedCommandsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.shader_stages = ShaderStageFlags::default();
@@ -52883,7 +55919,11 @@ unsafe impl Sync for WriteIndirectExecutionSetPipelineEXT<'_> {}
 impl ::core::default::Default for WriteIndirectExecutionSetPipelineEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.index = u32::default();
@@ -52936,7 +55976,11 @@ unsafe impl Sync for WriteIndirectExecutionSetShaderEXT<'_> {}
 impl ::core::default::Default for WriteIndirectExecutionSetShaderEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.index = u32::default();
@@ -52993,7 +56037,11 @@ unsafe impl Sync for IndirectCommandsLayoutCreateInfoEXT<'_> {}
 impl ::core::default::Default for IndirectCommandsLayoutCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = IndirectCommandsLayoutUsageFlagsEXT::default();
@@ -53078,7 +56126,11 @@ impl fmt::Debug for IndirectCommandsLayoutTokenEXT<'_> {
 impl ::core::default::Default for IndirectCommandsLayoutTokenEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.ty = IndirectCommandsTokenTypeEXT::default();
@@ -53133,7 +56185,11 @@ pub struct DrawIndirectCountIndirectCommandEXT {
 impl ::core::default::Default for DrawIndirectCountIndirectCommandEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.buffer_address = DeviceAddress::default();
         x.stride = u32::default();
         x.command_count = u32::default();
@@ -53181,7 +56237,11 @@ pub struct IndirectCommandsVertexBufferTokenEXT {
 impl ::core::default::Default for IndirectCommandsVertexBufferTokenEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.vertex_binding_unit = u32::default();
         x
     }
@@ -53219,7 +56279,11 @@ pub struct BindVertexBufferIndirectCommandEXT {
 impl ::core::default::Default for BindVertexBufferIndirectCommandEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.buffer_address = DeviceAddress::default();
         x.size = u32::default();
         x.stride = u32::default();
@@ -53267,7 +56331,11 @@ pub struct IndirectCommandsIndexBufferTokenEXT {
 impl ::core::default::Default for IndirectCommandsIndexBufferTokenEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.mode = IndirectCommandsInputModeFlagsEXT::default();
         x
     }
@@ -53305,7 +56373,11 @@ pub struct BindIndexBufferIndirectCommandEXT {
 impl ::core::default::Default for BindIndexBufferIndirectCommandEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.buffer_address = DeviceAddress::default();
         x.size = u32::default();
         x.index_type = IndexType::default();
@@ -53353,7 +56425,11 @@ pub struct IndirectCommandsPushConstantTokenEXT {
 impl ::core::default::Default for IndirectCommandsPushConstantTokenEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.update_range = PushConstantRange::default();
         x
     }
@@ -53390,7 +56466,11 @@ pub struct IndirectCommandsExecutionSetTokenEXT {
 impl ::core::default::Default for IndirectCommandsExecutionSetTokenEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.ty = IndirectExecutionSetInfoTypeEXT::default();
         x.shader_stages = ShaderStageFlags::default();
         x
@@ -53452,7 +56532,11 @@ unsafe impl Sync for PipelineViewportDepthClipControlCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineViewportDepthClipControlCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.negative_one_to_one = Bool32::default();
@@ -53503,7 +56587,11 @@ unsafe impl Sync for PhysicalDeviceDepthClampControlFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthClampControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.depth_clamp_control = Bool32::default();
@@ -53556,7 +56644,11 @@ unsafe impl Sync for PipelineViewportDepthClampControlCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineViewportDepthClampControlCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.depth_clamp_mode = DepthClampModeEXT::default();
@@ -53613,7 +56705,11 @@ unsafe impl Sync for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.vertex_input_dynamic_state = Bool32::default();
@@ -53665,7 +56761,11 @@ unsafe impl Sync for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.external_memory_rdma = Bool32::default();
@@ -53717,7 +56817,11 @@ unsafe impl Sync for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'
 impl ::core::default::Default for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_relaxed_extended_instruction = Bool32::default();
@@ -53780,7 +56884,11 @@ unsafe impl Sync for VertexInputBindingDescription2EXT<'_> {}
 impl ::core::default::Default for VertexInputBindingDescription2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.binding = u32::default();
@@ -53847,7 +56955,11 @@ unsafe impl Sync for VertexInputAttributeDescription2EXT<'_> {}
 impl ::core::default::Default for VertexInputAttributeDescription2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.location = u32::default();
@@ -53911,7 +57023,11 @@ unsafe impl Sync for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.color_write_enable = Bool32::default();
@@ -53961,7 +57077,11 @@ unsafe impl Sync for PipelineColorWriteCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineColorWriteCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.attachment_count = u32::default();
@@ -54013,7 +57133,11 @@ unsafe impl Sync for MemoryBarrier2<'_> {}
 impl ::core::default::Default for MemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_stage_mask = PipelineStageFlags2::default();
@@ -54084,7 +57208,11 @@ unsafe impl Sync for ImageMemoryBarrier2<'_> {}
 impl ::core::default::Default for ImageMemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_stage_mask = PipelineStageFlags2::default();
@@ -54192,7 +57320,11 @@ unsafe impl Sync for BufferMemoryBarrier2<'_> {}
 impl ::core::default::Default for BufferMemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_stage_mask = PipelineStageFlags2::default();
@@ -54287,7 +57419,11 @@ unsafe impl Sync for MemoryBarrierAccessFlags3KHR<'_> {}
 impl ::core::default::Default for MemoryBarrierAccessFlags3KHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_access_mask3 = AccessFlags3KHR::default();
@@ -54349,7 +57485,11 @@ unsafe impl Sync for DependencyInfo<'_> {}
 impl ::core::default::Default for DependencyInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.dependency_flags = DependencyFlags::default();
@@ -54425,7 +57565,11 @@ unsafe impl Sync for SemaphoreSubmitInfo<'_> {}
 impl ::core::default::Default for SemaphoreSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.semaphore = Semaphore::default();
@@ -54490,7 +57634,11 @@ unsafe impl Sync for CommandBufferSubmitInfo<'_> {}
 impl ::core::default::Default for CommandBufferSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.command_buffer = CommandBuffer::default();
@@ -54548,7 +57696,11 @@ unsafe impl Sync for SubmitInfo2<'_> {}
 impl ::core::default::Default for SubmitInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = SubmitFlags::default();
@@ -54624,7 +57776,11 @@ unsafe impl Sync for QueueFamilyCheckpointProperties2NV<'_> {}
 impl ::core::default::Default for QueueFamilyCheckpointProperties2NV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.checkpoint_execution_stage_mask = PipelineStageFlags2::default();
@@ -54675,7 +57831,11 @@ unsafe impl Sync for CheckpointData2NV<'_> {}
 impl ::core::default::Default for CheckpointData2NV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.stage = PipelineStageFlags2::default();
@@ -54727,7 +57887,11 @@ unsafe impl Sync for PhysicalDeviceSynchronization2Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceSynchronization2Features<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.synchronization2 = Bool32::default();
@@ -54776,7 +57940,11 @@ unsafe impl Sync for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.unified_image_layouts = Bool32::default();
@@ -54834,7 +58002,11 @@ unsafe impl Sync for PhysicalDeviceHostImageCopyFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceHostImageCopyFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.host_image_copy = Bool32::default();
@@ -54887,7 +58059,11 @@ unsafe impl Sync for PhysicalDeviceHostImageCopyProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceHostImageCopyProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.copy_src_layout_count = u32::default();
@@ -54967,7 +58143,11 @@ unsafe impl Sync for MemoryToImageCopy<'_> {}
 impl ::core::default::Default for MemoryToImageCopy<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_host_pointer = ::core::ptr::null();
@@ -55048,7 +58228,11 @@ unsafe impl Sync for ImageToMemoryCopy<'_> {}
 impl ::core::default::Default for ImageToMemoryCopy<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_host_pointer = ::core::ptr::null_mut();
@@ -55128,7 +58312,11 @@ unsafe impl Sync for CopyMemoryToImageInfo<'_> {}
 impl ::core::default::Default for CopyMemoryToImageInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = HostImageCopyFlags::default();
@@ -55198,7 +58386,11 @@ unsafe impl Sync for CopyImageToMemoryInfo<'_> {}
 impl ::core::default::Default for CopyImageToMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = HostImageCopyFlags::default();
@@ -55270,7 +58462,11 @@ unsafe impl Sync for CopyImageToImageInfo<'_> {}
 impl ::core::default::Default for CopyImageToImageInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = HostImageCopyFlags::default();
@@ -55351,7 +58547,11 @@ unsafe impl Sync for HostImageLayoutTransitionInfo<'_> {}
 impl ::core::default::Default for HostImageLayoutTransitionInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image = Image::default();
@@ -55415,7 +58615,11 @@ unsafe impl Sync for SubresourceHostMemcpySize<'_> {}
 impl ::core::default::Default for SubresourceHostMemcpySize<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.size = DeviceSize::default();
@@ -55463,7 +58667,11 @@ unsafe impl Sync for HostImageCopyDevicePerformanceQuery<'_> {}
 impl ::core::default::Default for HostImageCopyDevicePerformanceQuery<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.optimal_device_access = Bool32::default();
@@ -55518,7 +58726,11 @@ unsafe impl Sync for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.primitives_generated_query = Bool32::default();
@@ -55593,7 +58805,11 @@ unsafe impl Sync for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.legacy_dithering = Bool32::default();
@@ -55642,7 +58858,11 @@ unsafe impl Sync for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<
 impl ::core::default::Default for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.multisampled_render_to_single_sampled = Bool32::default();
@@ -55702,7 +58922,11 @@ unsafe impl Sync for SurfaceCapabilitiesPresentId2KHR<'_> {}
 impl ::core::default::Default for SurfaceCapabilitiesPresentId2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_id2_supported = Bool32::default();
@@ -55749,7 +58973,11 @@ unsafe impl Sync for SurfaceCapabilitiesPresentWait2KHR<'_> {}
 impl ::core::default::Default for SurfaceCapabilitiesPresentWait2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_wait2_supported = Bool32::default();
@@ -55796,7 +59024,11 @@ unsafe impl Sync for SubpassResolvePerformanceQueryEXT<'_> {}
 impl ::core::default::Default for SubpassResolvePerformanceQueryEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.optimal = Bool32::default();
@@ -55844,7 +59076,11 @@ unsafe impl Sync for MultisampledRenderToSingleSampledInfoEXT<'_> {}
 impl ::core::default::Default for MultisampledRenderToSingleSampledInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.multisampled_render_to_single_sampled_enable = Bool32::default();
@@ -55903,7 +59139,11 @@ unsafe impl Sync for PhysicalDevicePipelineProtectedAccessFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineProtectedAccessFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pipeline_protected_access = Bool32::default();
@@ -55955,7 +59195,11 @@ unsafe impl Sync for QueueFamilyVideoPropertiesKHR<'_> {}
 impl ::core::default::Default for QueueFamilyVideoPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.video_codec_operations = VideoCodecOperationFlagsKHR::default();
@@ -56005,7 +59249,11 @@ unsafe impl Sync for QueueFamilyQueryResultStatusPropertiesKHR<'_> {}
 impl ::core::default::Default for QueueFamilyQueryResultStatusPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.query_result_status_support = Bool32::default();
@@ -56054,7 +59302,11 @@ unsafe impl Sync for VideoProfileListInfoKHR<'_> {}
 impl ::core::default::Default for VideoProfileListInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.profile_count = u32::default();
@@ -56106,7 +59358,11 @@ unsafe impl Sync for PhysicalDeviceVideoFormatInfoKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoFormatInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image_usage = ImageUsageFlags::default();
@@ -56157,7 +59413,11 @@ unsafe impl Sync for VideoFormatPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoFormatPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.format = Format::default();
@@ -56233,7 +59493,11 @@ unsafe impl Sync for VideoEncodeQuantizationMapCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeQuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_quantization_map_extent = Extent2D::default();
@@ -56282,7 +59546,11 @@ unsafe impl Sync for VideoEncodeH264QuantizationMapCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264QuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.min_qp_delta = i32::default();
@@ -56340,7 +59608,11 @@ unsafe impl Sync for VideoEncodeH265QuantizationMapCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265QuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.min_qp_delta = i32::default();
@@ -56398,7 +59670,11 @@ unsafe impl Sync for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.min_q_index_delta = i32::default();
@@ -56452,7 +59728,11 @@ unsafe impl Sync for VideoFormatQuantizationMapPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoFormatQuantizationMapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.quantization_map_texel_size = Extent2D::default();
@@ -56500,7 +59780,11 @@ unsafe impl Sync for VideoFormatH265QuantizationMapPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoFormatH265QuantizationMapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.compatible_ctb_sizes = VideoEncodeH265CtbSizeFlagsKHR::default();
@@ -56554,7 +59838,11 @@ unsafe impl Sync for VideoFormatAV1QuantizationMapPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoFormatAV1QuantizationMapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.compatible_superblock_sizes = VideoEncodeAV1SuperblockSizeFlagsKHR::default();
@@ -56611,7 +59899,11 @@ unsafe impl Sync for VideoProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.video_codec_operation = VideoCodecOperationFlagsKHR::default();
@@ -56690,7 +59982,11 @@ unsafe impl Sync for VideoCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = VideoCapabilityFlagsKHR::default();
@@ -56791,7 +60087,11 @@ unsafe impl Sync for VideoSessionMemoryRequirementsKHR<'_> {}
 impl ::core::default::Default for VideoSessionMemoryRequirementsKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.memory_bind_index = u32::default();
@@ -56846,7 +60146,11 @@ unsafe impl Sync for BindVideoSessionMemoryInfoKHR<'_> {}
 impl ::core::default::Default for BindVideoSessionMemoryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.memory_bind_index = u32::default();
@@ -56913,7 +60217,11 @@ unsafe impl Sync for VideoPictureResourceInfoKHR<'_> {}
 impl ::core::default::Default for VideoPictureResourceInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.coded_offset = Offset2D::default();
@@ -56978,7 +60286,11 @@ unsafe impl Sync for VideoReferenceSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoReferenceSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.slot_index = i32::default();
@@ -57033,7 +60345,11 @@ unsafe impl Sync for VideoDecodeCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoDecodeCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = VideoDecodeCapabilityFlagsKHR::default();
@@ -57080,7 +60396,11 @@ unsafe impl Sync for VideoDecodeUsageInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeUsageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.video_usage_hints = VideoDecodeUsageFlagsKHR::default();
@@ -57135,7 +60455,11 @@ unsafe impl Sync for VideoDecodeInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = VideoDecodeFlagsKHR::default();
@@ -57228,7 +60552,11 @@ unsafe impl Sync for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.video_maintenance1 = Bool32::default();
@@ -57280,7 +60608,11 @@ unsafe impl Sync for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.video_maintenance2 = Bool32::default();
@@ -57334,7 +60666,11 @@ unsafe impl Sync for VideoInlineQueryInfoKHR<'_> {}
 impl ::core::default::Default for VideoInlineQueryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.query_pool = QueryPool::default();
@@ -57395,7 +60731,11 @@ unsafe impl Sync for VideoDecodeH264ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.std_profile_idc = StdVideoH264ProfileIdc::default();
@@ -57450,7 +60790,11 @@ unsafe impl Sync for VideoDecodeH264CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_level_idc = StdVideoH264LevelIdc::default();
@@ -57506,7 +60850,11 @@ unsafe impl Sync for VideoDecodeH264SessionParametersAddInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.std_sps_count = u32::default();
@@ -57569,7 +60917,11 @@ unsafe impl Sync for VideoDecodeH264SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.max_std_sps_count = u32::default();
@@ -57636,7 +60988,11 @@ unsafe impl Sync for VideoDecodeH264InlineSessionParametersInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264InlineSessionParametersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_std_sps = ::core::ptr::null();
@@ -57692,7 +61048,11 @@ unsafe impl Sync for VideoDecodeH264PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_std_picture_info = ::core::ptr::null();
@@ -57747,7 +61107,11 @@ unsafe impl Sync for VideoDecodeH264DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_std_reference_info = ::core::ptr::null();
@@ -57797,7 +61161,11 @@ unsafe impl Sync for VideoDecodeH265ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.std_profile_idc = StdVideoH265ProfileIdc::default();
@@ -57845,7 +61213,11 @@ unsafe impl Sync for VideoDecodeH265CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_level_idc = StdVideoH265LevelIdc::default();
@@ -57897,7 +61269,11 @@ unsafe impl Sync for VideoDecodeH265SessionParametersAddInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.std_vps_count = u32::default();
@@ -57969,7 +61345,11 @@ unsafe impl Sync for VideoDecodeH265SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.max_std_vps_count = u32::default();
@@ -58043,7 +61423,11 @@ unsafe impl Sync for VideoDecodeH265InlineSessionParametersInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265InlineSessionParametersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_std_vps = ::core::ptr::null();
@@ -58105,7 +61489,11 @@ unsafe impl Sync for VideoDecodeH265PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_std_picture_info = ::core::ptr::null();
@@ -58160,7 +61548,11 @@ unsafe impl Sync for VideoDecodeH265DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_std_reference_info = ::core::ptr::null();
@@ -58210,7 +61602,11 @@ unsafe impl Sync for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.video_decode_vp9 = Bool32::default();
@@ -58259,7 +61655,11 @@ unsafe impl Sync for VideoDecodeVP9ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeVP9ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.std_profile = StdVideoVP9Profile::default();
@@ -58307,7 +61707,11 @@ unsafe impl Sync for VideoDecodeVP9CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoDecodeVP9CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_level = StdVideoVP9Level::default();
@@ -58358,7 +61762,11 @@ unsafe impl Sync for VideoDecodeVP9PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeVP9PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_std_picture_info = ::core::ptr::null();
@@ -58433,7 +61841,11 @@ unsafe impl Sync for VideoDecodeAV1ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.std_profile = StdVideoAV1Profile::default();
@@ -58487,7 +61899,11 @@ unsafe impl Sync for VideoDecodeAV1CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_level = StdVideoAV1Level::default();
@@ -58534,7 +61950,11 @@ unsafe impl Sync for VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_std_sequence_header = ::core::ptr::null();
@@ -58588,7 +62008,11 @@ unsafe impl Sync for VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_std_sequence_header = ::core::ptr::null();
@@ -58644,7 +62068,11 @@ unsafe impl Sync for VideoDecodeAV1PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_std_picture_info = ::core::ptr::null();
@@ -58721,7 +62149,11 @@ unsafe impl Sync for VideoDecodeAV1DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_std_reference_info = ::core::ptr::null();
@@ -58779,7 +62211,11 @@ unsafe impl Sync for VideoSessionCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoSessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.queue_family_index = u32::default();
@@ -58875,7 +62311,11 @@ unsafe impl Sync for VideoSessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoSessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = VideoSessionParametersCreateFlagsKHR::default();
@@ -58936,7 +62376,11 @@ unsafe impl Sync for VideoSessionParametersUpdateInfoKHR<'_> {}
 impl ::core::default::Default for VideoSessionParametersUpdateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.update_sequence_count = u32::default();
@@ -58982,7 +62426,11 @@ unsafe impl Sync for VideoEncodeSessionParametersGetInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeSessionParametersGetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.video_session_parameters = VideoSessionParametersKHR::default();
@@ -59032,7 +62480,11 @@ unsafe impl Sync for VideoEncodeSessionParametersFeedbackInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeSessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.has_overrides = Bool32::default();
@@ -59083,7 +62535,11 @@ unsafe impl Sync for VideoBeginCodingInfoKHR<'_> {}
 impl ::core::default::Default for VideoBeginCodingInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = VideoBeginCodingFlagsKHR::default();
@@ -59152,7 +62608,11 @@ unsafe impl Sync for VideoEndCodingInfoKHR<'_> {}
 impl ::core::default::Default for VideoEndCodingInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = VideoEndCodingFlagsKHR::default();
@@ -59198,7 +62658,11 @@ unsafe impl Sync for VideoCodingControlInfoKHR<'_> {}
 impl ::core::default::Default for VideoCodingControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = VideoCodingControlFlagsKHR::default();
@@ -59246,7 +62710,11 @@ unsafe impl Sync for VideoEncodeUsageInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeUsageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.video_usage_hints = VideoEncodeUsageFlagsKHR::default();
@@ -59314,7 +62782,11 @@ unsafe impl Sync for VideoEncodeInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = VideoEncodeFlagsKHR::default();
@@ -59417,7 +62889,11 @@ unsafe impl Sync for VideoEncodeQuantizationMapInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeQuantizationMapInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.quantization_map = ImageView::default();
@@ -59470,7 +62946,11 @@ unsafe impl Sync for VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'_
 impl ::core::default::Default for VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.quantization_map_texel_size = Extent2D::default();
@@ -59523,7 +63003,11 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.video_encode_quantization_map = Bool32::default();
@@ -59578,7 +63062,11 @@ unsafe impl Sync for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {}
 impl ::core::default::Default for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.encode_feedback_flags = VideoEncodeFeedbackFlagsKHR::default();
@@ -59629,7 +63117,11 @@ unsafe impl Sync for VideoEncodeQualityLevelInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeQualityLevelInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.quality_level = u32::default();
@@ -59681,7 +63173,11 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_video_profile = ::core::ptr::null();
@@ -59735,7 +63231,11 @@ unsafe impl Sync for VideoEncodeQualityLevelPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeQualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.preferred_rate_control_mode = VideoEncodeRateControlModeFlagsKHR::default();
@@ -59798,7 +63298,11 @@ unsafe impl Sync for VideoEncodeRateControlInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeRateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = VideoEncodeRateControlFlagsKHR::default();
@@ -59881,7 +63385,11 @@ unsafe impl Sync for VideoEncodeRateControlLayerInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.average_bitrate = u64::default();
@@ -59951,7 +63459,11 @@ unsafe impl Sync for VideoEncodeCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = VideoEncodeCapabilityFlagsKHR::default();
@@ -60055,7 +63567,11 @@ unsafe impl Sync for VideoEncodeH264CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = VideoEncodeH264CapabilityFlagsKHR::default();
@@ -60191,7 +63707,11 @@ unsafe impl Sync for VideoEncodeH264QualityLevelPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264QualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.preferred_rate_control_flags = VideoEncodeH264RateControlFlagsKHR::default();
@@ -60306,7 +63826,11 @@ unsafe impl Sync for VideoEncodeH264SessionCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264SessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.use_max_level_idc = Bool32::default();
@@ -60362,7 +63886,11 @@ unsafe impl Sync for VideoEncodeH264SessionParametersAddInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.std_sps_count = u32::default();
@@ -60425,7 +63953,11 @@ unsafe impl Sync for VideoEncodeH264SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.max_std_sps_count = u32::default();
@@ -60494,7 +64026,11 @@ unsafe impl Sync for VideoEncodeH264SessionParametersGetInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264SessionParametersGetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.write_std_sps = Bool32::default();
@@ -60564,7 +64100,11 @@ unsafe impl Sync for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.has_std_sps_overrides = Bool32::default();
@@ -60621,7 +64161,11 @@ unsafe impl Sync for VideoEncodeH264DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_std_reference_info = ::core::ptr::null();
@@ -60674,7 +64218,11 @@ unsafe impl Sync for VideoEncodeH264PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.nalu_slice_entry_count = u32::default();
@@ -60738,7 +64286,11 @@ unsafe impl Sync for VideoEncodeH264ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.std_profile_idc = StdVideoH264ProfileIdc::default();
@@ -60787,7 +64339,11 @@ unsafe impl Sync for VideoEncodeH264NaluSliceInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264NaluSliceInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.constant_qp = i32::default();
@@ -60843,7 +64399,11 @@ unsafe impl Sync for VideoEncodeH264RateControlInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264RateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = VideoEncodeH264RateControlFlagsKHR::default();
@@ -60912,7 +64472,11 @@ pub struct VideoEncodeH264QpKHR {
 impl ::core::default::Default for VideoEncodeH264QpKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.qp_i = i32::default();
         x.qp_p = i32::default();
         x.qp_b = i32::default();
@@ -60962,7 +64526,11 @@ pub struct VideoEncodeH264FrameSizeKHR {
 impl ::core::default::Default for VideoEncodeH264FrameSizeKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.frame_i_size = u32::default();
         x.frame_p_size = u32::default();
         x.frame_b_size = u32::default();
@@ -61018,7 +64586,11 @@ unsafe impl Sync for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.use_gop_remaining_frames = Bool32::default();
@@ -61089,7 +64661,11 @@ unsafe impl Sync for VideoEncodeH264RateControlLayerInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264RateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.use_min_qp = Bool32::default();
@@ -61185,7 +64761,11 @@ unsafe impl Sync for VideoEncodeH265CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = VideoEncodeH265CapabilityFlagsKHR::default();
@@ -61342,7 +64922,11 @@ unsafe impl Sync for VideoEncodeH265QualityLevelPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265QualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.preferred_rate_control_flags = VideoEncodeH265RateControlFlagsKHR::default();
@@ -61448,7 +65032,11 @@ unsafe impl Sync for VideoEncodeH265SessionCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265SessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.use_max_level_idc = Bool32::default();
@@ -61506,7 +65094,11 @@ unsafe impl Sync for VideoEncodeH265SessionParametersAddInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.std_vps_count = u32::default();
@@ -61578,7 +65170,11 @@ unsafe impl Sync for VideoEncodeH265SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.max_std_vps_count = u32::default();
@@ -61655,7 +65251,11 @@ unsafe impl Sync for VideoEncodeH265SessionParametersGetInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265SessionParametersGetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.write_std_vps = Bool32::default();
@@ -61738,7 +65338,11 @@ unsafe impl Sync for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.has_std_vps_overrides = Bool32::default();
@@ -61803,7 +65407,11 @@ unsafe impl Sync for VideoEncodeH265PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.nalu_slice_segment_entry_count = u32::default();
@@ -61862,7 +65470,11 @@ unsafe impl Sync for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.constant_qp = i32::default();
@@ -61922,7 +65534,11 @@ unsafe impl Sync for VideoEncodeH265RateControlInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265RateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = VideoEncodeH265RateControlFlagsKHR::default();
@@ -61991,7 +65607,11 @@ pub struct VideoEncodeH265QpKHR {
 impl ::core::default::Default for VideoEncodeH265QpKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.qp_i = i32::default();
         x.qp_p = i32::default();
         x.qp_b = i32::default();
@@ -62041,7 +65661,11 @@ pub struct VideoEncodeH265FrameSizeKHR {
 impl ::core::default::Default for VideoEncodeH265FrameSizeKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.frame_i_size = u32::default();
         x.frame_p_size = u32::default();
         x.frame_b_size = u32::default();
@@ -62097,7 +65721,11 @@ unsafe impl Sync for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.use_gop_remaining_frames = Bool32::default();
@@ -62168,7 +65796,11 @@ unsafe impl Sync for VideoEncodeH265RateControlLayerInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265RateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.use_min_qp = Bool32::default();
@@ -62249,7 +65881,11 @@ unsafe impl Sync for VideoEncodeH265ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.std_profile_idc = StdVideoH265ProfileIdc::default();
@@ -62297,7 +65933,11 @@ unsafe impl Sync for VideoEncodeH265DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_std_reference_info = ::core::ptr::null();
@@ -62370,7 +66010,11 @@ unsafe impl Sync for VideoEncodeAV1CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = VideoEncodeAV1CapabilityFlagsKHR::default();
@@ -62600,7 +66244,11 @@ unsafe impl Sync for VideoEncodeAV1QualityLevelPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1QualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.preferred_rate_control_flags = VideoEncodeAV1RateControlFlagsKHR::default();
@@ -62779,7 +66427,11 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.video_encode_av1 = Bool32::default();
@@ -62829,7 +66481,11 @@ unsafe impl Sync for VideoEncodeAV1SessionCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1SessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.use_max_level = Bool32::default();
@@ -62885,7 +66541,11 @@ unsafe impl Sync for VideoEncodeAV1SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_std_sequence_header = ::core::ptr::null();
@@ -62959,7 +66619,11 @@ unsafe impl Sync for VideoEncodeAV1DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_std_reference_info = ::core::ptr::null();
@@ -63015,7 +66679,11 @@ unsafe impl Sync for VideoEncodeAV1PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.prediction_mode = VideoEncodeAV1PredictionModeKHR::default();
@@ -63104,7 +66772,11 @@ unsafe impl Sync for VideoEncodeAV1ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.std_profile = StdVideoAV1Profile::default();
@@ -63156,7 +66828,11 @@ unsafe impl Sync for VideoEncodeAV1RateControlInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1RateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = VideoEncodeAV1RateControlFlagsKHR::default();
@@ -63228,7 +66904,11 @@ pub struct VideoEncodeAV1QIndexKHR {
 impl ::core::default::Default for VideoEncodeAV1QIndexKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.intra_q_index = u32::default();
         x.predictive_q_index = u32::default();
         x.bipredictive_q_index = u32::default();
@@ -63278,7 +66958,11 @@ pub struct VideoEncodeAV1FrameSizeKHR {
 impl ::core::default::Default for VideoEncodeAV1FrameSizeKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.intra_frame_size = u32::default();
         x.predictive_frame_size = u32::default();
         x.bipredictive_frame_size = u32::default();
@@ -63334,7 +67018,11 @@ unsafe impl Sync for VideoEncodeAV1GopRemainingFrameInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1GopRemainingFrameInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.use_gop_remaining_frames = Bool32::default();
@@ -63405,7 +67093,11 @@ unsafe impl Sync for VideoEncodeAV1RateControlLayerInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1RateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.use_min_q_index = Bool32::default();
@@ -63486,7 +67178,11 @@ unsafe impl Sync for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.inherited_viewport_scissor2_d = Bool32::default();
@@ -63540,7 +67236,11 @@ unsafe impl Sync for CommandBufferInheritanceViewportScissorInfoNV<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceViewportScissorInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.viewport_scissor2_d = Bool32::default();
@@ -63603,7 +67303,11 @@ unsafe impl Sync for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ycbcr2plane444_formats = Bool32::default();
@@ -63656,7 +67360,11 @@ unsafe impl Sync for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.provoking_vertex_last = Bool32::default();
@@ -63716,7 +67424,11 @@ unsafe impl Sync for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.provoking_vertex_mode_per_pipeline = Bool32::default();
@@ -63780,7 +67492,11 @@ unsafe impl Sync for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> 
 impl ::core::default::Default for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.provoking_vertex_mode = ProvokingVertexModeEXT::default();
@@ -63835,7 +67551,11 @@ unsafe impl Sync for VideoEncodeIntraRefreshCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeIntraRefreshCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.intra_refresh_modes = VideoEncodeIntraRefreshModeFlagsKHR::default();
@@ -63924,7 +67644,11 @@ unsafe impl Sync for VideoEncodeSessionIntraRefreshCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeSessionIntraRefreshCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.intra_refresh_mode = VideoEncodeIntraRefreshModeFlagsKHR::default();
@@ -63979,7 +67703,11 @@ unsafe impl Sync for VideoEncodeIntraRefreshInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeIntraRefreshInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.intra_refresh_cycle_duration = u32::default();
@@ -64032,7 +67760,11 @@ unsafe impl Sync for VideoReferenceIntraRefreshInfoKHR<'_> {}
 impl ::core::default::Default for VideoReferenceIntraRefreshInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.dirty_intra_refresh_regions = u32::default();
@@ -64079,7 +67811,11 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.video_encode_intra_refresh = Bool32::default();
@@ -64132,7 +67868,11 @@ unsafe impl Sync for CuModuleCreateInfoNVX<'_> {}
 impl ::core::default::Default for CuModuleCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.data_size = usize::default();
@@ -64180,7 +67920,11 @@ unsafe impl Sync for CuModuleTexturingModeCreateInfoNVX<'_> {}
 impl ::core::default::Default for CuModuleTexturingModeCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.use64bit_texturing = Bool32::default();
@@ -64228,7 +67972,11 @@ unsafe impl Sync for CuFunctionCreateInfoNVX<'_> {}
 impl ::core::default::Default for CuFunctionCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.module = CuModuleNVX::default();
@@ -64299,7 +68047,11 @@ unsafe impl Sync for CuLaunchInfoNVX<'_> {}
 impl ::core::default::Default for CuLaunchInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.function = CuFunctionNVX::default();
@@ -64403,7 +68155,11 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.descriptor_buffer = Bool32::default();
@@ -64511,7 +68267,11 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.combined_image_sampler_descriptor_single_array = Bool32::default();
@@ -64839,7 +68599,11 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.combined_image_sampler_density_map_descriptor_size = usize::default();
@@ -64896,7 +68660,11 @@ unsafe impl Sync for DescriptorAddressInfoEXT<'_> {}
 impl ::core::default::Default for DescriptorAddressInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.address = DeviceAddress::default();
@@ -64955,7 +68723,11 @@ unsafe impl Sync for DescriptorBufferBindingInfoEXT<'_> {}
 impl ::core::default::Default for DescriptorBufferBindingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.address = DeviceAddress::default();
@@ -65007,7 +68779,11 @@ unsafe impl Sync for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {}
 impl ::core::default::Default for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.buffer = Buffer::default();
@@ -65090,7 +68866,11 @@ impl fmt::Debug for DescriptorGetInfoEXT<'_> {
 impl ::core::default::Default for DescriptorGetInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.ty = DescriptorType::default();
@@ -65142,7 +68922,11 @@ unsafe impl Sync for BufferCaptureDescriptorDataInfoEXT<'_> {}
 impl ::core::default::Default for BufferCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.buffer = Buffer::default();
@@ -65188,7 +68972,11 @@ unsafe impl Sync for ImageCaptureDescriptorDataInfoEXT<'_> {}
 impl ::core::default::Default for ImageCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image = Image::default();
@@ -65234,7 +69022,11 @@ unsafe impl Sync for ImageViewCaptureDescriptorDataInfoEXT<'_> {}
 impl ::core::default::Default for ImageViewCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image_view = ImageView::default();
@@ -65281,7 +69073,11 @@ unsafe impl Sync for SamplerCaptureDescriptorDataInfoEXT<'_> {}
 impl ::core::default::Default for SamplerCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.sampler = Sampler::default();
@@ -65328,7 +69124,11 @@ unsafe impl Sync for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {}
 impl ::core::default::Default for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.acceleration_structure = AccelerationStructureKHR::default();
@@ -65387,7 +69187,11 @@ unsafe impl Sync for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
 impl ::core::default::Default for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.opaque_capture_descriptor_data = ::core::ptr::null();
@@ -65455,7 +69259,11 @@ unsafe impl Sync for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_integer_dot_product = Bool32::default();
@@ -65537,7 +69345,11 @@ unsafe impl Sync for PhysicalDeviceShaderIntegerDotProductProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.integer_dot_product8_bit_unsigned_accelerated = Bool32::default();
@@ -65896,7 +69708,11 @@ unsafe impl Sync for PhysicalDeviceDrmPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDrmPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.has_primary = Bool32::default();
@@ -65973,7 +69789,11 @@ unsafe impl Sync for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.fragment_shader_barycentric = Bool32::default();
@@ -66028,7 +69848,11 @@ unsafe impl Sync for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.tri_strip_vertex_order_independent_of_provoking_vertex = Bool32::default();
@@ -66085,7 +69909,11 @@ unsafe impl Sync for PhysicalDeviceShaderFmaFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderFmaFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_fma_float16 = Bool32::default();
@@ -66146,7 +69974,11 @@ unsafe impl Sync for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ray_tracing_motion_blur = Bool32::default();
@@ -66208,7 +70040,11 @@ unsafe impl Sync for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ray_tracing_validation = Bool32::default();
@@ -66261,7 +70097,11 @@ unsafe impl Sync for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.spheres = Bool32::default();
@@ -66331,7 +70171,11 @@ impl fmt::Debug for AccelerationStructureGeometryMotionTrianglesDataNV<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryMotionTrianglesDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.vertex_data = DeviceOrHostAddressConstKHR::default();
@@ -66383,7 +70227,11 @@ unsafe impl Sync for AccelerationStructureMotionInfoNV<'_> {}
 impl ::core::default::Default for AccelerationStructureMotionInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.max_instances = u32::default();
@@ -66449,7 +70297,11 @@ pub struct SRTDataNV {
 impl ::core::default::Default for SRTDataNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.sx = f32::default();
         x.a = f32::default();
         x.b = f32::default();
@@ -66623,7 +70475,11 @@ impl fmt::Debug for AccelerationStructureMotionInstanceNV {
 impl ::core::default::Default for AccelerationStructureMotionInstanceNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.ty = AccelerationStructureMotionInstanceTypeNV::default();
         x.flags = AccelerationStructureMotionInstanceFlagsNV::default();
         x.data = AccelerationStructureMotionInstanceDataNV::default();
@@ -66679,7 +70535,11 @@ unsafe impl Sync for MemoryGetRemoteAddressInfoNV<'_> {}
 impl ::core::default::Default for MemoryGetRemoteAddressInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.memory = DeviceMemory::default();
@@ -66732,7 +70592,11 @@ unsafe impl Sync for ImportMemoryBufferCollectionFUCHSIA<'_> {}
 impl ::core::default::Default for ImportMemoryBufferCollectionFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.collection = BufferCollectionFUCHSIA::default();
@@ -66786,7 +70650,11 @@ unsafe impl Sync for BufferCollectionImageCreateInfoFUCHSIA<'_> {}
 impl ::core::default::Default for BufferCollectionImageCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.collection = BufferCollectionFUCHSIA::default();
@@ -66841,7 +70709,11 @@ unsafe impl Sync for BufferCollectionBufferCreateInfoFUCHSIA<'_> {}
 impl ::core::default::Default for BufferCollectionBufferCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.collection = BufferCollectionFUCHSIA::default();
@@ -66895,7 +70767,11 @@ unsafe impl Sync for BufferCollectionCreateInfoFUCHSIA<'_> {}
 impl ::core::default::Default for BufferCollectionCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.collection_token = zx_handle_t::default();
@@ -66951,7 +70827,11 @@ unsafe impl Sync for BufferCollectionPropertiesFUCHSIA<'_> {}
 impl ::core::default::Default for BufferCollectionPropertiesFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.memory_type_bits = u32::default();
@@ -67071,7 +70951,11 @@ unsafe impl Sync for BufferConstraintsInfoFUCHSIA<'_> {}
 impl ::core::default::Default for BufferConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.create_info = BufferCreateInfo::default();
@@ -67139,7 +71023,11 @@ unsafe impl Sync for SysmemColorSpaceFUCHSIA<'_> {}
 impl ::core::default::Default for SysmemColorSpaceFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.color_space = u32::default();
@@ -67190,7 +71078,11 @@ unsafe impl Sync for ImageFormatConstraintsInfoFUCHSIA<'_> {}
 impl ::core::default::Default for ImageFormatConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image_create_info = ImageCreateInfo::default();
@@ -67271,7 +71163,11 @@ unsafe impl Sync for ImageConstraintsInfoFUCHSIA<'_> {}
 impl ::core::default::Default for ImageConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.format_constraints_count = u32::default();
@@ -67344,7 +71240,11 @@ unsafe impl Sync for BufferCollectionConstraintsInfoFUCHSIA<'_> {}
 impl ::core::default::Default for BufferCollectionConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.min_buffer_count = u32::default();
@@ -67437,7 +71337,11 @@ unsafe impl Sync for CudaModuleCreateInfoNV<'_> {}
 impl ::core::default::Default for CudaModuleCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.data_size = usize::default();
@@ -67494,7 +71398,11 @@ unsafe impl Sync for CudaFunctionCreateInfoNV<'_> {}
 impl ::core::default::Default for CudaFunctionCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.module = CudaModuleNV::default();
@@ -67573,7 +71481,11 @@ unsafe impl Sync for CudaLaunchInfoNV<'_> {}
 impl ::core::default::Default for CudaLaunchInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.function = CudaFunctionNV::default();
@@ -67681,7 +71593,11 @@ unsafe impl Sync for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.format_rgba10x6_without_y_cb_cr_sampler = Bool32::default();
@@ -67736,7 +71652,11 @@ unsafe impl Sync for FormatProperties3<'_> {}
 impl ::core::default::Default for FormatProperties3<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.linear_tiling_features = FormatFeatureFlags2::default();
@@ -67796,7 +71716,11 @@ unsafe impl Sync for DrmFormatModifierPropertiesList2EXT<'_> {}
 impl ::core::default::Default for DrmFormatModifierPropertiesList2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.drm_format_modifier_count = u32::default();
@@ -67845,7 +71769,11 @@ pub struct DrmFormatModifierProperties2EXT {
 impl ::core::default::Default for DrmFormatModifierProperties2EXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.drm_format_modifier = u64::default();
         x.drm_format_modifier_plane_count = u32::default();
         x.drm_format_modifier_tiling_features = FormatFeatureFlags2::default();
@@ -67908,7 +71836,11 @@ unsafe impl Sync for AndroidHardwareBufferFormatProperties2ANDROID<'_> {}
 impl ::core::default::Default for AndroidHardwareBufferFormatProperties2ANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.format = Format::default();
@@ -68011,7 +71943,11 @@ unsafe impl Sync for PipelineRenderingCreateInfo<'_> {}
 impl ::core::default::Default for PipelineRenderingCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.view_mask = u32::default();
@@ -68085,7 +72021,11 @@ unsafe impl Sync for RenderingInfo<'_> {}
 impl ::core::default::Default for RenderingInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = RenderingFlags::default();
@@ -68171,7 +72111,11 @@ unsafe impl Sync for RenderingEndInfoKHR<'_> {}
 impl ::core::default::Default for RenderingEndInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x
@@ -68233,7 +72177,11 @@ impl fmt::Debug for RenderingAttachmentInfo<'_> {
 impl ::core::default::Default for RenderingAttachmentInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image_view = ImageView::default();
@@ -68323,7 +72271,11 @@ unsafe impl Sync for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {}
 impl ::core::default::Default for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image_view = ImageView::default();
@@ -68387,7 +72339,11 @@ unsafe impl Sync for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {}
 impl ::core::default::Default for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image_view = ImageView::default();
@@ -68441,7 +72397,11 @@ unsafe impl Sync for PhysicalDeviceDynamicRenderingFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceDynamicRenderingFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.dynamic_rendering = Bool32::default();
@@ -68495,7 +72455,11 @@ unsafe impl Sync for CommandBufferInheritanceRenderingInfo<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceRenderingInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = RenderingFlags::default();
@@ -68579,7 +72543,11 @@ unsafe impl Sync for AttachmentSampleCountInfoAMD<'_> {}
 impl ::core::default::Default for AttachmentSampleCountInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.color_attachment_count = u32::default();
@@ -68642,7 +72610,11 @@ unsafe impl Sync for MultiviewPerViewAttributesInfoNVX<'_> {}
 impl ::core::default::Default for MultiviewPerViewAttributesInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.per_view_attributes = Bool32::default();
@@ -68700,7 +72672,11 @@ unsafe impl Sync for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.min_lod = Bool32::default();
@@ -68749,7 +72725,11 @@ unsafe impl Sync for ImageViewMinLodCreateInfoEXT<'_> {}
 impl ::core::default::Default for ImageViewMinLodCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.min_lod = f32::default();
@@ -68798,7 +72778,11 @@ unsafe impl Sync for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT
 impl ::core::default::Default for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.rasterization_order_color_attachment_access = Bool32::default();
@@ -68879,7 +72863,11 @@ unsafe impl Sync for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.linear_color_attachment = Bool32::default();
@@ -68931,7 +72919,11 @@ unsafe impl Sync for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.graphics_pipeline_library = Bool32::default();
@@ -68983,7 +72975,11 @@ unsafe impl Sync for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pipeline_binaries = Bool32::default();
@@ -69032,7 +73028,11 @@ unsafe impl Sync for DevicePipelineBinaryInternalCacheControlKHR<'_> {}
 impl ::core::default::Default for DevicePipelineBinaryInternalCacheControlKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.disable_internal_cache = Bool32::default();
@@ -69084,7 +73084,11 @@ unsafe impl Sync for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pipeline_binary_internal_cache = Bool32::default();
@@ -69173,7 +73177,11 @@ unsafe impl Sync for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.graphics_pipeline_library_fast_linking = Bool32::default();
@@ -69237,7 +73245,11 @@ unsafe impl Sync for GraphicsPipelineLibraryCreateInfoEXT<'_> {}
 impl ::core::default::Default for GraphicsPipelineLibraryCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = GraphicsPipelineLibraryFlagsEXT::default();
@@ -69286,7 +73298,11 @@ impl ::core::default::Default
 {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.data_graph_neural_accelerator_statistics = Bool32::default();
@@ -69347,7 +73363,11 @@ unsafe impl Sync for DataGraphPipelineNeuralStatisticsCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineNeuralStatisticsCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.allow_neural_statistics = Bool32::default();
@@ -69398,7 +73418,11 @@ unsafe impl Sync for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'_> {
 impl ::core::default::Default for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.mode = NeuralAcceleratorStatisticsModeARM::default();
@@ -69449,7 +73473,11 @@ unsafe impl Sync for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.descriptor_set_host_mapping = Bool32::default();
@@ -69505,7 +73533,11 @@ unsafe impl Sync for DescriptorSetBindingReferenceVALVE<'_> {}
 impl ::core::default::Default for DescriptorSetBindingReferenceVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.descriptor_set_layout = DescriptorSetLayout::default();
@@ -69558,7 +73590,11 @@ unsafe impl Sync for DescriptorSetLayoutHostMappingInfoVALVE<'_> {}
 impl ::core::default::Default for DescriptorSetLayoutHostMappingInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.descriptor_offset = usize::default();
@@ -69613,7 +73649,11 @@ unsafe impl Sync for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.nested_command_buffer = Bool32::default();
@@ -69683,7 +73723,11 @@ unsafe impl Sync for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_command_buffer_nesting_level = u32::default();
@@ -69737,7 +73781,11 @@ unsafe impl Sync for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_module_identifier = Bool32::default();
@@ -69789,7 +73837,11 @@ unsafe impl Sync for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_module_identifier_algorithm_uuid = unsafe { ::core::mem::zeroed() };
@@ -69844,7 +73896,11 @@ unsafe impl Sync for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.identifier_size = u32::default();
@@ -69908,7 +73964,11 @@ impl fmt::Debug for ShaderModuleIdentifierEXT<'_> {
 impl ::core::default::Default for ShaderModuleIdentifierEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.identifier_size = u32::default();
@@ -69962,7 +74022,11 @@ unsafe impl Sync for ImageCompressionControlEXT<'_> {}
 impl ::core::default::Default for ImageCompressionControlEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = ImageCompressionFlagsEXT::default();
@@ -70022,7 +74086,11 @@ unsafe impl Sync for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.image_compression_control = Bool32::default();
@@ -70075,7 +74143,11 @@ unsafe impl Sync for ImageCompressionPropertiesEXT<'_> {}
 impl ::core::default::Default for ImageCompressionPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.image_compression_flags = ImageCompressionFlagsEXT::default();
@@ -70136,7 +74208,11 @@ unsafe impl Sync for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'
 impl ::core::default::Default for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.image_compression_control_swapchain = Bool32::default();
@@ -70196,7 +74272,11 @@ unsafe impl Sync for ImageSubresource2<'_> {}
 impl ::core::default::Default for ImageSubresource2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.image_subresource = ImageSubresource::default();
@@ -70242,7 +74322,11 @@ unsafe impl Sync for SubresourceLayout2<'_> {}
 impl ::core::default::Default for SubresourceLayout2<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.subresource_layout = SubresourceLayout::default();
@@ -70288,7 +74372,11 @@ unsafe impl Sync for RenderPassCreationControlEXT<'_> {}
 impl ::core::default::Default for RenderPassCreationControlEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.disallow_merging = Bool32::default();
@@ -70331,7 +74419,11 @@ pub struct RenderPassCreationFeedbackInfoEXT {
 impl ::core::default::Default for RenderPassCreationFeedbackInfoEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.post_merge_subpass_count = u32::default();
         x
     }
@@ -70372,7 +74464,11 @@ unsafe impl Sync for RenderPassCreationFeedbackCreateInfoEXT<'_> {}
 impl ::core::default::Default for RenderPassCreationFeedbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_render_pass_feedback = ::core::ptr::null_mut();
@@ -70429,7 +74525,11 @@ impl fmt::Debug for RenderPassSubpassFeedbackInfoEXT {
 impl ::core::default::Default for RenderPassSubpassFeedbackInfoEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.subpass_merge_status = SubpassMergeStatusEXT::default();
         x.description = unsafe { ::core::mem::zeroed() };
         x.post_merge_index = u32::default();
@@ -70488,7 +74588,11 @@ unsafe impl Sync for RenderPassSubpassFeedbackCreateInfoEXT<'_> {}
 impl ::core::default::Default for RenderPassSubpassFeedbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_subpass_feedback = ::core::ptr::null_mut();
@@ -70539,7 +74643,11 @@ unsafe impl Sync for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.subpass_merge_feedback = Bool32::default();
@@ -70620,7 +74728,11 @@ impl fmt::Debug for MicromapBuildInfoEXT<'_> {
 impl ::core::default::Default for MicromapBuildInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.ty = MicromapTypeEXT::default();
@@ -70728,7 +74840,11 @@ unsafe impl Sync for AccelerationStructureGeometryMicromapDataKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureGeometryMicromapDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.usage_counts_count = u32::default();
@@ -70811,7 +74927,11 @@ unsafe impl Sync for MicromapCreateInfoEXT<'_> {}
 impl ::core::default::Default for MicromapCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.create_flags = MicromapCreateFlagsEXT::default();
@@ -70887,7 +75007,11 @@ unsafe impl Sync for MicromapVersionInfoEXT<'_> {}
 impl ::core::default::Default for MicromapVersionInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_version_data = ::core::ptr::null();
@@ -70935,7 +75059,11 @@ unsafe impl Sync for CopyMicromapInfoEXT<'_> {}
 impl ::core::default::Default for CopyMicromapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src = MicromapEXT::default();
@@ -71006,7 +75134,11 @@ impl fmt::Debug for CopyMicromapToMemoryInfoEXT<'_> {
 impl ::core::default::Default for CopyMicromapToMemoryInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src = MicromapEXT::default();
@@ -71077,7 +75209,11 @@ impl fmt::Debug for CopyMemoryToMicromapInfoEXT<'_> {
 impl ::core::default::Default for CopyMemoryToMicromapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src = DeviceOrHostAddressConstKHR::default();
@@ -71137,7 +75273,11 @@ unsafe impl Sync for MicromapBuildSizesInfoEXT<'_> {}
 impl ::core::default::Default for MicromapBuildSizesInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.micromap_size = DeviceSize::default();
@@ -71192,7 +75332,11 @@ pub struct MicromapUsageKHR {
 impl ::core::default::Default for MicromapUsageKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.count = u32::default();
         x.subdivision_level = u32::default();
         x.format = OpacityMicromapFormatKHR::default();
@@ -71242,7 +75386,11 @@ pub struct MicromapUsageEXT {
 impl ::core::default::Default for MicromapUsageEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.count = u32::default();
         x.subdivision_level = u32::default();
         x.format = u32::default();
@@ -71292,7 +75440,11 @@ pub struct MicromapTriangleKHR {
 impl ::core::default::Default for MicromapTriangleKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.data_offset = u32::default();
         x.subdivision_level = u16::default();
         x.format = u16::default();
@@ -71345,7 +75497,11 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.micromap = Bool32::default();
@@ -71396,7 +75552,11 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.micromap = Bool32::default();
@@ -71460,7 +75620,11 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_opacity2_state_subdivision_level = u32::default();
@@ -71540,7 +75704,11 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_opacity2_state_subdivision_level = u32::default();
@@ -71607,7 +75775,11 @@ unsafe impl Sync for AccelerationStructureTrianglesOpacityMicromapKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.index_type = IndexType::default();
@@ -71710,7 +75882,11 @@ impl fmt::Debug for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
 impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.index_type = IndexType::default();
@@ -71809,7 +75985,11 @@ unsafe impl Sync for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.displacement_micromap = Bool32::default();
@@ -71871,7 +76051,11 @@ unsafe impl Sync for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_displacement_micromap_subdivision_level = u32::default();
@@ -71990,7 +76174,11 @@ impl fmt::Debug for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
 impl ::core::default::Default for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.displacement_bias_and_scale_format = Format::default();
@@ -72151,7 +76339,11 @@ unsafe impl Sync for PipelinePropertiesIdentifierEXT<'_> {}
 impl ::core::default::Default for PipelinePropertiesIdentifierEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pipeline_identifier = unsafe { ::core::mem::zeroed() };
@@ -72197,7 +76389,11 @@ unsafe impl Sync for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pipeline_properties_identifier = Bool32::default();
@@ -72249,7 +76445,11 @@ unsafe impl Sync for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_
 impl ::core::default::Default for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_early_and_late_fragment_tests = Bool32::default();
@@ -72309,7 +76509,11 @@ unsafe impl Sync for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
 impl ::core::default::Default for ExternalMemoryAcquireUnmodifiedEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.acquire_unmodified_memory = Bool32::default();
@@ -72359,7 +76563,11 @@ unsafe impl Sync for ExportMetalObjectCreateInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalObjectCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.export_object_type = ExportMetalObjectTypeFlagsEXT::default();
@@ -72411,7 +76619,11 @@ unsafe impl Sync for ExportMetalObjectsInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalObjectsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x
@@ -72450,7 +76662,11 @@ unsafe impl Sync for ExportMetalDeviceInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalDeviceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.mtl_device = unsafe { ::core::mem::zeroed() };
@@ -72498,7 +76714,11 @@ unsafe impl Sync for ExportMetalCommandQueueInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalCommandQueueInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.queue = Queue::default();
@@ -72552,7 +76772,11 @@ unsafe impl Sync for ExportMetalBufferInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalBufferInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.memory = DeviceMemory::default();
@@ -72605,7 +76829,11 @@ unsafe impl Sync for ImportMetalBufferInfoEXT<'_> {}
 impl ::core::default::Default for ImportMetalBufferInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.mtl_buffer = unsafe { ::core::mem::zeroed() };
@@ -72656,7 +76884,11 @@ unsafe impl Sync for ExportMetalTextureInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalTextureInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image = Image::default();
@@ -72728,7 +76960,11 @@ unsafe impl Sync for ImportMetalTextureInfoEXT<'_> {}
 impl ::core::default::Default for ImportMetalTextureInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.plane = ImageAspectFlags::default();
@@ -72782,7 +77018,11 @@ unsafe impl Sync for ExportMetalIOSurfaceInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalIOSurfaceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image = Image::default();
@@ -72835,7 +77075,11 @@ unsafe impl Sync for ImportMetalIOSurfaceInfoEXT<'_> {}
 impl ::core::default::Default for ImportMetalIOSurfaceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.io_surface = unsafe { ::core::mem::zeroed() };
@@ -72884,7 +77128,11 @@ unsafe impl Sync for ExportMetalSharedEventInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalSharedEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.semaphore = Semaphore::default();
@@ -72943,7 +77191,11 @@ unsafe impl Sync for ImportMetalSharedEventInfoEXT<'_> {}
 impl ::core::default::Default for ImportMetalSharedEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.mtl_shared_event = unsafe { ::core::mem::zeroed() };
@@ -72991,7 +77243,11 @@ unsafe impl Sync for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.non_seamless_cube_map = Bool32::default();
@@ -73043,7 +77299,11 @@ unsafe impl Sync for PhysicalDevicePipelineRobustnessFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineRobustnessFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pipeline_robustness = Bool32::default();
@@ -73095,7 +77355,11 @@ unsafe impl Sync for PipelineRobustnessCreateInfo<'_> {}
 impl ::core::default::Default for PipelineRobustnessCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.storage_buffers = PipelineRobustnessBufferBehavior::default();
@@ -73166,7 +77430,11 @@ unsafe impl Sync for PhysicalDevicePipelineRobustnessProperties<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineRobustnessProperties<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.default_robustness_storage_buffers = PipelineRobustnessBufferBehavior::default();
@@ -73249,7 +77517,11 @@ unsafe impl Sync for ImageViewSampleWeightCreateInfoQCOM<'_> {}
 impl ::core::default::Default for ImageViewSampleWeightCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.filter_center = Offset2D::default();
@@ -73308,7 +77580,11 @@ unsafe impl Sync for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_multiple_wait_queues = Bool32::default();
@@ -73363,7 +77639,11 @@ unsafe impl Sync for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_shader_wait_queues = u32::default();
@@ -73416,7 +77696,11 @@ unsafe impl Sync for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.texture_sample_weighted = Bool32::default();
@@ -73480,7 +77764,11 @@ unsafe impl Sync for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_weight_filter_phases = u32::default();
@@ -73549,7 +77837,11 @@ unsafe impl Sync for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.tile_properties = Bool32::default();
@@ -73600,7 +77892,11 @@ unsafe impl Sync for TilePropertiesQCOM<'_> {}
 impl ::core::default::Default for TilePropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.tile_size = Extent3D::default();
@@ -73658,7 +77954,11 @@ unsafe impl Sync for TileMemoryBindInfoQCOM<'_> {}
 impl ::core::default::Default for TileMemoryBindInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.memory = DeviceMemory::default();
@@ -73705,7 +78005,11 @@ unsafe impl Sync for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {}
 impl ::core::default::Default for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.amigo_profiling = Bool32::default();
@@ -73755,7 +78059,11 @@ unsafe impl Sync for AmigoProfilingSubmitInfoSEC<'_> {}
 impl ::core::default::Default for AmigoProfilingSubmitInfoSEC<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.first_draw_timestamp = u64::default();
@@ -73808,7 +78116,11 @@ unsafe impl Sync for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {
 impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.attachment_feedback_loop_layout = Bool32::default();
@@ -73866,7 +78178,11 @@ unsafe impl Sync for AttachmentFeedbackLoopInfoEXT<'_> {}
 impl ::core::default::Default for AttachmentFeedbackLoopInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.feedback_loop_enable = Bool32::default();
@@ -73913,7 +78229,11 @@ unsafe impl Sync for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.report_address_binding = Bool32::default();
@@ -73965,7 +78285,11 @@ unsafe impl Sync for RenderingAttachmentFlagsInfoKHR<'_> {}
 impl ::core::default::Default for RenderingAttachmentFlagsInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = RenderingAttachmentFlagsKHR::default();
@@ -74014,7 +78338,11 @@ unsafe impl Sync for ResolveImageModeInfoKHR<'_> {}
 impl ::core::default::Default for ResolveImageModeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = ResolveImageFlagsKHR::default();
@@ -74076,7 +78404,11 @@ unsafe impl Sync for DeviceAddressBindingCallbackDataEXT<'_> {}
 impl ::core::default::Default for DeviceAddressBindingCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = DeviceAddressBindingFlagsEXT::default();
@@ -74144,7 +78476,11 @@ unsafe impl Sync for PhysicalDeviceOpticalFlowFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpticalFlowFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.optical_flow = Bool32::default();
@@ -74202,7 +78538,11 @@ unsafe impl Sync for PhysicalDeviceOpticalFlowPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpticalFlowPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.supported_output_grid_sizes = OpticalFlowGridSizeFlagsNV::default();
@@ -74315,7 +78655,11 @@ unsafe impl Sync for OpticalFlowImageFormatInfoNV<'_> {}
 impl ::core::default::Default for OpticalFlowImageFormatInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.usage = OpticalFlowUsageFlagsNV::default();
@@ -74363,7 +78707,11 @@ unsafe impl Sync for OpticalFlowImageFormatPropertiesNV<'_> {}
 impl ::core::default::Default for OpticalFlowImageFormatPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.format = Format::default();
@@ -74417,7 +78765,11 @@ unsafe impl Sync for OpticalFlowSessionCreateInfoNV<'_> {}
 impl ::core::default::Default for OpticalFlowSessionCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.width = u32::default();
@@ -74513,7 +78865,11 @@ unsafe impl Sync for OpticalFlowSessionCreatePrivateDataInfoNV<'_> {}
 impl ::core::default::Default for OpticalFlowSessionCreatePrivateDataInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.id = u32::default();
@@ -74578,7 +78934,11 @@ unsafe impl Sync for OpticalFlowExecuteInfoNV<'_> {}
 impl ::core::default::Default for OpticalFlowExecuteInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = OpticalFlowExecuteFlagsNV::default();
@@ -74633,7 +78993,11 @@ unsafe impl Sync for PhysicalDeviceFaultFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFaultFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.device_fault = Bool32::default();
@@ -74684,7 +79048,11 @@ pub struct DeviceFaultAddressInfoKHR {
 impl ::core::default::Default for DeviceFaultAddressInfoKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.address_type = DeviceFaultAddressTypeKHR::default();
         x.reported_address = DeviceAddress::default();
         x.address_precision = DeviceSize::default();
@@ -74743,7 +79111,11 @@ impl fmt::Debug for DeviceFaultVendorInfoKHR {
 impl ::core::default::Default for DeviceFaultVendorInfoKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.description = unsafe { ::core::mem::zeroed() };
         x.vendor_fault_code = u64::default();
         x.vendor_fault_data = u64::default();
@@ -74821,7 +79193,11 @@ impl fmt::Debug for DeviceFaultInfoKHR<'_> {
 impl ::core::default::Default for DeviceFaultInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = DeviceFaultFlagsKHR::default();
@@ -74907,7 +79283,11 @@ unsafe impl Sync for DeviceFaultDebugInfoKHR<'_> {}
 impl ::core::default::Default for DeviceFaultDebugInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.vendor_binary_size = u32::default();
@@ -74957,7 +79337,11 @@ unsafe impl Sync for DeviceFaultCountsEXT<'_> {}
 impl ::core::default::Default for DeviceFaultCountsEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.address_info_count = u32::default();
@@ -75030,7 +79414,11 @@ impl fmt::Debug for DeviceFaultInfoEXT<'_> {
 impl ::core::default::Default for DeviceFaultInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.description = unsafe { ::core::mem::zeroed() };
@@ -75105,7 +79493,11 @@ pub struct DeviceFaultVendorBinaryHeaderVersionOneKHR {
 impl ::core::default::Default for DeviceFaultVendorBinaryHeaderVersionOneKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.header_size = u32::default();
         x.header_version = DeviceFaultVendorBinaryHeaderVersionKHR::default();
         x.vendor_id = u32::default();
@@ -75212,7 +79604,11 @@ unsafe impl Sync for PhysicalDeviceFaultFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFaultFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.device_fault = Bool32::default();
@@ -75281,7 +79677,11 @@ unsafe impl Sync for PhysicalDeviceFaultPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFaultPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_device_fault_count = u32::default();
@@ -75328,7 +79728,11 @@ unsafe impl Sync for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pipeline_library_group_handles = Bool32::default();
@@ -75385,7 +79789,11 @@ unsafe impl Sync for DepthBiasInfoEXT<'_> {}
 impl ::core::default::Default for DepthBiasInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.depth_bias_constant_factor = f32::default();
@@ -75444,7 +79852,11 @@ unsafe impl Sync for DepthBiasRepresentationInfoEXT<'_> {}
 impl ::core::default::Default for DepthBiasRepresentationInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.depth_bias_representation = DepthBiasRepresentationEXT::default();
@@ -75503,7 +79915,11 @@ pub struct DecompressMemoryRegionNV {
 impl ::core::default::Default for DecompressMemoryRegionNV {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.src_address = DeviceAddress::default();
         x.dst_address = DeviceAddress::default();
         x.compressed_size = DeviceSize::default();
@@ -75569,7 +79985,11 @@ pub struct DecompressMemoryRegionEXT {
 impl ::core::default::Default for DecompressMemoryRegionEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.src_address = DeviceAddress::default();
         x.dst_address = DeviceAddress::default();
         x.compressed_size = DeviceSize::default();
@@ -75630,7 +80050,11 @@ unsafe impl Sync for DecompressMemoryInfoEXT<'_> {}
 impl ::core::default::Default for DecompressMemoryInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.decompression_method = MemoryDecompressionMethodFlagsEXT::default();
@@ -75689,7 +80113,11 @@ unsafe impl Sync for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_core_mask = u64::default();
@@ -75752,7 +80180,11 @@ unsafe impl Sync for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_core_builtins = Bool32::default();
@@ -75812,7 +80244,11 @@ unsafe impl Sync for FrameBoundaryEXT<'_> {}
 impl ::core::default::Default for FrameBoundaryEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = FrameBoundaryFlagsEXT::default();
@@ -75898,7 +80334,11 @@ unsafe impl Sync for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.frame_boundary = Bool32::default();
@@ -75947,7 +80387,11 @@ unsafe impl Sync for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<
 impl ::core::default::Default for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.dynamic_rendering_unused_attachments = Bool32::default();
@@ -76007,7 +80451,11 @@ unsafe impl Sync for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'_> {
 impl ::core::default::Default for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.internally_synchronized_queues = Bool32::default();
@@ -76062,7 +80510,11 @@ unsafe impl Sync for SurfacePresentModeKHR<'_> {}
 impl ::core::default::Default for SurfacePresentModeKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_mode = PresentModeKHR::default();
@@ -76113,7 +80565,11 @@ unsafe impl Sync for SurfacePresentScalingCapabilitiesKHR<'_> {}
 impl ::core::default::Default for SurfacePresentScalingCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.supported_present_scaling = PresentScalingFlagsKHR::default();
@@ -76194,7 +80650,11 @@ unsafe impl Sync for SurfacePresentModeCompatibilityKHR<'_> {}
 impl ::core::default::Default for SurfacePresentModeCompatibilityKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_mode_count = u32::default();
@@ -76243,7 +80703,11 @@ unsafe impl Sync for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.swapchain_maintenance1 = Bool32::default();
@@ -76296,7 +80760,11 @@ unsafe impl Sync for SwapchainPresentFenceInfoKHR<'_> {}
 impl ::core::default::Default for SwapchainPresentFenceInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.swapchain_count = u32::default();
@@ -76346,7 +80814,11 @@ unsafe impl Sync for SwapchainPresentModesCreateInfoKHR<'_> {}
 impl ::core::default::Default for SwapchainPresentModesCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.present_mode_count = u32::default();
@@ -76396,7 +80868,11 @@ unsafe impl Sync for SwapchainPresentModeInfoKHR<'_> {}
 impl ::core::default::Default for SwapchainPresentModeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.swapchain_count = u32::default();
@@ -76447,7 +80923,11 @@ unsafe impl Sync for SwapchainPresentScalingCreateInfoKHR<'_> {}
 impl ::core::default::Default for SwapchainPresentScalingCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.scaling_behavior = PresentScalingFlagsKHR::default();
@@ -76508,7 +80988,11 @@ unsafe impl Sync for ReleaseSwapchainImagesInfoKHR<'_> {}
 impl ::core::default::Default for ReleaseSwapchainImagesInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.swapchain = SwapchainKHR::default();
@@ -76565,7 +81049,11 @@ unsafe impl Sync for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.depth_bias_control = Bool32::default();
@@ -76636,7 +81124,11 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ray_tracing_invocation_reorder = Bool32::default();
@@ -76691,7 +81183,11 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ray_tracing_invocation_reorder = Bool32::default();
@@ -76747,7 +81243,11 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'_> 
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ray_tracing_invocation_reorder_reordering_hint =
@@ -76812,7 +81312,11 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ray_tracing_invocation_reorder_reordering_hint =
@@ -76868,7 +81372,11 @@ unsafe impl Sync for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.extended_sparse_address_space = Bool32::default();
@@ -76925,7 +81433,11 @@ unsafe impl Sync for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.extended_sparse_address_space_size = DeviceSize::default();
@@ -77011,7 +81523,11 @@ impl fmt::Debug for DirectDriverLoadingInfoLUNARG<'_> {
 impl ::core::default::Default for DirectDriverLoadingInfoLUNARG<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = DirectDriverLoadingFlagsLUNARG::default();
@@ -77068,7 +81584,11 @@ unsafe impl Sync for DirectDriverLoadingListLUNARG<'_> {}
 impl ::core::default::Default for DirectDriverLoadingListLUNARG<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.mode = DirectDriverLoadingModeLUNARG::default();
@@ -77123,7 +81643,11 @@ unsafe impl Sync for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.multiview_per_view_viewports = Bool32::default();
@@ -77178,7 +81702,11 @@ unsafe impl Sync for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ray_tracing_position_fetch = Bool32::default();
@@ -77231,7 +81759,11 @@ unsafe impl Sync for DeviceImageSubresourceInfo<'_> {}
 impl ::core::default::Default for DeviceImageSubresourceInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_create_info = ::core::ptr::null();
@@ -77285,7 +81817,11 @@ unsafe impl Sync for PhysicalDeviceShaderCorePropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pixel_rate = u32::default();
@@ -77344,7 +81880,11 @@ unsafe impl Sync for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {
 impl ::core::default::Default for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.multiview_per_view_render_areas = Bool32::default();
@@ -77403,7 +81943,11 @@ unsafe impl Sync for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {}
 impl ::core::default::Default for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.per_view_render_area_count = u32::default();
@@ -77457,7 +82001,11 @@ unsafe impl Sync for QueryLowLatencySupportNV<'_> {}
 impl ::core::default::Default for QueryLowLatencySupportNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_queried_low_latency_data = ::core::ptr::null_mut();
@@ -77507,7 +82055,11 @@ unsafe impl Sync for MemoryMapInfo<'_> {}
 impl ::core::default::Default for MemoryMapInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = MemoryMapFlags::default();
@@ -77569,7 +82121,11 @@ unsafe impl Sync for MemoryUnmapInfo<'_> {}
 impl ::core::default::Default for MemoryUnmapInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = MemoryUnmapFlags::default();
@@ -77618,7 +82174,11 @@ unsafe impl Sync for PhysicalDeviceShaderObjectFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderObjectFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_object = Bool32::default();
@@ -77667,7 +82227,11 @@ unsafe impl Sync for PhysicalDeviceShaderObjectPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderObjectPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_binary_uuid = unsafe { ::core::mem::zeroed() };
@@ -77732,7 +82296,11 @@ unsafe impl Sync for ShaderCreateInfoEXT<'_> {}
 impl ::core::default::Default for ShaderCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = ShaderCreateFlagsEXT::default();
@@ -77842,7 +82410,11 @@ unsafe impl Sync for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_tile_image_color_read_access = Bool32::default();
@@ -77914,7 +82486,11 @@ unsafe impl Sync for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_tile_image_coherent_read_accelerated = Bool32::default();
@@ -77989,7 +82565,11 @@ unsafe impl Sync for ImportScreenBufferInfoQNX<'_> {}
 impl ::core::default::Default for ImportScreenBufferInfoQNX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.buffer = ::core::ptr::null_mut();
@@ -78037,7 +82617,11 @@ unsafe impl Sync for ScreenBufferPropertiesQNX<'_> {}
 impl ::core::default::Default for ScreenBufferPropertiesQNX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.allocation_size = DeviceSize::default();
@@ -78097,7 +82681,11 @@ unsafe impl Sync for ScreenBufferFormatPropertiesQNX<'_> {}
 impl ::core::default::Default for ScreenBufferFormatPropertiesQNX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.format = Format::default();
@@ -78198,7 +82786,11 @@ unsafe impl Sync for ExternalFormatQNX<'_> {}
 impl ::core::default::Default for ExternalFormatQNX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.external_format = u64::default();
@@ -78246,7 +82838,11 @@ unsafe impl Sync for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.screen_buffer_import = Bool32::default();
@@ -78302,7 +82898,11 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.cooperative_matrix = Bool32::default();
@@ -78372,7 +82972,11 @@ unsafe impl Sync for CooperativeMatrixPropertiesKHR<'_> {}
 impl ::core::default::Default for CooperativeMatrixPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.m_size = u32::default();
@@ -78466,7 +83070,11 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.cooperative_matrix_supported_stages = ShaderStageFlags::default();
@@ -78520,7 +83128,11 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'_> {
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.cooperative_matrix_conversion = Bool32::default();
@@ -78585,7 +83197,11 @@ unsafe impl Sync for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_execution_graph_depth = u32::default();
@@ -78698,7 +83314,11 @@ unsafe impl Sync for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_enqueue = Bool32::default();
@@ -78769,7 +83389,11 @@ unsafe impl Sync for ExecutionGraphPipelineCreateInfoAMDX<'_> {}
 impl ::core::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineCreateFlags::default();
@@ -78856,7 +83480,11 @@ unsafe impl Sync for PipelineShaderStageNodeCreateInfoAMDX<'_> {}
 impl ::core::default::Default for PipelineShaderStageNodeCreateInfoAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_name = ::core::ptr::null();
@@ -78932,7 +83560,11 @@ unsafe impl Sync for ExecutionGraphPipelineScratchSizeAMDX<'_> {}
 impl ::core::default::Default for ExecutionGraphPipelineScratchSizeAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.min_size = DeviceSize::default();
@@ -79005,7 +83637,11 @@ impl fmt::Debug for DispatchGraphInfoAMDX {
 impl ::core::default::Default for DispatchGraphInfoAMDX {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.node_index = u32::default();
         x.payload_count = u32::default();
         x.payloads = DeviceOrHostAddressConstAMDX::default();
@@ -79076,7 +83712,11 @@ impl fmt::Debug for DispatchGraphCountInfoAMDX {
 impl ::core::default::Default for DispatchGraphCountInfoAMDX {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.count = u32::default();
         x.infos = DeviceOrHostAddressConstAMDX::default();
         x.stride = u64::default();
@@ -79132,7 +83772,11 @@ unsafe impl Sync for PhysicalDeviceAntiLagFeaturesAMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceAntiLagFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.anti_lag = Bool32::default();
@@ -79182,7 +83826,11 @@ unsafe impl Sync for AntiLagDataAMD<'_> {}
 impl ::core::default::Default for AntiLagDataAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.mode = AntiLagModeAMD::default();
@@ -79241,7 +83889,11 @@ unsafe impl Sync for AntiLagPresentationInfoAMD<'_> {}
 impl ::core::default::Default for AntiLagPresentationInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.stage = AntiLagStageAMD::default();
@@ -79293,7 +83945,11 @@ unsafe impl Sync for BindMemoryStatus<'_> {}
 impl ::core::default::Default for BindMemoryStatus<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_result = ::core::ptr::null_mut();
@@ -79341,7 +83997,11 @@ unsafe impl Sync for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.tile_memory_heap = Bool32::default();
@@ -79391,7 +84051,11 @@ unsafe impl Sync for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.queue_submit_boundary = Bool32::default();
@@ -79448,7 +84112,11 @@ unsafe impl Sync for TileMemorySizeInfoQCOM<'_> {}
 impl ::core::default::Default for TileMemorySizeInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.size = DeviceSize::default();
@@ -79498,7 +84166,11 @@ unsafe impl Sync for TileMemoryRequirementsQCOM<'_> {}
 impl ::core::default::Default for TileMemoryRequirementsQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.size = DeviceSize::default();
@@ -79557,7 +84229,11 @@ unsafe impl Sync for BindDescriptorSetsInfo<'_> {}
 impl ::core::default::Default for BindDescriptorSetsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.stage_flags = ShaderStageFlags::default();
@@ -79635,7 +84311,11 @@ unsafe impl Sync for PushConstantsInfo<'_> {}
 impl ::core::default::Default for PushConstantsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.layout = PipelineLayout::default();
@@ -79705,7 +84385,11 @@ unsafe impl Sync for PushDescriptorSetInfo<'_> {}
 impl ::core::default::Default for PushDescriptorSetInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.stage_flags = ShaderStageFlags::default();
@@ -79774,7 +84458,11 @@ unsafe impl Sync for PushDescriptorSetWithTemplateInfo<'_> {}
 impl ::core::default::Default for PushDescriptorSetWithTemplateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.descriptor_update_template = DescriptorUpdateTemplate::default();
@@ -79846,7 +84534,11 @@ unsafe impl Sync for SetDescriptorBufferOffsetsInfoEXT<'_> {}
 impl ::core::default::Default for SetDescriptorBufferOffsetsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.stage_flags = ShaderStageFlags::default();
@@ -79921,7 +84613,11 @@ unsafe impl Sync for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {}
 impl ::core::default::Default for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.stage_flags = ShaderStageFlags::default();
@@ -79980,7 +84676,11 @@ unsafe impl Sync for PhysicalDeviceCubicClampFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceCubicClampFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.cubic_range_clamp = Bool32::default();
@@ -80028,7 +84728,11 @@ unsafe impl Sync for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ycbcr_degamma = Bool32::default();
@@ -80078,7 +84782,11 @@ unsafe impl Sync for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {}
 impl ::core::default::Default for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.enable_y_degamma = Bool32::default();
@@ -80135,7 +84843,11 @@ unsafe impl Sync for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.selectable_cubic_weights = Bool32::default();
@@ -80184,7 +84896,11 @@ unsafe impl Sync for SamplerCubicWeightsCreateInfoQCOM<'_> {}
 impl ::core::default::Default for SamplerCubicWeightsCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.cubic_weights = CubicFilterWeightsQCOM::default();
@@ -80231,7 +84947,11 @@ unsafe impl Sync for BlitImageCubicWeightsInfoQCOM<'_> {}
 impl ::core::default::Default for BlitImageCubicWeightsInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.cubic_weights = CubicFilterWeightsQCOM::default();
@@ -80278,7 +84998,11 @@ unsafe impl Sync for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.texture_block_match2 = Bool32::default();
@@ -80330,7 +85054,11 @@ unsafe impl Sync for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_block_match_window = Extent2D::default();
@@ -80382,7 +85110,11 @@ unsafe impl Sync for SamplerBlockMatchWindowCreateInfoQCOM<'_> {}
 impl ::core::default::Default for SamplerBlockMatchWindowCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.window_extent = Extent2D::default();
@@ -80441,7 +85173,11 @@ unsafe impl Sync for PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.image_gather_linear = Bool32::default();
@@ -80508,7 +85244,11 @@ unsafe impl Sync for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.descriptor_pool_overallocation = Bool32::default();
@@ -80563,7 +85303,11 @@ unsafe impl Sync for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {}
 impl ::core::default::Default for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.underlying_api = LayeredDriverUnderlyingApiMSFT::default();
@@ -80615,7 +85359,11 @@ unsafe impl Sync for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.per_stage_descriptor_set = Bool32::default();
@@ -80673,7 +85421,11 @@ unsafe impl Sync for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.external_format_resolve = Bool32::default();
@@ -80730,7 +85482,11 @@ unsafe impl Sync for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.null_color_attachment_with_external_format_resolve = Bool32::default();
@@ -80803,7 +85559,11 @@ unsafe impl Sync for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {}
 impl ::core::default::Default for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.color_attachment_format = Format::default();
@@ -80856,7 +85616,11 @@ unsafe impl Sync for LatencySleepModeInfoNV<'_> {}
 impl ::core::default::Default for LatencySleepModeInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.low_latency_mode = Bool32::default();
@@ -80915,7 +85679,11 @@ unsafe impl Sync for LatencySleepInfoNV<'_> {}
 impl ::core::default::Default for LatencySleepInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.signal_semaphore = Semaphore::default();
@@ -80968,7 +85736,11 @@ unsafe impl Sync for SetLatencyMarkerInfoNV<'_> {}
 impl ::core::default::Default for SetLatencyMarkerInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.present_id = u64::default();
@@ -81021,7 +85793,11 @@ unsafe impl Sync for GetLatencyMarkerInfoNV<'_> {}
 impl ::core::default::Default for GetLatencyMarkerInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.timing_count = u32::default();
@@ -81082,7 +85858,11 @@ unsafe impl Sync for LatencyTimingsFrameReportNV<'_> {}
 impl ::core::default::Default for LatencyTimingsFrameReportNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_id = u64::default();
@@ -81206,7 +85986,11 @@ unsafe impl Sync for OutOfBandQueueTypeInfoNV<'_> {}
 impl ::core::default::Default for OutOfBandQueueTypeInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.queue_type = OutOfBandQueueTypeNV::default();
@@ -81252,7 +86036,11 @@ unsafe impl Sync for LatencySubmissionPresentIdNV<'_> {}
 impl ::core::default::Default for LatencySubmissionPresentIdNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.present_id = u64::default();
@@ -81300,7 +86088,11 @@ unsafe impl Sync for SwapchainLatencyCreateInfoNV<'_> {}
 impl ::core::default::Default for SwapchainLatencyCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.latency_mode_enable = Bool32::default();
@@ -81348,7 +86140,11 @@ unsafe impl Sync for LatencySurfaceCapabilitiesNV<'_> {}
 impl ::core::default::Default for LatencySurfaceCapabilitiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.present_mode_count = u32::default();
@@ -81401,7 +86197,11 @@ unsafe impl Sync for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.cuda_kernel_launch_features = Bool32::default();
@@ -81461,7 +86261,11 @@ unsafe impl Sync for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.compute_capability_minor = u32::default();
@@ -81523,7 +86327,11 @@ unsafe impl Sync for DeviceQueueShaderCoreControlCreateInfoARM<'_> {}
 impl ::core::default::Default for DeviceQueueShaderCoreControlCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_core_count = u32::default();
@@ -81572,7 +86380,11 @@ unsafe impl Sync for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.scheduling_controls = Bool32::default();
@@ -81624,7 +86436,11 @@ unsafe impl Sync for PhysicalDeviceSchedulingControlsPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceSchedulingControlsPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.scheduling_controls_flags = PhysicalDeviceSchedulingControlsFlagsARM::default();
@@ -81682,7 +86498,11 @@ impl ::core::default::Default
 {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.scheduling_controls_max_warps_count = u32::default();
@@ -81760,7 +86580,11 @@ unsafe impl Sync for DispatchParametersARM<'_> {}
 impl ::core::default::Default for DispatchParametersARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.work_group_batch_size = u32::default();
@@ -81818,7 +86642,11 @@ unsafe impl Sync for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {}
 impl ::core::default::Default for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.relaxed_line_rasterization = Bool32::default();
@@ -81873,7 +86701,11 @@ unsafe impl Sync for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.render_pass_striped = Bool32::default();
@@ -81926,7 +86758,11 @@ unsafe impl Sync for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.render_pass_stripe_granularity = Extent2D::default();
@@ -81986,7 +86822,11 @@ unsafe impl Sync for RenderPassStripeInfoARM<'_> {}
 impl ::core::default::Default for RenderPassStripeInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.stripe_area = Rect2D::default();
@@ -82033,7 +86873,11 @@ unsafe impl Sync for RenderPassStripeBeginInfoARM<'_> {}
 impl ::core::default::Default for RenderPassStripeBeginInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.stripe_info_count = u32::default();
@@ -82084,7 +86928,11 @@ unsafe impl Sync for RenderPassStripeSubmitInfoARM<'_> {}
 impl ::core::default::Default for RenderPassStripeSubmitInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.stripe_semaphore_info_count = u32::default();
@@ -82136,7 +86984,11 @@ unsafe impl Sync for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pipeline_opacity_micromap = Bool32::default();
@@ -82188,7 +87040,11 @@ unsafe impl Sync for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_maximal_reconvergence = Bool32::default();
@@ -82244,7 +87100,11 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupRotateFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupRotateFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_subgroup_rotate = Bool32::default();
@@ -82305,7 +87165,11 @@ unsafe impl Sync for PhysicalDeviceShaderExpectAssumeFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderExpectAssumeFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_expect_assume = Bool32::default();
@@ -82354,7 +87218,11 @@ unsafe impl Sync for PhysicalDeviceShaderFloatControls2Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderFloatControls2Features<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_float_controls2 = Bool32::default();
@@ -82406,7 +87274,11 @@ unsafe impl Sync for PhysicalDeviceDynamicRenderingLocalReadFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceDynamicRenderingLocalReadFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.dynamic_rendering_local_read = Bool32::default();
@@ -82459,7 +87331,11 @@ unsafe impl Sync for RenderingAttachmentLocationInfo<'_> {}
 impl ::core::default::Default for RenderingAttachmentLocationInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.color_attachment_count = u32::default();
@@ -82512,7 +87388,11 @@ unsafe impl Sync for RenderingInputAttachmentIndexInfo<'_> {}
 impl ::core::default::Default for RenderingInputAttachmentIndexInfo<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.color_attachment_count = u32::default();
@@ -82580,7 +87460,11 @@ unsafe impl Sync for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_quad_control = Bool32::default();
@@ -82632,7 +87516,11 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_float16_vector_atomics = Bool32::default();
@@ -82689,7 +87577,11 @@ unsafe impl Sync for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.memory_map_placed = Bool32::default();
@@ -82750,7 +87642,11 @@ unsafe impl Sync for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.min_placed_memory_map_alignment = DeviceSize::default();
@@ -82804,7 +87700,11 @@ unsafe impl Sync for MemoryMapPlacedInfoEXT<'_> {}
 impl ::core::default::Default for MemoryMapPlacedInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_placed_address = ::core::ptr::null_mut();
@@ -82853,7 +87753,11 @@ unsafe impl Sync for PhysicalDeviceShaderBfloat16FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderBfloat16FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_b_float16_type = Bool32::default();
@@ -82917,7 +87821,11 @@ unsafe impl Sync for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_raw_access_chains = Bool32::default();
@@ -82966,7 +87874,11 @@ unsafe impl Sync for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.command_buffer_inheritance = Bool32::default();
@@ -83018,7 +87930,11 @@ unsafe impl Sync for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.image_alignment_control = Bool32::default();
@@ -83070,7 +87986,11 @@ unsafe impl Sync for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.supported_image_alignment_mask = u32::default();
@@ -83121,7 +88041,11 @@ unsafe impl Sync for ImageAlignmentControlCreateInfoMESA<'_> {}
 impl ::core::default::Default for ImageAlignmentControlCreateInfoMESA<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.maximum_requested_alignment = u32::default();
@@ -83168,7 +88092,11 @@ unsafe impl Sync for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_replicated_composites = Bool32::default();
@@ -83223,7 +88151,11 @@ unsafe impl Sync for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_mode_fifo_latest_ready = Bool32::default();
@@ -83274,7 +88206,11 @@ pub struct DepthClampRangeEXT {
 impl ::core::default::Default for DepthClampRangeEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.min_depth_clamp = f32::default();
         x.max_depth_clamp = f32::default();
         x
@@ -83327,7 +88263,11 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrix2FeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrix2FeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.cooperative_matrix_workgroup_scope = Bool32::default();
@@ -83430,7 +88370,11 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrix2PropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrix2PropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.cooperative_matrix_workgroup_scope_max_workgroup_size = u32::default();
@@ -83514,7 +88458,11 @@ unsafe impl Sync for CooperativeMatrixFlexibleDimensionsPropertiesNV<'_> {}
 impl ::core::default::Default for CooperativeMatrixFlexibleDimensionsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.m_granularity = u32::default();
@@ -83615,7 +88563,11 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.cooperative_matrix_decode_vector = Bool32::default();
@@ -83673,7 +88625,11 @@ unsafe impl Sync for PhysicalDeviceHdrVividFeaturesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceHdrVividFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.hdr_vivid = Bool32::default();
@@ -83721,7 +88677,11 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.vertex_attribute_robustness = Bool32::default();
@@ -83780,7 +88740,11 @@ unsafe impl Sync for PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'_> {}
 impl ::core::default::Default for PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.dense_geometry_format = Bool32::default();
@@ -83864,7 +88828,11 @@ impl fmt::Debug for AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'_
 impl ::core::default::Default for AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.compressed_data = DeviceOrHostAddressConstKHR::default();
@@ -83958,7 +88926,11 @@ unsafe impl Sync for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.depth_clamp_zero_one = Bool32::default();
@@ -84011,7 +88983,11 @@ unsafe impl Sync for PhysicalDeviceCooperativeVectorFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeVectorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.cooperative_vector = Bool32::default();
@@ -84071,7 +89047,11 @@ unsafe impl Sync for CooperativeVectorPropertiesNV<'_> {}
 impl ::core::default::Default for CooperativeVectorPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.input_type = ComponentTypeKHR::default();
@@ -84150,7 +89130,11 @@ unsafe impl Sync for PhysicalDeviceCooperativeVectorPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeVectorPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.cooperative_vector_supported_stages = ShaderStageFlags::default();
@@ -84264,7 +89248,11 @@ impl fmt::Debug for ConvertCooperativeVectorMatrixInfoNV<'_> {
 impl ::core::default::Default for ConvertCooperativeVectorMatrixInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_size = usize::default();
@@ -84389,7 +89377,11 @@ unsafe impl Sync for PhysicalDeviceTileShadingFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTileShadingFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.tile_shading = Bool32::default();
@@ -84524,7 +89516,11 @@ unsafe impl Sync for PhysicalDeviceTileShadingPropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTileShadingPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_apron_size = u32::default();
@@ -84591,7 +89587,11 @@ unsafe impl Sync for RenderPassTileShadingCreateInfoQCOM<'_> {}
 impl ::core::default::Default for RenderPassTileShadingCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = TileShadingRenderPassFlagsQCOM::default();
@@ -84646,7 +89646,11 @@ unsafe impl Sync for PerTileBeginInfoQCOM<'_> {}
 impl ::core::default::Default for PerTileBeginInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x
@@ -84684,7 +89688,11 @@ unsafe impl Sync for PerTileEndInfoQCOM<'_> {}
 impl ::core::default::Default for PerTileEndInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x
@@ -84722,7 +89730,11 @@ unsafe impl Sync for DispatchTileInfoQCOM<'_> {}
 impl ::core::default::Default for DispatchTileInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x
@@ -84761,7 +89773,11 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'_> 
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_fragment_density_map_layers = u32::default();
@@ -84812,7 +89828,11 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.fragment_density_map_layered = Bool32::default();
@@ -84867,7 +89887,11 @@ unsafe impl Sync for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'_> {}
 impl ::core::default::Default for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.max_fragment_density_map_layers = u32::default();
@@ -84919,7 +89943,11 @@ unsafe impl Sync for SetPresentConfigNV<'_> {}
 impl ::core::default::Default for SetPresentConfigNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.num_frames_per_batch = u32::default();
@@ -84972,7 +90000,11 @@ unsafe impl Sync for PhysicalDevicePresentMeteringFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentMeteringFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.present_metering = Bool32::default();
@@ -85021,7 +90053,11 @@ unsafe impl Sync for ExternalComputeQueueDeviceCreateInfoNV<'_> {}
 impl ::core::default::Default for ExternalComputeQueueDeviceCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.reserved_external_queues = u32::default();
@@ -85069,7 +90105,11 @@ unsafe impl Sync for ExternalComputeQueueCreateInfoNV<'_> {}
 impl ::core::default::Default for ExternalComputeQueueCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.preferred_queue = Queue::default();
@@ -85115,7 +90155,11 @@ unsafe impl Sync for ExternalComputeQueueDataParamsNV<'_> {}
 impl ::core::default::Default for ExternalComputeQueueDataParamsNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.device_index = u32::default();
@@ -85162,7 +90206,11 @@ unsafe impl Sync for PhysicalDeviceExternalComputeQueuePropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalComputeQueuePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.external_data_size = u32::default();
@@ -85224,7 +90272,11 @@ unsafe impl Sync for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_
 impl ::core::default::Default for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_uniform_buffer_unsized_array = Bool32::default();
@@ -85287,7 +90339,11 @@ unsafe impl Sync for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'_> {
 impl ::core::default::Default for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_mixed_float_dot_product_float16_acc_float32 = Bool32::default();
@@ -85376,7 +90432,11 @@ unsafe impl Sync for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.primitive_restart_index = Bool32::default();
@@ -85428,7 +90488,11 @@ unsafe impl Sync for PhysicalDeviceFormatPackFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceFormatPackFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.format_pack = Bool32::default();
@@ -85476,7 +90540,11 @@ unsafe impl Sync for PhysicalDeviceThrottleHintFeaturesSEC<'_> {}
 impl ::core::default::Default for PhysicalDeviceThrottleHintFeaturesSEC<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.throttle_hint = Bool32::default();
@@ -85524,7 +90592,11 @@ unsafe impl Sync for ThrottleHintSubmitInfoSEC<'_> {}
 impl ::core::default::Default for ThrottleHintSubmitInfoSEC<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.throttle_hint = ThrottleHintTypeSEC::default();
@@ -85576,7 +90648,11 @@ unsafe impl Sync for TensorDescriptionARM<'_> {}
 impl ::core::default::Default for TensorDescriptionARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.tiling = TensorTilingARM::default();
@@ -85655,7 +90731,11 @@ unsafe impl Sync for TensorCreateInfoARM<'_> {}
 impl ::core::default::Default for TensorCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = TensorCreateFlagsARM::default();
@@ -85723,7 +90803,11 @@ unsafe impl Sync for TensorViewCreateInfoARM<'_> {}
 impl ::core::default::Default for TensorViewCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = TensorViewCreateFlagsARM::default();
@@ -85781,7 +90865,11 @@ unsafe impl Sync for TensorMemoryRequirementsInfoARM<'_> {}
 impl ::core::default::Default for TensorMemoryRequirementsInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.tensor = TensorARM::default();
@@ -85829,7 +90917,11 @@ unsafe impl Sync for BindTensorMemoryInfoARM<'_> {}
 impl ::core::default::Default for BindTensorMemoryInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.tensor = TensorARM::default();
@@ -85888,7 +90980,11 @@ unsafe impl Sync for WriteDescriptorSetTensorARM<'_> {}
 impl ::core::default::Default for WriteDescriptorSetTensorARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.tensor_view_count = u32::default();
@@ -85938,7 +91034,11 @@ unsafe impl Sync for TensorFormatPropertiesARM<'_> {}
 impl ::core::default::Default for TensorFormatPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.optimal_tiling_tensor_features = FormatFeatureFlags2::default();
@@ -86009,7 +91109,11 @@ unsafe impl Sync for PhysicalDeviceTensorPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_tensor_dimension_count = u32::default();
@@ -86162,7 +91266,11 @@ unsafe impl Sync for TensorMemoryBarrierARM<'_> {}
 impl ::core::default::Default for TensorMemoryBarrierARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_stage_mask = PipelineStageFlags2::default();
@@ -86246,7 +91354,11 @@ unsafe impl Sync for TensorDependencyInfoARM<'_> {}
 impl ::core::default::Default for TensorDependencyInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.tensor_memory_barrier_count = u32::default();
@@ -86303,7 +91415,11 @@ unsafe impl Sync for PhysicalDeviceTensorFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTensorFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.tensor_non_packed = Bool32::default();
@@ -86393,7 +91509,11 @@ unsafe impl Sync for DeviceTensorMemoryRequirementsARM<'_> {}
 impl ::core::default::Default for DeviceTensorMemoryRequirementsARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_create_info = ::core::ptr::null();
@@ -86442,7 +91562,11 @@ unsafe impl Sync for CopyTensorInfoARM<'_> {}
 impl ::core::default::Default for CopyTensorInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_tensor = TensorARM::default();
@@ -86505,7 +91629,11 @@ unsafe impl Sync for TensorCopyARM<'_> {}
 impl ::core::default::Default for TensorCopyARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.dimension_count = u32::default();
@@ -86564,7 +91692,11 @@ unsafe impl Sync for MemoryDedicatedAllocateInfoTensorARM<'_> {}
 impl ::core::default::Default for MemoryDedicatedAllocateInfoTensorARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.tensor = TensorARM::default();
@@ -86613,7 +91745,11 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.tensor_capture_replay_descriptor_data_size = usize::default();
@@ -86684,7 +91820,11 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.descriptor_buffer_tensor_descriptors = Bool32::default();
@@ -86739,7 +91879,11 @@ unsafe impl Sync for TensorCaptureDescriptorDataInfoARM<'_> {}
 impl ::core::default::Default for TensorCaptureDescriptorDataInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.tensor = TensorARM::default();
@@ -86785,7 +91929,11 @@ unsafe impl Sync for TensorViewCaptureDescriptorDataInfoARM<'_> {}
 impl ::core::default::Default for TensorViewCaptureDescriptorDataInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.tensor_view = TensorViewARM::default();
@@ -86832,7 +91980,11 @@ unsafe impl Sync for DescriptorGetTensorInfoARM<'_> {}
 impl ::core::default::Default for DescriptorGetTensorInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.tensor_view = TensorViewARM::default();
@@ -86880,7 +92032,11 @@ unsafe impl Sync for FrameBoundaryTensorsARM<'_> {}
 impl ::core::default::Default for FrameBoundaryTensorsARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.tensor_count = u32::default();
@@ -86934,7 +92090,11 @@ unsafe impl Sync for PhysicalDeviceExternalTensorInfoARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalTensorInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = TensorCreateFlagsARM::default();
@@ -86992,7 +92152,11 @@ unsafe impl Sync for ExternalTensorPropertiesARM<'_> {}
 impl ::core::default::Default for ExternalTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.external_memory_properties = ExternalMemoryProperties::default();
@@ -87041,7 +92205,11 @@ unsafe impl Sync for ExternalMemoryTensorCreateInfoARM<'_> {}
 impl ::core::default::Default for ExternalMemoryTensorCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.handle_types = ExternalMemoryHandleTypeFlags::default();
@@ -87089,7 +92257,11 @@ unsafe impl Sync for PhysicalDeviceShaderFloat8FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderFloat8FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_float8 = Bool32::default();
@@ -87147,7 +92319,11 @@ unsafe impl Sync for SurfaceCreateInfoOHOS<'_> {}
 impl ::core::default::Default for SurfaceCreateInfoOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = SurfaceCreateFlagsOHOS::default();
@@ -87203,7 +92379,11 @@ unsafe impl Sync for PhysicalDeviceDataGraphFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDataGraphFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.data_graph = Bool32::default();
@@ -87280,7 +92460,11 @@ unsafe impl Sync for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoAR
 impl ::core::default::Default for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.dimension = u32::default();
@@ -87346,7 +92530,11 @@ unsafe impl Sync for DataGraphPipelineConstantARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineConstantARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.id = u32::default();
@@ -87400,7 +92588,11 @@ unsafe impl Sync for DataGraphPipelineResourceInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineResourceInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.descriptor_set = u32::default();
@@ -87458,7 +92650,11 @@ unsafe impl Sync for DataGraphPipelineResourceInfoImageLayoutARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineResourceInfoImageLayoutARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.layout = ImageLayout::default();
@@ -87509,7 +92705,11 @@ unsafe impl Sync for DataGraphPipelineCompilerControlCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineCompilerControlCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_vendor_options = ::core::ptr::null();
@@ -87571,7 +92771,11 @@ unsafe impl Sync for DataGraphPipelineCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = PipelineCreateFlags2::default();
@@ -87638,7 +92842,11 @@ unsafe impl Sync for DataGraphPipelineShaderModuleCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineShaderModuleCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.module = ShaderModule::default();
@@ -87718,7 +92926,11 @@ unsafe impl Sync for DataGraphPipelineSessionCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSessionCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.flags = DataGraphPipelineSessionCreateFlagsARM::default();
@@ -87771,7 +92983,11 @@ unsafe impl Sync for DataGraphPipelineSessionBindPointRequirementsInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSessionBindPointRequirementsInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.session = DataGraphPipelineSessionARM::default();
@@ -87820,7 +93036,11 @@ unsafe impl Sync for DataGraphPipelineSessionBindPointRequirementARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSessionBindPointRequirementARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.bind_point = DataGraphPipelineSessionBindPointARM::default();
@@ -87884,7 +93104,11 @@ unsafe impl Sync for DataGraphPipelineSessionMemoryRequirementsInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSessionMemoryRequirementsInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.session = DataGraphPipelineSessionARM::default();
@@ -87947,7 +93171,11 @@ unsafe impl Sync for BindDataGraphPipelineSessionMemoryInfoARM<'_> {}
 impl ::core::default::Default for BindDataGraphPipelineSessionMemoryInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.session = DataGraphPipelineSessionARM::default();
@@ -88018,7 +93246,11 @@ unsafe impl Sync for DataGraphPipelineInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.data_graph_pipeline = Pipeline::default();
@@ -88067,7 +93299,11 @@ unsafe impl Sync for DataGraphPipelinePropertyQueryResultARM<'_> {}
 impl ::core::default::Default for DataGraphPipelinePropertyQueryResultARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.property = DataGraphPipelinePropertyARM::default();
@@ -88129,7 +93365,11 @@ unsafe impl Sync for DataGraphPipelineIdentifierCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineIdentifierCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.identifier_size = u32::default();
@@ -88182,7 +93422,11 @@ unsafe impl Sync for DataGraphPipelineDispatchInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineDispatchInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = DataGraphPipelineDispatchFlagsARM::default();
@@ -88224,7 +93468,11 @@ pub struct PhysicalDeviceDataGraphProcessingEngineARM {
 impl ::core::default::Default for PhysicalDeviceDataGraphProcessingEngineARM {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.ty = PhysicalDeviceDataGraphProcessingEngineTypeARM::default();
         x.is_foreign = Bool32::default();
         x
@@ -88277,7 +93525,11 @@ impl fmt::Debug for PhysicalDeviceDataGraphOperationSupportARM {
 impl ::core::default::Default for PhysicalDeviceDataGraphOperationSupportARM {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.operation_type = PhysicalDeviceDataGraphOperationTypeARM::default();
         x.name = unsafe { ::core::mem::zeroed() };
         x.version = u32::default();
@@ -88337,7 +93589,11 @@ unsafe impl Sync for QueueFamilyDataGraphPropertiesARM<'_> {}
 impl ::core::default::Default for QueueFamilyDataGraphPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.engine = PhysicalDeviceDataGraphProcessingEngineARM::default();
@@ -88390,7 +93646,11 @@ unsafe impl Sync for PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'
 impl ::core::default::Default for PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.queue_family_index = u32::default();
@@ -88449,7 +93709,11 @@ unsafe impl Sync for QueueFamilyDataGraphProcessingEnginePropertiesARM<'_> {}
 impl ::core::default::Default for QueueFamilyDataGraphProcessingEnginePropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.foreign_semaphore_handle_types = ExternalSemaphoreHandleTypeFlags::default();
@@ -88509,7 +93773,11 @@ unsafe impl Sync for DataGraphProcessingEngineCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphProcessingEngineCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.processing_engine_count = u32::default();
@@ -88567,7 +93835,11 @@ unsafe impl Sync for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'_> {
 impl ::core::default::Default for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.pipeline_cache_incremental_mode = Bool32::default();
@@ -88625,7 +93897,11 @@ unsafe impl Sync for DataGraphPipelineBuiltinModelCreateInfoQCOM<'_> {}
 impl ::core::default::Default for DataGraphPipelineBuiltinModelCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_operation = ::core::ptr::null();
@@ -88676,7 +93952,11 @@ unsafe impl Sync for PhysicalDeviceDataGraphModelFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDataGraphModelFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.data_graph_model = Bool32::default();
@@ -88725,7 +94005,11 @@ unsafe impl Sync for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_untyped_pointers = Bool32::default();
@@ -88777,7 +94061,11 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.video_encode_rgb_conversion = Bool32::default();
@@ -88835,7 +94123,11 @@ unsafe impl Sync for VideoEncodeRgbConversionCapabilitiesVALVE<'_> {}
 impl ::core::default::Default for VideoEncodeRgbConversionCapabilitiesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.rgb_models = VideoEncodeRgbModelConversionFlagsVALVE::default();
@@ -88907,7 +94199,11 @@ unsafe impl Sync for VideoEncodeProfileRgbConversionInfoVALVE<'_> {}
 impl ::core::default::Default for VideoEncodeProfileRgbConversionInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.perform_encode_rgb_conversion = Bool32::default();
@@ -88958,7 +94254,11 @@ unsafe impl Sync for VideoEncodeSessionRgbConversionCreateInfoVALVE<'_> {}
 impl ::core::default::Default for VideoEncodeSessionRgbConversionCreateInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.rgb_model = VideoEncodeRgbModelConversionFlagsVALVE::default();
@@ -89033,7 +94333,11 @@ unsafe impl Sync for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader64_bit_indexing = Bool32::default();
@@ -89085,7 +94389,11 @@ unsafe impl Sync for NativeBufferUsageOHOS<'_> {}
 impl ::core::default::Default for NativeBufferUsageOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ohos_native_buffer_usage = u64::default();
@@ -89133,7 +94441,11 @@ unsafe impl Sync for NativeBufferPropertiesOHOS<'_> {}
 impl ::core::default::Default for NativeBufferPropertiesOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.allocation_size = DeviceSize::default();
@@ -89192,7 +94504,11 @@ unsafe impl Sync for NativeBufferFormatPropertiesOHOS<'_> {}
 impl ::core::default::Default for NativeBufferFormatPropertiesOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.format = Format::default();
@@ -89287,7 +94603,11 @@ unsafe impl Sync for ImportNativeBufferInfoOHOS<'_> {}
 impl ::core::default::Default for ImportNativeBufferInfoOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.buffer = ::core::ptr::null_mut();
@@ -89334,7 +94654,11 @@ unsafe impl Sync for MemoryGetNativeBufferInfoOHOS<'_> {}
 impl ::core::default::Default for MemoryGetNativeBufferInfoOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.memory = DeviceMemory::default();
@@ -89380,7 +94704,11 @@ unsafe impl Sync for ExternalFormatOHOS<'_> {}
 impl ::core::default::Default for ExternalFormatOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.external_format = u64::default();
@@ -89432,7 +94760,11 @@ unsafe impl Sync for PerfHintInfoQCOM<'_> {}
 impl ::core::default::Default for PerfHintInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.ty = PerfHintTypeQCOM::default();
@@ -89484,7 +94816,11 @@ unsafe impl Sync for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.queue_perf_hint = Bool32::default();
@@ -89533,7 +94869,11 @@ unsafe impl Sync for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.supported_queues = QueueFlags::default();
@@ -89584,7 +94924,11 @@ unsafe impl Sync for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.performance_counters_by_region = Bool32::default();
@@ -89643,7 +94987,11 @@ unsafe impl Sync for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> 
 impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_per_region_performance_counters = u32::default();
@@ -89724,7 +95072,11 @@ unsafe impl Sync for PerformanceCounterARM<'_> {}
 impl ::core::default::Default for PerformanceCounterARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.counter_id = u32::default();
@@ -89781,7 +95133,11 @@ impl fmt::Debug for PerformanceCounterDescriptionARM<'_> {
 impl ::core::default::Default for PerformanceCounterDescriptionARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = PerformanceCounterDescriptionFlagsARM::default();
@@ -89840,7 +95196,11 @@ unsafe impl Sync for RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {}
 impl ::core::default::Default for RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.counter_address_count = u32::default();
@@ -89909,7 +95269,11 @@ unsafe impl Sync for ComputeOccupancyPriorityParametersNV<'_> {}
 impl ::core::default::Default for ComputeOccupancyPriorityParametersNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.occupancy_priority = f32::default();
@@ -89961,7 +95325,11 @@ unsafe impl Sync for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.compute_occupancy_priority = Bool32::default();
@@ -90013,7 +95381,11 @@ unsafe impl Sync for PhysicalDeviceShaderLongVectorFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderLongVectorFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.long_vector = Bool32::default();
@@ -90062,7 +95434,11 @@ unsafe impl Sync for PhysicalDeviceShaderLongVectorPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderLongVectorPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_vector_components = u32::default();
@@ -90113,7 +95489,11 @@ unsafe impl Sync for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.texture_compression_astc_3d = Bool32::default();
@@ -90168,7 +95548,11 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_subgroup_partitioned = Bool32::default();
@@ -90222,7 +95606,11 @@ unsafe impl Sync for HostAddressRangeEXT<'_> {}
 impl ::core::default::Default for HostAddressRangeEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.address = ::core::ptr::null_mut();
         x.size = usize::default();
         x
@@ -90264,7 +95652,11 @@ unsafe impl Sync for HostAddressRangeConstEXT<'_> {}
 impl ::core::default::Default for HostAddressRangeConstEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.address = ::core::ptr::null();
         x.size = usize::default();
         x
@@ -90308,7 +95700,11 @@ unsafe impl Sync for TexelBufferDescriptorInfoEXT<'_> {}
 impl ::core::default::Default for TexelBufferDescriptorInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.format = Format::default();
@@ -90361,7 +95757,11 @@ unsafe impl Sync for ImageDescriptorInfoEXT<'_> {}
 impl ::core::default::Default for ImageDescriptorInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_view = ::core::ptr::null();
@@ -90439,7 +95839,11 @@ impl fmt::Debug for ResourceDescriptorInfoEXT<'_> {
 impl ::core::default::Default for ResourceDescriptorInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.ty = DescriptorType::default();
@@ -90493,7 +95897,11 @@ unsafe impl Sync for BindHeapInfoEXT<'_> {}
 impl ::core::default::Default for BindHeapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.heap_range = DeviceAddressRangeEXT::default();
@@ -90549,7 +95957,11 @@ unsafe impl Sync for PushDataInfoEXT<'_> {}
 impl ::core::default::Default for PushDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.offset = u32::default();
@@ -90600,7 +96012,11 @@ unsafe impl Sync for DescriptorMappingSourceConstantOffsetEXT<'_> {}
 impl ::core::default::Default for DescriptorMappingSourceConstantOffsetEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.heap_offset = u32::default();
         x.heap_array_stride = u32::default();
         x.p_embedded_sampler = ::core::ptr::null();
@@ -90672,7 +96088,11 @@ unsafe impl Sync for DescriptorMappingSourcePushIndexEXT<'_> {}
 impl ::core::default::Default for DescriptorMappingSourcePushIndexEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.heap_offset = u32::default();
         x.push_offset = u32::default();
         x.heap_index_stride = u32::default();
@@ -90779,7 +96199,11 @@ unsafe impl Sync for DescriptorMappingSourceIndirectIndexEXT<'_> {}
 impl ::core::default::Default for DescriptorMappingSourceIndirectIndexEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.heap_offset = u32::default();
         x.push_offset = u32::default();
         x.address_offset = u32::default();
@@ -90896,7 +96320,11 @@ unsafe impl Sync for DescriptorMappingSourceIndirectIndexArrayEXT<'_> {}
 impl ::core::default::Default for DescriptorMappingSourceIndirectIndexArrayEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.heap_offset = u32::default();
         x.push_offset = u32::default();
         x.address_offset = u32::default();
@@ -90990,7 +96418,11 @@ pub struct DescriptorMappingSourceHeapDataEXT {
 impl ::core::default::Default for DescriptorMappingSourceHeapDataEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.heap_offset = u32::default();
         x.push_offset = u32::default();
         x
@@ -91044,7 +96476,11 @@ unsafe impl Sync for DescriptorMappingSourceShaderRecordIndexEXT<'_> {}
 impl ::core::default::Default for DescriptorMappingSourceShaderRecordIndexEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.heap_offset = u32::default();
         x.shader_record_offset = u32::default();
         x.heap_index_stride = u32::default();
@@ -91138,7 +96574,11 @@ pub struct DescriptorMappingSourceIndirectAddressEXT {
 impl ::core::default::Default for DescriptorMappingSourceIndirectAddressEXT {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.push_offset = u32::default();
         x.address_offset = u32::default();
         x
@@ -91226,7 +96666,11 @@ impl fmt::Debug for DescriptorSetAndBindingMappingEXT<'_> {
 impl ::core::default::Default for DescriptorSetAndBindingMappingEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.descriptor_set = u32::default();
@@ -91303,7 +96747,11 @@ unsafe impl Sync for ShaderDescriptorSetAndBindingMappingInfoEXT<'_> {}
 impl ::core::default::Default for ShaderDescriptorSetAndBindingMappingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.mapping_count = u32::default();
@@ -91357,7 +96805,11 @@ unsafe impl Sync for SamplerCustomBorderColorIndexCreateInfoEXT<'_> {}
 impl ::core::default::Default for SamplerCustomBorderColorIndexCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.index = u32::default();
@@ -91405,7 +96857,11 @@ unsafe impl Sync for OpaqueCaptureDataCreateInfoEXT<'_> {}
 impl ::core::default::Default for OpaqueCaptureDataCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_data = ::core::ptr::null();
@@ -91454,7 +96910,11 @@ unsafe impl Sync for IndirectCommandsLayoutPushDataTokenNV<'_> {}
 impl ::core::default::Default for IndirectCommandsLayoutPushDataTokenNV<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.push_data_offset = u32::default();
@@ -91511,7 +96971,11 @@ unsafe impl Sync for SubsampledImageFormatPropertiesEXT<'_> {}
 impl ::core::default::Default for SubsampledImageFormatPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.subsampled_image_descriptor_count = u32::default();
@@ -91561,7 +97025,11 @@ unsafe impl Sync for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_split_barrier = Bool32::default();
@@ -91613,7 +97081,11 @@ unsafe impl Sync for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.split_barrier_reserved_shared_memory = u32::default();
@@ -91668,7 +97140,11 @@ unsafe impl Sync for PhysicalDeviceDescriptorHeapFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorHeapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.descriptor_heap = Bool32::default();
@@ -91741,7 +97217,11 @@ unsafe impl Sync for PhysicalDeviceDescriptorHeapPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorHeapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.sampler_heap_alignment = DeviceSize::default();
@@ -91920,7 +97400,11 @@ unsafe impl Sync for CommandBufferInheritanceDescriptorHeapInfoEXT<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceDescriptorHeapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.p_sampler_heap_bind_info = ::core::ptr::null();
@@ -91985,7 +97469,11 @@ unsafe impl Sync for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.tensor_descriptor_size = DeviceSize::default();
@@ -92051,7 +97539,11 @@ unsafe impl Sync for PhysicalDeviceShaderInstrumentationFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderInstrumentationFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_instrumentation = Bool32::default();
@@ -92104,7 +97596,11 @@ unsafe impl Sync for PhysicalDeviceShaderInstrumentationPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderInstrumentationPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.num_metrics = u32::default();
@@ -92160,7 +97656,11 @@ unsafe impl Sync for ShaderInstrumentationCreateInfoARM<'_> {}
 impl ::core::default::Default for ShaderInstrumentationCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x
@@ -92210,7 +97710,11 @@ impl fmt::Debug for ShaderInstrumentationMetricDescriptionARM<'_> {
 impl ::core::default::Default for ShaderInstrumentationMetricDescriptionARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.name = unsafe { ::core::mem::zeroed() };
@@ -92270,7 +97774,11 @@ pub struct ShaderInstrumentationMetricDataHeaderARM {
 impl ::core::default::Default for ShaderInstrumentationMetricDataHeaderARM {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.result_index = u32::default();
         x.result_sub_index = u32::default();
         x.stages = ShaderStageFlags::default();
@@ -92325,7 +97833,11 @@ pub struct DeviceAddressRangeKHR {
 impl ::core::default::Default for DeviceAddressRangeKHR {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.address = DeviceAddress::default();
         x.size = DeviceSize::default();
         x
@@ -92375,7 +97887,11 @@ unsafe impl Sync for DeviceMemoryCopyKHR<'_> {}
 impl ::core::default::Default for DeviceMemoryCopyKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_range = DeviceAddressRangeKHR::default();
@@ -92440,7 +97956,11 @@ unsafe impl Sync for CopyDeviceMemoryInfoKHR<'_> {}
 impl ::core::default::Default for CopyDeviceMemoryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.region_count = u32::default();
@@ -92495,7 +98015,11 @@ unsafe impl Sync for DeviceMemoryImageCopyKHR<'_> {}
 impl ::core::default::Default for DeviceMemoryImageCopyKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.address_range = DeviceAddressRangeKHR::default();
@@ -92585,7 +98109,11 @@ unsafe impl Sync for CopyDeviceMemoryImageInfoKHR<'_> {}
 impl ::core::default::Default for CopyDeviceMemoryImageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.image = Image::default();
@@ -92640,7 +98168,11 @@ unsafe impl Sync for MemoryRangeBarriersInfoKHR<'_> {}
 impl ::core::default::Default for MemoryRangeBarriersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.memory_range_barrier_count = u32::default();
@@ -92699,7 +98231,11 @@ unsafe impl Sync for MemoryRangeBarrierKHR<'_> {}
 impl ::core::default::Default for MemoryRangeBarrierKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.src_stage_mask = PipelineStageFlags2::default();
@@ -92787,7 +98323,11 @@ unsafe impl Sync for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.device_address_commands = Bool32::default();
@@ -92841,7 +98381,11 @@ unsafe impl Sync for ConditionalRenderingBeginInfo2EXT<'_> {}
 impl ::core::default::Default for ConditionalRenderingBeginInfo2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.address_range = DeviceAddressRangeKHR::default();
@@ -92902,7 +98446,11 @@ unsafe impl Sync for AccelerationStructureCreateInfo2KHR<'_> {}
 impl ::core::default::Default for AccelerationStructureCreateInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.create_flags = AccelerationStructureCreateFlagsKHR::default();
@@ -92968,7 +98516,11 @@ unsafe impl Sync for BindIndexBuffer3InfoKHR<'_> {}
 impl ::core::default::Default for BindIndexBuffer3InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.address_range = DeviceAddressRangeKHR::default();
@@ -93028,7 +98580,11 @@ unsafe impl Sync for BindVertexBuffer3InfoKHR<'_> {}
 impl ::core::default::Default for BindVertexBuffer3InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.set_stride = Bool32::default();
@@ -93088,7 +98644,11 @@ unsafe impl Sync for DrawIndirect2InfoKHR<'_> {}
 impl ::core::default::Default for DrawIndirect2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.address_range = StridedDeviceAddressRangeKHR::default();
@@ -93150,7 +98710,11 @@ unsafe impl Sync for DrawIndirectCount2InfoKHR<'_> {}
 impl ::core::default::Default for DrawIndirectCount2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.address_range = StridedDeviceAddressRangeKHR::default();
@@ -93221,7 +98785,11 @@ unsafe impl Sync for DispatchIndirect2InfoKHR<'_> {}
 impl ::core::default::Default for DispatchIndirect2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.address_range = DeviceAddressRangeKHR::default();
@@ -93274,7 +98842,11 @@ unsafe impl Sync for BindTransformFeedbackBuffer2InfoEXT<'_> {}
 impl ::core::default::Default for BindTransformFeedbackBuffer2InfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.address_range = DeviceAddressRangeKHR::default();
@@ -93329,7 +98901,11 @@ unsafe impl Sync for MemoryMarkerInfoAMD<'_> {}
 impl ::core::default::Default for MemoryMarkerInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.stage = PipelineStageFlags2KHR::default();
@@ -93393,7 +98969,11 @@ unsafe impl Sync for PhysicalDeviceShaderConstantDataFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderConstantDataFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_constant_data = Bool32::default();
@@ -93445,7 +99025,11 @@ unsafe impl Sync for PhysicalDeviceShaderAbortFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAbortFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.shader_abort = Bool32::default();
@@ -93493,7 +99077,11 @@ unsafe impl Sync for PhysicalDeviceShaderAbortPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAbortPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.max_shader_abort_message_size = u64::default();
@@ -93542,7 +99130,11 @@ unsafe impl Sync for DeviceFaultShaderAbortMessageInfoKHR<'_> {}
 impl ::core::default::Default for DeviceFaultShaderAbortMessageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.message_data_size = u64::default();
@@ -93595,7 +99187,11 @@ impl fmt::Debug for DataGraphTOSANameQualityARM {
 impl ::core::default::Default for DataGraphTOSANameQualityARM {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.name = unsafe { ::core::mem::zeroed() };
         x.quality_flags = DataGraphTOSAQualityFlagsARM::default();
         x
@@ -93649,7 +99245,11 @@ unsafe impl Sync for QueueFamilyDataGraphTOSAPropertiesARM<'_> {}
 impl ::core::default::Default for QueueFamilyDataGraphTOSAPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.profile_count = u32::default();
@@ -93714,7 +99314,11 @@ unsafe impl Sync for DataGraphPipelineSingleNodeConnectionARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSingleNodeConnectionARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.set = u32::default();
@@ -93773,7 +99377,11 @@ unsafe impl Sync for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.data_graph_optical_flow = Bool32::default();
@@ -93832,7 +99440,11 @@ unsafe impl Sync for QueueFamilyDataGraphOpticalFlowPropertiesARM<'_> {}
 impl ::core::default::Default for QueueFamilyDataGraphOpticalFlowPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.supported_output_grid_sizes = DataGraphOpticalFlowGridSizeFlagsARM::default();
@@ -93927,7 +99539,11 @@ unsafe impl Sync for DataGraphOpticalFlowImageFormatInfoARM<'_> {}
 impl ::core::default::Default for DataGraphOpticalFlowImageFormatInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null();
         x.usage = DataGraphOpticalFlowImageUsageFlagsARM::default();
@@ -93979,7 +99595,11 @@ unsafe impl Sync for DataGraphOpticalFlowImageFormatPropertiesARM<'_> {}
 impl ::core::default::Default for DataGraphOpticalFlowImageFormatPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.format = Format::default();
@@ -94028,7 +99648,11 @@ unsafe impl Sync for DataGraphPipelineSingleNodeCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSingleNodeCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.node_type = DataGraphPipelineNodeTypeARM::default();
@@ -94098,7 +99722,11 @@ unsafe impl Sync for DataGraphPipelineOpticalFlowCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineOpticalFlowCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.width = u32::default();
@@ -94204,7 +99832,11 @@ unsafe impl Sync for DataGraphPipelineOpticalFlowDispatchInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineOpticalFlowDispatchInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+        let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+        let mut x = unsafe {
+            ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+            x.assume_init()
+        };
         x.s_type = Self::STRUCTURE_TYPE;
         x.p_next = ::core::ptr::null_mut();
         x.flags = DataGraphOpticalFlowExecuteFlagsARM::default();

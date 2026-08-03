@@ -1936,7 +1936,11 @@ fn derive_default(
             #[inline]
             fn default() -> Self {
                 #allow_deprecated
-                let mut x = unsafe { ::core::mem::zeroed::<Self>() };
+                let mut x = ::std::mem::MaybeUninit::<Self>::uninit();
+                let mut x = unsafe {
+                    ::std::ptr::write_bytes(x.as_mut_ptr(), 0, 1);
+                    x.assume_init()
+                };
                 #(
                     #default_fields;
                 )*
