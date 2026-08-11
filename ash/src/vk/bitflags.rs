@@ -1383,6 +1383,12 @@ vk_bitflags_wrapped!(VideoEncodeFlagsKHR, Flags);
 impl VideoEncodeFlagsKHR {}
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkCooperativeMatrixFlagBitsEXT.html>"]
+pub struct CooperativeMatrixFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(CooperativeMatrixFlagsEXT, Flags);
+impl CooperativeMatrixFlagsEXT {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkVideoEncodeUsageFlagBitsKHR.html>"]
 pub struct VideoEncodeUsageFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEncodeUsageFlagsKHR, Flags);

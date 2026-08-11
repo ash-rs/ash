@@ -1842,6 +1842,8 @@ impl DriverId {
     pub const MESA_GFXSTREAM: Self = Self(29);
     #[doc = "Ape open source project"]
     pub const APE_SOFT: Self = Self(30);
+    #[doc = "Reserved for undisclosed driver project"]
+    pub const RESERVED_31: Self = Self(31);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]

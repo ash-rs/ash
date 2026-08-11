@@ -63,7 +63,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 358;
+pub const HEADER_VERSION: u32 = 359;
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampleMask.html>"]
@@ -63760,6 +63760,138 @@ impl<'a> CooperativeMatrixPropertiesKHR<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceCooperativeMatrixInfo2EXT.html>"]
+#[must_use]
+pub struct PhysicalDeviceCooperativeMatrixInfo2EXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub scope: ScopeKHR,
+    pub invocations: u32,
+    pub subgroup_size: u32,
+    pub flags: CooperativeMatrixFlagsEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceCooperativeMatrixInfo2EXT<'_> {}
+unsafe impl Sync for PhysicalDeviceCooperativeMatrixInfo2EXT<'_> {}
+impl ::core::default::Default for PhysicalDeviceCooperativeMatrixInfo2EXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            scope: ScopeKHR::default(),
+            invocations: u32::default(),
+            subgroup_size: u32::default(),
+            flags: CooperativeMatrixFlagsEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixInfo2EXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_INFO_2_EXT;
+}
+impl<'a> PhysicalDeviceCooperativeMatrixInfo2EXT<'a> {
+    #[inline]
+    pub fn scope(mut self, scope: ScopeKHR) -> Self {
+        self.scope = scope;
+        self
+    }
+    #[inline]
+    pub fn invocations(mut self, invocations: u32) -> Self {
+        self.invocations = invocations;
+        self
+    }
+    #[inline]
+    pub fn subgroup_size(mut self, subgroup_size: u32) -> Self {
+        self.subgroup_size = subgroup_size;
+        self
+    }
+    #[inline]
+    pub fn flags(mut self, flags: CooperativeMatrixFlagsEXT) -> Self {
+        self.flags = flags;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkCooperativeMatrixProperties2EXT.html>"]
+#[must_use]
+pub struct CooperativeMatrixProperties2EXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub m_granularity: u32,
+    pub n_granularity: u32,
+    pub k_granularity: u32,
+    pub a_type: ComponentTypeKHR,
+    pub b_type: ComponentTypeKHR,
+    pub c_type: ComponentTypeKHR,
+    pub result_type: ComponentTypeKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for CooperativeMatrixProperties2EXT<'_> {}
+unsafe impl Sync for CooperativeMatrixProperties2EXT<'_> {}
+impl ::core::default::Default for CooperativeMatrixProperties2EXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            m_granularity: u32::default(),
+            n_granularity: u32::default(),
+            k_granularity: u32::default(),
+            a_type: ComponentTypeKHR::default(),
+            b_type: ComponentTypeKHR::default(),
+            c_type: ComponentTypeKHR::default(),
+            result_type: ComponentTypeKHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixProperties2EXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::COOPERATIVE_MATRIX_PROPERTIES_2_EXT;
+}
+impl<'a> CooperativeMatrixProperties2EXT<'a> {
+    #[inline]
+    pub fn m_granularity(mut self, m_granularity: u32) -> Self {
+        self.m_granularity = m_granularity;
+        self
+    }
+    #[inline]
+    pub fn n_granularity(mut self, n_granularity: u32) -> Self {
+        self.n_granularity = n_granularity;
+        self
+    }
+    #[inline]
+    pub fn k_granularity(mut self, k_granularity: u32) -> Self {
+        self.k_granularity = k_granularity;
+        self
+    }
+    #[inline]
+    pub fn a_type(mut self, a_type: ComponentTypeKHR) -> Self {
+        self.a_type = a_type;
+        self
+    }
+    #[inline]
+    pub fn b_type(mut self, b_type: ComponentTypeKHR) -> Self {
+        self.b_type = b_type;
+        self
+    }
+    #[inline]
+    pub fn c_type(mut self, c_type: ComponentTypeKHR) -> Self {
+        self.c_type = c_type;
+        self
+    }
+    #[inline]
+    pub fn result_type(mut self, result_type: ComponentTypeKHR) -> Self {
+        self.result_type = result_type;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceCooperativeMatrixPropertiesKHR.html>"]
 #[must_use]
 pub struct PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
@@ -76505,6 +76637,84 @@ impl<'a> PhysicalDeviceShaderOCPMicroscalingTypesFeaturesEXT<'a> {
     #[inline]
     pub fn shader_mx_int8(mut self, shader_mx_int8: bool) -> Self {
         self.shader_mx_int8 = shader_mx_int8.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceCooperativeMatrixMaintenance1FeaturesEXT.html>"]
+#[must_use]
+pub struct PhysicalDeviceCooperativeMatrixMaintenance1FeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub cooperative_matrix_properties2: Bool32,
+    pub cooperative_matrix_reductions: Bool32,
+    pub cooperative_matrix_conversions: Bool32,
+    pub cooperative_matrix_per_element_operations: Bool32,
+    pub cooperative_matrix_get_coordinate: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceCooperativeMatrixMaintenance1FeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceCooperativeMatrixMaintenance1FeaturesEXT<'_> {}
+impl ::core::default::Default for PhysicalDeviceCooperativeMatrixMaintenance1FeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            cooperative_matrix_properties2: Bool32::default(),
+            cooperative_matrix_reductions: Bool32::default(),
+            cooperative_matrix_conversions: Bool32::default(),
+            cooperative_matrix_per_element_operations: Bool32::default(),
+            cooperative_matrix_get_coordinate: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixMaintenance1FeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_MAINTENANCE_1_FEATURES_EXT;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceCooperativeMatrixMaintenance1FeaturesEXT<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>>
+    for PhysicalDeviceCooperativeMatrixMaintenance1FeaturesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceCooperativeMatrixMaintenance1FeaturesEXT<'a> {
+    #[inline]
+    pub fn cooperative_matrix_properties2(mut self, cooperative_matrix_properties2: bool) -> Self {
+        self.cooperative_matrix_properties2 = cooperative_matrix_properties2.into();
+        self
+    }
+    #[inline]
+    pub fn cooperative_matrix_reductions(mut self, cooperative_matrix_reductions: bool) -> Self {
+        self.cooperative_matrix_reductions = cooperative_matrix_reductions.into();
+        self
+    }
+    #[inline]
+    pub fn cooperative_matrix_conversions(mut self, cooperative_matrix_conversions: bool) -> Self {
+        self.cooperative_matrix_conversions = cooperative_matrix_conversions.into();
+        self
+    }
+    #[inline]
+    pub fn cooperative_matrix_per_element_operations(
+        mut self,
+        cooperative_matrix_per_element_operations: bool,
+    ) -> Self {
+        self.cooperative_matrix_per_element_operations =
+            cooperative_matrix_per_element_operations.into();
+        self
+    }
+    #[inline]
+    pub fn cooperative_matrix_get_coordinate(
+        mut self,
+        cooperative_matrix_get_coordinate: bool,
+    ) -> Self {
+        self.cooperative_matrix_get_coordinate = cooperative_matrix_get_coordinate.into();
         self
     }
 }

@@ -5627,6 +5627,17 @@ impl StructureType {
     pub const QUEUE_FAMILY_OPTIMAL_IMAGE_TRANSFER_GRANULARITY_PROPERTIES_KHR: Self =
         Self(1_000_657_001);
 }
+#[doc = "Generated from 'VK_EXT_cooperative_matrix_maintenance1'"]
+impl CooperativeMatrixFlagsEXT {
+    pub const SATURATING_ACCUMULATION: Self = Self(0b1);
+}
+#[doc = "Generated from 'VK_EXT_cooperative_matrix_maintenance1'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_MAINTENANCE_1_FEATURES_EXT: Self =
+        Self(1_000_659_000);
+    pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_INFO_2_EXT: Self = Self(1_000_659_001);
+    pub const COOPERATIVE_MATRIX_PROPERTIES_2_EXT: Self = Self(1_000_659_002);
+}
 #[doc = "Generated from 'VK_EXT_shader_subgroup_partitioned'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_SUBGROUP_PARTITIONED_FEATURES_EXT: Self = Self(1_000_662_000);
@@ -10822,6 +10833,17 @@ pub type PFN_vkCmdSetComputeOccupancyPriorityNV = unsafe extern "system" fn(
 pub const KHR_MAINTENANCE11_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance11\0") };
 pub const KHR_MAINTENANCE11_SPEC_VERSION: u32 = 1u32;
+pub const EXT_COOPERATIVE_MATRIX_MAINTENANCE1_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_cooperative_matrix_maintenance1\0") };
+pub const EXT_COOPERATIVE_MATRIX_MAINTENANCE1_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceCooperativeMatrixProperties2EXT =
+    unsafe extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_cooperative_matrix_info: *const PhysicalDeviceCooperativeMatrixInfo2EXT<'_>,
+        p_property_count: *mut u32,
+        p_properties: *mut CooperativeMatrixProperties2EXT<'_>,
+    ) -> Result;
 pub const EXT_SHADER_SUBGROUP_PARTITIONED_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_partitioned\0") };
 pub const EXT_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION: u32 = 1u32;

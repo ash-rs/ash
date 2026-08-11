@@ -1369,6 +1369,15 @@ impl fmt::Debug for ConservativeRasterizationModeEXT {
         }
     }
 }
+impl fmt::Debug for CooperativeMatrixFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            CooperativeMatrixFlagsEXT::SATURATING_ACCUMULATION.0,
+            "SATURATING_ACCUMULATION",
+        )];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for CooperativeVectorMatrixLayoutNV {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
@@ -2352,6 +2361,7 @@ impl fmt::Debug for DriverId {
             Self::MESA_KOSMICKRISP => Some("MESA_KOSMICKRISP"),
             Self::MESA_GFXSTREAM => Some("MESA_GFXSTREAM"),
             Self::APE_SOFT => Some("APE_SOFT"),
+            Self::RESERVED_31 => Some("RESERVED_31"),
             _ => None,
         };
         if let Some(x) = name {
@@ -8869,6 +8879,15 @@ impl fmt::Debug for StructureType {
             }
             Self::QUEUE_FAMILY_OPTIMAL_IMAGE_TRANSFER_GRANULARITY_PROPERTIES_KHR => {
                 Some("QUEUE_FAMILY_OPTIMAL_IMAGE_TRANSFER_GRANULARITY_PROPERTIES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_MAINTENANCE_1_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_COOPERATIVE_MATRIX_MAINTENANCE_1_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_INFO_2_EXT => {
+                Some("PHYSICAL_DEVICE_COOPERATIVE_MATRIX_INFO_2_EXT")
+            }
+            Self::COOPERATIVE_MATRIX_PROPERTIES_2_EXT => {
+                Some("COOPERATIVE_MATRIX_PROPERTIES_2_EXT")
             }
             Self::PHYSICAL_DEVICE_SHADER_SUBGROUP_PARTITIONED_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_SUBGROUP_PARTITIONED_FEATURES_EXT")
